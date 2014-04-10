@@ -19,3 +19,4 @@ Route::get('users', function()
 {
     return 'Mewballs!';
 });
+Route::resource('users', 'UsersController');
