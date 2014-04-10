@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'evercise-laravel',
+			'database'  => 'evercise_2_0',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',
