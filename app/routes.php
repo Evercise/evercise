@@ -15,8 +15,10 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
-Route::get('users', function()
-{
-    return 'Mewballs!';
-});
+
+
 Route::resource('users', 'UsersController');
+Route::resource('groups', 'groupsController');
+Route::resource('sessions', 'sessionsController');
+Route::resource('gyms', 'gymsController');
+Route::resource('ratings', 'ratingsController');

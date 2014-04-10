@@ -1,0 +1,1 @@
+C:\Users\Tris\www\evercise\app/views/ratings/index.blade.php

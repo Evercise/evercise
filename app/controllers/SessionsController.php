@@ -1,6 +1,6 @@
 <?php
 
-class UsersController extends \BaseController {
+class SessionsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('users.index');
+		//
 	}
 
 	/**
@@ -19,7 +19,7 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('users.create');
+		//
 	}
 
 	/**
@@ -29,35 +29,7 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'userName' => 'required|max:20|min:5|unique:user'
-			)
-		);
-		if($validator->fails()) {
-			return Redirect::route('users.create')
-					->withErrors($validator)
-					->withInput();	
-		}
-		else{
-			//die("success!");
-			$userName = Input::get('userName');
-
-			$code = str_random(60);
-
-			$user = User::create(array(
-				'userName' => $userName
-			));
-
-			if($user) {
-				//return Redirect::route('home');
-			}
-
-
-		}
-
-		return Input::all();
+		//
 	}
 
 	/**
