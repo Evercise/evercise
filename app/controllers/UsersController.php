@@ -43,11 +43,15 @@ class UsersController extends \BaseController {
 		else{
 			//die("success!");
 			$userName = Input::get('userName');
+			$userPassword = Input::get('userPassword');
+			$userSex = Input::get('userSex');
 
 			$code = str_random(60);
 
 			$user = User::create(array(
-				'userName' => $userName
+				'userName' => $userName,
+				'userPassword' => $userPassword,
+				'userSex' => $userSex
 			));
 
 			if($user) {

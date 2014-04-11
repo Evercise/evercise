@@ -5,12 +5,12 @@
 
 	<p>user.create body content</p>
 	{{ Form::open(array('url' => 'users', 'method' => 'post')) }}
-    	{{ Form::text('userName', '', array('placeholder' => 'place held', 'maxlength' => 20), Input::old('userName'))}}
+    	@include('form.textfield', array('fieldname'=>'userName', 'placeholder'=>'Choose a username', 'maxlength'=>20))
+    	@include('form.textfield', array('fieldname'=>'userPassword', 'placeholder'=>'Choose a password', 'maxlength'=>20))
+    	@include('form.select', array('fieldname'=>'userSex'))
     	@if ($errors->has('userName'))
     		{{ $errors->first('userName')}}
     	@endif
-    	drink some tea
     	{{ Form::submit('send it') }}
 	{{ Form::close() }}
 @stop
-
