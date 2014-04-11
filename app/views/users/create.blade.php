@@ -1,7 +1,5 @@
 @extends('layouts.master')
 
-{{ HTML::script('js/less.js'); }}
-{{ HTML::style('style/style.less'); }}
 
 @section('content')
 
