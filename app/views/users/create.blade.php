@@ -9,7 +9,7 @@
     	@if ($errors->has('userName'))
     		{{ $errors->first('userName')}}
     	@endif
-    	drink some tea
+
     	{{ Form::submit('send it') }}
 	{{ Form::close() }}
 @stop

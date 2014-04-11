@@ -1,3 +1,99 @@
-body{
-	background: #f00;
+@import 'grid.css.less';
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
 }
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+@columns: 12;
+@column-width: 60;
+@gutter-width: 20;
+
+@total-width: 100%;
+
+@desktop:   ~"only screen and (min-width: 960px)";
+@tablet:    ~"only screen and (min-width: 720px) and (max-width: 959px)";
+@mobile:    ~"only screen and (max-width: 719px)";
+
+.text {
+   .column(12);
+
+   .inner_wrap {
+      .row(12);
+
+      .left {
+         .column(4,12);
+      }
+
+      .right {
+         .column(8,12);
+      }
+   }
+   @media @tablet {
+	   .inner_wrap {
+	      .row(12);
+
+	      .left {
+	         .column(6,12);
+	      }
+
+	      .right {
+	         .column(6,12);
+	      }
+	   }
+   }
+   @media @mobile {
+	   .inner_wrap {
+	      .row(12);
+
+	      .left {
+	         .column(12,12);
+	      }
+
+	      .right {
+	         .column(12,12);
+	      }
+	   }
+   }
+}
+
+
