@@ -11,6 +11,10 @@
     	@if ($errors->has('userName'))
     		{{ $errors->first('userName')}}
     	@endif
+<<<<<<< HEAD
+=======
+
+>>>>>>> 12f509378abea6b1318667b6938161f748cd7821
     	{{ Form::submit('send it') }}
 	{{ Form::close() }}
 @stop
