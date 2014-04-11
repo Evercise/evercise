@@ -14,3 +14,4 @@
     	{{ Form::submit('send it') }}
 	{{ Form::close() }}
 @stop
+
