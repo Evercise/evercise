@@ -1,0 +1,45 @@
+/* -------------- Fonts -------------- */
+
+
+.heading-font(@weight : 400, @style : normal){
+	font-family: 'Exo',serif;
+	font-weight: @weight;
+	font-style: @style;
+}
+
+.main-font(@weight : 400, @style : normal){
+	font-family: 'Lato', Arial, sans-serif;
+	font-weight: @weight;
+	font-style: @style;
+}
+
+.font-size(@sizeValue) {
+  @remValue: @sizeValue;
+  @pxValue: (@sizeValue * 10);
+  @lineremValue: (@sizeValue * 1.2);
+  @linepxValue: (@sizeValue * 12);
+  font-size: ~"@{pxValue}px"; 
+  font-size: ~"@{remValue}rem";
+  line-height: ~"@{linepxValue}px"; 
+  line-height: ~"@{lineremValue}rem";
+}
+
+.line-height(@sizeValue) {
+  @remValue: @sizeValue;
+  @pxValue: (@sizeValue * 10);
+  line-height: ~"@{pxValue}px"; 
+  line-height: ~"@{remValue}rem";
+}
+
+
+/* -------------- Colours -------------- */
+
+@evercise-yellow : #ffd21e;
+@black : #414141;
+@white :#ffffff;
+@grey : #cccccc;
+@blue : #5bc0de;
+
+
+/* -------------- forms -------------- */
+
