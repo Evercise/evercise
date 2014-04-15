@@ -32,24 +32,29 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'userName' => 'required|max:20|min:5|unique:user'
+				'userName' => 'required|max:20|min:5|unique:user',
+				'userEmail' => 'required|email|unique:user',
+				'userPassword' => 'required|confirmed',
 			)
 		);
 		if($validator->fails()) {
 			return Redirect::route('users.create')
 					->withErrors($validator)
-					->withInput();	
+					->withInput();
 		}
 		else{
 			//die("success!");
 			$userName = Input::get('userName');
+			$userEmail = Input::get('userEmail');
 			$userPassword = Input::get('userPassword');
+			$userPassword = Hash::make($userPassword);
 			$userSex = Input::get('userSex');
 
 			$code = str_random(60);
 
 			$user = User::create(array(
 				'userName' => $userName,
+				'userEmail' => $userEmail,
 				'userPassword' => $userPassword,
 				'userSex' => $userSex
 			));

@@ -44,6 +44,51 @@ table {
 	border-spacing: 0;
 }
 
+.container {
+	width:960px;
+	margin: 0px auto;
+}
+
+.formitem {
+	border-bottom:1px dashed #DCDCDC;
+	padding: 20px 0;
+}
+.formlabel {
+	float:left;
+	width:20%;
+}
+.formfield {
+	float:left;
+	position:relative;
+	width:80%;
+}
+.formfield input {
+	width: 400px;
+}
+.formcheckbox {
+	width:100%;
+	text-align: center;
+}
+.block_title {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 40px;
+	background-color: #fad52d;
+	text-align: center;
+	padding: 15px 0;
+	font-family: 'exo',serif;
+	font-style: italic;
+	box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.3);
+}
+
+.clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
 @columns: 12;
 @column-width: 60;
 @gutter-width: 20;
