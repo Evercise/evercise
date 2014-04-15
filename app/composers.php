@@ -1,6 +1,6 @@
 <?php
 
-View::composer('form.checkbox', function($view)
+View::composer('form.password', function($view)
 {
-    $view->with('testparam', (isset($testparam) ? $testparam : "this is the default"));
+    $view->with('confirmation', (isset($view->confirmation) ? $view->confirmation : false));
 });
