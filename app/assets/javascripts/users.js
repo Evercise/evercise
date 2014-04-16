@@ -7,7 +7,7 @@ jQuery( document ).ready( function( $ ) {
         $.post(
             $( this ).prop( 'action' ),
             {
-                "displayName": $( '#displayName' ).val(),
+                "display_name": $( '#display_name' ).val(),
                 "first_name": $( '#first_name' ).val(),
                 "last_name": $( '#last_name' ).val(),
                 "email": $( '#email' ).val(),

@@ -32,7 +32,7 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'displayName' => 'required|max:20|min:5|unique:users',
+				'display_name' => 'required|max:20|min:5|unique:users',
 				'first_name' => 'required|max:50|min:2',
 				'last_name' => 'required|max:50|min:2',
 				'email' => 'required|email|unique:users',
@@ -55,13 +55,12 @@ class UsersController extends \BaseController {
 	        }			
 		}
 		else{
-			die("success!");
-			$displayName = Input::get('displayName');
+			$display_name = Input::get('display_name');
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
 			$email = Input::get('email');
 			$password = Input::get('password');
-			$password = Hash::make($userPassword);
+			$password = Hash::make($password);
 			$gender = Input::get('gender');
 
 			
@@ -69,7 +68,7 @@ class UsersController extends \BaseController {
 			$code = str_random(60);
 
 			$user = User::create(array(
-				'displayName' => $displayName,
+				'display_name' => $display_name,
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'email' => $email,
@@ -81,7 +80,13 @@ class UsersController extends \BaseController {
 				if(Request::ajax())
         		{		 
 					$response_values = array(
-						'validation_failed' => 0
+						'validation_failed' => 0,
+						'display_name' => $display_name,
+						'first_name' => $first_name,
+						'last_name' => $last_name,
+						'email' => $email,
+						'password' => $password,
+						'gender' => $gender
 					);
 					return Response::json($response_values);
 				}else{
