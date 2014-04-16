@@ -32,8 +32,8 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'userName' => 'required|max:20|min:5|unique:user',
-				'userEmail' => 'required|email|unique:user',
+				'userName' => 'required|max:20|min:5|unique:users',
+				'userEmail' => 'required|email|unique:users',
 				'userPassword' => 'required|confirmed',
 			)
 		);
@@ -55,7 +55,7 @@ class UsersController extends \BaseController {
 			$user = User::create(array(
 				'userName' => $userName,
 				'userEmail' => $userEmail,
-				'userPassword' => $userPassword,
+				'password' => $userPassword,
 				'userSex' => $userSex
 			));
 

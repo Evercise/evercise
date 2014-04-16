@@ -22,3 +22,14 @@ Route::resource('groups', 'groupsController');
 Route::resource('sessions', 'sessionsController');
 Route::resource('gyms', 'gymsController');
 Route::resource('ratings', 'ratingsController');
+
+Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout'));
+Route::get('auth/login', array('as' => 'auth.login', 'uses' => 'auth\AuthController@getLogin'));
+Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
+
+Route::group(array('prefix' => 'auth', 'before' => 'auth'), function()
+{
+        Route::any('/', 'App\Controllers\Admin\PagesController@index');
+        Route::resource('articles', 'App\Controllers\Admin\ArticlesController');
+        Route::resource('pages', 'App\Controllers\Admin\PagesController');
+});
