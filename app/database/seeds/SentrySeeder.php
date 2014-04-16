@@ -17,6 +17,14 @@ class SentrySeeder extends Seeder {
         ));
  
         Sentry::getGroupProvider()->create(array(
+            'name'        => 'User',
+            'permissions' => array('user' => 1),
+        ));
+        Sentry::getGroupProvider()->create(array(
+            'name'        => 'Trainer',
+            'permissions' => array('trainer' => 1),
+        ));
+        Sentry::getGroupProvider()->create(array(
             'name'        => 'Admin',
             'permissions' => array('admin' => 1),
         ));
