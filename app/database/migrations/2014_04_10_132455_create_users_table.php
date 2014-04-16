@@ -13,10 +13,10 @@ class CreateUsersTable extends Migration {
 	public function up()
 	{
 		Schema::table('users', function(Blueprint $table) {
+			$table->string('display_name', 45);
 			$table->tinyInteger('gender');
 			$table->timestamp('dob');
 			$table->string('phone', 20);
-			$table->timestamp('lastLogin');
 			$table->string('directory', 45);
 			$table->string('image', 45);
 			$table->string('categories', 45);
