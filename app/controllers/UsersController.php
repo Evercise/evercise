@@ -63,11 +63,7 @@ class UsersController extends \BaseController {
 			$password = Hash::make($password);
 			$gender = Input::get('gender');
 
-			
-			
-			$code = str_random(60);
-
-			$user = User::create(array(
+			$user = Sentry::createUser(array(
 				'display_name' => $display_name,
 				'first_name' => $first_name,
 				'last_name' => $last_name,
