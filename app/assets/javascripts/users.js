@@ -7,11 +7,13 @@ jQuery( document ).ready( function( $ ) {
         $.post(
             $( this ).prop( 'action' ),
             {
-                "userName": $( '#userName' ).val(),
-                "userEmail": $( '#userEmail' ).val(),
-                "userPassword": $( '#userPassword' ).val(),
-                "userPassword_confirmation": $( '#userPassword_confirmation' ).val(),
-                "userSex": $( '#userSex' ).val()
+                "displayName": $( '#displayName' ).val(),
+                "first_name": $( '#first_name' ).val(),
+                "last_name": $( '#last_name' ).val(),
+                "email": $( '#email' ).val(),
+                "password": $( '#password' ).val(),
+                "password_confirmation": $( '#password_confirmation' ).val(),
+                "gender": $( '#gender' ).val()
             },
             function( data ) {
                 if (data.validation_failed == 1)

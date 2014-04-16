@@ -32,7 +32,9 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'first_name' => 'required|max:20|min:5|unique:users',
+				'displayName' => 'required|max:20|min:5|unique:users',
+				'first_name' => 'required|max:50|min:2',
+				'last_name' => 'required|max:50|min:2',
 				'email' => 'required|email|unique:users',
 				'password' => 'required|confirmed',
 			)
@@ -54,21 +56,25 @@ class UsersController extends \BaseController {
 		}
 		else{
 			die("success!");
+			$displayName = Input::get('displayName');
 			$first_name = Input::get('first_name');
+			$last_name = Input::get('last_name');
 			$email = Input::get('email');
 			$password = Input::get('password');
 			$password = Hash::make($userPassword);
-			$last_name = Input::get('last_name');
+			$gender = Input::get('gender');
 
 			
 			
 			$code = str_random(60);
 
 			$user = User::create(array(
+				'displayName' => $displayName,
 				'first_name' => $first_name,
+				'last_name' => $last_name,
 				'email' => $email,
 				'password' => $password,
-				'last_name' => $last_name
+				'gender' => $gender
 			));
 
 			if($user) {
