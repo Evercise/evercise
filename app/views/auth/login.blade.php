@@ -10,9 +10,9 @@
             @endif
 
             <div class="control-group">
-                {{ Form::label('userEmail', 'email') }}
+                {{ Form::label('email', 'Email') }}
                 <div class="controls">
-                        {{ Form::text('userEmail') }}
+                        {{ Form::text('email') }}
                 </div>
             </div>
 

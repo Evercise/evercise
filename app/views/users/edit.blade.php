@@ -1,1 +1,8 @@
-C:\Users\Tris\www\evercise\app/views/users/edit.blade.php
+@extends('layouts.master')
+
+
+@section('content')
+
+	<div>Edit user (dashboard)</div>
+
+@stop

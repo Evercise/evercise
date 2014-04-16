@@ -20,7 +20,7 @@ class AuthController extends \BaseController {
 	public function postLogin()
 	{
 		$credentials = array(
-			'userEmail' => Input::get('userEmail'),
+			'email' => Input::get('email'),
 			'password' => Input::get('password')
 		);
 
@@ -30,7 +30,9 @@ class AuthController extends \BaseController {
 
 			if ($user)
 			{
-				return Redirect::route('auth.pages.index');
+				var_dump($user);
+				exit;
+				//return Redirect::route('users.edit', $user->username);
 			}
 		}
 		catch(\Exception $e)

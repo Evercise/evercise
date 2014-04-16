@@ -1,1 +1,8 @@
-C:\Users\Tris\www\evercise\app/views/users/show.blade.php
+@extends('layouts.master')
+
+
+@section('content')
+
+	<div>Show user</div>
+
+@stop

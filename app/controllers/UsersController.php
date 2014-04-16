@@ -32,31 +32,31 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'userName' => 'required|max:20|min:5|unique:users',
-				'userEmail' => 'required|email|unique:users',
-				'userPassword' => 'required|confirmed',
+				'first_name' => 'required|max:20|min:5|unique:users',
+				'email' => 'required|email|unique:users',
+				'password' => 'required|confirmed',
 			)
 		);
 		if($validator->fails()) {
-			return Redirect::route('users.create')
+			return Redirect::route('users.edit')
 					->withErrors($validator)
 					->withInput();
 		}
 		else{
-			//die("success!");
-			$userName = Input::get('userName');
-			$userEmail = Input::get('userEmail');
-			$userPassword = Input::get('userPassword');
-			$userPassword = Hash::make($userPassword);
-			$userSex = Input::get('userSex');
+			die("success!");
+			$first_name = Input::get('first_name');
+			$email = Input::get('email');
+			$password = Input::get('password');
+			$password = Hash::make($userPassword);
+			$last_name = Input::get('last_name');
 
 			$code = str_random(60);
 
 			$user = User::create(array(
-				'userName' => $userName,
-				'userEmail' => $userEmail,
-				'password' => $userPassword,
-				'userSex' => $userSex
+				'first_name' => $first_name,
+				'email' => $email,
+				'password' => $password,
+				'last_name' => $last_name
 			));
 
 			if($user) {
@@ -77,7 +77,7 @@ class UsersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return View::make('users.show');
 	}
 
 	/**
@@ -88,7 +88,7 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		return View::make('users.edit');
 	}
 
 	/**
