@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"way/generators": "2.6",
-		"codesleeve/asset-pipeline": "dev-master"
+		"codesleeve/asset-pipeline": "dev-master",
+        "cartalyst/sentry": "2.0.*"
 	},
 	"autoload": {
 		"classmap": [
