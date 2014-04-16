@@ -84,7 +84,7 @@ p,a{
 
 /*forms and inputs*/
 
-input,textarea,select{
+input,textarea,select,.drop_down{
 	margin-top: 0;
 	.font-size(1.4);
 	background-color: @white;
@@ -109,6 +109,13 @@ input,textarea,select{
 	}
 }
 
+.drop_down{
+	display: block;
+	margin-top: -40px;
+	background-image: url('/img/select_arrow.png');
+	background-size: auto 50%;
+	background-position: 95% 50%;
+}
 
 label{
 	.font-size(1.4);
