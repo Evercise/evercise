@@ -38,18 +38,30 @@ class UsersController extends \BaseController {
 			)
 		);
 		if($validator->fails()) {
-			return Redirect::route('users.create')
+			if(Request::ajax())
+	        { 
+	        	$response_values = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($response_values);
+	        }else{
+	        	return Redirect::route('users.create')
 					->withErrors($validator)
 					->withInput();
+	        }			
 		}
 		else{
-			//die("success!");
+			
 			$userName = Input::get('userName');
 			$userEmail = Input::get('userEmail');
 			$userPassword = Input::get('userPassword');
 			$userPassword = Hash::make($userPassword);
 			$userSex = Input::get('userSex');
 
+			
+			
 			$code = str_random(60);
 
 			$user = User::create(array(
@@ -60,13 +72,23 @@ class UsersController extends \BaseController {
 			));
 
 			if($user) {
-				//return Redirect::route('home');
+				if(Request::ajax())
+        		{		 
+					$response_values = array(
+						'validation_failed' => 0,
+						'userName' => $userName,
+						'userEmail' => $userEmail,
+						'userPassword' => $userPassword,
+						'userSex' => $userSex
+					);
+					return Response::json($response_values);
+				}else{
+					return Redirect::route('home');
+				}
 			}
-
-
 		}
 
-		return Input::all();
+		//return Input::all();
 	}
 
 	/**

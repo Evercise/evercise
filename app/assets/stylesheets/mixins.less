@@ -1,7 +1,7 @@
 
 /* less mixins */
 
-.text-shadow (@string: 0 1px 3px rgba(0, 0, 0, 0.25)) {
+.text-shadow (@string: 0 -1px 1px rgba(255, 255, 255, 0.25)) {
 	text-shadow: @string;
 }
 .box-shadow (@string) {
@@ -138,6 +138,75 @@
 	-moz-transform-origin:    @x @y;
 	-ms-transform-origin:     @x @y;
 	-o-transform-origin:      @x @y;
+}
+
+.formitems(@cols, @left, @right) {
+	.clearfix;
+	border-bottom:1px dashed #DCDCDC;
+	padding: 20px 0;
+	.row(@cols);
+
+	.formlabel {
+		.column(@left,@cols);
+		label{
+			.heading-font(600);
+			.font-size(1.8);
+		}
+	}
+	.formfield {
+		.column(@right,@cols);
+		input{
+			width: 90%;
+			clear: both;
+			margin-bottom: 20px;
+		}
+		p{
+			color: lighten(@black, 40%);
+		}
+	}
+	&:last-of-type {
+		border-bottom:0;
+	}
+}
+
+.error_msgs(@cols){
+	.row(@cols);
+	.box-sizing();
+	background-color: lighten(@black, 10%);
+	color: @white;
+	padding: 15px 20px;
+	.font-size(1.8);
+	margin-bottom: 20px;
+}
+
+.place_holder(@colour : @black, 40%){
+	::-webkit-input-placeholder { /* WebKit browsers */
+	    color:    @colour;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	    color:    @colour;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	    color:    @colour;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+	    color:    @colour;
+	}
+}
+
+.btn(@colour,@width : 90 , @margin : 0){
+	.gradient (lighten(@colour, 15%), @colour);
+	width: @width+px;
+	.text-shadow();
+	display: block;
+	margin-top:@margin+px;
+	&:hover{
+		cursor: pointer;
+		.gradient (darken(@colour, 5%), @colour);
+	}
+	&:active{
+		.gradient (darken(@colour, 10%), @colour);
+	}
 }
 
 
