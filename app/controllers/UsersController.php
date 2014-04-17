@@ -42,17 +42,17 @@ class UsersController extends \BaseController {
 		if($validator->fails()) {
 			if(Request::ajax())
 	        { 
-	        	$response_values = array(
+	        	$result = array(
 		            'validation_failed' => 1,
 		            'errors' =>  $validator->errors()->toArray()
 		         );	
 
-				return Response::json($response_values);
+				return Response::json($result);
 	        }else{
 	        	return Redirect::route('users.edit')
 					->withErrors($validator)
 					->withInput();
-	        }			
+	        }
 		}
 		else{
 			$display_name = Input::get('display_name');
@@ -60,31 +60,36 @@ class UsersController extends \BaseController {
 			$last_name = Input::get('last_name');
 			$email = Input::get('email');
 			$password = Input::get('password');
-			$password = Hash::make($password);
+			//$password = Hash::make($password);
 			$gender = Input::get('gender');
 
-			$user = Sentry::createUser(array(
+			$user = Sentry::register(array(
 				'display_name' => $display_name,
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'email' => $email,
 				'password' => $password,
-				'gender' => $gender
+				'gender' => $gender,
+				'activated' => false
 			));
+
+			$userGroup = Sentry::findGroupById(1);
+			$user->addGroup($userGroup);
+
+			$activation_code = $user->getActivationCode();
 
 			if($user) {
 				if(Request::ajax())
-        		{		 
-					$response_values = array(
-						'validation_failed' => 0,
-						'display_name' => $display_name,
-						'first_name' => $first_name,
-						'last_name' => $last_name,
-						'email' => $email,
-						'password' => $password,
-						'gender' => $gender
-					);
-					return Response::json($response_values);
+        		{
+        			$result = $user;
+
+					Event::fire('user.signup', array(
+		            	'email' => $result->email, 
+		            	'display_name' => $result->display_name, 
+		                'activationCode' => $activation_code
+		            ));
+
+					return Response::json($result);
 				}else{
 					return Redirect::route('home');
 				}
