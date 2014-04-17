@@ -78,7 +78,7 @@
 									
 								</td>
 								<td valign="top" width="200" style="table-layout: fixed">
-									{{HTML::image('img/WIE_4.jpg', 'lets get going', array('id' => 'potatoe'));}}
+									{{HTML::image('img/WIE_4.jpg', 'lets get going', array('width' => 200, 'id' => 'potatoe'));}}
 
 								</td>
 							</tr>
@@ -89,7 +89,7 @@
 						<table width="600" height="120" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:12px; line-height:14.4px; color:#000000; padding: 0px 40px 0px 40px; font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; ">
 							<tr valign="top">
 								<td>
-									<p>Or point your browser to this address: <br /> {{ URL::to('users') }}/{{ $display_name }}/activate/{{ urlencode($activation_code) }}</p>
+									<p  style="max-width:520px; word-wrap:break-word;">Or point your browser to this address: <br /> {{ URL::to('users') }}/{{ $display_name }}/activate/{{ urlencode($activation_code) }}</p>
 									<br>
 									<br>
 									<br>
