@@ -78,6 +78,12 @@ class UsersController extends \BaseController {
 
 			$activation_code = $user->getActivationCode();
 
+/*			$data['user'] = $user;
+			Mail::send('emails.auth.welcome', $data, function($message) use ($user)
+			{
+			    $message->to('example@example.hu', $user->username)->subject('Account');
+			})
+*/
 			if($user) {
 				if(Request::ajax())
         		{

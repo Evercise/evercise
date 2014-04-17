@@ -91,3 +91,15 @@ require app_path().'/filters.php';
 */
 
 require app_path().'/composers.php';
+
+
+/*
+|--------------------------------------------------------------------------
+| Require The observables File
+|--------------------------------------------------------------------------
+|
+| Load a file containing the observables
+|
+*/
+
+require app_path().'/observables.php';

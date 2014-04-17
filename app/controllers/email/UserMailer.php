@@ -9,10 +9,10 @@ class UserMailer extends Mailer {
 	 */
 	public function subscribe($events)
 	{
-		$events->listen('user.signup', 		'Authority\Mailers\UserMailer@welcome');
-		$events->listen('user.resend', 		'Authority\Mailers\UserMailer@welcome');
-		$events->listen('user.forgot',      'Authority\Mailers\UserMailer@forgotPassword');
-		$events->listen('user.newpassword', 'Authority\Mailers\UserMailer@newPassword');
+		$events->listen('user.signup', 		'email\UserMailer@welcome');
+		$events->listen('user.resend', 		'email\UserMailer@welcome');
+		$events->listen('user.forgot',      'email\UserMailer@forgotPassword');
+		$events->listen('user.newpassword', 'email\UserMailer@newPassword');
 	}
 
 	/**
