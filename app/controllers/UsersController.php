@@ -135,7 +135,7 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		return View::make('users.update');
 	}
 
 	/**
@@ -147,6 +147,29 @@ class UsersController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	/**
+	 * Activate the user using the emailed hash
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function activate($display_name, $code)
+	{
+		$user = Sentry::findUserByActivationCode($code);
+
+		if ($user->attemptActivation($code))
+	    {
+	        // User activation passed
+			return View::make('users.edit')->with('activation','passed')->with('display_name', $display_name);
+	    }
+	    else
+	    {
+	        // User activation failed
+			return View::make('users.edit')->with('activation','failed')->with('display_name', $display_name);
+	    }
+
 	}
 
 }
