@@ -39,3 +39,5 @@ Route::get('login/fb', function() {
     );
     return Redirect::away($facebook->getLoginUrl($params));
 });
+
+Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));

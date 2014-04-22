@@ -84,19 +84,130 @@ class UsersController extends \BaseController {
 			})
 */
 			if($user) {
-    			$result = $user;
+				if(Request::ajax())
+	        	{
+					Event::fire('user.signup', array(
+		            	'email' => $user->email, 
+		            	'display_name' => $user->display_name, 
+		                'activationCode' => $activation_code
+		            ));
 
-				Event::fire('user.signup', array(
-	            	'email' => $result->email, 
-	            	'display_name' => $result->display_name, 
-	                'activationCode' => $activation_code
-	            ));
-
-				return Response::json($result);
+					if($this->makeUserDir($user))
+					{
+    					return Response::json($user);
+    				}		
+				}
 			}
 		}
 
 		//return Input::all();
+	}
+
+	public function fb_login()
+	{
+	    $code = Input::get('code');
+
+	    if (strlen($code) == 0) return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
+	 
+	    $facebook = new Facebook(Config::get('facebook'));
+	    $uid = $facebook->getUser();
+	 
+	    if ($uid == 0) return Redirect::to('/')->with('message', 'There was an error');
+	 
+	    $me = $facebook->api('/me');
+
+	    $password = $this->randomPassword();
+
+	    try{
+		    $user = Sentry::createUser(array(
+				'display_name' => $me['username'],
+				'first_name' => $me['first_name'],
+				'last_name' => $me['last_name'],
+				'email' => $me['email'],
+				'password' => $password,
+				'gender' => $me['gender'],
+				'activated' => true
+			));
+
+			$userGroup = Sentry::findGroupById(1);
+			$user->addGroup($userGroup);
+
+			$userGroup = Sentry::findGroupById(2);
+			$user->addGroup($userGroup);
+
+			if($user) {
+
+				Event::fire('user.signup', array(
+		        	'email' => $user->email, 
+		        	'display_name' => $user->display_name, 
+		            'password' => $password
+		        ));
+
+				$this->makeUserDir($user);
+				
+				$path = public_path().'/profiles/'.date('Y-m');
+/*				$url = 'http://tristanallen.co.uk/tristan_allen.jpg';
+				$contents = File::get($url);//'https://graph.facebook.com/'.$me["id"].'/picture?type=large');
+				File::put($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', $contents);
+*/
+
+				$url = 'http://graph.facebook.com/' . $me["username"] . '/picture?type=large';
+				//$url = 'http://tristanallen.co.uk/tristan_allen.jpg';
+				//$url = 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
+				/*$file_handler = fopen($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', 'w');
+				$curl = curl_init($url);
+				curl_setopt($curl, CURLOPT_FILE, $file_handler);
+				curl_setopt($curl, CURLOPT_HEADER, 0);
+				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
+				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+				curl_exec($curl);
+
+				curl_close($curl);
+				fclose($file_handler);*/
+
+
+				$img = file_get_contents($url);
+				file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', $img);
+			
+
+				return View::make('users.show');
+				
+
+			}
+	    }
+
+		catch (Cartalyst\Sentry\Users\UserExistsException $e)
+		{
+			$user = Sentry::findUserByLogin($me['email']);
+		    Sentry::login($user,false);
+		}
+
+	}
+
+	public function makeUserDir($user)
+	{
+
+        $path = public_path().'/profiles/'.date('Y-m');
+
+        if(!file_exists($path)){
+
+        	File::makeDirectory($path);
+        }
+
+        File::makeDirectory($path.'/'.$user->id.'_'.$user->display_name);
+
+        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
+
+        if ($user->save())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
