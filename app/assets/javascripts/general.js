@@ -11,4 +11,8 @@ jQuery( document ).ready( function( $ ) {
         	$(this).next().text(val);
     	})
     });
+
+    $('input').keyup(function(){
+       $(this).removeClass('error');
+    });
 });

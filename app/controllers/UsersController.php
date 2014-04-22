@@ -60,7 +60,6 @@ class UsersController extends \BaseController {
 			$last_name = Input::get('last_name');
 			$email = Input::get('email');
 			$password = Input::get('password');
-			//$password = Hash::make($password);
 			$gender = Input::get('gender');
 
 			$user = Sentry::register(array(
@@ -85,20 +84,15 @@ class UsersController extends \BaseController {
 			})
 */
 			if($user) {
-				if(Request::ajax())
-        		{
-        			$result = $user;
+    			$result = $user;
 
-					Event::fire('user.signup', array(
-		            	'email' => $result->email, 
-		            	'display_name' => $result->display_name, 
-		                'activationCode' => $activation_code
-		            ));
+				Event::fire('user.signup', array(
+	            	'email' => $result->email, 
+	            	'display_name' => $result->display_name, 
+	                'activationCode' => $activation_code
+	            ));
 
-					return Response::json($result);
-				}else{
-					return Redirect::route('home');
-				}
+				return Response::json($result);
 			}
 		}
 

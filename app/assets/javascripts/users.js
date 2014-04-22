@@ -24,6 +24,7 @@ jQuery( document ).ready( function( $ ) {
                         if (value.length != 0)
                         {
                            $("#" + index).addClass('error');
+                           $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);;
                            $("#" + index).after('<span class="error_msg">' + value + '</span>');
                         }
                     });
