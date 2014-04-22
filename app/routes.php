@@ -28,3 +28,14 @@ Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthContr
 Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
 
 Route::get('/users/{display_name}/activate/{code}', array('as' => 'users-activate', 'uses' => 'UsersController@activate'));
+
+Route::get('login/fb', function() {
+    $facebook = new Facebook(Config::get('facebook'));
+    $params = array(
+        'redirect_uri' => url('/login/fb/callback'),
+        'scope' => 'email,user_birthday,read_stream'
+        
+
+    );
+    return Redirect::away($facebook->getLoginUrl($params));
+});
