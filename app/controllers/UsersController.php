@@ -168,7 +168,7 @@ class UsersController extends \BaseController {
 				fclose($file_handler);
 */
 
-				$img = file_get_contents($url);
+				$img = 'woo';//file_get_contents($url);
 				file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/'.$img_filename, $img);
 
 				$user->image = $img_filename;
