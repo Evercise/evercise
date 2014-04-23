@@ -39,5 +39,7 @@
         <div class="center-btn-wrapper" >
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
         </div>
+        <div class="success_msg">Success, Please check your indox for a validation email.</div>
 	{{ Form::close() }}
+
 @stop
