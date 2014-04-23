@@ -138,7 +138,7 @@ label{
 	color: contrast(@bk, darken(@bk, lightness(@bk) ),lighten(@bk, (100 - lightness(@bk))), 50%);
 	.gradient (lighten(@bk, 15%), @bk);
 	width: @width;
-	.text-shadow();
+	.text-shadow(0 -1px 1px contrast(@bk,lighten(@bk, (100 - lightness(@bk))), darken(@bk, lightness(@bk) ), 50%));
 	display: block;
 	margin-top:@margin+px;
 	&:hover{
@@ -250,6 +250,7 @@ body{
 footer{
 	.column(12);
 	.border-radius(4);
+	.drop-shadow(0,5,5,-3,0.3);
 	margin-top: 40px;
 	float: left;
 	background-color: @brown;
@@ -281,6 +282,7 @@ footer{
 			}
 			p{
 				display: inline;
+				margin-right: 10px;
 			}
 		}
 	}	
