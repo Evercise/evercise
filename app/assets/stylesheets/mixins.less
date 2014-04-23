@@ -194,20 +194,6 @@
 	}
 }
 
-.btn(@colour,@width : 90 , @margin : 0){
-	.gradient (lighten(@colour, 15%), @colour);
-	width: @width+px;
-	.text-shadow();
-	display: block;
-	margin-top:@margin+px;
-	&:hover{
-		cursor: pointer;
-		.gradient (darken(@colour, 5%), @colour);
-	}
-	&:active{
-		.gradient (darken(@colour, 10%), @colour);
-	}
-}
 
 
 /*end less mixins */

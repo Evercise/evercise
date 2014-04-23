@@ -4,9 +4,11 @@
 @section('content')
 
 	@include('layouts.pagetitle', array('title'=>'Step 1: Create your user account', 'subtitle'=>'You can either fill in your details below, or sign up in one click using your Facebook account.'))
+    <div class="fb-wrapper">
+        <a class="btn-fb" href="../login/fb" >Log in with facebook</a>
+    </div>
 
-    <a href="../login/fb" >Log in with facebook</a>
-
+    
 	{{ Form::open(array('id' => 'user_create', 'url' => 'users', 'method' => 'post')) }}
     	@include('form.textfield', array('fieldname'=>'display_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'Choose your display_name', 'fieldtext'=>'This will be your display name visible to all Evercise members. It will also be used when you create a class.' ))
         @if ($errors->has('display_name'))
@@ -34,10 +36,8 @@
     	@include('form.select', array('fieldname'=>'gender', 'label'=>'Please select your sex'))
     	@include('form.checkbox', array('id' => 'userNewsletter','testparam'=>'not default', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.'))
 
-    	
-    	
-    	
-
-    	{{ Form::submit('Sign Up' , array('class'=>'btn')) }}
+        <div class="center-btn-wrapper" >
+    	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
+        </div>
 	{{ Form::close() }}
 @stop
