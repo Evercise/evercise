@@ -14,5 +14,6 @@ jQuery( document ).ready( function( $ ) {
 
     $('input').keyup(function(){
        $(this).removeClass('error');
+       $(this).closest('div').find('.error_msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
     });
 });

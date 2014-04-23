@@ -154,6 +154,35 @@ label{
 .btn-yellow{.btn(#ffd21e);}
 .btn-fb{.btn(#3b5998,20);}
 
+/*error and success blcks  */
+
+.error_msgs(@cols){
+	.row(@cols);
+	.box-sizing();
+	background-color: lighten(@black, 10%);
+	color: @white;
+	padding: 15px 20px;
+	.font-size(1.8);
+	margin-bottom: 20px;
+}
+
+.success_msgs(@cols){
+	.row(@cols);
+	.box-sizing();
+	.border-radius(4);
+	.font-size(1.8);
+	margin-top: 10px;
+	float: left;
+	background-color: lighten(@green, 2%);
+	border: 4px solid @green;
+	color: @white;
+	padding: 15px 20px;
+	text-align: center;
+	.transition(all linear 0.1s);
+	display: none;
+}
+
+
 #user_create{
 	.column(11);
 	.push(1);
@@ -162,6 +191,9 @@ label{
 	}
 	.error_msg{
 		.error_msgs(8);
+	}
+	.success_msg{
+		.success_msgs(10);
 	}
 	.btn{
 		margin: auto;

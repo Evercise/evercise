@@ -19,18 +19,25 @@ jQuery( document ).ready( function( $ ) {
                 if (data.validation_failed == 1)
                 {
                     var arr = data.errors;
+                    var scroll = false;
                     $.each(arr, function(index, value)
                     {
+                        if (scroll == false) {
+                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
+                            scroll = true;
+                        };
                         if (value.length != 0)
                         {
                            $("#" + index).addClass('error');
-                           $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);;
                            $("#" + index).after('<span class="error_msg">' + value + '</span>');
                         }
                     });
                     $('#ajax-loading').hide();
                 }else{
-                    console.log(data);
+                    $('.success_msg').show();
+                    setTimeout(function() {
+                        window.location.href = data;
+                    }, 2000);
                 }
             },
             'json'
