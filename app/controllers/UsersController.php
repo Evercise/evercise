@@ -95,7 +95,7 @@ class UsersController extends \BaseController {
 					if($this->makeUserDir($user))
 					{
     					return Response::json($user);
-    				}		
+    				}
 				}
 			}
 		}
@@ -146,15 +146,15 @@ class UsersController extends \BaseController {
 				$this->makeUserDir($user);
 				
 				$path = public_path().'/profiles/'.date('Y-m');
-/*				$url = 'http://tristanallen.co.uk/tristan_allen.jpg';
+				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
+				$url = 'http://graph.facebook.com/' . $me["username"] . '/picture?type=large';
+				//$url = 'http://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
+/*	
 				$contents = File::get($url);//'https://graph.facebook.com/'.$me["id"].'/picture?type=large');
 				File::put($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', $contents);
 */
 
-				$url = 'http://graph.facebook.com/' . $me["username"] . '/picture?type=large';
-				//$url = 'http://tristanallen.co.uk/tristan_allen.jpg';
-				//$url = 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
-				/*$file_handler = fopen($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', 'w');
+/*				$file_handler = fopen($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', 'w');
 				$curl = curl_init($url);
 				curl_setopt($curl, CURLOPT_FILE, $file_handler);
 				curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -165,16 +165,18 @@ class UsersController extends \BaseController {
 				curl_exec($curl);
 
 				curl_close($curl);
-				fclose($file_handler);*/
-
+				fclose($file_handler);
+*/
 
 				$img = file_get_contents($url);
-				file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', $img);
-			
+				file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/'.$img_filename, $img);
+
+				$user->image = $img_filename;
+
+				$user->save();
 
 				return View::make('users.show');
 				
-
 			}
 	    }
 
@@ -191,23 +193,11 @@ class UsersController extends \BaseController {
 
         $path = public_path().'/profiles/'.date('Y-m');
 
-        if(!file_exists($path)){
-
-        	File::makeDirectory($path);
-        }
+        if(!file_exists($path)) File::makeDirectory($path);
 
         File::makeDirectory($path.'/'.$user->id.'_'.$user->display_name);
-
         $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
 
-        if ($user->save())
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	/**
@@ -275,6 +265,67 @@ class UsersController extends \BaseController {
 			return View::make('users.edit')->with('activation','failed')->with('display_name', $display_name);
 	    }
 
+	}
+	/**
+	 * Reset the user's password using the emailed hash
+	 *
+	 * @param  int  $id
+	 * @return View
+	 */
+	public function getResetPassword($display_name, $code)
+	{
+		try
+		{
+		    $user = Sentry::findUserByResetPasswordCode($code);
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    return View::make('users.resetpassword')->with('message', 'Cannot find user');
+		}
+		
+		return View::make('users.resetpassword')->with('code', $code);
+	}
+
+	/**
+	 * Reset the user's password using the emailed hash
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function postResetPassword($display_name, $code)
+	{
+		$email = Input::get('email');
+		$password = Input::get('password');
+
+		try
+		{
+		    $user = Sentry::findUserByLogin($email);
+
+		    if ($user->checkResetPasswordCode($code))
+		    {
+
+
+		        // Attempt to reset the user password
+		        if ($user->attemptResetPassword($code, 'new_password'))
+		        {
+		            return View::make('auth.login')->with('message', 'Password Reset Successful');
+		        }
+		        else
+		        {
+		            return View::make('auth.login')->with('message', 'Password Reset Failed');
+		        }
+		    }
+		    else
+		    {
+		        return View::make('auth.login')->with('message', 'Password Reset Failed');
+		    }
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
+		}
+		
+		return View::make('users.resetpassword');
 	}
 
 }

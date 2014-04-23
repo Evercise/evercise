@@ -24,10 +24,14 @@ Route::resource('gyms', 'gymsController');
 Route::resource('ratings', 'ratingsController');
 
 Route::get('auth/login', array('as' => 'auth.login', 'uses' => 'auth\AuthController@getLogin'));
-Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout'));
 Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
+Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout'));
+Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthController@getForgot'));
+Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot'));
 
 Route::get('/users/{display_name}/activate/{code}', array('as' => 'users-activate', 'uses' => 'UsersController@activate'));
+Route::get('/users/{display_name}/resetpassword/{code}', array('as' => 'users.resetpassword', 'uses' => 'UsersController@getResetPassword'));
+Route::post('/users/{display_name}/resetpassword/{code}', array('as' => 'users.resetpassword', 'uses' => 'UsersController@postResetPassword'));
 
 Route::get('login/fb', function() {
     $facebook = new Facebook(Config::get('facebook'));
