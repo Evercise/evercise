@@ -9,22 +9,22 @@
                     <div class="alert alert-error">{{ $errors->first('login', ':message') }}</div>
             @endif
 
-            <div class="control-group">
+            <div>
                 {{ Form::label('email', 'Email') }}
-                <div class="controls">
+                <div>
                         {{ Form::text('email') }}
                 </div>
             </div>
 
-            <div class="control-group">
+            <div>
                 {{ Form::label('password', 'Password') }}
-                <div class="controls">
+                <div>
                         {{ Form::password('password') }}
                 </div>
             </div>
 
-            <div class="form-actions">
-                    {{ Form::submit('Login', array('class' => 'btn-login')) }}
+            <di>
+                    {{ Form::submit('Login', array('class' => 'btn-yellow')) }}
             </div>
 
 

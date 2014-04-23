@@ -4,7 +4,7 @@
 		{{ Form::label( $fieldname, $label) }}
 	</div>
 	<div class="formfield">
-		{{ Form::text( $fieldname , '', array('placeholder' => $placeholder, 'maxlength' => 20)) }}
+		{{ Form::text( $fieldname , '', array('placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
 		<p>{{ $fieldtext }}</p>
 	</div>
 </div>
