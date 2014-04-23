@@ -306,7 +306,7 @@ class UsersController extends \BaseController {
 
 
 		        // Attempt to reset the user password
-		        if ($user->attemptResetPassword($code, 'new_password'))
+		        if ($user->attemptResetPassword($code, $password))
 		        {
 		            return View::make('auth.login')->with('message', 'Password Reset Successful');
 		        }
@@ -326,6 +326,23 @@ class UsersController extends \BaseController {
 		}
 		
 		return View::make('users.resetpassword');
+	}
+
+	public function getHeaderUser()
+	{
+		try
+		{
+		    // Get the current active/logged in user
+		    $user = Sentry::getUser();
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    // User wasn't found, should only happen if the user was deleted
+		    // when they were already logged in or had a "remember me" cookie set
+		    // and they were deleted.
+		    $user = "none";
+		}
+		return View::make('users.headerUser')->with('user', $user);
 	}
 
 }

@@ -30,9 +30,10 @@ class AuthController extends \BaseController {
 
 			if ($user)
 			{
-				var_dump($user);
-				exit;
-				//return Redirect::route('users.edit', $user->username);
+				//var_dump($user);
+				//exit;
+				Sentry::login($user);
+				return Redirect::route('users.edit', $user->username);
 			}
 		}
 		catch(\Exception $e)
