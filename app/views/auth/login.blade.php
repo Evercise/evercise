@@ -27,6 +27,7 @@
                     {{ Form::submit('Login', array('class' => 'btn-login')) }}
             </div>
 
+
         {{ Form::close() }}
     </div>
 @stop

@@ -52,4 +52,41 @@ class AuthController extends \BaseController {
 		return Redirect::route('auth.login');
 	}
 
+	/**
+	* Display the forgot password page
+	* @return View
+	*/
+	public function getForgot()
+	{
+		return View::make('auth.forgot');
+	}
+
+	/**
+	* Forgot password action
+	* @return Redirect
+	*/
+	public function postForgot()
+	{
+		try
+		{
+			$email = Input::get('email');
+			$user = Sentry::findUserByLogin($email);
+			$reset_code = $user->getResetPasswordCode();
+
+			\Event::fire('user.forgot', array(
+	        	'email' => $user->email, 
+	        	'displayName' => $user->display_name, 
+	            'resetCode' => $reset_code
+	        ));
+		}
+		catch(\Exception $e)
+		{
+			return Redirect::route('auth.forgot')->withErrors(array('forgot' => $e->getMessage()));
+		}
+		catch(\Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+			return Redirect::route('auth.forgot')->withErrors(array('forgot' => $e->getMessage()));
+		}
+	}
+
 }

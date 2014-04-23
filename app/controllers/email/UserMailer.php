@@ -52,11 +52,11 @@ class UserMailer extends Mailer {
 	 * @param  string $resetCode 		
 	 * @return bool
 	 */
-	public function forgotPassword($email, $userId, $resetCode)
+	public function forgotPassword($email, $displayName, $resetCode)
 	{
 		$subject = 'Password Reset Confirmation | Laravel4 With Sentry';
 		$view = 'emails.auth.reset';
-		$data['userId'] = $userId;
+		$data['displayName'] = $displayName;
 		$data['resetCode'] = $resetCode;
 		$data['email'] = $email;
 
