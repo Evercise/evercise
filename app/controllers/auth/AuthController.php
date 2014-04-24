@@ -32,7 +32,7 @@ class AuthController extends \BaseController {
 			{
 				//var_dump($user);
 				//exit;
-				Sentry::login($user);
+				Sentry::loginAndRemember($user);
 				return Redirect::route('users.edit', $user->username);
 			}
 		}

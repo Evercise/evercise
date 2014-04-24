@@ -294,6 +294,17 @@ class UsersController extends \BaseController {
 	 */
 	public function postResetPassword($display_name, $code)
 	{
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'email' => 'required|email',
+				'password' => 'required|confirmed',
+			)
+		);
+
+		//  Finish validation !!!!!!!!!!!!!!!
+
 		$email = Input::get('email');
 		$password = Input::get('password');
 
