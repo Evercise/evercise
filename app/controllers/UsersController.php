@@ -353,7 +353,7 @@ class UsersController extends \BaseController {
 	{
 		//return View::make('users.resetpassword');
 		Sentry::logout();
-		return Redirect::route('/');
+		return Redirect::route('home');
 	}
 
 }
