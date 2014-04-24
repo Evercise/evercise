@@ -94,7 +94,7 @@ class UsersController extends \BaseController {
 
 					if($this->makeUserDir($user))
 					{
-    					return Response::json(route('auth.login'));
+    					return Response::json(route('home'));
     				}
 				}
 			}

@@ -11,6 +11,7 @@ jQuery( document ).ready( function( $ ) {
             function(data) { 
                 $('.mask').show();
                 $('.container').append(data);
+                login();
              }
         );
         return false;
@@ -21,13 +22,11 @@ jQuery( document ).ready( function( $ ) {
         $('.login_wrap').remove();
     })
 
-
     // create a new user
  
     $( '#user_create' ).on( 'submit', function() {
         $('.error_msg').remove();
         $('input').removeClass('error');
-        console.log($( this ).prop( 'action' ));
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
@@ -72,5 +71,39 @@ jQuery( document ).ready( function( $ ) {
         return false;
     });
 });
+
+function login(){
+    // login
+    $( '#login_wrap form' ).on( 'submit', function() {
+        $('.error-msg').remove();
+        $('input').removeClass('error');
+        // post to controller
+        $.post(
+            $( this ).prop( 'action' ),
+            {
+                "email": $( '#login_wrap #email' ).val(),
+                "password": $( '#login_wrap #password' ).val()
+            },
+            function( data ) {
+                if (data.validation_failed == 1)
+                {
+                    // show validation errors
+                    var arr = data.errors;
+                    $("#login_wrap").append('<span class="error-msg">' + arr + '</span>');
+                    $('#ajax-loading').hide();
+                }else{
+                    // redirect to login page
+                    $('.success_msg').show();
+                    setTimeout(function() {
+                        window.location.href = data;
+                    }, 2000);
+                }
+            },
+            'json'
+        );
+        return false;
+    });
+
+}
 
 
