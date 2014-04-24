@@ -1,6 +1,11 @@
 
 <div style="color:white">
-	User:
-	{{{ isset($displayName) ? $displayName : "No Name Set" }}}
-	{{ HTML::linkRoute('users.logout', 'Log Out') }}
+	
+	@if($displayName != 'none')
+		User:
+		{{ $displayName }}
+		{{ HTML::linkRoute('users.logout', 'Log Out') }}
+	@else
+		{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login')) }}
+	@endif
 </div>

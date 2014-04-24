@@ -9,7 +9,7 @@ class BaseController extends Controller {
 	 */
 	protected function setupLayout()
 	{
-		$displayName = "cannot find user";
+		$displayName = "none";
 		try
 		{
 		    // Get the current active/logged in user
