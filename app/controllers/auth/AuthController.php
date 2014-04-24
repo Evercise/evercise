@@ -33,10 +33,10 @@ class AuthController extends \BaseController {
 				Sentry::loginAndRemember($user);
 				if(\Request::ajax())
 	        	{
-	        		return \Response::json(route('users.edit', $user->username));
+	        		return \Response::json(route('users.edit', $user->display_name));
 	        	}
 	        	else{
-	        		return Redirect::route('users.edit', $user->username);
+	        		return Redirect::route('users.edit', $user->display_name);
 	        	}
 				
 			}

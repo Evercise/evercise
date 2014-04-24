@@ -184,6 +184,7 @@ class UsersController extends \BaseController {
 		{
 			$user = Sentry::findUserByLogin($me['email']);
 		    Sentry::login($user,false);
+		    return Redirect::route('users.edit', $user->display_name);
 		}
 
 	}

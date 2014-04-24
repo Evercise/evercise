@@ -13,7 +13,7 @@
                 		@include('form.textfield', array('fieldname'=>'search_bar', 'placeholder'=>'Find Classes near you', 'maxlength'=>50, 'label'=>null, 'fieldtext'=>null ))
                 	{{ Form::close() }}
                 </li>
-                <li>{{ HTML::linkRoute('auth.login', 'Join Evercise') }}</li>
+                <li>{{ HTML::linkRoute('users.create', 'Join Evercise') }}</li>
                 <li>
                 	@include('layouts.loginStatus')
                 </li>

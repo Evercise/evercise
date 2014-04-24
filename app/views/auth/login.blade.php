@@ -16,5 +16,5 @@
         </div>
         <div class="orSeperator"><span>or</span></div>
     {{ Form::close() }}
-    <a class="btn-fb" href="../login/fb" >Log in with facebook</a>
+    {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn-fb')) }}
 </div>
