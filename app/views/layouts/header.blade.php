@@ -16,7 +16,6 @@
                 <li>{{ HTML::linkRoute('auth.login', 'Join Evercise') }}</li>
                 <li>{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login')) }}</li>
             </ul>
-			@include('layouts.headerUser')
 		</nav>
 	</section>
 </header>
