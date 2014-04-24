@@ -20,7 +20,7 @@
                 <div class="input-wrapper">
                     @include('form.textfield', array('fieldname'=>'email', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Your email address', 'fieldtext'=>'Please confirm the email address associated with your account. We will then  email you a link to reset your password'))
                     @if ($errors->has('forgot'))
-                        {{ $errors->first('forgot', '<p class="error_msg">:message</p>')}}
+                        {{ $errors->first('forgot', '<p class="error-msg">:message</p>')}}
                     @endif
                 </div>
             </div>

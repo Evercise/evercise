@@ -1,9 +1,34 @@
 jQuery( document ).ready( function( $ ) {
+
+    // login pop up
+    $("#login").click(function(e){
+        $.ajax({
+            url: "/auth/login",
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) { 
+                $('.mask').show();
+                $('.container').append(data);
+             }
+        );
+        return false;
+    });
+
+    $(document).on('click','#cancel_login',function(){
+        $('.mask').hide();
+        $('.login_wrap').remove();
+    })
+
+
+    // create a new user
  
     $( '#user_create' ).on( 'submit', function() {
         $('.error_msg').remove();
         $('input').removeClass('error');
- 
+        console.log($( this ).prop( 'action' ));
+        // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
             {
@@ -18,6 +43,7 @@ jQuery( document ).ready( function( $ ) {
             function( data ) {
                 if (data.validation_failed == 1)
                 {
+                    // show validation errors
                     var arr = data.errors;
                     var scroll = false;
                     $.each(arr, function(index, value)
@@ -34,6 +60,7 @@ jQuery( document ).ready( function( $ ) {
                     });
                     $('#ajax-loading').hide();
                 }else{
+                    // redirect to login page
                     $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;

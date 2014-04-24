@@ -16,6 +16,6 @@
 		@yield('content')
 		@include('layouts.footer')
 	</div>
-
+	<div class="mask"></div>
 </body>
 </html>
