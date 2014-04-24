@@ -1,7 +1,7 @@
 <header>
 	<section>
 		<nav>
-			@include('layouts.loginStatus')
+			
 			<ul>
 				<a href=""><img src="/img/evercise logo yellow.png" alt="evercise facebook page"/></a>
                 <li>{{ HTML::linkRoute('auth.login', 'About') }}</li>
@@ -14,7 +14,9 @@
                 	{{ Form::close() }}
                 </li>
                 <li>{{ HTML::linkRoute('auth.login', 'Join Evercise') }}</li>
-                <li>{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login')) }}</li>
+                <li>
+                	@include('layouts.loginStatus')
+                </li>
             </ul>
 		</nav>
 	</section>
