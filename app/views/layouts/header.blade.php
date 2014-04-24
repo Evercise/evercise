@@ -1,7 +1,6 @@
 <header>
 	<section>
-		<nav>
-			
+		<nav>		
 			<ul>
 				<a href=""><img src="/img/evercise logo yellow.png" alt="evercise facebook page"/></a>
                 <li>{{ HTML::linkRoute('auth.login', 'About') }}</li>
@@ -13,10 +12,7 @@
                 		@include('form.textfield', array('fieldname'=>'search_bar', 'placeholder'=>'Find Classes near you', 'maxlength'=>50, 'label'=>null, 'fieldtext'=>null ))
                 	{{ Form::close() }}
                 </li>
-                <li>{{ HTML::linkRoute('users.create', 'Join Evercise') }}</li>
-                <li>
-                	@include('layouts.loginStatus')
-                </li>
+                @include('layouts.loginStatus')
             </ul>
 		</nav>
 	</section>

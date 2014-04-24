@@ -16,4 +16,21 @@ jQuery( document ).ready( function( $ ) {
        $(this).removeClass('error');
        $(this).closest('div').find('.error_msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
     });
+
+    $(document).on('click','#displayName', function(){
+      $('#displayName-dropdown').toggle(100,function(){
+        $(document).mouseup(function (e)
+        {
+            var container = $('#displayName-dropdown');
+            var link = $('#displayName');
+
+            if (!container.is(e.target) && !link.is(e.target) && container.has(e.target).length === 0) 
+            {
+                container.hide(100);
+            }
+        });
+      })
+    })
+
+
 });
