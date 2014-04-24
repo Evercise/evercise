@@ -219,19 +219,6 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		try
-		{
-		    // Get the current active/logged in user
-		    $user = Sentry::getUser();
-		    $displayName = $user->display_name;
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-		    // User wasn't found, should only happen if the user was deleted
-		    // when they were already logged in or had a "remember me" cookie set
-		    // and they were deleted.
-		    $displayName = "none";
-		}
 		return View::make('users.edit');
 	}
 
@@ -364,8 +351,9 @@ class UsersController extends \BaseController {
 	 */
 	public function logout()
 	{
+		//return View::make('users.resetpassword');
 		Sentry::logout();
-		return Redirect::route('users.edit');
+		return Redirect::route('/');
 	}
 
 }
