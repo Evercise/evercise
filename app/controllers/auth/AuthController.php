@@ -30,15 +30,29 @@ class AuthController extends \BaseController {
 
 			if ($user)
 			{
-				//var_dump($user);
-				//exit;
 				Sentry::loginAndRemember($user);
-				return Redirect::route('users.edit', $user->username);
+				if(\Request::ajax())
+	        	{
+	        		return \Response::json(route('users.edit', $user->username));
+	        	}
+	        	else{
+	        		return Redirect::route('users.edit', $user->username);
+	        	}
+				
 			}
 		}
 		catch(\Exception $e)
 		{
-			return Redirect::route('auth.login')->withErrors(array('login' => $e->getMessage()));
+			if(\Request::ajax())
+	        { 
+				$result = array(
+			            'validation_failed' => 1,
+			            'errors' => $e->getMessage()
+			    );	
+				return \Response::json($result);
+			}else{
+				return Redirect::route('auth.login')->withErrors(array('login' => $e->getMessage()));
+			}
 		}
 	}
 
