@@ -79,7 +79,7 @@ Route::filter('csrf', function()
 	}
 });
 
-Route::filter('auth', function()
+Route::filter('Sentry', function()
 {
         if ( ! Sentry::check())
         {

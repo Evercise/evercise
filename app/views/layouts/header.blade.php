@@ -1,7 +1,7 @@
 <header>
 	<section>
 		<nav>
-			@include('layouts.headerUser')
+			@include('layouts.loginStatus')
 		</nav>
 	</section>
 	

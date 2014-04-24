@@ -9,6 +9,22 @@ class BaseController extends Controller {
 	 */
 	protected function setupLayout()
 	{
+
+		try
+		{
+		    // Get the current active/logged in user
+		    $user = Sentry::getUser();
+		    $displayName = $user->display_name;
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    // User wasn't found, should only happen if the user was deleted
+		    // when they were already logged in or had a "remember me" cookie set
+		    // and they were deleted.
+		    $displayName = "cannot find user";
+		}
+		View::share('displayName', $displayName);
+
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);

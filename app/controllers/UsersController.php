@@ -95,7 +95,7 @@ class UsersController extends \BaseController {
 					if($this->makeUserDir($user))
 					{
     					return Response::json(route('auth.login'));
-    				}		
+    				}
 				}
 			}
 		}
@@ -219,6 +219,19 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
+		try
+		{
+		    // Get the current active/logged in user
+		    $user = Sentry::getUser();
+		    $displayName = $user->display_name;
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    // User wasn't found, should only happen if the user was deleted
+		    // when they were already logged in or had a "remember me" cookie set
+		    // and they were deleted.
+		    $displayName = "none";
+		}
 		return View::make('users.edit');
 	}
 
@@ -339,21 +352,20 @@ class UsersController extends \BaseController {
 		return View::make('users.resetpassword');
 	}
 
-	public function getHeaderUser()
+	public function getLoginStatus()
 	{
-		try
-		{
-		    // Get the current active/logged in user
-		    $user = Sentry::getUser();
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-		    // User wasn't found, should only happen if the user was deleted
-		    // when they were already logged in or had a "remember me" cookie set
-		    // and they were deleted.
-		    $user = "none";
-		}
-		return View::make('users.headerUser')->with('user', $user);
+		return View::make('users.loginStatus');
+	}
+
+	/**
+	 * Logout Action
+	 *
+	 * @return Redirect
+	 */
+	public function logout()
+	{
+		Sentry::logout();
+		return Redirect::route('users.edit');
 	}
 
 }
