@@ -77,12 +77,6 @@ class UsersController extends \BaseController {
 
 			$activation_code = $user->getActivationCode();
 
-/*			$data['user'] = $user;
-			Mail::send('emails.auth.welcome', $data, function($message) use ($user)
-			{
-			    $message->to('example@example.hu', $user->username)->subject('Account');
-			})
-*/
 			if($user) {
 				if(Request::ajax())
 	        	{
@@ -92,15 +86,17 @@ class UsersController extends \BaseController {
 		                'activationCode' => $activation_code
 		            ));
 
-					if($this->makeUserDir($user))
-					{
-    					return Response::json(route('home'));
-    				}
+					$this->makeUserDir($user);
+
+					return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
+					//return View::make('users.activate')->with('activation', 1)->with('display_name', $display_name);
 				}
 			}
 		}
 
 		//return Input::all();
+		//return View::make('users.activate')->with('activation', 1)->with('display_name', $display_name);
+
 	}
 
 	public function fb_login()
@@ -137,6 +133,7 @@ class UsersController extends \BaseController {
 
 			if($user) {
 
+				//  TODO - Make new email for FB signup ("here's your password" instead of "click the link")
 				Event::fire('user.signup', array(
 		        	'email' => $user->email, 
 		        	'display_name' => $user->display_name, 
@@ -175,7 +172,7 @@ class UsersController extends \BaseController {
 
 				$user->save();
 
-				return View::make('users.show');
+				//return View::make('users.show');
 				
 			}
 	    }
@@ -186,6 +183,8 @@ class UsersController extends \BaseController {
 		    Sentry::login($user,false);
 		    return Redirect::route('users.edit', $user->display_name);
 		}
+
+		return View::make('users.activate')->with('activation', 3)->with('display_name', $user->display_name);
 
 	}
 
@@ -253,18 +252,46 @@ class UsersController extends \BaseController {
 	 */
 	public function activate($display_name, $code)
 	{
-		$user = Sentry::findUserByActivationCode($code);
-
-		if ($user->attemptActivation($code))
-	    {
-	        // User activation passed
-			return View::make('users.edit')->with('activation','passed')->with('display_name', $display_name);
-	    }
-	    else
+		$user = 0;
+		if ($code)
+		{
+			try
+			{
+				$user = Sentry::findUserByActivationCode($code);
+			}
+			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+			{
+		        // User activation failed
+			}
+		}
+		if ($user)
+		{
+			if ($user->attemptActivation($code))
+		    {
+		        // User activation passed
+		        $display_name = $user->display_name;
+				return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
+		    }
+		}
+	    if (!$user)
 	    {
 	        // User activation failed
-			return View::make('users.edit')->with('activation','failed')->with('display_name', $display_name);
+	    	return View::make('users.activate')->with('activation', 0)->with('display_name', $display_name);
 	    }
+
+	}
+
+	/**
+	 * Activate the user using the emailed hash
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function pleaseActivate($display_name)
+	{
+		
+	    return View::make('users.activate')->with('display_name', $display_name);
+	    
 
 	}
 	/**

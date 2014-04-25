@@ -40,8 +40,10 @@ jQuery( document ).ready( function( $ ) {
                 "gender": $( '#gender' ).val()
             },
             function( data ) {
+                console.log("about to win.......");
                 if (data.validation_failed == 1)
                 {
+                    console.log('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
@@ -59,6 +61,7 @@ jQuery( document ).ready( function( $ ) {
                     });
                     $('#ajax-loading').hide();
                 }else{
+                    console.log('win');
                     // redirect to login page
                     $('.success_msg').show();
                     setTimeout(function() {
