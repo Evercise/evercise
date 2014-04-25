@@ -66,7 +66,7 @@ jQuery( document ).ready( function( $ ) {
                     $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 2000);
+                    }, 1000);
                 }
             },
             'json'

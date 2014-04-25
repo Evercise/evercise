@@ -55,6 +55,8 @@ table {
 }
 a{text-decoration: none;}
 
+img{ max-width: 100%;}
+
 /* end reset */
 @import 'mixins.less';
 @import 'settings.less';
@@ -396,6 +398,19 @@ nav{
 	.error-msg{
 		.error_msgs(4);
 	}
+}
+
+.large_left{
+	.column(7);
+	.push(1);
+	.btn-wrapper{
+		.column(3,7);
+	}
+}
+
+.small_right{
+	.column(2);
+	.push(1);
 }
 
 .block_title {
