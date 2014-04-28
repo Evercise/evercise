@@ -172,20 +172,27 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false); // TODO - Does not seem to work
 
+				return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);
 				//return View::make('users.show');
-				
 			}
 	    }
-
 		catch (Cartalyst\Sentry\Users\UserExistsException $e)
 		{
-			$user = Sentry::findUserByLogin($me['email']);
-		    Sentry::login($user,false);
-		    return Redirect::route('users.edit', $user->display_name);
+			try
+			{
+				$user = Sentry::findUserByLogin($me['email']);
+			    Sentry::login($user,false);
+			    return Redirect::route('users.edit', $user->display_name);
+			}
+			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+			{
+				$user = Sentry::findUserByLogin($me['email']);
+				return View::make('users.activate')->with('activation', 1)->with('display_name', $user->display_name);
+			}
 		}
 
 
-		return View::make('users.activate')->with('activation', 2)->with('display_name', $user->display_name);
+		//return View::make('users.activate')->with('activation', 3)->with('display_name', $user->display_name);
 
 	}
 
@@ -271,7 +278,7 @@ class UsersController extends \BaseController {
 		    {
 		        // User activation passed
 		        $display_name = $user->display_name;
-				return View::make('users.activate')->with('activation', 1)->with('display_name', $display_name);
+				return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
 		    }
 		}
 	    if (!$user)

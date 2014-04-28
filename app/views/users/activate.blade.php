@@ -1,5 +1,5 @@
 @extends('layouts.master')
-
+<?php $activation = isset($activation) ? $activation : Session::get('activation') ?>
 
 @section('content')
 
@@ -24,17 +24,21 @@
 			<br>
 			<p>if you copied and pasted the URL, please check you didn&apos;t miss any characters</p>
 		@elseif($activation == 1)
+			<h4>Seriously man, you have been sent an activation code.</h4>
+			<br>
+			<p>Click it</p>
+		@elseif($activation == 2)
 			<h4>Congratulations</h4>
 			<br>
 			<p>Your account has been successfuly activated</p>
-		@elseif($activation == 2)
+		@elseif($activation == 3)
 			<h4>Congratulations</h4>
 			<br>
 			<p>you have successfully signed up with facebook.</p> 
 			<p>Your password has been emailed to you</p>
 		@endif
 
-		@if($activation >= 1)
+		@if($activation >= 2)
 		<br>
 			<div class="btn-wrapper" >
 				<br>

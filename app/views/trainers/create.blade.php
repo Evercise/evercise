@@ -8,7 +8,7 @@
     
 	{{ Form::open(array('id' => 'user_create', 'url' => 'users', 'method' => 'post')) }}
 
-    	@include('form.select', array('fieldname'=>'gender', 'label'=>'Profession', 'values'=>$values))
+    	@include('form.select', array('fieldname'=>'gender', 'label'=>'Profession', 'values'=>$professions))
 
          @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'contact number', 'maxlength'=>20, 'label'=>'Add your contact number', 'fieldtext'=>'Please add a contact number' ))
         @if ($errors->has('last_name'))
