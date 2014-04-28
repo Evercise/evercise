@@ -19,6 +19,10 @@ class TrainersController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('trainers.create');
+
+		
+		$professions = array(1=>'Zumba guy', 2=>'Yoga chick');
+
+		return View::make('trainers.create')->with('professions', $professions);
 	}
 }

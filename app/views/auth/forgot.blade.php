@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <div id="login" class="full_width">
+    <div id="forgot" class="full_width">
         {{ Form::open() }}
             @if(isset($success))
             <div class="success-msg">

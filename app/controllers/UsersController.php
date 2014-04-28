@@ -89,13 +89,11 @@ class UsersController extends \BaseController {
 					$this->makeUserDir($user);
 
 					return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
-					//return View::make('users.activate')->with('activation', 1)->with('display_name', $display_name);
 				}
 			}
 		}
 
 		//return Input::all();
-		//return View::make('users.activate')->with('activation', 1)->with('display_name', $display_name);
 
 	}
 
@@ -172,6 +170,8 @@ class UsersController extends \BaseController {
 
 				$user->save();
 
+				Sentry::login($user, false); // TODO - Does not seem to work
+
 				//return View::make('users.show');
 				
 			}
@@ -184,7 +184,8 @@ class UsersController extends \BaseController {
 		    return Redirect::route('users.edit', $user->display_name);
 		}
 
-		return View::make('users.activate')->with('activation', 3)->with('display_name', $user->display_name);
+
+		return View::make('users.activate')->with('activation', 2)->with('display_name', $user->display_name);
 
 	}
 
@@ -270,7 +271,7 @@ class UsersController extends \BaseController {
 		    {
 		        // User activation passed
 		        $display_name = $user->display_name;
-				return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
+				return View::make('users.activate')->with('activation', 1)->with('display_name', $display_name);
 		    }
 		}
 	    if (!$user)
@@ -320,7 +321,7 @@ class UsersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function postResetPassword($display_name, $code)
+	public function postResetPassword()
 	{
 
 		$validator = Validator::make(
@@ -331,40 +332,74 @@ class UsersController extends \BaseController {
 			)
 		);
 
-		//  Finish validation !!!!!!!!!!!!!!!
+		// TODO - Finish validation !!!!!!!!!!!!!!!
 
 		$email = Input::get('email');
 		$password = Input::get('password');
+		$code = Input::get('code');
 
-		try
-		{
-		    $user = Sentry::findUserByLogin($email);
+		if($validator->fails()) {
 
-		    if ($user->checkResetPasswordCode($code))
-		    {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('users.resetpassword')
+					->withErrors($validator)
+					->withInput();
+	        }
+    	}
+    	else
+    	{
+    		$success = false;
+			try
+			{
+			    $user = Sentry::findUserByLogin($email);
+
+			    if ($user->checkResetPasswordCode($code))
+			    {
 
 
-		        // Attempt to reset the user password
-		        if ($user->attemptResetPassword($code, $password))
-		        {
-		            return View::make('auth.login')->with('message', 'Password Reset Successful');
-		        }
-		        else
-		        {
-		            return View::make('auth.login')->with('message', 'Password Reset Failed');
-		        }
-		    }
-		    else
-		    {
-		        return View::make('auth.login')->with('message', 'Password Reset Failed');
-		    }
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-		    return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
-		}
-		
-		return View::make('users.resetpassword');
+			        // Attempt to reset the user password
+			        if ($user->attemptResetPassword($code, $password))
+			        {
+			        	$success = true;
+			        }
+			    }
+			}
+			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+			{
+			    //return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
+			}
+			if ($success)
+			{
+	        	if(Request::ajax())
+	        	{
+		    		Session::flash('message', 'Password reset successful');
+		    		return Response::json(route('home'));
+		    	}
+		    	else
+		    	{
+		    		return View::make('home')->with('message', 'Password Reset Successful');
+		    	}
+	    	}
+	    	else
+	    	{
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  array('email'=>array(0=>'Wrong email'))
+		         );	
+
+				return Response::json($result);
+	    	}
+
+    	}
+
 	}
 
 	public function getLoginStatus()

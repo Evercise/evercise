@@ -25,7 +25,7 @@ jQuery( document ).ready( function( $ ) {
     // create a new user
  
     $( '#user_create' ).on( 'submit', function() {
-        $('.error_msg').remove();
+        $('.error-msg').remove();
         $('input').removeClass('error');
         // post to sontroller
         $.post(
@@ -56,12 +56,11 @@ jQuery( document ).ready( function( $ ) {
                         if (value.length != 0)
                         {
                            $("#" + index).addClass('error');
-                           $("#" + index).after('<span class="error_msg">' + value + '</span>');
+                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
                         }
                     });
                     $('#ajax-loading').hide();
                 }else{
-                    console.log('win');
                     // redirect to login page
                     $('.success_msg').show();
                     setTimeout(function() {
@@ -70,6 +69,53 @@ jQuery( document ).ready( function( $ ) {
                 }
             },
             'json'
+        );
+        return false;
+    });
+
+    // Reset password
+ 
+    $( '#passwords_reset' ).on( 'submit', function() {
+        $('.error-msg').remove();
+        $('input').removeClass('error');
+        // post to sontroller
+        $.post(
+            $( this ).prop( 'action' ),
+            {
+                "email": $( '#email' ).val(),
+                "password": $( '#password' ).val(),
+                "password_confirmation": $( '#password_confirmation' ).val(),
+                "code": $( '#code' ).val()
+            },
+            function( data ) {
+                console.log("about to win.......");
+                if (data.validation_failed == 1)
+                {
+                    console.log('loose');
+                    // show validation errors
+                    var arr = data.errors;
+                    var scroll = false;
+                    console.log(arr);
+                    $.each(arr, function(index, value)
+                    {
+                        if (scroll == false) {
+                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
+                            scroll = true;
+                        };
+                        if (value.length != 0)
+                        {
+                           $("#" + index).addClass('error');
+                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
+                        }
+                    });
+                    $('#ajax-loading').hide();
+                }else{
+                    // redirect to login page
+                    console.log(data);
+                    window.location.href = data;
+                }
+            },
+            ''
         );
         return false;
     });

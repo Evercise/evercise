@@ -17,4 +17,5 @@
         <div class="orSeperator"><span>or</span></div>
     {{ Form::close() }}
     {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn-fb')) }}
+    {{ HTML::link('auth/forgot', 'Forgot password?') }}
 </div>

@@ -30,9 +30,11 @@ Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\Aut
 Route::get('/users/{display_name}/activate/{code}', array('as' => 'users.activate', 'uses' => 'UsersController@activate'));
 Route::get('/users/{display_name}/activate', array('as' => 'users.activatecodeless', 'uses' => 'UsersController@pleaseActivate'));
 Route::get('/users/{display_name}/resetpassword/{code}', array('as' => 'users.resetpassword', 'uses' => 'UsersController@getResetPassword'));
-Route::post('/users/{display_name}/resetpassword/{code}', array('as' => 'users.resetpassword', 'uses' => 'UsersController@postResetPassword'));
+Route::post('/users/resetpassword', array('as' => 'users.resetpassword.post', 'uses' => 'UsersController@postResetPassword'));
 
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
+
+Route::resource('trainers', 'TrainersController');
 
 Route::get('login/fb' , function() {
     $facebook = new Facebook(Config::get('facebook'));

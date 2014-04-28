@@ -3,6 +3,6 @@
 		{{ Form::label( $fieldname, $label) }}
 	</div>
 	<div class="formfield">
-		{{ Form::select( $fieldname , array(1=>'Male', 2=>'Female')) }}
+		{{ Form::select( $fieldname , $values) }}
 	</div>
 </div>

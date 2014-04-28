@@ -2,8 +2,8 @@
 
 
 @section('content')
-    <div id="login" class="full_width">
-        {{ Form::open() }}
+    <div id="reset" class="full_width">
+        {{ Form::open(array('id' => 'passwords_reset', 'url' => 'users/resetpassword', 'method' => 'post')) }}
 
             @if ($errors->has('forgot'))
                 <div class="input-wrapper">
@@ -25,7 +25,6 @@
                     @if ($errors->has('password'))
                         {{ $errors->first('password', '<p class="error_msg">:message</p>')}}
                     @endif
-
                     @include('form.hidden', array('fieldname'=>'code', 'value'=>$code))
                 </div>
                 <div class="btn-wrapper">

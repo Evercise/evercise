@@ -12,6 +12,7 @@
 <body>
 	<div class="container">
 
+		@include('layouts.redirectmessage')
 		@include('layouts.header')
 		@yield('content')
 		@include('layouts.footer')
