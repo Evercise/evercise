@@ -12,7 +12,7 @@ class CreateMarketingpreferencesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('marketingprferences', function(Blueprint $table) {
+		Schema::create('marketingpreferences', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('name', 45);
 			$table->string('options', 255);
@@ -26,7 +26,7 @@ class CreateMarketingpreferencesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('marketingprferences');
+		Schema::drop('marketingpreferences');
 	}
 
 }
