@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Sessionmembers extends Migration {
+class CreateSessionmembersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class Sessionmembers extends Migration {
 		Schema::create('sessionmembers', function(Blueprint $table) {
 			$table->increments('id');
 			$table->decimal('price', 6, 2)->default(0.00);
-			$table->binary('reviewed')->default(0);
+			$table->boolean('reviewed')->default(0);
 			$table->timestamps();
 
 			// Foreign Key - session_id

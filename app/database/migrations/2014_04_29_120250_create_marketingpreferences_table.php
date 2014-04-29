@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Marketingprferences extends Migration {
+class CreateMarketingpreferencesTable extends Migration {
 
 	/**
 	 * Run the migrations.

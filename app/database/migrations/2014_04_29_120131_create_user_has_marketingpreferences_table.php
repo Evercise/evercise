@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserHasCategories extends Migration {
+class CreateUserHasMarketingpreferencesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,10 @@ class UserHasCategories extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_has_categories', function(Blueprint $table) {
+		Schema::create('user_has_marketingpreferences', function(Blueprint $table) {
 
 			// Foreign Key - user_id
-			// Foreign Key - category_id
+			// Foreign Key - marketingpreferences_id
 		});
 	}
 
@@ -26,7 +26,7 @@ class UserHasCategories extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('user_has_categories');
+		Schema::drop('user_has_marketingpreferences');
 	}
 
 }
