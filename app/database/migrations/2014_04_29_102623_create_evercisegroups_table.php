@@ -14,7 +14,23 @@ class CreateEvercisegroupsTable extends Migration {
 	{
 		Schema::create('evercisegroups', function(Blueprint $table) {
 			$table->increments('id');
+			$table->string('name', 45);
+			$table->string('title', 45);
+			$table->string('description', 255);
+			$table->string('address', 45)->nullable();
+			$table->string('town', 45)->nullable();
+			$table->string('postcode', 45)->nullable();
+			$table->decimal('lat', 10, 8);
+			$table->decimal('long', 11, 8);
+			$table->string('image', 100);
+			$table->integer('capacity');
+			$table->integer('defualt_duration');
+			$table->decimal('default_price', 6, 2)->default(0.00);
+			$table->tinyInteger('published')->default(0);
 			$table->timestamps();
+
+			// Foreign Key - user_id
+			// Foreign Key - category_id
 		});
 	}
 

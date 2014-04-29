@@ -14,7 +14,13 @@ class CreateSessionsTable extends Migration {
 	{
 		Schema::create('sessions', function(Blueprint $table) {
 			$table->increments('id');
+			$table->timestamp('date_time');
+			$table->integer('members')->default(0);
+			$table->decimal('price', 6, 2)->default(0.00);
+			$table->binary('members_emailed')->default(0);
 			$table->timestamps();
+
+			// Foreign Key - evercisegroup_id
 		});
 	}
 
