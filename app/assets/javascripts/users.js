@@ -37,7 +37,8 @@ jQuery( document ).ready( function( $ ) {
                 "email": $( '#email' ).val(),
                 "password": $( '#password' ).val(),
                 "password_confirmation": $( '#password_confirmation' ).val(),
-                "gender": $( '#gender' ).val()
+                "gender": $( '#gender' ).val(),
+                "userNewsletter": $( '#userNewsletter' ).val()
             },
             function( data ) {
                 console.log("about to win.......");
@@ -62,10 +63,11 @@ jQuery( document ).ready( function( $ ) {
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
-                    $('.success_msg').show();
+                    /*$('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 1000);
+                    }, 1000);*/
+                    console.log(data);
                 }
             },
             'json'
