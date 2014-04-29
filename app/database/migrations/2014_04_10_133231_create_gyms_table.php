@@ -14,7 +14,14 @@ class CreateGymsTable extends Migration {
 	{
 		Schema::create('gyms', function(Blueprint $table) {
 			$table->increments('id');
+			$table->string('name', 45);
+			$table->string('title', 45);
+			$table->string('description', 45);
+			$table->string('directory', 255);
+			$table->string('logo_image', 255);
+			$table->string('background_image', 255);
 			$table->timestamps();
+			// Foreign key - user_id
 		});
 	}
 

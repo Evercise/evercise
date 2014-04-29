@@ -18,6 +18,7 @@ Route::resource('users', 'UsersController');
 Route::resource('sessions', 'sessionsController');
 Route::resource('gyms', 'gymsController');
 Route::resource('ratings', 'ratingsController');
+Route::resource('evercisegroup', 'evercisegrouController');
 
 Route::get('auth/login', array('as' => 'auth.login', 'uses' => 'auth\AuthController@getLogin'));
 Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));

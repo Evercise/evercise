@@ -50,8 +50,6 @@ class CreateUsersTable extends Migration {
 		});
 	}
 
-	// TODO - Fill this in and migrate table ( and sort out Sentry migrations )
-
 
 	/**
 	 * Reverse the migrations.
