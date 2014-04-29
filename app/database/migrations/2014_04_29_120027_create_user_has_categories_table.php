@@ -13,6 +13,7 @@ class CreateUserHasCategoriesTable extends Migration {
 	public function up()
 	{
 		Schema::create('user_has_categories', function(Blueprint $table) {
+			$table->increments('id');
 
 			// Foreign Key - user_id
 			// Foreign Key - category_id
