@@ -12,9 +12,8 @@ class CreateTrainersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('trainers', function(Blueprint $table) {
+		Schema::create('trainers', function(Blueprint $table) {
 			$table->increments('id');
-			$table->foreign('user_id')->references('id')->on('users');
 			$table->string('bio');
 			$table->string('website', 45);
 			$table->string('profession', 45);

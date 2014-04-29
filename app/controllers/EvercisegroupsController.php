@@ -1,6 +1,6 @@
 <?php
 
-class GroupsController extends \BaseController {
+class EvercisegroupsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.

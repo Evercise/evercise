@@ -15,7 +15,6 @@ Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 
 
 Route::resource('users', 'UsersController');
-Route::resource('groups', 'groupsController');
 Route::resource('sessions', 'sessionsController');
 Route::resource('gyms', 'gymsController');
 Route::resource('ratings', 'ratingsController');

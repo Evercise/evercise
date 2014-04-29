@@ -21,16 +21,16 @@ class SentrySeeder extends Seeder {
             'permissions' => array('user' => 1),
         ));
         Sentry::getGroupProvider()->create(array(
+            'name'        => 'Facebook',
+            'permissions' => array('facebook' => 1),
+        ));
+        Sentry::getGroupProvider()->create(array(
             'name'        => 'Trainer',
             'permissions' => array('trainer' => 1),
         ));
         Sentry::getGroupProvider()->create(array(
             'name'        => 'Admin',
             'permissions' => array('admin' => 1),
-        ));
-        Sentry::getGroupProvider()->create(array(
-            'name'        => 'Facebook',
-            'permissions' => array('facebook' => 1),
         ));
  
         // Assign user permissions

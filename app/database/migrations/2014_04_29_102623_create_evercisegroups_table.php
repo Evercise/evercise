@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateGroupsTable extends Migration {
+class CreateEvercisegroupsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateGroupsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('groups', function(Blueprint $table) {
+		Schema::create('evercisegroups', function(Blueprint $table) {
 			$table->increments('id');
 			$table->timestamps();
 		});
@@ -26,7 +26,7 @@ class CreateGroupsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('groups');
+		Schema::drop('evercisegroups');
 	}
 
 }
