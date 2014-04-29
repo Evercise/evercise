@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration {
+class CreateTrainersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,15 +13,14 @@ class CreateUsersTable extends Migration {
 	public function up()
 	{
 		Schema::table('trainers', function(Blueprint $table) {
-			$table->string('id', 45);
-			$table->string('user_id', 45);
-			$table->string('created_at', 45);
-			$table->string('bio', 45);
+			$table->increments('id');
+			$table->foreign('user_id')->references('id')->on('users');
+			$table->string('bio');
 			$table->string('website', 45);
 			$table->string('profession', 45);
+			$table->timestamps();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.
