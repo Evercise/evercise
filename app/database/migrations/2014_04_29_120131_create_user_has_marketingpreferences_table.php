@@ -13,7 +13,7 @@ class CreateUserHasMarketingpreferencesTable extends Migration {
 	public function up()
 	{
 		Schema::create('user_has_marketingpreferences', function(Blueprint $table) {
-
+			$table->increments('id');
 			// Foreign Key - user_id
 			// Foreign Key - marketingpreferences_id
 		});
