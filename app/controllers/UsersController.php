@@ -387,12 +387,12 @@ class UsersController extends \BaseController {
 			{
 	        	if(Request::ajax())
 	        	{
-		    		Session::flash('message', 'Password reset successful');
+		    		Session::flash('notification', 'Password reset successful');
 		    		return Response::json(route('home'));
 		    	}
 		    	else
 		    	{
-		    		return View::make('home')->with('message', 'Password Reset Successful');
+		    		return View::make('home')->with('notification', 'Password Reset Successful');
 		    	}
 	    	}
 	    	else

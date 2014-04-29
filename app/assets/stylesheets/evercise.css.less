@@ -99,7 +99,7 @@ input,textarea,select,.drop_down{
 	.box-sizing();
 	margin-top: 0;
 	background-color: @white;
-	border: 1px solid lighten(@black, 50%);
+	border: 1px solid #cccccc;
 	padding: 10px 4px;
 	color: lighten(@black, 10%);
 	background-position: 99% 50%;
@@ -169,6 +169,18 @@ label{
 .btn-fb{.btn(#3b5998,20);}
 
 /*error and success blcks  */
+
+.top-msg{
+	width: 100%;
+	background-color: lighten(@green, 5%);
+	border: 2px solid @green;
+	color: @white;
+	padding: 12px 0px;
+	text-align: center;
+	.transition(all linear 0.1s);
+	.box-shadow( inset 0 0 3px @white );
+	.font-size(1.6);
+}
 
 .error_msgs(@cols){
 	.row(@cols);

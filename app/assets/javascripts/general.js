@@ -32,5 +32,9 @@ jQuery( document ).ready( function( $ ) {
       })
     })
 
+    setTimeout(function() {
+      $('.top-msg').fadeOut(500);
+    }, 5000);
+
 
 });

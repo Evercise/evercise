@@ -1,6 +1,6 @@
-@if(isset($message))
-	<div>{{ $message }}</div>
+@if(isset($notification))
+	<div class="notification-msg">{{ $notification }}</div>
 @endif
-@if ($message = Session::get('message'))
-	<div>{{ $message }}</div>
+@if ($notification = Session::get('notification'))
+	<div class="notification-msg">{{ $notification }}</div>
 @endif
