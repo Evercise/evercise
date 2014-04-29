@@ -12,7 +12,7 @@ class CreateGymTrainerTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('gym_trainer', function($table)
+		Schema::create('gym_trainers', function($table)
 		{
 			$table->tinyinteger('status');
 			$table->integer('user_id')->unsigned();// Foreign key
@@ -29,7 +29,7 @@ class CreateGymTrainerTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('gym_trainer');
+		Schema::drop('gym_trainers');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 

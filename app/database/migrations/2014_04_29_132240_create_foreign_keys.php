@@ -47,11 +47,11 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('session_id')->references('id')->on('sessions');
 		});
-		Schema::table('gym_trainer', function(Blueprint $table) {
+		Schema::table('gym_trainers', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('gym_id')->references('id')->on('gyms');
 		});
-		Schema::table('featuredgymgroup', function(Blueprint $table) {
+		Schema::table('featuredgymgroups', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('evercisegroup_id')->references('id')->on('evercisegroups');
 		});

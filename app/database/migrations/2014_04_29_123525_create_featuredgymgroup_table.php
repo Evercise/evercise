@@ -12,7 +12,7 @@ class CreateFeaturedgymgroupTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('featuredgymgroup', function($table)
+		Schema::create('featuredgymgroups', function($table)
 		{
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->integer('evercisegroup_id')->unsigned();// Foreign key
@@ -28,7 +28,7 @@ class CreateFeaturedgymgroupTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('featuredgymgroup');
+		Schema::drop('featuredgymgroups');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
