@@ -17,6 +17,7 @@ class CreateGymTrainerTable extends Migration {
 			$table->tinyinteger('status');
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->integer('gym_id')->unsigned();// Foreign key
+			$table->timestamps();
 		});
 	}
 
@@ -27,7 +28,9 @@ class CreateGymTrainerTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 		Schema::drop('gym_trainer');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 }

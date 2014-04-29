@@ -19,8 +19,7 @@ class CreateTrainerhistoryTable extends Migration {
 			$table->integer('trainerHistoryGroupId');
 			$table->integer('trainerHistoryGymId');
 			$table->integer('trainerHistoryUserId');
-
-			// Foreign Key - user_id
+			$table->timestamps();
 		});
 	}
 
@@ -31,7 +30,9 @@ class CreateTrainerhistoryTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 		Schema::drop('trainerhistory');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 }

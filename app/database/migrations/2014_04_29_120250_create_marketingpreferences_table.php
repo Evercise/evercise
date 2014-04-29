@@ -16,6 +16,7 @@ class CreateMarketingpreferencesTable extends Migration {
 			$table->increments('id');
 			$table->string('name', 45);
 			$table->string('options', 255);
+			$table->timestamps();
 		});
 	}
 
@@ -26,7 +27,9 @@ class CreateMarketingpreferencesTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 		Schema::drop('marketingpreferences');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 }

@@ -16,6 +16,7 @@ class CreateCategoriesTable extends Migration {
 			$table->increments('id');
 			$table->string('name',45);
 			$table->string('description',255);
+			$table->timestamps();
 
 		});
 	}
@@ -27,7 +28,9 @@ class CreateCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 		Schema::drop('categories');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 }

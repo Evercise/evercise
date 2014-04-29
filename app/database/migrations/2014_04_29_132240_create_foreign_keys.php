@@ -64,7 +64,7 @@ class CreateForeignKeys extends Migration {
 	 */
 	public function down()
 	{
-		//
+		
 	}
 
 }

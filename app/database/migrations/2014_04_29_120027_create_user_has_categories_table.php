@@ -15,6 +15,7 @@ class CreateUserHasCategoriesTable extends Migration {
 		Schema::create('user_has_categories', function(Blueprint $table) {
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->integer('category_id')->unsigned();// Foreign key
+			$table->timestamps();
 		});
 	}
 
@@ -25,7 +26,9 @@ class CreateUserHasCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 		Schema::drop('user_has_categories');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 }
