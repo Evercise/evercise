@@ -14,6 +14,7 @@ class CreateTrainerhistoryTable extends Migration {
 	{
 		Schema::create('trainerhistory', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('user_id')->unsigned();// Foreign key
 			$table->integer('trainer_historyTypeId');
 			$table->integer('trainerHistoryGroupId');
 			$table->integer('trainerHistoryGymId');

@@ -15,8 +15,8 @@ class CreateGymTrainerTable extends Migration {
 		Schema::create('gym_trainer', function($table)
 		{
 			$table->tinyinteger('status');
-			//Foreign key - user_id
-			//Foreign key - gym_id
+			$table->integer('user_id')->unsigned();// Foreign key
+			$table->integer('gym_id')->unsigned();// Foreign key
 		});
 	}
 

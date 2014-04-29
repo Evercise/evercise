@@ -14,11 +14,12 @@ class CreateTrainersTable extends Migration {
 	{
 		Schema::create('trainers', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('user_id')->unsigned();// Foreign key
 			$table->string('bio');
 			$table->string('website', 45);
 			$table->string('profession', 45);
 			$table->timestamps();
-			// Foreign key - user_id
+			
 		});
 	}
 

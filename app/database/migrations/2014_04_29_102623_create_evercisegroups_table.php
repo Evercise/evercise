@@ -14,6 +14,8 @@ class CreateEvercisegroupsTable extends Migration {
 	{
 		Schema::create('evercisegroups', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('user_id')->unsigned();// Foreign key
+			$table->integer('category_id')->unsigned();// Foreign key
 			$table->string('name', 45);
 			$table->string('title', 45);
 			$table->string('description', 255);
@@ -28,9 +30,6 @@ class CreateEvercisegroupsTable extends Migration {
 			$table->decimal('default_price', 6, 2)->default(0.00);
 			$table->tinyInteger('published')->default(0);
 			$table->timestamps();
-
-			// Foreign Key - user_id
-			// Foreign Key - category_id
 		});
 	}
 

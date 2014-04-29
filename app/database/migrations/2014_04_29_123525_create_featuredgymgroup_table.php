@@ -14,9 +14,8 @@ class CreateFeaturedgymgroupTable extends Migration {
 	{
 		Schema::create('featuredgymgroup', function($table)
 		{
-			$table->increments('id');
-			//Foreign key - user_id
-			//Foreign key - group_id
+			$table->integer('user_id')->unsigned();// Foreign key
+			$table->integer('evercisegroup_id')->unsigned();// Foreign key
 		});
 	}
 

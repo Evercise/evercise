@@ -14,12 +14,11 @@ class CreateSessionmembersTable extends Migration {
 	{
 		Schema::create('sessionmembers', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('user_id')->unsigned();// Foreign key
+			$table->integer('session_id')->unsigned();// Foreign key
 			$table->decimal('price', 6, 2)->default(0.00);
 			$table->boolean('reviewed')->default(0);
 			$table->timestamps();
-
-			// Foreign Key - session_id
-			// Foreign Key - user_id
 		});
 	}
 
