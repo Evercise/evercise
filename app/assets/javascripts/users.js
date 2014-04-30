@@ -63,11 +63,11 @@ jQuery( document ).ready( function( $ ) {
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
-                    /*$('.success_msg').show();
+                    $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 1000);*/
-                    console.log(data);
+                    }, 1000);
+                    //console.log(data);
                 }
             },
             'json'
@@ -121,6 +121,10 @@ jQuery( document ).ready( function( $ ) {
         );
         return false;
     });
+
+    $('#userNewsletter').on('change', function () {
+      this.value = this.checked ? 'yes' : 'no';
+    }).change();
 });
 
 function login(){

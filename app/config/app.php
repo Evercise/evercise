@@ -109,6 +109,7 @@ return array(
 		'Way\Generators\GeneratorsServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
+		'Laracasts\Utilities\UtilitiesServiceProvider',
 
 	),
 

@@ -36,5 +36,5 @@ jQuery( document ).ready( function( $ ) {
       $('.top-msg').fadeOut(500);
     }, 5000);
 
-
+    //alert(laracasts.foo);
 });
