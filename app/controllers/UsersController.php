@@ -61,6 +61,7 @@ class UsersController extends \BaseController {
 			$email = Input::get('email');
 			$password = Input::get('password');
 			$gender = Input::get('gender');
+			$newsletter = Input::get('userNewsletter');
 
 			$user = Sentry::register(array(
 				'display_name' => $display_name,
@@ -69,11 +70,21 @@ class UsersController extends \BaseController {
 				'email' => $email,
 				'password' => $password,
 				'gender' => $gender,
-				'activated' => false
+				'activated' => false,
 			));
 
 			$userGroup = Sentry::findGroupById(1);
 			$user->addGroup($userGroup);
+
+			$marketingpreferences = Marketingpreference::where('name', '=', 'newsletter')->get();
+			$chosenPreference = 1;
+			foreach ($marketingpreferences as $pref)
+			{
+			    if ($pref->option == $newsletter) $chosenPreference = $pref->id;
+			}
+
+
+			$user_has_marketingpreferences = User_has_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>$chosenPreference));
 
 			$activation_code = $user->getActivationCode();
 
@@ -89,6 +100,7 @@ class UsersController extends \BaseController {
 					$this->makeUserDir($user);
 
 					return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
+					//return Response::json($newsletter); // for testing
 				}
 			}
 		}
@@ -128,6 +140,9 @@ class UsersController extends \BaseController {
 
 			$userGroup = Sentry::findGroupById(2);
 			$user->addGroup($userGroup);
+
+
+			$user_has_marketingpreferences = User_has_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
 
 			if($user) {
 

@@ -8,7 +8,8 @@
 		"way/generators": "2.6",
 		"codesleeve/asset-pipeline": "dev-master",
         "cartalyst/sentry": "2.1.*",
-		"facebook/php-sdk": "dev-master"
+		"facebook/php-sdk": "dev-master",
+		"laracasts/utilities":"1.0"
 	},
 	"autoload": {
 		"classmap": [

@@ -15,7 +15,7 @@ class CreateMarketingpreferencesTable extends Migration {
 		Schema::create('marketingpreferences', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('name', 45);
-			$table->string('options', 255);
+			$table->string('option', 255);
 			$table->timestamps();
 		});
 	}

@@ -2,7 +2,7 @@
 
 class Marketingpreference extends \Eloquent {
 
-	protected $fillable = array('id', 'name','options');
+	protected $guarded = array('id', 'name','option');
 
 	/**
 	 * The database table used by the model.

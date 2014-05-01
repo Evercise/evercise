@@ -18,7 +18,8 @@ Route::resource('users', 'UsersController');
 Route::resource('sessions', 'sessionsController');
 Route::resource('gyms', 'gymsController');
 Route::resource('ratings', 'ratingsController');
-Route::resource('evercisegroup', 'evercisegrouController');
+Route::resource('evercisegroup', 'evercisegroupController');
+Route::resource('trainers', 'TrainersController');
 
 Route::get('auth/login', array('as' => 'auth.login', 'uses' => 'auth\AuthController@getLogin'));
 Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
@@ -34,7 +35,6 @@ Route::post('/users/resetpassword', array('as' => 'users.resetpassword.post', 'u
 
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
-Route::resource('trainers', 'TrainersController');
 
 Route::get('login/fb' , function() {
     $facebook = new Facebook(Config::get('facebook'));

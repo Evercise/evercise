@@ -6,8 +6,8 @@ class MarketingpreferencesTableSeeder extends Seeder {
 	{
         DB::table('marketingpreferences')->delete();
 
-        Marketingpreference::create(array('name' => 'newsletter', 'options' => 'yes'));
-        Marketingpreference::create(array('name' => 'newsletter', 'options' => 'no'));
+        Marketingpreference::create(array('name' => 'newsletter', 'option' => 'yes'));
+        Marketingpreference::create(array('name' => 'newsletter', 'option' => 'no'));
 
 	}
 
