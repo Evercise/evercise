@@ -35,6 +35,7 @@ class UsersController extends \BaseController {
 				'display_name' => 'required|max:20|min:5|unique:users',
 				'first_name' => 'required|max:50|min:2',
 				'last_name' => 'required|max:50|min:2',
+				'dob' => 'required',
 				'email' => 'required|email|unique:users',
 				'password' => 'required|confirmed',
 			)
@@ -58,6 +59,7 @@ class UsersController extends \BaseController {
 			$display_name = Input::get('display_name');
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
+			$dob = Input::get('dob');
 			$email = Input::get('email');
 			$password = Input::get('password');
 			$gender = Input::get('gender');
@@ -67,6 +69,7 @@ class UsersController extends \BaseController {
 				'display_name' => $display_name,
 				'first_name' => $first_name,
 				'last_name' => $last_name,
+				'dob' => $dob,
 				'email' => $email,
 				'password' => $password,
 				'gender' => $gender,

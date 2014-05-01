@@ -1,5 +1,5 @@
 jQuery( document ).ready( function( $ ) {
-	$('select').each(function(){
+/*	$('select').each(function(){
         var title = $(this).attr('title');
       	if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
         w = $(this).width();
@@ -11,7 +11,7 @@ jQuery( document ).ready( function( $ ) {
         	$(this).next().text(val);
     	})
     });
-
+*/
     $('input').keyup(function(){
        $(this).removeClass('error');
        $(this).closest('div').find('.error_msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
@@ -35,6 +35,5 @@ jQuery( document ).ready( function( $ ) {
     setTimeout(function() {
       $('.top-msg').fadeOut(500);
     }, 5000);
-
 
 });

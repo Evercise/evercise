@@ -20,7 +20,12 @@
             {{ $errors->first('first_name', '<p class="error-msg">:message</p>')}}
         @endif
 
-         @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'Add your last name', 'fieldtext'=>'Please add your last name.' ))
+        @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'Add your last name', 'fieldtext'=>'Please add your last name.' ))
+        @if ($errors->has('last_name'))
+            {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
+        @endif
+
+        @include('form.datepicker', array('fieldname'=>'Dob', 'placeholder'=>'Date of birth', 'maxlength'=>20, 'label'=>'Date of birth', 'fieldtext'=>'Please Add your date of birth.'))
         @if ($errors->has('last_name'))
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif

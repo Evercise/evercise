@@ -1,5 +1,17 @@
 jQuery( document ).ready( function( $ ) {
 
+    $( ".datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd" ,
+      defaultDate: "-30y",
+      yearRange: "-100:+0", 
+      minDate: '-120y', 
+      maxDate: '-16y',
+      changeMonth: true,
+      changeYear: true,
+      showOtherMonths: true,
+      selectOtherMonths: true
+    });
+
     // login pop up
     $("#login").click(function(e){
         $.ajax({
@@ -34,6 +46,7 @@ jQuery( document ).ready( function( $ ) {
                 "display_name": $( '#display_name' ).val(),
                 "first_name": $( '#first_name' ).val(),
                 "last_name": $( '#last_name' ).val(),
+                "dob": $( '#Dob' ).val(),
                 "email": $( '#email' ).val(),
                 "password": $( '#password' ).val(),
                 "password_confirmation": $( '#password_confirmation' ).val(),
