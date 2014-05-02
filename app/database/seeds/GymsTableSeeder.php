@@ -7,14 +7,12 @@ class GymsTableSeeder extends Seeder {
 
 	public function run()
 	{
-		$faker = Faker::create();
 
-		foreach(range(1, 10) as $index)
-		{
-			Gym::create([
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        DB::table('gyms')->delete();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-			]);
-		}
+        Gym::create(array('user_id' => '1', 'name' => 'Evercise', 'title' => 'Evercise Gym', 'description' => 'Its super cool'));
 	}
 
 }

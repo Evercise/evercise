@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder {
 
         $this->call('MarketingpreferencesTableSeeder');
         $this->command->info('Marketing prefs seeded!');
+
+        $this->call('GymsTableSeeder');
+        $this->command->info('Gyms seeded!');
 	}
 
 }

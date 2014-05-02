@@ -6,7 +6,7 @@
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
 
     
-	{{ Form::open(array('id' => 'user_create', 'url' => 'trainers', 'method' => 'post')) }}
+	{{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post')) }}
 
         @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
         @if ($errors->has('discipline'))
@@ -17,7 +17,7 @@
             {{ $errors->first('title', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'bio', 'placeholder'=>'write some stuff', 'maxlength'=>20, 'label'=>'Add your bio', 'fieldtext'=>'Please add some stuff about yourself' ))
+        @include('form.textfield', array('fieldname'=>'bio', 'placeholder'=>'write some stuff', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'Please add some stuff about yourself' ))
         @if ($errors->has('bio'))
             {{ $errors->first('bio', '<p class="error-msg">:message</p>')}}
         @endif
@@ -27,10 +27,14 @@
             {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
         @endif
 
+        @include('form.select', array('fieldname'=>'gym', 'label'=>'Discipline', 'values'=>$gyms))
+        @if ($errors->has('gym'))
+            {{ $errors->first('gym', '<p class="error-msg">:message</p>')}}
+        @endif
+
         <div class="center-btn-wrapper" >
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
         </div>
         <div class="success_msg">Success!</div>
-	{{ Form::close() }}
 
 @stop

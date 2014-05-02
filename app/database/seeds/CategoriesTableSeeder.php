@@ -7,7 +7,9 @@ class CategoriesTableSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('categories')->delete();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
         Category::create(array('name' => 'Workout', 'description' => 'Do you want to be physically challenged? Is your goal to tone up, gain muscle, lose weight or combat stress? Choose a workout, either indoors or outdoors, with a qualified instructor who can offer you great advice on your training regime.'));
         Category::create(array('name' => 'Sports', 'description' => 'Do you want to be coached in a competitive sport involving teams, giving you a chance to meet and bond with new people? (or you can sign up with a group of people you know!) Work together to get fit, learn a skill and have great fun while youre at it!'));

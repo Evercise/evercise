@@ -26,23 +26,31 @@ class TrainersController extends \BaseController {
 		}
 		else
 		{
-			$professions = Speciality::all();
+			$specialities = Speciality::all();
 			$disciplines = array();
 			$titles = array();
-			$disciplineNum = 0;
-			foreach ($professions as $prof)
+			foreach ($specialities as $sp)
 			{
-			    if (!isset($titles[$prof->name]))
+			    if (!isset($titles[$sp->name]))
 			    {
-			    	$disciplines[$prof->name] = $prof->name;
-			    	$titles[$prof->name] = array($prof->titles);
+			    	$disciplines[$sp->name] = $sp->name;
+			    	$titles[$sp->name] = array($sp->titles);
 			    }
-			   	else array_push($titles[$prof->name], $prof->titles);
+			   	else array_push($titles[$sp->name], $sp->titles);
 			}
 
-			JavaScript::put(array('titles' => json_encode($titles)));
+			$gyms_data = Gym::all();
+			$gyms = array();
+			foreach ($gyms_data as $gym)
+			{
+			    $gyms[$gym->id] = $gym->name;
+			}
 
-			return View::make('trainers.create')->with('disciplines', $disciplines);
+			// http://image.intervention.io/methods/crop
+			// http://odyniec.net/projects/imgareaselect
+
+			JavaScript::put(array('titles' => json_encode($titles), ));
+			return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
 		}
 
 	}
@@ -82,6 +90,7 @@ class TrainersController extends \BaseController {
 			$title = Input::get('title');
 			$bio = Input::get('bio');
 			$website = Input::get('website');
+			$gym = Input::get('gym');
 
 			$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
 			$trainer = Trainer::create(array('user_id'=>$user->id, 'bio'=>$bio, 'profession'=>$speciality, 'website'=>$website));

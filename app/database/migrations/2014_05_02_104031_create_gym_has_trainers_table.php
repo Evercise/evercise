@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGymTrainerTable extends Migration {
+class CreateGymHasTrainersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateGymTrainerTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('gym_trainers', function($table)
+		Schema::create('gym_has_trainers', function($table)
 		{
 			$table->tinyinteger('status');
 			$table->integer('user_id')->unsigned();// Foreign key
@@ -29,7 +29,7 @@ class CreateGymTrainerTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('gym_trainers');
+		Schema::drop('gym_has_trainers');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
