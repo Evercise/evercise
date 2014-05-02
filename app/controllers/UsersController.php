@@ -5,7 +5,7 @@ class UsersController extends \BaseController {
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function index()
 	{
@@ -15,7 +15,7 @@ class UsersController extends \BaseController {
 	/**
 	 * Show the form for creating a new resource.
 	 *
-	 * @return Response
+	 * @return View
 	 */
 	public function create()
 	{
