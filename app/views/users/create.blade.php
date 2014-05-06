@@ -9,7 +9,7 @@
     </div>
 
     
-	{{ Form::open(array('id' => 'user_create', 'url' => 'users', 'method' => 'post')) }}
+	{{ Form::open(array('id' => 'user_create', 'url' => 'users', 'method' => 'post', 'class' => 'create-form')) }}
     	@include('form.textfield', array('fieldname'=>'display_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'Choose your display_name', 'fieldtext'=>'This will be your display name visible to all Evercise members. It will also be used when you create a class.' ))
         @if ($errors->has('display_name'))
             {{ $errors->first('display_name', '<p class="error-msg">:message</p>')}}

@@ -21,7 +21,12 @@ Route::resource('ratings', 'ratingsController');
 Route::resource('evercisegroup', 'evercisegroupController');
 Route::resource('trainers', 'TrainersController');
 
-Route::get('auth/login', array('as' => 'auth.login', 'uses' => 'auth\AuthController@getLogin'));
+Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){
+		return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
+}));
+Route::get('auth/login', array('as' => 'auth.login', function(){
+		return View::make('auth.login')->with('redirect_after_login', false)->with('redirect_after_login_url', false);
+}));
 Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
 Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout'));
 Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthController@getForgot'));
@@ -36,15 +41,21 @@ Route::post('/users/resetpassword', array('as' => 'users.resetpassword.post', 'u
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
 
-Route::get('login/fb' , function() {
-    $facebook = new Facebook(Config::get('facebook'));
+Route::get('login/fb/{redirect_after_login_url}' , function($redirect_after_login_url) {
+    $facebook = new Facebook(Config::get('facebook')); 
     $params = array(
-        'redirect_uri' => url('/login/fb/callback'),
+        'redirect_uri' => url('/login/fb/callback/'.$redirect_after_login_url),
         'scope' => 'email,user_birthday,read_stream'
-        
-
+    );
+    return Redirect::away($facebook->getLoginUrl($params));
+});
+Route::get('login/fb' , function() {
+    $facebook = new Facebook(Config::get('facebook')); 
+    $params = array(
+        'redirect_uri' => url('/login/fb/callback/users.edit'),
+        'scope' => 'email,user_birthday,read_stream'
     );
     return Redirect::away($facebook->getLoginUrl($params));
 });
 
-Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
+Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));

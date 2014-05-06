@@ -9,5 +9,10 @@
 	
 @else
 	<li>{{ HTML::linkRoute('users.create', 'Join Evercise') }}</li>
-	<li>{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login')) }}</li>
+
+	@if(isset($redirect_after_login))
+		<li>{{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , 'Login',  array('id'=>'login', 'class' => 'login')) }}</li>
+	@else
+		<li>{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login')) }}</li>
+	@endif
 @endif

@@ -112,7 +112,7 @@ class UsersController extends \BaseController {
 
 	}
 
-	public function fb_login()
+	public function fb_login($redirect_after_login_url)
 	{
 	    $code = Input::get('code');
 
@@ -190,7 +190,8 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false); // TODO - Does not seem to work
 
-				return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);
+
+				return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);	
 				//return View::make('users.show');
 			}
 	    }
@@ -200,7 +201,13 @@ class UsersController extends \BaseController {
 			{
 				$user = Sentry::findUserByLogin($me['email']);
 			    Sentry::login($user,false);
-			    return Redirect::route('users.edit', $user->display_name);
+			    if ($redirect_after_login_url && $redirect_after_login_url != 'users.edit') {
+					return Redirect::route($redirect_after_login_url);
+				}
+				else
+				{
+			    	return Redirect::route('users.edit', $user->display_name);
+				}
 			}
 			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
 			{

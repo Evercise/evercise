@@ -21,8 +21,7 @@ class TrainersController extends \BaseController {
 	{
 		if ( ! Sentry::check())
 		{
-		    // User is not logged in, or is not activated
-		    return "Not logged in"; 
+		   return View::make('trainers.about')->with('status','logged-out')->with('redirect_after_login', true); 
 		}
 		else
 		{

@@ -149,7 +149,7 @@ label{
 	padding: 10px 4px;
 	.border-radius(4);
 	text-decoration: none;
-	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.15);
+	border: 1px solid darken(@bk, 8%);
 	color: contrast(@bk, darken(@bk, lightness(@bk) ),lighten(@bk, (100 - lightness(@bk))), 50%);
 	.gradient (lighten(@bk, 15%), @bk);
 	width: @width;
@@ -210,7 +210,7 @@ label{
 }
 
 
-#user_create{
+.create-form{
 	.column(11);
 	.push(1);
 	.formitem{
@@ -410,6 +410,42 @@ nav{
 	}
 	.error-msg{
 		.error_msgs(4);
+	}
+	.grey{
+		color: darken(@grey, 15%);
+	}
+	.btn{
+		max-width: 250px;
+		margin: auto;
+	}
+	hr{
+		border:none;
+		border-bottom: 1px dashed @grey;
+		margin: 35px 0 50px;
+	}
+	ul{
+		margin: 20px 0;
+		li{
+			.font-size(1.6);
+			line-height: 30px;
+		}
+	}
+	.center-img{
+		margin-bottom: 50px;
+	}
+	.orSeperator{
+		background-image: url(/img/line.jpg);
+		background-repeat: repeat-x;
+		background-position: 50%;
+		width: 30%;
+		text-align: center;
+		padding: 5px 0;
+		margin: 10px auto;
+		span{
+			.font-size(1.4);
+			padding: 5px;
+			background-color: @white;
+		}
 	}
 }
 

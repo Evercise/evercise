@@ -9,6 +9,9 @@
         </div>
         <div>
             @include('form.password', array('fieldname'=>'password', 'placeholder'=>'password', 'maxlength'=>20, 'label'=>'Please enter your password', 'fieldtext'=>null ))
+            @include('form.hidden', array('fieldname'=>'redirect_after_login',  'value' =>$redirect_after_login ))
+            @include('form.hidden', array('fieldname'=>'redirect_after_login_url',  'value' =>$redirect_after_login_url))
+             
         </div>
         <br>
         <div>
@@ -16,7 +19,11 @@
         </div>
         <div class="orSeperator"><span>or</span></div>
     {{ Form::close() }}
-    {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn-fb')) }}
+    @if ($redirect_after_login == 1)
+       {{ HTML::link('login/fb/'.$redirect_after_login_url, 'Log in with facebook', array('class' => 'btn-fb')) }}
+    @else
+        {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn-fb')) }}
+    @endif
     <br>
     {{ HTML::link('auth/forgot', 'Forgot password?') }}
 </div>

@@ -13,9 +13,10 @@ jQuery( document ).ready( function( $ ) {
     });
 
     // login pop up
-    $("#login").click(function(e){
+    $(".login").click(function(e){
+        var url = this.href;
         $.ajax({
-            url: "/auth/login",
+            url: url,
             type: 'GET',
             dataType: 'html'
         })
@@ -149,6 +150,8 @@ function login(){
         $.post(
             $( this ).prop( 'action' ),
             {
+                "redirect_after_login": $( '#login_wrap  #redirect_after_login' ).val(),
+                "redirect_after_login_url" : $( '#login_wrap  #redirect_after_login_url' ).val(),
                 "email": $( '#login_wrap #email' ).val(),
                 "password": $( '#login_wrap #password' ).val()
             },
@@ -163,7 +166,8 @@ function login(){
                     // redirect to login page
                     $('.success_msg').show();
                     setTimeout(function() {
-                        window.location.href = data;
+                       window.location.href = data;
+                       console.log(data);
                     }, 2000);
                 }
             },

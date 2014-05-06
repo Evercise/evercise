@@ -6,7 +6,7 @@
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
 
     
-	{{ Form::open(array('id' => 'user_create', 'url' => 'trainers', 'method' => 'post')) }}
+	{{ Form::open(array('id' => 'user_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
         @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
         @if ($errors->has('discipline'))

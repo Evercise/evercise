@@ -23,6 +23,8 @@ class AuthController extends \BaseController {
 			'email' => Input::get('email'),
 			'password' => Input::get('password')
 		);
+		$redirect_after_login = Input::get('redirect_after_login');
+		$redirect_after_login_url = Input::get('redirect_after_login_url');
 
 		try
 		{
@@ -31,13 +33,26 @@ class AuthController extends \BaseController {
 			if ($user)
 			{
 				Sentry::loginAndRemember($user);
-				if(\Request::ajax())
-	        	{
-	        		return \Response::json(route('users.edit', $user->display_name));
-	        	}
-	        	else{
-	        		return Redirect::route('users.edit', $user->display_name);
-	        	}
+				if ($redirect_after_login == 1) {
+					if(\Request::ajax())
+		        	{
+		        		return \Response::json(route($redirect_after_login_url));
+		        	}
+		        	else{
+		        		return Redirect::route($redirect_after_login_url);
+		        	}
+				}
+				else
+				{
+					if(\Request::ajax())
+		        	{
+		        		return \Response::json(route('users.edit', $user->display_name));
+		        	}
+		        	else{
+		        		return Redirect::route('users.edit', $user->display_name);
+		        	}
+				}
+				
 				
 			}
 		}
