@@ -18,7 +18,7 @@ Route::resource('users', 'UsersController');
 Route::resource('sessions', 'sessionsController');
 Route::resource('gyms', 'gymsController');
 Route::resource('ratings', 'ratingsController');
-Route::resource('evercisegroup', 'evercisegroupController');
+Route::resource('evercisegroups', 'evercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 
 Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){

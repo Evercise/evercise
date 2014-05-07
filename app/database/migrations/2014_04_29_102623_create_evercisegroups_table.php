@@ -26,7 +26,7 @@ class CreateEvercisegroupsTable extends Migration {
 			$table->decimal('long', 11, 8);
 			$table->string('image', 100);
 			$table->integer('capacity');
-			$table->integer('defualt_duration');
+			$table->integer('default_duration');
 			$table->decimal('default_price', 6, 2)->default(0.00);
 			$table->tinyInteger('published')->default(0);
 			$table->timestamps();

@@ -23,34 +23,33 @@ class TrainersController extends \BaseController {
 		{
 		   return View::make('trainers.about')->with('status','logged-out')->with('redirect_after_login', true); 
 		}
-		else
+
+		$specialities = Speciality::all();
+		$disciplines = array();
+		$titles = array();
+		foreach ($specialities as $sp)
 		{
-			$specialities = Speciality::all();
-			$disciplines = array();
-			$titles = array();
-			foreach ($specialities as $sp)
-			{
-			    if (!isset($titles[$sp->name]))
-			    {
-			    	$disciplines[$sp->name] = $sp->name;
-			    	$titles[$sp->name] = array($sp->titles);
-			    }
-			   	else array_push($titles[$sp->name], $sp->titles);
-			}
-
-			$gyms_data = Gym::all();
-			$gyms = array();
-			foreach ($gyms_data as $gym)
-			{
-			    $gyms[$gym->id] = $gym->name;
-			}
-
-			// http://image.intervention.io/methods/crop
-			// http://odyniec.net/projects/imgareaselect
-
-			JavaScript::put(array('titles' => json_encode($titles), ));
-			return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
+		    if (!isset($titles[$sp->name]))
+		    {
+		    	$disciplines[$sp->name] = $sp->name;
+		    	$titles[$sp->name] = array($sp->titles);
+		    }
+		   	else array_push($titles[$sp->name], $sp->titles);
 		}
+
+		$gyms_data = Gym::all();
+		$gyms = array();
+		foreach ($gyms_data as $gym)
+		{
+		    $gyms[$gym->id] = $gym->name;
+		}
+
+		// http://image.intervention.io/methods/crop
+		// http://odyniec.net/projects/imgareaselect
+
+		JavaScript::put(array('titles' => json_encode($titles), ));
+		return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
+
 
 	}
 
@@ -64,6 +63,7 @@ class TrainersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
+				'title' => 'required',
 				'bio' => 'required',
 			)
 		);

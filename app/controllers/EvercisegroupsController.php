@@ -19,7 +19,25 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+
+		if ( ! Sentry::check()) return 'Not logged in';
+		$user = Sentry::getUser();
+		if (Trainer::where('user_id', $user->id)->count())
+			$trainer = Trainer::where('user_id', $user->id)->get()->first();
+		else return 'Not a trainer';
+
+		$categoriesDB = category::all();
+
+		$categories = array();
+		$categoryDescriptions = array();
+		foreach ($categoriesDB as $cat)
+		{
+		    $categories[$cat->id] = $cat->name;
+		    $categoryDescriptions[$cat->id] = $cat->description;
+		}
+
+		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
+		return View::make('evercisegroups.create')->with('categories', $categories);
 	}
 
 	/**
@@ -29,7 +47,65 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'classname' => 'required',
+				'description' => 'required',
+				'category' => 'required',
+				//'summary' => 'required',
+				'duration' => 'required',
+				'maxsize' => 'required',
+				'price' => 'required',
+				//'customurl' => 'required',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else {
+
+			$classname = Input::get('classname');
+			$description = Input::get('description');
+			$category = Input::get('category');
+			//$summary = Input::get('summary');
+			$duration = Input::get('duration');
+			$maxsize = Input::get('maxsize');
+			$price = Input::get('price');
+			//$customurl = Input::get('customurl');
+
+			if ( ! Sentry::check()) return 'Not logged in';
+			$user = Sentry::getUser();
+			if (Trainer::where('user_id', $user->id)->count())
+				$trainer = Trainer::where('user_id', $user->id)->get()->first();
+
+			$evercisegroup = Evercisegroup::create(array(
+				'name'=>$classname,
+				'user_id'=>$user->id,
+				'category_id'=>$category,
+				'description'=>$description,
+				//'summary'=>$summary,
+				'default_duration'=>$duration,
+				'capacity'=>$maxsize,
+				'default_price'=>$price,
+				//'customurl'=>$customurl
+			));
+
+			//return Response::json(route('home', array('display_name'=> $user->display_name)));
+			return Response::json($evercisegroup); // for testing
+		}
 	}
 
 	/**

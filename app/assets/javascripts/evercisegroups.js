@@ -2,35 +2,31 @@ jQuery( document ).ready( function( $ ) {
 
     if(typeof laracasts !== 'undefined')
     {
-    	if(typeof laracasts.titles !== 'undefined')
-    	{
-    		titles = JSON.parse(laracasts.titles);
-
-    	    $('#discipline').on('change', function () {
-    			var currentTitles = titles[this.value];
-    			$("#title").empty();
-
-    			for(var i=0; i<currentTitles.length; i++)
-    			{
-    			    $("#title").append($("<option></option>").attr("value", currentTitles[i]).text(currentTitles[i]));
-    			}
-    	    }).change();
+        if(typeof laracasts.categoryDescriptions !== 'undefined')
+        {
+            categoryDescriptions = JSON.parse(laracasts.categoryDescriptions);
+            console.log(categoryDescriptions);
+            // TODO -  This is here ready to add the little rollover descriptions to the category selections.
         }
-	}
+    }
 
-    // create a new trainer
+    // create a new evercisegroup
  
-    $( '#trainer_create' ).on( 'submit', function() {
+    $( '#evercisegroup_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
             {
-                "discipline": $( '#discipline' ).val(),
-                "title": $( '#title' ).val(),
-                "bio": $( '#bio' ).val(),
-                "website": $( '#website' ).val()
+                "classname": $( '#classname' ).val(),
+                "description": $( '#description' ).val(),
+                "category": $( '#category' ).val(),
+                "summary": $( '#summary' ).val(),
+                "duration": $( '#duration' ).val(),
+                "maxsize": $( '#maxsize' ).val(),
+                "price": $( '#price' ).val(),
+                "customurl": $( '#customurl' ).val()
             },
             function( data ) {
                 console.log("about to win.......");

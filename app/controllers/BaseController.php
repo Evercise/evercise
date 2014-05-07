@@ -10,11 +10,13 @@ class BaseController extends Controller {
 	protected function setupLayout()
 	{
 		$displayName = "none";
+		$displayImage = "none"; // TODO - default image
 		try
 		{
 		    // Get the current active/logged in user
 		    $user = Sentry::getUser();
-		    if ($user){
+			if ( Sentry::check())
+			{
 		    	$displayName = $user->display_name;	
 		    	$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
 		    } 
