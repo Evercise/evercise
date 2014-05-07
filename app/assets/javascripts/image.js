@@ -28,15 +28,12 @@ function showResponse(response, statusText, xhr, form)  {
         });
         $("#validation-errors").show();
     } else {
-        // $("#output").html("<img src='"+response.file+"' />");
-        // $("#output").css('display','block');
         $('#image-upload').html(response.crop);
-        $('#upload').attr('action', response.postCrop);
         $('.preview img').attr('src', response.image_url);
         $('#img-crop img').attr('src', response.image_url);
+        $('#upload').attr('action', response.postCrop);
         initCrop();
         postCroppedImage();
-        //console.log(form);
     }
 }
 
@@ -112,7 +109,9 @@ function postCroppedImage()
                     remove: true
                 });
                 $('#upload_wrapper').html(data.uploadView);
-                
+                $('.preview img').attr('src', data.newImage);
+                $('#thumbFilename').val(data.thumbFilename);
+               
             }
         },
         'json'

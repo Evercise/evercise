@@ -1,6 +1,4 @@
-
-
-@if($displayImage)
+@if( basename($displayImage) != 'no-user-img.jpg')
 {{ Form::open(['id' => 'upload', 'url' => 'image/upload', 'files' => true, 'method' => 'post','class' => 'create-form']) }}
 	<div class="formitem clearfix">
 		<div class="formlabel">
@@ -16,7 +14,9 @@
 			<div id='image-upload'>		
 				<div class="cover-up">
 					<span class="btn btn-fb">select file</span> 
-					<div class="cover-up-wrap"></div>
+					<div class="cover-up-wrap">
+						<p>Click select a file to choose a new prolfile image.</p>
+					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}	 
 

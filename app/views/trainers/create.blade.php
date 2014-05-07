@@ -7,8 +7,6 @@
     <div id="upload_wrapper">
         @include('image.upload-form')
         {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
-
-
         @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
         @if ($errors->has('discipline'))
             {{ $errors->first('discipline', '<p class="error-msg">:message</p>')}}
@@ -29,18 +27,14 @@
             {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.select', array('fieldname'=>'gym', 'label'=>'Discipline', 'values'=>$gyms))
-        @if ($errors->has('gym'))
-            {{ $errors->first('gym', '<p class="error-msg">:message</p>')}}
-        @endif
+        {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}
+       
 
         <div class="center-btn-wrapper" >
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
         </div>
-        <div class="success_msg">Success!</div>
         {{ Form::close() }}
         
 
-    </div>
 
 @stop

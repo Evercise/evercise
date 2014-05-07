@@ -542,8 +542,12 @@ nav{
 		input{
 			width: 122px;
 			position: absolute;
-			top: 130px;
-			left: -142px;
+			top: 10px;
+			left: 10px;
+			padding: 5px 0;
+		}
+		img{
+			margin-top: 35px;
 		}
 	}
 	input#image{
@@ -557,7 +561,7 @@ nav{
 		position: absolute;
 		width: 100%;
 		height: 120px;
-		border: 1px solid #ccc;
+		border: 1px solid @grey;
 		.btn{
 			position: absolute;
 			top: -15px;
@@ -566,10 +570,15 @@ nav{
 			padding: 5px 0;
 		}
 		.cover-up-wrap{
-			background: @grey;
+			background: lighten(@grey, 10%);
 			position: absolute;
 			bottom: 5px;
-
+			left: 5px;
+			width: 440px;
+			height: 77px;
+			padding: 5px;
+			.box-sizing();
+			border: 1px solid @grey;
 		}
 	}
 }
