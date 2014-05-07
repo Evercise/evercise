@@ -14,7 +14,10 @@ class BaseController extends Controller {
 		{
 		    // Get the current active/logged in user
 		    $user = Sentry::getUser();
-		    if ($user) $displayName = $user->display_name;
+		    if ($user){
+		    	$displayName = $user->display_name;	
+		    	$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
+		    } 
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 		{
@@ -23,6 +26,7 @@ class BaseController extends Controller {
 		    // and they were deleted.
 		}
 		View::share('displayName', $displayName);
+		View::share('displayImage', $displayImage);
 
 		if ( ! is_null($this->layout))
 		{
