@@ -110,6 +110,7 @@ return array(
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Laracasts\Utilities\UtilitiesServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
 
 	),
 
@@ -177,6 +178,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Sentry'		  => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+		'Image'	          => 'Intervention\Image\Facades\Image',
 
 	),
 

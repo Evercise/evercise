@@ -67,6 +67,6 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 
 Route::get('/image/upload', array('as' => 'image.upload', 'uses' => 'ImageController@getUploadForm'));
 Route::post('/image/upload', array('as' => 'image.upload.post', 'uses' => 'ImageController@postUpload'));
-Route::post('/image/crop', array('as' => 'image.crop', 'uses' => 'ImageController@crop'));
+Route::get('/image/crop', array('as' => 'image.crop', 'uses' => 'ImageController@getCrop'));
 Route::post('/image/crop', array('as' => 'image.crop.post', 'uses' => 'ImageController@postCrop'));
 

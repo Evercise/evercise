@@ -5,7 +5,7 @@
 
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
 
-    
+        @include('image.upload-form')
 	{{ Form::open(array('id' => 'user_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
 
@@ -37,5 +37,8 @@
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
         </div>
         <div class="success_msg">Success!</div>
+        {{ Form::close() }}
+        
+
 
 @stop

@@ -1,37 +1,4 @@
-/*$(document).ready(function() {
-
-    $( '#upload' ).on( 'submit', function() {
-
-        // post to sontroller
-            console.log($( '#image' ).val());
-        $.post(
-            $( this ).prop( 'action' ),
-            {
-                "image": $( '#image' ).val()
-            },
-            function( data ) {
-                console.log("about to win.......");
-                if (data.validation_failed == 1)
-                {
-                    console.log('loose');
-                }else{
-                    // redirect to login page
-                    //$('.success_msg').show();
-                    //setTimeout(function() {
-                    //    window.location.href = data;
-                    //}, 1000);
-                    console.log(data);
-                }
-            },
-            'json'
-        );
-        return false;
-    });
-});
-*/
-
-
-$(document).ready(function() {
+jQuery(document).ready(function($) {
     var options = { 
         beforeSubmit:  showRequest,
         success:       showResponse,
@@ -44,7 +11,8 @@ $(document).ready(function() {
 });        
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();
-   // $("#output").css('display','none');
+   // $("#output").css('display','none'); 
+        console.log("showRequest..");       
     return true; 
 } 
 function showResponse(response, statusText, xhr, form)  { 
@@ -62,9 +30,69 @@ function showResponse(response, statusText, xhr, form)  {
     } else {
         // $("#output").html("<img src='"+response.file+"' />");
         // $("#output").css('display','block');
-        console.log(response);
+        $('#image-upload').html(response.crop);
+        $('#img-crop img').attr('src', response.image_url);
+        //console.log(response.crop);
+        initCrop();
+        postCroppedImage();
         //console.log(form);
     }
 }
 
+function initCrop()
+{
+    $('#img-crop img').imgAreaSelect({
+        handles: true,
+        onSelectEnd: saveCroppedImage
+    });
+}
 
+
+
+function saveCroppedImage(img, selection)
+{
+    $('#width').val(selection.width);
+    $('#height').val(selection.height);
+    $('#pos_x').val(selection.x1);
+    $('#pos_y').val(selection.y1);
+    $('#img_url').val(img.src);
+    $('#img_height').val(img.height);
+    //console.log($('#img_height').val());
+}
+
+
+
+function postCroppedImage()
+{
+   $( '#crop' ).on( 'submit', function() {
+    // post to sontroller
+    $.post(
+        $( this ).prop( 'action' ),
+        {
+            "pos_x": $( '#pos_x' ).val(),
+            "pos_y": $(  '#pos_y' ).val(),
+            "width": $(  '#width' ).val(),
+            "height": $(  '#height' ).val(),
+            "img_url": $(  '#img_url' ).val(),
+            "img_height": $(  '#img_height' ).val()
+        },
+        function( data ) {
+            console.log("about to win.......");
+            if (data.validation_failed == 1)
+            {
+                console.log('loose');
+               
+            }else{
+                console.log(data);
+                $('#img-crop').html(data.uploadView);
+                initCrop();
+                $('#img-crop img').imgAreaSelect({
+                    hide: true
+                });
+            }
+        },
+        'json'
+    );
+    return false;
+    }); 
+}

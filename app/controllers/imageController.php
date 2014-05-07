@@ -1,6 +1,8 @@
 <?php
  
 class ImageController extends \BaseController {
+
+    protected $layout = 'image.upload-form';
  
     public function getUploadForm() {
         return View::make('image/upload-form');
@@ -31,11 +33,9 @@ class ImageController extends \BaseController {
             
             if(Request::ajax())
             { 
-                //return Response::json($destinationPath.$filename);
-                //return View::make('image/crop');
-                //return Response::route('image.crop');
-                //return \Response::json(route('image.crop', $destinationPath.$filename));
-                return \Response::json(View::make('image/crop')); //WHAT THE DICK? I just want to return a view
+                $viewString = View::make('image/crop')->__toString();
+                $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
+                return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc));
             }
             else
             {
@@ -43,8 +43,56 @@ class ImageController extends \BaseController {
             }
         }
     }
-    public function crop() {
+    public function getCrop() {
+        return View::make('image/crop');
     }
+
     public function postCrop() {
+        $pos_x = Input::get('pos_x');
+        $pos_y = Input::get('pos_y');
+        $width = Input::get('width');
+        $height = Input::get('height');
+        $img_url = Input::get('img_url');
+        $img_height = Input::get('img_height');
+
+
+        $user = Sentry::getUser();
+        $save_location = $user->directory;
+
+        // open file a image resource
+        $img_path = public_path() . '/profiles/' . $save_location . '/' .basename($img_url);
+        $img = Image::make($img_path);
+        $true_height = $img->height;
+
+        $factor = $true_height / $img_height;
+        $scaledCoords = $this->scale($factor, array('width'=>$width, 'height'=>$height, 'pos_x'=>$pos_x, 'pos_y'=>$pos_y));
+
+
+        //return Response::json(array('height'=> $img_height));
+
+        // crop image
+        $img->crop($scaledCoords['width'], $scaledCoords['height'], $scaledCoords['pos_x'], $scaledCoords['pos_y']);
+
+        $thumbFilename = 'thumb_'.basename($img_url);
+        $img->save(public_path() . '/profiles/' . $save_location . '/'.$thumbFilename);
+
+        if(Request::ajax())
+        { 
+            //return Response::json(array('imgName' => $thumbFilename ));
+            $viewString = View::make('image/upload-form')->__toString();
+
+            return Response::json(array('uploadView'=>$viewString));
+        }
+        //return View::make('image/crop');
+    }
+
+    public function scale($factor, $params)
+    {
+        $scaledParams = array();
+        foreach ($params as $key => $value)
+        {
+            $scaledParams[$key] = $value * $factor; 
+        }
+        return $scaledParams;
     }
 }

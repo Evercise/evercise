@@ -102,6 +102,8 @@ class UsersController extends \BaseController {
 
 					$this->makeUserDir($user);
 
+					$user->save();
+
 					return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
 					//return Response::json($newsletter); // for testing
 				}
