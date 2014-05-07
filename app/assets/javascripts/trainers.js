@@ -30,7 +30,9 @@ jQuery( document ).ready( function( $ ) {
                 "discipline": $( '#discipline' ).val(),
                 "title": $( '#title' ).val(),
                 "bio": $( '#bio' ).val(),
-                "website": $( '#website' ).val()
+                "image": $( '#thumbFilename' ).val(),
+                "website": $( '#website' ).val(),
+
             },
             function( data ) {
                 console.log("about to win.......");
@@ -55,11 +57,11 @@ jQuery( document ).ready( function( $ ) {
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
-                    /*$('.success_msg').show();
+                    $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 1000);*/
-                    console.log(data);
+                    }, 100);
+                    //console.log(data);
                 }
             },
             'json'

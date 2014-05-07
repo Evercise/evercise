@@ -6,6 +6,7 @@
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
     <div id="upload_wrapper">
         @include('image.upload-form')
+    </div>
 	{{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
 
@@ -29,18 +30,14 @@
             {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.select', array('fieldname'=>'gym', 'label'=>'Discipline', 'values'=>$gyms))
-        @if ($errors->has('gym'))
-            {{ $errors->first('gym', '<p class="error-msg">:message</p>')}}
-        @endif
+        {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}
+       
 
         <div class="center-btn-wrapper" >
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
         </div>
-        <div class="success_msg">Success!</div>
         {{ Form::close() }}
         
 
-    </div>
 
 @stop

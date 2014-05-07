@@ -82,8 +82,8 @@ class ImageController extends \BaseController {
         { 
             //return Response::json(array('imgName' => $thumbFilename ));
             $viewString = View::make('image/upload-form')->__toString();
-
-            return Response::json(array('uploadView'=>$viewString));
+            $newImage = url('/') . '/profiles/' . $save_location . '/'.$thumbFilename;
+            return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
         }
         //return View::make('image/crop');
     }

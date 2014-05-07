@@ -65,6 +65,7 @@ class TrainersController extends \BaseController {
 			array(
 				'title' => 'required',
 				'bio' => 'required',
+				'image' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -88,15 +89,38 @@ class TrainersController extends \BaseController {
 			$discipline = Input::get('discipline');
 			$title = Input::get('title');
 			$bio = Input::get('bio');
+			$image = Input::get('image');
 			$website = Input::get('website');
-			$gym = Input::get('gym');
 
 			$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
 			$trainer = Trainer::create(array('user_id'=>$user->id, 'bio'=>$bio, 'profession'=>$speciality, 'website'=>$website));
 
+			// update user image
+
+			$user->image = $image;
+
+			$user->save();
+
+			// add to trainer group
+
+			$userGroup = Sentry::findGroupById(3);
+			$user->addGroup($userGroup);
+
 			//return Response::json(route('home', array('display_name'=> $user->display_name)));
-			return Response::json($bio); // for testing
+			//return Response::json(array('image' => $image)); // for testing
+			return Response::json(route('trainers.edit', array('display_name'=> $user->display_name)));
 		}
 
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function edit($id)
+	{
+		return View::make('trainers.edit');
 	}
 }

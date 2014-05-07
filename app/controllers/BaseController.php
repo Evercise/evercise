@@ -10,7 +10,7 @@ class BaseController extends Controller {
 	protected function setupLayout()
 	{
 		$displayName = "none";
-		$displayImage = "none"; // TODO - default image
+		$displayImage = url('/')."/img/no-user-img.jpg"; // TODO - default image
 		try
 		{
 		    // Get the current active/logged in user
@@ -18,7 +18,10 @@ class BaseController extends Controller {
 			if ( Sentry::check())
 			{
 		    	$displayName = $user->display_name;	
-		    	$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
+		    	if ($user->image) {
+		    		$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
+		    	}
+		    	
 		    } 
 		}
 		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
