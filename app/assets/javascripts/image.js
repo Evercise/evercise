@@ -31,8 +31,9 @@ function showResponse(response, statusText, xhr, form)  {
         // $("#output").html("<img src='"+response.file+"' />");
         // $("#output").css('display','block');
         $('#image-upload').html(response.crop);
+        $('#upload').attr('action', response.postCrop);
+        $('.preview img').attr('src', response.image_url);
         $('#img-crop img').attr('src', response.image_url);
-        //console.log(response.crop);
         initCrop();
         postCroppedImage();
         //console.log(form);
@@ -42,9 +43,32 @@ function showResponse(response, statusText, xhr, form)  {
 function initCrop()
 {
     $('#img-crop img').imgAreaSelect({
+        aspectRatio: '1:1',
+        fadeSpeed: 300,
         handles: true,
-        onSelectEnd: saveCroppedImage
+        onSelectEnd: saveCroppedImage,
+        onSelectChange: preview
     });
+}
+
+function preview(img, selection) {
+    if (!selection.width || !selection.height)
+        return;
+
+    var previewX = $('.preview').width();
+    var previewY = $('.preview').height();
+
+    console.log(previewX+' - '+previewY);
+    
+    var scaleX = previewX / selection.width;
+    var scaleY = previewY / selection.height;
+
+    $('.preview img').css({
+        width: Math.round(scaleX * img.width),
+        height: Math.round(scaleY * img.height),
+        marginLeft: -Math.round(scaleX * selection.x1),
+        marginTop: -Math.round(scaleY * selection.y1)
+    });   
 }
 
 
@@ -64,7 +88,7 @@ function saveCroppedImage(img, selection)
 
 function postCroppedImage()
 {
-   $( '#crop' ).on( 'submit', function() {
+   $( '#upload' ).on( 'submit', function() {
 
     // post to sontroller
     $.post(
@@ -87,8 +111,7 @@ function postCroppedImage()
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });
-                console.log(data);
-                $('#img-crop').html(data.uploadView);
+                $('#upload_wrapper').html(data.uploadView);
                 
             }
         },
