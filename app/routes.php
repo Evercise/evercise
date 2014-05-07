@@ -49,6 +49,7 @@ Route::get('login/fb/{redirect_after_login_url}' , function($redirect_after_logi
     );
     return Redirect::away($facebook->getLoginUrl($params));
 });
+
 Route::get('login/fb' , function() {
     $facebook = new Facebook(Config::get('facebook')); 
     $params = array(
@@ -59,7 +60,9 @@ Route::get('login/fb' , function() {
 });
 
 
-Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
+Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
+
+//Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
 
 Route::get('/image/upload', array('as' => 'image.upload', 'uses' => 'ImageController@getUploadForm'));

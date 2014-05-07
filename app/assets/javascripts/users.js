@@ -168,7 +168,7 @@ function login(){
                     setTimeout(function() {
                        window.location.href = data;
                        console.log(data);
-                    }, 2000);
+                    }, 20);
                 }
             },
             'json'
