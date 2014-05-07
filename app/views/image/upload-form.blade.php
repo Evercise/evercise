@@ -42,7 +42,9 @@
 			<div id='image-upload'>		
 				<div class="cover-up">
 					<span class="btn btn-fb">select file</span> 
-					<div class="cover-up-wrap"></div>
+					<div class="cover-up-wrap">
+						<p>Click select a file to choose a prolfile image.</p>
+					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}	 
 
