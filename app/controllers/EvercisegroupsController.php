@@ -9,7 +9,26 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		if ( ! Sentry::check()) return 'Not logged in';
+		$user = Sentry::getUser();
+		if (Trainer::where('user_id', $user->id)->count())
+		{
+			$trainer = Trainer::where('user_id', $user->id)->get()->first();
+
+			$evercisegroupsDB = Evercisegroup::where('user_id', $user->id)->get();
+			foreach ($evercisegroupsDB as $eg)
+			{
+			    $evercisegroups[$eg->id] = $eg->name;
+			}
+
+			return View::make('evercisegroups.index')->with('isTrainer', 1)->with('evercisegroups' , $evercisegroups);
+		}
+		else
+		{
+			return View::make('evercisegroups.index')->with('isTrainer', 0);
+		}
+
+		
 	}
 
 	/**
@@ -116,7 +135,7 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return View::make('evercisegroups.show');
 	}
 
 	/**

@@ -1,1 +1,8 @@
-C:\Users\Tris\www\evercise\app/views/evercisegroups/show.blade.php
+@extends('layouts.master')
+
+
+@section('content')
+
+show
+
+@stop

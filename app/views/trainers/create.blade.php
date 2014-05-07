@@ -6,7 +6,7 @@
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
     <div id="upload_wrapper">
         @include('image.upload-form')
-	{{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
+        {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
 
         @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
