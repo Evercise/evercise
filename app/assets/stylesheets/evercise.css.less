@@ -530,6 +530,76 @@ nav{
 	margin-top: 20px;
 }
 
+/* image uploader */
+
+#image-upload{
+	width: 450px;
+	float: left;
+	position: relative;
+	#img-crop{
+		padding: 10px;
+		border: 1px solid @grey;
+		input{
+			width: 122px;
+			position: absolute;
+			top: 130px;
+			left: -142px;
+		}
+	}
+	input#image{
+		width: 100%;
+		position: absolute;
+		opacity: 0;
+	}
+	
+	.cover-up{
+		.border-radius();
+		position: absolute;
+		width: 100%;
+		height: 120px;
+		border: 1px solid #ccc;
+		.btn{
+			position: absolute;
+			top: -15px;
+			left: 5px;
+			width: 130px;
+			padding: 5px 0;
+		}
+		.cover-up-wrap{
+			background: @grey;
+			position: absolute;
+			bottom: 5px;
+
+		}
+	}
+}
+
+.frame{
+	float: left;
+	width: 100px;
+	height: 100px;
+	padding: 9px 11px 11px 9px;
+	border: 1px solid #cccccc;
+	margin-right: 20px;
+	.preview {
+		width: 100px;
+		height: 100px;
+		overflow: hidden;
+		.border-radius();
+		border: 1px solid #cccccc;
+
+		img{
+			height: 100px;
+			width: 100px;
+			max-width: none;
+		}
+	}
+}
+
+
+
+
+
 /*footer */
 	
 footer{

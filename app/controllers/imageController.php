@@ -35,7 +35,9 @@ class ImageController extends \BaseController {
             { 
                 $viewString = View::make('image/crop')->__toString();
                 $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
-                return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc));
+               // $postCrop = Response::json(route('image.crop.post'));
+                $postCrop = url('/').'/image/crop';
+                return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
             }
             else
             {

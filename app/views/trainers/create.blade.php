@@ -4,8 +4,10 @@
 @section('content')
 
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
-
+    <div id="upload_wrapper">
         @include('image.upload-form')
+    </div>
+
 	{{ Form::open(array('id' => 'user_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
 
@@ -13,6 +15,7 @@
         @if ($errors->has('discipline'))
             {{ $errors->first('discipline', '<p class="error-msg">:message</p>')}}
         @endif
+
     	@include('form.select', array('fieldname'=>'title', 'label'=>'Title', 'values'=>array('0'=>'Select a discipline')))
         @if ($errors->has('title'))
             {{ $errors->first('title', '<p class="error-msg">:message</p>')}}
