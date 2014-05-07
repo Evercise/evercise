@@ -21,11 +21,11 @@ class EvercisegroupsController extends \BaseController {
 			    $evercisegroups[$eg->id] = $eg->name;
 			}
 
-			return View::make('evercisegroups.index')->with('isTrainer', 1)->with('evercisegroups' , $evercisegroups);
+			return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups);
 		}
 		else
 		{
-			return View::make('evercisegroups.index')->with('isTrainer', 0);
+			return View::make('evercisegroups.index');
 		}
 
 		

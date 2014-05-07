@@ -69,4 +69,34 @@ jQuery( document ).ready( function( $ ) {
         return false;
     });
 
+    // Open Create Session Window
+ 
+    $( '#session_new' ).on( 'submit', function() {
+        $('.error-msg').remove();
+        $('input').removeClass('error');
+        // post to sontroller
+        $.post(
+            $( this ).prop( 'action' ),
+            {
+                "evercisegroup": $( '#evercisegroup' ).val()
+
+            },
+            function( data ) {
+                console.log("about to win.......");
+                if (data.validation_failed == 1)
+                {
+                    console.log('loose');
+                    var arr = data.errors;
+                }else{
+                    /*setTimeout(function() {
+                        window.location.href = data;
+                    }, 100);*/
+                    console.log(data);
+                }
+            },
+            'json'
+        );
+        return false;
+    });
+
 });
