@@ -65,6 +65,7 @@ function saveCroppedImage(img, selection)
 function postCroppedImage()
 {
    $( '#crop' ).on( 'submit', function() {
+
     // post to sontroller
     $.post(
         $( this ).prop( 'action' ),
@@ -83,12 +84,12 @@ function postCroppedImage()
                 console.log('loose');
                
             }else{
+                $('#img-crop img').imgAreaSelect({
+                    remove: true
+                });
                 console.log(data);
                 $('#img-crop').html(data.uploadView);
-                initCrop();
-                $('#img-crop img').imgAreaSelect({
-                    hide: true
-                });
+                
             }
         },
         'json'
