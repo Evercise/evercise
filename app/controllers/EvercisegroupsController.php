@@ -18,6 +18,7 @@ class EvercisegroupsController extends \BaseController {
 			$trainer = Trainer::where('user_id', $user->id)->get()->first();
 
 			$evercisegroupsDB = Evercisegroup::where('user_id', $user->id)->get();
+			$evercisegroups = array();
 			foreach ($evercisegroupsDB as $eg)
 			{
 			    $evercisegroups[$eg->id] = $eg->name;
@@ -77,6 +78,9 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function store()
 	{
+		// echo 'Evercisegroups Store';
+		// exit;
+
 		$validator = Validator::make(
 			Input::all(),
 			array(
@@ -162,7 +166,8 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		echo('edit');
+		exit;
 	}
 
 	/**
@@ -173,7 +178,8 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		echo('update');
+		exit;
 	}
 
 	/**

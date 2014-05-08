@@ -1,3 +1,4 @@
+//Evercisegroups.js
 jQuery( document ).ready( function( $ ) {
 
     if(typeof laracasts !== 'undefined')
@@ -61,6 +62,30 @@ jQuery( document ).ready( function( $ ) {
         );
         return false;
     });
+
+
+    $('.add_session').click(function(){
+        var evercisegroupId = this.id;
+        //console.log(evercisegroupId);
+
+        var url = this.href;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) { 
+                $('.mask').show();
+                $('.container').append(data);
+                $('#evercisegroup').val(evercisegroupId);
+                console.log('id: '+ $('#evercisegroup').val());
+             }
+        );
+        return false;
+
+    });
+
 
 
 });

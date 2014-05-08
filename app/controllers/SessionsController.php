@@ -19,7 +19,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('sessions.create');
 	}
 
 	/**
@@ -29,7 +29,52 @@ class SessionsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		// echo 'Sessions store';
+		// exit;
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'evercisegroup' => 'required',
+				'date' => 'required',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else {
+
+			$evercisegroup = Input::get('evercisegroup');
+			$date = Input::get('date');
+			//$customurl = Input::get('customurl');
+
+			if ( ! Sentry::check()) return 'Not logged in';
+
+			$user = Sentry::getUser();
+			
+			if (Trainer::where('user_id', $user->id)->count())
+				$trainer = Trainer::where('user_id', $user->id)->get()->first();
+
+			$session = EverciseSession::create(array(
+				'evercisegroup_id'=>$evercisegroup,
+				'date_time'=>$date,
+			));
+
+			//return Response::json(route('home', array('display_name'=> $user->display_name)));
+			return Response::json($evercisegroup); // for testing
+		}
 	}
 
 	/**
