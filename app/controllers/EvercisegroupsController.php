@@ -76,6 +76,7 @@ class EvercisegroupsController extends \BaseController {
 				'duration' => 'required',
 				'maxsize' => 'required',
 				'price' => 'required',
+				'image'	=> 'required',
 				//'customurl' => 'required',
 			)
 		);
@@ -103,10 +104,13 @@ class EvercisegroupsController extends \BaseController {
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
+			$image = Input::get('image');
 			//$customurl = Input::get('customurl');
 
 			if ( ! Sentry::check()) return 'Not logged in';
+
 			$user = Sentry::getUser();
+			
 			if (Trainer::where('user_id', $user->id)->count())
 				$trainer = Trainer::where('user_id', $user->id)->get()->first();
 
@@ -119,6 +123,7 @@ class EvercisegroupsController extends \BaseController {
 				'default_duration'=>$duration,
 				'capacity'=>$maxsize,
 				'default_price'=>$price,
+				'image' => $image,
 				//'customurl'=>$customurl
 			));
 

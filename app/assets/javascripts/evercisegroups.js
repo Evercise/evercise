@@ -26,7 +26,7 @@ jQuery( document ).ready( function( $ ) {
                 "duration": $( '#duration' ).val(),
                 "maxsize": $( '#maxsize' ).val(),
                 "price": $( '#price' ).val(),
-                "customurl": $( '#customurl' ).val()
+                "image": $( '#thumbFilename' ).val()
             },
             function( data ) {
                 console.log("about to win.......");
@@ -62,5 +62,6 @@ jQuery( document ).ready( function( $ ) {
         );
         return false;
     });
+
 
 });

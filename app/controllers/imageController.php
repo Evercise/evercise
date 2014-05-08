@@ -56,6 +56,7 @@ class ImageController extends \BaseController {
         $height = Input::get('height');
         $img_url = Input::get('img_url');
         $img_height = Input::get('img_height');
+        $label = Input::get('label');
 
 
         $user = Sentry::getUser();
@@ -81,7 +82,7 @@ class ImageController extends \BaseController {
         if(Request::ajax())
         { 
             //return Response::json(array('imgName' => $thumbFilename ));
-            $viewString = View::make('image/upload-form')->__toString();
+            $viewString = View::make('image/upload-form')->with('uploadImage',$thumbFilename )->with('label',$label )->__toString();
             $newImage = url('/') . '/profiles/' . $save_location . '/'.$thumbFilename;
             return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
         }

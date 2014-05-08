@@ -4,6 +4,9 @@
 @section('content')
 
 	@include('layouts.pagetitle', array('title'=>'Add the information about your class', 'subtitle'=>'Make it as relevant and interesting as possible'))
+    <div id="upload_wrapper">
+         @include('image.upload-form', array('uploadImage' => null, 'label' => 'Upload you classes image'))
+    </div>
 
 	{{ Form::open(array('id' => 'evercisegroup_create', 'url' => 'evercisegroups', 'method' => 'post', 'class' => 'create-form')) }}
 
@@ -18,8 +21,6 @@
             {{ $errors->first('summary', '<p class="error-msg">:message</p>')}}
         @endif
 
-        CLASS IMAGE
-
         @include('form.select', array('fieldname'=>'category', 'label'=>'Category', 'values'=>$categories))
         @if ($errors->has('category'))
             {{ $errors->first('category', '<p class="error-msg">:message</p>')}}
@@ -30,27 +31,25 @@
             {{ $errors->first('summary', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'duration', 'placeholder'=>'0', 'maxlength'=>5, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class' ))
+        @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'0', 'maxlength'=>5, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class' ))
         @if ($errors->has('duration'))
             {{ $errors->first('duration', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'maxsize', 'placeholder'=>'1', 'maxlength'=>5, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' ))
+        @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'1', 'maxlength'=>5, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' ))
         @if ($errors->has('maxsize'))
             {{ $errors->first('maxsize', '<p class="error-msg">:message</p>')}}
         @endif
 
         LOCATION
 
-        @include('form.textfield', array('fieldname'=>'price', 'placeholder'=>'10', 'maxlength'=>5, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' ))
+        @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'10', 'maxlength'=>5, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' ))
         @if ($errors->has('price'))
             {{ $errors->first('price', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'customurl', 'placeholder'=>'Maximum 30 Characters', 'maxlength'=>30, 'label'=>'Custom Url', 'fieldtext'=>'Choose a custom url for your class (must be 6 or more alphanumeric characters) This will be used at the end of www.evercise.com/classes/ to direct people to your class page on evercise.' ))
-        @if ($errors->has('customurl'))
-            {{ $errors->first('customurl', '<p class="error-msg">:message</p>')}}
-        @endif
+
+        {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}
         
         <div class="center-btn-wrapper" >
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}

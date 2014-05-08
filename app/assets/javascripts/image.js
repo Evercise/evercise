@@ -96,6 +96,7 @@ function postCroppedImage()
             "width": $(  '#width' ).val(),
             "height": $(  '#height' ).val(),
             "img_url": $(  '#img_url' ).val(),
+            "label": $(  '#label' ).val(),
             "img_height": $(  '#img_height' ).val()
         },
         function( data ) {
