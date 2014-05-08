@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => '127.0.0.1',
-			'database'  => 'evercise_2_0',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => 'mewis_evercise',
+			'username'  => 'mewis_evercise',
+			'password'  => 'kuengooReef2',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
