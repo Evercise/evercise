@@ -35,8 +35,8 @@
 						<table width="600px" height="73px" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:18px; line-height:21.6px; color:#000000; padding: 0px 0px 0px 0px; font-family: Exo, lato, Helvetica, ‘Helvetica Neue’, Arial; ">
 							<tr align="center">
 								<td valign="top">
-									<span style="font-size:24px; line-height:28.8px; font-weight:bold">Welcome to Evercise!</span><br>
-									<span>You are just one step away from joining our community.</span>
+									<span style="font-size:24px; line-height:28.8px; font-weight:bold">So you want to Be a Pro?</span><br>
+									<span>Your Professional User application has being processed.</span>
 								</td>
 							</tr>
 						</table>
@@ -49,31 +49,15 @@
 									<span>Hi {{{ $display_name }}}.</span>
 									<br>
 									<br>
-									<span>You are about to be connected with a network of great trainers and likeminded keep-fitters. To complete the registration process and activate your account, click the link below.</span>
+									<span>Thank you for your interest to become a Professional User on Evercise. You made a great choice! There are so many benefits of joining Evercise as a professional.</span>
+									<br>
+									<br>
+									<span>Get started by adding classes today. </span>
+									<br>
+									<br>
+									<span>Thanks for joining Evercise!</span>
 
-									<!-- start button -->
-									<table height="15px" cellpadding="0" cellspacing="0" bgcolor="#ffffff" >
-										<tr>
-											<td height="15" ></td>
-										</tr>
-									</table>
-									<table cellspacing="0" cellpadding="0"> 
-										<tr> 
-											<td align="center"  height="30">
-												<a href="{{ URL::to('users') }}/{{ $display_name }}/activate/{{ urlencode($activation_code) }}" target="_blank">
-													{{HTML::image('img/click_to_verify_email.jpg', 'verify', array('id' => 'verify'));}}
-												</a>
-											</td> 
-										</tr> 
-									</table> 
-									<table height="15px" cellpadding="0" cellspacing="0" bgcolor="#ffffff" >
-										<tr>
-											<td height="15" ></td>
-										</tr>
-									</table>
-									<!-- end button -->
 
-									<span>Alternatively, you can copy this link into your browser.</span>
 
 									
 								</td>
@@ -85,19 +69,6 @@
 						</table>
 						<!-- end body -->
 
-						<!-- start link -->
-						<table width="600" height="120" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:12px; line-height:14.4px; color:#000000; padding: 0px 40px 0px 40px; font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; ">
-							<tr valign="top">
-								<td>
-									<p  style="max-width:520px; word-wrap:break-word;">Or point your browser to this address: <br /> {{ URL::to('users') }}/{{ $display_name }}/activate/{{ urlencode($activation_code) }}</p>
-									<br>
-									<br>
-									<br>
-									<span>Thanks for joining Evercise!</span>
-								</td>
-							</tr>
-						</table>
-						<!-- end link -->
 
 						<!-- start signature -->
 						<table width="600" height="80" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:12px; line-height:14.4px; color:#000000; padding: 0px 40px 0px 40px; font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; ">

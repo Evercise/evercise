@@ -16,12 +16,14 @@
 				<div class="cover-up">
 					<span class="btn btn-fb">select file</span> 
 					<div class="cover-up-wrap">
-						<p>Click select a file to choose a new image.</p>
+						<p>Accepted formats: JPG,JPEG,PNG,BMP</p>
 					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}	 
 
 			</div>
+			<p>{{ $fieldtext}}</p>
+			{{ Form::hidden( 'fieldtext' , $fieldtext, array('id' => 'fieldtext')) }}
 		</div>
 	</div>
 {{ Form::close() }}
@@ -44,12 +46,14 @@
 				<div class="cover-up">
 					<span class="btn btn-fb">select file</span> 
 					<div class="cover-up-wrap">
-						<p>Click select a file to choose a image.</p>
+						<p>Accepted formats: JPG,JPEG,PNG,BMP</p>
 					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}	 
 
 			</div>
+			<p>{{ $fieldtext}}</p>
+			{{ Form::hidden( 'fieldtext' , $fieldtext, array('id' => 'fieldtext')) }}
 		</div>
 	</div>
 {{ Form::close() }}

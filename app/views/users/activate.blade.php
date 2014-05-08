@@ -48,7 +48,7 @@
 			<div class="btn-wrapper" >
 				<br>
 				<br>
-				{{ HTML::linkRoute('home', 'Become a Trainer',null ,array('class' => 'btn-yellow')) }}
+				{{ HTML::linkRoute('trainers.create', 'Become a Trainer',null ,array('class' => 'btn-yellow')) }}
 			</div>
 		@endif
 	@endif

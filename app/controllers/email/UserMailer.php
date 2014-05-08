@@ -14,6 +14,7 @@ class UserMailer extends Mailer {
 		$events->listen('user.resend', 		'email\UserMailer@welcome');
 		$events->listen('user.forgot',      'email\UserMailer@forgotPassword');
 		$events->listen('user.newpassword', 'email\UserMailer@newPassword');
+		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
 	}
 
 	/**
@@ -75,6 +76,16 @@ class UserMailer extends Mailer {
 		$subject = 'New Password Information | Laravel4 With Sentry';
 		$view = 'emails.auth.newpassword';
 		$data['newPassword'] = $newPassword;
+		$data['email'] = $email;
+
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
+	public function upgrade($email, $display_name)
+	{
+		$subject = 'Welcome to Evercise';
+		$view = 'emails.user.upgrade';
+		$data['display_name'] = $display_name;
 		$data['email'] = $email;
 
 		return $this->sendTo($email, $subject, $view, $data );

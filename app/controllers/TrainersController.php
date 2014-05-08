@@ -64,8 +64,9 @@ class TrainersController extends \BaseController {
 			Input::all(),
 			array(
 				'title' => 'required',
-				'bio' => 'required',
+				'bio' => 'required|max:500|min:50',
 				'image' => 'required',
+				'website' => 'sometimes|active_url',
 			)
 		);
 		if($validator->fails()) {
@@ -106,8 +107,14 @@ class TrainersController extends \BaseController {
 			$userGroup = Sentry::findGroupById(3);
 			$user->addGroup($userGroup);
 
-			//return Response::json(route('home', array('display_name'=> $user->display_name)));
-			//return Response::json(array('image' => $image)); // for testing
+			// welcome email
+
+			Event::fire('user.upgrade', array(
+            	'email' => $user->email, 
+            	'display_name' => $user->display_name
+            ));
+
+			//respond
 			return Response::json(route('trainers.edit', array('display_name'=> $user->display_name)));
 		}
 

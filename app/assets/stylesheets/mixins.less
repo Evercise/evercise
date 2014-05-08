@@ -162,7 +162,16 @@
 			margin-bottom: 20px;
 		}
 		.slider-input{
-			width: 15%;
+			width: 30%;
+			margin-left: -1px;
+			.border-radiuses(4,4,0,0);
+		}
+		.slider_pre{
+			.border-radiuses(0,0,4px,4px);
+			border: 1px solid @grey;
+			height: 36px;
+			width: 36px;
+			float: left;
 		}
 		.datepicker{
 			width: 30%;
@@ -171,6 +180,7 @@
 		}
 		p{
 			color: lighten(@black, 40%);
+			float: left;
 		}
 	}/*
 	&:last-of-type {

@@ -97,6 +97,7 @@ function postCroppedImage()
             "height": $(  '#height' ).val(),
             "img_url": $(  '#img_url' ).val(),
             "label": $(  '#label' ).val(),
+            "fieldtext": $(  '#fieldtext' ).val(),
             "img_height": $(  '#img_height' ).val()
         },
         function( data ) {
@@ -106,6 +107,7 @@ function postCroppedImage()
                 console.log('loose');
                
             }else{
+                console.log(data);
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });

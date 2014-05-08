@@ -98,6 +98,7 @@ input,textarea,select,.drop_down{
 	.transition(all linear 0.2s);
 	.box-sizing();
 	margin-top: 0;
+	margin-left: 0;
 	background-color: @white;
 	border: 1px solid #cccccc;
 	padding: 10px 4px;
@@ -167,7 +168,7 @@ label{
 }
 
 
-.btn-yellow{.btn(#ffd21e);}
+.btn-yellow{.btn(@evercise-yellow);}
 .btn-fb{.btn(#3b5998,20);}
 
 /*error and success blcks  */
@@ -223,7 +224,7 @@ label{
 	.success_msg{
 		.success_msgs(10);
 	}
-	.btn{
+	.btn-yellow{
 		margin: auto;
 		.btn(@evercise-yellow, 220px,20);	
 	}
@@ -543,7 +544,7 @@ nav{
 		input{
 			width: 122px;
 			position: absolute;
-			top: 10px;
+			top: -10px;
 			left: 10px;
 			padding: 5px 0;
 		}
@@ -553,8 +554,8 @@ nav{
 	}
 	input#image{
 		width: 100%;
-		position: absolute;
 		opacity: 0;
+		height: 120px;
 	}
 	
 	.cover-up{
@@ -565,7 +566,7 @@ nav{
 		border: 1px solid @grey;
 		.btn{
 			position: absolute;
-			top: -15px;
+			top: 5px;
 			left: 5px;
 			width: 130px;
 			padding: 5px 0;
@@ -582,6 +583,10 @@ nav{
 			border: 1px solid @grey;
 		}
 	}
+
+	.error-msg{
+		width: 100%;
+	}
 }
 
 .frame{
@@ -591,6 +596,7 @@ nav{
 	padding: 9px 11px 11px 9px;
 	border: 1px solid #cccccc;
 	margin-right: 20px;
+	margin-bottom: 20px;
 	.preview {
 		width: 100px;
 		height: 100px;
