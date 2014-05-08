@@ -49,7 +49,12 @@ class EvercisegroupsController extends \BaseController {
 		{
 			$trainer = Trainer::where('user_id', $user->id)->get()->first();
 		}
-		else return 'Not a trainer';
+		//else return 'Not a trainer';
+
+		else
+		{
+			return View::make('trainers.about');
+		} 
 
 		$categoriesDB = category::all();
 
@@ -75,15 +80,13 @@ class EvercisegroupsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'classname' => 'required',
-				'description' => 'required',
+				'classname' => 'required|max:30|min:5',
+				'description' => 'required|max:500|min:100',
 				'category' => 'required',
-				//'summary' => 'required',
-				'duration' => 'required',
-				'maxsize' => 'required',
-				'price' => 'required',
+				'duration' => 'required|numeric|between:20,240',
+				'maxsize' => 'required|numeric|between:1,1000',
+				'price' => 'required||numeric|between:1,120',
 				'image'	=> 'required',
-				//'customurl' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -134,7 +137,9 @@ class EvercisegroupsController extends \BaseController {
 			));
 
 			//return Response::json(route('home', array('display_name'=> $user->display_name)));
-			return Response::json($evercisegroup); // for testing
+			//return Response::json($evercisegroup); // for testing
+			//return View::make('evercisegroups.index');
+			return Response::json(route('evercisegroups.index'));
 		}
 	}
 

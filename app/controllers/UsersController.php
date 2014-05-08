@@ -203,8 +203,14 @@ class UsersController extends \BaseController {
 			{
 				$user = Sentry::findUserByLogin($me['email']);
 			    Sentry::login($user,false);
+			    $trainerGroup = Sentry::findGroupByName('trainer');
+
 			    if ($redirect_after_login_url && $redirect_after_login_url != 'users.edit') {
 					return Redirect::route($redirect_after_login_url);
+				}
+				elseif ($user->inGroup($trainerGroup)) 
+				{
+					return Redirect::route('trainers.edit', $user->display_name);
 				}
 				else
 				{

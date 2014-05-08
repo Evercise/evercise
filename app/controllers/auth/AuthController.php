@@ -29,6 +29,8 @@ class AuthController extends \BaseController {
 		try
 		{
 			$user = Sentry::authenticate($credentials, false);
+			$trainerGroup = Sentry::findGroupByName('trainer');
+
 
 			if ($user)
 			{
@@ -40,6 +42,16 @@ class AuthController extends \BaseController {
 		        	}
 		        	else{
 		        		return Redirect::route($redirect_after_login_url);
+		        	}
+				}
+				elseif ($user->inGroup($trainerGroup)) 
+				{
+					if(\Request::ajax())
+		        	{
+		        		return \Response::json(route('trainers.edit', $user->display_name));
+		        	}
+		        	else{
+		        		return Redirect::route('trainers.edit', $user->display_name);
 		        	}
 				}
 				else

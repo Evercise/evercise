@@ -1,4 +1,6 @@
-<?php
+<?php namespace widgets;
+
+use Auth, BaseController, Form, Input, Redirect, Sentry, View, Request, Response, Validator, Image;
  
 class ImageController extends \BaseController {
 

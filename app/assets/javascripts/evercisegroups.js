@@ -22,7 +22,6 @@ jQuery( document ).ready( function( $ ) {
                 "classname": $( '#classname' ).val(),
                 "description": $( '#description' ).val(),
                 "category": $( '#category' ).val(),
-                "summary": $( '#summary' ).val(),
                 "duration": $( '#duration' ).val(),
                 "maxsize": $( '#maxsize' ).val(),
                 "price": $( '#price' ).val(),
@@ -51,10 +50,10 @@ jQuery( document ).ready( function( $ ) {
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
-                    /*$('.success_msg').show();
+                    $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 1000);*/
+                    }, 1000);
                     console.log(data);
                 }
             },

@@ -111,6 +111,7 @@ return array(
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Laracasts\Utilities\UtilitiesServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'Toin0u\Geocoder\GeocoderServiceProvider',
 
 	),
 
@@ -179,6 +180,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Sentry'		  => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'Image'	          => 'Intervention\Image\Facades\Image',
+		'Geocoder' 		  => 'Toin0u\Geocoder\GeocoderFacade',
 
 	),
 
