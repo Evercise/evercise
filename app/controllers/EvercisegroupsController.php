@@ -11,7 +11,9 @@ class EvercisegroupsController extends \BaseController {
 	{
 		if ( ! Sentry::check()) return 'Not logged in';
 		$user = Sentry::getUser();
-		if (Trainer::where('user_id', $user->id)->count())
+		$trainerGroup = Sentry::findGroupByName('trainer');
+
+		if ($user->inGroup($trainerGroup))
 		{
 			$trainer = Trainer::where('user_id', $user->id)->get()->first();
 
@@ -41,8 +43,12 @@ class EvercisegroupsController extends \BaseController {
 
 		if ( ! Sentry::check()) return 'Not logged in';
 		$user = Sentry::getUser();
-		if (Trainer::where('user_id', $user->id)->count())
+		$trainerGroup = Sentry::findGroupByName('trainer');
+
+		if ($user->inGroup($trainerGroup))
+		{
 			$trainer = Trainer::where('user_id', $user->id)->get()->first();
+		}
 		else return 'Not a trainer';
 
 		$categoriesDB = category::all();
