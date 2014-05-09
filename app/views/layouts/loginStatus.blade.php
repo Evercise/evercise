@@ -5,6 +5,8 @@
 	</li>
 
 	<div id="displayName-dropdown" class="dropdown-menu">
+		<span>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</span>
+		<hr>
 		<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
 	</div>
 	
