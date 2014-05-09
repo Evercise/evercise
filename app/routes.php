@@ -72,3 +72,5 @@ Route::post('/widgets/crop', array('as' => 'widgets.crop.post', 'uses' => 'widge
 
 Route::get('/location/geo', array('as' => 'location.geo', 'uses' => 'widgets\LocationController@getGeo'));
 
+Route::get('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar'));
+

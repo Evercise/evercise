@@ -38,6 +38,7 @@ jQuery( document ).ready( function( $ ) {
                     var scroll = false;
                     $.each(arr, function(index, value)
                     {
+                        console.log(value);
                         if (scroll == false) {
                             //$('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                             scroll = true;

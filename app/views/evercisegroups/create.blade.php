@@ -5,7 +5,7 @@
 
 	@include('layouts.pagetitle', array('title'=>'Add the information about your class', 'subtitle'=>'Make it as relevant and interesting as possible'))
     <div id="upload_wrapper">
-        @include('image.upload-form', array('uploadImage' => null, 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
+        @include('widgets.upload-form', array('uploadImage' => null, 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
     </div>
 
 	{{ Form::open(array('id' => 'evercisegroup_create', 'url' => 'evercisegroups', 'method' => 'post', 'class' => 'create-form')) }}
