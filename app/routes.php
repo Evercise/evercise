@@ -70,7 +70,7 @@ Route::post('/widgets/upload', array('as' => 'widgets.upload.post', 'uses' => 'w
 Route::get('/widgets/crop', array('as' => 'widgets.crop', 'uses' => 'widgets\ImageController@getCrop'));
 Route::post('/widgets/crop', array('as' => 'widgets.crop.post', 'uses' => 'widgets\ImageController@postCrop'));
 
-Route::get('/location/geo', array('as' => 'location.geo', 'uses' => 'widgets\LocationController@getGeo'));
+Route::get('/widgets/map', array('as' => 'widgets.map', 'uses' => 'widgets\LocationController@getMap'));
 
 Route::get('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar'));
 
