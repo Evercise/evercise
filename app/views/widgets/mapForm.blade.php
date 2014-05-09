@@ -14,6 +14,7 @@
 	
 	
 		@include('widgets.map')
+		{{ var_dump($geocode)}}
 		<br>
 		<p>{{ $fieldtext }}</p>
 	</div>
