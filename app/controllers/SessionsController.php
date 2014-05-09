@@ -19,6 +19,8 @@ class SessionsController extends \BaseController {
 	 */
 	public function create()
 	{
+		// NOTE - The view is set up in a view composer, not here. (app/composers.php)
+
 		return View::make('sessions.create');
 	}
 

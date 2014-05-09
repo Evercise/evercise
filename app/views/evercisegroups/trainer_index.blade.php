@@ -10,7 +10,7 @@
 		@foreach ($evercisegroups as $key=>$val)
 			<p>{{ $evercisegroups[$key] }}</p>
 			<li>{{ HTML::linkRoute('sessions.create', 'Add date', null, array('id'=>$key, 'class' => 'add_session')) }}</li>
+		@include('widgets.calendar', array('month'=>$month, 'year'=>$year))
 		@endforeach
 
-		@include('widgets.calendar', array('month'=>$month, 'year'=>$year))
 @stop
