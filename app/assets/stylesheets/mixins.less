@@ -173,6 +173,34 @@
 			width: 36px;
 			float: left;
 		}
+		.location-input{
+			width: auto;
+			margin-right: 2%;
+			&:nth-of-type(1){
+				width: 20%;
+			};
+			&:nth-of-type(2){
+				width: 68%;
+			};
+			&:nth-of-type(3){
+				width: 58%;
+			};
+			&:nth-of-type(4){
+				width: 30%;
+			};
+		}
+		.map-wrapper{
+			width: 90%;
+			height: 250px;
+			padding: 6px;
+			.box-sizing();
+			border: 1px solid @grey;
+			.border-radius();
+			#map-canvas{
+				height: 100%;
+			}
+		}
+		
 		.datepicker{
 			width: 30%;
 			background-image: url(/img/create_from_template.png); 

@@ -1,1 +1,3 @@
-<div id="map-canvas" style="width:100%; height: 300px;"></div>
+<div class="map-wrapper">
+	<div id="map-canvas" ></div>
+</div>

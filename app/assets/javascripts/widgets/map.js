@@ -43,7 +43,8 @@ function initialize() {
   var mapOptions = {
   	styles: styles,
     zoom: 10,
-    center: new google.maps.LatLng(-33.890542, 151.274856)
+    center: new google.maps.LatLng(-33.890542, 151.274856),
+    disableDefaultUI: true,
   };
 
   /*set map */
