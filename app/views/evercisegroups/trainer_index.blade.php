@@ -12,4 +12,6 @@
 			<li>{{ HTML::linkRoute('sessions.create', 'Add date', null, array('id'=>$key, 'class' => 'add_session')) }}</li>
 		@endforeach
 
+		{{ Calendar::generate(2012, 6); }}
+
 @stop

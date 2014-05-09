@@ -1,5 +1,5 @@
 @if( basename($uploadImage) != 'no-user-img.jpg' && $uploadImage != null)
-{{ Form::open(['id' => 'upload', 'url' => 'image/upload', 'files' => true, 'method' => 'post','class' => 'create-form']) }}
+{{ Form::open(['id' => 'upload', 'url' => 'widgets/upload', 'files' => true, 'method' => 'post','class' => 'create-form']) }}
 	<div class="formitem clearfix">
 		<div class="formlabel">
 
@@ -30,7 +30,7 @@
 
 @else
 
-{{ Form::open(['id' => 'upload', 'url' => 'image/upload', 'files' => true, 'method' => 'post','class' => 'create-form']) }}
+{{ Form::open(['id' => 'upload', 'url' => 'widgets/upload', 'files' => true, 'method' => 'post','class' => 'create-form']) }}
 	<div class="formitem clearfix">
 		<div class="formlabel">
 			{{ Form::label( 'image', $label) }}

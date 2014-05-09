@@ -65,10 +65,10 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 //Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
 
-Route::get('/image/upload', array('as' => 'image.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
-Route::post('/image/upload', array('as' => 'image.upload.post', 'uses' => 'widgets\ImageController@postUpload'));
-Route::get('/image/crop', array('as' => 'image.crop', 'uses' => 'widgets\ImageController@getCrop'));
-Route::post('/image/crop', array('as' => 'image.crop.post', 'uses' => 'widgets\ImageController@postCrop'));
+Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
+Route::post('/widgets/upload', array('as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload'));
+Route::get('/widgets/crop', array('as' => 'widgets.crop', 'uses' => 'widgets\ImageController@getCrop'));
+Route::post('/widgets/crop', array('as' => 'widgets.crop.post', 'uses' => 'widgets\ImageController@postCrop'));
 
 Route::get('/location/geo', array('as' => 'location.geo', 'uses' => 'widgets\LocationController@getGeo'));
 

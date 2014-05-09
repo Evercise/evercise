@@ -112,6 +112,7 @@ return array(
 		'Laracasts\Utilities\UtilitiesServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Toin0u\Geocoder\GeocoderServiceProvider',
+		'Gloudemans\Calendar\CalendarServiceProvider',
 
 	),
 
@@ -181,6 +182,7 @@ return array(
 		'Sentry'		  => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 		'Image'	          => 'Intervention\Image\Facades\Image',
 		'Geocoder' 		  => 'Toin0u\Geocoder\GeocoderFacade',
+		'Calendar'        => 'Gloudemans\Calendar\Facades\Calendar',
 
 	),
 

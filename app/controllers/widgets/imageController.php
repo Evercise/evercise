@@ -4,10 +4,10 @@ use Auth, BaseController, Form, Input, Redirect, Sentry, View, Request, Response
  
 class ImageController extends \BaseController {
 
-    protected $layout = 'image.upload-form';
+    protected $layout = 'widgets.upload-form';
  
     public function getUploadForm() {
-        return View::make('image/upload-form');
+        return View::make('widgets/upload-form');
     }
  
     public function postUpload() {
@@ -35,10 +35,10 @@ class ImageController extends \BaseController {
             
             if(Request::ajax())
             { 
-                $viewString = View::make('image/crop')->__toString();
+                $viewString = View::make('widgets/crop')->__toString();
                 $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
                // $postCrop = Response::json(route('image.crop.post'));
-                $postCrop = url('/').'/image/crop';
+                $postCrop = url('/').'/widgets/crop';
                 return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
             }
             else
@@ -48,7 +48,7 @@ class ImageController extends \BaseController {
         }
     }
     public function getCrop() {
-        return View::make('image/crop');
+        return View::make('widgets/crop');
     }
 
     public function postCrop() {
@@ -86,12 +86,12 @@ class ImageController extends \BaseController {
         { 
 
             //return Response::json(array('imgName' => $thumbFilename ));
-            $viewString = View::make('image/upload-form')->with('uploadImage',$thumbFilename )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
+            $viewString = View::make('widgets/upload-form')->with('uploadImage',$thumbFilename )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
            // return Response::json(array('uploadView'=>$viewString));
             $newImage = url('/') . '/profiles/' . $save_location . '/'.$thumbFilename;
             return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
         }
-        //return View::make('image/crop');
+        //return View::make('widgets/crop');
     }
 
     public function scale($factor, $params)
