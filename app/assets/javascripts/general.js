@@ -12,6 +12,11 @@ jQuery( document ).ready( function( $ ) {
     	})
     });
 */
+    $(document).on('click','#cancel_login',function(){
+        $('.mask').hide();
+        $('.login_wrap, .modal').remove();
+    })
+    
     $('input').keyup(function(){
        $(this).removeClass('error');
        $(this).closest('div').find('.error-msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});

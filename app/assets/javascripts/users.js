@@ -31,10 +31,6 @@ jQuery( document ).ready( function( $ ) {
         return false;
     });
 
-    $(document).on('click','#cancel_login',function(){
-        $('.mask').hide();
-        $('.login_wrap').remove();
-    })
 
     // create a new user
  
