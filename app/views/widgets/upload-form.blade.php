@@ -14,7 +14,7 @@
 			</div>
 			<div id='image-upload'>		
 				<div class="cover-up">
-					<span class="btn btn-fb">select file</span> 
+					<span class="btn btn-blue">select file</span> 
 					<div class="cover-up-wrap">
 						<p>Accepted formats: JPG,JPEG,PNG,BMP</p>
 					</div>
@@ -44,7 +44,7 @@
 			</div>
 			<div id='image-upload'>		
 				<div class="cover-up">
-					<span class="btn btn-fb">select file</span> 
+					<span class="btn btn-blue">select file</span> 
 					<div class="cover-up-wrap">
 						<p>Accepted formats: JPG,JPEG,PNG,BMP</p>
 					</div>
