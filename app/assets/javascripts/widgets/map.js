@@ -36,11 +36,13 @@ function initialize() {
 
   /* set lat and long  */
 
-  
+  // Added these defaults to stop errors. (TRIS)
+  var latitude = 0;
+  var longitude = 0;
 
   if ($('#latbox').val() != 0) {
-  	var latitude = $('#latbox').val();
-    var longitude = $('#lngbox').val();
+  	latitude = $('#latbox').val();
+    longitude = $('#lngbox').val();
   }
   else
   {
@@ -65,8 +67,10 @@ function initialize() {
 	
   var myLatLng = new google.maps.LatLng(latitude, longitude);
 
-  document.getElementById("latbox").value = latitude;
-  document.getElementById("lngbox").value = longitude;
+  if(document.getElementById("latbox"))
+    document.getElementById("latbox").value = latitude;
+  if(document.getElementById("lngbox"))
+    document.getElementById("lngbox").value = longitude;
 
   /* set ap options  */
 

@@ -43,6 +43,30 @@ jQuery( document ).ready( function( $ ) {
 
     /* sliders */
 
+    if(typeof laracasts !== 'undefined')
+    {
+      if(typeof laracasts.sliderParams !== 'undefined')
+      {
+        sliderParams = JSON.parse(laracasts.sliderParams);
+
+        $( "#slider" ).slider({
+          range: "min",
+          min: sliderParams.min,
+          max: sliderParams.max,
+          step: sliderParams.step,
+          value: sliderParams.value,
+          slide: function( event, ui ) {
+            $( "#slider-value" ).val( ui.value .toFixed(2) );
+          }
+        }); // end General slider
+
+        $('#slider').keyup(function(){
+            $( "#slider-value" ).slider({ value: $(this).val() });
+        })
+      }
+    }
+
+
     $( "#price-slider" ).slider({
       range: "min",
       min: 1,

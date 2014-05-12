@@ -41,6 +41,8 @@ View::composer(array('widgets.calendar'), function($view)
 	   {table_close}</table>{/table_close}
 	';
 
+	JavaScript::put(array('sliderParams' => json_encode(array('min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
+
 	Calendar::initialize(array('template' => $template));
 
 	$view->with('calendarData', $calendarData);
