@@ -11,9 +11,6 @@
 	{{ isset($fieldname3) ? Form::text( $fieldname3 , $city, array('id' => $fieldname3, 'class' => 'location-input', 'placeholder' => $placeholder3, 'maxlength' => $maxlength3))  : null }}	
 	{{ isset($fieldname4) ? Form::text( $fieldname4 , $postCode, array('id' => $fieldname4, 'class' => 'location-input', 'placeholder' => $placeholder4, 'maxlength' => $maxlength4))  : null }}
 
-	 {{ Form::hidden( 'latbox' , null, array('id' => 'latbox')) }}
-
-	  {{ Form::hidden( 'lngbox' , null, array('id' => 'lngbox')) }}
 
 	<button type="button" class="btn btn-blue" id="findLocation">find location</button>
 	

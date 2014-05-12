@@ -15,12 +15,12 @@ View::composer(array('widgets.calendar'), function($view)
 	   {heading_row_start}<tr>{/heading_row_start}
 
 	   {heading_previous_cell}<th><a href="{previous_url}">&lt;&lt;</a></th>{/heading_previous_cell}
-	   {heading_title_cell}<th colspan="{colspan}">{heading}</th>{/heading_title_cell}
+	   {heading_title_cell}<th colspan="{colspan}"><h6>{heading}</h6></th>{/heading_title_cell}
 	   {heading_next_cell}<th><a href="{next_url}">&gt;&gt;</a></th>{/heading_next_cell}
 
 	   {heading_row_end}</tr>{/heading_row_end}
 
-	   {week_row_start}<tr>{/week_row_start}
+	   {week_row_start}<tr class="calendar-days">{/week_row_start}
 	   {week_day_cell}<td>{week_day}</td>{/week_day_cell}
 	   {week_row_end}</tr>{/week_row_end}
 

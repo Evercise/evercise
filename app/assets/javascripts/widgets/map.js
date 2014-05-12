@@ -25,7 +25,7 @@ function initialize() {
 		    ]  
 		},{  
 		    featureType: 'road.local',  
-		    elementType: 'all',  
+		    elementType: 'geometry',  
 		    stylers: [  
 		        { hue: '#ffd21e' },  
 		        { saturation: 100 },  

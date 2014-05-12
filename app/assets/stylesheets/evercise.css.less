@@ -496,7 +496,7 @@ nav{
 
 /* end body area */
 
-/* create user page */
+/* create form */
 .formcheckbox{
 	text-align: center;
 
@@ -543,6 +543,71 @@ nav{
 	margin-top: 20px;
 }
 
+/* hub page */
+
+.hub-wrapper{
+	.column(9);
+	.hub-row{
+		.row(9);
+		height: 250px;
+		.hub-title{
+			.column(9,9);
+			padding: 5px 0;
+			margin-bottom: 5px;
+			border-bottom: 1px solid @grey;
+		}
+		.hub-block{
+			.column(3,9);
+		}
+	}
+	
+}
+
+.hub-calendar-wrapper{
+	.column(3);
+	#calendar{
+		border-top: 1px solid @grey;
+		margin-top: 37px;
+		&:after{
+			position: absolute;
+			top: 0;
+			left: -20px;
+			height: 1px;
+			width: 20px;
+			display: inline-block;
+			content: '';
+			border-top: 1px solid @grey;
+		}
+	}
+}
+
+/* calendar widget */
+
+#calendar{
+	position: relative;
+	width: 100%;
+	th{
+		padding-top: 8px;
+	}
+	tr{
+		height: 36px;
+ 		vertical-align:middle;
+ 		td{
+ 			text-align: center;
+ 			a{
+ 				display: block;
+ 				.font-size(1.2);
+ 				line-height: 30px;
+ 				&:hover{
+ 					.box-shadow(0 0px 1px 1px  @blue);
+ 					.border-radius();
+ 					.transition(all linear 0.1s);
+ 				}
+ 			}
+ 		}
+	}
+
+}
 /* image uploader */
 
 #image-upload{
