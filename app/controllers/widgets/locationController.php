@@ -1,6 +1,6 @@
 <?php namespace widgets;
 
-use Sentry, View, Geocoder, Exception, Request;
+use Sentry, View, Geocoder, Exception, Request, Response, JavaScript, Input, Session;
 
 
  
@@ -8,11 +8,15 @@ class LocationController extends \BaseController {
 
     public function getGeo() {
 
+       
+    }
+
+    public function postGeo() {
         $ip = Request::getClientIp();
 
-        if ($ip = '127.0.0.1' || $ip = null) {
-            $ip = '172.25.47.1';
-        }
+        $address = array_values(Input::get());
+
+        $address = implode(',', $address);
 
         $geocoder = new \Geocoder\Geocoder();
         $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
@@ -27,14 +31,19 @@ class LocationController extends \BaseController {
         $geocoder->registerProvider($chain);
         
         try {
-            $geocode = $geocoder->geocode($ip);
-            var_dump($geocode);
+           
+            $geocode = $geocoder->geocode($address);
+
+            JavaScript::put(array('latitude' => json_encode( $geocode->getLatitude()) , 'longitude' => json_encode( $geocode->getLongitude()) )  );
+
+            return Response::json(array('lat' => $geocode->getLatitude(), 'lng' => $geocode->getLongitude() ));
+
         } catch (Exception $e) {
-            echo $e->getMessage();
+             return Response::json(array('error' => $e->getMessage()));
         }        
     }
 
-     public function getMap() {
+    public function getMap() {
         return View::make('widgets/map');
     }
     

@@ -48,10 +48,10 @@ View::composer(array('widgets.calendar'), function($view)
 
 View::composer('widgets.mapForm', function($view)
 {
-    $ip = Request::getClientIp();
+    $query = Request::getClientIp();
 
-    if ($ip = '127.0.0.1' || $ip = null) {
-        $ip = '172.25.47.1';
+    if ($query = '127.0.0.1' || $query = null) {
+        $query = '151.237.238.126';
     }
 
     $geocoder = new \Geocoder\Geocoder();
@@ -67,7 +67,7 @@ View::composer('widgets.mapForm', function($view)
     $geocoder->registerProvider($chain);
     
     try {
-        $geocode = $geocoder->geocode($ip);
+        $geocode = $geocoder->geocode($query);
     } catch (Exception $e) {
         echo $e->getMessage();
     }   

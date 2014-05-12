@@ -15,10 +15,10 @@ Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 
 
 Route::resource('users', 'UsersController');
-Route::resource('sessions', 'sessionsController');
-Route::resource('gyms', 'gymsController');
-Route::resource('ratings', 'ratingsController');
-Route::resource('evercisegroups', 'evercisegroupsController');
+Route::resource('sessions', 'SessionsController');
+Route::resource('gyms', 'GymsController');
+Route::resource('ratings', 'RatingsController');
+Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 
 Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){
@@ -72,6 +72,7 @@ Route::post('/widgets/crop', array('as' => 'widgets.crop.post', 'uses' => 'widge
 
 Route::get('/widgets/map', array('as' => 'widgets.map', 'uses' => 'widgets\LocationController@getMap'));
 Route::get('/widgets/mapForm', array('as' => 'widgets.map-form', 'uses' => 'widgets\LocationController@getGeo'));
+Route::post('/widgets/postGeo', array('as' => 'widgets.postGeo', 'uses' => 'widgets\LocationController@postGeo'));
 
 Route::get('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar'));
 

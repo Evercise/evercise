@@ -6,7 +6,6 @@ jQuery( document ).ready( function( $ ) {
         if(typeof laracasts.categoryDescriptions !== 'undefined')
         {
             categoryDescriptions = JSON.parse(laracasts.categoryDescriptions);
-            console.log(categoryDescriptions);
             // TODO -  This is here ready to add the little rollover descriptions to the category selections.
         }
     }
@@ -16,7 +15,7 @@ jQuery( document ).ready( function( $ ) {
     $( '#evercisegroup_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
-        // post to sontroller
+        // post to controller
         $.post(
             $( this ).prop( 'action' ),
             {
@@ -26,13 +25,16 @@ jQuery( document ).ready( function( $ ) {
                 "duration": $( '#duration' ).val(),
                 "maxsize": $( '#maxsize' ).val(),
                 "price": $( '#price' ).val(),
-                "image": $( '#thumbFilename' ).val()
+                "image": $( '#thumbFilename' ).val(),
+                "address": $( '#street' ).val() + ' '+ $( '#street' ).val(),
+                "city": $( '#city' ).val(),
+                "postcode": $( '#postcode' ).val(),
+                "lat": $( '#latbox' ).val(),
+                "long": $( '#lngbox' ).val()
             },
             function( data ) {
-                console.log("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    console.log('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
@@ -55,8 +57,7 @@ jQuery( document ).ready( function( $ ) {
                     $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 1000);
-                    console.log(data);
+                    }, 1000);;
                 }
             },
             'json'
@@ -80,7 +81,6 @@ jQuery( document ).ready( function( $ ) {
                 $('.mask').show();
                 $('.container').append(data);
                 $('#evercisegroup').val(evercisegroupId);
-                console.log('id: '+ $('#evercisegroup').val());
              }
         );
         return false;

@@ -61,7 +61,7 @@ class EvercisegroupsController extends \BaseController {
 			return View::make('trainers.about');
 		} 
 
-		$categoriesDB = category::all();
+		$categoriesDB = Category::all();
 
 		$categories = array();
 		$categoryDescriptions = array();
@@ -95,6 +95,8 @@ class EvercisegroupsController extends \BaseController {
 				'maxsize' => 'required|numeric|between:1,1000',
 				'price' => 'required|numeric|between:1,120',
 				'image'	=> 'required',
+				'lat' => 'required',
+				'long' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -123,6 +125,11 @@ class EvercisegroupsController extends \BaseController {
 			$price = Input::get('price');
 			$image = Input::get('image');
 			//$customurl = Input::get('customurl');
+			$address = Input::get('address');
+			$city = Input::get('city');
+			$postcode = Input::get('postcode');
+			$lat = Input::get('lat');
+			$long = Input::get('long');
 
 			if ( ! Sentry::check()) return 'Not logged in';
 
@@ -141,6 +148,11 @@ class EvercisegroupsController extends \BaseController {
 				'capacity'=>$maxsize,
 				'default_price'=>$price,
 				'image' => $image,
+				'address'=>$address,
+				'town'=>$city,
+				'postcode'=>$postcode,
+				'lat'=>$lat,
+				'long' => $long
 				//'customurl'=>$customurl
 			));
 

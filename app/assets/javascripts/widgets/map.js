@@ -36,16 +36,44 @@ function initialize() {
 
   /* set lat and long  */
 
-  console.log( laracasts.latitude+ ' - '+ laracasts.longitude );
+  
+
+  if ($('#latbox').val() != 0) {
+  	var latitude = $('#latbox').val();
+    var longitude = $('#lngbox').val();
+  }
+  else
+  {
+  	if(typeof laracasts !== 'undefined')
+    {
+        if(typeof laracasts.latitude !== 'undefined')
+        {
+        	var latitude = laracasts.latitude;
+        }
+
+        if(typeof laracasts.latitude !== 'undefined')
+        {
+        	var longitude = laracasts.longitude;
+        }
+    }
+  	
+  };
+
+  
+
+  console.log(latitude);
 	
-  var myLatLng = new google.maps.LatLng(laracasts.latitude, laracasts.longitude);
+  var myLatLng = new google.maps.LatLng(latitude, longitude);
+
+  document.getElementById("latbox").value = latitude;
+  document.getElementById("lngbox").value = longitude;
 
   /* set ap options  */
 
   var mapOptions = {
   	styles: styles,
-    zoom: 10,
-    center: new google.maps.LatLng(laracasts.latitude, laracasts.longitude),
+    zoom: 14,
+    center: new google.maps.LatLng(latitude, longitude),
     disableDefaultUI: true,
   };
 
@@ -63,10 +91,11 @@ function initialize() {
       draggable:true,
   });
 
+  	
+
   google.maps.event.addListener(marker, 'dragend', function (event) {
-  	console.log( this.getPosition().lat());
-    //document.getElementById("latbox").value = this.getPosition().lat();
-    //document.getElementById("lngbox").value = this.getPosition().lng();
+    document.getElementById("latbox").value = this.getPosition().lat();
+    document.getElementById("lngbox").value = this.getPosition().lng();
   });
 
 }
@@ -80,3 +109,30 @@ function loadScript() {
 }
 
 window.onload = loadScript;
+
+$(document).on('click', '#findLocation',function(){
+	var url = '/widgets/postGeo';
+
+	var data = {
+        street: $('#number').val()+' '+$('#street').val(),
+        city: $('#city').val(),
+        post_code: $('#postcode').val()
+    }
+
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        dataType: 'json'
+    })
+    .done(
+        function(data) { 
+        	console.log(data);
+        	$('#latbox').val(data.lat);
+        	$('#lngbox').val(data.lng);
+        	initialize();
+         }
+    );
+    return false;
+})
