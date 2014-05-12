@@ -76,3 +76,21 @@ View::composer('widgets.mapForm', function($view)
 
 	$view->with('houseNumber', $geocode->getStreetNumber())->with('streetName', $geocode->getStreetName())->with('city', $geocode->getCity())->with('postCode', $geocode->getZipcode());
 });
+
+View::composer('widgets.time', function($view)
+{
+	$hours = array();
+	for ($i=0; $i<24; $i++)
+	{
+		$hours[$i] = $i;
+	}
+
+	$minute_intervals = 15;
+	$minutes = array();
+	for ($i=0; $i<60; $i+=$minute_intervals)
+	{
+		$minutes[$i] = $i;
+	}
+
+	$view->with('hours', $hours)->with('minutes', $minutes);
+});

@@ -22,7 +22,7 @@ jQuery( document ).ready( function( $ ) {
                     setTimeout(function() {
                         window.location.href = data;
                     }, 1000);*/
-                    console.log(data);
+                    console.log("data: "+data);
                 }
             },
             'json'

@@ -37,8 +37,12 @@ class SessionsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'evercisegroup' => 'required',
-				'date' => 'required',
+				's-evercisegroupId' => 'required',
+				's-year' => 'required',
+				's-month' => 'required',
+				's-date' => 'required',
+				's-time-hour' => 'required',
+				's-time-minute' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -58,9 +62,17 @@ class SessionsController extends \BaseController {
 		}
 		else {
 
-			$evercisegroup = Input::get('evercisegroup');
-			$date = Input::get('date');
+			$evercisegroup = Input::get('s-evercisegroupId');
+			$year = Input::get('s-year');
+			$month = Input::get('s-month');
+			$date = Input::get('s-date');
+			$hour = Input::get('s-time-hour');
+			$minute = Input::get('s-time-minute');
 			//$customurl = Input::get('customurl');
+
+			$time = $hour.'-'.$minute.'-00';
+
+			$date_time = $year.'-'.$month.'-'.$date.' '.$time;
 
 			if ( ! Sentry::check()) return 'Not logged in';
 
@@ -71,7 +83,7 @@ class SessionsController extends \BaseController {
 
 			$session = EverciseSession::create(array(
 				'evercisegroup_id'=>$evercisegroup,
-				'date_time'=>$date,
+				'date_time'=>$date_time,
 			));
 
 			//return Response::json(route('home', array('display_name'=> $user->display_name)));

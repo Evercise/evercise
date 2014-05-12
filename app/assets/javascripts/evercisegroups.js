@@ -77,7 +77,7 @@ jQuery( document ).ready( function( $ ) {
             dataType: 'html'
         })
         .done(
-            function(data) { 
+            function(data) {
                 $('.mask').show();
                 $('.container').append(data);
                 $('#evercisegroup').val(evercisegroupId);
@@ -85,6 +85,41 @@ jQuery( document ).ready( function( $ ) {
         );
         return false;
 
+    });
+
+
+    //$('#calendar a').attr('href', 'sessions/create');
+
+    $('#calendar a').click(function(){
+        console.log(this.id);
+        var year = $('#year').val();
+        var month = $('#month').val();
+        var date = this.id.replace('day_', '');
+        var evercisegroupId = $('#evercisegroupId').val();
+
+        var completeDate = date+'-'+month+'-'+year;
+
+        console.log(completeDate);
+
+        var url = 'sessions/create';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                $('.mask').show();
+                $('.container').append(data);
+                $('#s-year').val(year);
+                $('#s-month').val(month);
+                $('#s-date').val(date);
+                $('#s-evercisegroupId').val(evercisegroupId);
+                $('#complete-date').html(completeDate);
+                console.log('id: '+ evercisegroupId);
+             }
+        );
+        return false;
     });
 
 
