@@ -48,29 +48,31 @@ View::composer(array('widgets.calendar'), function($view)
 
 View::composer('widgets.mapForm', function($view)
 {
-	  $ip = Request::getClientIp();
+    $ip = Request::getClientIp();
 
-        if ($ip = '127.0.0.1' || $ip = null) {
-            $ip = '172.25.47.1';
-        }
+    if ($ip = '127.0.0.1' || $ip = null) {
+        $ip = '172.25.47.1';
+    }
 
-        $geocoder = new \Geocoder\Geocoder();
-        $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-        $provider = new \Geocoder\Provider\GoogleMapsProvider($adapter);
+    $geocoder = new \Geocoder\Geocoder();
+    $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+    $provider = new \Geocoder\Provider\GoogleMapsProvider($adapter);
 
-        $chain    = new \Geocoder\Provider\ChainProvider(array(
-                    new \Geocoder\Provider\FreeGeoIpProvider($adapter),
-                    new \Geocoder\Provider\HostIpProvider($adapter),
-                    new \Geocoder\Provider\GoogleMapsProvider($adapter),
-        ));
+    $chain    = new \Geocoder\Provider\ChainProvider(array(
+                new \Geocoder\Provider\FreeGeoIpProvider($adapter),
+                new \Geocoder\Provider\HostIpProvider($adapter),
+                new \Geocoder\Provider\GoogleMapsProvider($adapter),
+    ));
 
-        $geocoder->registerProvider($chain);
-        
-        try {
-            $geocode = $geocoder->geocode($ip);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }   
+    $geocoder->registerProvider($chain);
+    
+    try {
+        $geocode = $geocoder->geocode($ip);
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }   
 
-    	$view->with('geocode', $geocode);
+    JavaScript::put(array('latitude' => json_encode( $geocode->getLatitude()) , 'longitude' => json_encode( $geocode->getLongitude()) )  );
+
+	$view->with('houseNumber', $geocode->getStreetNumber())->with('streetName', $geocode->getStreetName())->with('city', $geocode->getCity())->with('postCode', $geocode->getZipcode());
 });

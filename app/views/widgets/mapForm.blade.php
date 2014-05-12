@@ -14,7 +14,12 @@
 	
 	
 		@include('widgets.map')
-		{{ var_dump($geocode)}}
+		{{ $houseNumber }}
+		<br>
+		{{ $streetName }}
+		<br>
+		{{ $city }}
+
 		<br>
 		<p>{{ $fieldtext }}</p>
 	</div>

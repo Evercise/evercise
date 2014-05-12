@@ -35,15 +35,17 @@ function initialize() {
 	];
 
   /* set lat and long  */
+
+  console.log( laracasts.latitude+ ' - '+ laracasts.longitude );
 	
-  var myLatLng = new google.maps.LatLng(-33.890542, 151.274856);
+  var myLatLng = new google.maps.LatLng(laracasts.latitude, laracasts.longitude);
 
   /* set ap options  */
 
   var mapOptions = {
   	styles: styles,
     zoom: 10,
-    center: new google.maps.LatLng(-33.890542, 151.274856),
+    center: new google.maps.LatLng(laracasts.latitude, laracasts.longitude),
     disableDefaultUI: true,
   };
 
