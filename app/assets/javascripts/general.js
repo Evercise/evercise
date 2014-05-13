@@ -1,4 +1,25 @@
+initFunctions = [];
+function registerInitFunction(f)
+{
+  functionName = /\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ];
+  initFunctions.push({'name' : functionName, 'run' : f});
+}
+
+
 jQuery( document ).ready( function( $ ) {
+
+    if(typeof laracasts !== 'undefined')
+    {
+      initFunctions.forEach(function(f) {
+        console.log('function: '+f.name)
+        //f.f();
+        if(typeof laracasts[f.name] !== 'undefined')
+        {
+            f.run();
+        }
+      });
+    }
+
 /*	$('select').each(function(){
         var title = $(this).attr('title');
       	if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
@@ -94,12 +115,12 @@ jQuery( document ).ready( function( $ ) {
 
 function initSlider(sliderName)
 {
-  console.log("initSlider()");
+  console.log("initSlider("+sliderName+")");
   if(typeof laracasts !== 'undefined')
   {
-    if(typeof laracasts.sliderParams !== 'undefined')
+    if(typeof laracasts[sliderName] !== 'undefined')
     {
-      sliderParams = JSON.parse(laracasts.sliderParams);
+      sliderParams = JSON.parse(laracasts[sliderName]);
 
       $( "#"+sliderName+"-slider" ).slider({
         range: "min",

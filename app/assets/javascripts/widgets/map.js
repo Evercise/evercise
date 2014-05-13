@@ -1,4 +1,31 @@
-function initialize() {
+function MapWidgetInit() {
+
+  $(document).on('click', '#findLocation',function(){
+    var url = '/widgets/postGeo';
+
+    var data = {
+          street: $('#number').val()+' '+$('#street').val(),
+          city: $('#city').val(),
+          post_code: $('#postcode').val()
+      }
+
+
+      $.ajax({
+          url: url,
+          type: 'POST',
+          data: data,
+          dataType: 'json'
+      })
+      .done(
+          function(data) { 
+            console.log(data);
+            $('#latbox').val(data.lat);
+            $('#lngbox').val(data.lng);
+            MapWidgetInit();
+           }
+      );
+      return false;
+  })
 
 	/* style the map  */
 
@@ -104,39 +131,16 @@ function initialize() {
 
 }
 
-function loadScript() {
+function MapWidgetloadScript() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
-      'callback=initialize';
+      'callback=MapWidgetInit';
   document.body.appendChild(script);
 }
 
-window.onload = loadScript;
+//window.onload = MapWidgetloadScript;
+// Initialised from general.js using laracast.
 
-$(document).on('click', '#findLocation',function(){
-	var url = '/widgets/postGeo';
+registerInitFunction(MapWidgetloadScript);
 
-	var data = {
-        street: $('#number').val()+' '+$('#street').val(),
-        city: $('#city').val(),
-        post_code: $('#postcode').val()
-    }
-
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: data,
-        dataType: 'json'
-    })
-    .done(
-        function(data) { 
-        	console.log(data);
-        	$('#latbox').val(data.lat);
-        	$('#lngbox').val(data.lng);
-        	initialize();
-         }
-    );
-    return false;
-})

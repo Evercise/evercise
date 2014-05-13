@@ -71,6 +71,7 @@ class EvercisegroupsController extends \BaseController {
 		    $categoryDescriptions[$cat->id] = $cat->description;
 		}
 
+		JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS. priority 1 (0 is first)
 		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
 		return View::make('evercisegroups.create')->with('categories', $categories);
 	}
