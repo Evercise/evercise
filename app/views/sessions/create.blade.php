@@ -7,9 +7,8 @@
 		{{ Form::hidden( 's-month' , '', array('id' => 's-month')) }}
 		{{ Form::hidden( 's-date' , '', array('id' => 's-date')) }}
 		@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time'))
-		@include('form.generalslider', array('fieldname'=>'s-time', 'label'=>'Time', 'placeholder'=>'Time', 'maxlength'=>'Time', 'fieldtext'=>'why is there no slider here?'))
+		@include('form.generalslider', array('fieldname'=>'s-price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>'why is there no slider here?'))
 		<div id="complete-date"></div>
 		{{ Form::submit('Create session' , array('class'=>'btn-yellow ')) }}
-
     {{ Form::close() }}
 </div>

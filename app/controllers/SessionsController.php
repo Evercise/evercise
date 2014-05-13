@@ -43,6 +43,7 @@ class SessionsController extends \BaseController {
 				's-date' => 'required',
 				's-time-hour' => 'required',
 				's-time-minute' => 'required',
+				's-price' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -68,6 +69,7 @@ class SessionsController extends \BaseController {
 			$date = Input::get('s-date');
 			$hour = Input::get('s-time-hour');
 			$minute = Input::get('s-time-minute');
+			$price = Input::get('s-price');
 			//$customurl = Input::get('customurl');
 
 			$time = $hour.'-'.$minute.'-00';
@@ -84,6 +86,7 @@ class SessionsController extends \BaseController {
 			$session = EverciseSession::create(array(
 				'evercisegroup_id'=>$evercisegroup,
 				'date_time'=>$date_time,
+				'price'=>$price,
 			));
 
 			//return Response::json(route('home', array('display_name'=> $user->display_name)));

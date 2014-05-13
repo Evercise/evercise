@@ -62,7 +62,7 @@ function initialize() {
   };
 
   
-
+  
   console.log(latitude);
 	
   var myLatLng = new google.maps.LatLng(latitude, longitude);
@@ -72,7 +72,7 @@ function initialize() {
   if(document.getElementById("lngbox"))
     document.getElementById("lngbox").value = longitude;
 
-  /* set ap options  */
+   // set ap options  
 
   var mapOptions = {
   	styles: styles,
@@ -81,11 +81,11 @@ function initialize() {
     disableDefaultUI: true,
   };
 
-  /*set map */
+  // set map 
 
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-  /* add marker */
+   // add marker 
 
   var image = '/img/mapmark.png';
   var marker = new google.maps.Marker({
