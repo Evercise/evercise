@@ -78,4 +78,3 @@ Route::get('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'wid
 
 Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 'widgets\EvercisegroupsController@block'));
 
-Event::listen('illuminate.query', function($sql) { echo '<h4>' . $sql . '</h4>' ;});

@@ -139,6 +139,7 @@ jQuery( document ).ready( function( $ ) {
 });
 
 function login(){
+
     // login
     $( '#login_wrap form' ).on( 'submit', function() {
         $('.error-msg').remove();

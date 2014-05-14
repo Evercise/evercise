@@ -21,19 +21,24 @@ class EvercisegroupsController extends \BaseController {
 
 			$evercisegroups = Evercisegroup::with('EverciseSession')->where('user_id', $user->id)->get();
 
-			$sessionDates = array();
+			if ($evercisegroups->isEmpty()) {
+				return View::make('evercisegroups.first_class');
+			}else{
+				$sessionDates = array();
 
-			foreach ($evercisegroups as $key) {
+				foreach ($evercisegroups as $key) {
 
-				$sessionDates[] = $this->arrayDate($key->EverciseSession->lists('date_time'));
+					$sessionDates[] = $this->arrayDate($key->EverciseSession->lists('date_time'));
+				}
+
+				$month = date("m");
+				$year = date("Y");
+
+
+				JavaScript::put(array('calendarSlide' => 1 )); // Initialise calendarSlide JS. priority 1 (0 is first)
+				return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);	
 			}
 
-			$month = date("m");
-			$year = date("Y");
-
-
-
-			return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);
 		}
 		else
 		{

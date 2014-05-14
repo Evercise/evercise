@@ -73,9 +73,9 @@ img{ max-width: 100%;}
 h1{.font-size(3.5); .main-font()}
 h2{.font-size(3.1); .main-font()}
 h3{.font-size(2.8); .main-font()}
-h4{.font-size(2.3); .main-font()}
-h5{.font-size(2.0); .main-font()}
-h6{.font-size(1.6); .main-font()}
+h4{.font-size(2.3); .main-font(400)}
+h5{.font-size(2.0); .main-font(400)}
+h6{.font-size(1.6); .main-font(400)}
 
 p,a{
 	.font-size(1.6);
@@ -448,6 +448,10 @@ nav{
 			line-height: 30px;
 		}
 	}
+	small{
+		.font-size(1.2);
+		color: #5e5e5e;
+	}
 	.center-img{
 		margin-bottom: 50px;
 	}
@@ -549,7 +553,6 @@ nav{
 	.column(9);
 	.hub-row{
 		.row(9);
-		height: 300px;
 		.hub-title{
 			.column(9,9);
 			padding: 5px 0;

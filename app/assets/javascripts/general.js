@@ -1,4 +1,3 @@
-initFunctions = [];
 function registerInitFunction(f)
 {
   functionName = /\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ];
