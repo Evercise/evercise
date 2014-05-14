@@ -12,7 +12,7 @@ class MapComposer {
 
     $geocoder = new \Geocoder\Geocoder();
     $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-    $provider = new \Geocoder\Provider\GoogleMapsProvider($adapter);
+    //$provider = new \Geocoder\Provider\GoogleMapsProvider($adapter);
 
     $chain    = new \Geocoder\Provider\ChainProvider(array(
                 new \Geocoder\Provider\FreeGeoIpProvider($adapter),

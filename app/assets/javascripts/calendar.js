@@ -13,13 +13,14 @@ function calendarSlide () {
 	// create a array to store scrolling posistions
 	 
 	class_top = new Array();
-	class_bottom = new Array();
 	class_height = new Array();
+	class_id = new Array();
 	
 	// find top of each class and add it to the class top array
 	// get the height of each class
 
     $('.hub-row').each(function(){
+    	class_id.push($(this).data('id'));
     	class_top.push($(this).offset().top);
     	class_height.push($(this).height());
     })
@@ -30,8 +31,6 @@ function calendarSlide () {
 
     mt = parseInt($('#calendar').css('marginTop'));
     topmt = mt;
-
-    bottom = $('html').height();
 
     // get window position
 
@@ -46,17 +45,10 @@ function calendarSlide () {
         		'-o-transition': 'all 0.5s ease',
         		'transition': 'all 0.5s ease'
             });
-    	} else if( y == bottom ){
-    		$('#calendar').css({
-        		marginTop: '37px',
-        		'-webkit-transition': 'all 0.5s ease',
-        		'-moz-transition': 'all 0.5s ease',
-        		'-o-transition': 'all 0.5s ease',
-        		'transition': 'all 0.5s ease'
-            });
+            $('#evercisegroupId').val(class_id[0]);
+            $('.hub-row').removeClass('selected');
+    		$('div[data-id="'+class_id[0]+'"]').addClass('selected');
     	} 
-
-
     	else if (y >= class_top[i] ) {
     		mt = parseInt(mt + class_height[i]);
     		
@@ -69,10 +61,16 @@ function calendarSlide () {
             });
     		i++;
     		p++;
+    		$('#evercisegroupId').val(class_id[i]);
+    		$('.hub-row').removeClass('selected');
+    		$('div[data-id="'+class_id[i]+'"]').addClass('selected');
     	}
     	else if( y < class_top[p] && p >= 0){
+
+    		$('.hub-row').removeClass('selected');
+    		$('div[data-id="'+class_id[p]+'"]').addClass('selected');
+            $('#evercisegroupId').val(class_id[p]);
     		i--;
-    		//mt = parseInt($('#calendar').css('marginTop'));
     		mt = parseInt(mt - class_height[i]);
     		$('#calendar').css({
         		marginTop: mt+'px',
@@ -81,7 +79,8 @@ function calendarSlide () {
         		'-o-transition': 'all 0.5s ease',
         		'transition': 'all 0.5s ease'
             });
-            p--;
+
+            p--;           
     	};
     });
    

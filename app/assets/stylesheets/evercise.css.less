@@ -562,6 +562,12 @@ nav{
 		.hub-block{
 			.column(3,9);
 		}
+		&.selected{
+			.class-block{
+				.box-shadow(0 2px 7px darken(@grey, 5%));
+				border: 1px solid darken(@grey, 10%);
+			}
+		}
 	}
 	
 }
@@ -587,6 +593,7 @@ nav{
 /* class block  */
 
 .class-block{
+	.transition(all linear 0.3s);
 	.column(3);
 	.box-sizing();
 	.border-radius();
