@@ -11,24 +11,29 @@ class EvercisegroupsController extends \BaseController {
 	{
 		if ( ! Sentry::check()) return 'Not logged in';
 		$user = Sentry::getUser();
+
+		$directory = $user->directory;
 		$trainerGroup = Sentry::findGroupByName('trainer');
 
 		if ($user->inGroup($trainerGroup))
 		{
 			$trainer = Trainer::where('user_id', $user->id)->get()->first();
 
-			$evercisegroupsDB = Evercisegroup::where('user_id', $user->id)->get();
-			$evercisegroups = array();
-			foreach ($evercisegroupsDB as $eg)
-			{
-			    $evercisegroups[$eg->id] = $eg->name;
+			$evercisegroups = Evercisegroup::with('EverciseSession')->where('user_id', $user->id)->get();
+
+			$sessionDates = array();
+
+			foreach ($evercisegroups as $key) {
+
+				$sessionDates[] = $this->arrayDate($key->EverciseSession->lists('date_time'));
 			}
 
 			$month = date("m");
 			$year = date("Y");
 
 
-			return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('year', $year)->with('month', $month);
+
+			return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);
 		}
 		else
 		{

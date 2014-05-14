@@ -549,7 +549,7 @@ nav{
 	.column(9);
 	.hub-row{
 		.row(9);
-		height: 250px;
+		height: 300px;
 		.hub-title{
 			.column(9,9);
 			padding: 5px 0;
@@ -580,6 +580,66 @@ nav{
 		}
 	}
 }
+
+/* class block  */
+
+.class-block{
+	.column(3);
+	.box-sizing();
+	.border-radius();
+	border:1px solid @grey;
+	padding: 10px;
+	.class-block-img-wrap{
+		height: 135px;
+		overflow: hidden;
+		margin-bottom: 20px;
+		background: @grey;
+		.border-radius();
+		img.class-block-img{
+			
+		}	
+	}
+	
+	h3{
+		.font-size(1.4);
+		.heading-font(600);
+	}
+	select{
+		.heading-font(600);
+		.font-size(1.2);
+		border:none;
+		color: @black;
+		margin-left: -5px;
+		padding: 3px 0;
+	}
+	.class-block-content{
+		height: 70px;
+	}
+	p{
+		.font-size(1.2);
+		line-height: 18px;
+		color: lighten(@black, 15%);
+	}
+	span{
+		text-transform: uppercase;
+		color: lighten(@black, 15%);
+	}
+	strong{
+		.font-size(1.4);
+		color: #000;
+	}
+	.class-block-stats{
+		.row(3);
+		margin-top: 12px;
+		.class-block-stat{
+			.column(1);
+			span{
+				display: block;
+			}
+		}
+	}
+}
+
 
 /* calendar widget */
 

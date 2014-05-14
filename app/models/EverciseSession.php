@@ -9,4 +9,9 @@ class EverciseSession extends \Eloquent {
 	 * @var string
 	 */
 	protected $table = 'sessions';
+
+	public function evercisegroup()
+    {
+        return $this->belongsTo('EverciseGroup');
+    }
 }

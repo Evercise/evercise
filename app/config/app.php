@@ -113,7 +113,7 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 		'Toin0u\Geocoder\GeocoderServiceProvider',
 		'Gloudemans\Calendar\CalendarServiceProvider',
-
+		'Toin0u\Geotools\GeotoolsServiceProvider',
 	),
 
 	/*
@@ -183,6 +183,7 @@ return array(
 		'Image'	          => 'Intervention\Image\Facades\Image',
 		'Geocoder' 		  => 'Toin0u\Geocoder\GeocoderFacade',
 		'Calendar'        => 'Gloudemans\Calendar\Facades\Calendar',
+		'Geotools' 		  => 'Toin0u\Geotools\GeotoolsFacade',
 
 	),
 

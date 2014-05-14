@@ -11,14 +11,15 @@
 	@include('form.hidden', array('fieldname'=>'date', 'value'=>''))
 
 	<div class="hub-wrapper">
+
 		@foreach ($evercisegroups as $key=>$value)
 			<div class="hub-row">
-				<div class="hub-title"><h4>{{ $value }}</h4></div>
+				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">		
 					<li>{{ HTML::linkRoute('sessions.create', 'Add date', null, array('id'=>$key, 'class' => 'add_session')) }}</li>	
 				</div>
 				<div class="hub-block">
-					h
+					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'], 'sessionDates' => $sessionDates[$key] ))
 				</div>
 				<div class="hub-block">
 					h
