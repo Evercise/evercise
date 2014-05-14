@@ -11,8 +11,8 @@ class CalendarComposer {
 
 	   {heading_row_start}<tr>{/heading_row_start}
 
-	   {heading_previous_cell}<th><a href="{previous_url}">&lt;&lt;</a></th>{/heading_previous_cell}
-	   {heading_title_cell}<th colspan="{colspan}"><h6>{heading}</h6></th>{/heading_title_cell}
+	   {heading_previous_cell}<th><a href="{previous_url}">&#171;</a></th>{/heading_previous_cell}
+	   {heading_title_cell}<th colspan="{colspan}"><h6>&#171;{heading}&#0187;</h6></th>{/heading_title_cell}
 	   {heading_next_cell}<th><a href="{next_url}">&gt;&gt;</a></th>{/heading_next_cell}
 
 	   {heading_row_end}</tr>{/heading_row_end}
