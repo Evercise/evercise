@@ -12,6 +12,7 @@
 		"laracasts/utilities":"1.0",
 		"intervention/image": "dev-master",
 		"toin0u/geocoder-laravel": "0.2.*@dev",
+		"toin0u/geotools-laravel": "~0.2",
     	"gloudemans/calendar": "dev-master"
 	},
 	"autoload": {

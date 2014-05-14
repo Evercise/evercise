@@ -50,5 +50,15 @@ class BaseController extends Controller {
 	    return implode($pass); //turn the array into a string
 	}
 
+	public function arrayDate($array, $format='h:m a M-d')
+	{
+		$dateTime = array();
+
+		foreach ($array as $key => $value) {
+			$dateTime[] = date($format, strtotime($value));
+		}
+		return $dateTime;
+	}
+
 
 }

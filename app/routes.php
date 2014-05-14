@@ -76,4 +76,6 @@ Route::post('/widgets/postGeo', array('as' => 'widgets.postGeo', 'uses' => 'widg
 
 Route::get('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar'));
 
+Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 'widgets\EvercisegroupsController@block'));
 
+Event::listen('illuminate.query', function($sql) { echo '<h4>' . $sql . '</h4>' ;});
