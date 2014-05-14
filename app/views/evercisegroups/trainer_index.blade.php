@@ -5,6 +5,7 @@
 
 	@include('layouts.pagetitle', array('title'=>'View Classes', 'subtitle'=>'and stuff'))
 	@include('form.hidden', array('fieldname'=>'evercisegroupId', 'value'=>$evercisegroups[0]->id))
+	@include('form.hidden', array('fieldname'=>'originalprice', 'value'=>$evercisegroups[0]->default_price))
 	@include('form.hidden', array('fieldname'=>'year', 'value'=>$year))
 	@include('form.hidden', array('fieldname'=>'month', 'value'=>$month))
 	@include('form.hidden', array('fieldname'=>'date', 'value'=>''))
@@ -21,7 +22,7 @@
 					<li>{{ HTML::linkRoute('sessions.create', 'Add date', null, array('id'=>$key, 'class' => 'add_session')) }}</li>	
 				</div>
 				<div class="hub-block">
-					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'], 'sessionDates' => $sessionDates[$key] ))
+					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'], 'sessionDates' => $sessionDates[$key], 'distance' => $miles[$key]  ))
 				</div>
 				<div class="hub-block">
 					h

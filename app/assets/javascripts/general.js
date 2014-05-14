@@ -61,55 +61,7 @@ jQuery( document ).ready( function( $ ) {
       $('.top-msg').fadeOut(500);
     }, 5000);
 
-    /* sliders */
-
-
-
-    $( "#price-slider" ).slider({
-      range: "min",
-      min: 1,
-      max: 120,
-      step: 0.50,
-      value: 1,
-      slide: function( event, ui ) {
-        $( "#price" ).val( ui.value .toFixed(2) );
-      }
-    }); // end pricee slider
-
-    $('#price').keyup(function(){
-        $( "#price-slider" ).slider({ value: $(this).val() });
-    })
-
-    $( "#maxsize-slider" ).slider({
-      range: "min",
-      min: 1,
-      max: 30,
-      step: 1,
-      value: 1,
-      slide: function( event, ui ) {
-        $( "#maxsize" ).val( ui.value );
-      }
-    }); // end pricee slider
-
-    $('#maxsize').keyup(function(){
-        $( "#maxsize-slider" ).slider({ value: $(this).val() });
-    })
-
-    $( "#duration-slider" ).slider({
-      range: "min",
-      min: 0,
-      max: 240,
-      step: 10,
-      value: 0,
-      slide: function( event, ui ) {
-        $( "#duration" ).val( ui.value );
-      }
-    }); // end pricee slider
-
-    $('#duration').keyup(function(){
-        $( "#duration-slider" ).slider({ value: $(this).val() });
-    })
-
+    
 });
 
 function initSlider(sliderName)

@@ -370,11 +370,10 @@ nav{
 
 .login_wrap,.modal{
 	width: 300px;
-	margin-left: -150px;
+	margin-left: -160px;
 	left: 50%;
 	top: 30%;
 	.border-radius(4);
-	.box-sizing();
 	background-color: @white;
 	position: fixed;
 	z-index: 9999;
@@ -410,6 +409,32 @@ nav{
 		margin-top: 20px;
 		text-align: center;
 	}
+}
+
+.modal{
+	.row(6);
+	margin-left: -275px;
+	.formitem{
+		.row(4);
+		margin-bottom: 20px;
+		.formlabel{
+			.column(1,4);
+		}
+		.formfield{
+			.column(3,4);
+			input{
+				margin-bottom: 10px;
+			}
+			.time-box{
+				width: 48%;
+				margin-right: 2%;
+				&:last-of-type{
+					margin-right: 0;
+				}
+			}
+		}
+	}
+	
 }
 
 .full_width{
@@ -625,6 +650,7 @@ nav{
 	.class-block-content{
 		height: 70px;
 	}
+	
 	p{
 		.font-size(1.2);
 		line-height: 18px;
@@ -646,6 +672,12 @@ nav{
 			span{
 				display: block;
 			}
+		}
+	}
+	.class-block-no-dates{
+		padding: 3px 0;
+		p{
+			color: @black;
 		}
 	}
 }
