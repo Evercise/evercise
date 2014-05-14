@@ -139,3 +139,4 @@ function initSlider(sliderName)
     }
   }
 }
+registerInitFunction(initSlider);
