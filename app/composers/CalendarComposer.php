@@ -9,11 +9,11 @@ class CalendarComposer {
 	$template = '
 	   {table_open}<table border="0" cellpadding="0" cellspacing="0" id="calendar">{/table_open}
 
-	   {heading_row_start}<tr>{/heading_row_start}
+	   {heading_row_start}<tr class="calendar-head">{/heading_row_start}
 
-	   {heading_previous_cell}<th><a href="{previous_url}">&#171;</a></th>{/heading_previous_cell}
-	   {heading_title_cell}<th colspan="{colspan}"><h6>&#171;{heading}&#0187;</h6></th>{/heading_title_cell}
-	   {heading_next_cell}<th><a href="{next_url}">&gt;&gt;</a></th>{/heading_next_cell}
+	   {heading_previous_cell}<th><a href="#" id="month_{previous_url}">&#171;</a></th>{/heading_previous_cell}
+	   {heading_title_cell}<th colspan="{colspan}"><h6>{heading}</h6></th>{/heading_title_cell}
+		   {heading_next_cell}<th><a href="#" id="month_{next_url}">&#0187;</a></th>{/heading_next_cell}
 
 	   {heading_row_end}</tr>{/heading_row_end}
 
@@ -21,7 +21,7 @@ class CalendarComposer {
 	   {week_day_cell}<td>{week_day}</td>{/week_day_cell}
 	   {week_row_end}</tr>{/week_row_end}
 
-	   {cal_row_start}<tr>{/cal_row_start}
+	   {cal_row_start}<tr class="calendar-row">{/cal_row_start}
 	   {cal_cell_start}<td>{/cal_cell_start}
 
 	   {cal_cell_content}<a href="{content}">{day}</a>{/cal_cell_content}
@@ -38,9 +38,10 @@ class CalendarComposer {
 	   {table_close}</table>{/table_close}
 	';
 
+	JavaScript::put(array('initEverciseGroups' => 1 ));
 	JavaScript::put(array('price' => json_encode(array('min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
 
-	Calendar::initialize(array('template' => $template));
+	Calendar::initialize(array('template' => $template, 'show_next_prev' => true));
 
 	$view->with('calendarData', $calendarData);
   }
