@@ -19,12 +19,40 @@
 			" data-id="{{ $value['id'] }}">
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">
+				buttons
 				</div>
 				<div class="hub-block">
 					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'], 'sessionDates' => $sessionDates[$key], 'distance' => $miles[$key]  ))
 				</div>
 				<div class="hub-block">
-					h
+				<h5>This class has:</h5>
+				@if (count($pastDates[$key]) == 1) 
+					{{ count($pastDates[$key])}} past date
+				@else
+					{{ count($pastDates[$key])}} past dates
+				@endif
+
+				<br>
+
+				@if (count($futureDates[$key]) == 1) 
+					{{ count($futureDates[$key])}} upcoming date
+				@else
+					{{ count($futureDates[$key])}} upcoming dates
+				@endif
+				
+				<br>
+				<br>
+				<h5>Upcoming dates:</h5>
+				<br>
+				@if($futureDates[$key])
+					@foreach ($futureDates[$key] as $key => $value)
+						{{ $value}}<br>
+					@endforeach
+				@else
+					No Upcoming Dates
+				@endif
+				
+					
 				</div>
 			</div>
 		@endforeach	
