@@ -55,9 +55,12 @@ class CalendarController extends \BaseController {
 		';
 		//\Calendar::initialize(array('template' => $template, 'show_next_prev' => true));
 
-		$monthyear = explode("_", Input::get('monthyear'));
+		/*$monthyear = explode("_", Input::get('monthyear'));
 		$month = explode("-", $monthyear[1])[0];
-		$year = explode("-", $monthyear[1])[1];
+		$year = explode("-", $monthyear[1])[1];*/
+
+		$month = Input::get('month');
+		$year = Input::get('year');
 
 		//$month = date("m") - 1;
 		//$year = date("Y");

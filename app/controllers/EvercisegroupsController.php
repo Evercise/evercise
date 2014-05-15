@@ -34,7 +34,7 @@ class EvercisegroupsController extends \BaseController {
 				$month = date("m");
 				$year = date("Y");
 
-
+				JavaScript::put(array('price' => json_encode(array('min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
 				JavaScript::put(array('calendarSlide' => 1 )); // Initialise calendarSlide JS. priority 1 (0 is first)
 				return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);	
 			}

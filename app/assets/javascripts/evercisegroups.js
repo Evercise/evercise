@@ -66,32 +66,6 @@ function initEverciseGroups()
         return false;
     });
 
-
-    $('.add_session').click(function(){
-        var evercisegroupId = this.id;
-        //console.log(evercisegroupId);
-
-        var url = this.href;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'html'
-        })
-        .done(
-            function(data) {
-                $('.mask').show();
-                $('.container').append(data);
-                $('#evercisegroup').val(evercisegroupId);
-             }
-        );
-        return false;
-
-    });
-
-
-    //$('#calendar a').attr('href', 'sessions/create');
-
-
     bindCalendar();
 
 }
@@ -135,11 +109,19 @@ function bindCalendar()
 
     $('#calendar .calendar-head a').click(function(){
         console.log("ID: "+this.id);
+
+        var monthyear = this.id.split("_");
+        var month = monthyear[1].split("-")[0];
+        var year = monthyear[1].split("-")[1];
+
+        $('#month').val(month);
+        $('#year').val(year);
+
         var url = 'widgets/calendar';
         $.ajax({
             url: url,
             type: 'POST',
-            data: 'monthyear='+this.id,
+            data: 'month='+month+'&year='+year,
             dataType: 'html'
         })
         .done(

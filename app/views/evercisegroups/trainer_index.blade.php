@@ -17,8 +17,7 @@
 			@endif
 			" data-id="{{ $value['id'] }}">
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
-				<div class="hub-block">		
-					<li>{{ HTML::linkRoute('sessions.create', 'Add date', null, array('id'=>$key, 'class' => 'add_session')) }}</li>	
+				<div class="hub-block">
 				</div>
 				<div class="hub-block">
 					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'], 'sessionDates' => $sessionDates[$key] ))
