@@ -1,5 +1,6 @@
 //Evercisegroups.js
-jQuery( document ).ready( function( $ ) {
+function initEverciseGroups()
+{
 
     if(typeof laracasts !== 'undefined')
     {
@@ -91,6 +92,17 @@ jQuery( document ).ready( function( $ ) {
     //$('#calendar a').attr('href', 'sessions/create');
 
     $('#calendar a').click(function(){
+
+
+        bindCalendar();
+
+    }
+
+registerInitFunction(initEverciseGroups);
+
+function bindCalendar()
+{
+    $('#calendar .calendar-row a').click(function(){
         var year = $('#year').val();
         var month = $('#month').val();
         var date = this.id.replace('day_', '');
@@ -117,9 +129,27 @@ jQuery( document ).ready( function( $ ) {
                 $('#complete-date span').html(completeDate);
              }
         );
+
         return false;
     });
 
+    $('#calendar .calendar-head a').click(function(){
+        console.log("ID: "+this.id);
+        var url = 'widgets/calendar';
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: 'monthyear='+this.id,
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                //console.log('id: '+ data);
+                $('.hub-calendar-wrapper').html(data);
+                bindCalendar();
+             }
+        );
 
-
-});
+        return false;
+    });
+}
