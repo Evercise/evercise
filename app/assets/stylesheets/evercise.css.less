@@ -73,8 +73,8 @@ img{ max-width: 100%;}
 h1{.font-size(3.5); .main-font()}
 h2{.font-size(3.1); .main-font()}
 h3{.font-size(2.8); .main-font()}
-h4{.font-size(2.3); .main-font(400)}
-h5{.font-size(2.0); .main-font(400)}
+h4{.font-size(2.3); .main-font()}
+h5{.font-size(2.0); .main-font()}
 h6{.font-size(1.6); .main-font(400)}
 
 p,a{
@@ -146,7 +146,7 @@ label{
 // buttons 
 
 .btn(@bk, @width : 100% , @margin : 0){
-	.font-size(1.4);
+	.font-size(1.6);
 	text-align: center;
 	padding: 10px 4px;
 	.border-radius(4);
@@ -155,7 +155,7 @@ label{
 	color: contrast(@bk, darken(@bk, lightness(@bk) ),lighten(@bk, (100 - lightness(@bk))), 50%);
 	.gradient (lighten(@bk, 15%), @bk);
 	width: @width;
-	.text-shadow(0 -1px 1px contrast(@bk,lighten(@bk, (100 - lightness(@bk))), darken(@bk, lightness(@bk) ), 50%));
+	.text-shadow(0 0px 1px contrast(@bk,lighten(@bk, (100 - lightness(@bk))), darken(@bk, lightness(@bk) ), 50%));
 	display: block;
 	margin-top:@margin+px;
 	&:hover{
@@ -171,6 +171,13 @@ label{
 .btn-yellow{.btn(@evercise-yellow);}
 .btn-fb{.btn(#3b5998,20);}
 .btn-blue{.btn(@blue);}
+.btn-red{.btn(@red);}
+.disabled{ 
+	pointer-events: none;
+	opacity: 0.65;
+}
+
+
 
 /*error and success blcks  */
 
@@ -587,9 +594,23 @@ nav{
 		.hub-block{
 			.column(3,9);
 			.box-sizing();
+			.font-size(1.2);
+			.line-height(1.6);
+			color: #333333;
+			padding-top: 20px;
+			&:nth-of-type(2){
+				padding-left: 25px;
+				padding-right: 25px;
+			};
+			&:nth-of-type(3){
+				padding-top: 10px;
+			};
 			&:nth-of-type(4){
 				padding-left: 25px;
 			};
+			.btn{
+				margin-bottom: 20px;
+			}
 		}
 		&.selected{
 			.class-block{

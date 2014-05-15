@@ -19,7 +19,9 @@
 			" data-id="{{ $value['id'] }}">
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">
-				buttons
+				{{ HTML::linkRoute('evercisegroups.create', 'Edit Class!',null ,array('class' => 'btn btn-yellow')) }}
+				{{ HTML::linkRoute('evercisegroups.create', 'Delete Class!',null ,array('class' => 'btn btn-red disabled')) }}
+				{{ HTML::linkRoute('evercisegroups.create', 'View Participants',null ,array('class' => 'btn btn-blue')) }}
 				</div>
 				<div class="hub-block">
 					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'], 'sessionDates' => $sessionDates[$key], 'distance' => $miles[$key]  ))
