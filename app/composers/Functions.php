@@ -29,5 +29,15 @@ class Functions {
 
     return $geocode;
   }
+
+    public static function getDistance($clientLat, $clientLng, $lat, $lng)
+  {
+    $geotools = new \League\Geotools\Geotools();
+    $coordA   = new \League\Geotools\Coordinate\Coordinate(array($clientLat, $clientLng));
+    $coordB   = new \League\Geotools\Coordinate\Coordinate(array($lat, $lng));
+    $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
+
+    return $distance;
+  }
  
 }
