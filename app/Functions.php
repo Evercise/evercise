@@ -1,8 +1,8 @@
 <?php
  
-class ClassBlockComposer {
+class Functions {
  
-  public function compose($view)
+  public static function getPosition()
   {
     $query = Request::getClientIp();
 
@@ -12,7 +12,6 @@ class ClassBlockComposer {
 
     $geocoder = new \Geocoder\Geocoder();
     $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-    $provider = new \Geocoder\Provider\GoogleMapsProvider($adapter);
 
     $chain    = new \Geocoder\Provider\ChainProvider(array(
                 new \Geocoder\Provider\FreeGeoIpProvider($adapter),
@@ -26,14 +25,19 @@ class ClassBlockComposer {
         $geocode = $geocoder->geocode($query);
     } catch (Exception $e) {
         echo $e->getMessage();
-    } 
+    }   
 
+    return $geocode;
+  }
+
+    public static function getDistance($clientLat, $clientLng, $lat, $lng)
+  {
     $geotools = new \League\Geotools\Geotools();
-    $coordA   = new \League\Geotools\Coordinate\Coordinate(array($geocode->getLatitude(), $geocode->getLongitude()));
-    $coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+    $coordA   = new \League\Geotools\Coordinate\Coordinate(array($clientLat, $clientLng));
+    $coordB   = new \League\Geotools\Coordinate\Coordinate(array($lat, $lng));
     $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
 
-    $view->with('distance', $distance->in('mi')->vincenty());
+    return $distance;
   }
  
 }

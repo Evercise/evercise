@@ -67,7 +67,6 @@ function initEverciseGroups()
     });
 
     bindCalendar();
-
 }
 
 registerInitFunction(initEverciseGroups);
@@ -75,15 +74,13 @@ registerInitFunction(initEverciseGroups);
 function bindCalendar()
 {
     $('#calendar .calendar-row a').click(function(){
-        console.log("ID: "+this.id);
         var year = $('#year').val();
         var month = $('#month').val();
         var date = this.id.replace('day_', '');
         var evercisegroupId = $('#evercisegroupId').val();
-
+        var originalPrice =  $('#originalprice').val();
         var completeDate = date+'-'+month+'-'+year;
 
-        console.log(completeDate);
 
         var url = 'sessions/create';
         $.ajax({
@@ -99,8 +96,8 @@ function bindCalendar()
                 $('#s-month').val(month);
                 $('#s-date').val(date);
                 $('#s-evercisegroupId').val(evercisegroupId);
-                $('#complete-date').html(completeDate);
-                console.log('id: '+ evercisegroupId);
+                $('#price').val(originalPrice);
+                $('#complete-date span').html(completeDate);
              }
         );
 
