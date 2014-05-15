@@ -109,11 +109,10 @@ function bindCalendar()
 
     // Change month of calendar
     $('#calendar .calendar-head a').click(function(){
-        console.log("ID: "+this.id);
-
-        var monthyear = this.id.split("_");
-        var month = monthyear[1].split("-")[0];
-        var year = monthyear[1].split("-")[1];
+        var monthyear = this.id.split("?")[1];
+        var year = monthyear.split("&")[0].split("=")[1];
+        var month = monthyear.split("&")[1].split("=")[1];
+        //console.log("ID: "+month);
 
         $('#month').val(month);
         $('#year').val(year);
