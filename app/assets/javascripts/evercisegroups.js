@@ -1,4 +1,4 @@
-//Evercisegroups.js
+// evercisegroups.js
 function initEverciseGroups()
 {
 
@@ -73,10 +73,13 @@ registerInitFunction(initEverciseGroups);
 
 function bindCalendar()
 {
+
+    // Bring up new session view, based on date selected
     $('#calendar .calendar-row a').click(function(){
         var year = $('#year').val();
         var month = $('#month').val();
-        var date = this.id.replace('day_', '');
+        var href = $(this).attr('href');
+        var date = href.replace('day_', '');
         var evercisegroupId = $('#evercisegroupId').val();
         var originalPrice =  $('#originalprice').val();
         var completeDate = date+'-'+month+'-'+year;
@@ -104,6 +107,7 @@ function bindCalendar()
         return false;
     });
 
+    // Change month of calendar
     $('#calendar .calendar-head a').click(function(){
         console.log("ID: "+this.id);
 
