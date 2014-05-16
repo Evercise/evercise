@@ -76,6 +76,7 @@ class SessionsController extends \BaseController {
 
         //$bumclouds = Input::get('bumclouds');
 
+
 		return View::make('sessions.create')->with('year',$year)->with('month',$month)->with('date',$date)->with('id',$id)->with('duration',$duration)->with('price',$price);
 	}
 

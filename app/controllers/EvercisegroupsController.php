@@ -35,6 +35,7 @@ class EvercisegroupsController extends \BaseController {
 				$year = date("Y");
 
 				//JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
+		JavaScript::put(array('initSessions' => 1 )); // Initialise session JS.
 				JavaScript::put(array('calendarSlide' => 1 )); // Initialise calendarSlide JS. priority 1 (0 is first)
 				return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);	
 			}
@@ -85,6 +86,7 @@ class EvercisegroupsController extends \BaseController {
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
 
+		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
 		JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
 		return View::make('evercisegroups.create')->with('categories', $categories);

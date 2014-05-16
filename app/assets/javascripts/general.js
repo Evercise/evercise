@@ -31,7 +31,7 @@ jQuery( document ).ready( function( $ )
        initFunctions.forEach(function(f) {
         if (f.name == name)
         {
-           //console.log('RUNNING: '+name+' : '+laracasts[l]);
+           console.log('RUNNING: '+name+' : '+laracasts[l]);
            f.run(laracasts[l]);
         }
       });

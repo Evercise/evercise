@@ -1,8 +1,10 @@
 //Sessions.js
-jQuery( document ).ready( function( $ ) {
+function initSessions()
+{
+   // $( '#newsession' ).on( 'submit', function() {
+    $(document).on('submit', '#newsession' , function() {
 
-
-    $( '#newsession' ).on( 'submit', function() {
+        alert('dick');
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
@@ -30,4 +32,5 @@ jQuery( document ).ready( function( $ ) {
         return false;
     });
 
-});
+}
+registerInitFunction(initSessions);

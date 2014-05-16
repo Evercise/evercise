@@ -1,5 +1,5 @@
 // evercisegroups.js
-function initEverciseGroups()
+function initEvercisegroups()
 {
 
     if(typeof laracasts !== 'undefined')
@@ -70,7 +70,7 @@ function initEverciseGroups()
     bindCalendar();
 }
 
-registerInitFunction(initEverciseGroups);
+registerInitFunction(initEvercisegroups);
 
 function bindCalendar()
 {
