@@ -52,28 +52,31 @@
         @endif
 
         @if(Session::has('duration'))
-            @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class', 'value'=>Session::get('duration') ))
+            @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class', 'default'=>Session::get('duration') ))
         @else
-            @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class' ))
+            @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class', 'default'=>50 ))
         @endif
+
         @if ($errors->has('duration'))
             {{ $errors->first('duration', '<p class="error-msg">:message</p>')}}
         @endif
 
         @if(Session::has('maxsize'))
-            @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' , 'value' => Session::get('maxsize') ))
+            @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' , 'default' => Session::get('maxsize') ))
         @else
-            @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' ))
+            @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.', 'default'=>10 ))
         @endif
+
         @if ($errors->has('maxsize'))
             {{ $errors->first('maxsize', '<p class="error-msg">:message</p>')}}
         @endif
 
         @if(Session::has('price'))
-            @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' , 'value' => Session::get('price') ))
+            @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' , 'default' => Session::get('price') ))
         @else
-            @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' ))
+            @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.', 'default'=>15 ))
         @endif
+
         @if ($errors->has('price'))
             {{ $errors->first('price', '<p class="error-msg">:message</p>')}}
         @endif

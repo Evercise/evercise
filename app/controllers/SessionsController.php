@@ -20,7 +20,33 @@ class SessionsController extends \BaseController {
 	public function create()
 	{
 		// The slider is initialised in JS from the view, as the document.ready has already run
-		return View::make('sessions.create');
+
+		/*
+                $('#s-year').val(year);
+                $('#s-month').val(month);
+                $('#s-date').val(date);
+                $('#s-evercisegroupId').val(evercisegroupId);
+                $('#s-evercisegroupDuration').val(evercisegroupDuration);
+                $('#price').val(originalPrice);
+                $('#complete-date span').html(completeDate);
+                $('#session-class-name span').html(session_class_name);
+                $('#session-class-price span').html(originalPrice);*/
+
+                //year='+year+'&month='+month+'&date='+date+'&evercisegroupId='+evercisegroupId
+
+        $year = Input::get('year');
+        $month = Input::get('month');
+        $date = Input::get('date');
+        $id = Input::get('evercisegroupId');
+
+		$evercisegroup = Evercisegroup::where('id', $id)->first();
+
+		$duration = $evercisegroup->default_duration;
+		$price = $evercisegroup->default_price;
+
+        //$bumclouds = Input::get('bumclouds');
+
+		return View::make('sessions.create')->with('year',$year)->with('month',$month)->with('date',$date)->with('id',$id)->with('duration',$duration)->with('price',$price);
 	}
 
 	/**
