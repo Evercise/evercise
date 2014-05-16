@@ -119,6 +119,19 @@ input,textarea,select,.drop_down{
 	}
 }
 
+.slider_pre{
+	.border-radiuses(0,0,4px,4px);
+	border: 1px solid @grey;
+	height: 36px;
+	width: 36px;
+	float: left;
+}
+
+.slider-input{
+	width: 30%;
+	margin-left: -1px;
+	.border-radiuses(4,4,0,0);
+}
 
 #password_confirmation{
 	margin-top: 10px;
@@ -379,7 +392,7 @@ nav{
 	width: 300px;
 	margin-left: -160px;
 	left: 50%;
-	top: 30%;
+	top: 20%;
 	.border-radius(4);
 	background-color: @white;
 	position: fixed;
@@ -419,8 +432,30 @@ nav{
 }
 
 .modal{
-	.row(6);
-	margin-left: -275px;
+	.row(7);
+	margin-left: -307px;
+	.modal-head{
+		.column(7,7);
+		margin-bottom: 20px;
+		border-bottom: 1px dashed @grey;
+		padding-bottom: 13px;
+
+		#complete-date{
+			.font-size(1.6);
+			span{
+				color: @blue;
+			}
+		}
+	}
+	.modal-body{
+		.grey-box{
+			width: 100%;
+			background: lighten(@grey, 15%);
+			.box-sizing();
+			padding: 5px;
+			margin-bottom: 20px;
+		}
+	}
 	.formitem{
 		.row(4);
 		margin-bottom: 20px;
@@ -432,6 +467,12 @@ nav{
 			input{
 				margin-bottom: 10px;
 			}
+			.slider_pre{
+				width: 15%;
+			}
+			.slider-input{
+				width: 84%;
+			}
 			.time-box{
 				width: 48%;
 				margin-right: 2%;
@@ -441,7 +482,7 @@ nav{
 			}
 		}
 	}
-	
+		
 }
 
 .full_width{
@@ -568,7 +609,7 @@ nav{
 	            
 }
 
-.fb-wrapper{
+.fb-wrapper, .btn-wrapper{
 	.column(4);
 	.push(4);
 	margin-bottom: 20px;
@@ -624,6 +665,7 @@ nav{
 
 .hub-calendar-wrapper{
 	.column(3);
+	.box-sizing();
 	#calendar{
 		border-top: 1px solid @grey;
 		margin-top: 37px;
@@ -663,6 +705,7 @@ nav{
 	h3{
 		.font-size(1.4);
 		.heading-font(600);
+		margin-bottom: 10px;
 	}
 	select{
 		.heading-font(600);
@@ -670,7 +713,7 @@ nav{
 		border:none;
 		color: @black;
 		margin-left: -5px;
-		padding: 3px 0;
+		padding: 0 0 3px;
 	}
 	.class-block-content{
 		height: 70px;
@@ -735,7 +778,8 @@ nav{
 	}
 	.calendarHighlight{
 		a{
-			color: #f00;
+			color: @blue;
+			background: rgba(0,0,0,0.03);
 		}
 	}
 

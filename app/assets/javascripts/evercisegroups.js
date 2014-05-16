@@ -66,6 +66,7 @@ function initEverciseGroups()
         return false;
     });
 
+
     bindCalendar();
 }
 
@@ -83,6 +84,8 @@ function bindCalendar()
         var evercisegroupId = $('#evercisegroupId').val();
         var originalPrice =  $('#originalprice').val();
         var completeDate = date+'-'+month+'-'+year;
+        var session_class_name = $('#evercisegroupName').val();
+        var evercisegroupDuration = $('#evercisegroupDuration').val();
 
 
         var url = 'sessions/create';
@@ -99,8 +102,12 @@ function bindCalendar()
                 $('#s-month').val(month);
                 $('#s-date').val(date);
                 $('#s-evercisegroupId').val(evercisegroupId);
+                $('#s-evercisegroupDuration').val(evercisegroupDuration);
                 $('#price').val(originalPrice);
                 $('#complete-date span').html(completeDate);
+                $('#session-class-name span').html(session_class_name);
+                $('#session-class-price span').html(originalPrice);
+                session_overview();
              }
         );
 
@@ -134,4 +141,38 @@ function bindCalendar()
 
         return false;
     });
+}
+
+//1400235562274 
+
+function session_overview() {
+
+    // update start and end time on changing of tim dropdown
+    
+    $('select.time-box').on('change', function(){
+
+          var day = $('#s-date').val();
+          var month = $('#s-month').val();
+          var year = $('#s-year').val();
+          var hour = $('select[name="s-time-hour"]').val();
+          var min = $('select[name="s-time-minute"]').val();
+
+          var dur = parseInt($('#s-evercisegroupDuration').val());
+
+          var dt = year+'-'+month+'-'+day+' '+hour+':'+min+':00';
+
+          var date = new Date(dt);
+
+          date.setMinutes(date.getMinutes());
+
+          start_time = date.getHours(date)+":"+(date.getMinutes(date)<10?"0":"") + date.getMinutes(date);
+
+          $('#session-start-time span').html(start_time);
+
+          date.setMinutes(date.getMinutes()+dur);
+            
+          end_time = date.getHours(date)+":"+(date.getMinutes(date)<10?"0":"") + date.getMinutes(date); 
+   
+          $('#session-end-time span').html(end_time);
+    })
 }
