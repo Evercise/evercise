@@ -175,4 +175,5 @@ function session_overview() {
    
           $('#session-end-time span').html(end_time);
     })
+
 }

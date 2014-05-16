@@ -64,6 +64,8 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 
 //Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
+Route::get('/evercisegroups/clone_evercise_groups/{id}', array('as' => 'evercisegroups.clone_evercise_groups', 'uses' => 'EvercisegroupsController@cloneEG'));
+
 
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
 Route::post('/widgets/upload', array('as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload'));

@@ -179,6 +179,30 @@ class EvercisegroupsController extends \BaseController {
 	}
 
 	/**
+	 * clone evercise group.
+	 *
+	 * @return Response
+	 */
+	public function cloneEG($id)
+	{
+		$user = Sentry::getUser();
+		$Evercisegroups = Evercisegroup::where('id', $id)->get()->first();
+		
+		return Redirect::route('evercisegroups.create')
+				->with('name', $Evercisegroups->name)
+				->with('description', $Evercisegroups->description)
+				->with('category', $Evercisegroups->category_id)
+				->with('duration', $Evercisegroups->default_duration)
+				->with('maxsize', $Evercisegroups->capacity)
+				->with('price', $Evercisegroups->default_price)
+				->with('lat', $Evercisegroups->lat)
+				->with('lng', $Evercisegroups->long)
+				->with('location', array('address' => $Evercisegroups->address , 'city' => $Evercisegroups->town , 'postCode' => $Evercisegroups->postcode ) )
+				->with('image_full', 'profiles/'.$user->directory.'/'. $Evercisegroups->image)
+				->with( 'image' , $Evercisegroups->image );
+	}
+
+	/**
 	 * Display the specified resource.
 	 *
 	 * @param  int  $id
@@ -223,5 +247,7 @@ class EvercisegroupsController extends \BaseController {
 	{
 		//
 	}
+
+	
 
 }
