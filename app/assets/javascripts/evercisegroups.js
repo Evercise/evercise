@@ -92,19 +92,20 @@ function bindCalendar()
         $.ajax({
             url: url,
             type: 'GET',
+            data: 'year='+year+'&month='+month+'&date='+date+'&evercisegroupId='+evercisegroupId+'',
             dataType: 'html'
         })
         .done(
             function(data) {
                 $('.mask').show();
                 $('.container').append(data);
-                $('#s-year').val(year);
-                $('#s-month').val(month);
-                $('#s-date').val(date);
-                $('#s-evercisegroupId').val(evercisegroupId);
-                $('#s-evercisegroupDuration').val(evercisegroupDuration);
-                $('#price').val(originalPrice);
-                $('#complete-date span').html(completeDate);
+                // $('#s-year').val(year);
+                // $('#s-month').val(month);
+                // $('#s-date').val(date);
+                //$('#s-evercisegroupId').val(evercisegroupId);
+                //$('#s-evercisegroupDuration').val(evercisegroupDuration);
+                //$('#price').val(originalPrice);
+                //$('#complete-date span').html(completeDate);
                 $('#session-class-name span').html(session_class_name);
                 $('#session-class-price span').html(originalPrice);
                 session_overview();

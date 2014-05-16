@@ -3,18 +3,18 @@
 	<div class="modal-head">
 		<h4>Create a class</h4>
 		<br>
-		<div id="complete-date">Date: <span></span></div>
+		<div id="complete-date">Date: {{ $date.'-'.$month.'-'.$year }}<span></span></div>
 	</div>
 	
 	<div class="modal-body">
 		{{ Form::open(array('id' => 'newsession', 'url' => 'sessions', 'method' => 'post', 'class' => '')) }}
 			<div class="col4">
 				
-				{{ Form::hidden( 's-evercisegroupId' , '', array('id' => 's-evercisegroupId')) }}
-				{{ Form::hidden( 's-evercisegroupDuration' , '', array('id' => 's-evercisegroupDuration')) }}
-				{{ Form::hidden( 's-year' , '', array('id' => 's-year')) }}
-				{{ Form::hidden( 's-month' , '', array('id' => 's-month')) }}
-				{{ Form::hidden( 's-date' , '', array('id' => 's-date')) }}
+				{{ Form::hidden( $id , '', array('id' => 's-evercisegroupId')) }}
+				{{ Form::hidden( 's-evercisegroupDuration' , $duration, array('id' => 's-evercisegroupDuration')) }}
+				{{ Form::hidden( 's-year' , $year, array('id' => 's-year')) }}
+				{{ Form::hidden( 's-month' , $month, array('id' => 's-month')) }}
+				{{ Form::hidden( 's-date' , $date, array('id' => 's-date')) }}
 				@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time'))
 				@include('layouts.slider', array('fieldname'=>'price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>null))
 			</div>
@@ -30,7 +30,9 @@
 				
 			
 	    {{ Form::close() }}
+	    {{ $year }}
+	    {{ $month }}
     </div>
 <script>initSlider('{"name":"price","min":0,"max":99,"step":0.5,"value":1}');</script>
-	
+
 </div>
