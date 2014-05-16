@@ -4,7 +4,7 @@ function MapWidgetInit() {
     var url = '/widgets/postGeo';
 
     var data = {
-          street: $('#number').val()+' '+$('#street').val(),
+          street: $('#street').val(),
           city: $('#city').val(),
           post_code: $('#postcode').val()
       }
@@ -87,10 +87,6 @@ function MapWidgetInit() {
     }
   	
   };
-
-  
-  
-  console.log(latitude);
 	
   var myLatLng = new google.maps.LatLng(latitude, longitude);
 

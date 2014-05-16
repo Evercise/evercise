@@ -3,6 +3,10 @@
 		{{ Form::label( $fieldname, $label) }}
 	</div>
 	<div class="formfield">
-		{{ Form::select( $fieldname , $values) }}
+	@if(isset($selected))
+		{{ Form::select( $fieldname , $values , $selected) }}
+	@else
+		{{ Form::select( $fieldname , $values ) }}
+	@endif
 	</div>
 </div>

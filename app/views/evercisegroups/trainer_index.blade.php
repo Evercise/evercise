@@ -24,9 +24,9 @@
 			" data-id="{{ $value['id'] }}" data-name="{{ $value['name'] }}"  data-duration="{{ $value['default_duration'] }}">
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">
-				{{ HTML::linkRoute('evercisegroups.create', 'Edit Class!', null, array('class' => 'btn btn-yellow')) }}
-				{{ HTML::linkRoute('evercisegroups.create', 'Delete Class!', null, array('class' => 'btn btn-red')) }}
-				{{ HTML::linkRoute('sessions.index', 'View Participants', null, array('class' => 'btn btn-blue')) }}
+				{{ HTML::link('evercisegroups/clone_evercise_groups/'.$value['id'], 'Clone Class!' ,array('class' => 'btn btn-yellow')) }}
+				{{ HTML::linkRoute('evercisegroups.create', 'Delete Class!',null ,array('class' => 'btn btn-red')) }}
+				{{ HTML::linkRoute('evercisegroups.create', 'View Participants',null ,array('class' => 'btn btn-blue')) }}
 				</div>
 				<div class="hub-block">
 					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity']  ))
@@ -40,6 +40,8 @@
 						@else
 							{{ count($pastDates[$key])}} past dates
 						@endif
+					@else
+						0 past dates
 					@endif
 
 					<br>
@@ -51,6 +53,8 @@
 						@else
 							{{ count($futureDates[$key])}} upcoming dates
 						@endif
+					@else
+						0 upcoming dates
 					@endif
 
 					

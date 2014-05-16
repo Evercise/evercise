@@ -2,6 +2,15 @@
 	<div id="map-canvas" ></div>
 </div>
 
-{{ Form::hidden( 'latbox' , null, array('id' => 'latbox')) }}
+@if(isset($lat)) 
+	{{ Form::hidden( 'latbox' , $lat, array('id' => 'latbox')) }}
+@else
+	{{ Form::hidden( 'latbox' , '', array('id' => 'latbox')) }}
+@endif
 
-{{ Form::hidden( 'lngbox' , null, array('id' => 'lngbox')) }}
+@if(isset($lng))
+	{{ Form::hidden( 'lngbox' , $lng, array('id' => 'lngbox')) }}
+@else
+	{{ Form::hidden( 'lngbox' , '', array('id' => 'lngbox')) }}
+@endif
+

@@ -21,7 +21,7 @@ Route::resource('ratings', 'RatingsController');
 Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 
-Route::get('sessions/{evercisegroup_id}/view', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
+Route::get('sessions/{evercisegroup_id}/index', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
 
 Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){
 		return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
@@ -65,6 +65,8 @@ Route::get('login/fb' , function() {
 Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
 //Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
+
+Route::get('/evercisegroups/clone_evercise_groups/{id}', array('as' => 'evercisegroups.clone_evercise_groups', 'uses' => 'EvercisegroupsController@cloneEG'));
 
 
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
