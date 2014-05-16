@@ -1,8 +1,6 @@
 <div class='modal'>
 	<div id="cancel_login" class="cancel">x</div>
 	<h4>Create a class</h4>
-
-	
 	{{ Form::open(array('id' => 'newsession', 'url' => 'sessions', 'method' => 'post', 'class' => '')) }}
 
 		<div class="col4">
@@ -17,9 +15,6 @@
 		<div class="col2">
 			{{ Form::submit('Create session' , array('class'=>'btn-yellow ')) }}
 		</div>
-			
-		
     {{ Form::close() }}
-
-	
 </div>
+<script>initSlider('{"name":"price","min":0,"max":99,"step":0.5,"value":1}');</script>

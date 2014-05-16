@@ -19,8 +19,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function create()
 	{
-		// NOTE - The view is set up in a view composer, not here. (app/composers.php)
-
+		// The slider is initialised in JS from the view, as the document.ready has already run
 		return View::make('sessions.create');
 	}
 

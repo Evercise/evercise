@@ -40,7 +40,7 @@
         @endif
 
         
-        @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' ))
+        @include('layouts.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' ))
         @if ($errors->has('price'))
             {{ $errors->first('price', '<p class="error-msg">:message</p>')}}
         @endif

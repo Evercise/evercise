@@ -24,6 +24,13 @@ class TrainersController extends \BaseController {
 		   return View::make('trainers.about')->with('status','logged-out')->with('redirect_after_login', true); 
 		}
 
+		$user = Sentry::getUser();
+		$trainerGroup = Sentry::findGroupByName('trainer');
+		if ($user->inGroup($trainerGroup))
+		{
+			return 'you are alredy a trainer, man';
+		}
+
 		$specialities = Speciality::all();
 		$disciplines = array();
 		$titles = array();
