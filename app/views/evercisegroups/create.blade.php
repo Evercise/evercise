@@ -29,18 +29,18 @@
         @include('widgets.mapForm', array('label'=>'Class Location','fieldname1'=>'number', 'placeholder1'=>'House number', 'maxlength1'=>5, 'fieldname2'=>'street', 'placeholder2'=>'Street Name', 'maxlength2'=>50, 'fieldname3'=>'city', 'placeholder3'=>'City', 'maxlength3'=>50, 'fieldname4'=>'postcode', 'placeholder4'=>'Post Code', 'maxlength4'=>10, 'fieldtext'=>'Enter the location of your class and make sure the marker appears in the correct place on the map above. (You can drag the marker to the correct place if it doesn&apos;t match up)' ))
 
 
-        @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class' ))
+        @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class', 'default'=>50 ))
         @if ($errors->has('duration'))
             {{ $errors->first('duration', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' ))
+        @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.', 'default'=>10 ))
         @if ($errors->has('maxsize'))
             {{ $errors->first('maxsize', '<p class="error-msg">:message</p>')}}
         @endif
 
         
-        @include('layouts.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' ))
+        @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.', 'default'=>15 ))
         @if ($errors->has('price'))
             {{ $errors->first('price', '<p class="error-msg">:message</p>')}}
         @endif

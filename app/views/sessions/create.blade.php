@@ -16,7 +16,7 @@
 				{{ Form::hidden( 's-month' , $month, array('id' => 's-month')) }}
 				{{ Form::hidden( 's-date' , $date, array('id' => 's-date')) }}
 				@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time'))
-				@include('layouts.slider', array('fieldname'=>'price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>null))
+				@include('layouts.slider', array('fieldname'=>'price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$price))
 			</div>
 			<div class="col3">
 				<div class="grey-box">
