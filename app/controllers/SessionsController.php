@@ -7,9 +7,39 @@ class SessionsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($evercisegroup_id = '')
 	{
-		//
+		//$evercisegroup_id;
+		if ( ! Sentry::check()) return 'Not logged in';
+		$user = Sentry::getUser();
+
+		$directory = $user->directory;
+		$trainerGroup = Sentry::findGroupByName('trainer');
+		
+		if ($user->inGroup($trainerGroup))
+		{
+
+			$sessions = EverciseSession::where('evercisegroup_id', $evercisegroup_id)->get();
+
+			if ($sessions->isEmpty()) {
+				return View::make('evercisegroups.first_class');
+			}else{
+				$singleSessions = array();
+
+				foreach ($sessions as $key) {
+
+					$singleSessions[] = $key->price;
+				}
+
+				return View::make('sessions.index')->with('singleSessions', $singleSessions);
+			}
+
+		}
+		else
+		{
+			return "you're not even a trainer, stop trying to look at this";
+		}
+
 	}
 
 	/**
@@ -127,7 +157,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return 'Show';
 	}
 
 	/**
@@ -138,7 +168,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		return 'Edit';
 	}
 
 	/**
@@ -149,7 +179,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		return 'Update';
 	}
 
 	/**
@@ -160,7 +190,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		return 'Destroy';
 	}
 
 }

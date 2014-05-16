@@ -83,7 +83,7 @@ function bindCalendar()
         var date = href.replace('day_', '');
         var evercisegroupId = $('#evercisegroupId').val();
         var originalPrice =  $('#originalprice').val();
-        var completeDate = date+'-'+month+'-'+year;
+        //var completeDate = date+'-'+month+'-'+year;
         var session_class_name = $('#evercisegroupName').val();
         var evercisegroupDuration = $('#evercisegroupDuration').val();
 

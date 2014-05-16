@@ -1,1 +1,7 @@
-C:\Users\Tris\www\evercise\app/views/sessions/index.blade.php
+@extends('layouts.master')
+
+@section('content')
+
+{{ var_dump($singleSessions) }}
+
+@stop

@@ -32,6 +32,7 @@ class BaseController extends Controller {
 		}
 		View::share('displayName', $displayName);
 		View::share('displayImage', $displayImage);
+		View::share('title', 'Evercise');
 
 		if ( ! is_null($this->layout))
 		{

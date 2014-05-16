@@ -30,8 +30,6 @@
 				
 			
 	    {{ Form::close() }}
-	    {{ $year }}
-	    {{ $month }}
     </div>
 <script>initSlider('{"name":"price","min":0,"max":99,"step":0.5,"value":1}');</script>
 

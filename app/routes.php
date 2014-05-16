@@ -21,6 +21,8 @@ Route::resource('ratings', 'RatingsController');
 Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 
+Route::get('sessions/{evercisegroup_id}/view', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
+
 Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){
 		return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
 }));
