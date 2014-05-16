@@ -32,33 +32,39 @@
 					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity']  ))
 				</div>
 				<div class="hub-block">
-				<h5>This class has:</h5>
-				@if (count($pastDates[$key]) == 1) 
-					{{ count($pastDates[$key])}} past date
-				@else
-					{{ count($pastDates[$key])}} past dates
-				@endif
+					<h5>This class has:</h5>
 
-				<br>
+					@if (!empty($pastDates[$key]))
+						@if (count($pastDates[$key]) == 1) 
+							{{ count($pastDates[$key])}} past date
+						@else
+							{{ count($pastDates[$key])}} past dates
+						@endif
+					@endif
 
-				@if (count($futureDates[$key]) == 1) 
-					{{ count($futureDates[$key])}} upcoming date
-				@else
-					{{ count($futureDates[$key])}} upcoming dates
-				@endif
-				
-				<br>
-				<br>
-				<h5>Upcoming dates:</h5>
-				<br>
-				@if($futureDates[$key])
-					@foreach ($futureDates[$key] as $key => $value)
-						{{ $value}}<br>
-					@endforeach
-				@else
-					No Upcoming Dates
-				@endif
-				
+					<br>
+
+					 
+					@if (!empty($futureDates[$key]))
+						@if (count($futureDates[$key]) == 1) 
+							{{ count($futureDates[$key])}} upcoming date
+						@else
+							{{ count($futureDates[$key])}} upcoming dates
+						@endif
+					@endif
+
+					
+					<br>
+					<br>
+					<h5>Upcoming dates:</h5>
+					<br>
+					@if (!empty($futureDates[$key]))
+						@foreach ($futureDates[$key] as $key => $value)
+							{{ $value}}<br>
+						@endforeach
+					@else
+						No Upcoming Dates
+					@endif
 					
 				</div>
 			</div>
