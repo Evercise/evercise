@@ -31,7 +31,7 @@ jQuery( document ).ready( function( $ )
        initFunctions.forEach(function(f) {
         if (f.name == name)
         {
-           debugOutput('RUNNING: '+name+' : '+laracasts[l]);
+           //debugOutput('RUNNING: '+name+' : '+laracasts[l]);
            f.run(laracasts[l]);
         }
       });
@@ -65,7 +65,7 @@ jQuery( document ).ready( function( $ )
 
 function debugOutput(message)
 {
-  console.log(message);
+  console.log(arguments.callee.caller.name + ' => ' + message);
 }
 
 function initLoginBox()
@@ -103,6 +103,8 @@ function initLoginBox()
 }
 registerInitFunction(initLoginBox, true);
 
+// params: name, min, max, step, value,
+// extra - a selector of a field to update with the value
 function initSlider(params)
 {
   sliderParams = JSON.parse(params);
@@ -117,6 +119,7 @@ function initSlider(params)
     value: sliderParams.value,
     slide: function( event, ui ) {
       $( "#"+sliderName+"" ).val( ui.value .toFixed(2) );
+      if (sliderParams.extra) $(sliderParams.extra).html(ui.value .toFixed(2) );
     }
   }); // end General slider
 
@@ -129,6 +132,6 @@ registerInitFunction(initSlider);
 
 function updateSlider(sliderName)
 {
-  debugOutput("sliderName: "+$("#"+sliderName).val());
+  debugOutput("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
   $( "#"+sliderName+"-slider" ).slider({ value: $("#"+sliderName).val() });
 }

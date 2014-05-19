@@ -21,8 +21,8 @@
 			</div>
 			<div class="col3">
 				<div class="grey-box">
-					<p id="session-class-name">Class name: <span></span></p>
-					<p id="session-class-price">Class price: &pound;<span></span></p>
+					<p id="session-class-name">Class name: <span>{{ $name }}</span></p>
+					<p id="session-class-price">Class price: &pound;<span>{{ $price }}</span></p>
 					<p id="session-start-time">Start time: <span></span></p>
 					<p id="session-end-time">End time: <span></span></p>
 				</div>
@@ -32,6 +32,6 @@
 			
 	    {{ Form::close() }}
     </div>
-<script>initSlider('{"name":"s-price","min":0,"max":99,"step":0.5,"value":1}');</script>
+<script>initSlider('{"name":"s-price","min":0,"max":99,"step":0.5,"value":1, "extra":"#session-class-price span"}');</script>
 
 </div>

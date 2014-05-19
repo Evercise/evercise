@@ -70,11 +70,12 @@ class SessionsController extends \BaseController {
 
 		$duration = $evercisegroup->default_duration;
 		$price = $evercisegroup->default_price;
+		$name = $evercisegroup->name;
 
         //$bumclouds = Input::get('bumclouds');
 
 
-		return View::make('sessions.create')->with('year',$year)->with('month',$month)->with('date',$date)->with('id',$id)->with('duration',$duration)->with('price',$price);
+		return View::make('sessions.create')->with('year',$year)->with('month',$month)->with('date',$date)->with('id',$id)->with('duration',$duration)->with('price',$price)->with('name',$name);
 	}
 
 	/**

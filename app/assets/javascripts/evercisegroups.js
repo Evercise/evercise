@@ -108,8 +108,8 @@ function bindCalendar()
                 //$('#s-evercisegroupDuration').val(evercisegroupDuration);
                 //$('#price').val(originalPrice);
                 //$('#complete-date span').html(completeDate);
-                $('#session-class-name span').html(session_class_name);
-                $('#session-class-price span').html(originalPrice);
+                //$('#session-class-name span').html(session_class_name);
+                //$('#session-class-price span').html(originalPrice);
                 session_overview();
              }
         );
