@@ -1,4 +1,5 @@
-jQuery( document ).ready( function( $ ) {
+function initCreateTrainer()
+{
 
     if(typeof laracasts !== 'undefined')
     {
@@ -35,10 +36,10 @@ jQuery( document ).ready( function( $ ) {
 
             },
             function( data ) {
-                console.log("about to win.......");
+                debugOutput("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    console.log('loose');
+                    debugOutput('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
@@ -61,13 +62,19 @@ jQuery( document ).ready( function( $ ) {
                     setTimeout(function() {
                         window.location.href = data;
                     }, 100);
-                    //console.log(data);
+                    //debugOutput(data);
                 }
             },
             'json'
         );
         return false;
     });
+}
+registerInitFunction(initCreateTrainer);
+
+
+function initSessionNew()
+{
 
     // Open Create Session Window
  
@@ -82,16 +89,16 @@ jQuery( document ).ready( function( $ ) {
 
             },
             function( data ) {
-                console.log("about to win.......");
+                debugOutput("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    console.log('loose');
+                    debugOutput('loose');
                     var arr = data.errors;
                 }else{
                     /*setTimeout(function() {
                         window.location.href = data;
                     }, 100);*/
-                    console.log(data);
+                    debugOutput(data);
                 }
             },
             'json'
@@ -99,4 +106,5 @@ jQuery( document ).ready( function( $ ) {
         return false;
     });
 
-});
+}
+//registerInitFunction(initSessionNew);

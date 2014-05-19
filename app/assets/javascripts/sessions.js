@@ -4,19 +4,32 @@ function initSessions()
    // $( '#newsession' ).on( 'submit', function() {
     $(document).on('submit', '#newsession' , function() {
 
-        alert('dick');
-        // post to sontroller
+        // post to controller
         $.post(
             $( this ).prop( 'action' ),
             {
-                "evercisegroup": $( '#evercisegroup' ).val(),
-                "date": $( '#date' ).val()
+                "s-evercisegroupId": $( '#s-evercisegroupId' ).val(),
+                "s-year": $( '#s-year' ).val(),
+                "s-month": $( '#s-month' ).val(),
+                "s-date": $( '#s-date' ).val(),
+                "s-time-hour": $( '#s-time-hour' ).val(),
+                "s-time-minute": $( '#s-time-minute' ).val(),
+                "s-price": $( '#s-price' ).val()
             },
             function( data ) {
-                console.log("about to win.......");
+                debugOutput("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    console.log('loose');
+                    debugOutput('loose: '+data);
+                    var arr = data.errors;
+                    $.each(arr, function(index, value)
+                    {
+                        if (value.length != 0)
+                        {
+                           debugOutput( value );
+                        }
+                    });
+
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
@@ -24,7 +37,7 @@ function initSessions()
                     setTimeout(function() {
                         window.location.href = data;
                     }, 1000);*/
-                    console.log("data: "+data);
+                    debugOutput("data: "+data);
                 }
             },
             'json'

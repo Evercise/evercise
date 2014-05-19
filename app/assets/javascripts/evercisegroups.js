@@ -1,6 +1,8 @@
 // evercisegroups.js
+
 function initEvercisegroups()
 {
+    debugOutput('initEvercisegroups');
 
     if(typeof laracasts !== 'undefined')
     {
@@ -41,7 +43,7 @@ function initEvercisegroups()
                     var scroll = false;
                     $.each(arr, function(index, value)
                     {
-                        console.log(value);
+                        debugOutput(value);
                         if (scroll == false) {
                             //$('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                             scroll = true;
@@ -120,7 +122,7 @@ function bindCalendar()
         var monthyear = this.id.split("?")[1];
         var year = monthyear.split("&")[0].split("=")[1];
         var month = monthyear.split("&")[1].split("=")[1];
-        //console.log("ID: "+month);
+        //debugOutput("ID: "+month);
 
         $('#month').val(month);
         $('#year').val(year);
@@ -134,7 +136,7 @@ function bindCalendar()
         })
         .done(
             function(data) {
-                //console.log('id: '+ data);
+                //debugOutput('id: '+ data);
                 $('.hub-calendar-wrapper').html(data);
                 bindCalendar();
              }

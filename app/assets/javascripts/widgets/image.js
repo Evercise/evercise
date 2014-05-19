@@ -6,13 +6,13 @@ jQuery(document).ready(function($) {
         }; 
      $('body').delegate('#image','change', function(){
          $('#upload').ajaxForm(options).submit();   
-        console.log("uploading..");       
+        debugOutput("uploading..");       
      }); 
 });        
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
-        console.log("showRequest..");       
+        debugOutput("showRequest..");       
     return true; 
 } 
 function showResponse(response, statusText, xhr, form)  { 
@@ -55,7 +55,7 @@ function preview(img, selection) {
     var previewX = $('.preview').width();
     var previewY = $('.preview').height();
 
-    console.log(previewX+' - '+previewY);
+    debugOutput(previewX+' - '+previewY);
     
     var scaleX = previewX / selection.width;
     var scaleY = previewY / selection.height;
@@ -78,7 +78,7 @@ function saveCroppedImage(img, selection)
     $('#pos_y').val(selection.y1);
     $('#img_url').val(img.src);
     $('#img_height').val(img.height);
-    //console.log($('#img_height').val());
+    //debugOutput($('#img_height').val());
 }
 
 
@@ -101,13 +101,13 @@ function postCroppedImage()
             "img_height": $(  '#img_height' ).val()
         },
         function( data ) {
-            console.log("about to win.......");
+            debugOutput("about to win.......");
             if (data.validation_failed == 1)
             {
-                console.log('loose');
+                debugOutput('loose');
                
             }else{
-                console.log(data);
+                debugOutput(data);
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });

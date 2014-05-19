@@ -1,18 +1,7 @@
 //Users.js
-jQuery( document ).ready( function( $ ) {
 
-    $( ".datepicker" ).datepicker({
-      dateFormat: "yy-mm-dd" ,
-      defaultDate: "-30y",
-      yearRange: "-100:+0", 
-      minDate: '-120y', 
-      maxDate: '-16y',
-      changeMonth: true,
-      changeYear: true,
-      showOtherMonths: true,
-      selectOtherMonths: true
-    });
-
+function initLogin()
+{
     // login pop up
     $(".login").click(function(e){
         var url = this.href;
@@ -30,7 +19,24 @@ jQuery( document ).ready( function( $ ) {
         );
         return false;
     });
+}
+registerInitFunction(initLogin, true);
 
+function initUsers()
+{
+    debugOutput('initUsers');
+
+    $( ".datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd" ,
+      defaultDate: "-30y",
+      yearRange: "-100:+0", 
+      minDate: '-120y', 
+      maxDate: '-16y',
+      changeMonth: true,
+      changeYear: true,
+      showOtherMonths: true,
+      selectOtherMonths: true
+    });
 
     // create a new user
  
@@ -52,10 +58,10 @@ jQuery( document ).ready( function( $ ) {
                 "userNewsletter": $( '#userNewsletter' ).val()
             },
             function( data ) {
-                console.log("about to win.......");
+                debugOutput("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    console.log('loose');
+                    debugOutput('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
@@ -78,7 +84,7 @@ jQuery( document ).ready( function( $ ) {
                     setTimeout(function() {
                         window.location.href = data;
                     }, 1000);
-                    //console.log(data);
+                    //debugOutput(data);
                 }
             },
             'json'
@@ -101,14 +107,14 @@ jQuery( document ).ready( function( $ ) {
                 "code": $( '#code' ).val()
             },
             function( data ) {
-                console.log("about to win.......");
+                debugOutput("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    console.log('loose');
+                    debugOutput('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
-                    console.log(arr);
+                    debugOutput(arr);
                     $.each(arr, function(index, value)
                     {
                         if (scroll == false) {
@@ -124,7 +130,7 @@ jQuery( document ).ready( function( $ ) {
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
-                    console.log(data);
+                    debugOutput(data);
                     window.location.href = data;
                 }
             },
@@ -136,7 +142,8 @@ jQuery( document ).ready( function( $ ) {
     $('#userNewsletter').on('change', function () {
       this.value = this.checked ? 'yes' : 'no';
     }).change();
-});
+}
+registerInitFunction(initUsers);
 
 function login(){
 
@@ -165,7 +172,7 @@ function login(){
                     $('.success_msg').show();
                     setTimeout(function() {
                        window.location.href = data;
-                       console.log(data);
+                       debugOutput(data);
                     }, 20);
                 }
             },

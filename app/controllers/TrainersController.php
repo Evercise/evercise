@@ -28,7 +28,7 @@ class TrainersController extends \BaseController {
 		$trainerGroup = Sentry::findGroupByName('trainer');
 		if ($user->inGroup($trainerGroup))
 		{
-			return 'you are alredy a trainer, man';
+			return 'you are already a trainer, man';
 		}
 
 		$specialities = Speciality::all();
@@ -54,6 +54,7 @@ class TrainersController extends \BaseController {
 		// http://image.intervention.io/methods/crop
 		// http://odyniec.net/projects/imgareaselect
 
+		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
 		JavaScript::put(array('titles' => json_encode($titles), ));
 		return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
 
