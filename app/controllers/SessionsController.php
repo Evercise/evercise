@@ -18,21 +18,18 @@ class SessionsController extends \BaseController {
 		
 		if ($user->inGroup($trainerGroup))
 		{
+			$Evercisegroup = Evercisegroup::with('EverciseSession')->find($evercisegroup_id);
+			$everciseSessions = $Evercisegroup->EverciseSession;
 
-			$sessions = EverciseSession::where('evercisegroup_id', $evercisegroup_id)->get();
-
-			if ($sessions->isEmpty()) {
+			if ($everciseSessions->isEmpty()) {
 				return View::make('evercisegroups.first_class');
-			}else{
-				$singleSessions = array();
-
-				foreach ($sessions as $key) {
-
-					$singleSessions[] = $key->price;
-				}
-
-				return View::make('sessions.index')->with('singleSessions', $singleSessions);
 			}
+			else
+			{
+				return View::make('sessions.index')->with('evercisesessions' , $everciseSessions)->with('evercisegroup' , $Evercisegroup )->with('directory' , $directory);
+			}
+
+			
 
 		}
 		else

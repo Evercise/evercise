@@ -18,6 +18,7 @@ class CreateSessionsTable extends Migration {
 			$table->timestamp('date_time');
 			$table->integer('members')->default(0);
 			$table->decimal('price', 6, 2)->default(0.00);
+			$table->integer('duration');
 			$table->boolean('members_emailed')->default(0);
 			$table->timestamps();
 		});

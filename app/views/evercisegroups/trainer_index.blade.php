@@ -26,7 +26,7 @@
 				<div class="hub-block">
 				{{ HTML::link('evercisegroups/clone_evercise_groups/'.$value['id'], 'Clone Class!' ,array('class' => 'btn btn-yellow')) }}
 				{{ HTML::linkRoute('evercisegroups.create', 'Delete Class!',null ,array('class' => 'btn btn-red')) }}
-				{{ HTML::linkRoute('evercisegroups.create', 'View Participants',null ,array('class' => 'btn btn-blue')) }}
+				{{ HTML::linkRoute('sessions.index', 'View Participants',$value['id'] ,array('class' => 'btn btn-blue')) }}
 				</div>
 				<div class="hub-block">
 					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity']  ))

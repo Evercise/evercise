@@ -10,6 +10,11 @@ class EverciseSession extends \Eloquent {
 	 */
 	protected $table = 'sessions';
 
+	public function sessionmembers()
+    {
+        return $this->hasMany('Sessionmember');
+    }
+
 	public function evercisegroup()
     {
         return $this->belongsTo('EverciseGroup');

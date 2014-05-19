@@ -7,4 +7,10 @@ class Sessionmember extends \Eloquent {
 	 * @var string
 	 */
 	protected $table = 'sessionmembers';
+
+
+	public function evercisegroup()
+    {
+        return $this->belongsTo('EverciseSession');
+    }
 }
