@@ -181,7 +181,7 @@ label{
 }
 
 
-.btn-yellow{.btn(@evercise-yellow);}
+.btn-yellow{.btn(@yellow);}
 .btn-fb{.btn(#3b5998,20);}
 .btn-blue{.btn(@blue);}
 .btn-red{.btn(@red);}
@@ -247,7 +247,7 @@ label{
 	}
 	.btn-yellow{
 		margin: auto;
-		.btn(@evercise-yellow, 220px,20);	
+		.btn(@yellow, 220px,20);	
 	}
 
 	.btn-blue{
@@ -559,7 +559,7 @@ nav{
 
 .block_title {
 	.column(12);
-	background-color: @evercise-yellow;
+	background-color: @yellow;
 	padding: 15px 0;
 	text-align: center;
 	.drop-shadow(0,5,5,-3,0.3);
@@ -682,11 +682,30 @@ nav{
 	}
 }
 
+/* progress bar */
+
+.progress-bar{
+	width: 100%;
+	height: 16px;
+	position: relative;
+	.gradient (lighten(@grey , 10%), lighten(@grey , 20%));
+	.border-radius(8);
+	.box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.1)); 
+	.progress-bar-filler{
+		height: 100%;
+		background: @yellow;
+		.box-shadow(inset 0 -1px 0 rgba(0, 0, 0, 0.15));
+		.transition(all linear 0.5s);
+		.border-radius(8);
+	}
+}
+
 /* class block  */
 
 .class-block{
 	.transition(all linear 0.3s);
-	.column(3);
+	display: inline-block;
+	width: 100%;
 	.box-sizing();
 	.border-radius();
 	border:1px solid @grey;
@@ -733,10 +752,11 @@ nav{
 		color: #000;
 	}
 	.class-block-stats{
-		.row(3);
+		width: 100%;
 		margin-top: 12px;
 		.class-block-stat{
-			.column(1);
+			width: 33%;
+			float: left;
 			span{
 				display: block;
 			}

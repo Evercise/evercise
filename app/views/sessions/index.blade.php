@@ -15,7 +15,7 @@
 			<br>
 			<h6>Start time: {{  date('H:ia' , strtotime($value['date_time'])) }}</h6>
 			<h6>End time: {{  date('H:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</h6>
-			{{  $value['members'] }}/{{$evercisegroup->capacity}}
+			@include('layouts.progressbar', array('cap' => $evercisegroup->capacity, 'mem' =>$value['members']))
 		</div>
 		
 	@endforeach

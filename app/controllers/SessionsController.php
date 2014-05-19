@@ -22,7 +22,7 @@ class SessionsController extends \BaseController {
 			$everciseSessions = $Evercisegroup->EverciseSession;
 
 			if ($everciseSessions->isEmpty()) {
-				return View::make('evercisegroups.first_class');
+				return Redirect::route('evercisegroups.index');
 			}
 			else
 			{
