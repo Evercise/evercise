@@ -99,7 +99,7 @@ class SessionsController extends \BaseController {
 				's-date' => 'required',
 				's-time-hour' => 'required',
 				's-time-minute' => 'required',
-				'price' => 'required',
+				's-price' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -125,7 +125,7 @@ class SessionsController extends \BaseController {
 			$date = Input::get('s-date');
 			$hour = Input::get('s-time-hour');
 			$minute = Input::get('s-time-minute');
-			$price = Input::get('price');
+			$price = Input::get('s-price');
 			//$customurl = Input::get('customurl');
 
 			$time = $hour.'-'.$minute.'-00';

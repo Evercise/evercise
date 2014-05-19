@@ -9,6 +9,7 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
+		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('users.index');
 	}
 
@@ -19,6 +20,8 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
+
+		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('users.create');
 	}
 

@@ -17,6 +17,7 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
+		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('home');
 	}
 

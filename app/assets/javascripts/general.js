@@ -25,28 +25,28 @@ jQuery( document ).ready( function( $ )
   if(typeof laracasts !== 'undefined')
   {
     for(var l in laracasts){
-       //console.log('LARACASTS: '+l + ': ' + laracasts[l] + ': ' + initFunctions[l]);
+       //debugOutput('LARACASTS: '+l + ': ' + laracasts[l] + ': ' + initFunctions[l]);
        var name = l.split('_')[0];
 
        initFunctions.forEach(function(f) {
         if (f.name == name)
         {
-           console.log('RUNNING: '+name+' : '+laracasts[l]);
+           debugOutput('RUNNING: '+name+' : '+laracasts[l]);
            f.run(laracasts[l]);
         }
       });
     }
   }
-
   // Loop through all registered init functions, and run the ones flagged 'always'
   initFunctions.forEach(function(f)
   {
     if(f.always)
     {
-        f.run(laracasts[f.name]);
-        //console.log("always: "+f.name);
+        f.run(f.name);
+        //debugOutput("always: "+f.name);
     }
   });
+
 
 /*	$('select').each(function(){
       var title = $(this).attr('title');
@@ -62,6 +62,11 @@ jQuery( document ).ready( function( $ )
   });
 */  
 });
+
+function debugOutput(message)
+{
+  console.log(message);
+}
 
 function initLoginBox()
 {
@@ -80,6 +85,7 @@ function initLoginBox()
     $('#displayName-dropdown').toggle(100,function(){
       $(document).mouseup(function (e)
       {
+        //debugOutput('displayName click');
           var container = $('#displayName-dropdown');
           var link = $('#displayName');
 
@@ -101,7 +107,7 @@ function initSlider(params)
 {
   sliderParams = JSON.parse(params);
   var sliderName = sliderParams.name;
-  //console.log("initSlider("+sliderName+") -3");
+  //debugOutput("initSlider("+sliderName+") -3");
 
   $( "#"+sliderName+"-slider" ).slider({
     range: "min",
@@ -123,6 +129,6 @@ registerInitFunction(initSlider);
 
 function updateSlider(sliderName)
 {
-  console.log("boob: "+$("#"+sliderName).val());
+  debugOutput("sliderName: "+$("#"+sliderName).val());
   $( "#"+sliderName+"-slider" ).slider({ value: $("#"+sliderName).val() });
 }

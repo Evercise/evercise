@@ -35,8 +35,9 @@ class EvercisegroupsController extends \BaseController {
 				$year = date("Y");
 
 				//JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
-		JavaScript::put(array('initSessions' => 1 )); // Initialise session JS.
+				JavaScript::put(array('initSessions' => 1 )); // Initialise session JS.
 				JavaScript::put(array('calendarSlide' => 1 )); // Initialise calendarSlide JS. priority 1 (0 is first)
+				JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
 				return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);	
 			}
 
@@ -45,8 +46,6 @@ class EvercisegroupsController extends \BaseController {
 		{
 			return View::make('evercisegroups.index');
 		}
-
-		
 	}
 
 	/**
