@@ -11,18 +11,19 @@
 			<div class="col4">
 				
 				{{ Form::hidden( 's-evercisegroupId' , $id, array('id' => 's-evercisegroupId')) }}
-				{{ Form::hidden( 's-evercisegroupDuration' , $duration, array('id' => 's-evercisegroupDuration')) }}
 				{{ Form::hidden( 's-year' , $year, array('id' => 's-year')) }}
 				{{ Form::hidden( 's-month' , $month, array('id' => 's-month')) }}
 				{{ Form::hidden( 's-date' , $date, array('id' => 's-date')) }}
 				@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time'))
 
 				@include('form.slider', array('fieldname'=>'s-price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$price))
+				@include('form.slider', array('fieldname'=>'s-duration', 'label'=>'Duration', 'placeholder'=>'Duration', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$duration))
 			</div>
 			<div class="col3">
 				<div class="grey-box">
 					<p id="session-class-name">Class name: <span>{{ $name }}</span></p>
 					<p id="session-class-price">Class price: &pound;<span>{{ $price }}</span></p>
+					<p id="session-class-duration">Class duration: <span>{{ $duration }}</span></p>
 					<p id="session-start-time">Start time: <span></span></p>
 					<p id="session-end-time">End time: <span></span></p>
 				</div>
@@ -32,6 +33,8 @@
 			
 	    {{ Form::close() }}
     </div>
-<script>initSlider('{"name":"s-price","min":0,"max":99,"step":0.5,"value":1, "extra":"#session-class-price span"}');</script>
+<script>
+	
+</script>
 
 </div>

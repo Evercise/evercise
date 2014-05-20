@@ -16,8 +16,10 @@ class TimeComposer {
     {
         $minutes[$i] = sprintf("%02s", $i);
     }
+    $hourDefault = '12';
+    $minuteDefault = '00';
 
-    $view->with('hours', $hours)->with('minutes', $minutes);
+    $view->with('hours', $hours)->with('minutes', $minutes)->with('hourDefault', $hourDefault)->with('minuteDefault', $minuteDefault);
   }
  
 }

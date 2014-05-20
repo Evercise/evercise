@@ -104,12 +104,12 @@ function initLoginBox()
 registerInitFunction(initLoginBox, true);
 
 // params: name, min, max, step, value,
-// extra - a selector of a field to update with the value
+// callback - a selector of a field to update with the value
 function initSlider(params)
 {
   sliderParams = JSON.parse(params);
   var sliderName = sliderParams.name;
-  //debugOutput("initSlider("+sliderName+") -3");
+  debugOutput("initSlider("+sliderName+") - callback:"+sliderParams.callback);
 
   $( "#"+sliderName+"-slider" ).slider({
     range: "min",
@@ -119,7 +119,10 @@ function initSlider(params)
     value: sliderParams.value,
     slide: function( event, ui ) {
       $( "#"+sliderName+"" ).val( ui.value .toFixed(2) );
-      if (sliderParams.extra) $(sliderParams.extra).html(ui.value .toFixed(2) );
+      if (sliderParams.callback){
+        window[sliderParams.callback]();
+      } 
+      //if (sliderParams.callback) $(sliderParams.callback).html(ui.value .toFixed(2) );
     }
   }); // end General slider
 

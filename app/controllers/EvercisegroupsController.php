@@ -82,7 +82,7 @@ class EvercisegroupsController extends \BaseController {
 		}
 
 		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
-		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
+		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>120, 'step'=>5, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
 
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.

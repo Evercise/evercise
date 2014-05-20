@@ -3,7 +3,7 @@
 		{{ Form::label( $fieldname, $label) }}
 	</div>
 	<div class="formfield">
-		{{ Form::select( $fieldname.'-hour' , $hours, null, array('class' => 'time-box', 'id'=> $fieldname.'-hour')) }}
-		{{ Form::select( $fieldname.'-minute' , $minutes, null, array('class' => 'time-box', 'id'=>$fieldname.'-minute')) }}
+		{{ Form::select( $fieldname.'-hour' , $hours, $hourDefault, array('class' => 'time-box', 'id'=> $fieldname.'-hour')) }}
+		{{ Form::select( $fieldname.'-minute' , $minutes, $minuteDefault, array('class' => 'time-box', 'id'=>$fieldname.'-minute')) }}
 	</div>
 </div>
