@@ -1,6 +1,6 @@
 <?php
 
-class EverciseSession extends \Eloquent {
+class Evercisesession extends \Eloquent {
 
 	protected $fillable = array('evercisegroup_id', 'date_time', 'members', 'price', 'members_emailed');
 	/**
@@ -8,15 +8,22 @@ class EverciseSession extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'sessions';
+	protected $table = 'evercisesessions';
 
-	public function sessionmembers()
+	public function Sessionmembers()
     {
         return $this->hasMany('Sessionmember');
     }
 
-	public function evercisegroup()
+	public function Evercisegroup()
     {
-        return $this->belongsTo('EverciseGroup');
+        return $this->belongsTo('Evercisegroup');
     }
+
+    
+
+
+
 }
+
+ //select `users`.*, `sessionmembers`.`user_id` from `users` inner join `sessionmembers` on `sessionmembers`.`id` = `users`.`id` where `sessionmembers`.`user_id` in (?, ?, ?, ?, ?)

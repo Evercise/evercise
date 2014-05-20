@@ -9,8 +9,11 @@ class Sessionmember extends \Eloquent {
 	protected $table = 'sessionmembers';
 
 
-	public function evercisegroup()
+	
+
+    public function Users()
     {
-        return $this->belongsTo('EverciseSession');
+        return $this->belongsTo('User' , 'user_id');
     }
+
 }

@@ -12,7 +12,7 @@ class CreateSessionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sessions', function(Blueprint $table) {
+		Schema::create('evercisesessions', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('evercisegroup_id')->unsigned();// Foreign key
 			$table->timestamp('date_time');
@@ -33,7 +33,7 @@ class CreateSessionsTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('sessions');
+		Schema::drop('evercisesessions');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 

@@ -18,19 +18,15 @@ class SessionsController extends \BaseController {
 		
 		if ($user->inGroup($trainerGroup))
 		{
-			$Evercisegroup = Evercisegroup::with('EverciseSession')->find($evercisegroup_id);
-			$everciseSessions = $Evercisegroup->EverciseSession;
+			$Evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($evercisegroup_id);
 
-			if ($everciseSessions->isEmpty()) {
+			if ($Evercisegroup['Evercisesession']->isEmpty()) {
 				return Redirect::route('evercisegroups.index');
 			}
 			else
 			{
-				return View::make('sessions.index')->with('evercisesessions' , $everciseSessions)->with('evercisegroup' , $Evercisegroup )->with('directory' , $directory);
-			}
-
-			
-
+				return View::make('sessions.index')->with('evercisegroup' , $Evercisegroup )->with('directory' , $directory);
+			}		
 		}
 		else
 		{

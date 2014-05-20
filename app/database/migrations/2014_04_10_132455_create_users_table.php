@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration {
 			$table->string('directory', 45);
 			$table->string('image', 45);
 			$table->string('categories', 45);
+			$table->string('remember_token', 100)->nullable();
 
 		});
 	}

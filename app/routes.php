@@ -83,9 +83,8 @@ Route::post('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'wi
 
 Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 'widgets\EvercisegroupsController@block'));
 
-/*
+
 Event::listen('illuminate.query', function($sql)
 {
     var_dump($sql);
 });
-*/
