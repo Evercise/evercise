@@ -34,7 +34,7 @@ class SessionsController extends \BaseController {
 		}
 		else
 		{
-			return "you're not even a trainer, stop trying to look at this";
+			return Redirect::route('home');
 		}
 
 	}

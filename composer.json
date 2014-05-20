@@ -13,7 +13,8 @@
 		"intervention/image": "dev-master",
 		"toin0u/geocoder-laravel": "0.2.*@dev",
 		"toin0u/geotools-laravel": "~0.2",
-    	"gloudemans/calendar": "dev-master"
+    	"gloudemans/calendar": "dev-master",
+    	"tecnick.com/tcpdf": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
