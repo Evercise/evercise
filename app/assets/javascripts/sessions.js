@@ -32,12 +32,12 @@ function initSessions()
 
                     $('#ajax-loading').hide();
                 }else{
+                    debugOutput("data: "+data);
                     // redirect to login page
-                    /*$('.success_msg').show();
+                    $('.success_msg').show();
                     setTimeout(function() {
                         window.location.href = data;
-                    }, 1000);*/
-                    debugOutput("data: "+data);
+                    }, 1000);
                 }
             },
             'json'

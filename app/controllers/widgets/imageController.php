@@ -67,14 +67,15 @@ class ImageController extends \BaseController {
 
         // open file a image resource
         $img_path = public_path() . '/profiles/' . $save_location . '/' .basename($img_url);
+        
         $img = Image::make($img_path);
-        $true_height = $img->height;
+        $true_height = $img->height();
 
         $factor = $true_height / $img_height;
         $scaledCoords = $this->scale($factor, array('width'=>$width, 'height'=>$height, 'pos_x'=>$pos_x, 'pos_y'=>$pos_y));
 
 
-        //return Response::json(array('height'=> $img_height));
+       //return Response::json(array('uploadView'=>$scaledCoords['pos_x']));
 
         // crop image
         $img->crop($scaledCoords['width'], $scaledCoords['height'], $scaledCoords['pos_x'], $scaledCoords['pos_y']);
@@ -99,7 +100,7 @@ class ImageController extends \BaseController {
         $scaledParams = array();
         foreach ($params as $key => $value)
         {
-            $scaledParams[$key] = $value * $factor; 
+            $scaledParams[$key] = (int) round($value * $factor); 
         }
         return $scaledParams;
     }

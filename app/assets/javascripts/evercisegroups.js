@@ -68,11 +68,63 @@ function initEvercisegroups()
         return false;
     });
 
+    $('.hub-block .btn-red').click(function(){
+        var href = $(this).attr('href');
+
+        console.log('delete '+href);
+
+        var url = href;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: '',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                debugOutput(data);
+                $('.mask').show();
+                $('.container').append(data);
+                bindDelete();
+             }
+        );
+
+        return false;
+    });
 
     bindCalendar();
 }
-
 registerInitFunction(initEvercisegroups);
+
+function bindDelete()
+{
+    $('#delete_evercisegroup').click(function(){
+        var href = $(this).attr('href');
+
+        console.log('delete '+href);
+
+        var url = href;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: 'deleteNow=1',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                debugOutput(data);
+                //$('.mask').show();
+                //$('.container').append(data);
+
+                setTimeout(function() {
+                    window.location.href = data;
+                }, 1000);
+             }
+        );
+
+        return false;
+    });
+}
 
 function bindCalendar()
 {

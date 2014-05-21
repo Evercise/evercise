@@ -25,7 +25,7 @@
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">
 				{{ HTML::link('evercisegroups/clone_evercise_groups/'.$value['id'], 'Clone Class!' ,array('class' => 'btn btn-yellow')) }}
-				{{ HTML::linkRoute('evercisegroups.create', 'Delete Class!',null ,array('class' => 'btn btn-red')) }}
+				{{ HTML::link('evercisegroups/delete_evercise_groups/'.$value['id'], 'Delete Class!',array('class' => 'btn btn-red')) }}
 				{{ HTML::linkRoute('sessions.index', 'View Participants',$value['id'] ,array('class' => 'btn btn-blue')) }}
 				</div>
 				<div class="hub-block">
