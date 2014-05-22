@@ -44,18 +44,6 @@ class SessionsController extends \BaseController {
 	{
 		// The slider is initialised in JS from the view, as the document.ready has already run
 
-		/*
-                $('#s-year').val(year);
-                $('#s-month').val(month);
-                $('#s-date').val(date);
-                $('#s-evercisegroupId').val(evercisegroupId);
-                $('#s-evercisegroupDuration').val(evercisegroupDuration);
-                $('#price').val(originalPrice);
-                $('#complete-date span').html(completeDate);
-                $('#session-class-name span').html(session_class_name);
-                $('#session-class-price span').html(originalPrice);*/
-
-                //year='+year+'&month='+month+'&date='+date+'&evercisegroupId='+evercisegroupId
 
         $year = Input::get('year');
         $month = Input::get('month');
@@ -68,7 +56,6 @@ class SessionsController extends \BaseController {
 		$price = $evercisegroup->default_price;
 		$name = $evercisegroup->name;
 
-        //$bumclouds = Input::get('bumclouds');
 
 
 		return View::make('sessions.create')->with('year',$year)->with('month',$month)->with('date',$date)->with('id',$id)->with('duration',$duration)->with('price',$price)->with('name',$name);
@@ -139,8 +126,8 @@ class SessionsController extends \BaseController {
 				'price'=>$price,
 			));
 
-			//return Response::json(route('home', array('display_name'=> $user->display_name)));
-			return Response::json($evercisegroup); // for testing
+			return Response::json(route('evercisegroups.index'));
+			//return Response::json($evercisegroup); // for testing
 		}
 	}
 

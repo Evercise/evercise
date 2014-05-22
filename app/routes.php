@@ -67,6 +67,7 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 //Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
 Route::get('/evercisegroups/clone_evercise_groups/{id}', array('as' => 'evercisegroups.clone_evercise_groups', 'uses' => 'EvercisegroupsController@cloneEG'));
+Route::post('/evercisegroups/delete_evercise_groups/{id}', array('as' => 'evercisegroups.delete_evercise_groups', 'uses' => 'EvercisegroupsController@deleteEG'));
 
 
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
@@ -86,8 +87,8 @@ Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 
 Route::post('/postPdf', array('as' => 'postPdf', 'uses' => 'PdfController@postPdf'));
 
 
-/*
-Event::listen('illuminate.query', function($sql)
+/*Event::listen('illuminate.query', function($sql)
+>>>>>>> 77ef4bd24fca58688258333bfbd700818a8465dc
 {
     var_dump($sql);
 });

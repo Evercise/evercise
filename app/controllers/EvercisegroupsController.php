@@ -187,20 +187,73 @@ class EvercisegroupsController extends \BaseController {
 	public function cloneEG($id)
 	{
 		$user = Sentry::getUser();
-		$Evercisegroups = Evercisegroup::where('id', $id)->get()->first();
+		$evercisegroups = Evercisegroup::where('id', $id)->get()->first();
 		
 		return Redirect::route('evercisegroups.create')
-				->with('name', $Evercisegroups->name)
-				->with('description', $Evercisegroups->description)
-				->with('category', $Evercisegroups->category_id)
-				->with('duration', $Evercisegroups->default_duration)
-				->with('maxsize', $Evercisegroups->capacity)
-				->with('price', $Evercisegroups->default_price)
-				->with('lat', $Evercisegroups->lat)
-				->with('lng', $Evercisegroups->long)
-				->with('location', array('address' => $Evercisegroups->address , 'city' => $Evercisegroups->town , 'postCode' => $Evercisegroups->postcode ) )
-				->with('image_full', 'profiles/'.$user->directory.'/'. $Evercisegroups->image)
-				->with( 'image' , $Evercisegroups->image );
+				->with('name', $evercisegroups->name)
+				->with('description', $evercisegroups->description)
+				->with('category', $evercisegroups->category_id)
+				->with('duration', $evercisegroups->default_duration)
+				->with('maxsize', $evercisegroups->capacity)
+				->with('price', $evercisegroups->default_price)
+				->with('lat', $evercisegroups->lat)
+				->with('lng', $evercisegroups->long)
+				->with('location', array('address' => $evercisegroups->address , 'city' => $evercisegroups->town , 'postCode' => $evercisegroups->postcode ) )
+				->with('image_full', 'profiles/'.$user->directory.'/'. $evercisegroups->image)
+				->with( 'image' , $evercisegroups->image );
+	}
+	public function deleteEG($id)
+	{
+		//$evercisegroups = Evercisegroup::where('id', $id)->get()->first();
+
+		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+		$name = $evercisegroup->name;
+		//$name = 'bob';
+
+		$deleteNow = Input::get('deleteNow');
+
+		if($deleteNow == 1)
+		{
+			// If Evercisegroup contains Evercisesessions, delete them all.
+			if (!$evercisegroup['Evercisesession']->isEmpty())
+			{
+				$evercisegroupAndSessionsForDeletion = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
+				//$evercisegroupAndSessionsForDeletion->delete();
+				foreach ($evercisegroupAndSessionsForDeletion['Evercisesession'] as $value) {
+					$value->delete();
+				}
+			}
+			
+			// Now, delete actual Evercisegroup too.
+			$evercisegroupForDeletion = Evercisegroup::where('id', $id)->get()->first();
+			//$evercisegroupForDeletion->delete();
+			
+
+			return Route('evercisegroups.index');
+		}
+		else
+		{
+			if (false /* If there are Users signed up */)
+			{
+				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',3);
+			}
+			else
+			{
+				if ($evercisegroup['Evercisesession']->isEmpty())
+				{
+					//return $evercisegroup;
+					return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',1);
+				}
+				else
+				{
+					//return $evercisegroup;
+					return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',2);
+				}
+			}
+		}
+
+		 return Redirect::route('home');
+		//return 'delete '.$id;
 	}
 
 	/**
