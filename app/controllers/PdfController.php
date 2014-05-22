@@ -2,18 +2,17 @@
 
 class PdfController extends \BaseController
 {
-    public function getSample()
+    public function postPdf()
     {
-        $pdf = new TCPDF();
- /*
-        $pdf->SetPrintHeader(false);
-        $pdf->SetPrintFooter(false);
-        $pdf->AddPage();
-        $pdf->Text(90, 140, 'This is a test');
-        $filename = storage_path() . '/test.pdf';
-        $pdf->output($filename, 'F');
- 
-        return Response::download($filename);
-*/
+        $data = json_decode(Input::get('postMembers'), true);
+
+        $timestamp = date("d-m-Y");
+
+        $pdf = App::make('dompdf');
+        $pdfPage = View::make('pdf.session_members')->with('data', $data);
+        $pdf->loadHTML($pdfPage);
+
+        //return  $pdf->stream($timestamp.'.pdf'); /* for testing */
+        return  $pdf->download($timestamp.'.pdf');
     }
 }

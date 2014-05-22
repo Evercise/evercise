@@ -17,6 +17,12 @@
 			<h6>Start time: {{  date('H:ia' , strtotime($value['date_time'])) }}</h6>
 			<h6>End time: {{  date('H:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</h6>
 			@include('layouts.progressbar', array('cap' => $evercisegroup->capacity, 'mem' =>$value['members']))
+			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
+				{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
+
+				{{ Form::submit('Download' , array('class'=>'btn-yellow ')) }}
+
+			{{ Form::close() }}
 			<br>
 			@foreach($value['Sessionmembers'] as $k => $val)
 				<p>{{ $val['created_at']}}</p>
@@ -26,8 +32,10 @@
 				<p>{{ $val['Users']['first_name'] }}</p>
 				<p>{{ $val['Users']['last_name'] }}</p>
 
-				{{ HTML::link('pdf', 'title',  array('class' => 'btn btn-yellow')); }}
+
 			@endforeach
+
+			
 			<br>
 		</div>
 		
