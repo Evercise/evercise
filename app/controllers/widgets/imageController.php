@@ -74,13 +74,14 @@ class ImageController extends \BaseController {
         $factor = $true_height / $img_height;
         $scaledCoords = $this->scale($factor, array('width'=>$width, 'height'=>$height, 'pos_x'=>$pos_x, 'pos_y'=>$pos_y));
 
-
-       //return Response::json(array('uploadView'=>$scaledCoords['pos_x']));
+        //return Response::json(array('uploadView'=>$scaledCoords['pos_x']));
 
         // crop image
         $img->crop($scaledCoords['width'], $scaledCoords['height'], $scaledCoords['pos_x'], $scaledCoords['pos_y']);
+        //$img->crop(200, 200, 600, 600);
 
-        $thumbFilename = 'thumb_'.basename($img_url);
+        $timestamp = date_create();
+        $thumbFilename = date_timestamp_get($timestamp).'_'.basename($img_url);
         $img->save(public_path() . '/profiles/' . $save_location . '/'.$thumbFilename);
 
         if(Request::ajax())
