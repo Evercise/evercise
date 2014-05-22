@@ -18,7 +18,7 @@ function MapWidgetInit() {
       })
       .done(
           function(data) { 
-            debugOutput(data);
+            trace(data);
             $('#latbox').val(data.lat);
             $('#lngbox').val(data.lng);
             MapWidgetInit();

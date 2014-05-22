@@ -29,12 +29,12 @@ function calendarSlide () {
     topmt = mt;
     bottom = parseInt(class_height[class_height.length - 1] + mt);
 
-    debugOutput(bottom);
+    trace(bottom);
 
     // get window position
 
     $(window).scroll(function(evt) {
-
+        
     	var y = $(this).scrollTop();
 
     	if( y == 0 ){
@@ -52,7 +52,7 @@ function calendarSlide () {
     		$('div[data-id="'+class_id[0]+'"]').addClass('selected');
     	} 
         else if( y > class_top[class_top.length - 1] ){
-            debugOutput('bottom');
+            trace('bottom');
             $('#calendar').css({
                 marginTop: bottom+ 'px',
                 '-webkit-transition': 'all 0.5s ease',
@@ -67,7 +67,7 @@ function calendarSlide () {
             $('div[data-id="'+class_id[class_id.length-1]+'"]').addClass('selected');
         }
     	else if (y >= class_top[i] && y < class_top[class_top.length - 1] ) {
-            debugOutput('norm');
+            trace('norm');
     		mt = parseInt(mt + class_height[i]);
     		
     		$('#calendar').css({

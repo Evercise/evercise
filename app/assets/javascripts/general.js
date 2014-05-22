@@ -25,13 +25,13 @@ jQuery( document ).ready( function( $ )
   if(typeof laracasts !== 'undefined')
   {
     for(var l in laracasts){
-       //debugOutput('LARACASTS: '+l + ': ' + laracasts[l] + ': ' + initFunctions[l]);
+       //trace('LARACASTS: '+l + ': ' + laracasts[l] + ': ' + initFunctions[l]);
        var name = l.split('_')[0];
 
        initFunctions.forEach(function(f) {
         if (f.name == name)
         {
-           //debugOutput('RUNNING: '+name+' : '+laracasts[l]);
+           //trace('RUNNING: '+name+' : '+laracasts[l]);
            f.run(laracasts[l]);
         }
       });
@@ -43,7 +43,7 @@ jQuery( document ).ready( function( $ )
     if(f.always)
     {
         f.run(f.name);
-        //debugOutput("always: "+f.name);
+        //trace("always: "+f.name);
     }
   });
 
@@ -63,7 +63,7 @@ jQuery( document ).ready( function( $ )
 */  
 });
 
-function debugOutput(message)
+function trace(message)
 {
   console.log(arguments.callee.caller.name + ' => ' + message);
 }
@@ -85,7 +85,7 @@ function initLoginBox()
     $('#displayName-dropdown').toggle(100,function(){
       $(document).mouseup(function (e)
       {
-        //debugOutput('displayName click');
+        //trace('displayName click');
           var container = $('#displayName-dropdown');
           var link = $('#displayName');
 
@@ -109,7 +109,7 @@ function initSlider(params)
 {
   sliderParams = JSON.parse(params);
   var sliderName = sliderParams.name;
-  //debugOutput("initSlider("+sliderName+") - callback:"+sliderParams.callback);
+  //trace("initSlider("+sliderName+") - callback:"+sliderParams.callback);
 
   $( "#"+sliderName+"-slider" ).slider({
     range: "min",
@@ -135,6 +135,6 @@ registerInitFunction(initSlider);
 
 function updateSlider(sliderName)
 {
-  //debugOutput("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
+  //trace("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
   $( "#"+sliderName+"-slider" ).slider({ value: $("#"+sliderName).val() });
 }

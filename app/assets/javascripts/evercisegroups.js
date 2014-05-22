@@ -2,7 +2,7 @@
 
 function initEvercisegroups()
 {
-    debugOutput('initEvercisegroups');
+    trace('initEvercisegroups');
 
     if(typeof laracasts !== 'undefined')
     {
@@ -43,7 +43,7 @@ function initEvercisegroups()
                     var scroll = false;
                     $.each(arr, function(index, value)
                     {
-                        debugOutput(value);
+                        trace(value);
                         if (scroll == false) {
                             //$('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                             scroll = true;
@@ -82,7 +82,7 @@ function initEvercisegroups()
         })
         .done(
             function(data) {
-                debugOutput(data);
+                trace(data);
                 $('.mask').show();
                 $('.container').append(data);
                 bindDelete();
@@ -112,7 +112,7 @@ function bindDelete()
         })
         .done(
             function(data) {
-                debugOutput(data);
+                trace(data);
                 //$('.mask').show();
                 //$('.container').append(data);
 
@@ -174,7 +174,7 @@ function bindCalendar()
         var monthyear = this.id.split("?")[1];
         var year = monthyear.split("&")[0].split("=")[1];
         var month = monthyear.split("&")[1].split("=")[1];
-        //debugOutput("ID: "+month);
+        //trace("ID: "+month);
 
         $('#month').val(month);
         $('#year').val(year);
@@ -188,7 +188,7 @@ function bindCalendar()
         })
         .done(
             function(data) {
-                //debugOutput('id: '+ data);
+                //trace('id: '+ data);
                 $('.hub-calendar-wrapper').html(data);
                 bindCalendar();
              }

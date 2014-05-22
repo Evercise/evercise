@@ -17,22 +17,22 @@ function initSessions()
                 "s-price": $( '#s-price' ).val()
             },
             function( data ) {
-                debugOutput("about to win.......");
+                trace("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    debugOutput('loose: '+data);
+                    trace('loose: '+data);
                     var arr = data.errors;
                     $.each(arr, function(index, value)
                     {
                         if (value.length != 0)
                         {
-                           debugOutput( value );
+                           trace( value );
                         }
                     });
 
                     $('#ajax-loading').hide();
                 }else{
-                    debugOutput("data: "+data);
+                    trace("data: "+data);
                     // redirect to login page
                     $('.success_msg').show();
                     setTimeout(function() {

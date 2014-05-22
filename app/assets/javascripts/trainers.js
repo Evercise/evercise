@@ -36,10 +36,10 @@ function initCreateTrainer()
 
             },
             function( data ) {
-                debugOutput("about to win.......");
+                trace("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    debugOutput('loose');
+                    trace('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
@@ -62,7 +62,7 @@ function initCreateTrainer()
                     setTimeout(function() {
                         window.location.href = data;
                     }, 100);
-                    //debugOutput(data);
+                    //trace(data);
                 }
             },
             'json'
@@ -89,16 +89,16 @@ function initSessionNew()
 
             },
             function( data ) {
-                debugOutput("about to win.......");
+                trace("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    debugOutput('loose');
+                    trace('loose');
                     var arr = data.errors;
                 }else{
                     /*setTimeout(function() {
                         window.location.href = data;
                     }, 100);*/
-                    debugOutput(data);
+                    trace(data);
                 }
             },
             'json'

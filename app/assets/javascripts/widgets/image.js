@@ -7,7 +7,7 @@ function initImage()
         }; 
      $('body').delegate('#image','change', function(){
          $('#upload').ajaxForm(options).submit();   
-        debugOutput("uploading..");
+        trace("uploading..");
      }); 
 }        
 registerInitFunction(initImage);
@@ -15,7 +15,7 @@ registerInitFunction(initImage);
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
-        debugOutput("showRequest..");       
+        trace("showRequest..");       
     return true; 
 } 
 function showResponse(response, statusText, xhr, form)  { 
@@ -61,7 +61,7 @@ function preview(img, selection) {
     var previewX = $('.preview').width();
     var previewY = $('.preview').height();
 
-    debugOutput(previewX+' - '+previewY);
+    trace(previewX+' - '+previewY);
     
     var scaleX = previewX / selection.width;
     var scaleY = previewY / selection.height;
@@ -84,15 +84,16 @@ function saveCroppedImage(img, selection)
     $('#pos_y').val(selection.y1);
     $('#img_url').val(img.src);
     $('#img_height').val(img.height);
-    //debugOutput($('#img_height').val());
+    //trace($('#img_height').val());
 }
 
 
 
 function postCroppedImage()
 {
+    //TODO - implement cancel button here.
     $('#cancel_upload').click(function(){
-        debugOutput("cancel");
+        trace("cancel");
 
         var url = '../widgets/upload';
         $.ajax({
@@ -103,7 +104,7 @@ function postCroppedImage()
         })
         .done(
             function(data) {
-                debugOutput(data);
+                trace(data);
                 $('#upload_wrapper').html(data);
              }
         );
@@ -111,7 +112,7 @@ function postCroppedImage()
     });
 
    $( '#upload' ).on( 'submit', function() {
-    debugOutput('postCroppedImage: ');
+    trace('postCroppedImage: ');
     // post to sontroller
     $.post(
         $( this ).prop( 'action' ),
@@ -126,13 +127,13 @@ function postCroppedImage()
             "img_height": $(  '#img_height' ).val()
         },
         function( data ) {
-            debugOutput("about to win.......");
+            trace("about to win.......");
             if (data.validation_failed == 1)
             {
-                debugOutput('loose');
+                trace('loose');
                
             }else{
-                debugOutput(data);
+                trace(data);
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });

@@ -24,7 +24,7 @@ registerInitFunction(initLogin, true);
 
 function initUsers()
 {
-    debugOutput('initUsers');
+    trace('initUsers');
 
     $( ".datepicker" ).datepicker({
       dateFormat: "yy-mm-dd" ,
@@ -58,10 +58,10 @@ function initUsers()
                 "userNewsletter": $( '#userNewsletter' ).val()
             },
             function( data ) {
-                debugOutput("about to win.......");
+                trace("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    debugOutput('loose');
+                    trace('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
@@ -84,7 +84,7 @@ function initUsers()
                     setTimeout(function() {
                         window.location.href = data;
                     }, 1000);
-                    //debugOutput(data);
+                    //trace(data);
                 }
             },
             'json'
@@ -107,14 +107,14 @@ function initUsers()
                 "code": $( '#code' ).val()
             },
             function( data ) {
-                debugOutput("about to win.......");
+                trace("about to win.......");
                 if (data.validation_failed == 1)
                 {
-                    debugOutput('loose');
+                    trace('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
-                    debugOutput(arr);
+                    trace(arr);
                     $.each(arr, function(index, value)
                     {
                         if (scroll == false) {
@@ -130,7 +130,7 @@ function initUsers()
                     $('#ajax-loading').hide();
                 }else{
                     // redirect to login page
-                    debugOutput(data);
+                    trace(data);
                     window.location.href = data;
                 }
             },
@@ -172,7 +172,7 @@ function login(){
                     $('.success_msg').show();
                     setTimeout(function() {
                        window.location.href = data;
-                       debugOutput(data);
+                       trace(data);
                     }, 20);
                 }
             },
