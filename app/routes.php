@@ -84,9 +84,11 @@ Route::post('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'wi
 
 Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 'widgets\EvercisegroupsController@block'));
 
+Route::post('/postPdf', array('as' => 'postPdf', 'uses' => 'PdfController@postPdf'));
 
-// This seems to break the image upload stuff !!!
+
 /*Event::listen('illuminate.query', function($sql)
+>>>>>>> 77ef4bd24fca58688258333bfbd700818a8465dc
 {
     var_dump($sql);
 });
