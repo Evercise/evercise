@@ -265,9 +265,23 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+		$user = Sentry::getUser();
 
-		return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup);
+		$trainerGroup = Sentry::findGroupByName('trainer');
+
+		if ($user->inGroup($trainerGroup))
+		{
+			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+
+			return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup); // change to trainer show view
+		}
+		else
+		{
+			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+
+			return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup);
+		}
+		
 	}
 
 	/**

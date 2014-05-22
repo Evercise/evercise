@@ -4,8 +4,8 @@
 		{{ Form::label( $fieldname, $label) }}
 	</div>
 	<div class="formfield">
-		@if( isset($value))
-			{{ Form::text( $fieldname , $value, array('placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
+		@if( isset($default))
+			{{ Form::text( $fieldname , $default, array('placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
 			<p>{{ $fieldtext }}</p>
 		@else
 			{{ Form::text( $fieldname , '', array('placeholder' => $placeholder, 'maxlength' => $maxlength)) }}

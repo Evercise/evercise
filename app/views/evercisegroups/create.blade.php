@@ -17,7 +17,7 @@
 
 
         @if(Session::has('name'))
-            @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name', 'fieldtext'=>'Your class name should be simple, specific and memorable, and it should clarify the nature of the service you are going to provide. Try not to be too general.', 'value' => Session::get('name') ))
+            @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name', 'fieldtext'=>'Your class name should be simple, specific and memorable, and it should clarify the nature of the service you are going to provide. Try not to be too general.', 'default' => Session::get('name') ))
         @else
             @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name', 'fieldtext'=>'Your class name should be simple, specific and memorable, and it should clarify the nature of the service you are going to provide. Try not to be too general.' ))
         @endif
@@ -27,7 +27,7 @@
         @endif
 
         @if(Session::has('description'))
-            @include('form.textfield', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'fieldtext'=>'This summary will appear in the Class Panel under the title. Use your words wisely to explain as concisely and clearly as possible what a participant can hope to gain from joining your class.', 'value' => Session::get('description') ))
+            @include('form.textfield', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'fieldtext'=>'This summary will appear in the Class Panel under the title. Use your words wisely to explain as concisely and clearly as possible what a participant can hope to gain from joining your class.', 'default' => Session::get('description') ))
         @else
             @include('form.textfield', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'fieldtext'=>'This summary will appear in the Class Panel under the title. Use your words wisely to explain as concisely and clearly as possible what a participant can hope to gain from joining your class.' ))
         @endif

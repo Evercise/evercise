@@ -9,7 +9,7 @@
                 <li>{{ HTML::linkRoute('auth.login', 'Help') }}</li>
                 <li>
                 	{{ Form::open(array('id' => 'search_bar', 'url' => 'users', 'method' => 'post')) }}
-                		@include('form.textfield', array('fieldname'=>'search_bar', 'placeholder'=>'Find Classes near you', 'maxlength'=>50, 'label'=>null, 'fieldtext'=>null ))
+                		@include('form.textfield', array('fieldname'=>'search_bar', 'placeholder'=>'Find Classes near you', 'maxlength'=>50, 'label'=>null, 'fieldtext'=>null , 'default' => null ))
                 	{{ Form::close() }}
                 </li>
                 @include('layouts.loginStatus')
