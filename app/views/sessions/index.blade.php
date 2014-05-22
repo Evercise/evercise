@@ -19,9 +19,14 @@
 			@include('layouts.progressbar', array('cap' => $evercisegroup->capacity, 'mem' =>$value['members']))
 			<br>
 			@foreach($value['Sessionmembers'] as $k => $val)
+				<p>{{ $val['created_at']}}</p>
+				
+				{{ HTML::image('profiles/'.$val['Users']['directory'].'/'.$val['Users']['image'], 'session members profile image' , array('class' => 'session-list-profile')); }}
 				<p>{{ $val['Users']['display_name'] }}</p>
 				<p>{{ $val['Users']['first_name'] }}</p>
 				<p>{{ $val['Users']['last_name'] }}</p>
+
+				{{ HTML::link('pdf', 'title',  array('class' => 'btn btn-yellow')); }}
 			@endforeach
 			<br>
 		</div>

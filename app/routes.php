@@ -83,6 +83,9 @@ Route::post('/widgets/calendar', array('as' => 'widgets.calendar', 'uses' => 'wi
 
 Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 'widgets\EvercisegroupsController@block'));
 
+Route::get('/pdf', array('as' => 'pdf', 'uses' => 'PdfController@getSample'));
+
+
 
 Event::listen('illuminate.query', function($sql)
 {
