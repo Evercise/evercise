@@ -265,7 +265,9 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		return View::make('evercisegroups.show');
+		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+
+		return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup);
 	}
 
 	/**

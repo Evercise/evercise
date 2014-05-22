@@ -1,6 +1,8 @@
 <div class="class-block">
 	<div class="class-block-img-wrap">
-		{{ HTML::image($image, 'class image', array('class' => 'class-block-img')); }}
+		<a href="evercisegroups/{{ $evercisegroupId}}">
+			{{ HTML::image($image, 'class image', array('class' => 'class-block-img')); }}
+		</a> 
 	</div>
 	@if(isset($title))
 		<h3>{{ $title }}</h3>

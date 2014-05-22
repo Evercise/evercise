@@ -29,7 +29,7 @@
 				{{ HTML::linkRoute('sessions.index', 'View Participants',$value['id'] ,array('class' => 'btn btn-blue')) }}
 				</div>
 				<div class="hub-block">
-					@include('layouts.classBlock', array('title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity'] , 'sessions' => $sessionDates[$key] ))
+					@include('layouts.classBlock', array('evercisegroupId' => $value['id'],'title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity'] , 'sessions' => $sessionDates[$key] ))
 				</div>
 				<div class="hub-block">
 					<h5>This class has:</h5>

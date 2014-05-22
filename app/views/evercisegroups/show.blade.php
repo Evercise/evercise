@@ -3,6 +3,6 @@
 
 @section('content')
 
-show
+show {{ var_dump($evercisegroup)}}
 
 @stop
