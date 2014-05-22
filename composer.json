@@ -10,7 +10,7 @@
         "cartalyst/sentry": "2.1.*",
 		"facebook/php-sdk": "dev-master",
 		"laracasts/utilities":"1.0",
-		"intervention/image": "dev-master",
+		"intervention/image": "2.0",
 		"toin0u/geocoder-laravel": "0.2.*@dev",
 		"toin0u/geotools-laravel": "~0.2",
     	"gloudemans/calendar": "dev-master",

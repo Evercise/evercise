@@ -109,7 +109,7 @@ function initSlider(params)
 {
   sliderParams = JSON.parse(params);
   var sliderName = sliderParams.name;
-  debugOutput("initSlider("+sliderName+") - callback:"+sliderParams.callback);
+  //debugOutput("initSlider("+sliderName+") - callback:"+sliderParams.callback);
 
   $( "#"+sliderName+"-slider" ).slider({
     range: "min",
@@ -135,6 +135,6 @@ registerInitFunction(initSlider);
 
 function updateSlider(sliderName)
 {
-  debugOutput("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
+  //debugOutput("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
   $( "#"+sliderName+"-slider" ).slider({ value: $("#"+sliderName).val() });
 }

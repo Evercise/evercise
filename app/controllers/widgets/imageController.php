@@ -48,7 +48,10 @@ class ImageController extends \BaseController {
         }
     }
     public function getCrop() {
-        return View::make('widgets/crop');
+
+            //Don't forget to initialise the JS (initImage) from the containing controller
+            return View::make('widgets/crop');
+        
     }
 
     public function postCrop() {

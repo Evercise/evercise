@@ -85,6 +85,7 @@ class EvercisegroupsController extends \BaseController {
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>120, 'step'=>5, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
 
+        JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
 		JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
@@ -226,7 +227,7 @@ class EvercisegroupsController extends \BaseController {
 			
 			// Now, delete actual Evercisegroup too.
 			$evercisegroupForDeletion = Evercisegroup::where('id', $id)->get()->first();
-			//$evercisegroupForDeletion->delete();
+			$evercisegroupForDeletion->delete();
 			
 
 			return Route('evercisegroups.index');

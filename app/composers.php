@@ -9,7 +9,6 @@ require 'composers/DistanceComposer.php';
 require 'composers/UpcomingPastSessions.php';
 require 'composers/ProgressBarComposer.php';
 
-
 View::composer('widgets.calendar', 'CalendarComposer');
 View::composer('widgets.mapForm', 'MapComposer');
 View::composer('widgets.time', 'TimeComposer');

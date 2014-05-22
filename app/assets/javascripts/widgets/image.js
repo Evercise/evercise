@@ -1,4 +1,5 @@
-jQuery(document).ready(function($) {
+function initImage()
+{
     var options = { 
         beforeSubmit:  showRequest,
         success:       showResponse,
@@ -6,9 +7,11 @@ jQuery(document).ready(function($) {
         }; 
      $('body').delegate('#image','change', function(){
          $('#upload').ajaxForm(options).submit();   
-        debugOutput("uploading..");       
+        debugOutput("uploading..");
      }); 
-});        
+}        
+registerInitFunction(initImage);
+
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
@@ -49,6 +52,9 @@ function initCrop()
 }
 
 function preview(img, selection) {
+
+    $('#img-crop .btn-yellow').removeClass('disabled');
+    
     if (!selection.width || !selection.height)
         return;
 
@@ -85,8 +91,27 @@ function saveCroppedImage(img, selection)
 
 function postCroppedImage()
 {
-   $( '#upload' ).on( 'submit', function() {
+    $('#cancel_upload').click(function(){
+        debugOutput("cancel");
 
+        var url = '../widgets/upload';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: 'uploadImage='+Laracasts.uploadImage,
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                debugOutput(data);
+                $('#upload_wrapper').html(data);
+             }
+        );
+        return false;
+    });
+
+   $( '#upload' ).on( 'submit', function() {
+    debugOutput('postCroppedImage: ');
     // post to sontroller
     $.post(
         $( this ).prop( 'action' ),
