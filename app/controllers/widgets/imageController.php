@@ -30,6 +30,7 @@ class ImageController extends \BaseController {
             $destinationPath = 'profiles/'.$user->directory;
 
             $filename = $file->getClientOriginalName();
+            $filename = str_replace(' ', '_', $filename);
             Input::file('image')->move($destinationPath, $filename);
             
             
@@ -68,8 +69,9 @@ class ImageController extends \BaseController {
         $user = Sentry::getUser();
         $save_location = $user->directory;
 
+        $img_name = basename($img_url);
         // open file a image resource
-        $img_path = public_path() . '/profiles/' . $save_location . '/' .basename($img_url);
+        $img_path = public_path() . '/profiles/' . $save_location . '/' .$img_name;
         
         $img = Image::make($img_path);
         $true_height = $img->height();
@@ -84,7 +86,8 @@ class ImageController extends \BaseController {
         //$img->crop(200, 200, 600, 600);
 
         $timestamp = date_create();
-        $thumbFilename = date_timestamp_get($timestamp).'_'.basename($img_url);
+
+        $thumbFilename = date_timestamp_get($timestamp).'_'.$img_name;
         $img->save(public_path() . '/profiles/' . $save_location . '/'.$thumbFilename);
 
         if(Request::ajax())
