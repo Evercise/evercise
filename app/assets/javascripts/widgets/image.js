@@ -98,7 +98,7 @@ function postCroppedImage()
         $.ajax({
             url: url,
             type: 'GET',
-            data: 'uploadImage='+Laracasts.uploadImage,
+            data: '',
             dataType: 'html'
         })
         .done(
