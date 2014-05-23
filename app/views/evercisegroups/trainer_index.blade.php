@@ -17,11 +17,7 @@
     </div>
 	<div class="hub-wrapper">
 		@foreach ($evercisegroups as $key=>$value)
-			<div class="hub-row
-			@if($key == 0)
-			selected
-			@endif
-			" data-id="{{ $value['id'] }}" data-name="{{ $value['name'] }}"  data-duration="{{ $value['default_duration'] }}">
+			<div class="hub-row {{ ($key == 0) ? 'selected' : '' }}" data-id="{{ $value['id'] }}" data-name="{{ $value['name'] }}"  data-duration="{{ $value['default_duration'] }}">
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">
 				{{ HTML::link('evercisegroups/clone_evercise_groups/'.$value['id'], 'Clone Class!' ,array('class' => 'btn btn-yellow')) }}
@@ -77,7 +73,9 @@
 
 
 	<div class="hub-calendar-wrapper">
-		@include('widgets.calendar', array('month'=>$month, 'year'=>$year))
+		<div id="calendar-wrapper">
+			@include('widgets.calendar', array('month'=>$month, 'year'=>$year))
+		</div>
 	</div>
 
 @stop

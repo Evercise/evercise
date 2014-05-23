@@ -173,6 +173,9 @@ class EvercisegroupsController extends \BaseController {
 				//'customurl'=>$customurl
 			));
 
+			$message = 'Trainer '.$user->first_name.' '.$user->last_name.' created Class '.$evercisegroup->name;
+			Trainerhistory::create(array('user_id'=> $user->id, 'message'=>$message));
+
 			//return Response::json(route('home', array('display_name'=> $user->display_name)));
 			//return Response::json($evercisegroup); // for testing
 			//return View::make('evercisegroups.index');

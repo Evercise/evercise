@@ -189,7 +189,7 @@ function bindCalendar()
         .done(
             function(data) {
                 //trace('id: '+ data);
-                $('.hub-calendar-wrapper').html(data);
+                $('#calendar-wrapper').html(data);
                 bindCalendar();
              }
         );
