@@ -5,7 +5,7 @@
 @include('layouts.pagetitle', array('title'=> $evercisegroup->name.'&apos;s attendance list', 'subtitle'=>'view, download  or message your attendance list'))
 
 <div class="col3">
-	@include('layouts.classBlock', array('title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$directory .'/'. $evercisegroup->image,   'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity  ))
+	@include('layouts.classBlock', array('title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$directory .'/'. $evercisegroup->image,   'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity, 'evercisegroupId' => $evercisegroup->id  ))
 </div>
 <div class="col9">
 
