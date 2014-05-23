@@ -100,7 +100,7 @@ class SessionsController extends \BaseController {
 		}
 		else {
 
-			$evercisegroup = Input::get('s-evercisegroupId');
+			$evercisegroupId = Input::get('s-evercisegroupId');
 			$year = Input::get('s-year');
 			$month = Input::get('s-month');
 			$date = Input::get('s-date');
@@ -109,7 +109,7 @@ class SessionsController extends \BaseController {
 			$price = Input::get('s-price');
 			//$customurl = Input::get('customurl');
 
-			$time = $hour.'-'.$minute.'-00';
+			$time = $hour.':'.$minute.':00';
 
 			$date_time = $year.'-'.$month.'-'.$date.' '.$time;
 
@@ -121,10 +121,17 @@ class SessionsController extends \BaseController {
 				$trainer = Trainer::where('user_id', $user->id)->get()->first();
 
 			$session = EverciseSession::create(array(
-				'evercisegroup_id'=>$evercisegroup,
+				'evercisegroup_id'=>$evercisegroupId,
 				'date_time'=>$date_time,
 				'price'=>$price,
 			));
+
+			$evercisegroup = Evercisegroup::where('id', $evercisegroupId)->firstOrFail();
+
+			$timestamp = strtotime($date_time);
+			$niceTime = date('h:ia', $timestamp);
+			$niceDate = date('dS F Y', $timestamp);
+			Trainerhistory::create(array('user_id'=> $user->id, 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 
 			return Response::json(route('evercisegroups.index'));
 			//return Response::json($evercisegroup); // for testing

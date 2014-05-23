@@ -17,8 +17,6 @@ class EvercisegroupsController extends \BaseController {
 
 		if ($user->inGroup($trainerGroup))
 		{
-			//$trainer = Trainer::where('user_id', $user->id)->get()->first();
-
 			$evercisegroups = Evercisegroup::with('EverciseSession')->where('user_id', $user->id)->get();
 
 			if ($evercisegroups->isEmpty()) {
@@ -64,7 +62,6 @@ class EvercisegroupsController extends \BaseController {
 		{
 			$trainer = Trainer::where('user_id', $user->id)->get()->first();
 		}
-		//else return 'Not a trainer';
 
 		else
 		{
@@ -99,9 +96,6 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function store()
 	{
-		// echo 'Evercisegroups Store';
-		// exit;
-
 		$validator = Validator::make(
 			Input::all(),
 			array(
@@ -136,12 +130,10 @@ class EvercisegroupsController extends \BaseController {
 			$classname = Input::get('classname');
 			$description = Input::get('description');
 			$category = Input::get('category');
-			//$summary = Input::get('summary');
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
 			$image = Input::get('image');
-			//$customurl = Input::get('customurl');
 			$address = Input::get('address');
 			$city = Input::get('city');
 			$postcode = Input::get('postcode');
@@ -160,7 +152,6 @@ class EvercisegroupsController extends \BaseController {
 				'user_id'=>$user->id,
 				'category_id'=>$category,
 				'description'=>$description,
-				//'summary'=>$summary,
 				'default_duration'=>$duration,
 				'capacity'=>$maxsize,
 				'default_price'=>$price,
@@ -170,11 +161,9 @@ class EvercisegroupsController extends \BaseController {
 				'postcode'=>$postcode,
 				'lat'=>$lat,
 				'long' => $long
-				//'customurl'=>$customurl
 			));
 
-			$message = 'Trainer '.$user->first_name.' '.$user->last_name.' created Class '.$evercisegroup->name;
-			Trainerhistory::create(array('user_id'=> $user->id, 'message'=>$message));
+			Trainerhistory::create(array('user_id'=> $user->id, 'type'=>'created_evercisegroup', 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name));
 
 			//return Response::json(route('home', array('display_name'=> $user->display_name)));
 			//return Response::json($evercisegroup); // for testing
@@ -205,59 +194,6 @@ class EvercisegroupsController extends \BaseController {
 				->with('location', array('address' => $evercisegroups->address , 'city' => $evercisegroups->town , 'postCode' => $evercisegroups->postcode ) )
 				->with('image_full', 'profiles/'.$user->directory.'/'. $evercisegroups->image)
 				->with( 'image' , $evercisegroups->image );
-	}
-	public function deleteEG($id)
-	{
-		//$evercisegroups = Evercisegroup::where('id', $id)->get()->first();
-
-		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
-		$name = $evercisegroup->name;
-		//$name = 'bob';
-
-		$deleteNow = Input::get('deleteNow');
-
-		if($deleteNow == 1)
-		{
-			// If Evercisegroup contains Evercisesessions, delete them all.
-			if (!$evercisegroup['Evercisesession']->isEmpty())
-			{
-				$evercisegroupAndSessionsForDeletion = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
-				//$evercisegroupAndSessionsForDeletion->delete();
-				foreach ($evercisegroupAndSessionsForDeletion['Evercisesession'] as $value) {
-					$value->delete();
-				}
-			}
-			
-			// Now, delete actual Evercisegroup too.
-			$evercisegroupForDeletion = Evercisegroup::where('id', $id)->get()->first();
-			$evercisegroupForDeletion->delete();
-			
-
-			return Route('evercisegroups.index');
-		}
-		else
-		{
-			if (false /* If there are Users signed up */)
-			{
-				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',3);
-			}
-			else
-			{
-				if ($evercisegroup['Evercisesession']->isEmpty())
-				{
-					//return $evercisegroup;
-					return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',1);
-				}
-				else
-				{
-					//return $evercisegroup;
-					return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',2);
-				}
-			}
-		}
-
-		 return Redirect::route('home');
-		//return 'delete '.$id;
 	}
 
 	/**
@@ -319,7 +255,61 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+
+		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
+		$name = $evercisegroup->name;
+
+		// If Evercisegroup contains Evercisesessions, delete them all.
+		if (!$evercisegroup['Evercisesession']->isEmpty())
+		{
+			foreach ($evercisegroup['Evercisesession'] as $value) {
+				$value->delete();
+			}
+		}
+		
+		// Now, delete actual Evercisegroup too.
+		$evercisegroupForDeletion = Evercisegroup::find($id);
+		//$evercisegroupForDeletion->delete();
+
+		$user = Sentry::getUser();
+
+		Trainerhistory::create(array('user_id'=> $user->id, 'type'=>'deleted_evercisegroup', 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name));
+		
+		return Route('evercisegroups.index');
+	}
+
+
+	/**
+	 * Bring up delete view in window
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function deleteEG($id)
+	{
+
+		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
+		$name = $evercisegroup->name;
+
+		if (false /* If there are Users signed up */)
+		{
+			return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',3);
+		}
+		else
+		{
+			if ($evercisegroup['Evercisesession']->isEmpty())
+			{
+				//return $evercisegroup;
+				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',1);
+			}
+			else
+			{
+				//return $evercisegroup;
+				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',2);
+			}
+		}
+		 return Redirect::route('home');
+		//return 'delete '.$id;
 	}
 
 	
