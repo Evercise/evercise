@@ -17,7 +17,7 @@ class CreateTrainersTable extends Migration {
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->string('bio');
 			$table->string('website', 45);
-			$table->string('profession', 45);
+			$table->string('specialities_id', 45)->unsigned();// Foreign key
 			$table->timestamps();
 			
 		});

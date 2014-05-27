@@ -66,5 +66,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	    return 'remember_token';
 	}
 
+	/* forign keys */
+
+	public function Trainer()
+    {
+        return $this->hasMany('Trainer');
+    }
+
 
 }

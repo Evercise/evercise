@@ -138,4 +138,17 @@ class TrainersController extends \BaseController {
 	{
 		return View::make('trainers.edit');
 	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show($id)
+	{
+		$trainer = User::with('Trainer')->find($id);
+
+		return View::make('trainers.show')->with('trainer', $trainer);
+	}
 }
