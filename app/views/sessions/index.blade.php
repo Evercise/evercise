@@ -14,8 +14,8 @@
 		<div class="session-view-header">
 			<h5>{{ date('dS F Y' , strtotime($value['date_time'])) }}</h5>
 			<br>
-			<h6>Start time: {{  date('H:ia' , strtotime($value['date_time'])) }}</h6>
-			<h6>End time: {{  date('H:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</h6>
+			<h6>Start time: {{  date('h:ia' , strtotime($value['date_time'])) }}</h6>
+			<h6>End time: {{  date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</h6>
 			@include('layouts.progressbar', array('cap' => $evercisegroup->capacity, 'mem' =>$value['members']))
 			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 				{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
