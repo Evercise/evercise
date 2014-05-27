@@ -51,7 +51,7 @@ class BaseController extends Controller {
 	    return implode($pass); //turn the array into a string
 	}
 
-	public function arrayDate($array, $format='h:m a M-dS')
+	public function arrayDate($array, $format='h:ia M-dS')
 	{
 		$dateTime = array();
 

@@ -131,7 +131,7 @@ class SessionsController extends \BaseController {
 			$timestamp = strtotime($date_time);
 			$niceTime = date('h:ia', $timestamp);
 			$niceDate = date('dS F Y', $timestamp);
-			Trainerhistory::create(array('user_id'=> $user->id, 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+			Trainerhistory::create(array('user_id'=> $user->id, 'type'=>'created_session', 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 
 			return Response::json(route('evercisegroups.index'));
 			//return Response::json($evercisegroup); // for testing

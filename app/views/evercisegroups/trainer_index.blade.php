@@ -41,8 +41,7 @@
 					@endif
 
 					<br>
-
-					 
+					
 					@if (!empty($futureDates[$key]))
 						@if (count($futureDates[$key]) == 1) 
 							{{ count($futureDates[$key])}} upcoming date
