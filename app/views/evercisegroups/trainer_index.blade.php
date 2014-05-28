@@ -20,51 +20,15 @@
 			<div class="hub-row {{ ($key == 0) ? 'selected' : '' }}" data-id="{{ $value['id'] }}" data-name="{{ $value['name'] }}"  data-duration="{{ $value['default_duration'] }}">
 				<div class="hub-title"><h4>{{ $value['name'] }}</h4></div>
 				<div class="hub-block">
-				{{ HTML::link('evercisegroups/clone_evercise_groups/'.$value['id'], 'Clone Class!' ,array('class' => 'btn btn-yellow')) }}
-				{{ HTML::link('evercisegroups/delete_evercise_groups/'.$value['id'], 'Delete Class!',array('class' => 'btn btn-red')) }}
+				{{ HTML::link('evercisegroups/clone_evercisegroup/'.$value['id'], 'Clone Class!' ,array('class' => 'btn btn-yellow')) }}
+				{{ HTML::link('evercisegroups/delete_evercisegroup/'.$value['id'], 'Delete Class!',array('class' => 'btn btn-red')) }}
 				{{ HTML::linkRoute('sessions.index', 'View Participants',$value['id'] ,array('class' => 'btn btn-blue')) }}
 				</div>
 				<div class="hub-block">
-					@include('layouts.classBlock', array('evercisegroupId' => $value['id'],'title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity'] , 'sessions' => $sessionDates[$key] ))
+					@include('layouts.classBlock', array('evercisegroupId' => $value['id'],'title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity'] , 'sessions' => $sessionDates[$key]))
 				</div>
-				<div class="hub-block">
-					<h5>This class has:</h5>
-
-					@if (!empty($pastDates[$key]))
-						@if (count($pastDates[$key]) == 1) 
-							{{ count($pastDates[$key])}} past date
-						@else
-							{{ count($pastDates[$key])}} past dates
-						@endif
-					@else
-						0 past dates
-					@endif
-
-					<br>
-					
-					@if (!empty($futureDates[$key]))
-						@if (count($futureDates[$key]) == 1) 
-							{{ count($futureDates[$key])}} upcoming date
-						@else
-							{{ count($futureDates[$key])}} upcoming dates
-						@endif
-					@else
-						0 upcoming dates
-					@endif
-
-					
-					<br>
-					<br>
-					<h5>Upcoming dates:</h5>
-					<br>
-					@if (!empty($futureDates[$key]))
-						@foreach ($futureDates[$key] as $key => $value)
-							{{ $value}}<br>
-						@endforeach
-					@else
-						No Upcoming Dates
-					@endif
-					
+				<div class="hub-block date-list" id="date-list-{{ $key }}">
+					@include('sessions.date_list' , array( 'ids' => $value['Evercisesession'] ))
 				</div>
 			</div>
 		@endforeach	

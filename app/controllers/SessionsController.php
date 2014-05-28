@@ -179,7 +179,18 @@ class SessionsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		return 'Destroy';
+		Evercisesession::destroy($id);
+
+		$user = Sentry::getUser();
+		$evercisegroups = Evercisegroup::with('EverciseSession')->where('user_id', $user->id)->get();
+		$sessionDates = array();
+		foreach ($evercisegroups as $key => $value) {
+
+			$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
+		}
+
+		$EGindex = Input::get('EGindex');
+		return View::make('sessions.date_list')->with('key', $id)->with('sessionDates' , $sessionDates )->with('EGindex' , $EGindex );
 	}
 
 }

@@ -16,7 +16,7 @@ class UpcomingPastSessions {
 		$pastDates = array();
 		$dt = date('Y-m-d H:i:s');
 
-		// loop tough view data array with session dates key
+		// loop through view data array with session dates key
 
 		foreach ($viewdata['sessionDates'] as $key => $value) {
 			if (empty($value) ) {
@@ -25,16 +25,17 @@ class UpcomingPastSessions {
 			}else{
 				foreach ($value as $k => $val) {
 					if (strtotime($val) >= strtotime($dt) ) {
-						$futureDates[$key][] = $val;
+						$futureDates[$key][$k] = $val;
 					}else{
-						$pastDates[$key][] = $val;
+						$pastDates[$key][$k] = $val;
 					}
 					
 				}
-			}		    
+			}
 	   }
 
-
-	    $view->with('futureDates', $futureDates)->with('pastDates', $pastDates);
+	    $key = (isset($viewdata['EGindex'])) ? $viewdata['EGindex'] : $viewdata['key'];
+	    //$key = $viewdata['EGindex'] ;
+	    $view->with('futureDates', $futureDates)->with('pastDates', $pastDates)->with('key', $key);
 	}
 }
