@@ -38,7 +38,7 @@ class UserMailer extends Mailer {
 	public function welcome_fb($email, $display_name, $password)
 	{
 		$subject = 'Welcome to Evercise';
-		$view = 'emails.auth.welcome';
+		$view = 'emails.auth.fb_welcome';
 		$data['display_name'] = $display_name;
 		$data['activation_code'] = $password;
 		$data['email'] = $email;
