@@ -165,14 +165,14 @@ class UsersController extends \BaseController {
 				
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
-				$url = 'http://graph.facebook.com/' . $me["name"] . '/picture?type=large';
-				//$url = 'http://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
+				//$url = 'http://graph.facebook.com/' . $me["name"] . '/picture?type=large';
+				$url = 'http://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
 /*	
 				$contents = File::get($url);//'https://graph.facebook.com/'.$me["id"].'/picture?type=large');
 				File::put($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', $contents);
 */
-
-/*				$file_handler = fopen($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', 'w');
+/*
+				$file_handler = fopen($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', 'w');
 				$curl = curl_init($url);
 				curl_setopt($curl, CURLOPT_FILE, $file_handler);
 				curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -186,14 +186,14 @@ class UsersController extends \BaseController {
 				fclose($file_handler);
 */
 
-				$img = 'woo';//file_get_contents($url);
+				$img = file_get_contents($url);
 				file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/'.$img_filename, $img);
 
 				$user->image = $img_filename;
 
 				$user->save();
 
-				Sentry::login($user, false); // TODO - Does not seem to work
+				Sentry::login($user, false);
 
 
 				return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);	
