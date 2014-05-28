@@ -10,6 +10,7 @@ class BaseController extends Controller {
 	protected function setupLayout()
 	{
 		$displayName = "none";
+		$userId = 0;
 		$displayImage = url('/')."/img/no-user-img.jpg"; // TODO - default image
 		try
 		{
@@ -21,7 +22,7 @@ class BaseController extends Controller {
 		    	if ($user->image) {
 		    		$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
 		    	}
-		    	$UserId = $user->id;
+		    	$userId = $user->id;
 		    	
 		    } 
 		}
@@ -33,7 +34,7 @@ class BaseController extends Controller {
 		}
 		View::share('displayName', $displayName);
 		View::share('displayImage', $displayImage);
-		View::share('UserId', $UserId);
+		View::share('userId', $userId);
 		View::share('title', 'Evercise');
 
 		if ( ! is_null($this->layout))
