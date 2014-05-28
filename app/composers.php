@@ -14,5 +14,5 @@ View::composer('widgets.mapForm', 'MapComposer');
 View::composer('widgets.time', 'TimeComposer');
 View::composer('form.password', 'PasswordComposer');
 View::composer('evercisegroups.trainer_index', 'DistanceComposer');
-View::composer('evercisegroups.trainer_index', 'UpcomingPastSessions');
+View::composer('sessions.date_list', 'UpcomingPastSessions');
 View::composer('layouts.progressbar', 'ProgressBarComposer');

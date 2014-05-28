@@ -56,7 +56,7 @@ class BaseController extends Controller {
 		$dateTime = array();
 
 		foreach ($array as $key => $value) {
-			$dateTime[] = date($format, strtotime($value));
+			$dateTime[$key] = date($format, strtotime($value));
 		}
 		return $dateTime;
 	}
