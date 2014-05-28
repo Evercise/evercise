@@ -18,3 +18,5 @@ View::composer('evercisegroups.trainer_index', 'DistanceComposer');
 View::composer('evercisegroups.trainer_index', 'UpcomingPastSessions');
 View::composer('layouts.progressbar', 'ProgressBarComposer');
 View::composer('trainers.trainerBlock', 'TrainerBlockComposer');
+View::composer('sessions.date_list', 'UpcomingPastSessions');
+

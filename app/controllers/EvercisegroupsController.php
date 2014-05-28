@@ -24,9 +24,9 @@ class EvercisegroupsController extends \BaseController {
 			}else{
 				$sessionDates = array();
 
-				foreach ($evercisegroups as $key) {
+				foreach ($evercisegroups as $key => $value) {
 
-					$sessionDates[] = $this->arrayDate($key->EverciseSession->lists('date_time'));
+					$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
 				}
 
 				$month = date("m");
