@@ -137,7 +137,12 @@ class TrainersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		return View::make('trainers.edit');
+		$trainer = User::with('Trainer')->find($id);
+
+		$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
+
+		
+		return View::make('trainers.edit')->with('trainer', $trainer)->with('speciality', $speciality);
 	}
 
 	/**

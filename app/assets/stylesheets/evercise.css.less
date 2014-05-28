@@ -814,10 +814,11 @@ nav{
 			padding: 4px 4px 2px 4px;
 			img{
 				.border-radius();
+				width: 100%;
 			}
 		}
 		.trainer-block-info-wrapper{
-			.column(8);
+			.column(10);
 			color: @black;
 			h3{
 				.heading-font(400);
@@ -841,7 +842,50 @@ nav{
 	}
 }
 
+/* trainer dashboard  */
 
+.trainer-dashboard-wrapper{
+	margin-top: 35px;
+	float: left;
+	.trainer-dashboard-wrapper-left{
+		.column(3);
+		border-right: 1px solid @grey;
+		.box-sizing();
+		ul{
+			li{
+				border-bottom: 1px solid @grey;
+				.font-size(1.4);
+				.heading-font(600);
+				.line-height(5.0); 
+				.box-sizing();
+				.transition(all linear 0.2s);
+				padding: 0 0 0 20px;
+				cursor: pointer;
+				&:first-of-type{
+					border-top:  1px solid @grey;
+				}
+				&:hover{
+					background: @yellow;
+				}
+			}
+		}
+	}
+	.trainer-dashboard-wrapper-right{
+		.column(9);
+		position: relative;
+		border-top:  1px solid @grey;
+		&:after{
+			position: absolute;
+			top: -1px;
+			left: -20px;
+			height: 1px;
+			width: 20px;
+			display: inline-block;
+			content: '';
+			border-top: 1px solid @grey;
+		}
+	}
+}
 
 /* read more */
 

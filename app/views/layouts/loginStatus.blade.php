@@ -7,6 +7,7 @@
 	</li>
 
 	<div id="displayName-dropdown" class="dropdown-menu">
+		<span>{{ HTML::linkRoute('trainers.edit', 'My Dashboard' , $userId) }}</span>
 		<span>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</span>
 		<hr>
 		<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>

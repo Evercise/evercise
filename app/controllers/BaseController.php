@@ -20,7 +20,7 @@ class BaseController extends Controller {
 			{
 		    	$displayName = $user->display_name;	
 		    	if ($user->image) {
-		    		$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
+		    		$displayImage = '/profiles/'.$user->directory.'/'.$user->image;
 		    	}
 		    	$userId = $user->id;
 		    	

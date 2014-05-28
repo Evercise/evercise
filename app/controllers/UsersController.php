@@ -134,7 +134,7 @@ class UsersController extends \BaseController {
 
 	    try{
 		    $user = Sentry::createUser(array(
-				'display_name' => $me['username'],
+				'display_name' => $me['name'],
 				'first_name' => $me['first_name'],
 				'last_name' => $me['last_name'],
 				'email' => $me['email'],
@@ -165,7 +165,7 @@ class UsersController extends \BaseController {
 				
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
-				$url = 'http://graph.facebook.com/' . $me["username"] . '/picture?type=large';
+				$url = 'http://graph.facebook.com/' . $me["name"] . '/picture?type=large';
 				//$url = 'http://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
 /*	
 				$contents = File::get($url);//'https://graph.facebook.com/'.$me["id"].'/picture?type=large');
@@ -213,11 +213,11 @@ class UsersController extends \BaseController {
 				}
 				elseif ($user->inGroup($trainerGroup)) 
 				{
-					return Redirect::route('trainers.edit', $user->display_name);
+					return Redirect::route('trainers.edit', $user->id);
 				}
 				else
 				{
-			    	return Redirect::route('users.edit', $user->display_name);
+			    	return Redirect::route('users.edit', $user->id);
 				}
 			}
 			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
