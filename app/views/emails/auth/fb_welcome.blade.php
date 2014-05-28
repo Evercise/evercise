@@ -72,7 +72,7 @@
 						<table width="600" height="120" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:12px; line-height:14.4px; color:#000000; padding: 0px 40px 0px 40px; font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; ">
 							<tr valign="top">
 								<td>
-									<p  style="max-width:520px; word-wrap:break-word;">$activation_code</p>
+									<p  style="max-width:520px; word-wrap:break-word;">{{{ urlencode($activation_code) }}}</p>
 									<br>
 									<br>
 									<br>
