@@ -2,7 +2,9 @@
 
 @section('content')
 
-	@include('trainers.trainerBlock', array('image'=>'/profiles/'.$trainer->directory.'/'.$trainer->image , 'name' => $trainer->display_name))
+<div class="row10 push1">
+	@include('trainers.trainerBlock', array('orientation' => 'landscape'))
+</div>
 @stop
 
 

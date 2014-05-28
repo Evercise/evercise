@@ -86,9 +86,10 @@ Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 
 
 Route::post('/postPdf', array('as' => 'postPdf', 'uses' => 'PdfController@postPdf'));
 
+/*
 
-/*Event::listen('illuminate.query', function($sql)
->>>>>>> 77ef4bd24fca58688258333bfbd700818a8465dc
+// uncomment for sql statement breakdown
+Event::listen('illuminate.query', function($sql)
 {
     var_dump($sql);
 });

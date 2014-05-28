@@ -21,6 +21,7 @@ class BaseController extends Controller {
 		    	if ($user->image) {
 		    		$displayImage = url('/').'/profiles/'.$user->directory.'/'.$user->image;
 		    	}
+		    	$UserId = $user->id;
 		    	
 		    } 
 		}
@@ -32,6 +33,7 @@ class BaseController extends Controller {
 		}
 		View::share('displayName', $displayName);
 		View::share('displayImage', $displayImage);
+		View::share('UserId', $UserId);
 		View::share('title', 'Evercise');
 
 		if ( ! is_null($this->layout))

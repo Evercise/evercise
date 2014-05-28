@@ -138,3 +138,14 @@ function updateSlider(sliderName)
   //trace("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
   $( "#"+sliderName+"-slider" ).slider({ value: $("#"+sliderName).val() });
 }
+
+
+/* used for read more buttons */
+function initReadMore()
+{
+  $(document).on('click', '.expand-wrapper', function(){
+    $('.expand').toggle(300);
+  })
+}
+
+registerInitFunction(initReadMore);

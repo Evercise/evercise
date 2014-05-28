@@ -2,7 +2,7 @@
 
 class Trainer extends \Eloquent {
 
-	protected $fillable = array('user_id', 'bio', 'website', 'profession');
+	protected $fillable = array('user_id', 'bio', 'website', 'specialities_id');
 	/**
 	 * The database table used by the model.
 	 *
@@ -14,4 +14,8 @@ class Trainer extends \Eloquent {
     {
         return $this->belongsTo('User');
     }
+
+
+ 
+
 }

@@ -56,6 +56,7 @@ class TrainersController extends \BaseController {
 
 		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
 		JavaScript::put(array('titles' => json_encode($titles), ));
+		JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
 		return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
 
 
@@ -102,7 +103,7 @@ class TrainersController extends \BaseController {
 			$website = Input::get('website');
 
 			$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
-			$trainer = Trainer::create(array('user_id'=>$user->id, 'bio'=>$bio, 'profession'=>$speciality, 'website'=>$website));
+			$trainer = Trainer::create(array('user_id'=>$user->id, 'bio'=>$bio, 'specialities_id'=>$speciality, 'website'=>$website));
 
 			// update user image
 
@@ -149,6 +150,10 @@ class TrainersController extends \BaseController {
 	{
 		$trainer = User::with('Trainer')->find($id);
 
-		return View::make('trainers.show')->with('trainer', $trainer);
+		$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
+
+		
+
+		return View::make('trainers.show')->with('trainer', $trainer)->with('speciality', $speciality);
 	}
 }

@@ -1,5 +1,7 @@
 @if($displayName != 'none')
-	{{ HTML::image( $displayImage, $displayName.'s image', array('class'=> 'profile-pic')); }}
+	<a href="{{ URL::route('trainers.show', $UserId ) }}">
+		{{ HTML::image( $displayImage, $displayName.'s image', array('class'=> 'profile-pic')); }}
+	</a>
 	<li id="displayName" class="float-right">
 		{{ $displayName }}
 	</li>
