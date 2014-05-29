@@ -6,6 +6,7 @@
 	<div class="col7">
 	<br>
 	<br>
+	{{$activation = 3}}
 		<h2>Hi {{ $display_name }}</h2>
 		<br>
 		@if(!isset($activation))
@@ -36,6 +37,12 @@
 				<br>
 				<p>you have successfully signed up with facebook.</p> 
 				<p>Your password has been emailed to you</p>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+    			@include('users.edit_form', array())
 			@endif
 
 			@if($activation >= 2)

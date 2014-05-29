@@ -154,7 +154,7 @@ class UsersController extends \BaseController {
 
 			if($user) {
 
-				//  TODO - Make new email for FB signup ("here's your password" instead of "click the link")
+				
 				Event::fire('user.fb_signup', array(
 		        	'email' => $user->email, 
 		        	'display_name' => $user->display_name, 
@@ -185,9 +185,15 @@ class UsersController extends \BaseController {
 				curl_close($curl);
 				fclose($file_handler);
 */
-
-				$img = file_get_contents($url);
-				file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/'.$img_filename, $img);
+				try
+				{
+					$img = file_get_contents($url);
+					file_put_contents($path.'/'.$user->id.'_'.$user->display_name.'/'.$img_filename, $img);
+				}catch (Exception $e)
+				{
+					// This exception will happen from localhost, as pulling the file from facebook will not work
+					$img = '';
+				}
 
 				$user->image = $img_filename;
 
@@ -236,10 +242,11 @@ class UsersController extends \BaseController {
 	{
 
         $path = public_path().'/profiles/'.date('Y-m');
+        $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
 
         if(!file_exists($path)) File::makeDirectory($path);
+        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
 
-        File::makeDirectory($path.'/'.$user->id.'_'.$user->display_name);
         $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
 
 	}
@@ -263,7 +270,24 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		return View::make('users.edit');
+		$user = Sentry::getUser();
+
+		$firstName = $user->first_name;
+		$lastName = $user->last_name;
+		$dob = $user->dob != '0000-00-00 00:00:00' ? $user->dob : '';
+		$email = $user->email;
+		$gender = $user->gender;
+
+		$user_has_marketingpreferences = User_has_marketingpreference::where('user_id', $user->id)->firstOrFail();
+		$marketingPreference = $user_has_marketingpreferences->marketingpreferences_id;
+
+		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
+		return View::make('users.edit')
+			->with('firstName', $firstName)
+			->with('lastName', $lastName)
+			->with('dob', $dob)
+			->with('email', $email)
+			->with('gender', $gender);
 	}
 
 	/**
@@ -274,7 +298,57 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		return View::make('users.update');
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'first_name' => 'required|max:50|min:2',
+				'last_name' => 'required|max:50|min:2',
+				'dob' => 'required',
+				'email' => 'required|email',
+				'password' => 'confirmed',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('users.edit')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else{
+			// Actually update the user record 
+
+			$first_name = Input::get('first_name');
+			$last_name = Input::get('last_name');
+			$dob = Input::get('dob');
+			$email = Input::get('email');
+			$password = Input::get('password');
+			$gender = Input::get('gender');
+			$newsletter = Input::get('userNewsletter');
+
+			$user = Sentry::getUser();
+			$user->update(array(
+				'first_name' => $first_name,
+				'last_name' => $last_name,
+				'dob' => $dob,
+				'email' => $email,
+				'gender' => $gender,
+			));
+
+			return Response::json(array('edited' => 'yeah'));
+
+		}
+		//return Response::json($result);
+		//return View::make('users.edit');
 	}
 
 	/**

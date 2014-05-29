@@ -69,11 +69,9 @@ function initEvercisegroups()
     });
 
     $('.hub-block .btn-red').click(function(){
-        var href = $(this).attr('href');
+        var url = $(this).attr('href');
+        console.log('delete '+url);
 
-        console.log('delete '+href);
-
-        var url = href;
         $.ajax({
             url: url,
             type: 'POST',
