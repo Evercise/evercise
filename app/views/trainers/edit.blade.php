@@ -3,7 +3,20 @@
 
 @section('content')
 
-	<div>Edit trainer (dashboard)</div>
-	<h1>{{{ isset($displayName) ? $displayName : "No Name Set" }}}</h1>
+	
+	@include('trainers.trainerBlock', array('orientation' => 'landscape'))
+	<div class="trainer-dashboard-wrapper">
+		<div class="trainer-dashboard-wrapper-left">
+			<ul>
+				<li>Edit profile</li>
+			</ul>
+		</div>
+
+		<div class="trainer-dashboard-wrapper-right">
+			whomp
+		</div>
+			
+	</div>
+
 
 @stop
