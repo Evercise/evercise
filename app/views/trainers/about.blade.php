@@ -3,7 +3,7 @@
 
 @section('content')
 
-	<div class="full_width">
+	<div class="center_col">
 		<h2>So you are looking at becoming a pro?</h2>
 		<h2 class="grey">Great choice!</h2>
 		<br>

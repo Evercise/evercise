@@ -45,7 +45,7 @@ function initEvercisegroups()
                     {
                         trace(value);
                         if (scroll == false) {
-                            //$('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
+                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                             scroll = true;
                         };
                         if (value.length != 0)

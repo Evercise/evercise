@@ -1,23 +1,26 @@
+function initTrainerTitles()
+{
+    if(typeof laracasts.titles !== 'undefined')
+    {
+        titles = JSON.parse(laracasts.titles);
+
+        $('#discipline').on('change', function () {
+            var currentTitles = titles[this.value];
+            $("#title").empty();
+
+            for(var i=0; i<currentTitles.length; i++)
+            {
+                $("#title").append($("<option></option>").attr("value", currentTitles[i]).text(currentTitles[i]));
+            }
+        }).change();
+    }
+}
+
+registerInitFunction(initTrainerTitles);
+
+
 function initCreateTrainer()
 {
-
-    if(typeof laracasts !== 'undefined')
-    {
-    	if(typeof laracasts.titles !== 'undefined')
-    	{
-    		titles = JSON.parse(laracasts.titles);
-
-    	    $('#discipline').on('change', function () {
-    			var currentTitles = titles[this.value];
-    			$("#title").empty();
-
-    			for(var i=0; i<currentTitles.length; i++)
-    			{
-    			    $("#title").append($("<option></option>").attr("value", currentTitles[i]).text(currentTitles[i]));
-    			}
-    	    }).change();
-        }
-	}
 
     // create a new trainer
  

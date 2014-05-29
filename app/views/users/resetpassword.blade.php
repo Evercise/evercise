@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <div id="reset" class="full_width">
+    <div id="reset" class="center_col">
         {{ Form::open(array('id' => 'passwords_reset', 'url' => 'users/resetpassword', 'method' => 'post')) }}
 
             @if ($errors->has('forgot'))

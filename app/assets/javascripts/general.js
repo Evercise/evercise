@@ -149,3 +149,46 @@ function initReadMore()
 }
 
 registerInitFunction(initReadMore);
+
+
+/* use for creating charts */
+function initChart()
+{
+
+  $('.donut-chart canvas').each(function(){
+    var chart = $(this);
+    var total = parseInt(chart.data('total'));
+    var fill = parseInt(chart.data('filled'));
+
+    result = Math.ceil((fill*100)/ total);
+    left = 100 - result;
+
+    trace(left);
+
+    var data = [
+      {
+        value: result,
+        color:"#ffd21e"
+      },
+      {
+        value : left,
+        color : "#ccc"
+      }
+
+    ];
+
+    var options = 
+      {
+            percentageInnerCutout : 87,
+            animationEasing       : 'easeInOutQuart',
+            onAnimationComplete :  function(){ trace('git')}
+      };
+
+    var myDoughnut = new Chart(chart.get(0).getContext("2d")).Doughnut(data, options);
+  })
+
+  
+}
+
+
+registerInitFunction(initChart);

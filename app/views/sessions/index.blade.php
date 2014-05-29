@@ -2,12 +2,36 @@
 
 @section('content')
 
-@include('layouts.pagetitle', array('title'=> $evercisegroup->name.'&apos;s attendance list', 'subtitle'=>'view, download  or message your attendance list'))
+	<div class="full-width">
+		<div id="class-info-image" class="full-width-one-q">
+			<div class="class-thumb">
+				<div class="class-thumb-wrap">
+					{{ HTML::image('/profiles/'.$directory .'/'. $evercisegroup->image, 'class image' , array('class' => 'class-thumb-img')); }}
+				</div>
+			</div>					
+		</div>
+		<div id="class-info" class="full-width-three-q">
+			<h3>{{ $evercisegroup->name }}</h3>
+			<p>{{ $evercisegroup->description }}</p>
+		</div>
+		<hr class="col12">
 
-<div class="col3">
-	@include('layouts.classBlock', array('title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$directory .'/'. $evercisegroup->image,   'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity, 'evercisegroupId' => $evercisegroup->id  ))
-</div>
-<div class="col9">
+		<div class="donut-chart">
+			<canvas data-total="500" data-filled="300"  height="120" width="120" id="donut-chart" ></canvas>
+		</div>
+		<div class="donut-chart">
+			<canvas data-total="500" data-filled="380"  height="120" width="120" id="donut-chart" ></canvas>
+		</div>
+		<div class="donut-chart">
+			<canvas data-total="500"  data-filled="120"  height="120" width="120" id="donut-chart" ></canvas>
+		</div>
+		<div class="donut-chart">
+			<canvas data-total="500"  data-filled="2" height="120" width="120" id="donut-chart" ></canvas>
+		</div>
+
+		
+			
+
 
 	@foreach ($evercisegroup['Evercisesession'] as $key => $value) 
 
@@ -40,7 +64,8 @@
 		</div>
 		
 	@endforeach
-</div>
+
+	</div>
 
 
 
