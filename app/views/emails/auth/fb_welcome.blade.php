@@ -39,7 +39,7 @@
 									<span>Thankyou for signing up with Facebook.</span>
 								</td>
 							</tr>
-						</table>
+						</table> 
 						<!-- end heading -->
 
 						<!-- start body -->
@@ -72,7 +72,11 @@
 						<table width="600" height="120" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:12px; line-height:14.4px; color:#000000; padding: 0px 40px 0px 40px; font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; ">
 							<tr valign="top">
 								<td>
+<<<<<<< HEAD
+									<p  style="max-width:520px; word-wrap:break-word;">{{{ urlencode($activation_code) }}}</p>
+=======
 									<p  style="max-width:520px; word-wrap:break-word;">$activation_code</p>
+>>>>>>> e2d122539bf773d3cd399c87e5b06d1cb7df1c67
 									<br>
 									<br>
 									<br>
