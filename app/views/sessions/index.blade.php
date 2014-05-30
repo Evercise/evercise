@@ -16,23 +16,18 @@
 		</div>
 		<hr class="col12">
 
-		<div class="donut-chart">
-			<canvas data-total="500" data-filled="300"  height="120" width="120" id="donut-chart" ></canvas>
-		</div>
-		<div class="donut-chart">
-			<canvas data-total="500" data-filled="380"  height="120" width="120" id="donut-chart" ></canvas>
-		</div>
-		<div class="donut-chart">
-			<canvas data-total="500"  data-filled="120"  height="120" width="120" id="donut-chart" ></canvas>
-		</div>
-		<div class="donut-chart">
-			<canvas data-total="500"  data-filled="2" height="120" width="120" id="donut-chart" ></canvas>
-		</div>
+		<!-- chart s to diaplsy members info when done -->
+
+		@include('widgets.donutChart', array('id' => 'total-class-bookings1','total' => 500, 'fill' => 300 ))
+		@include('widgets.donutChart', array('id' => 'total-class-bookings2','total' => 500, 'fill' => 300 ))
+		@include('widgets.donutChart', array('id' => 'total-class-bookings3','total' => 500, 'fill' => 300 ))
+		@include('widgets.donutChart', array('id' => 'total-class-bookings4','total' => 500, 'fill' => 300 ))
+		
 
 		
 			
 
-
+		</div>
 	@foreach ($evercisegroup['Evercisesession'] as $key => $value) 
 
 		<div class="session-view-header">

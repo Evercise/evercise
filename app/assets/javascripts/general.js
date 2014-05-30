@@ -152,40 +152,40 @@ registerInitFunction(initReadMore);
 
 
 /* use for creating charts */
-function initChart()
+function initChart(params)
 {
+  params = JSON.parse(params);
+  trace(params.id);
 
-  $('.donut-chart canvas').each(function(){
-    var chart = $(this);
-    var total = parseInt(chart.data('total'));
-    var fill = parseInt(chart.data('filled'));
+  var chart = $('#'+params.id);
+  var total = parseInt(chart.data('total'));
+  var fill = parseInt(chart.data('filled'));
 
-    result = Math.ceil((fill*100)/ total);
-    left = 100 - result;
+  result = Math.ceil((fill*100)/ total);
+  left = 100 - result;
 
-    trace(left);
+  var data = [
+    {
+      value: result,
+      color:"#ffd21e"
+    },
+    {
+      value : left,
+      color : "#ebebeb"
+    }
 
-    var data = [
-      {
-        value: result,
-        color:"#ffd21e"
-      },
-      {
-        value : left,
-        color : "#ccc"
-      }
+  ];
 
-    ];
+  var options = 
+    {
+          percentageInnerCutout : 87,
+          animationEasing       : 'easeInOutQuart',
+          onAnimationComplete :  function(){ 
+            $('.canvas-overlay').fadeIn(300);
+          }
+    };
 
-    var options = 
-      {
-            percentageInnerCutout : 87,
-            animationEasing       : 'easeInOutQuart',
-            onAnimationComplete :  function(){ trace('git')}
-      };
-
-    var myDoughnut = new Chart(chart.get(0).getContext("2d")).Doughnut(data, options);
-  })
+  var myDoughnut = new Chart(chart.get(0).getContext("2d")).Doughnut(data, options);
 
   
 }

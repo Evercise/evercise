@@ -25,7 +25,6 @@ class SessionsController extends \BaseController {
 			}
 			else
 			{
-				JavaScript::put(array('initChart' => 1 )); // Initialise chart JS.
 				return View::make('sessions.index')->with('evercisegroup' , $Evercisegroup )->with('directory' , $directory);
 			}		
 		}

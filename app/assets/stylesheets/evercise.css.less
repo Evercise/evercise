@@ -608,10 +608,26 @@ nav{
 
 .donut-chart{
 	.column(3);
+	position: relative;
 	float: left;
 	canvas{
 		margin: auto;
 		display: block;
+	}
+	.canvas-overlay{
+		display: none;
+		.heading-font(100);
+		.font-size(1.4);
+		width: 100%;
+		position: absolute;
+		text-align: center;
+		top: 38px;
+		color: @grey;
+		strong{
+			display: block;
+			color: @yellow;
+			.font-size(3.0);
+		}
 	}
 }
 
