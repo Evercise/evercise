@@ -7,15 +7,7 @@ function initSessions()
         // post to controller
         $.post(
             $( this ).prop( 'action' ),
-            {
-                "s-evercisegroupId": $( '#s-evercisegroupId' ).val(),
-                "s-year": $( '#s-year' ).val(),
-                "s-month": $( '#s-month' ).val(),
-                "s-date": $( '#s-date' ).val(),
-                "s-time-hour": $( '#s-time-hour' ).val(),
-                "s-time-minute": $( '#s-time-minute' ).val(),
-                "s-price": $( '#s-price' ).val()
-            },
+             $( this ).serialize(),
             function( data ) {
                 trace("about to win.......");
                 if (data.validation_failed == 1)
@@ -97,3 +89,13 @@ function updateTimeFields()
 
     $('#session-end-time span').html(end_time);
 }
+
+function initSessionListDropdown()
+{
+    $(document).on('click', '.session-icon-view' , function(){
+        $('.session-members-list').slideUp(400 );
+        $(this).closest('ul').find('.session-members-list').slideToggle(400);  
+    })
+}
+
+registerInitFunction(initSessionListDropdown);

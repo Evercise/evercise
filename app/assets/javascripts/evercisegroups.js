@@ -93,7 +93,7 @@ function initEvercisegroups()
     bindCalendar();
 
     //$('.date-list a.session-delete').click(function(){
-    $(document).on('click','.date-list a.session-delete', function(){
+    $(document).on('click','.session-delete', function(){
         var url = $(this).attr('href');
         var EGindex = $(this).attr('EGindex');
         //trace('EGindex: '+EGindex);
@@ -107,6 +107,8 @@ function initEvercisegroups()
         .done(
             function(data) {
                 $('#date-list-'+EGindex).html(data);
+
+                initChart('total-members-bookings-'+EGindex);
              }
         );
 

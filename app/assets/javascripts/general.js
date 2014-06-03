@@ -154,10 +154,16 @@ registerInitFunction(initReadMore);
 /* use for creating charts */
 function initChart(params)
 {
-  params = JSON.parse(params);
-  trace(params.id);
 
-  var chart = $('#'+params.id);
+  try {
+     params = JSON.parse(params);
+     id = params.id;
+     trace(params.id);
+  } catch(error) {
+     id = params;
+  }
+
+  var chart = $('#'+id);
   var total = parseInt(chart.data('total'));
   var fill = parseInt(chart.data('filled'));
 
@@ -181,7 +187,7 @@ function initChart(params)
           percentageInnerCutout : 87,
           animationEasing       : 'easeInOutQuart',
           onAnimationComplete :  function(){ 
-            $('.canvas-overlay').fadeIn(300);
+            $(chart).closest('div').find('.canvas-overlay').fadeIn(300);
           }
     };
 

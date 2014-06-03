@@ -17,48 +17,108 @@
 		<hr class="col12">
 
 		<!-- chart s to diaplsy members info when done -->
-
-		@include('widgets.donutChart', array('id' => 'total-class-bookings1','total' => 500, 'fill' => 300 ))
-		@include('widgets.donutChart', array('id' => 'total-class-bookings2','total' => 500, 'fill' => 300 ))
-		@include('widgets.donutChart', array('id' => 'total-class-bookings3','total' => 500, 'fill' => 300 ))
-		@include('widgets.donutChart', array('id' => 'total-class-bookings4','total' => 500, 'fill' => 300 ))
+		<div class="row12">
+			<div class="donut-chart">
+				@include('widgets.donutChart', array('label' => 'Total Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings1','total' => $totalCapacity, 'fill' => $totalSessionMembers ))
+			</div>
+			<div class="donut-chart">
+				@include('widgets.donutChart', array('label' => 'Average Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings2','total' => $averageCapacity, 'fill' => $averageSessionMembers ))
+			</div>
+			<div class="donut-chart">
+				@include('widgets.donutChart', array('label' => 'Total Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings3','total' => 500, 'fill' => 300 ))
+			</div>
+			<div class="donut-chart">
+				@include('widgets.donutChart', array('label' => 'Average Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings4','total' => 500, 'fill' => 300 ))
+			</div>
 		
-
-		
-			
-
 		</div>
-	@foreach ($evercisegroup['Evercisesession'] as $key => $value) 
 
-		<div class="session-view-header">
-			<h5>{{ date('dS F Y' , strtotime($value['date_time'])) }}</h5>
-			<br>
-			<h6>Start time: {{  date('h:ia' , strtotime($value['date_time'])) }}</h6>
-			<h6>End time: {{  date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</h6>
-			@include('layouts.progressbar', array('cap' => $evercisegroup->capacity, 'mem' =>$value['members']))
-			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
-				{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
+		<hr class="col12">
 
-				{{ Form::submit('Download' , array('class'=>'btn-yellow ')) }}
+		<div class="col12">
+			<h3>Class Sessions</h3>
+		</div>
+		<div class="session-table">
+			<li class="hd">Class Date</li>
+			<li class="hd">Start Time</li>
+			<li class="hd">End Time</li>
+			<li class="hd">Price Per Person</li>
+			<li class="hd">Places Filled</li>
+			<li class="hd">Options</li>
+			
+			@foreach ($evercisegroup['Evercisesession'] as $key => $value) 
+				<ul>
+					<div class="session-list-row">
+						<li>{{ date('M-dS' , strtotime($value['date_time'])) }}</li>
+						<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
+						<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</li>
+						<li>&pound;{{ $value['price'] }}</li>
+						<li> <strong>{{$value['members']}}</strong>/{{ $evercisegroup->capacity }} </li>
+						<li>
+							{{ HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+							{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
+								{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
+								<button type="submit">
+									{{ HTML::image('/img/download_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+								</button>
+								 
+							{{ Form::close() }}
+							
+							{{ HTML::image('/img/view_icon.png', 'mail icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view')); }} 
+						</li>
+					</div>
+					
+					<div class="session-members-list">
 
-			{{ Form::close() }}
-			<br>
-			@foreach($value['Sessionmembers'] as $k => $val)
-				<p>{{ $val['created_at']}}</p>
-				
-				{{ HTML::image('profiles/'.$val['Users']['directory'].'/'.$val['Users']['image'], 'session members profile image' , array('class' => 'session-list-profile')); }}
-				<p>{{ $val['Users']['display_name'] }}</p>
-				<p>{{ $val['Users']['first_name'] }}</p>
-				<p>{{ $val['Users']['last_name'] }}</p>
+						@foreach($value['Sessionmembers'] as $k => $val)
 
+							@if ($k % 3 === 2) 
+								</div>
+							@endif
+							@if ($k % 2 === 0) 
+								<div class="session-members-row">
+							@endif
+							<div class="session-members-col">
+								{{ HTML::image('profiles/'.$val['Users']['directory'].'/'.$val['Users']['image'], 'session members profile image' , array('class' => 'session-list-profile')); }}
+								<div class="session-list-info">
+									<p>{{ $val['Users']['display_name'] }}</p>
+									<p>Joined on the {{ date('dS-M', strtotime($val['created_at']) )  }}</p>
 
+								</div>
+								{{ HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+								
+							</div>
+						@endforeach
+						@if(! $value['Sessionmembers']->isEmpty())
+							</div>
+							
+						@endif
+
+						<div class="session-members-footer">
+							<aside>
+								<a href="">
+								{{ HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+									Message All Users
+								</a>
+							</aside>
+							<aside>
+								{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
+									{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
+									<button type="submit">
+										{{ HTML::image('/img/download_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+										<span>Download List</span>
+									</button>
+									 
+								{{ Form::close() }}
+							</aside>
+							
+						</div>
+					</div>
+				</ul>
 			@endforeach
-
-			
-			<br>
 		</div>
 		
-	@endforeach
+	
 
 	</div>
 

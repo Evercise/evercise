@@ -18,14 +18,36 @@ class SessionsController extends \BaseController {
 		
 		if ($user->inGroup($trainerGroup))
 		{
-			$Evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($evercisegroup_id);
-
-			if ($Evercisegroup['Evercisesession']->isEmpty()) {
+			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($evercisegroup_id);
+			if ($evercisegroup['Evercisesession']->isEmpty()) {
 				return Redirect::route('evercisegroups.index');
 			}
 			else
 			{
-				return View::make('sessions.index')->with('evercisegroup' , $Evercisegroup )->with('directory' , $directory);
+				$i = 0;
+				$totalSessionMembers = 0;
+				$totalCapacity = 0;
+				$averageSessionMembers = 0;
+				$averageCapacity = 0;
+
+				foreach ($evercisegroup->Evercisesession as $key => $value) {
+					$totalSessionMembers= $totalSessionMembers + $value['members'];
+					$totalCapacity = $totalCapacity + $evercisegroup->capacity;
+					$i++;
+				}
+
+				$averageSessionMembers = $totalSessionMembers/$i;
+				$averageCapacity = $totalCapacity/$i;
+
+				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
+
+				return View::make('sessions.index')
+					->with('evercisegroup' , $evercisegroup )
+					->with('directory' , $directory)
+					->with('totalSessionMembers' , $totalSessionMembers)
+					->with('totalCapacity' , $totalCapacity)
+					->with('averageSessionMembers' , $averageSessionMembers)
+					->with('averageCapacity' , $averageCapacity);
 			}		
 		}
 		else
@@ -107,6 +129,7 @@ class SessionsController extends \BaseController {
 			$hour = Input::get('s-time-hour');
 			$minute = Input::get('s-time-minute');
 			$price = Input::get('s-price');
+			$duration = Input::get('s-duration');
 			//$customurl = Input::get('customurl');
 
 			$time = $hour.':'.$minute.':00';
@@ -124,6 +147,7 @@ class SessionsController extends \BaseController {
 				'evercisegroup_id'=>$evercisegroupId,
 				'date_time'=>$date_time,
 				'price'=>$price,
+				'duration'=>$duration
 			));
 
 			$evercisegroup = Evercisegroup::where('id', $evercisegroupId)->firstOrFail();
@@ -184,13 +208,23 @@ class SessionsController extends \BaseController {
 		$user = Sentry::getUser();
 		$evercisegroups = Evercisegroup::with('EverciseSession')->where('user_id', $user->id)->get();
 		$sessionDates = array();
+		$totalMembers = array();
+		$totalCapacity = array();
 		foreach ($evercisegroups as $key => $value) {
 
 			$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
+			$totalCapacity[] =  $value->capacity;
+			foreach ($value['Evercisesession'] as $k => $val) {
+				$totalMembers[]= $val->members;
+			}
 		}
 
 		$EGindex = Input::get('EGindex');
-		return View::make('sessions.date_list')->with('key', $id)->with('sessionDates' , $sessionDates )->with('EGindex' , $EGindex );
+		return View::make('sessions.date_list')
+				->with('key', $id)->with('sessionDates' , $sessionDates )
+				->with('totalMembers' , $totalMembers )
+				->with('totalCapacity' , $totalCapacity )
+				->with('EGindex' , $EGindex );
 	}
 
 }

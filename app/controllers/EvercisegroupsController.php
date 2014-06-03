@@ -23,11 +23,19 @@ class EvercisegroupsController extends \BaseController {
 				return View::make('evercisegroups.first_class');
 			}else{
 				$sessionDates = array();
+				$totalMembers = array();
+				$totalCapacity = array();
 
 				foreach ($evercisegroups as $key => $value) {
 
 					$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
+					$totalCapacity[] =  $value->capacity;
+					foreach ($value['Evercisesession'] as $k => $val) {
+						$totalMembers[]= $val->members;
+					}
+
 				}
+
 
 				$month = date("m");
 				$year = date("Y");
@@ -36,7 +44,13 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initSessions' => 1 )); // Initialise session JS.
 				JavaScript::put(array('calendarSlide' => 1 )); // Initialise calendarSlide JS. priority 1 (0 is first)
 				JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
-				return View::make('evercisegroups.trainer_index')->with('evercisegroups' , $evercisegroups)->with('sessionDates' , $sessionDates )->with('year', $year)->with('month', $month)->with('directory', $directory);	
+				return View::make('evercisegroups.trainer_index')
+						->with('evercisegroups' , $evercisegroups)
+						->with('sessionDates' , $sessionDates )
+						->with('totalMembers' , $totalMembers )
+						->with('totalCapacity' , $totalCapacity )
+						->with('year', $year)->with('month', $month)
+						->with('directory', $directory);	
 			}
 
 		}
@@ -211,6 +225,10 @@ class EvercisegroupsController extends \BaseController {
 		if ($user->inGroup($trainerGroup))
 		{
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+
+			if ($evercisegroup->user_id == $user->id) {
+				return Redirect::route('sessions.index', array($id));
+			}
 
 			return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup); // change to trainer show view
 		}

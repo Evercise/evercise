@@ -87,6 +87,10 @@ Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 
 
 Route::post('/postPdf', array('as' => 'postPdf', 'uses' => 'PdfController@postPdf'));
 
+/* static pages */
+
+Route::get('/{$view}', array('as' => 'static', 'uses' => 'staticController@show'));
+
 /*
 
 // uncomment for sql statement breakdown

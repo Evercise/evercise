@@ -3,7 +3,7 @@
 		<nav>		
 			<ul>
 				<a href="{{ URL::route('home', null) }}">{{ HTML::image('/img/evercise logo yellow.png', 'evercise logo'); }}</a>
-                <li>{{ HTML::linkRoute('auth.login', 'About') }}</li>
+                <li>{{ HTML::linkRoute('static', 'About', array('about')) }}</li>
                 <li>{{ HTML::linkRoute('auth.login', 'Discover classes') }}</li>
                 <li>{{ HTML::linkRoute('trainers.create', 'Be a pro') }}</li>
                 <li>{{ HTML::linkRoute('auth.login', 'Help') }}</li>
