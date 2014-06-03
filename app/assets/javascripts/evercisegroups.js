@@ -114,8 +114,50 @@ function initEvercisegroups()
 
         return false;
     });
+
+    trace('cock');
+    $('.mail_all').click(function(){
+
+        var url = this.href;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                trace('id: '+ data);
+             }
+        );
+
+        return false;
+    });
 }
 registerInitFunction(initEvercisegroups);
+
+function initEvercisegroupsShow()
+{
+    trace('cock');
+    $('.mail_all').click(function(){
+
+        var url = this.href;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                //trace('id: '+ data);
+                $('.mask').show();
+                $('.container').append(data);
+             }
+        );
+
+        return false;
+    });
+}
+registerInitFunction(initEvercisegroupsShow);
 
 function bindDelete()
 {

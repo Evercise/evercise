@@ -24,7 +24,7 @@ function showResponse(response, statusText, xhr, form)  {
     if(response.success == false)
     {
         var arr = response.errors;
-        trace(arr, true);
+        //trace(arr, true);
         $.each(arr, function(index, value)
         {
             if (value.length != 0)
@@ -136,7 +136,7 @@ function postCroppedImage()
                 trace('loose');
                
             }else{
-                trace(data, true);
+                //trace(data, true);
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });

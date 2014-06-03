@@ -227,7 +227,52 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
 			if ($evercisegroup->user_id == $user->id) {
-				return Redirect::route('sessions.index', array($id));
+				//$evercisegroup_id;
+		if ( ! Sentry::check()) return 'Not logged in';
+		$user = Sentry::getUser();
+
+		$directory = $user->directory;
+		$trainerGroup = Sentry::findGroupByName('trainer');
+		
+		if ($user->inGroup($trainerGroup))
+		{
+			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+			if ($evercisegroup['Evercisesession']->isEmpty()) {
+				return Redirect::route('evercisegroups.index');
+			}
+			else
+			{
+				$i = 0;
+				$totalSessionMembers = 0;
+				$totalCapacity = 0;
+				$averageSessionMembers = 0;
+				$averageCapacity = 0;
+
+				foreach ($evercisegroup->Evercisesession as $key => $value) {
+					$totalSessionMembers= $totalSessionMembers + $value['members'];
+					$totalCapacity = $totalCapacity + $evercisegroup->capacity;
+					$i++;
+				}
+
+				$averageSessionMembers = $totalSessionMembers/$i;
+				$averageCapacity = $totalCapacity/$i;
+
+				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
+				JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise session list dropdown JS.
+
+				return View::make('sessions.index')
+					->with('evercisegroup' , $evercisegroup )
+					->with('directory' , $directory)
+					->with('totalSessionMembers' , $totalSessionMembers)
+					->with('totalCapacity' , $totalCapacity)
+					->with('averageSessionMembers' , $averageSessionMembers)
+					->with('averageCapacity' , $averageCapacity);
+			}		
+		}
+		else
+		{
+			return Redirect::route('home');
+		}
 			}
 
 			return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup); // change to trainer show view

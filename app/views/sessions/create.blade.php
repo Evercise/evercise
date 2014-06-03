@@ -33,8 +33,5 @@
 			
 	    {{ Form::close() }}
     </div>
-<script>
-	
-</script>
 
 </div>

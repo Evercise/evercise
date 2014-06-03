@@ -32,6 +32,7 @@ class ImageController extends \BaseController {
             $user = Sentry::getUser();
             $destinationPath = 'profiles/'.$user->directory;
 
+            // INTERMITTENT BUG - $file is sometimes null, so the following line fails. No idea why. Please fix
             $filename = $file->getClientOriginalName();
             $filename = str_replace(' ', '_', $filename);
             Input::file('image')->move($destinationPath, $filename);

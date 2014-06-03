@@ -70,6 +70,9 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
 Route::post('/evercisegroups/delete_evercisegroups/{id}', array('as' => 'evercisegroups.delete_evercisegroups', 'uses' => 'EvercisegroupsController@deleteEG'));
 
+Route::get('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll'));
+Route::post('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll'));
+
 
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
 Route::post('/widgets/upload', array('as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload'));
