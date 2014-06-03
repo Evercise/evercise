@@ -55,6 +55,7 @@ class TrainersController extends \BaseController {
 		// http://odyniec.net/projects/imgareaselect
 
 		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
+		JavaScript::put(array('initTrainerTitles' => 1 )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('titles' => json_encode($titles), ));
 		JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
 		return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
@@ -124,7 +125,7 @@ class TrainersController extends \BaseController {
             ));
 
 			//respond
-			return Response::json(route('trainers.edit', array('display_name'=> $user->display_name)));
+			return Response::json(route('trainers.edit', array('id'=> $user->id)));
 		}
 
 	}

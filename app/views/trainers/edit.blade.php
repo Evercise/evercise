@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="trainer-dashboard-wrapper-right">
-			whomp
+			@include('trainers.editForm')
 		</div>
 			
 	</div>

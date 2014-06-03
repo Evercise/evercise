@@ -263,7 +263,7 @@ body{
 	background-image: url('/img/cream_pixels.png');
 }
 .container {
-	.column(12);
+	.row(12);
 	.font-size(1);
 	.main-font(400);
 	margin: 0px auto;
@@ -273,10 +273,9 @@ body{
 }
 
 nav{
-	.column(12);
+	.column(12,12);
 	.border-radius(4);
 	.drop-shadow(0,5,5,-3,0.3);
-	.box-sizing();
 	position: relative;
 	margin-top: 10px;
 	margin-bottom: 20px;
@@ -485,7 +484,7 @@ nav{
 		
 }
 
-.full_width{
+.center_col{
 	.row(8);
 	.push(2);
 	text-align: center;
@@ -544,12 +543,56 @@ nav{
 	}
 }
 
+.full-width{
+	padding: 0 10px;
+	h3{
+		.heading-font(500);
+		color: @black;
+		margin: 5px 0 15px;
+	}
+	p{
+		.font-size(1.4);
+	}
+	hr{
+		border:none;
+		border-bottom: 1px solid @grey;
+		.box-sizing();
+		padding: 0 10px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	.full-width-one-q{
+		.column(3,12);
+	}
+	.full-width-three-q{
+		.column(9,12);
+	}
+	.class-thumb{
+		border: 1px solid @grey;
+		padding: 10px;
+		.border-radius();
+		.class-thumb-wrap{
+			position: relative;
+			height: 130px;
+			overflow: hidden;
+			.border-radius();
+			.class-thumb-img{
+				position: absolute;
+				top: 50%;
+				margin-top: -108px;
+			}	
+		}
+		
+	}
+}
+
 
 .block_title {
-	.column(12);
+	.column(12,12);
 	background-color: @yellow;
 	padding: 15px 0;
 	text-align: center;
+	padding: 10px;
 	.drop-shadow(0,5,5,-3,0.3);
 	.heading-font(600,italic);
 	margin-bottom: 40px;
@@ -560,6 +603,33 @@ nav{
 }
 
 /* end body area */
+
+/* charts  */
+
+.donut-chart{
+	.column(3);
+	position: relative;
+	float: left;
+	canvas{
+		margin: auto;
+		display: block;
+	}
+	.canvas-overlay{
+		display: none;
+		.heading-font(100);
+		.font-size(1.4);
+		width: 100%;
+		position: absolute;
+		text-align: center;
+		top: 38px;
+		color: @grey;
+		strong{
+			display: block;
+			color: @yellow;
+			.font-size(3.0);
+		}
+	}
+}
 
 /* create form */
 .formcheckbox{
@@ -1017,13 +1087,12 @@ nav{
 /*footer */
 	
 footer{
-	.column(12);
+	.column(12,12);
 	.border-radius(4);
 	.drop-shadow(0,5,5,-3,0.3);
 	margin-top: 40px;
-	float: left;
 	background-color: @brown;
-	padding: 15px 0; 
+	padding: 15px 10px; 
 	color: darken(@white, 20%);
 	section{
 		.row(12);
@@ -1058,8 +1127,9 @@ footer{
 	}	
 }	
 .lower_footer{
-	.column(12);
+	.column(12,12);
 	margin-top: 5px;
+	padding: 0 10px;
 	img{
 		width: 100px;
 		float: left;

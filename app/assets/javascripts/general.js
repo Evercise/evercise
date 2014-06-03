@@ -149,3 +149,46 @@ function initReadMore()
 }
 
 registerInitFunction(initReadMore);
+
+
+/* use for creating charts */
+function initChart(params)
+{
+  params = JSON.parse(params);
+  trace(params.id);
+
+  var chart = $('#'+params.id);
+  var total = parseInt(chart.data('total'));
+  var fill = parseInt(chart.data('filled'));
+
+  result = Math.ceil((fill*100)/ total);
+  left = 100 - result;
+
+  var data = [
+    {
+      value: result,
+      color:"#ffd21e"
+    },
+    {
+      value : left,
+      color : "#ebebeb"
+    }
+
+  ];
+
+  var options = 
+    {
+          percentageInnerCutout : 87,
+          animationEasing       : 'easeInOutQuart',
+          onAnimationComplete :  function(){ 
+            $('.canvas-overlay').fadeIn(300);
+          }
+    };
+
+  var myDoughnut = new Chart(chart.get(0).getContext("2d")).Doughnut(data, options);
+
+  
+}
+
+
+registerInitFunction(initChart);

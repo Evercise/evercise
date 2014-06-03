@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="full_width">
+<div class="center_col">
 	<div class="row8">
 		<br>
 		<h5>Creating your first class with evercise is easy</h5>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="full_width">
+	<div class="center_col">
 		<h1> whoooooomp</h1>
 
 			@foreach ($data as $key => $value) 
