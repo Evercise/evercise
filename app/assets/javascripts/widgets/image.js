@@ -20,9 +20,11 @@ function showRequest(formData, jqForm, options) {
     return true; 
 } 
 function showResponse(response, statusText, xhr, form)  { 
+
     if(response.success == false)
     {
         var arr = response.errors;
+        trace(arr, true);
         $.each(arr, function(index, value)
         {
             if (value.length != 0)
@@ -134,12 +136,12 @@ function postCroppedImage()
                 trace('loose');
                
             }else{
-                trace(data);
+                trace(data, true);
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });
                 $('#upload_wrapper').html(data.uploadView);
-                $('.preview img').attr('src', data.newImage);
+                //$('.preview img').attr('src', data.newImage);
                 $('#thumbFilename').val(data.thumbFilename);
                
             }

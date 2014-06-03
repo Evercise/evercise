@@ -17,16 +17,7 @@ class ImageController extends \BaseController {
             'image' => 'image'
         );
 
-        /*$result = array(
-            'validation_failed' => 1,
-            'errors' =>  array(
-                'imaage'=>array(
-                    'fucked'
-                )
-            )
-         ); 
-
-        return Response::json($result);*/
+        //return Response::json(['success' => false, 'errors' => ['suck'=>$file]]);
 
         $validator = Validator::make($input, $rules);
         if ( $validator->fails() )
@@ -100,15 +91,16 @@ class ImageController extends \BaseController {
         $timestamp = date_create();
 
         $thumbFilename = date_timestamp_get($timestamp).'_'.$img_name;
-        $img->save(public_path() . '/profiles/' . $save_location . '/'.$thumbFilename);
+        $fileNameWithPath = '/profiles/' . $save_location . '/'.$thumbFilename;
+        $img->save(public_path() . $fileNameWithPath);
 
         if(Request::ajax())
         { 
 
             //return Response::json(array('imgName' => $thumbFilename ));
-            $viewString = View::make('widgets/upload-form')->with('uploadImage',$thumbFilename )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
+            $viewString = View::make('widgets/upload-form')->with('uploadImage',$fileNameWithPath )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
            // return Response::json(array('uploadView'=>$viewString));
-            $newImage = url('/') . '/profiles/' . $save_location . '/'.$thumbFilename;
+            $newImage = url('/') . $fileNameWithPath;
             return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
         }
         //return View::make('widgets/crop');

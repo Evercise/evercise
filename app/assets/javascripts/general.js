@@ -63,9 +63,17 @@ jQuery( document ).ready( function( $ )
 */  
 });
 
-function trace(message)
+function trace(message, debug)
 {
-  console.log(arguments.callee.caller.name + ' => ' + message);
+  if (debug == true)
+  {
+    console.log(arguments.callee.caller.name + ' => ');
+    console.debug(message);
+  }
+  else
+  {
+    console.log(arguments.callee.caller.name + ' => ' + message);
+  }
 }
 
 function initLoginBox()
