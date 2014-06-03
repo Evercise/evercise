@@ -74,5 +74,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
 
+   /* public function user_has_marketingpreference()
+    {
+        return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');
+    }
 
+
+	public function Marketingpreferences()
+    {
+        return $this->belongsToMany('MarketingPreference', 'user_has_marketingpreferences', 'marketingpreferences_id', 'user_id');
+    }*/
+
+	public function marketingpreferences()
+	{
+		return $this->belongsToMany('Marketingpreference', 'user_marketingpreferences', 'user_id', 'marketingpreference_id');
+	}
 }

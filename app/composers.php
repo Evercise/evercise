@@ -9,6 +9,7 @@ require 'composers/DistanceComposer.php';
 require 'composers/UpcomingPastSessions.php';
 require 'composers/ProgressBarComposer.php';
 require 'composers/TrainerBlockComposer.php';
+require 'composers/UserEditComposer.php';
 
 View::composer('widgets.calendar', 'CalendarComposer');
 View::composer('widgets.mapForm', 'MapComposer');
@@ -18,4 +19,5 @@ View::composer('evercisegroups.trainer_index', 'DistanceComposer');
 View::composer('layouts.progressbar', 'ProgressBarComposer');
 View::composer('trainers.trainerBlock', 'TrainerBlockComposer');
 View::composer('sessions.date_list', 'UpcomingPastSessions');
+View::composer('users.edit_form', 'UserEditComposer');
 

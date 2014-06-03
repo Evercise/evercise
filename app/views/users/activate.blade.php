@@ -6,7 +6,6 @@
 	<div class="col7">
 	<br>
 	<br>
-	{{$activation = 3}}
 		<h2>Hi {{ $display_name }}</h2>
 		<br>
 		@if(!isset($activation))

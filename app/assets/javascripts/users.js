@@ -102,7 +102,7 @@ function initUsers()
         $.ajax({
             url: url,
             type: 'PUT',
-            data: 'first_name='+$( '#first_name' ).val()+'&last_name='+$( '#last_name' ).val()+'&dob='+$( '#dob' ).val()+'&email='+$( '#email' ).val()+'&password='+$( '#password' ).val()+'&userNewsletter='+$( '#userNewsletter' ).val(),
+            data: $( '#user_edit' ).serialize(),
             dataType: 'json'
         })
         .done(
@@ -110,16 +110,16 @@ function initUsers()
                 trace("Sending data.....");
                 if (data.validation_failed == 1)
                 {
-                    trace('loose');
+                    console.debug("failed: "+data);
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
                     $.each(arr, function(index, value)
                     {
-                        /*if (scroll == false) {
+                        if (scroll == false) {
                             $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                             scroll = true;
-                        };*/
+                        };
                         if (value.length != 0)
                         {
                            $("#" + index).addClass('error');
@@ -130,10 +130,10 @@ function initUsers()
                 }else{
                     // redirect to login page
                     $('.success_msg').show();
-                    trace("cock: "+data);
-                    setTimeout(function() {
+                    trace("User updated: "+data);
+                    /*setTimeout(function() {
                         window.location.href = '';
-                    }, 1000);
+                    }, 1000);*/
                 }
             }
         );

@@ -9,6 +9,8 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
+		if (!Sentry::check()) return Redirect::route('home');
+
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('users.index');
 	}
@@ -82,7 +84,7 @@ class UsersController extends \BaseController {
 			$userGroup = Sentry::findGroupById(1);
 			$user->addGroup($userGroup);
 
-			$marketingpreferences = Marketingpreference::where('name', '=', 'newsletter')->get();
+			/*$marketingpreferences = Marketingpreference::where('name', '=', 'newsletter')->get();
 			$chosenPreference = 1;
 			foreach ($marketingpreferences as $pref)
 			{
@@ -90,8 +92,8 @@ class UsersController extends \BaseController {
 			}
 
 
-			$user_has_marketingpreferences = User_has_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>$chosenPreference));
-
+			$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreference_id'=>$chosenPreference));
+*/
 			$activation_code = $user->getActivationCode();
 
 			if($user) {
@@ -150,7 +152,9 @@ class UsersController extends \BaseController {
 			$user->addGroup($userGroup);
 
 
-			$user_has_marketingpreferences = User_has_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
+			//$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
+
+			User::find($user->id)->marketingpreferences()->attach(1);
 
 			if($user) {
 
@@ -259,6 +263,8 @@ class UsersController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		if (!Sentry::check()) return Redirect::route('home');
+
 		return View::make('users.show');
 	}
 
@@ -270,24 +276,9 @@ class UsersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$user = Sentry::getUser();
+		if (!Sentry::check()) return Redirect::route('home');
 
-		$firstName = $user->first_name;
-		$lastName = $user->last_name;
-		$dob = $user->dob != '0000-00-00 00:00:00' ? $user->dob : '';
-		$email = $user->email;
-		$gender = $user->gender;
-
-		$user_has_marketingpreferences = User_has_marketingpreference::where('user_id', $user->id)->firstOrFail();
-		$marketingPreference = $user_has_marketingpreferences->marketingpreferences_id;
-
-		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		return View::make('users.edit')
-			->with('firstName', $firstName)
-			->with('lastName', $lastName)
-			->with('dob', $dob)
-			->with('email', $email)
-			->with('gender', $gender);
+		return View::make('users.edit');
 	}
 
 	/**
@@ -306,7 +297,9 @@ class UsersController extends \BaseController {
 				'last_name' => 'required|max:50|min:2',
 				'dob' => 'required',
 				'email' => 'required|email',
-				'password' => 'confirmed',
+				'old_password' => 'required',
+				'new_password' => 'confirmed',
+				'thumbFilename' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -327,24 +320,54 @@ class UsersController extends \BaseController {
 		else{
 			// Actually update the user record 
 
+			$old_password = Input::get('old_password');
+			$new_password = Input::get('new_password');
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
 			$dob = Input::get('dob');
 			$email = Input::get('email');
-			$password = Input::get('password');
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
+			$image = Input::get('thumbFilename');
 
 			$user = Sentry::getUser();
+			if (!$user->checkPassword($old_password))
+			{
+				$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  array(
+		            	'old_password'=>array(
+		            		'Your current password is incorrect'
+	            		)
+	            	)
+		         );	
+
+				return Response::json($result);
+			}
+			if ($new_password)
+			{
+				$user->update(array(
+					'password' => $new_password,
+				));
+			}
+
 			$user->update(array(
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'dob' => $dob,
 				'email' => $email,
 				'gender' => $gender,
+				'image' => $image,
 			));
 
-			return Response::json(array('edited' => 'yeah'));
+			$savedNewsletter = User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
+			if ($newsletter != $savedNewsletter)
+			{
+				User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->detach();
+				User::find($user->id)->marketingpreferences()->attach($newsletter == 'yes' ? true : false);
+			}
+
+			return Response::json();
 
 		}
 		//return Response::json($result);
