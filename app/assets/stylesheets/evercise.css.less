@@ -42,12 +42,11 @@ ol, ul {
 	list-style: none;
 }
 blockquote, q {
-	quotes: none;
+	quotes:  "\201C""\201D""\2018""\2019";
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+	content: 'open-quote';
 }
 table {
 	border-collapse: collapse;
@@ -83,12 +82,23 @@ p,a{
 	.main-font(300);
 	color: @black;
 }
+b{
+	font-weight: (500);
+}
+i{
+	font-style: italic;
+}
+
+li, strong{
+	.font-size(1.6);
+}
 
 hr{
 	border: none;
 	border-bottom: 1px solid @grey;
 
 }
+
 /* end tags */
 
 /*forms and inputs*/
@@ -492,6 +502,9 @@ nav{
 	.row(8);
 	.push(2);
 	text-align: center;
+	a{
+		color: @blue;
+	}
 	.input-wrapper{
 		.column(6,8);
 		.push(1);
@@ -1347,8 +1360,66 @@ nav{
 	}
 }
 
+/* faq */
 
+.faq_gap {
+	width: 50px;
+	height: 3px;
+	background-color: #ffcc00;
+	margin: 40px 0 20px 0;
+}
 
+#faq_nav_column{
+	padding-left: 10px;
+	a{
+		color: @blue;
+		.font-size(1.4);
+		.line-height(2.4);
+		&:hover{
+			text-decoration: underline;
+		}
+	}
+	h3{
+		a{
+			color: @black;
+		}
+	}
+}
+
+/* the team */
+
+#the-team{
+	padding-left: 10px;
+	aside{
+		float: left;
+		width: 50%;
+		text-align: left;
+		.box-sizing();
+		padding-right: 30px;
+		height: 360px;
+		margin-bottom: 20px;
+		h3{
+			margin-bottom: 5px;
+		}
+		.team-img{
+			float: left;
+			height: 130px;
+			margin-right: 20px;
+			.border-radius(50%);
+			border: 4px solid @yellow;
+			.box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.5));
+		}
+		.team_blurb{
+			width: 100%;
+			float: left;
+			margin-top: 20px;
+
+			strong{
+				font-weight: 500;
+			}
+		}
+	}
+}
 
 
 /*footer */
@@ -1375,6 +1446,10 @@ footer{
 		a,p{
 			color: darken(@white, 30%);
 			.font-size(1.4);
+			.line-height(2.1);
+			&:hover{
+				text-decoration: underline;
+			}
 		}
 		div{
 			.column(12,12);
@@ -1403,6 +1478,13 @@ footer{
 	}
 	p{
 		text-align: right;
+	}
+	small{
+		a{
+			.font-size(1.2);
+			margin-right: 10px;
+		}
+		
 	}
 }
 

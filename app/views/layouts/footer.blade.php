@@ -10,19 +10,22 @@
 			<header>
 				Create
 			</header>
-			{{ HTML::linkRoute('auth.login', 'Discover fitness classes') }}
+			{{ HTML::linkRoute('trainers.create', 'Be a pro') }}
 		</aside>
 		<aside>
 			<header>
 				About
 			</header>
-			{{ HTML::linkRoute('auth.login', 'Discover fitness classes') }}
+			{{ HTML::linkRoute('static.about', 'What is Evercise?') }}<br>
+			{{ HTML::linkRoute('static.class_guidelines', 'Class Guidelines') }}<br>
+			{{ HTML::linkRoute('static.faq', 'Help') }}<br>
+			{{ HTML::linkRoute('static.the_team', 'Meet the team') }}<br>
 		</aside>
 		<aside>
 			<header>
 				Stay in touch
 			</header>
-			{{ HTML::linkRoute('auth.login', 'Discover fitness classes') }}
+			{{ HTML::linkRoute('static.contact_us', 'Contact Us') }}<br>
 		</aside>
 		<div>
 			<p>Follow us</p>
@@ -35,5 +38,6 @@
 </footer>
 <div class="lower_footer">
 	<img src="/img/evercise logo for use.png" alt="evercise small logo"/>
-	<p>©2014 Qin Technology. Inc.</p>
+
+	<p><small>{{ HTML::linkRoute('static.terms_of_use', 'Terms of Use') }}</small> <small>{{ HTML::linkRoute('static.privacy', 'Privacy Policy') }}</small>©2014 Qin Technology. Inc.</p>
 </div>

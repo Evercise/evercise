@@ -91,8 +91,15 @@ Route::get('/layouts/classBlock', array('as' => 'layouts.classBlock', 'uses' => 
 Route::post('/postPdf', array('as' => 'postPdf', 'uses' => 'PdfController@postPdf'));
 
 /* static pages */
+/* all static pages use the same controller and  points the the vew based on the current route*/
 
-Route::get('/{$view}', array('as' => 'static', 'uses' => 'staticController@show'));
+Route::get('about', array('as' => 'static.about', 'uses' => 'StaticController@show'));
+Route::get('terms_of_use', array('as' => 'static.terms_of_use', 'uses' => 'StaticController@show'));
+Route::get('privacy', array('as' => 'static.privacy', 'uses' => 'StaticController@show'));
+Route::get('the_team', array('as' => 'static.the_team', 'uses' => 'StaticController@show'));
+Route::get('faq', array('as' => 'static.faq', 'uses' => 'StaticController@show'));
+Route::get('class_guidelines', array('as' => 'static.class_guidelines', 'uses' => 'StaticController@show'));
+Route::get('contact_us', array('as' => 'static.contact_us', 'uses' => 'StaticController@show'));
 
 /*
 

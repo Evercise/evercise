@@ -7,8 +7,9 @@ class StaticController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function show($view = 'about')
+	public function show()
 	{
-		return View::make('static.'.$view);
+		$page = Route::getCurrentRoute()->getPath();
+		return View::make('static.'.$page);
 	}
 }
