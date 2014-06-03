@@ -99,3 +99,10 @@ Event::listen('illuminate.query', function($sql)
     var_dump($sql);
 });
 */
+
+
+Route::get('/user_marketingpreferences', function()
+{
+    $user = User::find(2);
+    return $user->marketingpreferences()->where('name', 'newsletter')->first()['option'];
+});

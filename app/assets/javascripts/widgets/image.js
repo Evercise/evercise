@@ -1,5 +1,6 @@
 function initImage()
 {
+    trace();
     var options = { 
         beforeSubmit:  showRequest,
         success:       showResponse,
@@ -92,7 +93,7 @@ function saveCroppedImage(img, selection)
 function postCroppedImage()
 {
     //TODO - implement cancel button here.
-    $('#cancel_upload').click(function(){
+    /*$('#cancel_upload').click(function(){
         trace("cancel");
 
         var url = '../widgets/upload';
@@ -109,7 +110,7 @@ function postCroppedImage()
              }
         );
         return false;
-    });
+    });*/
 
    $( '#upload' ).on( 'submit', function() {
     trace('postCroppedImage: ');

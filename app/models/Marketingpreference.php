@@ -10,4 +10,15 @@ class Marketingpreference extends \Eloquent {
 	 * @var string
 	 */
 	protected $table = 'marketingpreferences';
+
+	/*public function User_marketingpreferences()
+    {
+        return $this->belongsToMany('User', 'user_marketingpreferences', 'user_id', 'marketingpreferences_id');
+    }*/
+
+
+	public function users()
+	{
+		return $this->belongsToMany('User');
+	}
 }

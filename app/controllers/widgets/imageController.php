@@ -16,6 +16,18 @@ class ImageController extends \BaseController {
         $rules = array(
             'image' => 'image'
         );
+
+        /*$result = array(
+            'validation_failed' => 1,
+            'errors' =>  array(
+                'imaage'=>array(
+                    'fucked'
+                )
+            )
+         ); 
+
+        return Response::json($result);*/
+
         $validator = Validator::make($input, $rules);
         if ( $validator->fails() )
         {

@@ -40,7 +40,7 @@ class UserMailer extends Mailer {
 		$subject = 'Welcome to Evercise';
 		$view = 'emails.auth.fb_welcome';
 		$data['display_name'] = $display_name;
-		$data['activation_code'] = $password;
+		$data['generated_password'] = $password;
 		$data['email'] = $email;
 
 		return $this->sendTo($email, $subject, $view, $data );

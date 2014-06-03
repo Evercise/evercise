@@ -9,6 +9,7 @@ require 'composers/DistanceComposer.php';
 require 'composers/UpcomingPastSessions.php';
 require 'composers/ProgressBarComposer.php';
 require 'composers/TrainerBlockComposer.php';
+require 'composers/UserEditComposer.php';
 require 'composers/TrainerEditFormComposer.php';
 require 'composers/DonutChartComposer.php';
 
@@ -20,6 +21,6 @@ View::composer('evercisegroups.trainer_index', 'DistanceComposer');
 View::composer('layouts.progressbar', 'ProgressBarComposer');
 View::composer('trainers.trainerBlock', 'TrainerBlockComposer');
 View::composer('sessions.date_list', 'UpcomingPastSessions');
+View::composer('users.edit_form', 'UserEditComposer');
 View::composer('trainers.editForm', 'TrainerEditFormComposer');
 View::composer('widgets.donutChart', 'DonutChartComposer');
-
