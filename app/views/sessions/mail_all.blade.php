@@ -6,7 +6,7 @@
 	</div>
 	
 	<div class="modal-body">
-		{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$userId, 'method' => 'PUT', 'class' => 'create-form')) }}
+		{{ Form::open(array('id' => 'mail_all', 'url' => 'sessions/'.$sessionId.'/mail_all', 'method' => 'POST', 'class' => 'create-form')) }}
 		
 	    	@include('form.textfield', array('fieldname'=>'mail_subject', 'placeholder'=>'Type your subject here', 'maxlength'=>1000, 'label'=>'Subject', 'fieldtext'=>''))
 	        @if ($errors->has('mail_subject'))
@@ -19,6 +19,9 @@
 	        @endif
 
 			{{ Form::submit('Send Email' , array('class'=>'btn-yellow ')) }}
+
+        	<div class="success_msg">Message sent</div>
+
 		{{ Form::close() }}
     </div>
 

@@ -18,6 +18,8 @@ class UpcomingPastSessions {
 
 		// loop through view data array with session dates key
 
+		// TODO - order by date, rather than ID
+
 		foreach ($viewdata['sessionDates'] as $key => $value) {
 			if (empty($value) ) {
 				$futureDates[] = null;

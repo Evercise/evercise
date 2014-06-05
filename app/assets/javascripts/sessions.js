@@ -99,3 +99,44 @@ function initSessionListDropdown()
 }
 
 registerInitFunction(initSessionListDropdown);
+
+function mailAll()
+{
+    trace("mail all");
+    $(document).on('submit', '#mail_all' , function() {
+
+        // post to controller
+        $.post(
+            $( this ).prop( 'action' ),
+             $( this ).serialize(),
+            function( data ) {
+                trace("about to win.......");
+                if (data.validation_failed == 1)
+                {
+                    trace('loose: '+data);
+                    var arr = data.errors;
+                    $.each(arr, function(index, value)
+                    {
+                        if (value.length != 0)
+                        {
+                           trace( value );
+                        }
+                    });
+
+                    $('#ajax-loading').hide();
+                }else{
+                    trace(data.message, true);
+                    // redirect to login page
+                    $('.success_msg').show();
+                    setTimeout(function() {
+                        /*$('.mask').hide();
+                        $('.modal').remove();*/
+                    }, 1000);
+                }
+            },
+            'json'
+        );
+        return false;
+    });
+}
+registerInitFunction(mailAll);

@@ -15,6 +15,7 @@ class UserMailer extends Mailer {
 		$events->listen('user.forgot',      'email\UserMailer@forgotPassword');
 		$events->listen('user.newpassword', 'email\UserMailer@newPassword');
 		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
+		$events->listen('session.mail_all', 'email\UserMailer@mailAll');
 	}
 
 	/**
@@ -89,6 +90,21 @@ class UserMailer extends Mailer {
 		$data['email'] = $email;
 
 		return $this->sendTo($email, $subject, $view, $data );
+	}
+
+	public function mailAll($userList, $group, $subject, $body)
+	{
+		$subject = $subject;
+		$view = 'emails.session.all';
+		$data['body'] = $body;
+		$data['group'] = $group;
+		$data['subject'] = $subject;
+
+		foreach($userList as $name => $email)
+		{
+			$data['name'] = $name;
+			$this->sendTo($email, $subject, $view, $data );
+		}
 	}
 
 

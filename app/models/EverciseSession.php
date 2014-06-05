@@ -22,6 +22,11 @@ class Evercisesession extends \Eloquent {
 
     
 
+	public function users()
+	{
+		return $this->belongsToMany('user', 'sessionmembers', 'evercisesession_id', 'user_id');
+	}
+
 
 
 }

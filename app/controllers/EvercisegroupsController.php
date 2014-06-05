@@ -218,6 +218,8 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		if (!Sentry::check()) return Redirect::route('home');
+		
 		$user = Sentry::getUser();
 
 		$trainerGroup = Sentry::findGroupByName('trainer');
@@ -237,7 +239,8 @@ class EvercisegroupsController extends \BaseController {
 		if ($user->inGroup($trainerGroup))
 		{
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
-			if ($evercisegroup['Evercisesession']->isEmpty()) {
+			if ($evercisegroup['Evercisesession']->isEmpty())
+			{
 				return Redirect::route('evercisegroups.index');
 			}
 			else
@@ -257,8 +260,9 @@ class EvercisegroupsController extends \BaseController {
 				$averageSessionMembers = $totalSessionMembers/$i;
 				$averageCapacity = $totalCapacity/$i;
 
+				JavaScript::put(array('mailAll' => 1 ));
 				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
-				JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise session list dropdown JS.
+				JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
 
 				return View::make('sessions.index')
 					->with('evercisegroup' , $evercisegroup )
