@@ -99,7 +99,7 @@ class SessionsController extends \BaseController {
 			if (Trainer::where('user_id', $user->id)->count())
 				$trainer = Trainer::where('user_id', $user->id)->get()->first();
 
-			$session = EverciseSession::create(array(
+			$session = Evercisesession::create(array(
 				'evercisegroup_id'=>$evercisegroupId,
 				'date_time'=>$date_time,
 				'price'=>$price,
@@ -162,13 +162,13 @@ class SessionsController extends \BaseController {
 		Evercisesession::destroy($id);
 
 		$user = Sentry::getUser();
-		$evercisegroups = Evercisegroup::with('EverciseSession')->where('user_id', $user->id)->get();
+		$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $user->id)->get();
 		$sessionDates = array();
 		$totalMembers = array();
 		$totalCapacity = array();
 		foreach ($evercisegroups as $key => $value) {
 
-			$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
+			$sessionDates[$key] = $this->arrayDate($value->Evercisesession->lists('date_time', 'id'));
 			$totalCapacity[] =  $value->capacity;
 			foreach ($value['Evercisesession'] as $k => $val) {
 				$totalMembers[]= $val->members;
@@ -185,25 +185,64 @@ class SessionsController extends \BaseController {
 
 	public function getMailAll($id)
 	{
-		return View::make('sessions.mail_all');
+
+		return View::make('sessions.mail_all')->with('sessionId', $id);
 	}
 
 	public function postMailAll($id)
 	{
-/*		Event::fire('user.signup', array(
-        	'email' => $user->email, 
-        	'display_name' => $user->display_name, 
-            'activationCode' => $activation_code
-		));*/
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'mail_subject' => 'required',
+				'mail_body' => 'required',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
 
-    	$result = array(
-            'validation_failed' => 1,
-            'errors' =>  $validator->errors()->toArray()
-         );	
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else
+		{
+			$subject = Input::get('mail_subject');
+			$body = Input::get('mail_body');
+
+			//$eg = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->where('Evercisesession.evercisegroup_id', $id);
+
+			$groupId = Evercisesession::where('id', $id)->pluck('evercisegroup_id');
+			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+
+			//$session = Evercisesession::with('Sessionmembers.Users')->find($id);
+
+			$users = Evercisesession::find($id)->users()->get();
+
+			$userList = [];
+			foreach ($users as $key => $value)
+			{
+				$userList[$value->first_name] = $value->email;
+			}
 
 
-    	// TODO - send email and return success message.
-		return Response::json($result);
+			Event::fire('session.mail_all', array(
+	        	'email' => $userList, 
+	        	'name' => $groupName, 
+	        	'subject' => $subject, 
+	            'body' => $body
+			));
+		}
+
+		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$id]);
 	}
 
 }

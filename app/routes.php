@@ -116,3 +116,9 @@ Route::get('/user_marketingpreferences', function()
     $user = User::find(2);
     return $user->marketingpreferences()->where('name', 'newsletter')->first()['option'];
 });
+
+Route::get('/email_test', function(){
+    return View::make('emails.session.all')
+    ->with('body', 'blah blah blah blah blah blah blah blah')
+    ->with('subject', 'Message from your trainer Bob regarding the Yoga session on the 17th June');
+});

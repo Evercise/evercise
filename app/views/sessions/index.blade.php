@@ -55,8 +55,7 @@
 						<li>&pound;{{ $value['price'] }}</li>
 						<li> <strong>{{$value['members']}}</strong>/{{ $evercisegroup->capacity }} </li>
 						<li>
-							{{ HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
-							{{ HTML::linkRoute('sessions.mail_all', 'mail', array('id'=>$value['id']), array('class'=>'mail_all')) }}
+							{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img>', array('id'=>$value['id']), array('class'=>'mail_all session-icon')) ) }}
 							{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 								{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
 								<button type="submit">
