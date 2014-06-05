@@ -120,6 +120,8 @@ function mailAll()
                         if (value.length != 0)
                         {
                            trace( value );
+                           $("#" + index).addClass('error');
+                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
                         }
                     });
 

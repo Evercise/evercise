@@ -84,7 +84,8 @@ function initLoginBox()
       $('.login_wrap, .modal').remove();
   })
   
-  $('input').keyup(function(){
+  //$('input').keyup(function(){
+  $(document).on('keyup','input', function(){
      $(this).removeClass('error');
      $(this).closest('div').find('.error-msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
   });
