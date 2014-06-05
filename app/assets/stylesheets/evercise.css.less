@@ -220,8 +220,8 @@ label{
 	.font-size(1.6);
 }
 
-.error_msgs(@cols){
-	.row(@cols);
+.error_msgs(){
+	width: 90%;
 	.box-sizing();
 	background-color: lighten(@black, 10%);
 	color: @white;
@@ -230,8 +230,8 @@ label{
 	margin-bottom: 20px;
 }
 
-.success_msgs(@cols){
-	.row(@cols);
+.success_msgs(){
+	 width: 100%;
 	.box-sizing();
 	.border-radius();
 	.font-size(1.8);
@@ -243,21 +243,81 @@ label{
 	padding: 15px 20px;
 	text-align: center;
 	.transition(all linear 0.1s);
-	display: none;
+	//display: none;
 }
 
 
 .create-form{
-	.column(11);
-	.push(1);
+	float: left;
+	width: 100%;
 	.formitem{
-		.formitems(10,2,8);
+		.clearfix;
+		border-bottom:1px dashed #DCDCDC;
+		padding: 20px 0;
+		.formlabel{
+			width:25%;
+			float: left;
+			label{
+				.heading-font(600);
+				.font-size(1.8);
+			}
+		}
+		.formfield {
+			float: right;
+			width: 75%;
+			input{
+				width: 90%;
+				clear: both;
+				margin-bottom: 20px;
+			}
+			.slider-input{
+				width: 30%;
+			}
+			
+			.location-input{
+				width: auto;
+				margin-right: 2%;
+				&:nth-of-type(1){
+					width: 90%;
+				};
+				&:nth-of-type(2){
+					width: 58%;
+				};
+				&:nth-of-type(3){
+					width: 30%;
+				};
+			}
+			.map-wrapper{
+				width: 90%;
+				height: 250px;
+				padding: 6px;
+				.box-sizing();
+				border: 1px solid @grey;
+				.border-radius();
+				#map-canvas{
+					height: 100%;
+				}
+			}
+			
+			.datepicker{
+				width: 30%;
+				background-image: url(/img/create_from_template.png); 
+				background-position: 95% 50%;
+				display: block;
+				}
+			p{
+				color: lighten(@black, 40%);
+				float: left;
+			}
+		}
 	}
+	
+
 	.error-msg{
-		.error_msgs(8);
+		.error_msgs();
 	}
 	.success_msg{
-		.success_msgs(10);
+		.success_msgs();
 	}
 	.btn-yellow{
 		margin: auto;

@@ -1,7 +1,7 @@
 <div id="upload_wrapper">
     @include('widgets.upload-form', array('uploadImage' => 'profiles/'. $user->directory.'/'.$user->image, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
 </div>
-	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$userId, 'method' => 'PUT', 'class' => 'create-form')) }}
+	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$user->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
         @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'first name', 'fieldtext'=>'This is your first name.', 'default'=>$firstName ))
         @if ($errors->has('first_name'))

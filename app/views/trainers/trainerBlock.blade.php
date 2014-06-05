@@ -1,4 +1,4 @@
-{{--@if(isset($orientation))
+@if(isset($orientation))
 	@if($orientation == 'portrait')
 		<div class="trainer-block-portrait-wrapper">
 	@else
@@ -12,7 +12,7 @@
 				<div class="trainer-block-info-wrapper">
 					
 					<h3>{{$name}}</h3>
-					<h5>{{$title}}</h5>
+					<h5>{{$speciality}}</h5>
 					<span>{{ HTML::image('/img/'.$gender.'.png', 'trainers gender')}}{{ $gender}}</span>
 					<span><strong>{{$age}}</strong> years old </span>
 					<span>member since {{$member_since}}</span>
@@ -25,7 +25,3 @@
 	@if(isset($orientation))
 		</div>
 	@endif
-		
---}}
-
-<h1>{{ $name }}</h1>

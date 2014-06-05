@@ -17,7 +17,6 @@ class UserEditComposer {
     	$markPref = User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
 
 		JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
-		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		$view->with('firstName', $firstName)
 			->with('lastName', $lastName)
 			->with('dob', $dob)

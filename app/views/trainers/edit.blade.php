@@ -3,7 +3,6 @@
 
 @section('content')
 
-	
 	@include('trainers.trainerBlock', array('orientation' => 'landscape'))
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
@@ -22,7 +21,7 @@
 
 				<div id="trainer" class="dashboard-block">
 					<div class="dashboard-header"><h3>Trainer</h3></div>
-					@include('trainers.editForm')
+					@include('trainers.editForm', array('bio' => $trainer->bio))
 				</div>
 				
 				

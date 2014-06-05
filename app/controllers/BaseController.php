@@ -21,12 +21,17 @@ class BaseController extends Controller {
 		$displayName = "none";
 		$userId = 0;
 		$displayImage = url('/')."/img/no-user-img.jpg"; // TODO - default image
+		$user = '';
+
 
 		View::share('user', $this->user);
+		/*
+
 		View::share('displayName', $this->user->displayName);
-		View::share('displayImage', $this->user->displayImage);
+		View::share('displayImage', $this->user->image);
 		View::share('userId', $this->user->userId);
 		View::share('title', 'Evercise');
+		*/
 
 		if ( ! is_null($this->layout))
 		{

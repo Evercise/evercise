@@ -140,11 +140,10 @@ class TrainersController extends \BaseController {
 	{
 		$trainer = Trainer::where('user_id' , $this->user->id)->first();
 
-		$speciality = Speciality::where('id', $trainer['Trainer']['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
-
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise dashboard panls JS.
+		JavaScript::put(array('initPut' => 1 )); // Initialise put ajax function JS.
 
-		return View::make('trainers.edit')->with('trainer', $trainer)->with('speciality', $speciality);
+		return View::make('trainers.edit')->with('trainer', $trainer);
 	}
 
 	/**
@@ -162,5 +161,64 @@ class TrainersController extends \BaseController {
 		
 
 		return View::make('trainers.show')->with('trainer', $trainer)->with('speciality', $speciality);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function update($id)
+	{
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'bio' => 'required|max:500|min:50',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('trainers.edit')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else{
+			// Actually update the trainer record 
+
+			$discipline = Input::get('discipline');
+			$title = Input::get('title');
+			$bio = Input::get('bio');
+			$website = Input::get('website');
+
+			$trainer = Trainer::find($id);
+			$speciality = Speciality::where('name', $discipline)->where('titles', $title)->first();
+			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
+
+			$trainer->update(array(
+				'bio' => $bio,
+				'website' => $website,
+				'specialities_id' => $speciality->id, 
+			));
+
+			$result = array(
+		            'sp' =>  $speciality
+		         );	
+
+			return Response::json($result);
+
+		}
+		//return Response::json($result);
+		//return View::make('users.edit');
 	}
 }

@@ -92,55 +92,7 @@ function initUsers()
         return false;
     });
 
-    // edit a user
- 
-    $( '#user_edit' ).on( 'submit', function() {
-        $('.error-msg').remove();
-        $('input').removeClass('error');
-        // post to controller
-        var url = $(this).attr('action');
-        $.ajax({
-            url: url,
-            type: 'PUT',
-            data: $( '#user_edit' ).serialize(),
-            dataType: 'json'
-        })
-        .done(
-            function(data) {
-                trace("Sending data.....");
-                if (data.validation_failed == 1)
-                {
-                    console.debug("failed: "+data);
-                    // show validation errors
-                    var arr = data.errors;
-                    var scroll = false;
-                    $.each(arr, function(index, value)
-                    {
-                        if (scroll == false) {
-                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
-                            scroll = true;
-                        };
-                        if (value.length != 0)
-                        {
-                           $("#" + index).addClass('error');
-                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
-                        }
-                    });
-                    $('#ajax-loading').hide();
-                }else{
-                    // redirect to login page
-                    $('.success_msg').show();
-                    trace("User updated: "+data);
-                    
-                    setTimeout(function() {
-                        window.location.href = '';
-                    }, 300);
-                }
-            }
-        );
 
-        return false;
-    });
 
     // Reset password
  

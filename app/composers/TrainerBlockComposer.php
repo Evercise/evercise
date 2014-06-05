@@ -12,8 +12,6 @@ class TrainerBlockComposer {
 
   		$name = $user->display_name;
 
-  		$title = $viewdata['speciality'];
-
   		$gender =  $user->gender;
 
   		$image = '/profiles/'.  $user->directory.'/'. $user->image;
@@ -29,21 +27,23 @@ class TrainerBlockComposer {
   		$dob =  $user->dob;
 
   		$from = new DateTime($dob);
-		$to   = new DateTime('today');
-		$age  =  $from->diff($to)->y;
+  		$to   = new DateTime('today');
+  		$age  =  $from->diff($to)->y;
 
-		$member_since = date('dS M-Y', strtotime( $trainer->created_at));
+  		$member_since = date('dS M-Y', strtotime( $trainer->created_at));
 
-		$bio =  $trainer->bio;
+  		$bio =  $trainer->bio;
 
-		JavaScript::put(array('initReadMore' => 1 )); // Initialise read more.
+      $speciality = Speciality::find($trainer->specialities_id)->pluck(DB::raw("CONCAT(name, ' ', titles)"));
+
+		  JavaScript::put(array('initReadMore' => 1 )); // Initialise read more.
 
   		$view->with('name', $name)
-        ->with('title', $title)
         ->with('image', $image)
         ->with('gender', $gender)
         ->with('age', $age)
         ->with('member_since' , $member_since)
+        ->with('speciality' , $speciality)
         ->with('bio' , $bio);
   	}
 } 
