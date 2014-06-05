@@ -3,7 +3,7 @@
 @section('title', 'View Classes - Trainer')
 @section('content')
 
-	@include('layouts.pagetitle', array('title'=> $displayName.'&apos;s class hub', 'subtitle'=>'Manage your classes from here'))
+	@include('layouts.pagetitle', array('title'=> $user->display_name.'&apos;s class hub', 'subtitle'=>'Manage your classes from here'))
 	@include('form.hidden', array('fieldname'=>'evercisegroupId', 'value'=>$evercisegroups[0]->id))
 	@include('form.hidden', array('fieldname'=>'evercisegroupName', 'value'=>$evercisegroups[0]->name))
 	@include('form.hidden', array('fieldname'=>'originalprice', 'value'=>$evercisegroups[0]->default_price))

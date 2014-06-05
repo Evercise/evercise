@@ -4,9 +4,11 @@
 @section('content')
 
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
-    <div id="upload_wrapper">
-        @include('widgets.upload-form', array('uploadImage' => $displayImage, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
-    </div>
+    <div class="col10 push1">
+        <div id="upload_wrapper">
+            @include('widgets.upload-form', array('uploadImage' => $user->image, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
+        </div>
+    
         {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
         @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
         @if ($errors->has('discipline'))
@@ -28,8 +30,8 @@
             {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @if(basename($displayImage) != 'no-user-img.jpg')
-            {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}
+        @if(basename($user->image) != 'no-user-img.jpg')
+            {{ Form::hidden( 'thumbFilename' , basename($user->image), array('id' => 'thumbFilename')) }}
         @else
             {{ Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')) }}
         @endif
@@ -38,7 +40,7 @@
     	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
         </div>
         {{ Form::close() }}
-        
+     </div>   
 
 
 @stop

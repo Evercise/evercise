@@ -39,8 +39,8 @@
             {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @if(basename($displayImage) != 'no-user-img.jpg')
-            {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}
+        @if(basename($user->image) != 'no-user-img.jpg')
+            {{ Form::hidden( 'thumbFilename' , basename($user->image), array('id' => 'thumbFilename')) }}
         @else
             {{ Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')) }}
         @endif

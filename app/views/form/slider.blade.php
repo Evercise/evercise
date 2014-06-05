@@ -1,3 +1,3 @@
 <div class="formitem clearfix">
-	@include('layouts.slider');
+	@include('layouts.slider')
 </div>
