@@ -101,8 +101,8 @@ Route::get('faq', array('as' => 'static.faq', 'uses' => 'StaticController@show')
 Route::get('class_guidelines', array('as' => 'static.class_guidelines', 'uses' => 'StaticController@show'));
 Route::get('contact_us', array('as' => 'static.contact_us', 'uses' => 'StaticController@show'));
 
-/*
 
+/*
 // uncomment for sql statement breakdown
 Event::listen('illuminate.query', function($sql)
 {

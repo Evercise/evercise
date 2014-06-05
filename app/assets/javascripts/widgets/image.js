@@ -140,6 +140,7 @@ function postCroppedImage()
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });
+                trace(data.uploadView);
                 $('#upload_wrapper').html(data.uploadView);
                 //$('.preview img').attr('src', data.newImage);
                 $('#thumbFilename').val(data.thumbFilename);

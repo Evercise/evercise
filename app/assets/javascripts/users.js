@@ -131,9 +131,10 @@ function initUsers()
                     // redirect to login page
                     $('.success_msg').show();
                     trace("User updated: "+data);
-                    /*setTimeout(function() {
+                    
+                    setTimeout(function() {
                         window.location.href = '';
-                    }, 1000);*/
+                    }, 300);
                 }
             }
         );

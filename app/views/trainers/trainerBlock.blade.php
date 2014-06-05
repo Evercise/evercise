@@ -1,4 +1,4 @@
-@if(isset($orientation))
+{{--@if(isset($orientation))
 	@if($orientation == 'portrait')
 		<div class="trainer-block-portrait-wrapper">
 	@else
@@ -26,4 +26,6 @@
 		</div>
 	@endif
 		
+--}}
 
+<h1>{{ $name }}</h1>

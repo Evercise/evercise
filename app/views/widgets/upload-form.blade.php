@@ -9,7 +9,7 @@
 		<div class="formfield">
 			<div class="frame" >
 			  <div class="preview" >
-			  	{{ HTML::image( $uploadImage, $displayName.'s image', array('class'=> 'profile-pic')); }}
+			  	{{ HTML::image( $uploadImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}
 			  </div>
 			</div>
 			<div id='image-upload'>		

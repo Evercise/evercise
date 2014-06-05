@@ -9,5 +9,8 @@
 			{{ Form::password( $fieldname.'_confirmation' ,  array('placeholder' => $confirmation, 'maxlength' => 20, 'id' => $fieldname.'_confirmation'))}}
 		@endif
 		<p>{{ $fieldtext }}</p>
+		@if(isset($forgot))
+			<br><br><br><p>{{ link_to('auth/forgot', $forgot) }}</p>
+		@endif
 	</div>
 </div>

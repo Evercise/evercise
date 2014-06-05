@@ -829,8 +829,7 @@ nav{
 	margin-bottom: 20px;
 }
 .center-btn-wrapper{
-	.column(4);
-	.push(3);
+	width: 100%;
 	margin-top: 20px;
 }
 
@@ -1155,6 +1154,7 @@ nav{
 }
 
 .trainer-block-landscape-wrapper{
+	padding: 0 10px;
 	.trainer-block{
 		.trainer-block-image-wrapper{
 			.column(2);
@@ -1199,7 +1199,7 @@ nav{
 	float: left;
 	.trainer-dashboard-wrapper-left{
 		.column(3);
-		border-right: 1px solid @grey;
+
 		.box-sizing();
 		ul{
 			li{
@@ -1214,7 +1214,7 @@ nav{
 				&:first-of-type{
 					border-top:  1px solid @grey;
 				}
-				&:hover{
+				&:hover,&.selected{
 					background: @yellow;
 				}
 			}
@@ -1224,6 +1224,8 @@ nav{
 		.column(9);
 		position: relative;
 		border-top:  1px solid @grey;
+		border-left: 1px solid @grey;
+		margin-left: -10px;
 		&:after{
 			position: absolute;
 			top: -1px;
@@ -1233,6 +1235,35 @@ nav{
 			display: inline-block;
 			content: '';
 			border-top: 1px solid @grey;
+		}
+		.dashboard-header{
+			padding-left: 40px;
+			border-bottom:  1px solid @grey;
+			padding: 32px 40px 16px;
+			h3{
+				.heading-font(500);
+			}
+		}
+		.dashboard-block{
+			display: none;
+			&:first-of-type{
+				display: block;
+			}
+			
+		}
+		.create-form{
+			margin: 0 0 0 40px;
+			width: 100%;
+			.formitem{
+				.formitems(8,1,8);
+				.formlabel{
+					display: none;
+				}
+			}
+			.success_msg{
+				width: 100%;
+			}
+			
 		}
 	}
 }

@@ -4,7 +4,9 @@ class UserEditComposer {
 
 	 public function compose($view)
   	{
-		$user = Sentry::getUser();
+  		$viewdata = $view->getData(); //  grab all view data including shared 
+
+		$user = $viewdata['user'];
 
 		$firstName = $user->first_name;
 		$lastName = $user->last_name;

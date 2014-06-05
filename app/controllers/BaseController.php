@@ -7,34 +7,25 @@ class BaseController extends Controller {
 	 *
 	 * @return void
 	 */
+
+	public $user;
+
+	public function __construct()
+	  {
+	  	 $this->user=  Sentry::getUser();
+	  }
+
+
 	protected function setupLayout()
 	{
 		$displayName = "none";
 		$userId = 0;
 		$displayImage = url('/')."/img/no-user-img.jpg"; // TODO - default image
-		try
-		{
-		    // Get the current active/logged in user
-		    $user = Sentry::getUser();
-			if ( Sentry::check())
-			{
-		    	$displayName = $user->display_name;	
-		    	if ($user->image) {
-		    		$displayImage = '/profiles/'.$user->directory.'/'.$user->image;
-		    	}
-		    	$userId = $user->id;
-		    	
-		    } 
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-		    // User wasn't found, should only happen if the user was deleted
-		    // when they were already logged in or had a "remember me" cookie set
-		    // and they were deleted.
-		}
-		View::share('displayName', $displayName);
-		View::share('displayImage', $displayImage);
-		View::share('userId', $userId);
+
+		View::share('user', $this->user);
+		View::share('displayName', $this->user->displayName);
+		View::share('displayImage', $this->user->displayImage);
+		View::share('userId', $this->user->userId);
 		View::share('title', 'Evercise');
 
 		if ( ! is_null($this->layout))

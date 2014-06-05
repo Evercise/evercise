@@ -1,8 +1,9 @@
-@include('widgets.upload-form', array('uploadImage' => $displayImage, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
-
+<div id="upload_wrapper">
+    @include('widgets.upload-form', array('uploadImage' => 'profiles/'. $user->directory.'/'.$user->image, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
+</div>
 	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$userId, 'method' => 'PUT', 'class' => 'create-form')) }}
 
-        @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'first name', 'fieldtext'=>'your first name.', 'default'=>$firstName ))
+        @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'first name', 'fieldtext'=>'This is your first name.', 'default'=>$firstName ))
         @if ($errors->has('first_name'))
             {{ $errors->first('first_name', '<p class="error-msg">:message</p>')}}
         @endif
@@ -12,7 +13,7 @@
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.datepicker', array('fieldname'=>'dob', 'placeholder'=>'Date of birth', 'maxlength'=>20, 'label'=>'Date of birth', 'fieldtext'=>'date of birth.', 'default'=>$dob))
+        @include('form.datepicker', array('fieldname'=>'dob', 'placeholder'=>'Date of birth', 'maxlength'=>20, 'label'=>'Date of birth', 'fieldtext'=>'date of birth.', 'default'=>date('Y-m-d',strtotime($dob))))
         @if ($errors->has('last_name'))
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif
@@ -28,14 +29,15 @@
         @endif
 
     	@include('form.select', array('fieldname'=>'gender', 'label'=>'gender', 'values'=>array(1=>'Male', 2=>'Female'), 'selected'=>$gender))
+        {{-- 
+        marketing preferences to be used in edit preferences
 
     	@include('form.checkbox', array('id' => 'userNewsletter', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.', 'default'=> ($marketingPreference=='yes') ))
-
-        @include('form.password', array('fieldname'=>'old_password', 'placeholder'=>'Current password', 'maxlength'=>20, 'label'=>'Current password', 'fieldtext'=>'To change your settings, Please enter your current password.'))
+        --}}
+        @include('form.password', array('fieldname'=>'old_password', 'placeholder'=>'Current password', 'maxlength'=>20, 'label'=>'Current password', 'fieldtext'=>'To change your settings, Please enter your current password.' , 'forgot' => 'I forgot my password'))
         @if ($errors->has('password'))
             {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
         @endif
-        {{ link_to('auth/forgot', 'I forgot my password like a noob') }}
 
         @if(basename($displayImage) != 'no-user-img.jpg')
             {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}

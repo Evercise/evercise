@@ -1,25 +1,21 @@
-@if($displayName != 'none')
-	<a href="{{ URL::route('trainers.show', $userId ) }}">
-		{{ HTML::image( $displayImage, $displayName.'s image', array('class'=> 'profile-pic')); }}
+	<a href="{{ URL::route('trainers.show', $user->id ) }}">
+		{{ HTML::image( 'profiles/'. $user->directory.'/'.$user->image, $user->display_name.'s image', array('class'=> 'profile-pic')); }}
 	</a>
 	<li id="displayName" class="float-right">
-		{{ $displayName }}
+		{{ $user->display_name }}
 	</li>
 
-	<div id="displayName-dropdown" class="dropdown-menu">
-		<span>{{ HTML::linkRoute('trainers.edit', 'My Dashboard' , $userId) }}</span>
+<div id="displayName-dropdown" class="dropdown-menu">
+	@if($group == 'trainer')	
+		<span>{{ HTML::linkRoute('trainers.edit', 'My Dashboard' , $user->id) }}</span>
 		<span>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</span>
 		<hr>
 		<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
-	</div>
-	
-	
-@else
-	<li>{{ HTML::linkRoute('users.create', 'Join Evercise') }}</li>
-
-	@if(isset($redirect_after_login))
-		<li>{{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , 'Login',  array('id'=>'login', 'class' => 'login')) }}</li>
+			
 	@else
-		<li>{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login')) }}</li>
+		<span>{{ HTML::linkRoute('users.edit', 'My Dashboard' , $user->id) }}</span>
+		<span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span> 
+		<hr>
+		<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
 	@endif
-@endif
+</div>

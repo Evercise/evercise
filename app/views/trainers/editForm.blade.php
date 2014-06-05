@@ -1,4 +1,6 @@
+
 {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
+
         @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
         @if ($errors->has('discipline'))
             {{ $errors->first('discipline', '<p class="error-msg">:message</p>')}}
@@ -9,7 +11,7 @@
             {{ $errors->first('title', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'Your biography will be visible on your profile and will give members a more personal insight into you as an instructor. (example: Kayla is a qualified pool yoga instructor with 5 years of experience helping swimmers improve strength and flexibility in the pool. She is excited to meet new swimmers and help them improve their practice while decreasing chances of injury. She loves canoeing and camping, and is very happy to be a part of the evercise team!)' ))
+        @include('form.textfield', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'This is the bio that is displayed to our users', 'default'=>'d' ))
         @if ($errors->has('bio'))
             {{ $errors->first('bio', '<p class="error-msg">:message</p>')}}
         @endif
@@ -19,14 +21,9 @@
             {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @if(basename($displayImage) != 'no-user-img.jpg')
-            {{ Form::hidden( 'thumbFilename' , basename($displayImage), array('id' => 'thumbFilename')) }}
-        @else
-            {{ Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')) }}
-        @endif
-
         <div class="center-btn-wrapper" >
-    	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
+    	   {{ Form::submit('Save changes' , array('class'=>'btn-yellow ')) }}
         </div>
+        <div class="success_msg">Details updated</div>
         {{ Form::close() }}
         
