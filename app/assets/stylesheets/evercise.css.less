@@ -531,13 +531,7 @@ nav{
 		}
 	}
 	.formitem{
-		.row(4);
-		margin-bottom: 20px;
-		.formlabel{
-			.column(1,4);
-		}
 		.formfield{
-			.column(3,4);
 			input{
 				margin-bottom: 10px;
 			}
@@ -720,6 +714,9 @@ nav{
 .session-table{
 	.column(12);
 	.font-size(1.4);
+	.session-list-controls{
+		padding-top:15px;
+	}
 	li{
 		.heading-font();
 		background: @white;
@@ -732,6 +729,7 @@ nav{
 		padding: 26px 0 17px;
 		text-align: center;
 		border-bottom: 1px solid @grey;
+		height:62px;
 		&.hd{
 			border-bottom: 2px solid @white;
 			border-right: 2px solid @white;

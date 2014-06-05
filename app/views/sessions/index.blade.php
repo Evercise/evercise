@@ -53,18 +53,18 @@
 						<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
 						<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</li>
 						<li>&pound;{{ $value['price'] }}</li>
-						<li> <strong>{{$value['members']}}</strong>/{{ $evercisegroup->capacity }} </li>
-						<li>
+						<li> <strong>{{$members}}</strong>/{{ $evercisegroup->capacity }} </li>
+						<li class="session-list-controls">
 							{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img>', array('id'=>$value['id']), array('class'=>'mail_all session-icon')) ) }}
 							{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 								{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
 								<button type="submit">
-									{{ HTML::image('/img/download_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+									{{ HTML::image('/img/download_icon.png', 'download icon' , array('class' => 'session-icon')); }}
 								</button>
 								 
 							{{ Form::close() }}
 							
-							{{ HTML::image('/img/view_icon.png', 'mail icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view')); }} 
+							{{ HTML::image('/img/view_icon.png', 'view icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view')); }} 
 						</li>
 					</div>
 					
@@ -85,7 +85,8 @@
 									<p>Joined on the {{ date('dS-M', strtotime($val['created_at']) )  }}</p>
 
 								</div>
-								{{ HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+								{{ HTML::decode(HTML::linkRoute('sessions.mail_one', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$value['id'], 'userId'=> $val['Users']['id']), array('class'=>'mail_all session-icon')) ) }}
+								{{-- HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); --}}
 								
 							</div>
 						@endforeach

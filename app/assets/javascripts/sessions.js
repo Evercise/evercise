@@ -93,8 +93,19 @@ function updateTimeFields()
 function initSessionListDropdown()
 {
     $(document).on('click', '.session-icon-view' , function(){
+        
+        if ($(this).closest('ul').find('.session-members-row').length === 0) return null;
+        
+        var alreadyOpen = 0;
+        if ($(this).closest('ul').find('.session-members-list').css('display') == 'block')
+            alreadyOpen = 1; 
+        
         $('.session-members-list').slideUp(400 );
-        $(this).closest('ul').find('.session-members-list').slideToggle(400);  
+
+        if (alreadyOpen == 0)
+            $(this).closest('ul').find('.session-members-list').slideToggle(400);  
+
+        
     })
 }
 
@@ -102,8 +113,9 @@ registerInitFunction(initSessionListDropdown);
 
 function mailAll()
 {
+
     trace("mail all");
-    $(document).on('submit', '#mail_all' , function() {
+    $(document).on('submit', '#mail_all, #mail_one' , function() {
 
         // post to controller
         $.post(
@@ -131,8 +143,8 @@ function mailAll()
                     // redirect to login page
                     $('.success_msg').show();
                     setTimeout(function() {
-                        /*$('.mask').hide();
-                        $('.modal').remove();*/
+                        $('.mask').hide();
+                        $('.modal').remove();
                     }, 1000);
                 }
             },

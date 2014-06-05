@@ -10,14 +10,13 @@ class EvercisegroupsController extends \BaseController {
 	public function index()
 	{
 		if ( ! Sentry::check()) return 'Not logged in';
-		$user = Sentry::getUser();
 
-		$directory = $user->directory;
+		$directory = $this->user->directory;
 		$trainerGroup = Sentry::findGroupByName('trainer');
 
-		if ($user->inGroup($trainerGroup))
+		if ($this->user->inGroup($trainerGroup))
 		{
-			$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $user->id)->get();
+			$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $this->user->id)->get();
 
 			if ($evercisegroups->isEmpty()) {
 				return View::make('evercisegroups.first_class');
@@ -69,12 +68,12 @@ class EvercisegroupsController extends \BaseController {
 	{
 
 		if ( ! Sentry::check()) return 'Not logged in';
-		$user = Sentry::getUser();
+
 		$trainerGroup = Sentry::findGroupByName('trainer');
 
-		if ($user->inGroup($trainerGroup))
+		if ($this->user->inGroup($trainerGroup))
 		{
-			$trainer = Trainer::where('user_id', $user->id)->get()->first();
+			$trainer = Trainer::where('user_id', $this->user->id)->get()->first();
 		}
 
 		else
@@ -155,15 +154,13 @@ class EvercisegroupsController extends \BaseController {
 			$long = Input::get('long');
 
 			if ( ! Sentry::check()) return 'Not logged in';
-
-			$user = Sentry::getUser();
 			
-			if (Trainer::where('user_id', $user->id)->count())
-				$trainer = Trainer::where('user_id', $user->id)->get()->first();
+			if (Trainer::where('user_id', $this->user->id)->count())
+				$trainer = Trainer::where('user_id', $this->user->id)->get()->first();
 
 			$evercisegroup = Evercisegroup::create(array(
 				'name'=>$classname,
-				'user_id'=>$user->id,
+				'user_id'=>$this->user->id,
 				'category_id'=>$category,
 				'description'=>$description,
 				'default_duration'=>$duration,
@@ -177,9 +174,9 @@ class EvercisegroupsController extends \BaseController {
 				'long' => $long
 			));
 
-			Trainerhistory::create(array('user_id'=> $user->id, 'type'=>'created_evercisegroup', 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name));
+			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 
-			//return Response::json(route('home', array('display_name'=> $user->display_name)));
+			//return Response::json(route('home', array('display_name'=> $this->user->display_name)));
 			//return Response::json($evercisegroup); // for testing
 			//return View::make('evercisegroups.index');
 			return Response::json(route('evercisegroups.index'));
@@ -193,7 +190,6 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function cloneEG($id)
 	{
-		$user = Sentry::getUser();
 		$evercisegroups = Evercisegroup::where('id', $id)->get()->first();
 		
 		return Redirect::route('evercisegroups.create')
@@ -206,7 +202,7 @@ class EvercisegroupsController extends \BaseController {
 				->with('lat', $evercisegroups->lat)
 				->with('lng', $evercisegroups->long)
 				->with('location', array('address' => $evercisegroups->address , 'city' => $evercisegroups->town , 'postCode' => $evercisegroups->postcode ) )
-				->with('image_full', 'profiles/'.$user->directory.'/'. $evercisegroups->image)
+				->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroups->image)
 				->with( 'image' , $evercisegroups->image );
 	}
 
@@ -219,24 +215,21 @@ class EvercisegroupsController extends \BaseController {
 	public function show($id)
 	{
 		if (!Sentry::check()) return Redirect::route('home');
-		
-		$user = Sentry::getUser();
 
 		$trainerGroup = Sentry::findGroupByName('trainer');
 
-		if ($user->inGroup($trainerGroup))
+		if ($this->user->inGroup($trainerGroup))
 		{
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
-			if ($evercisegroup->user_id == $user->id) {
+			if ($evercisegroup->user_id == $this->user->id) {
 				//$evercisegroup_id;
 		if ( ! Sentry::check()) return 'Not logged in';
-		$user = Sentry::getUser();
 
-		$directory = $user->directory;
+		$directory = $this->user->directory;
 		$trainerGroup = Sentry::findGroupByName('trainer');
 		
-		if ($user->inGroup($trainerGroup))
+		if ($this->user->inGroup($trainerGroup))
 		{
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 			if ($evercisegroup['Evercisesession']->isEmpty())
@@ -259,6 +252,14 @@ class EvercisegroupsController extends \BaseController {
 
 				$averageSessionMembers = $totalSessionMembers/$i;
 				$averageCapacity = $totalCapacity/$i;
+				//
+				//
+				//
+				//
+				//
+				// TODO - Put the actual right amount in here, and in the view change $members to $members[$i] or something//
+				//
+				$members = 7;
 
 				JavaScript::put(array('mailAll' => 1 ));
 				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
@@ -270,7 +271,8 @@ class EvercisegroupsController extends \BaseController {
 					->with('totalSessionMembers' , $totalSessionMembers)
 					->with('totalCapacity' , $totalCapacity)
 					->with('averageSessionMembers' , $averageSessionMembers)
-					->with('averageCapacity' , $averageCapacity);
+					->with('averageCapacity' , $averageCapacity)
+					->with('members' , $members);
 			}		
 		}
 		else
@@ -338,9 +340,7 @@ class EvercisegroupsController extends \BaseController {
 		$evercisegroupForDeletion = Evercisegroup::find($id);
 		//$evercisegroupForDeletion->delete();
 
-		$user = Sentry::getUser();
-
-		Trainerhistory::create(array('user_id'=> $user->id, 'type'=>'deleted_evercisegroup', 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name));
+		Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'deleted_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 		
 		return Route('evercisegroups.index');
 	}

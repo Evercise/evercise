@@ -114,31 +114,16 @@ function initEvercisegroups()
 
         return false;
     });
-
-    trace('cock');
-    $('.mail_all').click(function(){
-
-        var url = this.href;
-        $.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'html'
-        })
-        .done(
-            function(data) {
-                trace('id: '+ data);
-             }
-        );
-
-        return false;
-    });
 }
 registerInitFunction(initEvercisegroups);
 
 function initEvercisegroupsShow()
 {
-    trace('cock');
+    
     $('.mail_all').click(function(){
+
+        // If no members, do not open mail dialogue
+        if ($(this).closest('ul').find('.session-members-row').length === 0) return false;
 
         var url = this.href;
         $.ajax({

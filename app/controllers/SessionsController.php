@@ -94,10 +94,9 @@ class SessionsController extends \BaseController {
 
 			if ( ! Sentry::check()) return 'Not logged in';
 
-			$user = Sentry::getUser();
 			
-			if (Trainer::where('user_id', $user->id)->count())
-				$trainer = Trainer::where('user_id', $user->id)->get()->first();
+			if (Trainer::where('user_id', $this->user->id)->count())
+				$trainer = Trainer::where('user_id', $this->user->id)->get()->first();
 
 			$session = Evercisesession::create(array(
 				'evercisegroup_id'=>$evercisegroupId,
@@ -111,7 +110,7 @@ class SessionsController extends \BaseController {
 			$timestamp = strtotime($date_time);
 			$niceTime = date('h:ia', $timestamp);
 			$niceDate = date('dS F Y', $timestamp);
-			Trainerhistory::create(array('user_id'=> $user->id, 'type'=>'created_session', 'display_name'=>$user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 
 			return Response::json(route('evercisegroups.index'));
 			//return Response::json($evercisegroup); // for testing
@@ -161,8 +160,7 @@ class SessionsController extends \BaseController {
 	{
 		Evercisesession::destroy($id);
 
-		$user = Sentry::getUser();
-		$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $user->id)->get();
+		$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $this->user->id)->get();
 		$sessionDates = array();
 		$totalMembers = array();
 		$totalCapacity = array();
@@ -218,19 +216,15 @@ class SessionsController extends \BaseController {
 			$subject = Input::get('mail_subject');
 			$body = Input::get('mail_body');
 
-			//$eg = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->where('Evercisesession.evercisegroup_id', $id);
-
 			$groupId = Evercisesession::where('id', $id)->pluck('evercisegroup_id');
 			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
-
-			//$session = Evercisesession::with('Sessionmembers.Users')->find($id);
 
 			$users = Evercisesession::find($id)->users()->get();
 
 			$userList = [];
-			foreach ($users as $key => $value)
+			foreach ($users as $value)
 			{
-				$userList[$value->first_name] = $value->email;
+				$userList[$value->first_name . ' ' . $value->last_name] = $value->email;
 			}
 
 
@@ -243,6 +237,63 @@ class SessionsController extends \BaseController {
 		}
 
 		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$id]);
+	}
+
+	public function getMailOne($sessionId, $userId)
+	{
+		$userDetails = User::where('id', $userId)->select('first_name', 'last_name')->first();
+		$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
+
+		return View::make('sessions.mail_one')->with('sessionId', $sessionId)->with('userId', $userId)->with('firstName', $name);
+	}
+
+	public function postMailOne($sessionId, $userId)
+	{
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'mail_subject' => 'required',
+				'mail_body' => 'required',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else
+		{
+			$subject = Input::get('mail_subject');
+			$body = Input::get('mail_body');
+
+			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+			$userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
+
+			$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
+			$email = $userDetails['email'];
+			$userList = [$name => $email];
+
+			Event::fire('session.mail_all', array(
+	        	'email' => $userList, 
+	        	'groupName' => $groupName, 
+	        	'subject' => $subject, 
+	            'body' => $body
+			));
+		}
+
+		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
 	}
 
 }
