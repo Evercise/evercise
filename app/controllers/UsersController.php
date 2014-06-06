@@ -22,7 +22,6 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
-
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('users.create');
 	}
@@ -277,6 +276,8 @@ class UsersController extends \BaseController {
 	public function edit($id)
 	{
 		if (!Sentry::check()) return Redirect::route('home');
+
+		JavaScript::put(array('initPut' => 1 ));
 
 		return View::make('users.edit');
 	}

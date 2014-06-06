@@ -1,6 +1,7 @@
 <?php
 
 require 'Functions.php';
+require 'composers/HomePageComposer.php';
 require 'composers/NavBarComposer.php';
 require 'composers/CalendarComposer.php';
 require 'composers/MapComposer.php';
@@ -14,6 +15,7 @@ require 'composers/UserEditComposer.php';
 require 'composers/TrainerEditFormComposer.php';
 require 'composers/DonutChartComposer.php';
 
+View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
 View::composer('widgets.calendar', 'CalendarComposer');
 View::composer('widgets.mapForm', 'MapComposer');

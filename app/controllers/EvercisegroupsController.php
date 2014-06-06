@@ -151,7 +151,7 @@ class EvercisegroupsController extends \BaseController {
 			$city = Input::get('city');
 			$postcode = Input::get('postcode');
 			$lat = Input::get('lat');
-			$long = Input::get('long');
+			$lng = Input::get('long');
 
 			if ( ! Sentry::check()) return 'Not logged in';
 			
@@ -171,7 +171,7 @@ class EvercisegroupsController extends \BaseController {
 				'town'=>$city,
 				'postcode'=>$postcode,
 				'lat'=>$lat,
-				'long' => $long
+				'lng' => $lng
 			));
 
 			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
@@ -200,7 +200,7 @@ class EvercisegroupsController extends \BaseController {
 				->with('maxsize', $evercisegroups->capacity)
 				->with('price', $evercisegroups->default_price)
 				->with('lat', $evercisegroups->lat)
-				->with('lng', $evercisegroups->long)
+				->with('lng', $evercisegroups->lng)
 				->with('location', array('address' => $evercisegroups->address , 'city' => $evercisegroups->town , 'postCode' => $evercisegroups->postcode ) )
 				->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroups->image)
 				->with( 'image' , $evercisegroups->image );
@@ -371,6 +371,54 @@ class EvercisegroupsController extends \BaseController {
 		}
 		 return Redirect::route('home');
 		//return 'delete '.$id;
+	}
+
+	/**
+	 * query eg's based on location
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function searchEg($id)
+	{
+		$query = Input::get('location');
+		$radius = Input::get('radius');
+		$category = Input::get('category');
+
+        $geocoder = new \Geocoder\Geocoder();
+        $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+
+        $geocoder->registerProvider(new \Geocoder\Provider\GoogleMapsProvider($adapter));
+
+        try {
+            $geocode = $geocoder->geocode($query);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }   
+
+        $coordToGeohash = Geotools::coordinate($geocode->getCoordinates());
+
+        $encoded = Geotools::geohash()->encode($coordToGeohash, 3);
+
+        $boundingBox = $encoded->getBoundingBox();
+
+        $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
+
+        $places = DB::table('evercisegroups')
+	    ->select( array('*', DB::raw($haversine . ' as distance')) )
+	    ->whereBetween('lat', array(0,100))
+	    ->where('category_id' , $category)
+	    ->orderBy('distance', 'ASC')
+	    ->having('distance', '<', $radius)
+	    ->get();
+
+
+	    JavaScript::put(array('classes' => json_encode($places) ));
+	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
+
+
+	    return View::make('evercisegroups.discover')
+	    		->with('places' , $places);
 	}
 
 	

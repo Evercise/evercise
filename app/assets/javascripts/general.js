@@ -31,7 +31,7 @@ jQuery( document ).ready( function( $ )
        initFunctions.forEach(function(f) {
         if (f.name == name)
         {
-           //trace('RUNNING: '+name+' : '+laracasts[l]);
+           trace('RUNNING: '+name+' : '+laracasts[l]);
            f.run(laracasts[l]);
         }
       });
@@ -261,3 +261,12 @@ function initPut () {
 }
 
 registerInitFunction(initPut);
+
+function initPlayVideo(){ 
+  
+  $('.video').click(function(){
+    this.paused?this.play():this.pause();
+  });
+}
+
+registerInitFunction(initPlayVideo);

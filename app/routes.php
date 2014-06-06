@@ -69,6 +69,9 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 
 Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
 Route::post('/evercisegroups/delete_evercisegroups/{id}', array('as' => 'evercisegroups.delete_evercisegroups', 'uses' => 'EvercisegroupsController@deleteEG'));
+/* geo evercise groups for searching */
+
+Route::get('/evercisegroups/search/{id}', array('as' => 'evercisegroups.searchEg', 'uses' => 'EvercisegroupsController@searchEg'));
 
 Route::get('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll'));
 Route::post('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll'));
@@ -124,3 +127,4 @@ Route::get('/email_test', function(){
     ->with('body', 'blah blah blah blah blah blah blah blah')
     ->with('subject', 'Message from your trainer Bob regarding the Yoga session on the 17th June');
 });
+

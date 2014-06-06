@@ -7,7 +7,7 @@ class NavBarComposer {
   	if ( ! Sentry::check())
 	{
 		$aboutNav = HTML::linkRoute('static.about', 'About');
-		$proNav = HTML::linkRoute('trainers.create', 'Be a pro');
+		$proNav = HTML::linkRoute('trainers.create', 'I&#039;m a trainer');
 		$discoverNav =  HTML::linkRoute('auth.login', 'Discover classes'); //needs changing to dscover when available
 	    $helpNav = HTML::linkRoute('static.faq', 'Help');
 	    $joinNav = HTML::linkRoute('users.create', 'Join Evercise');
@@ -36,7 +36,7 @@ class NavBarComposer {
 		else
 		{
 			$aboutNav = HTML::linkRoute('users.edit', 'My Dashboard' , $user->id);
-			$proNav = HTML::linkRoute('trainers.create', 'Be a pro');
+			$proNav = HTML::linkRoute('trainers.create', 'I&#039;m a trainer');
 			$discoverNav =  null; 
 		    $helpNav = HTML::linkRoute('static.faq', 'Help');
 		    $joinNav = HTML::linkRoute('users.create', 'My Cart'); // change to art when ready

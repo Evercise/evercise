@@ -10,7 +10,13 @@
 
 </head>
 <body>
-	<div class="container">
+	@yield('banner')
+	@if(isset($class))
+		<div class="container no-bk">
+	@else
+		<div class="container">
+	@endif
+	
 
 		@include('layouts.redirectmessage')
 		@include('layouts.header')
