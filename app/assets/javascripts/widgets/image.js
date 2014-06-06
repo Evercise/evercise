@@ -1,6 +1,5 @@
 function initImage()
 {
-    trace();
     var options = { 
         beforeSubmit:  showRequest,
         success:       showResponse,

@@ -12,7 +12,13 @@ class BaseController extends Controller {
 
 	public function __construct()
 	  {
-	  	 $this->user=  Sentry::getUser();
+	  	if (Sentry::check())
+	  	{
+			$this->user=  Sentry::getUser();
+			$userImage =  $this->user->image ? ('profiles/'. $this->user->directory.'/'.$this->user->image) : 'img/no-user-img.jpg' ;
+			
+		}
+		View::share('userImage', isset($userImage) ? $userImage : '');
 	  }
 
 
@@ -20,7 +26,6 @@ class BaseController extends Controller {
 	{
 		$displayName = "none";
 		$userId = 0;
-		$displayImage = url('/')."/img/no-user-img.jpg"; // TODO - default image
 		$user = '';
 
 
@@ -32,6 +37,7 @@ class BaseController extends Controller {
 		View::share('userId', $this->user->userId);
 		View::share('title', 'Evercise');
 		*/
+		
 
 		if ( ! is_null($this->layout))
 		{

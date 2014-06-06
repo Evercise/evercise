@@ -1,5 +1,5 @@
 <div id="upload_wrapper">
-    @include('widgets.upload-form', array('uploadImage' => 'profiles/'. $user->directory.'/'.$user->image, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
+    @include('widgets.upload-form', array('uploadImage' => $userImage, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
 </div>
 	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$user->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
@@ -39,7 +39,7 @@
             {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @if(basename($user->image) != 'no-user-img.jpg')
+        @if(basename($user->image) != '')
             {{ Form::hidden( 'thumbFilename' , basename($user->image), array('id' => 'thumbFilename')) }}
         @else
             {{ Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')) }}
