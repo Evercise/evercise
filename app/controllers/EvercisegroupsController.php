@@ -244,22 +244,16 @@ class EvercisegroupsController extends \BaseController {
 				$averageSessionMembers = 0;
 				$averageCapacity = 0;
 
+				$members = [];
 				foreach ($evercisegroup->Evercisesession as $key => $value) {
-					$totalSessionMembers= $totalSessionMembers + $value['members'];
 					$totalCapacity = $totalCapacity + $evercisegroup->capacity;
-					$i++;
+					$members[$key] = count($value['Sessionmembers']); // Count those members
+					$totalSessionMembers= $totalSessionMembers + $members[$key];
+					++$i;
 				}
 
-				$averageSessionMembers = $totalSessionMembers/$i;
-				$averageCapacity = $totalCapacity/$i;
-				//
-				//
-				//
-				//
-				//
-				// TODO - Put the actual right amount in here, and in the view change $members to $members[$i] or something//
-				//
-				$members = 7;
+				$averageSessionMembers = round($totalSessionMembers/$i, 1);
+				$averageCapacity = round($totalCapacity/$i, 1);
 
 				JavaScript::put(array('mailAll' => 1 ));
 				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
@@ -273,7 +267,7 @@ class EvercisegroupsController extends \BaseController {
 					->with('averageSessionMembers' , $averageSessionMembers)
 					->with('averageCapacity' , $averageCapacity)
 					->with('members' , $members);
-			}		
+			}
 		}
 		else
 		{

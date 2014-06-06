@@ -196,7 +196,7 @@ class UsersController extends \BaseController {
 				}catch (Exception $e)
 				{
 					// This exception will happen from localhost, as pulling the file from facebook will not work
-					$img = '';
+					$img_filename = '';
 				}
 
 				$user->image = $img_filename;

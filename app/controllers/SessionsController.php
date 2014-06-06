@@ -34,9 +34,19 @@ class SessionsController extends \BaseController {
 		$price = $evercisegroup->default_price;
 		$name = $evercisegroup->name;
 
+		$hour = 12;
+		$minute = 00;
 
-
-		return View::make('sessions.create')->with('year',$year)->with('month',$month)->with('date',$date)->with('id',$id)->with('duration',$duration)->with('price',$price)->with('name',$name);
+		return View::make('sessions.create')
+			->with('year',$year)
+			->with('month',$month)
+			->with('date',$date)
+			->with('id',$id)
+			->with('duration',$duration)
+			->with('price',$price)
+			->with('name',$name)
+			->with('hour',$hour)
+			->with('minute',$minute);
 	}
 
 	/**

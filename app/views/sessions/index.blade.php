@@ -28,7 +28,7 @@
 				@include('widgets.donutChart', array('label' => 'Total Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings3','total' => 500, 'fill' => 300 ))
 			</div>
 			<div class="donut-chart">
-				@include('widgets.donutChart', array('label' => 'Average Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings4','total' => 500, 'fill' => 300 ))
+				@include('widgets.donutChart', array('label' => 'Total Class Capacity', 'width' => 120 , 'id' => 'total-class-bookings4','total' => 500, 'fill' => 300 ))
 			</div>
 		
 		</div>
@@ -46,30 +46,31 @@
 			<li class="hd">Places Filled</li>
 			<li class="hd">Options</li>
 			
-			@foreach ($evercisegroup['Evercisesession'] as $key => $value) 
+			@foreach ($evercisegroup['Evercisesession'] as $key => $value)
+
+
 				<ul>
 					<div class="session-list-row">
 						<li>{{ date('M-dS' , strtotime($value['date_time'])) }}</li>
 						<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
 						<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)) }}</li>
 						<li>&pound;{{ $value['price'] }}</li>
-						<li> <strong>{{$members}}</strong>/{{ $evercisegroup->capacity }} </li>
+						<li> <strong>{{$members[$key]}}</strong>/{{ $evercisegroup->capacity }} </li>
 						<li class="session-list-controls">
-							{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img>', array('id'=>$value['id']), array('class'=>'mail_all session-icon')) ) }}
+							{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img>', array('id'=>$value['id']), array('class'=>'mail_all session-icon '.($value['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))) ) }}
 							{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 								{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
 								<button type="submit">
-									{{ HTML::image('/img/download_icon.png', 'download icon' , array('class' => 'session-icon')); }}
+									{{ HTML::image('/img/download_icon.png', 'download icon' , array('class' => 'session-icon '.($value['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }}
 								</button>
 								 
 							{{ Form::close() }}
 							
-							{{ HTML::image('/img/view_icon.png', 'view icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view')); }} 
+							{{ HTML::image('/img/view_icon.png', 'view icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view '.($value['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }} 
 						</li>
 					</div>
 					
 					<div class="session-members-list">
-
 						@foreach($value['Sessionmembers'] as $k => $val)
 
 							@if ($k % 3 === 2) 
@@ -86,7 +87,6 @@
 
 								</div>
 								{{ HTML::decode(HTML::linkRoute('sessions.mail_one', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$value['id'], 'userId'=> $val['Users']['id']), array('class'=>'mail_all session-icon')) ) }}
-								{{-- HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); --}}
 								
 							</div>
 						@endforeach
@@ -97,16 +97,14 @@
 
 						<div class="session-members-footer">
 							<aside>
-								<a href="">
-								{{ HTML::image('/img/mail_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
-									Message All Users
-								</a>
+								{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img><span>Message All Users</span>', array('id'=>$value['id']), array('class'=>'mail_all session-icon')) ) }}
+									
 							</aside>
 							<aside>
 								{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 									{{ Form::hidden( 'postMembers' , $value['Sessionmembers'] , array('id' => 'postMembers')) }}
 									<button type="submit">
-										{{ HTML::image('/img/download_icon.png', 'mail icon' , array('class' => 'session-icon')); }}
+										{{ HTML::image('/img/download_icon.png', 'download icon' , array('class' => 'session-icon')); }}
 										<span>Download List</span>
 									</button>
 									 

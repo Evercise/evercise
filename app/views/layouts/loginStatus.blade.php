@@ -1,5 +1,5 @@
 	<a href="{{ URL::route('trainers.show', $user->id ) }}">
-		{{ HTML::image( 'profiles/'. $user->directory.'/'.$user->image, $user->display_name.'s image', array('class'=> 'profile-pic')); }}
+		{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}
 	</a>
 	<li id="displayName" class="float-right">
 		{{ $user->display_name }}

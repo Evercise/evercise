@@ -56,15 +56,15 @@ function session_overview() {
     $('select.time-box').on('change', function(){
         updateTimeFields();
     });
+    updateTimeFields();
 
     initSlider('{"name":"s-price","min":0,"max":99,"step":0.5,"value":1}');
-    initSlider('{"name":"s-duration","min":0,"max":100,"step":5,"value":5, "callback":"updateNewSessionFields" }');
+    initSlider('{"name":"s-duration","min":10,"max":100,"step":5,"value":5, "callback":"updateNewSessionFields" }');
 
 }
 
 function updateTimeFields()
 {
-
     var day = $('#s-date').val();
     var month = $('#s-month').val();
     var year = $('#s-year').val();
@@ -116,7 +116,7 @@ function mailAll()
 
     trace("mail all");
     $(document).on('submit', '#mail_all, #mail_one' , function() {
-
+        $('.error-msg').remove();
         // post to controller
         $.post(
             $( this ).prop( 'action' ),

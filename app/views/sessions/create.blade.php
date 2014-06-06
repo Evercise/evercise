@@ -14,7 +14,7 @@
 				{{ Form::hidden( 's-year' , $year, array('id' => 's-year')) }}
 				{{ Form::hidden( 's-month' , $month, array('id' => 's-month')) }}
 				{{ Form::hidden( 's-date' , $date, array('id' => 's-date')) }}
-				@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time'))
+				@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time', 'hourDefault'=>$hour, 'minuteDefault'=>$minute))
 
 				@include('form.slider', array('fieldname'=>'s-price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$price))
 				@include('form.slider', array('fieldname'=>'s-duration', 'label'=>'Duration', 'placeholder'=>'Duration', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$duration))
