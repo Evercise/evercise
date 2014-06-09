@@ -8,7 +8,7 @@
 			<div id="map-canvas" ></div>
 		</div>
 	</div>
-		
-		{{ var_dump($places)}}
+	
+
 	</div>
 @stop

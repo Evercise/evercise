@@ -27,7 +27,7 @@
 				<h5>Show up and<br> shape up!</h5>
 			</div>
 			<div class="search-box">
-				{{ Form::open(array('id' => 'search-by-location', 'url' => 'evercisegroups/search/j', 'method' => 'get', 'class' => 'search-form')) }}
+				{{ Form::open(array('id' => 'search-by-location', 'url' => 'evercisegroups/search/'.Str::quickRandom(5), 'method' => 'get', 'class' => 'search-form')) }}
 					{{ Form::text( 'location' , null, array('placeholder' => 'Search by location (town or postcode)', 'maxlength' => 50)) }}
 					{{ Form::select( 'category' , $types ) }}
 					{{ Form::select( 'radius' , $radiuses ) }}
@@ -39,6 +39,7 @@
 		<div class="home-body">
 			<div class="video-wrapper">
 				<h2>See how Evercise works</h2>
+				{{--
 				<video id="video" class="video" controls>
 					<source src="/video/test.mp4"  type="video/mp4" />
 					<object width="640" height="360" type="application/x-shockwave-flash" data="__FLASH__.SWF">
@@ -48,6 +49,7 @@
 						     title="No video playback capabilities, please download the video below" />
 					</object>
 				</video>
+				--}}
 			</div>
 			<div class="sign-up-wrapper">
 				<h2>Join Evercise today</h2>

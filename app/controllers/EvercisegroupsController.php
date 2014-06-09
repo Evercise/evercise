@@ -417,7 +417,7 @@ class EvercisegroupsController extends \BaseController {
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
 
 
-	    return View::make('evercisegroups.discover')
+	    return View::make('evercisegroups.search')
 	    		->with('places' , $places);
 	}
 

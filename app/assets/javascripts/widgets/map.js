@@ -176,7 +176,8 @@ function DiscoverMapWidgetInit() {
 
   var mapOptions = {
     styles: styles,
-    zoom: 14,
+    zoom: 10,
+    maxZoom: 16,
     center: new google.maps.LatLng( 51.5143825, -0.11134839999999713),
     zoomControl: true,
     disableDefaultUI: true,
@@ -204,7 +205,8 @@ function DiscoverMapWidgetInit() {
 
   var mcOptions = { 
     gridSize: 10,
-    maxZoom:15,
+    maxZoom: 15,
+    zoom: 1,
     styles: clusterStyles
    };
 
