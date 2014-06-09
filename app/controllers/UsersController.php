@@ -126,10 +126,9 @@ class UsersController extends \BaseController {
 	 
 	    $facebook = new Facebook(Config::get('facebook'));
 	    $uid = $facebook->getUser();
-	 
 	    if ($uid == 0) return Redirect::to('/')->with('message', 'There was an error');
-	 
 	    $me = $facebook->api('/me');
+	    if (!isset($me['email'])) return Redirect::to('/')->with('message', 'There was an error');
 
 	    $password = $this->randomPassword();
 
@@ -140,7 +139,7 @@ class UsersController extends \BaseController {
 				'last_name' => $me['last_name'],
 				'email' => $me['email'],
 				'password' => $password,
-				'gender' => $me['gender'],
+				'gender' => isset($me['gender']) ? $me['gender'] : '',
 				'activated' => true
 			));
 
@@ -169,25 +168,7 @@ class UsersController extends \BaseController {
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
 				$url = 'http://graph.facebook.com/' . $uid . '/picture?type=large';
-				//$url = 'http://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c53.45.557.557/s200x200/936888_10152789400300290_1726812964_n.jpg';
-/*	
-				$contents = File::get($url);//'https://graph.facebook.com/'.$me["id"].'/picture?type=large');
-				File::put($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', $contents);
-*/
-/*
-				$file_handler = fopen($path.'/'.$user->id.'_'.$user->display_name.'/facebook-image.jpg', 'w');
-				$curl = curl_init($url);
-				curl_setopt($curl, CURLOPT_FILE, $file_handler);
-				curl_setopt($curl, CURLOPT_HEADER, 0);
-				curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0);
-				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-				curl_exec($curl);
-
-				curl_close($curl);
-				fclose($file_handler);
-*/
 				try
 				{
 					$img = file_get_contents($url);
@@ -278,6 +259,8 @@ class UsersController extends \BaseController {
 		if (!Sentry::check()) return Redirect::route('home');
 
 		JavaScript::put(array('initPut' => 1 ));
+		JavaScript::put(array('initUsers' => 1 ));
+
 
 		return View::make('users.edit');
 	}
