@@ -10,6 +10,7 @@
 				<ul>
 					<li data-view="profile" class="selected">Edit profile</li>
 					<li data-view="trainer">Edit trainer details</li>
+					<li data-view="password">Change Password</li>
 				</ul>
 			</div>
 
@@ -22,6 +23,11 @@
 				<div id="trainer" class="dashboard-block">
 					<div class="dashboard-header"><h3>Trainer</h3></div>
 					@include('trainers.editForm', array('bio' => $trainer->bio))
+				</div>
+
+				<div id="password" class="dashboard-block">
+					<div class="dashboard-header"><h3>Password</h3></div>
+					@include('users.changepassword')
 				</div>
 				
 				

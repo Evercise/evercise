@@ -260,6 +260,7 @@ class UsersController extends \BaseController {
 
 		JavaScript::put(array('initPut' => 1 ));
 		JavaScript::put(array('initUsers' => 1 ));
+		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
 
 
 		return View::make('users.edit');
@@ -281,8 +282,8 @@ class UsersController extends \BaseController {
 				'last_name' => 'required|max:50|min:2',
 				'dob' => 'required',
 				'email' => 'required|email',
-				'old_password' => 'required',
-				'new_password' => 'confirmed',
+				// 'old_password' => 'required',
+				// 'new_password' => 'confirmed',
 				'thumbFilename' => 'required',
 			)
 		);
@@ -304,8 +305,8 @@ class UsersController extends \BaseController {
 		else{
 			// Actually update the user record 
 
-			$old_password = Input::get('old_password');
-			$new_password = Input::get('new_password');
+			//$old_password = Input::get('old_password');
+			//$new_password = Input::get('new_password');
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
 			$dob = Input::get('dob');
@@ -314,8 +315,9 @@ class UsersController extends \BaseController {
 			$newsletter = Input::get('userNewsletter');
 			$image = Input::get('thumbFilename');
 
-			$user = Sentry::getUser();
-			if (!$user->checkPassword($old_password))
+			//$user = Sentry::getUser();
+
+			/*if (!$user->checkPassword($old_password))
 			{
 				$result = array(
 		            'validation_failed' => 1,
@@ -333,9 +335,9 @@ class UsersController extends \BaseController {
 				$user->update(array(
 					'password' => $new_password,
 				));
-			}
+			}*/
 
-			$user->update(array(
+			$this->user->update(array(
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'dob' => $dob,
@@ -344,11 +346,11 @@ class UsersController extends \BaseController {
 				'image' => $image,
 			));
 
-			$savedNewsletter = User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
+			$savedNewsletter = User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
 			if ($newsletter != $savedNewsletter)
 			{
-				User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->detach();
-				User::find($user->id)->marketingpreferences()->attach($newsletter == 'yes' ? true : false);
+				User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->detach();
+				User::find($this->user->id)->marketingpreferences()->attach($newsletter == 'yes' ? true : false);
 			}
 
 			return Response::json();
@@ -425,8 +427,68 @@ class UsersController extends \BaseController {
 	 * @param  int  $id
 	 * @return View
 	 */
+	public function getChangePassword($display_name)
+	{
+		// Init JS from composer as used for trainers as well as users	
+		return View::make('users.changepassword');
+	}
+
+	/**
+	 * Reset the user's password using the emailed hash
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function postChangePassword()
+	{
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'old_password' => 'required',
+				'new_password' => 'required|confirmed',
+			)
+		);
+
+		$oldPassword = Input::get('old_password');
+		$newPassword = Input::get('new_password');
+
+		if($validator->fails()) {
+
+			if(Request::ajax())
+	        { 
+    			return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
+	        }else{
+	        	return Redirect::route('users.resetpassword')
+					->withErrors($validator)
+					->withInput();
+	        }
+    	}
+    	else
+    	{
+    		if ($oldPassword == $newPassword)
+    		{
+    			return Response::json(['validation_failed' => 1, 'errors' => ['new_password'=>'your new password matches your old password']]);
+    		}
+    		if ($this->user->checkPassword($oldPassword))
+    		{
+    			$this->user->password = $newPassword;
+    			$this->user->save();
+    			return Response::json(['result'=>'changed']);
+    		}
+    		return Response::json(['validation_failed' => 1, 'errors' => ['old_password'=>'Current password incorrect']]);
+    	}
+    }
+
+	/**
+	 * Reset the user's password using the emailed hash
+	 *
+	 * @param  int  $id
+	 * @return View
+	 */
 	public function getResetPassword($display_name, $code)
 	{
+		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		try
 		{
 		    $user = Sentry::findUserByResetPasswordCode($code);
@@ -455,8 +517,6 @@ class UsersController extends \BaseController {
 				'password' => 'required|confirmed',
 			)
 		);
-
-		// TODO - Finish validation !!!!!!!!!!!!!!!
 
 		$email = Input::get('email');
 		$password = Input::get('password');

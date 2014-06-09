@@ -14,6 +14,7 @@ require 'composers/TrainerBlockComposer.php';
 require 'composers/UserEditComposer.php';
 require 'composers/TrainerEditFormComposer.php';
 require 'composers/DonutChartComposer.php';
+require 'composers/ChangePasswordComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -28,3 +29,4 @@ View::composer('sessions.date_list', 'UpcomingPastSessions');
 View::composer('users.edit_form', 'UserEditComposer');
 View::composer('trainers.editForm', 'TrainerEditFormComposer');
 View::composer('widgets.donutChart', 'DonutChartComposer');
+View::composer('users.changepassword', 'ChangePasswordComposer');
