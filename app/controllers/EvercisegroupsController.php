@@ -143,6 +143,7 @@ class EvercisegroupsController extends \BaseController {
 			$classname = Input::get('classname');
 			$description = Input::get('description');
 			$category = Input::get('category');
+			$venue = 1;
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
@@ -162,6 +163,7 @@ class EvercisegroupsController extends \BaseController {
 				'name'=>$classname,
 				'user_id'=>$this->user->id,
 				'category_id'=>$category,
+				'venue_id'=>$venue,
 				'description'=>$description,
 				'default_duration'=>$duration,
 				'capacity'=>$maxsize,
