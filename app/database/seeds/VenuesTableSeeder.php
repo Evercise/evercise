@@ -7,14 +7,12 @@ class VenuesTableSeeder extends Seeder {
 
 	public function run()
 	{
-		$faker = Faker::create();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        DB::table('venues')->delete();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-		foreach(range(1, 10) as $index)
-		{
-			Venue::create([
-
-			]);
-		}
+        Venue::create(array('name' => 'Greenlight', 'town' => 'London', 'postcode' => 'h4', 'lat' => '51.50682494', 'lng' => '-0.15704746'));
 	}
+
 
 }
