@@ -1,7 +1,9 @@
 <div class="row9">
 	@foreach ($evercisegroups as $key => $value) 
 			<div class="class-list">
-				{{ HTML::image('profiles/'.$value->user->directory .'/'. $value->image, 'class image', array('class' => 'class-list-img')) }}
+				<a href="{{ URL::to('evercisegroups/'.$value->id) }}">
+					{{ HTML::image('profiles/'.$value->user->directory .'/'. $value->image, 'class image', array('class' => 'class-list-img')) }}
+				</a>
 				<div class="list-details">
 					<h4>{{$value->name}}</h4>
 					<p>{{ Str::limit($value->description, 115) }}</p>	

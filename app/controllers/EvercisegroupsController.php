@@ -281,7 +281,11 @@ class EvercisegroupsController extends \BaseController {
 		{
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
-			return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup);
+			$trainer = User::with('Trainer')->find($evercisegroup->user_id);
+
+			return View::make('evercisegroups.show')
+						->with('evercisegroup',$evercisegroup)
+						->with('trainer',$trainer);
 		}
 		
 	}
