@@ -6,6 +6,8 @@ class VenueComposer {
   	{
   		$venues = Venue::lists('name', 'id');
 
-  		$view->with('venues', $venues);
+  		$facilities = Facility::get();
+
+  		$view->with('venues', $venues)->with('facilities', $facilities);
   	}
 }

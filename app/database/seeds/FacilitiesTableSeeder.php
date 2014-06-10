@@ -11,10 +11,10 @@ class FacilitiesTableSeeder extends Seeder {
         DB::table('facilities')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-        Facility::create(array('name' => 'Rowing Machine', 'category' => 'facility', 'details' => 'a really big one', 'image' => 'rowing.png'));
-        Facility::create(array('name' => 'Toilets', 'category' => 'Amenety', 'details' => '4 ladies, 1 mens', 'image' => 'toilets'));
-        Facility::create(array('name' => 'Car Park', 'category' => 'Amenety', 'details' => '46 Spaces', 'image' => 'carpark'));
-        Facility::create(array('name' => 'Hall', 'category' => 'facility', 'details' => '16 square metres', 'image' => 'hall'));
+        Facility::create(array('name' => 'Rowing Machine', 'category' => 'facility', 'image' => 'rowing.png'));
+        Facility::create(array('name' => 'Toilets', 'category' => 'Amenity', 'image' => 'toilets'));
+        Facility::create(array('name' => 'Car Park', 'category' => 'Amenity', 'image' => 'carpark'));
+        Facility::create(array('name' => 'Hall', 'category' => 'facility', 'image' => 'hall'));
 	}
 
 }

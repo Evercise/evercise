@@ -60,6 +60,10 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('evercisegroup_id')->references('id')->on('evercisegroups');
 		});
 
+		Schema::table('venue', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users');
+		});
+
 		Schema::table('venue_facilities', function(Blueprint $table) {
 			$table->foreign('venue_id')->references('id')->on('venues');
 			$table->foreign('facility_id')->references('id')->on('facilities');

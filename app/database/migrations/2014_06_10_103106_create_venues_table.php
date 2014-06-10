@@ -14,8 +14,9 @@ class CreateVenuesTable extends Migration {
 	{
 		Schema::create('venues', function(Blueprint $table) {
 			$table->increments('id');
+			$table->integer('user_id')->unsigned();// Foreign key;
 			$table->string('name', 45);
-			$table->string('adress', 45);
+			$table->string('address', 45);
 			$table->string('town', 45);
 			$table->string('postcode', 45);
 			$table->decimal('lat', 10, 8);

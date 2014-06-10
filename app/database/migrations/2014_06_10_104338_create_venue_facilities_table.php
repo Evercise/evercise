@@ -15,6 +15,7 @@ class CreateVenueFacilitiesTable extends Migration {
 		Schema::create('venue_facilities', function(Blueprint $table) {
 			$table->integer('venue_id')->unsigned();// Foreign key;
 			$table->integer('facility_id')->unsigned();// Foreign key;
+			$table->string('details');
 			$table->timestamps();
 		});
 	}

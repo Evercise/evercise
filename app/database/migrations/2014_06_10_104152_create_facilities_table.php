@@ -16,7 +16,6 @@ class CreateFacilitiesTable extends Migration {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('category');
-			$table->string('details');
 			$table->string('image');
 			$table->timestamps();
 		});

@@ -11,7 +11,7 @@ class VenuesTableSeeder extends Seeder {
         DB::table('venues')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-        Venue::create(array('name' => 'Greenlight', 'town' => 'London', 'postcode' => 'h4', 'lat' => '51.50682494', 'lng' => '-0.15704746'));
+        Venue::create(array('user_id' => 1, 'name' => 'Greenlight', 'address' => 'Cally Road', 'town' => 'London', 'postcode' => 'h4', 'lat' => '51.50682494', 'lng' => '-0.15704746'));
 	}
 
 

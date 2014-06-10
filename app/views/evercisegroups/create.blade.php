@@ -13,6 +13,8 @@
         @endif
     </div>
 
+    {{-- @include('layouts.venue') --}}
+
 	{{ Form::open(array('id' => 'evercisegroup_create', 'url' => 'evercisegroups', 'method' => 'post', 'class' => 'create-form')) }}
 
 
@@ -45,7 +47,6 @@
             {{ $errors->first('category', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('layouts.venue')
 
         @if(Session::has('lat') && Session::has('lng'))
              @include('widgets.mapForm', array( 'location'=> Session::get('location'), 'label'=>'Class Location','fieldname1'=>'street', 'placeholder1'=>'Street name and number', 'maxlength1'=>50, 'fieldname2'=>'city', 'placeholder2'=>'City', 'maxlength2'=>50, 'fieldname3'=>'postcode', 'placeholder3'=>'Post Code', 'maxlength3'=>10, 'fieldtext'=>'Enter the location of your class and make sure the marker appears in the correct place on the map above. (You can drag the marker to the correct place if it doesn&apos;t match up) '  , 'lat' => Session::get('lat'), 'lng' => Session::get('lng')))

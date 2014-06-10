@@ -2,7 +2,7 @@
 
 class Venue extends \Eloquent {
 
-	protected $fillable = array('id', 'name', 'address', 'town', 'postcode', 'lat', 'lng', 'image');
+	protected $fillable = array('id', 'user_id', 'name', 'address', 'town', 'postcode', 'lat', 'lng', 'image');
 
 	/**
 	 * The database table used by the model.
@@ -11,9 +11,9 @@ class Venue extends \Eloquent {
 	 */
 	protected $table = 'venues';
 
-	/**
-	 * Concatenate name and title
-	 *
-	 * 
-	*/
+
+	public function Facilities()
+	{
+		return $this->belongsToMany('Facility', 'venue_facilities', 'venue_id', 'facility_id');
+	}
 }
