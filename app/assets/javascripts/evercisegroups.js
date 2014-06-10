@@ -242,4 +242,16 @@ function bindCalendar()
     });
 }
 
+function initSwitchView(){
+    $(document).on('click','.icon-btn', function(){
+        $('.icon-btn').removeClass('selected');
+        $(this).addClass('selected');
+        var view = $(this).data('view')
+        $('.discover-view').removeClass('selected');
+        $('#'+view).addClass('selected');
+    })
+}
+
+registerInitFunction(initSwitchView);
+
 //1400235562274 

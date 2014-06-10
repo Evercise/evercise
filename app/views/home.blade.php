@@ -27,12 +27,7 @@
 				<h5>Show up and<br> shape up!</h5>
 			</div>
 			<div class="search-box">
-				{{ Form::open(array('id' => 'search-by-location', 'url' => 'evercisegroups/search/'.Str::quickRandom(5), 'method' => 'get', 'class' => 'search-form')) }}
-					{{ Form::text( 'location' , null, array('placeholder' => 'Search by location (town or postcode)', 'maxlength' => 50)) }}
-					{{ Form::select( 'category' , $types ) }}
-					{{ Form::select( 'radius' , $radiuses ) }}
-					{{ Form::submit('Search classes' , array('class'=>'btn btn-darkyellow ')) }}
-				{{ Form::close() }}
+				@include('evercisegroups.refine')
 			</div>
 		</div>
 

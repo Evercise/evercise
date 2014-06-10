@@ -19,4 +19,9 @@ class Evercisegroup extends \Eloquent {
     {
         return $this->hasManyThrough('Sessionmember', 'Evercisesession');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 }

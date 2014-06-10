@@ -130,110 +130,121 @@ function MapWidgetInit() {
 function DiscoverMapWidgetInit() {
   /* style the map  */
 
-  var everciseGroups = JSON.parse(laracasts.classes);
+  trace(laracasts.classes);
 
-  var styles = [  
-    {  
-        featureType: 'water',  
-        elementType: 'geometry.fill',  
-        stylers: [  
-            { color: '#5bc0de' }  
-        ]  
-    },{  
-          featureType: 'landscape.natural',  
-          elementType: 'all',  
+
+  var everciseGroups = JSON.parse($('#places').val());
+
+  if(!everciseGroups.length){
+    $('#map-canvas').html('<h5>Your search returned 0 results, please refine your search');
+  }else{
+
+
+    var styles = [  
+      {  
+          featureType: 'water',  
+          elementType: 'geometry.fill',  
           stylers: [  
-              { hue: '#00a651' },  
+              { color: '#5bc0de' }  
+          ]  
+      },{  
+            featureType: 'landscape.natural',  
+            elementType: 'all',  
+            stylers: [  
+                { hue: '#00a651' },  
+                { lightness: 0 }  
+            ]  
+        },{  
+          featureType: 'road',  
+          elementType: 'geometry',  
+          stylers: [  
+              { hue: '#ffd21e' },  
               { lightness: 0 }  
           ]  
       },{  
-        featureType: 'road',  
-        elementType: 'geometry',  
-        stylers: [  
-            { hue: '#ffd21e' },  
-            { lightness: 0 }  
-        ]  
-    },{  
-        featureType: 'road.local',  
-        elementType: 'geometry',  
-        stylers: [  
-            { hue: '#ffd21e' },  
-            { saturation: 100 },  
-            { lightness: -40 }  
-        ]  
-    }     
-  ];
+          featureType: 'road.local',  
+          elementType: 'geometry',  
+          stylers: [  
+              { hue: '#ffd21e' },  
+              { saturation: 100 },  
+              { lightness: -40 }  
+          ]  
+      }     
+    ];
 
-  var locations = [
-    ['Bondi Beach', -33.890542, 151.274856, 4],
-    ['Coogee Beach', -33.923036, 151.259052, 5],
-    ['Cronulla Beach', -34.028249, 151.157507, 3],
-    ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-    ['Maroubra Beach', -33.950198, 151.259302, 1]
-  ];
+    // set ap options  
 
-  // set ap options  
+    var mapOptions = {
+      styles: styles,
+      zoom: 10,
+      maxZoom: 16,
+      center: new google.maps.LatLng( 51.5143825, -0.11134839999999713),
+      zoomControl: true,
+      disableDefaultUI: true,
+    };
 
-  var mapOptions = {
-    styles: styles,
-    zoom: 10,
-    maxZoom: 16,
-    center: new google.maps.LatLng( 51.5143825, -0.11134839999999713),
-    zoomControl: true,
-    disableDefaultUI: true,
-  };
+    // set map 
 
-  // set map 
+    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-  //set up marker
+    //set up marker
 
 
 
 
-  // multiple markers
-  var clusterStyles = [
+    // multiple markers
+    var clusterStyles = [
 
-    {
-      textSize: '0',
-      url: '/img/mapmarks_multi.png',
-      height: 73,
-      width: 48
+      {
+        textSize: '0',
+        url: '/img/mapmarks_multi.png',
+        height: 73,
+        width: 48
+      }
+    ];
+
+    var mcOptions = { 
+      gridSize: 10,
+      maxZoom: 15,
+      zoom: 1,
+      styles: clusterStyles
+     };
+
+
+    var markers = [];
+    var bounds = new google.maps.LatLngBounds();
+    var icon = '/img/mapmark.png';
+
+    for (i = 0; i < everciseGroups.length; i++) { 
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),
+        icon: icon
+      });
+      markers.push(marker);
+      var latlng = new google.maps.LatLng(
+                parseFloat(everciseGroups[i].lat),
+                parseFloat(everciseGroups[i].lng));
+
+      bounds.extend(latlng);
+      if (infowindow) infowindow.close();
+      var contentString = '<div style="width:200px; height:130px;" class="info-window"><p style="font-size:16px; text-align:center; padding: 10px 0">'+everciseGroups[i].name+'</p></div>';
+      var infowindow = new google.maps.InfoWindow({
+          content: contentString
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,this);
+      });
+
     }
-  ];
-
-  var mcOptions = { 
-    gridSize: 10,
-    maxZoom: 15,
-    zoom: 1,
-    styles: clusterStyles
-   };
-
-
-  var markers = [];
-  var bounds = new google.maps.LatLngBounds();
-  var icon = '/img/mapmark.png';
-
-  for (i = 0; i < everciseGroups.length; i++) { 
-    marker = new google.maps.Marker({
-      position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),
-      icon: icon
-    });
-    markers.push(marker);
-    var latlng = new google.maps.LatLng(
-              parseFloat(everciseGroups[i].lat),
-              parseFloat(everciseGroups[i].lng));
-
-    bounds.extend(latlng);
+    map.fitBounds(bounds);
+    var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
   }
-  map.fitBounds(bounds);
-  var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
 }
 
 function MapWidgetloadScript(params) {
+
 
   var func = 'MapWidgetInit';
   params = JSON.parse(params);
@@ -275,3 +286,7 @@ function MapWidgetloadScript(params) {
 
 registerInitFunction(MapWidgetloadScript);
 
+
+function PostMapInit() {
+
+}

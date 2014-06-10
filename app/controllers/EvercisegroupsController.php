@@ -404,21 +404,29 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
-        $places = DB::table('evercisegroups')
+        $places = Evercisegroup::with('user')->with('Evercisesession.Sessionmembers')
 	    ->select( array('*', DB::raw($haversine . ' as distance')) )
 	    ->whereBetween('lat', array(0,100))
 	    ->where('category_id' , $category)
 	    ->orderBy('distance', 'ASC')
-	    ->having('distance', '<', $radius)
+	    ->having('distance', '<', $radius)	    
 	    ->get();
 
+	    $members = [];
+	    foreach ($places as $key => $value) {
+			foreach ($value->evercisesession as $k => $v) {
+				$members[$key][] = count($v->sessionmembers); // Count those members
+			}
+		}
 
 	    JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
-
+	    JavaScript::put(array('initSwitchView' => 1 ));
 
 	    return View::make('evercisegroups.search')
-	    		->with('places' , $places);
+	    		->with('places' , $places)
+	    		->with('evercisegroups' , $places)
+	    		->with('members' , $members);
 	}
 
 	

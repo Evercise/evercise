@@ -12,8 +12,10 @@ class DistanceComposer {
 
     $distanceMiles = array();
 
-    foreach ($viewdata['evercisegroups'] as $key => $value) {
-        $distance = Functions::getDistance( $geocode->getLatitude(), $geocode->getLongitude(), $value['lat'], $value['lng']);
+    $evercisegroups = $viewdata['evercisegroups'];
+
+    foreach ( $evercisegroups as $key => $value) {
+        $distance = Functions::getDistance( $geocode->getLatitude(), $geocode->getLongitude(), $value->lat, $value->lng);
         $distanceMiles[] = $distance->in('mi')->vincenty();
     }
 
