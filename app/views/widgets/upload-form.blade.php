@@ -30,7 +30,7 @@
 
 @else
 
-{{ Form::open(['id' => 'upload', 'url' => 'widgets/upload', 'files' => true, 'method' => 'post','class' => 'create-form']) }}
+{{ Form::open(['id' => 'upload', 'url' => 'widgets/upload', 'files' => true, 'method' => 'post','class' => 'image-form']) }}
 	<div class="formitem clearfix">
 		<div class="formlabel">
 			{{ Form::label( 'image', $label) }}
