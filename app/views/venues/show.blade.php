@@ -1,0 +1,1 @@
+C:\Users\Tris\www\evercise\app/views/venues/show.blade.php

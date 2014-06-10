@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateForeignKeys extends Migration {
 
@@ -12,6 +12,7 @@ class CreateForeignKeys extends Migration {
 	 */
 	public function up()
 	{
+
 		Schema::table('trainers', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('specialities_id')->references('id')->on('specialities');
@@ -57,7 +58,13 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('evercisegroup_id')->references('id')->on('evercisegroups');
 		});
+
+		Schema::table('venue_facilities', function(Blueprint $table) {
+			$table->foreign('venue_id')->references('id')->on('venues');
+			$table->foreign('facility_id')->references('id')->on('facilities');
+		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -66,7 +73,7 @@ class CreateForeignKeys extends Migration {
 	 */
 	public function down()
 	{
-		//
+
 	}
 
 }
