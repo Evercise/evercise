@@ -11,11 +11,13 @@ class ImageController extends \BaseController {
     }
  
     public function postUpload() {
+            //return Response::json('woo');
         $file = Input::file('image');
         $input = array('image' => $file);
         $rules = array(
             'image' => 'image'
         );
+
 
         //return Response::json(['success' => false, 'errors' => ['suck'=>$file]]);
 
@@ -31,6 +33,7 @@ class ImageController extends \BaseController {
 
             $user = Sentry::getUser();
             $destinationPath = 'profiles/'.$user->directory;
+
 
             // INTERMITTENT BUG - $file is sometimes null, so the following line fails. No idea why. Please fix
             $filename = $file->getClientOriginalName();

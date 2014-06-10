@@ -212,6 +212,7 @@ registerInitFunction(initChart);
 
 function initPut () {
   $( '.create-form' ).on( 'submit', function() {
+      trace('submitting via initPut');
       $('.error-msg').remove();
       $('input').removeClass('error');
       // post to controller

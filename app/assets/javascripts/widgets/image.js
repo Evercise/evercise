@@ -7,7 +7,7 @@ function initImage()
         }; 
      $('body').delegate('#image','change', function(){
          $('#upload').ajaxForm(options).submit();   
-        trace("uploading..");
+        trace("uploading image ...");
      }); 
 }        
 registerInitFunction(initImage);
@@ -39,6 +39,7 @@ function showResponse(response, statusText, xhr, form)  {
         $('#upload').attr('action', response.postCrop);
         initCrop();
         postCroppedImage();
+        trace("init postCroppedImage");
     }
 }
 
