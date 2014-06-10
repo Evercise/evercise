@@ -11,15 +11,18 @@
 				</div>
 				<div class="trainer-block-info-wrapper">
 					
-					<h3>{{$name}}</h3>
+					<h4>{{$name}}</h4>
 					<h5>{{$speciality}}</h5>
-					<span>{{ HTML::image('/img/'.$gender.'.png', 'trainers gender')}}{{ $gender}}</span>
-					<span><strong>{{$age}}</strong> years old </span>
-					<span>member since {{$member_since}}</span>
-					<div class="expand-wrapper" id="trainer-block-info-about">
-						<p class="expand expand-short">{{  Str::limit($bio, 70)  }} <span>(read more)</span></p>
-						<p class="expand expand-full">{{ $bio }} <span>(read less)</span></p>
-					</div>
+					<span class="rating">Rating</span>
+					@if($orientation == 'portrait')
+							<p>{{ Str::limit($bio, 120) }}</p>
+					@else
+						<div class="expand-wrapper" id="trainer-block-info-about">					
+								<p class="expand expand-short">{{  Str::limit($bio, 70)  }} <span>(read more)</span></p>
+								<p class="expand expand-full">{{ $bio }}
+								 <span>(read less)</span></p>
+						</div>
+					@endif
 				</div>
 			</div>
 	@if(isset($orientation))

@@ -6,9 +6,17 @@ class TrainerBlockComposer {
   	{
   	  $viewdata = $view->getData();
 
-      $trainer = $viewdata['trainer'];
+      if (isset($viewdata['userTrainer'])) {
+        $userTrainer = $viewdata['userTrainer'];
+      }else{
+        $userTrainer = $viewdata['user'];
+      }
 
-  		$gender =  $trainer->gender;
+      
+
+      $orientation = $viewdata['orientation'];
+
+  		$gender =  $userTrainer->gender;
 
 
   		if ($gender == 0 ) {
@@ -19,17 +27,22 @@ class TrainerBlockComposer {
   			$gender = 'male';
   		}
 
-  		$dob =  $trainer->dob;
+  		$dob =  $userTrainer->dob;
 
   		$from = new DateTime($dob);
   		$to   = new DateTime('today');
   		$age  =  $from->diff($to)->y;
 
-  		$bio =  $trainer->bio;
+      $trainerDetails = $viewdata['trainer'];
 
-      $speciality = Speciality::find(4)->pluck(DB::raw("CONCAT(name, ' ', titles)"));
+  		$bio =  $trainerDetails->bio;
 
-		  JavaScript::put(array('initReadMore' => 1 )); // Initialise read more.
+      $speciality = Speciality::find($trainerDetails->specialities_id)->pluck(DB::raw("CONCAT(name, ' ', titles)"));
+
+      if ($orientation == 'landscape') {
+        JavaScript::put(array('initReadMore' => 1 )); // Initialise read more.
+      }
+		  
 
   		$view
         ->with('gender', $gender)
