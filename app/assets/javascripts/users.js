@@ -95,11 +95,10 @@ function initUsers()
 
 
     // Reset password
- 
     $( '#passwords_reset' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
-        // post to sontroller
+
         $.post(
             $( this ).prop( 'action' ),
             {
@@ -141,11 +140,65 @@ function initUsers()
         return false;
     });
 
+
     $('#userNewsletter').on('change', function () {
       this.value = this.checked ? 'yes' : 'no';
     }).change();
 }
 registerInitFunction(initUsers);
+
+function initChangePassword()
+{
+    // Change password
+    $( '#password_change' ).on( 'submit', function() {
+        $('.error-msg').remove();
+        $('input').removeClass('error');
+        var form = $(this);
+
+        $.post(
+            $( this ).prop( 'action' ),
+             $( this ).serialize(),
+            function( data ) {
+                trace("Sending data (reset password) ...");
+                if (data.validation_failed == 1)
+                {
+                    trace('loose');
+                    // show validation errors
+                    var arr = data.errors;
+                    var scroll = false;
+                    trace(arr);
+                    $.each(arr, function(index, value)
+                    {
+                        if (scroll == false) {
+                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
+                            scroll = true;
+                        };
+                        if (value.length != 0)
+                        {
+                           $("#" + index).addClass('error');
+                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
+                        }
+                    });
+                    $('#ajax-loading').hide();
+                }else{
+
+                    if (data['result'] == 'changed')
+                    {
+                        trace('success message showing');
+                        form.find('.success_msg').show();
+                    }
+                    setTimeout(function() {
+                        window.location.href = '';
+                    }, 300);
+                }
+            },
+            'json'
+        );
+        return false;
+    });
+}
+registerInitFunction(initChangePassword);
+
 
 function login(){
 

@@ -23,21 +23,12 @@
             {{ $errors->first('email', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.password', array('fieldname'=>'new_password', 'placeholder'=>'Choose a password', 'maxlength'=>20, 'confirmation'=> 'Please re-enter your password', 'label'=>'New password', 'fieldtext'=>'For increased security, please choose a password with a combination of lowercase, capital letters and numbers (but no symbols).'))
-        @if ($errors->has('password'))
-            {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
-        @endif
-
     	@include('form.select', array('fieldname'=>'gender', 'label'=>'gender', 'values'=>array(1=>'Male', 2=>'Female'), 'selected'=>$gender))
         {{-- 
         marketing preferences to be used in edit preferences
 
     	@include('form.checkbox', array('id' => 'userNewsletter', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.', 'default'=> ($marketingPreference=='yes') ))
         --}}
-        @include('form.password', array('fieldname'=>'old_password', 'placeholder'=>'Current password', 'maxlength'=>20, 'label'=>'Current password', 'fieldtext'=>'To change your settings, Please enter your current password.' , 'forgot' => 'I forgot my password'))
-        @if ($errors->has('password'))
-            {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
-        @endif
 
         @if(basename($user->image) != '')
             {{ Form::hidden( 'thumbFilename' , basename($user->image), array('id' => 'thumbFilename')) }}

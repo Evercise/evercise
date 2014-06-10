@@ -216,6 +216,7 @@ function initPut () {
       $('input').removeClass('error');
       // post to controller
       var url = $(this).attr('action');
+      var form = $(this);
       $.ajax({
           url: url,
           type: 'PUT',
@@ -224,7 +225,7 @@ function initPut () {
       })
       .done(
           function(data) {
-              trace("Sending data.....");
+              trace("PUT | Sending data.....");
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
@@ -246,8 +247,9 @@ function initPut () {
                   $('#ajax-loading').hide();
               }else{
                   // redirect to login page
-                  $('.success_msg').show();
+                  form.find('.success_msg').show();
                   trace("Updated: "+data);
+                  trace(form, true);
                   
                   setTimeout(function() {
                       window.location.href = '';

@@ -168,8 +168,37 @@ class SessionsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		Evercisesession::destroy($id);
+		$evercisesession = Evercisesession::find($id);
+		if ( !is_null($evercisesession) )
+		{
+			$evercisegroupId = $evercisesession->evercisegroup_id;
+			$dateTime = $evercisesession->date_time;
+			$price = $evercisesession->price;
+			$duration = $evercisesession->duration;
 
+			$undoDetails = ['mode'=>'delete', 'evercisegroup_id'=>$evercisegroupId, 'date_time'=>$dateTime, 'price'=>$price, 'duration'=>$duration];
+
+			Evercisesession::destroy($id);
+			return Response::json($undoDetails);
+		}
+		else
+		{
+			$undoDetails = json_decode(Input::get('undo'));
+
+			$session = Evercisesession::create(array(
+				'evercisegroup_id' => $undoDetails->evercisegroup_id,
+				'date_time' => $undoDetails->date_time,
+				'price' => $undoDetails->price,
+				'duration' => $undoDetails->duration
+			));
+
+			return Response::json(['mode' => 'undo', 'session_id' => $session->id]);
+		}
+
+		// TODO - refresh the session date_list on page load - to update id's
+		// ( to fix bug caused by cached page after back button)
+
+/*
 		$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $this->user->id)->get();
 		$sessionDates = array();
 		$totalMembers = array();
@@ -189,6 +218,7 @@ class SessionsController extends \BaseController {
 				->with('totalMembers' , $totalMembers )
 				->with('totalCapacity' , $totalCapacity )
 				->with('EGindex' , $EGindex );
+*/
 	}
 
 	public function getMailAll($id)

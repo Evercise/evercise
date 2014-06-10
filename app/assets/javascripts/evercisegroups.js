@@ -92,22 +92,39 @@ function initEvercisegroups()
 
     bindCalendar();
 
-    //$('.date-list a.session-delete').click(function(){
+    // Also doubles as undo function
     $(document).on('click','.session-delete', function(){
         var url = $(this).attr('href');
         var EGindex = $(this).attr('EGindex');
         //trace('EGindex: '+EGindex);
+
+        var id = $(this).attr('id');
+        var undo = $(this).data('undo');
+        trace('id: '+id);
         //trace("deleting session.. "+url);
         $.ajax({
             url: url,
             type: 'DELETE',
             dataType: 'html',
-            data: 'EGindex='+EGindex
+            data: 'EGindex='+EGindex+'&undo='+undo
         })
         .done(
             function(data) {
-                $('#date-list-'+EGindex).html(data);
-
+                //$('#date-list-'+EGindex).html(data);
+                var details = $.parseJSON(data);
+                if (details.mode == 'delete')
+                {
+                    $('#'+id).parent().addClass('session-undo');
+                    $('#'+id).html('undo');
+                    $('#'+id).data('undo', data);
+                }
+                else if (details.mode == 'undo')
+                {
+                    $('#'+id).parent().removeClass('session-undo');
+                    $('#'+id).attr('href', 'sessions/'+details.session_id);
+                    $('#'+id).html('x');
+                }
+                trace(data);
                 initChart('total-members-bookings-'+EGindex);
              }
         );

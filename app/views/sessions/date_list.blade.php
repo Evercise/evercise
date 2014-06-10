@@ -44,7 +44,7 @@
 	<ul>
 		@if (!empty($futureDates[$key]))
 			@foreach ($futureDates[$key] as $k => $futurevalue)
-			<li>{{ $futurevalue }} {{ HTML::link('sessions/' . $k , 'x',array('class' => 'session-delete',  'EGindex'=>$key)) }}</li>
+			<li>{{ $futurevalue }} {{ HTML::link('sessions/' . $k , 'x',array('class' => 'session-delete', 'id' => 'delete-session-'.$key.'-'.$k,  'EGindex'=>$key)) }}</li>
 				
 			@endforeach
 		@else

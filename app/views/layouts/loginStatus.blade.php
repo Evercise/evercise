@@ -1,4 +1,4 @@
-	<a href="{{ URL::route('trainers.show', $user->id ) }}">
+	<a href="{{ URL::route( $group . 's.edit', $user->id ) }}">
 		{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}
 	</a>
 	<li id="displayName" class="float-right">
