@@ -285,9 +285,17 @@ class EvercisegroupsController extends \BaseController {
 
 			$trainerDetails = $userTrainer->Trainer[0];
 
+			$members = [];
+			foreach ($evercisegroup->Evercisesession as $key => $value) {
+				$members[$key] = count($value['Sessionmembers']); // Count those members
+			}
+
+			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
+
 			return View::make('evercisegroups.show')
 						->with('evercisegroup',$evercisegroup)
 						->with('userTrainer',$userTrainer)
+						->with('members' , $members)
 						->with('trainer',$trainerDetails);
 		}
 		

@@ -336,4 +336,15 @@ class SessionsController extends \BaseController {
 		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
 	}
 
+	public function joinSessions()
+	{
+		$sessionId = json_decode(Input::get('session-ids'));
+
+		foreach ($sessionId  as $key => $value) {
+			var_dump($value);
+		}
+
+		//return var_dump($sessionId);
+	}
+
 }

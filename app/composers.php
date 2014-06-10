@@ -16,6 +16,7 @@ require 'composers/TrainerEditFormComposer.php';
 require 'composers/DonutChartComposer.php';
 require 'composers/ChangePasswordComposer.php';
 require 'composers/RefineComposer.php';
+require 'composers/CategoryBoxComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -33,3 +34,4 @@ View::composer('trainers.editForm', 'TrainerEditFormComposer');
 View::composer('widgets.donutChart', 'DonutChartComposer');
 View::composer('users.changepassword', 'ChangePasswordComposer');
 View::composer('evercisegroups.refine', 'RefineComposer');
+View::composer('evercisegroups.category_box', 'CategoryBoxComposer');

@@ -272,3 +272,55 @@ function initSwitchView(){
 registerInitFunction(initSwitchView);
 
 //1400235562274 
+
+function initJoinEvercisegroup()
+{
+    var total = 0;
+    var price = 0;
+    var sessions = [];
+
+    $(document).on('click','.btn-join-session',function(){
+        var sessionId = $(this).data('session');
+
+        var sessionPrice = $(this).data('price');
+
+        sessions.push(sessionId);
+        var session = JSON.stringify(sessions);
+
+        // add session id's to hidden  field in form
+        $('#session-ids').val(session);
+        // change button to undo button
+        $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
+        
+        ++total;
+
+        price = price + parseFloat(sessionPrice);
+
+        $('#total-sessions').html(total);
+        $('#total-price').html(price);
+    })
+
+    $(document).on('click','.undo-btn' , function(){
+        var sessionId = $(this).data('session');
+
+        var sessionPrice = $(this).data('price');
+        
+        $(this).replaceWith('<button data-price="'+sessionPrice+'" data-session="'+sessionId+'" class="btn-join-session btn btn-yellow">Join Session</button>')
+        
+
+        sessions = jQuery.grep(sessions, function(value) {
+          return value != sessionId;
+        });
+
+        var session = JSON.stringify(sessions);
+        
+        --total;
+
+        price = price - parseFloat(sessionPrice);
+
+        $('#total-sessions').html(total);
+        $('#total-price').html(price);
+    })
+}
+
+registerInitFunction(initJoinEvercisegroup);

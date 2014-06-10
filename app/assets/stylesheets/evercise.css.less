@@ -69,7 +69,7 @@ img{ max-width: 100%;}
 
 /* tags */
 
-h1{.font-size(3.5); .heading-font(500)}
+h1{.font-size(3.7); .heading-font(500); margin-bottom: 14px; color: #414141}
 h2{.font-size(3.1); .heading-font(500)}
 h3{.font-size(2.8); .heading-font(500)}
 h4{.font-size(2.3); .heading-font(500); margin-bottom: 14px;}
@@ -87,6 +87,9 @@ b{
 }
 i{
 	font-style: italic;
+}
+small{
+	.font-size(1.2);
 }
 
 li, strong{
@@ -180,7 +183,7 @@ label{
 	text-decoration: none;
 	border: 1px solid darken(@bk, 8%);
 	color: contrast(@bk, darken(@bk, lightness(@bk) ),lighten(@bk, (100 - lightness(@bk))), 50%);
-	.gradient (lighten(@bk, 15%), @bk);
+	.gradient (lighten(@bk, 10%), @bk);
 	width: @width;
 	.text-shadow(0 0px 1px contrast(@bk,lighten(@bk, (100 - lightness(@bk))), darken(@bk, lightness(@bk) ), 50%));
 	display: block;
@@ -200,9 +203,22 @@ label{
 .btn-fb{.btn(#3b5998,20);}
 .btn-blue{.btn(@blue);}
 .btn-red{.btn(@red);}
+.btn-green{.btn(@green);}
 .disabled{ 
 	pointer-events: none;
 	opacity: 0.65;
+}
+.undo-btn{
+	background: transparent;
+	border:none;
+	outline: none;
+	color: #867E7E;
+	cursor: pointer;
+	span{
+		float: right;
+		margin: 2px 0 0 5px;
+
+	}
 }
 
 
@@ -954,10 +970,14 @@ nav{
 /* session table */
 
 .session-table{
-	.column(12);
+	width: 100%;
+	float: left;
 	.font-size(1.4);
 	.session-list-controls{
 		padding-top:15px;
+	}
+	.undo-btn{
+		margin-top: -5px;
 	}
 	li{
 		.heading-font();
@@ -976,7 +996,7 @@ nav{
 			border-bottom: 2px solid @white;
 			border-right: 2px solid @white;
 			background: @yellow;
-			padding: 16px;
+			padding: 20px 0;
 			.main-font();
 			&:last-of-type{
 				border-right: 2px solid @yellow;
@@ -1095,6 +1115,23 @@ nav{
 				}
 
 			}
+		}
+	}
+	.session-total{
+		span{
+			.font-size(2.3);
+			display: inline-block;
+			.heading-font(400);
+			padding: 17px 0 4px;
+			&:first-of-type{
+				margin-right: 50px;
+			}
+		}
+		.btn{
+			width: 140px;
+			float: right;
+			margin-top: 24px;
+			display: inline-block;
 		}
 	}
 }
@@ -1427,10 +1464,21 @@ nav{
 	}
 }
 
+
+.category-box{
+	img.category-image{
+		height: 30px;
+		margin: 0 10px -9px 0;
+	}
+	span{
+		.font-size(1.4);
+	}
+}
+
 /* class page  */
 
 #class-trainer-wrapper{
-	margin-top: -50px;
+	margin: -50px 0 0 20px ;
 }
 
 .class-nav{
@@ -1443,17 +1491,31 @@ nav{
 		float: left;
 		font-weight: 500;
 		padding: 19px;
+		cursor: pointer;
 	}
 	&:after{
 			position: absolute;
 			bottom: -1px;
-			left: -20px;
+			left: -10px;
 			height: 1px;
-			width: 20px;
+			width: 10px;
 			display: inline-block;
 			content: '';
 			border-bottom: 1px solid @grey;
 		}
+}
+
+.class-wrap{
+	margin-left: 10px;
+	.box-sizing();
+	border-bottom: 1px solid @grey;
+	padding: 20px 10px 20px 0;
+	width: 100%;
+	float: left;
+	position: relative;
+	.btn-join-session{
+		margin-top: -16px;
+	}
 }
 
 
