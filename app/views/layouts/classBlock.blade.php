@@ -1,6 +1,6 @@
 <div class="class-block">
 	<div class="class-block-img-wrap">
-		<a href="evercisegroups/{{ $evercisegroupId}}">
+		<a href="{{ URL::to('evercisegroups/'.$evercisegroupId) }}">
 			{{ HTML::image($image, 'class image', array('class' => 'class-block-img')); }}
 		</a> 
 	</div>

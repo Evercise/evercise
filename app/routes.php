@@ -74,7 +74,7 @@ Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'everciseg
 Route::post('/evercisegroups/delete_evercisegroups/{id}', array('as' => 'evercisegroups.delete_evercisegroups', 'uses' => 'EvercisegroupsController@deleteEG'));
 /* geo evercise groups for searching */
 
-Route::get('/evercisegroups/search/{id}', array('as' => 'evercisegroups.searchEg', 'uses' => 'EvercisegroupsController@searchEg'));
+Route::get('/evercisegroups/search/{id}', array('as' => 'evercisegroups.search', 'uses' => 'EvercisegroupsController@searchEg'));
 
 Route::get('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll'));
 Route::post('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll'));
