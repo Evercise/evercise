@@ -17,6 +17,7 @@ require 'composers/DonutChartComposer.php';
 require 'composers/ChangePasswordComposer.php';
 require 'composers/RefineComposer.php';
 require 'composers/CategoryBoxComposer.php';
+require 'composers/VenueComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -35,3 +36,4 @@ View::composer('widgets.donutChart', 'DonutChartComposer');
 View::composer('users.changepassword', 'ChangePasswordComposer');
 View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
+View::composer('layouts.venue', 'VenueComposer');

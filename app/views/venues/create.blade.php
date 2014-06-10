@@ -1,1 +1,8 @@
-C:\Users\Tris\www\evercise\app/views/venues/create.blade.php
+@extends('layouts.master')
+
+
+@section('content')
+
+	@include('layouts.venue')
+
+@stop

@@ -14,13 +14,14 @@ class CreateVenuesTable extends Migration {
 	{
 		Schema::create('venues', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('name');
-			$table->string('adress');
-			$table->string('town');
-			$table->string('postcode');
-			$table->integer('lat');
-			$table->integer('lng');
-			$table->string('image');
+			$table->integer('user_id')->unsigned();// Foreign key;
+			$table->string('name', 45);
+			$table->string('address', 45);
+			$table->string('town', 45);
+			$table->string('postcode', 45);
+			$table->decimal('lat', 10, 8);
+			$table->decimal('lng', 11, 8);
+			$table->string('image', 45);
 			$table->timestamps();
 		});
 	}
