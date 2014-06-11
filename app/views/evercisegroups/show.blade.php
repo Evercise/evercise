@@ -19,11 +19,16 @@
 		</ul>
 		<div class="class-wrap" id="description">
 			<h1>{{ $evercisegroup->name }}</h1>
-			<p>{{ $evercisegroup->description }}</p>
-			<br>
-			<br>
-			<br>
+			<div class="share-wrap">
+				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->facebook()  }}"  class="btn">{{ HTML::image('img/fb-share.png','share on facebook', array('class' => 'share-btn')) }}</a>
+				<a  class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
+				<a  class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
+			</div>
+			
 			@include('evercisegroups.category_box', array('category' =>  $evercisegroup->category_id))
+			<br>
+			<p>{{ $evercisegroup->description }}</p>
+						
 		</div>
 		<div class="class-wrap" id="sessions">
 			<h4>Sessions</h4>
@@ -53,7 +58,7 @@
 						<span>Total Price: &pound;<span id="total-price">0.00</span></span>
 						{{ Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')) }}
 						{{ Form::hidden( 'session-ids' , null, array('id' => 'session-ids')) }}
-						{{ Form::submit('Pay Now' , array('class'=>'btn btn-green')) }}
+						{{ Form::submit('Checkout' , array('class'=>'btn btn-green')) }}
 					{{ Form::close() }}
 				</div>
 			</div>
