@@ -197,7 +197,12 @@ label{
 	}
 }
 
-
+.btn{
+	background: transparent;
+	border:none;
+	outline: none;
+	cursor: pointer;
+}
 .btn-yellow{.btn(@yellow);}
 .btn-darkyellow{.btn(@darkYellow);}
 .btn-fb{.btn(#3b5998,20);}
@@ -208,7 +213,7 @@ label{
 	pointer-events: none;
 	opacity: 0.65;
 }
-.undo-btn{
+.undo-btn,.undo-btn-reverse{
 	background: transparent;
 	border:none;
 	outline: none;
@@ -976,8 +981,11 @@ nav{
 	.session-list-controls{
 		padding-top:15px;
 	}
-	.undo-btn{
+	.undo-btn,.undo-btn-reverse{
 		margin-top: -5px;
+	}
+	.btn-join-session,.btn-cancel-session {
+		margin-top: -16px;
 	}
 	li{
 		.heading-font();
@@ -1466,6 +1474,7 @@ nav{
 
 
 .category-box{
+	margin: 20px 0;
 	img.category-image{
 		height: 30px;
 		margin: 0 10px -9px 0;
@@ -1513,8 +1522,16 @@ nav{
 	width: 100%;
 	float: left;
 	position: relative;
-	.btn-join-session{
-		margin-top: -16px;
+	h1{
+		display: inline-block;
+	}
+	.share-wrap{
+		display: inline-block;
+		float: right;
+		padding-top: 8px;
+		.share-btn{
+			margin-left: 20px;
+		}
 	}
 }
 

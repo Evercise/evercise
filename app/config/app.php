@@ -115,6 +115,7 @@ return array(
 		'Gloudemans\Calendar\CalendarServiceProvider',
 		'Toin0u\Geotools\GeotoolsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
+		'Thujohn\Share\ShareServiceProvider',
 	),
 
 	/*
@@ -186,6 +187,7 @@ return array(
 		'Calendar'        => 'Gloudemans\Calendar\Facades\Calendar',
 		'Geotools' 		  => 'Toin0u\Geotools\GeotoolsFacade',
 		'PDF' 			  => 'Barryvdh\DomPDF\Facade',
+		'Share' 		  => 'Thujohn\Share\ShareFacade',
 	),
 
 );

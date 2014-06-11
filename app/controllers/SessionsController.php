@@ -336,15 +336,53 @@ class SessionsController extends \BaseController {
 		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
 	}
 
+	/*
+	*
+	*
+	* confirmation for join sessions
+	*/
+
 	public function joinSessions()
 	{
-		$sessionId = json_decode(Input::get('session-ids'));
+		$evercisegroupId = Input::get('evercisegroup-id');
+		$sessionIds = json_decode(Input::get('session-ids'), true);
 
-		foreach ($sessionId  as $key => $value) {
-			var_dump($value);
-		}
 
+		$evercisegroup = Evercisegroup::with(array('evercisesession.sessionmembers' => function($query) use (&$sessionIds)
+		{
+
+			$query->whereIn('id', $sessionIds);
+
+		}))->find($evercisegroupId);
+
+
+
+		$userTrainer = User::find($evercisegroup->user_id);
+
+		$members = [];
+		$total = 0;
+		$price = 0;
+	    foreach ($evercisegroup->evercisesession as $key => $value)
+	    {
+			$members[] = count($value->sessionmembers); // Count those members
+			++$total;
+			$price = $price + $value->price;
+	    }
+
+	    JavaScript::put(array('initJoinEvercisegroup' => json_encode(array('sessions'=> $sessionIds,'total' => $total,'price' => $price)) ));
+
+		return View::make('sessions.join')
+					->with('evercisegroup' , $evercisegroup)
+					->with('members' , $members)
+					->with('userTrainer' , $userTrainer)
+					->with('totalPrice' , $price)
+					->with('totalSessions' , $total)
+					->with('sessionIds' , $sessionIds);
 		//return var_dump($sessionId);
+	}
+
+	function payForSessions(){
+		return ' whomp';
 	}
 
 }

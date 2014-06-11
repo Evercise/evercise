@@ -345,13 +345,14 @@ class UsersController extends \BaseController {
 				'gender' => $gender,
 				'image' => $image,
 			));
-
+			/*
 			$savedNewsletter = User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
 			if ($newsletter != $savedNewsletter)
 			{
 				User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->detach();
 				User::find($this->user->id)->marketingpreferences()->attach($newsletter == 'yes' ? true : false);
 			}
+			*/
 
 			return Response::json();
 

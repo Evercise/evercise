@@ -273,13 +273,21 @@ registerInitFunction(initSwitchView);
 
 //1400235562274 
 
-function initJoinEvercisegroup()
+function initJoinEvercisegroup(params)
 {
-    var total = 0;
-    var price = 0;
-    var sessions = [];
 
-    $(document).on('click','.btn-join-session',function(){
+    if (JSON.parse(params) != '1') {
+        var params = JSON.parse(params);
+        var sessions = params.sessions;
+        var total =  params.total;
+        var price =  params.price;
+    }else{
+       var sessions = []; 
+        var total = 0;
+        var price = 0;
+    }
+
+    $(document).on('click','.btn-join-session,.undo-btn-reverse',function(){
         var sessionId = $(this).data('session');
 
         var sessionPrice = $(this).data('price');
@@ -289,8 +297,13 @@ function initJoinEvercisegroup()
 
         // add session id's to hidden  field in form
         $('#session-ids').val(session);
-        // change button to undo button
-        $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
+        // change button to undo button depending on existing button
+
+        if($(this).attr('class') == 'undo-btn-reverse'){
+           $(this).replaceWith('<button data-price="'+sessionPrice+'" data-session="'+sessionId+'" class="btn-cancel-session btn btn-red">Cancel</button>');
+        }else{
+          $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');  
+        }
         
         ++total;
 
@@ -313,6 +326,35 @@ function initJoinEvercisegroup()
         });
 
         var session = JSON.stringify(sessions);
+
+        // add session id's to hidden  field in form
+        $('#session-ids').val(session);
+        
+        --total;
+
+        price = price - parseFloat(sessionPrice);
+
+        $('#total-sessions').html(total);
+        $('#total-price').html(price);
+    })
+
+    $(document).on('click','.btn-cancel-session' , function(){
+        var sessionId = $(this).data('session');
+
+        var sessionPrice = $(this).data('price');
+        
+        $(this).replaceWith('<button class="undo-btn-reverse" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
+
+        sessions = jQuery.grep(sessions, function(value) {
+          return value != sessionId;
+        });
+
+        
+
+        var session = JSON.stringify(sessions);
+
+        // add session id's to hidden  field in form
+        $('#session-ids').val(session);
         
         --total;
 
