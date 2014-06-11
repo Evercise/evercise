@@ -14,6 +14,6 @@ class Venue extends \Eloquent {
 
 	public function Facilities()
 	{
-		return $this->belongsToMany('Facility', 'venue_facilities', 'venue_id', 'facility_id');
+		return $this->belongsToMany('Facility', 'venue_facilities', 'venue_id', 'facility_id')->withTimestamps();
 	}
 }

@@ -97,7 +97,7 @@ class EvercisegroupsController extends \BaseController {
 
         JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
-		JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
 		return View::make('evercisegroups.create')->with('categories', $categories);
 	}
@@ -119,8 +119,8 @@ class EvercisegroupsController extends \BaseController {
 				'maxsize' => 'required|numeric|between:1,1000',
 				'price' => 'required|numeric|between:1,120',
 				'image'	=> 'required',
-				'lat' => 'required',
-				'long' => 'required',
+				// 'lat' => 'required',
+				// 'long' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -148,11 +148,12 @@ class EvercisegroupsController extends \BaseController {
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
 			$image = Input::get('image');
-			$address = Input::get('address');
-			$city = Input::get('city');
-			$postcode = Input::get('postcode');
-			$lat = Input::get('lat');
-			$lng = Input::get('long');
+			// $address = Input::get('address');
+			// $city = Input::get('city');
+			// $postcode = Input::get('postcode');
+			// $lat = Input::get('lat');
+			// $lng = Input::get('long');
+			$venue = Input::get('venue');
 
 			if ( ! Sentry::check()) return 'Not logged in';
 			
@@ -169,11 +170,12 @@ class EvercisegroupsController extends \BaseController {
 				'capacity'=>$maxsize,
 				'default_price'=>$price,
 				'image' => $image,
-				'address'=>$address,
-				'town'=>$city,
-				'postcode'=>$postcode,
-				'lat'=>$lat,
-				'lng' => $lng
+				// 'address'=>$address,
+				// 'town'=>$city,
+				// 'postcode'=>$postcode,
+				// 'lat'=>$lat,
+				// 'lng' => $lng
+				'venue_id' => $venue,
 			));
 
 			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));

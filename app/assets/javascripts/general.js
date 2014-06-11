@@ -22,6 +22,7 @@ function registerInitFunction(f, always)
 // Loop through Laracasts, and run the ones that match a registered function
 jQuery( document ).ready( function( $ )
 {
+  var initLog = [];
   if(typeof laracasts !== 'undefined')
   {
     for(var l in laracasts){
@@ -31,7 +32,7 @@ jQuery( document ).ready( function( $ )
        initFunctions.forEach(function(f) {
         if (f.name == name)
         {
-           trace('RUNNING: '+name+' : '+laracasts[l]);
+           initLog.push('RUNNING: '+name+' : '+laracasts[l]);
            f.run(laracasts[l]);
         }
       });
@@ -43,9 +44,10 @@ jQuery( document ).ready( function( $ )
     if(f.always)
     {
         f.run(f.name);
-        //trace("always: "+f.name);
+        //initLog.push("always: "+f.name);
     }
   });
+  trace(initLog, true);
 
 
 /*	$('select').each(function(){

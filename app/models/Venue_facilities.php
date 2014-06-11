@@ -1,6 +1,6 @@
 <?php
 
-class Venue extends \Eloquent {
+class Venue_facilities extends \Eloquent {
 
 	protected $fillable = array('venue_id', 'facility_id');
 

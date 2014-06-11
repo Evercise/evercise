@@ -41,7 +41,7 @@
 				<br>
 				<br>
 				<br>
-    			@include('users.edit_form', array())
+    			{{-- @include('users.edit_form', array()) --}}
 			@endif
 
 			@if($activation >= 2)

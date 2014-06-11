@@ -1,1 +1,2 @@
-C:\Users\Tris\www\evercise\app/views/venues/index.blade.php
+
+	@include('form.select', array('fieldname'=>'venue', 'label'=>'Venue', 'values'=>$venues ))

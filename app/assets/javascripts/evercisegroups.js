@@ -29,11 +29,12 @@ function initEvercisegroups()
                 "maxsize": $( '#maxsize' ).val(),
                 "price": $( '#price' ).val(),
                 "image": $( '#thumbFilename' ).val(),
-                "address": $( '#street' ).val() + ' '+ $( '#street' ).val(),
-                "city": $( '#city' ).val(),
-                "postcode": $( '#postcode' ).val(),
-                "lat": $( '#latbox' ).val(),
-                "long": $( '#lngbox' ).val()
+                // "address": $( '#street' ).val() + ' '+ $( '#street' ).val(),
+                // "city": $( '#city' ).val(),
+                // "postcode": $( '#postcode' ).val(),
+                // "lat": $( '#latbox' ).val(),
+                // "long": $( '#lngbox' ).val()
+                "venue": $( '#venue' ).val()
             },
             function( data ) {
                 if (data.validation_failed == 1)
