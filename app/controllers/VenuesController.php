@@ -59,7 +59,7 @@ class VenuesController extends \BaseController {
 			$venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
 		}
 
-		return Response::json(['success' => 'true']);
+		return Response::json(['venue_id' => $venue->id]);
 	}
 
 	/**

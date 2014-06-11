@@ -36,4 +36,4 @@ View::composer('widgets.donutChart', 'DonutChartComposer');
 View::composer('users.changepassword', 'ChangePasswordComposer');
 View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
-View::composer('layouts.venue', 'VenueComposer');
+View::composer('venues.select', 'VenueComposer');

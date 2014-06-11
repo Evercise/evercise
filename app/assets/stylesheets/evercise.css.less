@@ -336,6 +336,17 @@ label{
 		width: 90%;
 		margin-bottom: 20px;
 	}
+	
+	.facilities{
+		li{
+			float: left;
+			width: 33%;
+			.facility_checkbox, label, img{
+				float: left;
+				width: 30%;
+			}
+		}
+	}
 }
 
 /* end forms */
@@ -1932,4 +1943,8 @@ footer{
 	background: url('/img/transparent_mask.png') repeat scroll 0 0 transparent;
 	opacity: 1;
 	z-index: 9998;
+}
+
+#venue_create_form{
+	display: none;
 }

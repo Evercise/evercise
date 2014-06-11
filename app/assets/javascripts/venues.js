@@ -2,35 +2,36 @@
 function initVenues()
 {
 	$( '#new_venue_button' ).on( 'click', function() {
-		trace('new venue button');
+		//trace($('#venue_create_form').css('display'));
 
-        getView('../venues/create', function(data){
-        	$('#venue_create_form').html(data);
-        	MapWidgetloadScript();
-        });
+		if ($('#venue_create_form').css('display') == 'block')
+		{
+			$('#new_venue_button').html('Create new Venue');
+        	$('#venue_create_form').slideToggle(1000);
+		}
+		else
+		{
+			$('#new_venue_button').html('Cancel');
 
-        /*var url = '../venues/create';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'html'
-        })
-        .done(
-            function(data) {
-                //trace('data: '+ data);
-                $('#venue_create_form').html(data);
-                MapWidgetloadScript(); // Initialise map js after map widget has been placed
-             }
-        );
-
-        return false;*/
+			if ($('#venue_create_form').html() == '')
+			{
+		        getView('../venues/create', function(data){
+		        	MapWidgetloadScript();
+		        	$('#venue_create_form').html(data);
+		        	$('#venue_create_form').slideToggle(1000);
+		        });
+		    }
+		    else
+		    {
+				$('#venue_create_form').slideToggle(1000);
+			}
+	    }
 	});
 
 	$( '#venue_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
         // post to controller
-        trace("venue create");
         $.post(
             $( this ).prop( 'action' ),
             $( this ).serialize(),
@@ -42,7 +43,7 @@ function initVenues()
                     var scroll = false;
                     $.each(arr, function(index, value)
                     {
-                        trace(value);
+                        //trace(value);
                         if (scroll == false) {
                             $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                             scroll = true;
@@ -55,13 +56,19 @@ function initVenues()
                     });
                     $('#ajax-loading').hide();
                 }else{
-                	trace(data.success);
+                	//trace(data.venue_id);
                    // $('.success_msg').show();
                     setTimeout(function() {
-                        $('#venue_create_form').html('');
+        				$('#venue_create_form').slideToggle(1000, function(){
+        					$('#venue_create_form').hide();
+                        	$('#venue_create_form').html('');
+                        });
+                        // Refresh Venues dropdown
                         getView('../venues', function(data1){
 				        	$('#venue_select').html(data1);
-				        	MapWidgetloadScript();
+				        	//trace(data.venue_id);
+                			$('#venue').val(data.venue_id);
+                			$('#new_venue_button').html('Create new Venue');
 				        });
                     }, 1000);
                 }
@@ -75,7 +82,6 @@ registerInitFunction(initVenues);
 
 function getView(url, callback)
 {
-    //var url = '../venues/create';
     $.ajax({
         url: url,
         type: 'GET',
@@ -83,12 +89,6 @@ function getView(url, callback)
     })
     .done(
         function(data) {
-            //trace('data: '+ data);
-            //$('#venue_create_form').append(data);
-            //MapWidgetloadScript();
-            //trace('get venue select');
-            //trace(data);
-            //$(selector).html(data);
             callback(data);
          }
     );
