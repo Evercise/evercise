@@ -244,7 +244,7 @@ function DiscoverMapWidgetInit() {
 }
 
 function MapWidgetloadScript(params) {
-
+  params = params ? params : 1;
 
   var func = 'MapWidgetInit';
   params = JSON.parse(params);

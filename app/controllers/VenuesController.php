@@ -9,7 +9,8 @@ class VenuesController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+  		$venues = Venue::where('user_id', $this->user->id)->lists('name', 'id');
+		return View::make('venues.index')->with('venues', $venues);
 	}
 
 	/**
@@ -20,9 +21,8 @@ class VenuesController extends \BaseController {
 	public function create()
 	{
 
-		JavaScript::put(array('initEverciseGroups ' => 1 ));
-		JavaScript::put(array('MapWidgetloadScript ' => 1 ));
-		return View::make('venues.create');
+  		$facilities = Facility::get();
+		return View::make('venues.create')->with('facilities', $facilities);
 	}
 
 	/**
@@ -50,15 +50,13 @@ class VenuesController extends \BaseController {
 			$lat = Input::get('latbox');
 			$lng = Input::get('lngbox');
 
-			$facilities = Input::get('facilities_array');
+			$facilities = Input::get('facilities_array') ? Input::get('facilities_array') : [];
+
 			//return Response::json(['success' => $facilities]);
 
 			$venue = Venue::create(['user_id' => $this->user->id, 'name' => $venue_name, 'address' => $address, 'town' => $town, 'postcode' => $postcode, 'lat' => $lat, 'lng' => $lng]);
-			/*foreach ($facilities as $facility)
-			{
-				$venue->facilities()->attach($facility);
-			}*/
-			$venue->facilities()->sync($facilities);
+			
+			$venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
 		}
 
 		return Response::json(['success' => 'true']);
