@@ -388,7 +388,7 @@ class SessionsController extends \BaseController {
 		/* get currnet user */
 		$u = User::find($this->user->id);
 		/*pivot current user with session via session members */
-		$u->sessions()->sync($sessionIds);
+		$u->sessions()->attach($sessionIds);
 		/* create confirmation view */
 		$evercisegroupId = Input::get('evercisegroup-id');
 

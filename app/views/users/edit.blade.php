@@ -9,7 +9,7 @@
 				<ul>
 					<li data-view="profile" class="selected">Edit profile</li>
 					<li data-view="password">Change Password</li>
-					<li data-view="history">History Stats</li>
+					<li data-view="classes">Classes</li>
 				</ul>
 			</div>
 
@@ -24,9 +24,9 @@
 					@include('users.changepassword')
 				</div>
 
-				<div id="history" class="dashboard-block">
-					<div class="dashboard-header"><h3>History Stats</h3></div>
-					@include('users.history')
+				<div id="classes" class="dashboard-block">
+					<div class="dashboard-header"><h3>Classes</h3></div>
+					@include('users.classes')
 				</div>
 				
 				
