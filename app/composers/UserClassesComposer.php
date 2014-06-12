@@ -33,40 +33,41 @@ class UserClassesComposer {
 		{
 		    $query->where('user_id', $userId);
 
-		})->get();
-
-	    $members = [];
-		$group_ids = [];
-		foreach ($sessions as $session_id => $session)
-		{
-			if (!in_array($session->evercisegroup_id, $group_ids))
-			{
-				$group_ids[] = $session->evercisegroup_id;
-			}
-			$members[$session->id] = count($session->sessionmembers); // Count those members
-		}
-
-
-        $groups = Evercisegroup::with('Evercisesession.Sessionmembers')
-        ->whereIn('id', $group_ids)
-	    ->get();
-
-		// var_dump($evercisegroups[1]->evercisesession);
-		// exit;
-
+		})->orderBy('date_time', 'asc')->get();
 
 		$groupsWithKeys = [];
-		foreach ($groups as $key => $group)
+	    $members = [];
+		$group_ids = [];
+		if($sessions->count())
 		{
-			$groupsWithKeys[$group->id] = $group;
+				foreach ($sessions as $session_id => $session)
+				{
+					if (!in_array($session->evercisegroup_id, $group_ids))
+					{
+						$group_ids[] = $session->evercisegroup_id;
+					}
+					$members[$session->id] = count($session->sessionmembers); // Count those members
+				}
 
-			/*foreach ($group->evercisesession as $evercisesession_id => $evercisesession)
-			{
-				$members[$group->id][] = count($evercisesession->sessionmembers); // Count those members
-			}*/
+
+		        $groups = Evercisegroup::with('Evercisesession.Sessionmembers')
+		        ->whereIn('id', $group_ids)
+			    ->get();
+
+				// var_dump($evercisegroups[1]->evercisesession);
+				// exit;
+
+
+				foreach ($groups as $key => $group)
+				{
+					$groupsWithKeys[$group->id] = $group;
+
+					/*foreach ($group->evercisesession as $evercisesession_id => $evercisesession)
+					{
+						$members[$group->id][] = count($evercisesession->sessionmembers); // Count those members
+				}*/
+			}
 		}
-
-
   		$view->with('groups', $groupsWithKeys)
 	  		 ->with('sessions', $sessions)
 	  		 ->with('members', $members);

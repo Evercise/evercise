@@ -25,7 +25,7 @@
 						<div class="half">
 							<strong>
 								@if(isset($members[$session->id]))
-									{{ count($members[$session->id])}}
+									{{ $members[$session->id] }}
 								@else
 								 	0
 								@endif
