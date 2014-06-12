@@ -135,6 +135,7 @@ function DiscoverMapWidgetInit() {
 
 
   var everciseGroups = JSON.parse($('#places').val());
+  trace(everciseGroups, true);
 
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>Your search returned 0 results, please refine your search');

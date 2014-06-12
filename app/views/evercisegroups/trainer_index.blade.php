@@ -45,7 +45,7 @@
 					
 				</div>
 				<div class="class-hub-block">
-					@include('layouts.classBlock', array('evercisegroupId' => $value['id'],'title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],  'distance' => $miles[$key], 'default_price' => $value['default_price'], 'default_size' => $value['capacity'] ))
+					@include('layouts.classBlock', array('evercisegroupId' => $value['id'],'title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],   'default_price' => $value['default_price'], 'default_size' => $value['capacity'] ))
 				</div>
 			</div>
 			<hr>

@@ -19,7 +19,7 @@
 			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups))
 		</div>
 		<div id="list" class="discover-view tab-view">
-			@include('evercisegroups.discover_classes_list', array('classes' => $evercisegroups))
+			{{--@include('evercisegroups.discover_classes_list', array('classes' => $evercisegroups))--}}
 		</div>
 		
 	</div>

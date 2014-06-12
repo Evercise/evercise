@@ -21,8 +21,8 @@
 			<h1>{{ $evercisegroup->name }}</h1>
 			<div class="share-wrap">
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->facebook()  }}"  class="btn">{{ HTML::image('img/fb-share.png','share on facebook', array('class' => 'share-btn')) }}</a>
-				<a  class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
-				<a  class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
+				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
+				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
 			</div>
 			
 			@include('evercisegroups.category_box', array('category' =>  $evercisegroup->category_id))
@@ -125,14 +125,48 @@
 					<button  data-view="participant" id="participant-btn" class="icon-btn btn">Participants</button>
 				</div>
 				<div id="review" class="tab-view selected">
-					ratings to be added
+					<strong>Overall Rating</strong>
+					<br>
+					<br>
+					<br>
+					<div class="rating-wrap">
+						
+						@foreach ($ratings as $key => $rating) 
+							<div class="rating-row">
+
+								
+								<div class="rating-block">
+									{{ HTML::image('profiles/'.$rating->user->directory.'/'.$rating->user->image,  $rating->user->display_name  , array('title' => $rating->user->display_name ,'class' => 'user-icon')) }}
+									{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}
+
+
+									<span>
+									<div class="star_wrap">
+										@for ($i = 0; $i < $rating->stars; $i++)
+											{{ HTML::image('img/yellow_star.png', 'stars' , array('class' => 'star-icons')) }}
+										@endfor
+										@for ($i = $rating->stars; $i < 5; $i++)
+											{{ HTML::image('img/yellow_emptystar.png', 'stars' , array('class' => 'star-icons')) }}
+
+										@endfor
+									</div>
+									
+
+
+									<strong>  {{ $rating->user->display_name }}</strong> on {{ date('d/m/Y' , strtotime($rating->created_at))}} </span>
+									<p>{{ $rating->comment}}</p> 
+								</div>
+							</div>
+
+						@endforeach
+					</div>
 				</div>
 				<div id="participant" class="tab-view">
 					
 
-					{{--@foreach ($memberUsers as $key => $memberUser)
-						{{ $memberUser->display_name }}
-					@endforeach--}}
+					@foreach ($memberUsers as $key => $memberUser)
+						{{ HTML::image('profiles/'.$memberUser->directory.'/'.$memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+					@endforeach
 				</div>
 			</div>
 		</div>

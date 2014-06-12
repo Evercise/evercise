@@ -30,7 +30,7 @@
 			</div>
 		@elseif(isset($default_size))
 			<div class="class-block-stat">
-				<strong>0 /{{$default_size}}</strong>
+				<strong>{{$default_size}}</strong>
 				<span>class size</span>
 			</div>
 		@endif

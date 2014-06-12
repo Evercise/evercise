@@ -11,6 +11,11 @@ class Venue extends \Eloquent {
 	 */
 	protected $table = 'venues';
 
+	public function evercisegroup()
+    {
+        return $this->hasMany('Evercisegroup');
+    }
+
 
 	public function Facilities()
 	{
