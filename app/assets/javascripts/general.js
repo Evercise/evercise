@@ -65,6 +65,23 @@ jQuery( document ).ready( function( $ )
 */  
 });
 
+function getView(url, callback)
+{
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'html'
+    })
+    .done(
+        function(data) {
+            callback(data);
+         }
+    );
+
+    return false;
+}
+
+
 function trace(message, debug)
 {
   if (debug == true)

@@ -12,9 +12,11 @@
 			<ul class='facilities'>
 				@foreach ($facilities as $f_key => $facility) 
 					<li>
+						<div>
 						{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => $facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
+						{{Form::label('facilities_array[]', $facility->name, array('id'=>'fac_check'))}}
+						</div>
 						{{ HTML::image('img/facility/'.$facility->image, $facility->image) }}
-						{{ Form::label( $facility->name, $facility->name) }}
 					</li>
 				@endforeach
 			</ul>

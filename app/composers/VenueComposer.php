@@ -13,7 +13,7 @@ class VenueComposer {
 
   		$facilities = Facility::get();
 
-		JavaScript::put(array('initVenues ' => 1 ));
+		JavaScript::put(array('initVenues' => 1 ));
 		//JavaScript::put(array('MapWidgetloadScript ' => 1 ));
   		$view->with('venues', $venues)->with('facilities', $facilities);
   	}

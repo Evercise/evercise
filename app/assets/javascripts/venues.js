@@ -1,6 +1,7 @@
 
 function initVenues()
 {
+	trace('initVenues');
 	$( '#new_venue_button' ).on( 'click', function() {
 		//trace($('#venue_create_form').css('display'));
 
@@ -18,7 +19,8 @@ function initVenues()
 		        getView('../venues/create', function(data){
 		        	MapWidgetloadScript();
 		        	$('#venue_create_form').html(data);
-		        	$('#venue_create_form').slideToggle(1000);
+		        	$('#venue_create_form').slideToggle(1000/*, function(){initCheckboxes();}*/);
+		        	
 		        });
 		    }
 		    else
@@ -80,18 +82,3 @@ function initVenues()
 }
 registerInitFunction(initVenues);
 
-function getView(url, callback)
-{
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'html'
-    })
-    .done(
-        function(data) {
-            callback(data);
-         }
-    );
-
-    return false;
-}

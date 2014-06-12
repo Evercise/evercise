@@ -18,6 +18,7 @@ require 'composers/ChangePasswordComposer.php';
 require 'composers/RefineComposer.php';
 require 'composers/CategoryBoxComposer.php';
 require 'composers/VenueComposer.php';
+require 'composers/UserHistoryComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -37,3 +38,4 @@ View::composer('users.changepassword', 'ChangePasswordComposer');
 View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('venues.select', 'VenueComposer');
+View::composer('users.history', 'UserHistoryComposer');
