@@ -78,6 +78,7 @@ function MapWidgetInit() {
         if(typeof laracasts.latitude !== 'undefined')
         {
         	var latitude = laracasts.latitude;
+          trace(latitude);
         }
 
         if(typeof laracasts.latitude !== 'undefined')

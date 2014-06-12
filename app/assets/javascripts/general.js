@@ -292,3 +292,15 @@ function initPlayVideo(){
 }
 
 registerInitFunction(initPlayVideo);
+
+function initSwitchView(){
+    $(document).on('click','.icon-btn', function(){
+        $('.icon-btn').removeClass('selected');
+        $(this).addClass('selected');
+        var view = $(this).data('view')
+        $('.tab-view').removeClass('selected');
+        $('#'+view).addClass('selected');
+    })
+}
+
+registerInitFunction(initSwitchView);

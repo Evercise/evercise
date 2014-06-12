@@ -15,10 +15,10 @@
 			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
 			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
 		</div>
-		<div id="grid" class="discover-view selected">
+		<div id="grid" class="discover-view tab-view selected">
 			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups))
 		</div>
-		<div id="list" class="discover-view">
+		<div id="list" class="discover-view tab-view">
 			@include('evercisegroups.discover_classes_list', array('classes' => $evercisegroups))
 		</div>
 		

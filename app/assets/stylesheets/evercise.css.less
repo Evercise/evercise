@@ -73,7 +73,7 @@ h1{.font-size(3.7); .heading-font(500); margin-bottom: 14px; color: #414141}
 h2{.font-size(3.1); .heading-font(500)}
 h3{.font-size(2.8); .heading-font(500)}
 h4{.font-size(2.3); .heading-font(500); margin-bottom: 14px;}
-h5{.font-size(2.0); .heading-font()}
+h5{.font-size(2.0); .heading-font(400)}
 h6{.font-size(1.6); .heading-font(400)}
 
 p,a{
@@ -94,6 +94,10 @@ small{
 
 li, strong{
 	.font-size(1.6);
+}
+
+strong{
+	font-weight: 500;
 }
 
 hr{
@@ -1152,6 +1156,7 @@ nav{
 			display: inline-block;
 			.heading-font(400);
 			padding: 17px 0 4px;
+			color: #414141;
 			&:first-of-type{
 				margin-right: 50px;
 			}
@@ -1553,6 +1558,82 @@ nav{
 		.share-btn{
 			margin-left: 20px;
 		}
+	}
+	.venue-details{
+		float: left;
+		width: 33.33333%;
+	}
+	.class-map-wrap{
+		float: left;
+		width: 66.67%;
+		.map-wrapper{
+			height: 320px;
+		}
+	}
+	hr{
+		border:none;
+		border-bottom: 1px dashed @grey;
+		margin: 29px 0 23px;
+		float: left;
+		width: 100%;
+	}
+}
+
+.facilities-wrap{
+	float: left;
+	padding: 7px 0;
+	width: 100%;
+	strong{
+		display: block;
+		margin: 16px 0; 
+		font-weight: 600;
+	}
+	li{
+		float: left;
+		width: 33.33333%;
+		margin-bottom: 7px;
+		img{
+			height: 20px;
+			width: 20px;
+			margin-right: 10px;
+			margin: 0 10px -5px 0;
+		}
+	}
+}
+
+/* tabbed view */
+
+.tab-wrapper{
+	width: 100%;
+	float: left;
+	.tab-header{
+		.btn{
+			width: 50%;
+			float: left;
+			border-bottom: 1px solid @grey;
+			text-align: left;
+			padding: 11px 0 12px 20px;
+			color: @grey;
+			font-weight: 600;
+			.font-size(1.4);
+			&:first-of-type{
+				padding-left: 0;
+				border-right: 1px solid @grey;
+			}
+			&.selected{
+				color: @black;
+				font-weight: 700;
+				border-top: 1px solid @grey;
+				border-bottom: none;
+			}
+			
+		}
+	}
+}	
+.tab-view{
+	display: none;
+	&.selected{
+		display: block;
 	}
 }
 

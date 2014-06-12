@@ -51,7 +51,7 @@
 								@if (isset($membersIds[$key]))
 									@if (in_array($user->id, $membersIds[$key])) 
 
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-red disabled">Joined</button></li>
+										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 									@else
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
 									@endif
@@ -74,8 +74,71 @@
 				</div>
 			</div>
 		</div>
+		<div class="class-wrap" id="venue">
+			<div class="venue-details">
+				<h4>Venue</h4>
+				<br>
+				<h5>{{$venue->name}}</h5>
+				<br>
+				<ul class="venue-address">
+					<li>{{$venue->address}}</li>
+					<li>{{$venue->town}}</li>
+					<li>{{$venue->postcode}}</li>
+				</ul>
+			</div>
+			<div class="class-map-wrap">
+				@include('widgets.map', array('lat' =>$venue->lat, 'lng' =>  $venue->lng))
+			</div>
+			<hr>
+			
+			
+			<ul class="facilities-wrap">
+				<strong>Venue Facilities</strong>
+				@foreach($venue->facilities as $key => $value)
+					@if ($value->category == 'facility') 
+						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>					
+						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>					
+						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>
+					@endif										
+				@endforeach
+			</ul>
+
+			
+			
+			<ul class="facilities-wrap">
+				<strong>Venue Amenities</strong>
+				@foreach($venue->facilities as $key => $value)
+					@if ($value->category == 'Amenity') 
+						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>					
+						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>					
+						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>
+					@endif										
+				@endforeach
+			</ul>	
+			
+		</div>
+		<div class="class-wrap" id="reviews"> 
+			<h4>Reviews / Participants</h4>
+			<div class="tab-wrapper">
+				<div class="tab-header">
+					<button  data-view="review" id="review-btn" class="icon-btn btn selected">Reviews</button>
+					<button  data-view="participant" id="participant-btn" class="icon-btn btn">Participants</button>
+				</div>
+				<div id="review" class="tab-view selected">
+					ratings to be added
+				</div>
+				<div id="participant" class="tab-view">
+					
+
+					{{--@foreach ($memberUsers as $key => $memberUser)
+						{{ $memberUser->display_name }}
+					@endforeach--}}
+				</div>
+			</div>
+		</div>
 		
 	</div>
 </div>
 
 @stop
+

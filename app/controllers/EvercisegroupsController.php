@@ -283,7 +283,7 @@ class EvercisegroupsController extends \BaseController {
 		}
 		else
 		{
-			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
 
 			$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
 
@@ -291,20 +291,30 @@ class EvercisegroupsController extends \BaseController {
 
 			$members = [];
 			$membersIds = [];
-			foreach ($evercisegroup->Evercisesession as $key => $value) {
-				$members[$key] = count($value['Sessionmembers']); // Count those members
-				foreach ($value['Sessionmembers'] as $k => $v) {
-					$membersIds[$key][] =  $v->user_id;
+			$memberUsers = [];
+			foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
+				$members[$key] = count($evercisesession['sessionmembers']); // Count those members
+				foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
+					$membersIds[$key][] =  $sessionmember->user_id;			
+					//$memberUsers[] = $sessionmember->users;
+
 				}
 			}
 
+			$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
+
 			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
+			JavaScript::put(array('initSwitchView' => 1 ));
+
+			JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 
 			return View::make('evercisegroups.show')
 						->with('evercisegroup',$evercisegroup)
 						->with('userTrainer',$userTrainer)
 						->with('members' , $members)
 						->with('membersIds' , $membersIds)
+						->with('venue' , $venue)
+						//->with('memberUsers' , $memberUsers)
 						->with('trainer',$trainerDetails);
 		}
 		
