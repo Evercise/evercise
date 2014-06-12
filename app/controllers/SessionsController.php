@@ -348,12 +348,12 @@ class SessionsController extends \BaseController {
 		$sessionIds = json_decode(Input::get('session-ids'), true);
 
 
-		$evercisegroup = Evercisegroup::with(array('evercisesession.sessionmembers' => function($query) use (&$sessionIds)
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
 		{
 
 			$query->whereIn('id', $sessionIds);
 
-		}))->find($evercisegroupId);
+		}), 'evercisesession.sessionmembers')->find($evercisegroupId);
 
 
 
@@ -382,7 +382,44 @@ class SessionsController extends \BaseController {
 	}
 
 	function payForSessions(){
-		return ' whomp';
+
+		/* get session ids */
+		$sessionIds = json_decode(Input::get('session-ids'), true);
+		/* get currnet user */
+		$u = User::find($this->user->id);
+		/*pivot current user with session via session members */
+		$u->sessions()->sync($sessionIds);
+		/* create confirmation view */
+		$evercisegroupId = Input::get('evercisegroup-id');
+
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
+		{
+
+			$query->whereIn('id', $sessionIds);
+
+		}), 'evercisesession.sessionmembers')->find($evercisegroupId);
+
+
+
+		$userTrainer = User::find($evercisegroup->user_id);
+
+		$members = [];
+		$total = 0;
+		$price = 0;
+	    foreach ($evercisegroup->evercisesession as $key => $value)
+	    {
+			$members[] = count($value->sessionmembers); // Count those members
+			++$total;
+			$price = $price + $value->price;
+	    }
+
+		return View::make('sessions.confirmation')
+					->with('evercisegroup' , $evercisegroup)
+					->with('members' , $members)
+					->with('userTrainer' , $userTrainer)
+					->with('totalPrice' , $price)
+					->with('totalSessions' , $total)
+					->with('sessionIds' , $sessionIds);
 	}
 
 }

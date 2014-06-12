@@ -93,6 +93,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function sessions()
 	{
-		return $this->belongsToMany('session', 'sessionmembers', 'evercisesession_id', 'user_id')->withTimestamps();
+		return $this->belongsToMany('Evercisesession', 'Sessionmembers', 'user_id', 'evercisesession_id')->withTimestamps();
 	}
 }

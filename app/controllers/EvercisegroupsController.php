@@ -16,7 +16,7 @@ class EvercisegroupsController extends \BaseController {
 
 		if ($this->user->inGroup($trainerGroup))
 		{
-			$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $this->user->id)->get();
+			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')->where('user_id', $this->user->id)->get();
 
 			if ($evercisegroups->isEmpty()) {
 				return View::make('evercisegroups.first_class');
@@ -30,7 +30,7 @@ class EvercisegroupsController extends \BaseController {
 					$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
 					$totalCapacity[] =  $value->capacity;
 					foreach ($value['Evercisesession'] as $k => $val) {
-						$totalMembers[]= $val->members;
+						$totalMembers[$key][] = count($val->sessionmembers);
 					}
 
 				}
@@ -249,7 +249,7 @@ class EvercisegroupsController extends \BaseController {
 				$averageCapacity = 0;
 
 				$members = [];
-				foreach ($evercisegroup->Evercisesession as $key => $value) {
+				foreach ($evercisegroup->evercisesession as $key => $value) {
 					$totalCapacity = $totalCapacity + $evercisegroup->capacity;
 					$members[$key] = count($value['Sessionmembers']); // Count those members
 					$totalSessionMembers= $totalSessionMembers + $members[$key];
@@ -290,8 +290,12 @@ class EvercisegroupsController extends \BaseController {
 			$trainerDetails = $userTrainer->Trainer[0];
 
 			$members = [];
+			$membersIds = [];
 			foreach ($evercisegroup->Evercisesession as $key => $value) {
 				$members[$key] = count($value['Sessionmembers']); // Count those members
+				foreach ($value['Sessionmembers'] as $k => $v) {
+					$membersIds[$key][] =  $v->user_id;
+				}
 			}
 
 			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
@@ -300,6 +304,7 @@ class EvercisegroupsController extends \BaseController {
 						->with('evercisegroup',$evercisegroup)
 						->with('userTrainer',$userTrainer)
 						->with('members' , $members)
+						->with('membersIds' , $membersIds)
 						->with('trainer',$trainerDetails);
 		}
 		

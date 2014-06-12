@@ -210,7 +210,6 @@ function DiscoverMapWidgetInit() {
       styles: clusterStyles
      };
 
-
     var markers = [];
     var bounds = new google.maps.LatLngBounds();
     var icon = '/img/mapmark.png';
@@ -218,7 +217,8 @@ function DiscoverMapWidgetInit() {
     for (i = 0; i < everciseGroups.length; i++) { 
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),
-        icon: icon
+        icon: icon,
+        map: map
       });
       markers.push(marker);
       var latlng = new google.maps.LatLng(
@@ -237,7 +237,7 @@ function DiscoverMapWidgetInit() {
 
     }
     map.fitBounds(bounds);
-    var markerCluster = new MarkerClusterer(map, markers,mcOptions);
+    //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
   }
 

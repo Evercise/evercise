@@ -312,6 +312,10 @@ function initJoinEvercisegroup(params)
 
         $('#total-sessions').html(total);
         $('#total-price').html(price);
+
+        if (total > 0) {
+            $('#session-checkout').removeClass('disabled');
+        };
     })
 
     $(document).on('click','.undo-btn' , function(){
@@ -337,6 +341,10 @@ function initJoinEvercisegroup(params)
 
         $('#total-sessions').html(total);
         $('#total-price').html(price);
+
+        if (total == 0) {
+            $('#session-checkout').addClass('disabled');
+        };
     })
 
     $(document).on('click','.btn-cancel-session' , function(){

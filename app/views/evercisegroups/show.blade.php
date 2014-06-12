@@ -48,7 +48,18 @@
 								<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60))}}
 								<li>&pound;{{ $value['price'] }}</li>
 								<li> <strong>{{$members[$key]}}</strong>/{{ $evercisegroup->capacity }} </li>
-								<li><button data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+								@if (isset($membersIds[$key]))
+									@if (in_array($user->id, $membersIds[$key])) 
+
+										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-red disabled">Joined</button></li>
+									@else
+										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+									@endif
+								@else
+									<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+								@endif
+								
+								
 							</div>
 					@endforeach
 				</ul>
@@ -58,7 +69,7 @@
 						<span>Total Price: &pound;<span id="total-price">0.00</span></span>
 						{{ Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')) }}
 						{{ Form::hidden( 'session-ids' , null, array('id' => 'session-ids')) }}
-						{{ Form::submit('Checkout' , array('class'=>'btn btn-green')) }}
+						{{ Form::submit('Checkout' , array( 'id' => 'session-checkout','class'=>'btn btn-green disabled')) }}
 					{{ Form::close() }}
 				</div>
 			</div>
