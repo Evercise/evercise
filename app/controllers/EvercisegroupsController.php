@@ -449,14 +449,22 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
-        $places = Venue::with('evercisegroup.Evercisesession.Sessionmembers')
-        ->with('evercisegroup.user')
+        $places = Venue::with(array('evercisegroup' =>function($query) use (&$category)
+        {
+
+        	$query->where('category_id' , $category);
+
+        }))
+        //->with('evercisegroup.Evercisesession.Sessionmembers')
+        //->with('evercisegroup.user')
        	->select( array('*', DB::raw($haversine . ' as distance')) )
 	    ->whereBetween('lat', array(0,100))
 	    //->where('category_id' , $category)
 	    ->orderBy('distance', 'ASC')
 	    ->having('distance', '<', $radius)	    
-	    ->get();    
+	    ->get();   
+
+	    
 
 	    
 

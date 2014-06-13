@@ -353,7 +353,7 @@ class SessionsController extends \BaseController {
 
 			$query->whereIn('id', $sessionIds);
 
-		}), 'evercisesession.sessionmembers')->find($evercisegroupId);
+		}))->find($evercisegroupId);
 
 
 
