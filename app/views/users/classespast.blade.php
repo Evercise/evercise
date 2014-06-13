@@ -1,5 +1,6 @@
 <div class="row9">
 		@foreach ($sessions as $session)
+		@if (new DateTime($session->date_time) < new DateTime() ) 
 			<div class="class-list">
 				<div class="class-date">
 					<div class="day">{{ date('d', strtotime($session->date_time)) }}</div>
@@ -14,43 +15,16 @@
 					<p>{{ Str::limit($groups[$session->evercisegroup_id]->description, 115) }}</p>	
 				</div>
 				<div class="list-info">
-					<div class="list-row">
-						<div class="half">
-							<span>Distance</span>
+					@if ( isset($ratings[$session->id]) )
+						<div class="star_wrap">
+							@for ($i = 0; $i < 5; $i++)
+								{{ HTML::image('img/yellow_' . ($i < $ratings[$session->id]['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
+							@endfor
 						</div>
-						<div class="half">
-						</div>
-					</div>
-					<div class="list-row">
-						<div class="half">
-							<strong>
-								@if(isset($members[$session->id]))
-									{{ $members[$session->id] }}
-								@else
-								 	0
-								@endif
-								/{{ $groups[$session->evercisegroup_id]->capacity }}
-							</strong>
-							<br>
-							<span>Class size</span>
-						</div>
-						<div class="half">
-							<strong>&pound;{{ $session->price }}</strong>
-							<br>
-							<span>Price</span>
-						</div>
-					</div>
-
-					<div class="list-row">
-						<div class="half">
-							
-						</div>
-						<div class="half">
-							
-						</div>
-					</div>
-
-					<span>Rating</span>
+						<span>Your Rating</span>
+					@else
+						<span>Class not yet rated</span>
+					@endif
 				</div>
 				<div class="list-feedback">
 					@if ( !isset($ratings[$session->id]) )
@@ -69,18 +43,13 @@
 							{{ Form::submit('Save changes' , array('class'=>'btn-yellow ')) }}
 						{{ Form::close() }}
 					@else
-
-						<div class="star_wrap">
-							@for ($i = 0; $i < 5; $i++)
-								{{ HTML::image('img/yellow_' . ($i < $ratings[$session->id]['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
-							@endfor
-						</div>
-						<span>{{ $ratings[$session->id]['comment'] }}</span>
+						<span>Your Feedback</span>
+						<p>{{ $ratings[$session->id]['comment'] }}</p>
 					@endif
 
 				</div>
 				
 			</div>
-			
+		@endif
 		@endforeach
 </div>

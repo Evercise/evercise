@@ -142,12 +142,8 @@
 
 									<span>
 									<div class="star_wrap">
-										@for ($i = 0; $i < $rating->stars; $i++)
-											{{ HTML::image('img/yellow_star.png', 'stars' , array('class' => 'star-icons')) }}
-										@endfor
-										@for ($i = $rating->stars; $i < 5; $i++)
-											{{ HTML::image('img/yellow_emptystar.png', 'stars' , array('class' => 'star-icons')) }}
-
+										@for ($i = 0; $i < 5; $i++)
+											{{ HTML::image('img/yellow_' . ($i < $rating->stars ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
 										@endfor
 									</div>
 									

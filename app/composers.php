@@ -39,4 +39,4 @@ View::composer('users.changepassword', 'ChangePasswordComposer');
 View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('venues.select', 'VenueComposer');
-View::composer('users.classes', 'UserClassesComposer');
+View::composer('users.edit', 'UserClassesComposer');

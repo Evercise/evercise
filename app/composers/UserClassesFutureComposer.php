@@ -1,6 +1,6 @@
 <?php
  
-class UserClassesComposer {
+class UserClassesFutureComposer {
 
 	 public function compose($view)
   	{
@@ -15,7 +15,6 @@ class UserClassesComposer {
 
 		$groupsWithKeys = [];
 	    $members = [];
-	    $sessionmember_ids = []; // For rating
 		if($sessions->count())
 		{
 			$group_ids = [];
@@ -26,20 +25,9 @@ class UserClassesComposer {
 					$group_ids[] = $session->evercisegroup_id;
 				}
 				$members[$session->id] = count($session->sessionmembers); // Count those members
-				foreach ($session->sessionmembers as $sessionmember) {
-					if($sessionmember->user_id == $user->id)
-						$sessionmember_ids[$session->id] = $sessionmember->id;
-				}
+				
 				
 			}
-
-			$ratings = Rating::whereIn('sessionmember_id', $sessionmember_ids)->get();
-
-			$ratingsWithKeys = [];
-			foreach ($ratings as $rating) {
-				$ratingsWithKeys[$rating->session_id] = ['comment' => $rating->comment, 'stars' => $rating->stars];
-			}
-
 
 
 	        $groups = Evercisegroup::whereIn('id', $group_ids)
@@ -53,8 +41,6 @@ class UserClassesComposer {
 	  	
   		$view->with('groups', $groupsWithKeys)
 	  		 ->with('sessions', $sessions)
-	  		 ->with('members', $members)
-	  		 ->with('sessionmember_ids', $sessionmember_ids)
-	  		 ->with('ratings', $ratingsWithKeys);
+	  		 ->with('members', $members);
 	}
 }
