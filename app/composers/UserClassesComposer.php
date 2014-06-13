@@ -13,9 +13,11 @@ class UserClassesComposer {
 
 		})->orderBy('date_time', 'asc')->get();
 
+		$pastFutureCount = [];
 		$groupsWithKeys = [];
 	    $members = [];
 	    $sessionmember_ids = []; // For rating
+		$ratingsWithKeys = [];
 	    $pastSessionCount = 0;
 	    $currentDate = new DateTime();
 		if($sessions->count())
@@ -42,7 +44,6 @@ class UserClassesComposer {
 
 			$ratings = Rating::whereIn('sessionmember_id', $sessionmember_ids)->get();
 
-			$ratingsWithKeys = [];
 			foreach ($ratings as $rating) {
 				$ratingsWithKeys[$rating->session_id] = ['comment' => $rating->comment, 'stars' => $rating->stars];
 			}

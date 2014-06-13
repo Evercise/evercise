@@ -30,6 +30,8 @@ class RatingsController extends \BaseController {
 	public function store()
 	{
 
+		// TODO - add security (check if user is a member of the session, and the session is in the past)
+
 		$validator = Validator::make(
 			Input::all(),
 			array(

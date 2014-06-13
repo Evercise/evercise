@@ -335,6 +335,62 @@ class SessionsController extends \BaseController {
 
 		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
 	}
+	public function getMailTrainer($sessionId, $trainerId)
+	{
+		$trainer = Trainer::find($trainerId);
+		$name = $trainer->first_name . ' ' . $trainer->last_name;
+
+		return View::make('sessions.mail_trainer')->with('sessionId', $sessionId)->with('userId', $this->user->id)->with('firstName', $name);
+	}
+
+	public function postMailTrainer($sessionId)
+	{
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'mail_subject' => 'required',
+				'mail_body' => 'required',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else
+		{
+			$subject = Input::get('mail_subject');
+			$body = Input::get('mail_body');
+
+			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+			$userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
+
+			$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
+			$email = $userDetails['email'];
+			$userList = [$name => $email];
+
+			Event::fire('session.mail_all', array(
+	        	'email' => $userList, 
+	        	'groupName' => $groupName, 
+	        	'subject' => $subject, 
+	            'body' => $body
+			));
+		}
+
+		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
+	}
 
 	/*
 	*

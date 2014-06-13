@@ -43,12 +43,8 @@
 					</div>
 
 					<div class="list-row">
-						<div class="half">
-							
-						</div>
-						<div class="half">
-							
-						</div>
+						<span>Mail Trainer</span>
+						{{ HTML::decode(HTML::linkRoute('sessions.mail_trainer', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$session->id, 'trainerId' => $groups[$session->evercisegroup_id]->user_id), array('class'=>'mail_trainer session-icon '))) }}
 					</div>
 				</div>
 				

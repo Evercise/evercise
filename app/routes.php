@@ -83,6 +83,8 @@ Route::get('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all', 'uses' 
 Route::post('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll'));
 Route::get('/sessions/{sessionId}/mail_one/{userId}', array('as' => 'sessions.mail_one', 'uses' => 'SessionsController@getMailOne'));
 Route::post('/sessions/{sessionId}/mail_one/{userId}', array('as' => 'sessions.mail_one.post', 'uses' => 'SessionsController@postMailOne'));
+Route::get('/sessions/{sessionId}/mail_trainer/{groupId}', array('as' => 'sessions.mail_trainer', 'uses' => 'SessionsController@getMailTrainer'));
+Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}', array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer'));
 
 
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
