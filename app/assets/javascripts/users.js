@@ -147,7 +147,7 @@ function initUsers()
 }
 registerInitFunction(initUsers);
 
-function initChangePassword()
+/*function initChangePassword()
 {
     // Change password
     $( '#password_change' ).on( 'submit', function() {
@@ -197,7 +197,7 @@ function initChangePassword()
         return false;
     });
 }
-registerInitFunction(initChangePassword);
+registerInitFunction(initChangePassword);*/
 
 
 function login(){

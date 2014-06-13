@@ -52,6 +52,27 @@
 
 					<span>Rating</span>
 				</div>
+				<div class="list-feedback">
+					@if ( !isset($ratings[$session->id]) )
+						<span>Leave Feedback</span>
+						{{ Form::open(array('id' => 'feedback', 'url' => 'ratings', 'method' => 'POST', 'class' => 'create-form')) }}
+							{{ Form::hidden( 'session_id' , $session->id ) }}
+							{{ Form::hidden( 'user_id' , $groups[$session->evercisegroup_id]->user_id ) }}
+							{{ Form::hidden( 'evercisegroup_id' , $session->evercisegroup_id ) }}
+							{{ Form::hidden( 'sessionmember_id' , $sessionmember_ids[$session->id] ) }}
+							{{ Form::hidden( 'stars' , 5 ) }}
+
+							@include('form.textfield', array('fieldname'=>'feedback_text', 'placeholder'=>'What did you think?', 'maxlength'=>20, 'label'=>'Feedback', 'fieldtext'=>'' ))
+							@if ($errors->has('feedback_text'))
+							    {{ $errors->first('feedback_text', '<p class="error-msg">:message</p>')}}
+							@endif
+							{{ Form::submit('Save changes' , array('class'=>'btn-yellow ')) }}
+						{{ Form::close() }}
+					@else
+						<span>{{ $ratings[$session->id] }}</span>
+					@endif
+
+				</div>
 				
 			</div>
 			

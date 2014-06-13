@@ -7,29 +7,7 @@ class UserClassesComposer {
   		$user = Sentry::getUser();
   		$userId = $user->id;
 
-        //$evercisegroups = Evercisegroup::with('Evercisesession.Sessionmembers')
-        //->where('sessionmembers.user_id', $user->id)
-	    //->get();
-
-
-		/*$evercisegroups = Evercisegroup::with(
-			array('evercisesession.sessionmembers' => function($query) use (&$userId)
-			{
-
-				$query->where('user_id', $userId);
-
-			}),
-			'evercisesession.sessionmembers'
-		)->get();*/
-
-		/*$evercisegroups = Evercisegroup::with('Evercisesession.Sessionmembers')
-		->whereHas('sessionmembers', function($query) use (&$userId)
-		{
-		    $query->where('user_id', $userId);
-
-		})->get();*/
-
-		$sessions = Evercisesession::whereHas('sessionmembers', function($query) use (&$userId)
+		$sessions = Evercisesession::whereHas('users', function($query) use (&$userId)
 		{
 		    $query->where('user_id', $userId);
 
@@ -37,39 +15,46 @@ class UserClassesComposer {
 
 		$groupsWithKeys = [];
 	    $members = [];
-		$group_ids = [];
+	    $sessionmember_ids = []; // For rating
 		if($sessions->count())
 		{
-				foreach ($sessions as $session_id => $session)
+			$group_ids = [];
+			foreach ($sessions as $session_id => $session)
+			{
+				if (!in_array($session->evercisegroup_id, $group_ids))
 				{
-					if (!in_array($session->evercisegroup_id, $group_ids))
-					{
-						$group_ids[] = $session->evercisegroup_id;
-					}
-					$members[$session->id] = count($session->sessionmembers); // Count those members
+					$group_ids[] = $session->evercisegroup_id;
 				}
-
-
-		        $groups = Evercisegroup::with('Evercisesession.Sessionmembers')
-		        ->whereIn('id', $group_ids)
-			    ->get();
-
-				// var_dump($evercisegroups[1]->evercisesession);
-				// exit;
-
-
-				foreach ($groups as $key => $group)
-				{
-					$groupsWithKeys[$group->id] = $group;
-
-					/*foreach ($group->evercisesession as $evercisesession_id => $evercisesession)
-					{
-						$members[$group->id][] = count($evercisesession->sessionmembers); // Count those members
-				}*/
+				$members[$session->id] = count($session->sessionmembers); // Count those members
+				foreach ($session->sessionmembers as $sessionmember) {
+					if($sessionmember->user_id == $user->id)
+						$sessionmember_ids[$session->id] = $sessionmember->id;
+				}
+				
 			}
-		}
+
+			$ratings = Rating::whereIn('sessionmember_id', $sessionmember_ids)->get();
+
+			$ratingsWithKeys = [];
+			foreach ($ratings as $rating) {
+				$ratingsWithKeys[$rating->session_id] = $rating->comment;
+			}
+
+
+
+	        $groups = Evercisegroup::whereIn('id', $group_ids)
+		    ->get();
+
+			foreach ($groups as $key => $group)
+			{
+				$groupsWithKeys[$group->id] = $group;
+			}
+	  	}
+	  	
   		$view->with('groups', $groupsWithKeys)
 	  		 ->with('sessions', $sessions)
-	  		 ->with('members', $members);
-  	}
+	  		 ->with('members', $members)
+	  		 ->with('sessionmember_ids', $sessionmember_ids)
+	  		 ->with('ratings', $ratingsWithKeys);
+	}
 }

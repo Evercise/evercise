@@ -229,9 +229,12 @@ registerInitFunction(initChart);
 
 // edit form
 
+// NOW gets the method from the form and sends via that method
 function initPut () {
   $( '.create-form' ).on( 'submit', function() {
-      trace('submitting via initPut');
+      var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
+      trace('submitting via initPut. Method: '+ method);
+
       $('.error-msg').remove();
       $('input').removeClass('error');
       // post to controller
@@ -239,13 +242,13 @@ function initPut () {
       var form = $(this);
       $.ajax({
           url: url,
-          type: 'PUT',
+          type: method,
           data: $( this ).serialize(),
           dataType: 'json'
       })
       .done(
           function(data) {
-              trace("PUT | Sending data.....");
+              trace("initPut >> Sending data.....");
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
@@ -268,12 +271,12 @@ function initPut () {
               }else{
                   // redirect to login page
                   form.find('.success_msg').show();
-                  trace("Updated: "+data);
+                  trace("Updated: "+data.message);
                   trace(form, true);
                   
-                  setTimeout(function() {
+                  /*setTimeout(function() {
                       window.location.href = '';
-                  }, 300);
+                  }, 300);*/
               }
           }
       );

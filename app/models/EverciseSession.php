@@ -10,21 +10,20 @@ class Evercisesession extends \Eloquent {
 	 */
 	protected $table = 'evercisesessions';
 
-	public function Sessionmembers()
+	public function sessionmembers()
     {
         return $this->hasMany('Sessionmember');
     }
 
-	public function Evercisegroup()
+	public function evercisegroup()
     {
         return $this->belongsTo('Evercisegroup');
     }
-
     
 
 	public function users()
 	{
-		return $this->belongsToMany('user', 'sessionmembers', 'evercisesession_id', 'user_id');
+		return $this->belongsToMany('user', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
 	}
 
 
