@@ -307,3 +307,63 @@ function initSwitchView(){
 }
 
 registerInitFunction(initSwitchView);
+
+
+function initScrollAnchor(string) {
+
+  var locationPath = filterPath(location.pathname);
+
+  var sticky_header = 0;
+
+  if ($('.sticky-header')) {
+    sticky_header = $('.sticky-header').height();
+  };
+  
+  $('a[href*=#]').each(function() {
+    var thisPath = filterPath(this.pathname) || locationPath;
+    if (  locationPath == thisPath
+    && (location.hostname == this.hostname || !this.hostname)
+    && this.hash.replace(/#/,'') ) {
+      var $target = $(this.hash), target = this.hash;
+      
+      if (target) {
+        var targetOffset = ($target.offset().top - sticky_header) - sticky_header;
+        //targetOffset = (targetOffset - sticky_header)- sticky_header;
+        $(this).click(function(event) {
+          event.preventDefault();
+          $('html, body').animate({scrollTop: targetOffset}, 400, function() {
+            location.hash = target;
+          });
+        });
+      }
+    }
+  });
+}
+
+registerInitFunction(initScrollAnchor);
+
+function filterPath(string) {
+  return string
+    .replace(/^\//,'')
+    .replace(/(index|default).[a-zA-Z]{3,4}$/,'')
+    .replace(/\/$/,'');
+}
+
+
+function initStickHeader(){
+  var target = $('.sticky-header');
+  var targetOffset = target.offset().top;
+  var width = target.width();
+  $(window).scroll(function(){
+      if ($(window).scrollTop() >= targetOffset) {
+         $('.sticky-header').addClass('fixed').css({
+          'width': width+'px'
+         });
+      }
+      else {
+         $('.sticky-header').removeClass('fixed');
+      }
+  });
+}
+
+registerInitFunction(initStickHeader);

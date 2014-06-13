@@ -29,4 +29,9 @@ class Evercisegroup extends \Eloquent {
     {
         return $this->belongsTo('User');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany('Rating');
+    }
 }

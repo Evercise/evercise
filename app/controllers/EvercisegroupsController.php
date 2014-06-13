@@ -312,6 +312,8 @@ class EvercisegroupsController extends \BaseController {
 
 			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
 			JavaScript::put(array('initSwitchView' => 1 ));
+			JavaScript::put(array('initScrollAnchor' => 1 ));
+			JavaScript::put(array('initStickHeader' => 1 ));
 
 			JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 
@@ -462,11 +464,29 @@ class EvercisegroupsController extends \BaseController {
 	    //->where('category_id' , $category)
 	    ->orderBy('distance', 'ASC')
 	    ->having('distance', '<', $radius)	    
-	    ->get();   
+	    ->get(); 
 
-	    
+	    $evercisegroups = [];  
+	    $evercisegroup_ids = [];  
+	    $stars = [];
 
-	    
+	    foreach ($places as $key => $venue) {
+	    	foreach($venue->evercisegroup as $k => $eg){
+	    		$evercisegroup_ids[] = $eg->id;
+	    	}
+	    	
+	    };
+
+	    //return var_dump($evercisegroup_ids);
+
+	    if (isset($evercisegroup_ids)) {
+	    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+
+		    foreach ($ratings as $key => $rating) {
+		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
+		    }
+
+	    }
 
 	    JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
@@ -474,6 +494,7 @@ class EvercisegroupsController extends \BaseController {
 
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $places)
+	    		->with('stars' , $stars)
 	    		->with('evercisegroups' , $places);
 	    		//->with('members' , $members);
 	}

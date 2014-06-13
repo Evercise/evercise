@@ -35,7 +35,11 @@
 			</div>
 		@endif
 		<div class="class-block-stat">
-			<div class="class-block-rating"></div>
+			<div class="class-block-rating">
+				@if (isset($rating)) 
+					@include('ratings.stars', array('rating' => $rating))
+				@endif
+			</div>
 			<span>rating</span>
 		</div>
 		@if(isset($default_price))

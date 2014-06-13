@@ -1477,6 +1477,8 @@ nav{
 	margin: 0;
 	float: left;
 	width: 100%;
+	background: @white;
+	z-index: 99;
 	border-bottom: 1px solid @grey;
 	position: relative;
 	li{
@@ -1486,15 +1488,19 @@ nav{
 		cursor: pointer;
 	}
 	&:after{
-			position: absolute;
-			bottom: -1px;
-			left: -10px;
-			height: 1px;
-			width: 10px;
-			display: inline-block;
-			content: '';
-			border-bottom: 1px solid @grey;
-		}
+		position: absolute;
+		bottom: -1px;
+		left: -10px;
+		height: 1px;
+		width: 10px;
+		display: inline-block;
+		content: '';
+		border-bottom: 1px solid @grey;
+	}
+	&.fixed{
+		position: fixed;
+		top: 0;
+	}
 }
 
 .class-wrap{
