@@ -16,6 +16,8 @@ class UserClassesComposer {
 		$groupsWithKeys = [];
 	    $members = [];
 	    $sessionmember_ids = []; // For rating
+	    $pastSessionCount = 0;
+	    $currentDate = new DateTime();
 		if($sessions->count())
 		{
 			$group_ids = [];
@@ -30,8 +32,13 @@ class UserClassesComposer {
 					if($sessionmember->user_id == $user->id)
 						$sessionmember_ids[$session->id] = $sessionmember->id;
 				}
-				
+				if ( new DateTime($session->date_time) < $currentDate )
+				{
+					$pastSessionCount++;
+				}
 			}
+
+			$pastFutureCount = ['past' => $pastSessionCount, 'future' => ($sessions->count() - $pastSessionCount), 'total' => $sessions->count()];
 
 			$ratings = Rating::whereIn('sessionmember_id', $sessionmember_ids)->get();
 
@@ -40,10 +47,7 @@ class UserClassesComposer {
 				$ratingsWithKeys[$rating->session_id] = ['comment' => $rating->comment, 'stars' => $rating->stars];
 			}
 
-
-
-	        $groups = Evercisegroup::whereIn('id', $group_ids)
-		    ->get();
+	        $groups = Evercisegroup::whereIn('id', $group_ids)->get();
 
 			foreach ($groups as $key => $group)
 			{
@@ -55,6 +59,7 @@ class UserClassesComposer {
 	  		 ->with('sessions', $sessions)
 	  		 ->with('members', $members)
 	  		 ->with('sessionmember_ids', $sessionmember_ids)
-	  		 ->with('ratings', $ratingsWithKeys);
+	  		 ->with('ratings', $ratingsWithKeys)
+	  		 ->with('pastFutureCount', $pastFutureCount);
 	}
 }
