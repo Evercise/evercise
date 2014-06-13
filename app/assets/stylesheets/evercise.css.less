@@ -1440,8 +1440,11 @@ nav{
 		width: 100%;
 		margin-top: 12px;
 		.class-block-stat{
-			width: 33%;
+			width: 29%;
 			float: left;
+			&:nth-of-type(2){
+				width: 42%;
+			}
 			span{
 				display: block;
 			}
@@ -1607,6 +1610,10 @@ nav{
 		.border-radius();
 		margin: 10px;
 	}
+	.class-list{
+		.class-list();
+	}
+	
 }
 
 /*ratings */
@@ -1805,85 +1812,87 @@ nav{
 			
 		}
 	}
-
-
-
-	/* class list  */
-
 	.class-list{
-		border-bottom: 1px dashed @grey;
-		width: 96%;
+		.class-list(50%);
+	}
+
+}
+
+/* class list  */
+
+.class-list(@center:60%){
+	border-bottom: 1px dashed @grey;
+	width: 96%;
+	float: left;
+	.box-sizing();
+	padding: 20px 30px 10px 10px;
+	.class-date{
+		float: left;
+		width: 10%;
+		div{
+			width: 100%;
+			text-align:center;
+			display: inline-block;
+		}
+		.day{
+			font-size:36px;
+			line-height:36px;
+			margin-bottom:16px;
+		}
+		.month{
+			font-size:23px;
+			margin-bottom:8px;
+		}
+		.year{
+			font-size:15px;
+			margin-bottom:8px;
+		}
+	}
+	img.class-list-img{
+		width: 20%;
+		float: left;
+		.border-radius();
+	}
+	.list-details{
+		width: @center;
 		float: left;
 		.box-sizing();
-		padding: 20px 30px 10px 10px;
-		.class-date{
-			float: left;
-			width: 10%;
-			div{
-				width: 100%;
-				text-align:center;
-				display: inline-block;
-			}
-			.day{
-				font-size:36px;
-				line-height:36px;
-				margin-bottom:16px;
-			}
-			.month{
-				font-size:23px;
-				margin-bottom:8px;
-			}
-			.year{
-				font-size:15px;
-				margin-bottom:8px;
-			}
+		padding: 0 20px;
+	}
+	.list-info{
+		width: 20%;
+		float: left;
+		span{
+			text-transform: uppercase;
+			color: #999;
+			line-height: 2.4;
 		}
-		img{
-			width: 20%;
-			float: left;
-			.border-radius();
-		}
-		.list-details{
-			width: 50%;
-			float: left;
-			.box-sizing();
-			padding: 0 20px;
-		}
-		.list-info{
-			width: 20%;
-			float: left;
-			span{
-				text-transform: uppercase;
-				color: #999;
-				line-height: 2.4;
-			}
-			strong{
-				
-			}
-			.list-row{
-				width: 100%;
-				float: left;
-				margin-bottom: 5px;
-				.half{
-					width: 50%;
-					float: left;
-				}
-			}
+		strong{
 			
 		}
-		.list-feedback{
-			clear:both;
-			.btn-yellow{
-				border:none;
-				margin-top: 0px;
+		.list-row{
+			width: 100%;
+			float: left;
+			margin-bottom: 5px;
+			.half{
+				width: 50%;
+				float: left;
 			}
-			.formitem{
-				border:none;
-				height: 38px;
-			}
-			span{
-				font-size: 20px;
-			}
+		}
+		
+	}
+	.list-feedback{
+		clear:both;
+		.btn-yellow{
+			border:none;
+			margin-top: 0px;
+		}
+		.formitem{
+			border:none;
+			height: 38px;
+		}
+		span{
+			font-size: 20px;
 		}
 	}
 }

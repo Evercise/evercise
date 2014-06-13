@@ -17,9 +17,10 @@
 				<div class="list-info">
 					@if ( isset($ratings[$session->id]) )
 						<div class="star_wrap">
-							@for ($i = 0; $i < 5; $i++)
+							@include('ratings.stars', array('rating' => $ratings[$session->id]['stars'] ))
+							{{--@for ($i = 0; $i < 5; $i++)
 								{{ HTML::image('img/yellow_' . ($i < $ratings[$session->id]['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
-							@endfor
+							@endfor--}}
 						</div>
 						<span>Your Rating</span>
 					@else

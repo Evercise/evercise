@@ -23,7 +23,7 @@
 				@foreach ($evercisegroups as $key => $venue) 
 					@foreach ($venue->evercisegroup as $k => $evercisegroup)
 
-						@include('evercisegroups.discover_classes_list', array('lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
+						@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
 					@endforeach	
 				@endforeach
 			</div>
