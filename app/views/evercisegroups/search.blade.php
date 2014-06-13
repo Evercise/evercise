@@ -19,7 +19,13 @@
 			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups))
 		</div>
 		<div id="list" class="discover-view tab-view">
-			@include('evercisegroups.discover_classes_list', array('classes' => $evercisegroups))
+			<div class="row9">
+				@foreach ($evercisegroups as $key => $venue) 
+					@foreach ($venue->evercisegroup as $k => $evercisegroup)
+						@include('evercisegroups.discover_classes_list', array('lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
+					@endforeach	
+				@endforeach
+			</div>
 		</div>
 		
 	</div>

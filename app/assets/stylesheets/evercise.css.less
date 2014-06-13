@@ -1564,6 +1564,9 @@ nav{
 	width: 100%;
 	float: left;
 	.tab-header{
+		margin-bottom: 10px;
+		float: left;
+		width: 100%;
 		.btn{
 			width: 50%;
 			float: left;
@@ -1592,6 +1595,60 @@ nav{
 	&.selected{
 		display: block;
 	}
+	.user-icon{
+		height: 60px;
+		width: 60px;
+		.border-radius();
+		margin: 10px;
+	}
+}
+
+/*ratings */
+
+.rating-wrap{
+	.rating-row{
+
+		width: 100%;
+
+		
+		.rating-block{
+			width: 86%;
+			float: left;
+			padding: 15px 10px;
+			border: 1px solid @grey;
+			margin-left: 11%;
+			margin-bottom: 20px;
+			position: relative; 
+			.border-radius();
+			.user-icon{
+				float: left;
+				margin: -30px 20px 0 0;
+				position: absolute;
+				top: 50%;
+				left: -82px;
+			}
+			.star_wrap{
+				display: inline;
+				margin-right: 10px;
+			}
+			.rating-arrow-icon{
+				position: absolute;
+				top: 50%;
+				margin-top: -11px;
+				left: -11px;
+			}
+			.star-icons{}
+			span{
+				display: inline-block;
+				margin-bottom: 8px;
+			}
+		}
+	}
+}
+
+.star-icons{
+	height: 14px;
+	margin-right: 1px;
 }
 
 

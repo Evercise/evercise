@@ -15,6 +15,11 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Evercisesession');
     }
 
+    public function venue()
+    {
+        return $this->belongsTo('Venue');
+    }
+
     public function Sessionmember()
     {
         return $this->hasManyThrough('Sessionmember', 'Evercisesession');

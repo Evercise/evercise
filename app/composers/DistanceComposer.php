@@ -10,15 +10,20 @@ class DistanceComposer {
 
     $viewdata= $view->getData();
 
-    $distanceMiles = array();
+    $distanceMiles = 0;
 
-    $evercisegroups = $viewdata['evercisegroups'];
+    if (isset($viewdata['lat']) && isset($viewdata['lng'])) {
+        $lat = $viewdata['lat'];
+        $lng = $viewdata['lng'];
+        //$lat = 51.50682494;
+        //$lng = -0.15704746;
 
-    foreach ( $evercisegroups as $key => $value) {
-        $distance = Functions::getDistance( $geocode->getLatitude(), $geocode->getLongitude(), $value->lat, $value->lng);
-        $distanceMiles[] = $distance->in('mi')->vincenty();
+        $distance = Functions::getDistance( $geocode->getLatitude(), $geocode->getLongitude(), $lat, $lng);
+        //$distance = Functions::getDistance( 50.01, -0.19, $lat, $lng);
+        $distanceMiles = $distance->in('mi')->vincenty();
+
+        $view->with('distance', $distanceMiles);
     }
-
-    $view->with('miles', $distanceMiles);
+    
   }
 }

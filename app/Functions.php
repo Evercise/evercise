@@ -8,6 +8,7 @@ class Functions {
 
         if ($query = '127.0.0.1' || $query = null) {
             $query = '151.237.238.126';
+           // $query = '10 rue Gambetta, Paris, France';
         }
 
         $geocoder = new \Geocoder\Geocoder();
@@ -16,6 +17,8 @@ class Functions {
         $chain    = new \Geocoder\Provider\ChainProvider(array(
                     new \Geocoder\Provider\FreeGeoIpProvider($adapter),
                     new \Geocoder\Provider\HostIpProvider($adapter),
+                    new \Geocoder\Provider\IpGeoBaseProvider($adapter),
+                    
                     new \Geocoder\Provider\GoogleMapsProvider($adapter),
         ));
 
@@ -24,8 +27,12 @@ class Functions {
         try {
             $geocode = $geocoder->geocode($query);
         } catch (Exception $e) {
-            echo $e->getMessage();
+            //return $query;
         }   
+
+        if ($geocode->getLatitude() == 0 && $geocode->getLongitude() == 0) {
+           $geocode = $geocoder->geocode('london');
+        }
 
         return $geocode;
     }

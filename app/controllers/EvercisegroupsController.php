@@ -287,21 +287,28 @@ class EvercisegroupsController extends \BaseController {
 
 			$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
 
+
 			$trainerDetails = $userTrainer->Trainer[0];
 
 			$members = [];
 			$membersIds = [];
-			$memberUsers = [];
+			$memberAllIds = [];
 			foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
 				$members[$key] = count($evercisesession['sessionmembers']); // Count those members
 				foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
-					$membersIds[$key][] =  $sessionmember->user_id;			
+					$membersIds[$key][] =  $sessionmember->user_id;	
+					$memberAllIds[]	 = 	$sessionmember->user_id;	
 					//$memberUsers[] = $sessionmember->users;
 
 				}
 			}
 
+			$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
+
+
 			$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
+
+			$ratings = Rating::with('user')->where('evercisegroup_id', $evercisegroup->id)->get();
 
 			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
 			JavaScript::put(array('initSwitchView' => 1 ));
@@ -313,7 +320,9 @@ class EvercisegroupsController extends \BaseController {
 						->with('userTrainer',$userTrainer)
 						->with('members' , $members)
 						->with('membersIds' , $membersIds)
+						->with('memberUsers' , $memberUsers)
 						->with('venue' , $venue)
+						->with('ratings' , $ratings)
 						//->with('memberUsers' , $memberUsers)
 						->with('trainer',$trainerDetails);
 		}
@@ -436,22 +445,28 @@ class EvercisegroupsController extends \BaseController {
 
         $boundingBox = $encoded->getBoundingBox();
 
+        //return var_dump($boundingBox);
+
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
-        $places = Evercisegroup::with('user')->with('Evercisesession.Sessionmembers')
-	    ->select( array('*', DB::raw($haversine . ' as distance')) )
+        $places = Venue::with(array('evercisegroup' =>function($query) use (&$category)
+        {
+
+        	$query->where('category_id' , $category);
+
+        }))
+        //->with('evercisegroup.Evercisesession.Sessionmembers')
+        //->with('evercisegroup.user')
+       	->select( array('*', DB::raw($haversine . ' as distance')) )
 	    ->whereBetween('lat', array(0,100))
-	    ->where('category_id' , $category)
+	    //->where('category_id' , $category)
 	    ->orderBy('distance', 'ASC')
 	    ->having('distance', '<', $radius)	    
-	    ->get();
+	    ->get();   
 
-	    $members = [];
-	    foreach ($places as $key => $value) {
-			foreach ($value->evercisesession as $k => $v) {
-				$members[$key][] = count($v->sessionmembers); // Count those members
-			}
-		}
+	    
+
+	    
 
 	    JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
@@ -459,8 +474,8 @@ class EvercisegroupsController extends \BaseController {
 
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $places)
-	    		->with('evercisegroups' , $places)
-	    		->with('members' , $members);
+	    		->with('evercisegroups' , $places);
+	    		//->with('members' , $members);
 	}
 
 	
