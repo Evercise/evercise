@@ -14,27 +14,29 @@
 					<h4>{{$groups[$session->evercisegroup_id]->name}}</h4>
 					<p>{{ Str::limit($groups[$session->evercisegroup_id]->description, 115) }}</p>	
 				</div>
+				<div class="list-info">
+					@if ( isset($ratings[$session->id]) )
+						<div class="star_wrap">
+							@include('ratings.stars', array('rating' => $ratings[$session->id]['stars'] ))
+							{{--@for ($i = 0; $i < 5; $i++)
+								{{ HTML::image('img/yellow_' . ($i < $ratings[$session->id]['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
+							@endfor--}}
+						</div>
+						<span>Your Rating</span>
+					@else
+						<span>Class not yet rated</span>
+					@endif
+				</div>
+				<div class="list-feedback">
+					@if ( !isset($ratings[$session->id]) )
+						<span>Leave Feedback</span>
+						{{ Form::open(array('id' => 'feedback', 'url' => 'ratings', 'method' => 'POST', 'class' => 'create-form')) }}
+							{{ Form::hidden( 'session_id' , $session->id ) }}
+							{{ Form::hidden( 'user_id' , $groups[$session->evercisegroup_id]->user_id ) }}
+							{{ Form::hidden( 'evercisegroup_id' , $session->evercisegroup_id ) }}
+							{{ Form::hidden( 'sessionmember_id' , $sessionmember_ids[$session->id] ) }}
+							{{ Form::hidden( 'stars' , 5 ) }}
 
-				@if ( isset($ratings[$session->id]) )
-					<div class="star_wrap">
-						@for ($i = 0; $i < 5; $i++)
-							{{ HTML::image('img/yellow_' . ($i < $ratings[$session->id]['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
-						@endfor
-					</div>
-					<span>Your Rating</span>
-				@else
-					<span>Class not yet rated</span>
-				@endif
-			</div>
-			<div class="list-feedback">
-				@if ( !isset($ratings[$session->id]) )
-					<span>Leave Feedback</span>
-					{{ Form::open(array('id' => 'feedback', 'url' => 'ratings', 'method' => 'POST', 'class' => 'create-form')) }}
-						{{ Form::hidden( 'session_id' , $session->id ) }}
-						{{ Form::hidden( 'user_id' , $groups[$session->evercisegroup_id]->user_id ) }}
-						{{ Form::hidden( 'evercisegroup_id' , $session->evercisegroup_id ) }}
-						{{ Form::hidden( 'sessionmember_id' , $sessionmember_ids[$session->id] ) }}
-						{{ Form::hidden( 'stars' , 5 ) }}
 
 						@include('form.textfield', array('fieldname'=>'feedback_text', 'placeholder'=>'What did you think?', 'maxlength'=>20, 'label'=>'Feedback', 'fieldtext'=>'' ))
 						@if ($errors->has('feedback_text'))

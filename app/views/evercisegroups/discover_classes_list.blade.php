@@ -37,15 +37,14 @@
 					</div>
 
 					<div class="list-row">
-						<div class="half">
-							
-						</div>
-						<div class="half">
-							
-						</div>
-					</div>
+						@if (isset($rating)) 
+							@include('ratings.stars', array('rating' => $rating))
+						@endif
+						<br>
+						<span>Rating</span>
 
-					<span>Rating</span>
+					</div>
+					
 				</div>
 				
 			</div>

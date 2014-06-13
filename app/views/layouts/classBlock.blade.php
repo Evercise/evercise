@@ -31,12 +31,17 @@
 		@elseif(isset($default_size))
 			<div class="class-block-stat">
 				<strong>{{$default_size}}</strong>
-				<span>class size</span>
+				<span>capacity</span>
 			</div>
 		@endif
 		<div class="class-block-stat">
-			<div class="class-block-rating"></div>
-			<span>rating</span>
+			<div class="class-block-rating">
+				@if (isset($rating)) 
+					@include('ratings.stars', array('rating' => $rating))
+				@endif
+				<span>rating</span>
+			</div>
+			
 		</div>
 		@if(isset($default_price))
 			<div class="class-block-stat">

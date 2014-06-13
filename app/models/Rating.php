@@ -10,4 +10,9 @@ class Rating extends \Eloquent {
     {
         return $this->belongsTo('User' , 'user_id');
     }
+
+    public function evercisegroup()
+    {
+        return $this->belongsTo('evercisegroup' , 'evercisegroup_id');
+    }
 }

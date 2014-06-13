@@ -11,11 +11,11 @@
 		@include('trainers.trainerBlock', array('orientation' => 'portrait', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
 	</div>
 	<div class="col9">
-		<ul class="class-nav">
-			<li>Description</li>
-			<li>Sessions</li>
-			<li>Venues</li>
-			<li>Reviews/Participants</li>
+		<ul class="class-nav sticky-header">
+			<li><a href="#description">Description</a></li>
+			<li><a href="#sessions">Sessions</a></li>
+			<li><a href="#venue">Venues</a></li>
+			<li><a href="#reviews">Reviews/Participants</a></li>
 		</ul>
 		<div class="class-wrap" id="description">
 			<h1>{{ $evercisegroup->name }}</h1>

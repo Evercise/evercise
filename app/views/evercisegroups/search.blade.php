@@ -16,13 +16,14 @@
 			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
 		</div>
 		<div id="grid" class="discover-view tab-view selected">
-			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups))
+			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups, 'rating' => $stars ))
 		</div>
 		<div id="list" class="discover-view tab-view">
 			<div class="row9">
 				@foreach ($evercisegroups as $key => $venue) 
 					@foreach ($venue->evercisegroup as $k => $evercisegroup)
-						@include('evercisegroups.discover_classes_list', array('lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
+
+						@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
 					@endforeach	
 				@endforeach
 			</div>
