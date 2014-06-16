@@ -14,7 +14,7 @@
 				</ul>
 			</div>
 
-			<div class="trainer-dashboard-wrapper-right">
+			<div class="dashboard-wrapper-right">
 				<div id="profile" class="dashboard-block">
 					<div class="dashboard-header"><h3>Profile</h3></div>
 					@include('users.edit_form', array())
