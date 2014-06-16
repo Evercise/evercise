@@ -55,6 +55,8 @@ class UserClassesComposer {
 				$groupsWithKeys[$group->id] = $group;
 			}
 	  	}
+
+	  	 JavaScript::put(array('initAddRating' => 1 ));
 	  	
   		$view->with('groups', $groupsWithKeys)
 	  		 ->with('sessions', $sessions)

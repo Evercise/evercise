@@ -231,7 +231,7 @@ registerInitFunction(initChart);
 
 // NOW gets the method from the form and sends via that method
 function initPut () {
-  $( '.create-form' ).on( 'submit', function() {
+  $( '.create-form, .update-form' ).on( 'submit', function() {
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
       trace('submitting via initPut. Method: '+ method);
 
@@ -270,10 +270,14 @@ function initPut () {
                   $('#ajax-loading').hide();
               }else{
                   // redirect to login page
-                  form.find('.success_msg').show();
+                 /* form.find('.success_msg').show();
                   trace("Updated: "+data.message);
                   trace(form, true);
-                  
+                  */
+                  var callback = data.callback;
+
+                  window[callback]();
+
                   /*setTimeout(function() {
                       window.location.href = '';
                   }, 300);*/
@@ -367,3 +371,9 @@ function initStickHeader(){
 }
 
 registerInitFunction(initStickHeader);
+
+function refreshpage(){
+  setTimeout(function() {
+    window.location.href = '';
+  }, 10);
+}

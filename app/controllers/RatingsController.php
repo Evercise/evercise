@@ -74,7 +74,7 @@ class RatingsController extends \BaseController {
 			]);
 		}
 
-		return Response::json(['message' => $session_id]);
+		return Response::json(['callback' => 'refreshpage' ,'message' => $session_id]);
 	}
 
 	/**

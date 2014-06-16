@@ -1814,7 +1814,7 @@ nav{
 		}
 	}
 	.class-list{
-		.class-list(50%);
+		.class-list(51%);
 	}
 
 }
@@ -1823,26 +1823,30 @@ nav{
 
 .class-list(@center:60%){
 	border-bottom: 1px dashed @grey;
-	width: 96%;
+	width: 95%;
 	float: left;
 	.box-sizing();
-	padding: 20px 30px 10px 10px;
+	padding: 20px 0px 10px 0px;
+	margin-left: 10px;
 	.class-date{
 		float: left;
-		width: 10%;
+		width: 14%;
+		padding-left: 20px;
+		.box-sizing();
 		div{
 			width: 100%;
-			text-align:center;
+			text-align:left;
 			display: inline-block;
+			.heading-font(500);
 		}
 		.day{
-			font-size:36px;
-			line-height:36px;
-			margin-bottom:16px;
+			font-size:37px;
+			margin-bottom:24px;
+			.line-height(3.0);
 		}
 		.month{
 			font-size:23px;
-			margin-bottom:8px;
+			margin-bottom:10px;
 		}
 		.year{
 			font-size:15px;
@@ -1851,6 +1855,7 @@ nav{
 	}
 	img.class-list-img{
 		width: 20%;
+		height: 90px;
 		float: left;
 		.border-radius();
 	}
@@ -1882,18 +1887,47 @@ nav{
 		}
 		
 	}
+	.list-rating{
+		width: 15%;
+		float: left;
+	}
 	.list-feedback{
 		clear:both;
-		.btn-yellow{
-			border:none;
-			margin-top: 0px;
-		}
+		margin-top: 32px;
+		float: right;
+		width: 86%;
 		.formitem{
 			border:none;
 			height: 38px;
 		}
+		input{
+			float: left;
+		}
+		.btn{
+			float: right;
+			width: 140px;
+			margin-top: 20px;
+		}
 		span{
 			font-size: 20px;
+		}
+		.rating-block{
+			width: 94%;
+			margin: 20px 0 10px 10px;
+		}
+	}
+	.list-staradd{
+		.empty-star{
+			cursor: pointer;
+			height: 14px;
+			width: 14px;
+			float: left;
+			margin-right: 1px;
+			background-image: url(/img/yellow_emptystar.png);
+			background-size: 100% 100%;
+			&.full{
+				background-image: url(/img/yellow_star.png);
+			}
 		}
 	}
 }
