@@ -337,13 +337,24 @@ class SessionsController extends \BaseController {
 	}
 	public function getMailTrainer($sessionId, $trainerId)
 	{
-		$trainer = Trainer::find($trainerId);
+		$session = Evercisesession::with('evercisegroup')->find($sessionId);
+		//return Response::json($session->evercisegroup->name);
+		$dateTime = $session->date_time;
+		$groupName = $session->evercisegroup->name;
+
+		$trainer = User::find($trainerId);
 		$name = $trainer->first_name . ' ' . $trainer->last_name;
 
-		return View::make('sessions.mail_trainer')->with('sessionId', $sessionId)->with('userId', $this->user->id)->with('firstName', $name);
+		return View::make('sessions.mail_trainer')
+			->with('sessionId', $sessionId)
+			->with('trainerId', $trainerId)
+			->with('userId', $this->user->id)
+			->with('dateTime', $dateTime)
+			->with('groupName', $groupName)
+			->with('name', $name);
 	}
 
-	public function postMailTrainer($sessionId)
+	public function postMailTrainer($sessionId, $trainerId)
 	{
 
 		$validator = Validator::make(
@@ -375,7 +386,7 @@ class SessionsController extends \BaseController {
 
 			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
 			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
-			$userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
+			$userDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
 
 			$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
 			$email = $userDetails['email'];
