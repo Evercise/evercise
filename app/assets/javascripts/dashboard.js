@@ -25,6 +25,7 @@ function initDashboardPanel()
                 //trace('id: '+ data);
                 $('.mask').show();
                 $('.container').append(data);
+                initPut();
              }
         );
 

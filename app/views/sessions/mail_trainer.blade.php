@@ -1,12 +1,12 @@
 <div class='modal'>
 	<div id="cancel_login" class="cancel">x</div>
 	<div class="modal-head">
-		<h4>Email your trainer {{ $firstName }}</h4>
+		<h4>Email your trainer {{ $name }} regarding {{ $groupName }} at {{ date('h:m', strtotime($dateTime)) }} on {{ date('d-M-Y', strtotime($dateTime)) }}</h4>
 		<br>
 	</div>
 	
 	<div class="modal-body">
-		{{ Form::open(array('id' => 'mail_one', 'url' => 'sessions/'.$sessionId.'/mail_trainer', 'method' => 'POST', 'class' => 'create-form')) }}
+		{{ Form::open(array('id' => 'mail_trainer', 'url' => 'sessions/'.$sessionId.'/mail_trainer/'.$trainerId, 'method' => 'POST', 'class' => 'create-form')) }}
 		
 	    	@include('form.textfield', array('fieldname'=>'mail_subject', 'placeholder'=>'Type your subject here', 'maxlength'=>1000, 'label'=>'Subject', 'fieldtext'=>''))
 	        @if ($errors->has('mail_subject'))
