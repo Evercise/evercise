@@ -293,6 +293,7 @@ class EvercisegroupsController extends \BaseController {
 			$members = [];
 			$membersIds = [];
 			$memberAllIds = [];
+			$memberUsers = [];
 			foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
 				$members[$key] = count($evercisesession['sessionmembers']); // Count those members
 				foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
@@ -303,7 +304,10 @@ class EvercisegroupsController extends \BaseController {
 				}
 			}
 
-			$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
+			if (!empty($memberAllIds)) {
+				$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
+			}
+			
 
 
 			$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
@@ -479,7 +483,7 @@ class EvercisegroupsController extends \BaseController {
 
 	    //return var_dump($evercisegroup_ids);
 
-	    if (isset($evercisegroup_ids)) {
+	    if (!empty($evercisegroup_ids)) {
 	    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
 
 		    foreach ($ratings as $key => $rating) {

@@ -20,12 +20,21 @@
 		</div>
 		<div id="list" class="discover-view tab-view">
 			<div class="row9">
-				@foreach ($evercisegroups as $key => $venue) 
-					@foreach ($venue->evercisegroup as $k => $evercisegroup)
-
-						@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
-					@endforeach	
-				@endforeach
+				@if (isset($evercisegroups)) 
+					@foreach ($evercisegroups as $key => $venue) 
+						@if (isset($venue->evercisegroup)) 
+							@foreach ($venue->evercisegroup as $k => $evercisegroup)
+								@if (isset($stars[$evercisegroup->id])) 
+									@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
+									@else
+									@include('evercisegroups.discover_classes_list', array('rating' => 0, 'lat'=> $venue->lat, 'lng' => $venue->lng, 'classes' => $evercisegroups))
+									@endif
+								
+							@endforeach	
+						@endif
+					@endforeach
+				@endif
+				
 			</div>
 		</div>
 		
