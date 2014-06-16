@@ -56,6 +56,7 @@ class ImageController extends \BaseController {
         }
     }
     public function getCrop() {
+            /******* ASPECT RATIO = (2.35 : 1) *******/
 
             //Don't forget to initialise the JS (initImage) from the containing controller
             return View::make('widgets/crop');

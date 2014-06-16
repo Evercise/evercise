@@ -34,3 +34,10 @@ function initDashboardPanel()
 }
 
 registerInitFunction(initDashboardPanel);
+
+function mailSent()
+{
+	trace('mail sent');
+	$('.mask').hide();
+	$('.login_wrap, .modal').remove();
+}

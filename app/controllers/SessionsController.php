@@ -400,7 +400,7 @@ class SessionsController extends \BaseController {
 			));
 		}
 
-		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
+		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId, 'callback' => 'mailSent']);
 	}
 
 	/*
