@@ -15,7 +15,7 @@
 			<p>{{ $evercisegroup->description }}</p>
 		</div>
 		<hr class="col12">
-
+		@if($members)
 		<!-- chart s to diaplsy members info when done -->
 		<div class="row12">
 			<div class="donut-chart">
@@ -117,7 +117,11 @@
 			@endforeach
 		</div>
 		
-	
+		@else
+			<div class="row12">
+				<div class="session-table">No members have signed up for this class yet</div>
+			</div>
+		@endif
 
 	</div>
 

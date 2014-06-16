@@ -25,6 +25,7 @@ class EvercisegroupsController extends \BaseController {
 				$totalMembers = array();
 				$totalCapacity = array();
 
+				// TODO - this counts past dates as well as future. Probably shouldn't
 				foreach ($evercisegroups as $key => $value) {
 
 					$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
@@ -95,7 +96,7 @@ class EvercisegroupsController extends \BaseController {
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>120, 'step'=>5, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>99, 'step'=>1, 'value'=>1))));
 
-        JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
+        JavaScript::put(array('initImage' => json_encode(['ratio' => 'group_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
 		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
@@ -238,7 +239,12 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 			if ($evercisegroup['Evercisesession']->isEmpty())
 			{
-				return Redirect::route('evercisegroups.index');
+				//return Redirect::route('evercisegroups.index');
+
+				return View::make('sessions.index')
+					->with('evercisegroup' , $evercisegroup )
+					->with('directory' , $directory)
+					->with('members' , 0 );
 			}
 			else
 			{

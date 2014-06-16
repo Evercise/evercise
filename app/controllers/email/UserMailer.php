@@ -16,6 +16,7 @@ class UserMailer extends Mailer {
 		$events->listen('user.newpassword', 'email\UserMailer@newPassword');
 		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
 		$events->listen('session.mail_all', 'email\UserMailer@mailAll');
+		$events->listen('session.mail_trainer', 'email\UserMailer@mailTrainer');
 	}
 
 	/**
@@ -101,6 +102,22 @@ class UserMailer extends Mailer {
 		$data['subject'] = $subject;
 
 		foreach($userList as $name => $email)
+		{
+			$data['name'] = $name;
+			$this->sendTo($email, $subject, $view, $data );
+		}
+	}
+	public function mailTrainer($trainer, $user, $group, $dateTime, $subject, $body)
+	{
+		$subject = $subject;
+		$view = 'emails.session.trainer';
+		$data['user_name'] = $user;
+		$data['body'] = $body;
+		$data['group'] = $group;
+		$data['dateTime'] = $dateTime;
+		$data['subject'] = $subject;
+
+		foreach($trainer as $name => $email)
 		{
 			$data['name'] = $name;
 			$this->sendTo($email, $subject, $view, $data );

@@ -703,16 +703,17 @@ nav{
 	.class-thumb{
 		border: 1px solid @grey;
 		padding: 10px;
+		overflow: hidden;
 		.border-radius();
 		.class-thumb-wrap{
-			position: relative;
-			height: 130px;
-			overflow: hidden;
+			
+				overflow: hidden;
+				height: 135px;
+				width: 317px;
+				margin-left: -52px;
 			.border-radius();
 			.class-thumb-img{
-				position: absolute;
-				top: 50%;
-				margin-top: -108px;
+				width:100%
 			}	
 		}		
 	}
@@ -1404,6 +1405,12 @@ nav{
 		img.class-block-img{
 			width:100%;
 		}	
+	}
+	.class-block-img-crop{
+		overflow: hidden;
+		height: 135px;
+		width: 317px;
+		margin-left: -52px;
 	}
 	
 	h3{

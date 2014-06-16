@@ -16,7 +16,7 @@ class UserEditComposer {
 
     	$markPref = User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
 
-		JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
+		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		$view->with('firstName', $firstName)
 			->with('lastName', $lastName)
 			->with('dob', $dob)

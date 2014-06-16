@@ -1,5 +1,20 @@
-function initImage()
+
+var user_ratio = 1;
+var group_ratio = 2.35;
+var ratio = 1;
+var previewHeight = 100;
+
+function setRatio(r)
 {
+    trace('setting ratio: '+window[r])
+    ratio = window[r];
+    $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
+}
+
+function initImage(params)
+{
+    //trace('initImage ratio: '+JSON.parse(params).ratio );
+    setRatio(JSON.parse(params).ratio);
     var options = { 
         beforeSubmit:  showRequest,
         success:       showResponse,
@@ -7,7 +22,7 @@ function initImage()
         }; 
      $('body').delegate('#image','change', function(){
          $('#upload').ajaxForm(options).submit();   
-        trace("uploading image ...");
+        trace("uploading image ... "+ratio);
      }); 
 }        
 registerInitFunction(initImage);
@@ -37,16 +52,17 @@ function showResponse(response, statusText, xhr, form)  {
         $('.preview img').attr('src', response.image_url);
         $('#img-crop img').attr('src', response.image_url);
         $('#upload').attr('action', response.postCrop);
-        initCrop();
+        $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
+        initCrop(ratio);
         postCroppedImage();
         trace("init postCroppedImage");
     }
 }
 
-function initCrop()
+function initCrop(ratio)
 {
     $('#img-crop img').imgAreaSelect({
-        aspectRatio: '1:1',
+        aspectRatio: ratio + ':1',
         fadeSpeed: 300,
         handles: true,
         onSelectEnd: saveCroppedImage,
@@ -142,6 +158,8 @@ function postCroppedImage()
                 });
                 trace(data.uploadView);
                 $('#upload_wrapper').html(data.uploadView);
+
+                $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 //$('.preview img').attr('src', data.newImage);
                 $('#thumbFilename').val(data.thumbFilename);
                

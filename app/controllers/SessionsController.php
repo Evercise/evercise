@@ -384,17 +384,22 @@ class SessionsController extends \BaseController {
 			$subject = Input::get('mail_subject');
 			$body = Input::get('mail_body');
 
+			$dateTime = Evercisesession::where('id', $sessionId)->pluck('date_time');
 			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
 			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
-			$userDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
+			$trainerDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
 
-			$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
-			$email = $userDetails['email'];
+			$name = $trainerDetails['first_name'] . ' ' . $trainerDetails['last_name'];
+			$email = $trainerDetails['email'];
 			$userList = [$name => $email];
 
-			Event::fire('session.mail_all', array(
+			$userName = $this->user->first_name . ' ' . $this->user->last_name;
+
+			Event::fire('session.mail_trainer', array(
 	        	'email' => $userList, 
+	        	'user' => $userName, 
 	        	'groupName' => $groupName, 
+	        	'dateTime' => $dateTime, 
 	        	'subject' => $subject, 
 	            'body' => $body
 			));

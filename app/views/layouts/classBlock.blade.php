@@ -1,8 +1,11 @@
 <div class="class-block">
+{{-- image ratio 2.35:1 / size 317*135 --}}
 	<div class="class-block-img-wrap">
-		<a href="{{ URL::to('evercisegroups/'.$evercisegroupId) }}">
-			{{ HTML::image($image, 'class image', array('class' => 'class-block-img')); }}
-		</a> 
+		<div class="class-block-img-crop">
+			<a href="{{ URL::to('evercisegroups/'.$evercisegroupId) }}">
+				{{ HTML::image($image, 'class image', array('class' => 'class-block-img')); }}
+			</a> 
+		</div>
 	</div>
 	@if(isset($title))
 		<h3>{{ $title }}</h3>

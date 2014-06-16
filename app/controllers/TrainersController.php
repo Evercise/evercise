@@ -57,7 +57,7 @@ class TrainersController extends \BaseController {
 		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
 		JavaScript::put(array('initTrainerTitles' => 1 )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('titles' => json_encode($titles), ));
-		JavaScript::put(array('initImage' => 1 )); // Initialise image JS.
+		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
 
 
