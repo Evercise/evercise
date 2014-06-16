@@ -202,6 +202,9 @@ class TrainersController extends \BaseController {
 			$website = Input::get('website');
 
 			$trainer = Trainer::find($id);
+
+			if ($this->user->id != $trainer->user_id) return Response::json(['callback' => 'fail']);
+
 			$speciality = Speciality::where('name', $discipline)->where('titles', $title)->first();
 			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
 
@@ -212,7 +215,8 @@ class TrainersController extends \BaseController {
 			));
 
 			$result = array(
-		            'sp' =>  $speciality
+		            'sp' =>  $speciality,
+		            'callback' => 'successAndRefresh'
 		         );	
 
 			return Response::json($result);

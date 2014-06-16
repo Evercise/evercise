@@ -258,7 +258,7 @@ class UsersController extends \BaseController {
 	{
 		if (!Sentry::check()) return Redirect::route('home');
 
-		JavaScript::put(array('initPut' => 1 ));
+		JavaScript::put(array('initPut' => json_encode(['']) ));
 		JavaScript::put(array('initUsers' => 1 ));
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
 
@@ -354,7 +354,7 @@ class UsersController extends \BaseController {
 			}
 			*/
 
-			return Response::json();
+			return Response::json(['callback' => 'successAndRefresh']);
 
 		}
 		//return Response::json($result);
@@ -475,7 +475,7 @@ class UsersController extends \BaseController {
     		{
     			$this->user->password = $newPassword;
     			$this->user->save();
-    			return Response::json(['result'=>'changed']);
+    			return Response::json(['result'=>'changed', 'callback' => 'successAndRefresh']);
     		}
     		return Response::json(['validation_failed' => 1, 'errors' => ['old_password'=>'Current password incorrect']]);
     	}

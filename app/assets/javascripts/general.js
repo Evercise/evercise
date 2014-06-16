@@ -276,7 +276,7 @@ function initPut () {
                   */
                   var callback = data.callback;
 
-                  window[callback]();
+                  window[callback](data, form);
 
                   /*setTimeout(function() {
                       window.location.href = '';
@@ -287,6 +287,20 @@ function initPut () {
 
       return false;
   });
+}
+
+function successAndRefresh(data, form)
+{
+  form.find('.success_msg').show();
+  setTimeout(function() {
+      window.location.href = '';
+  }, 300);
+}
+function fail(data, form)
+{
+  setTimeout(function() {
+      window.location.href = './';
+  }, 300);
 }
 
 registerInitFunction(initPut);
