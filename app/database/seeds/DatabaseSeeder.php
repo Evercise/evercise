@@ -31,6 +31,9 @@ class DatabaseSeeder extends Seeder {
 
         $this->call('VenuesTableSeeder');
         $this->command->info('Venues seeded!');
+
+        $this->call('HistorytypesTableSeeder');
+        $this->command->info('history type seeded!');
 	}
 
 }

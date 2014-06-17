@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrainerhistoryTable extends Migration {
+class CreateHistorytypesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateTrainerhistoryTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('trainerhistory', function(Blueprint $table) {
+		Schema::create('historytypes', function(Blueprint $table) {
 			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('historytype_id')->unsigned();// Foreign key
-			$table->string('message');
+			$table->string('name');
+			$table->string('description');
 			$table->timestamps();
 		});
 	}
@@ -29,7 +28,7 @@ class CreateTrainerhistoryTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('trainerhistory');
+		Schema::drop('historytypes');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 

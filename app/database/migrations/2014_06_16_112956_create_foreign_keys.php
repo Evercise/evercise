@@ -41,6 +41,7 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('trainerhistory', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('historytype_id')->references('id')->on('historytypes');
 		});
 		Schema::table('user_has_categories', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');

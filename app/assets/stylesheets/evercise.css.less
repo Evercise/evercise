@@ -1207,7 +1207,7 @@ nav{
 				.heading-font(500);
 				float: left;
 			}
-			.btn-yellow{
+			.btn{
 				.column(2);
 				margin: 0;
 				float: right;
@@ -1679,7 +1679,8 @@ nav{
 .user-block-wrap{
 	width: 100%;
 	float: left;
-	padding: 20px 0;
+	padding: 20px 0 21px;
+	.box-sizing();
 	img.user-block-image{
 		height: 62px;
 		float: left;
@@ -1849,9 +1850,47 @@ nav{
 		}
 	}
 	.class-list{
-		.class-list(51%);
+		.class-list(46%);
 	}
 
+}
+
+.activity-list {
+	&.activity_1{ .activity_list(@activty_1); }
+	&.activity_2{ .activity_list(@activty_2); }
+	&.activity_3{ .activity_list(@activty_3); }
+	&.activity_4{ .activity_list(@activty_4); }
+	&.activity_5{ .activity_list(@activty_5); }
+}
+
+.activity_list(@activty_colour){
+	float: left;
+	width: 92%;
+	margin-left: 20px;
+	border-bottom: 1px dashed @grey;
+	padding: 17px 20px;
+	position: relative;
+	p{
+		float: left;
+		width: 90%;
+	}
+	span{
+		float: right;
+		color: #999;
+		.font-size(1.4);
+	}
+
+		
+	&:after{
+		position: absolute;
+		top: 0px;
+		left: -20px;
+		bottom: 0px;
+		width: 20px;
+		display: inline-block;
+		content: '';
+		background: @activty_colour;
+	}
 }
 
 /* class list  */
@@ -1911,6 +1950,11 @@ nav{
 		strong{
 			
 		}
+		.mail_trainer{
+			img{
+				margin-top: -7px;
+			}
+		}
 		.list-row{
 			width: 100%;
 			float: left;
@@ -1965,6 +2009,28 @@ nav{
 			}
 		}
 	}
+}
+
+/* venue create */
+
+#venue_create_form{
+	display:none;
+	.map-wrapper{
+		width: 90%;
+	}
+}
+
+#venue_select{
+	select{
+		float: left;
+		margin-right: 20px;
+	}
+	#new_venue_button{
+		width: 160px;
+		float: left;
+		margin: 0;
+	}
+
 }
 
 
@@ -2235,6 +2301,3 @@ footer{
 	z-index: 9998;
 }
 
-#venue_create_form{
-	display:none;
-}

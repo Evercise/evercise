@@ -263,7 +263,10 @@ class EvercisegroupsController extends \BaseController {
 				}
 
 				$averageSessionMembers = round($totalSessionMembers/$i, 1);
+				$averageSessionMembers = round($totalSessionMembers/$i, 1);
 				$averageCapacity = round($totalCapacity/$i, 1);
+
+				//return '<h1>'. $averageCapacity . '</h1>';
 
 				JavaScript::put(array('mailAll' => 1 ));
 				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
@@ -486,6 +489,16 @@ class EvercisegroupsController extends \BaseController {
 	    	}
 	    	
 	    };
+
+	    foreach ($places as $key => $venue) {
+	    	if (count($venue->evercisegroup) > 0) {
+	    		$evercisegroups[] = $venue->evercisegroup;
+	    	}
+	    	
+	    }
+
+	    //return var_dump($evercisegroups);
+	    //exit;
 
 	    //return var_dump($evercisegroup_ids);
 

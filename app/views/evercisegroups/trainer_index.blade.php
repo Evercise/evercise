@@ -29,7 +29,7 @@
 				<div class="hub-block">
 					<div class="hub-title">
 						<h3>{{ $value['name'] }}</h3>
-						{{ HTML::linkRoute('evercisegroups.show', 'Class Details',$value['id'] ,array('class' => 'btn btn-yellow')) }}
+						{{ HTML::linkRoute('evercisegroups.show', 'Class Details',$value['id'] ,array('class' => 'btn btn-blue')) }}
 					</div>
 					
 					

@@ -9,6 +9,10 @@ class UsersTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        DB::table('historytypes')->delete();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
 		foreach(range(1, 10) as $index)
 		{
 			User::create([

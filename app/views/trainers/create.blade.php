@@ -6,7 +6,7 @@
 	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
     <div class="col10 push1">
         <div id="upload_wrapper">
-            @include('widgets.upload-form', array('uploadImage' => 'profiles/'.$user->directory.'/'.$user->image, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
+            @include('widgets.upload-form', array('uploadImage' => $userImage, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
         </div>
     
         {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}

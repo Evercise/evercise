@@ -73,8 +73,8 @@ function updateTimeFields()
 
     var dur = parseInt($('#session-class-duration span').html());
 
-    var dt = year+'-'+month+'-'+day+' '+hour+':'+min+':00';
-
+    var dt = year+'-'+month+'-'+day+'T'+hour+':'+min+':00';
+    trace(dt);
     var date = new Date(dt);
 
     date.setMinutes(date.getMinutes());

@@ -131,7 +131,7 @@ function MapWidgetInit() {
 function DiscoverMapWidgetInit() {
   /* style the map  */
 
-  trace(laracasts.classes);
+  //trace(laracasts.classes.evercisegroup);
 
 
   var everciseGroups = JSON.parse($('#places').val());
@@ -217,30 +217,32 @@ function DiscoverMapWidgetInit() {
     var icon = '/img/mapmark.png';
 
     for (i = 0; i < everciseGroups.length; i++) { 
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),
-        icon: icon,
-        map: map
-      });
-      markers.push(marker);
-      var latlng = new google.maps.LatLng(
-                parseFloat(everciseGroups[i].lat),
-                parseFloat(everciseGroups[i].lng));
+      if (everciseGroups[i].evercisegroup.length > 0) {
+      
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),
+          icon: icon,
+          map: map
+        });
+        markers.push(marker);
+        var latlng = new google.maps.LatLng(
+                  parseFloat(everciseGroups[i].lat),
+                  parseFloat(everciseGroups[i].lng));
 
-      bounds.extend(latlng);
-      if (infowindow) infowindow.close();
-      var contentString = '<div style="width:200px; height:130px;" class="info-window"><p style="font-size:16px; text-align:center; padding: 10px 0">'+everciseGroups[i].name+'</p></div>';
-      var infowindow = new google.maps.InfoWindow({
-          content: contentString
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,this);
-      });
+        bounds.extend(latlng);
+        if (infowindow) infowindow.close();
+        var contentString = '<div style="width:200px; height:130px;" class="info-window"><p style="font-size:16px; text-align:center; padding: 10px 0">'+everciseGroups[i].name+'</p></div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,this);
+        });
 
+      }
+      map.fitBounds(bounds);
+      //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
     }
-    map.fitBounds(bounds);
-    //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
-
   }
 
 }

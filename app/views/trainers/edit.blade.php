@@ -8,13 +8,19 @@
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
 				<ul>
-					<li data-view="profile" class="selected">Edit profile</li>
+					<li data-view="activity" class="selected">View Activity</li>
+					<li data-view="profile" >Edit profile</li>
 					<li data-view="trainer">Edit trainer details</li>
 					<li data-view="password">Change Password</li>
+					<li data-view="upcoming">Upcoming Sessions</li>
 				</ul>
 			</div>
 
 			<div class="dashboard-wrapper-right">
+				<div id="activity" class="dashboard-block">
+					<div class="dashboard-header"><h3>Activity</h3></div>
+					@include('trainers.trainerHistory')
+				</div>
 				<div id="profile" class="dashboard-block">
 					<div class="dashboard-header"><h3>Profile</h3></div>
 					@include('users.edit_form', array())
@@ -28,6 +34,9 @@
 				<div id="password" class="dashboard-block">
 					<div class="dashboard-header"><h3>Password</h3></div>
 					@include('users.changepassword')
+				</div>
+				<div id="upcoming" class="dashboard-block">		
+					@include('trainers.upcoming')
 				</div>
 				
 				

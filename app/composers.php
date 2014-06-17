@@ -19,6 +19,8 @@ require 'composers/RefineComposer.php';
 require 'composers/CategoryBoxComposer.php';
 require 'composers/VenueComposer.php';
 require 'composers/UserClassesComposer.php';
+require 'composers/TrainerHistoryComposer.php';
+require 'composers/UpcomingTrainerSessionsComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -40,3 +42,5 @@ View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('venues.select', 'VenueComposer');
 View::composer('users.edit', 'UserClassesComposer');
+View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');
+View::composer('trainers.upcoming', 'UpcomingTrainerSessionsComposer');

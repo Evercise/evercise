@@ -7,25 +7,25 @@ function initVenues()
 
 		if ($('#venue_create_form').css('display') == 'block')
 		{
-			$('#new_venue_button').html('Create new Venue');
-        	$('#venue_create_form').slideToggle(1000);
+			$('#new_venue_button').removeClass('btn-red').addClass('btn-blue').html('Create new Venue');
+        	$('#venue_create_form').slideToggle(600);
 		}
 		else
 		{
-			$('#new_venue_button').html('Cancel');
+			$('#new_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
 
 			if ($('#venue_create_form').html() == '')
 			{
 		        getView('../venues/create', function(data){
 		        	MapWidgetloadScript();
 		        	$('#venue_create_form').html(data);
-		        	$('#venue_create_form').slideToggle(1000/*, function(){initCheckboxes();}*/);
+		        	$('#venue_create_form').slideToggle(600/*, function(){initCheckboxes();}*/);
 		        	
 		        });
 		    }
 		    else
 		    {
-				$('#venue_create_form').slideToggle(1000);
+				$('#venue_create_form').slideToggle(600);
 			}
 	    }
 	});
