@@ -39,7 +39,7 @@
 							{{ Form::hidden( 'stars' , 0, array('id' => 'stars') ) }}
 
 
-						@include('form.textfield', array('fieldname'=>'feedback_text', 'placeholder'=>'What did you think?', 'maxlength'=>20,  'fieldtext'=>'' ))
+						@include('form.textfield', array('fieldname'=>'feedback_text', 'placeholder'=>'What did you think?', 'maxlength'=>400,  'fieldtext'=>'' ))
 						@if ($errors->has('feedback_text'))
 						    {{ $errors->first('feedback_text', '<p class="error-msg">:message</p>')}}
 						@endif

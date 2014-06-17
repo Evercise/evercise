@@ -14,7 +14,7 @@
 			
 	@else
 		<span>{{ HTML::linkRoute('users.edit', 'My Dashboard' , $user->id) }}</span>
-		<span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span> 
+		<!--span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span--> 
 		<hr>
 		<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
 	@endif
