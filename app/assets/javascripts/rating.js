@@ -12,7 +12,7 @@ function initAddRating()
 		}
 	};
 
-	$(".class-list").on({
+	$(".class-list-box").on({
 		keyup: function () {
 			var id = $(this).find('.list-staradd span').data('id');
 			base.checkButton(id);

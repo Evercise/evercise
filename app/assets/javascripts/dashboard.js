@@ -2,15 +2,32 @@
 
 function initDashboardPanel()
 {
-	$(document).on('click', '.trainer-dashboard-wrapper-left li', function(){
+
+    $(document).on('click','.dashboard-dropdown li.selected' ,function(){
+        $('.dashboard-dropdown li:not(.selected)').slideToggle(200);
+    } )
+
+	$(document).on('click', '.dashboard-tab li', function(){
 		$('li.selected').removeClass('selected');
 		selected = $(this);
 		var view = selected.data('view');
 		selected.addClass('selected');
+        //$('.dashboard-dropdown li:not(.selected)').hide();
 		$('.dashboard-block').hide();
 		$('#'+view).show();
 
 	})
+
+    $(document).on('click', '.dashboard-dropdown li:not(.selected)', function(){
+        $('li.selected').removeClass('selected');
+        selected = $(this);
+        var view = selected.data('view');
+        selected.addClass('selected');
+        $('.dashboard-dropdown li:not(.selected)').hide(0);
+        $('.dashboard-block').hide();
+        $('#'+view).show();
+
+    })
 	
     $('.mail_trainer').click(function(){
 
