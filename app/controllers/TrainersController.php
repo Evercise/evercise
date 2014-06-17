@@ -138,12 +138,16 @@ class TrainersController extends \BaseController {
 	 */
 	public function edit($id)
 	{
+		if (!Sentry::check()) { echo 'logged out'; exit;}
 		$trainer = Trainer::where('user_id' , $this->user->id)->first();
+		$speciality = Speciality::find($trainer->specialities_id);
 
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise dashboard panls JS.
 		JavaScript::put(array('initPut' => 1 )); // Initialise put ajax function JS.
 
-		return View::make('trainers.edit')->with('trainer', $trainer);
+		return View::make('trainers.edit')
+			->with('trainer', $trainer)
+			->with('speciality', $speciality);
 	}
 
 	/**

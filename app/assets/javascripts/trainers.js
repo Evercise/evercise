@@ -1,19 +1,20 @@
-function initTrainerTitles()
+function initTrainerTitles(p)
 {
-    if(typeof laracasts.titles !== 'undefined')
-    {
-        titles = JSON.parse(laracasts.titles);
+    var params = JSON.parse(p);
+    titles = params.titles;
+    title = params.title;
 
-        $('#discipline').on('change', function () {
-            var currentTitles = titles[this.value];
-            $("#title").empty();
+    $('#discipline').on('change', function () {
+        var currentTitles = titles[this.value];
+        $("#title").empty();
 
-            for(var i=0; i<currentTitles.length; i++)
-            {
-                $("#title").append($("<option></option>").attr("value", currentTitles[i]).text(currentTitles[i]));
-            }
-        }).change();
-    }
+        for(var i=0; i<currentTitles.length; i++)
+        {
+            $("#title").append($("<option></option>").attr("value", currentTitles[i]).text(currentTitles[i]));
+        }
+        $("#title").val(title).attr("selected", "selected");
+        trace(title)
+    }).change();
 }
 
 registerInitFunction(initTrainerTitles);

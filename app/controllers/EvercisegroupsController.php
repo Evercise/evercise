@@ -16,7 +16,8 @@ class EvercisegroupsController extends \BaseController {
 
 		if ($this->user->inGroup($trainerGroup))
 		{
-			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')->where('user_id', $this->user->id)->get();
+			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
+			->where('user_id', $this->user->id)->get();
 
 			if ($evercisegroups->isEmpty()) {
 				return View::make('evercisegroups.first_class');

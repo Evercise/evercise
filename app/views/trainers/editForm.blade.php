@@ -1,7 +1,7 @@
 
 {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
-    @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines))
+    @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines, 'selected'=>$speciality->name))
     @if ($errors->has('discipline'))
         {{ $errors->first('discipline', '<p class="error-msg">:message</p>')}}
     @endif
