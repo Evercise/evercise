@@ -35,6 +35,10 @@ class Trainerhistory extends \Eloquent {
 				$message = $params['display_name'].' has joined '.$params['name'].' at '.$params['time'].' on the '.$params['date'];
 				$typeId = 5; // these need changing so they are picked up from the database
 				break;
+    		case 'rated_session':
+				$message = $params['display_name'].' has left a review of '.$params['name'].' at '.$params['time'].' on the '.$params['date'];
+				$typeId = 6; // these need changing so they are picked up from the database
+				break;
 		}
 		if (isset($message))
 		{
