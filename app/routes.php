@@ -13,6 +13,9 @@
 
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 
+Route::group(array('before' => 'auth'), function()
+{
+});
 
 Route::resource('users', 'UsersController');
 Route::resource('sessions', 'SessionsController');

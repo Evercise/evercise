@@ -25,8 +25,13 @@ class TrainerEditFormComposer {
 		    $gyms[$gym->id] = $gym->name;
 		}
 
+		// Pass selected 'title' through to JS so the checkbox can be set after it's initialised with its array
+		$viewdata = $view->getData();
+		$speciality = $viewdata['speciality'];
+		$title = $speciality->titles;
+
 		JavaScript::put(array('titles' => json_encode($titles), ));
-		JavaScript::put(array('initTrainerTitles' => 1 )); // Initialise title swap Trainer JS.
+		JavaScript::put(array('initTrainerTitles' => json_encode(['titles' => $titles, 'title' => $title]) )); // Initialise title swap Trainer JS.
 
 		$view->with('disciplines', $disciplines)->with('gyms', $gyms);
 	}

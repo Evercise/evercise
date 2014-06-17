@@ -12,7 +12,7 @@ class Evercisegroup extends \Eloquent {
 
 	public function Evercisesession()
     {
-        return $this->hasMany('Evercisesession');
+        return $this->hasMany('Evercisesession')->orderBy('date_time', 'asc');
     }
 
     public function venue()

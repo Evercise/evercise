@@ -41,7 +41,7 @@ class UsersController extends \BaseController {
 				'last_name' => 'required|max:50|min:2',
 				'dob' => 'required',
 				'email' => 'required|email|unique:users',
-				'password' => 'required|confirmed',
+				'password' => 'required|confirmed|min:5',
 			)
 		);
 		if($validator->fails()) {
@@ -447,7 +447,7 @@ class UsersController extends \BaseController {
 			Input::all(),
 			array(
 				'old_password' => 'required',
-				'new_password' => 'required|confirmed',
+				'new_password' => 'required|confirmed|min:5',
 			)
 		);
 

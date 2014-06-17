@@ -35,7 +35,10 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+    if ( ! Sentry::check())
+    {
+        return Redirect::route('home');
+    }
 });
 
 
@@ -43,6 +46,7 @@ Route::filter('auth.basic', function()
 {
 	return Auth::basic();
 });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -78,4 +82,3 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
-

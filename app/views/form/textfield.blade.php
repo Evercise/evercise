@@ -10,7 +10,7 @@
 			{{ Form::text( $fieldname , isset($default) ? $default : '', array('placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form )) }}
 			<p>{{ $fieldtext }}</p>
 		@else
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array('placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
+			{{ Form::text( $fieldname , isset($default) ? $default : '', array('placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname)) }}
 			<p>{{ $fieldtext }}</p>
 		@endif
 	</div>
