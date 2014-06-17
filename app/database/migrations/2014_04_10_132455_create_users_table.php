@@ -12,6 +12,8 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
+		Artisan::call('migrate', ['--package' => 'cartalyst/sentry']);
+
 		Schema::table('users', function($table)
 		{
 			

@@ -458,9 +458,9 @@ class SessionsController extends \BaseController {
 		/* get session ids */
 		$sessionIds = json_decode(Input::get('session-ids'), true);
 		/* get currnet user */
-		$u = User::find($this->user->id);
+		$user = User::find($this->user->id);
 		/*pivot current user with session via session members */
-		$u->sessions()->attach($sessionIds);
+		$user->sessions()->attach($sessionIds);
 		/* create confirmation view */
 		$evercisegroupId = Input::get('evercisegroup-id');
 
@@ -483,7 +483,13 @@ class SessionsController extends \BaseController {
 			$members[] = count($value->sessionmembers); // Count those members
 			++$total;
 			$price = $price + $value->price;
+
+			$timestamp = strtotime($value->date_time);
+			$niceTime = date('h:ia', $timestamp);
+			$niceDate = date('dS F Y', $timestamp);
+		    Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'joined_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 	    }
+
 
 		return View::make('sessions.confirmation')
 					->with('evercisegroup' , $evercisegroup)
