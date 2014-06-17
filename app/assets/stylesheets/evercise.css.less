@@ -1805,6 +1805,18 @@ nav{
 			float: left;
 			width: 100%;
 			margin-top: 20px;
+			.dashboard-dropdown-selected{
+				border: 1px solid @grey;
+				display: block;
+				border-top:  1px solid @grey;
+				.border-radius();
+				background: url(/img/down-arrow.png);
+				background-repeat: no-repeat;
+				background-position: 95%  50%;
+				li{
+					display: block;
+				}
+			}
 
 			li{
 				display: none;
@@ -1812,21 +1824,14 @@ nav{
 				.heading-font(600);
 				.line-height(4.0); 
 				.box-sizing();
-				.transition(all linear 0.2s);
 
 				padding: 0 0 0 20px;
 				cursor: pointer;
-				&.selected{
-					border: 1px solid @grey;
-					display: block;
-					border-top:  1px solid @grey;
-					.border-radius();
-					background: url(/img/down-arrow.png);
-					background-repeat: no-repeat;
-					background-position: 95%  50%;
-				}
+				
+				
+				
 				&:hover{
-					background: @yellow;
+					background-color: @yellow;
 				}
 			}
 		}
@@ -1845,8 +1850,13 @@ nav{
 			margin-left: 10px;
 			border: none;
 			.dashboard-header{
-				padding: 32px 0 16px;
-				margin-bottom: 10px;
+				padding: 7px 0 22px;
+				margin-bottom: 30px;
+			}
+			.formitem{
+				&:first-of-type{
+					padding-top: 10px;
+				}
 			}
 		}
 		&:not(.user-dash){

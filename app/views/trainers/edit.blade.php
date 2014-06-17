@@ -7,12 +7,12 @@
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
-				<ul>
+				<ul class="dashboard-tab">
 					<li data-view="activity" class="selected">View Activity</li>
 					<li data-view="profile" >Edit profile</li>
 					<li data-view="trainer">Edit trainer details</li>
 					<li data-view="password">Change Password</li>
-					<li data-view="upcoming">Upcoming Sessions</li>
+				{{--	<li data-view="upcoming">Upcoming Sessions</li> --}}
 				</ul>
 			</div>
 

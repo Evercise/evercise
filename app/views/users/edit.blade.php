@@ -11,7 +11,7 @@
 					@include('users.dashboardDropdown')
 					
 				</div>
-				@include('users.dashboardTabs')
+				{{--@include('users.dashboardTabs') --}}
 			</div>
 
 			<div class="dashboard-wrapper-right user-dash">

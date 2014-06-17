@@ -3,7 +3,7 @@
 function initDashboardPanel()
 {
 
-    $(document).on('click','.dashboard-dropdown li.selected' ,function(){
+    $(document).on('click','.dashboard-dropdown-selected' ,function(){
         $('.dashboard-dropdown li:not(.selected)').slideToggle(200);
     } )
 
@@ -21,8 +21,10 @@ function initDashboardPanel()
     $(document).on('click', '.dashboard-dropdown li:not(.selected)', function(){
         $('li.selected').removeClass('selected');
         selected = $(this);
+        var clone = selected.clone();
         var view = selected.data('view');
-        selected.addClass('selected');
+        clone.addClass('selected');
+        $('.dashboard-dropdown-selected').html(clone);
         $('.dashboard-dropdown li:not(.selected)').hide(0);
         $('.dashboard-block').hide();
         $('#'+view).show();
