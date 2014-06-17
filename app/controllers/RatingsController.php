@@ -72,6 +72,15 @@ class RatingsController extends \BaseController {
 				'stars' => $stars,
 				'comment' => $comment
 			]);
+
+			$groupname = Evercisegroup::find($evercisegroup_id)->pluck('name');
+			$groupname = Evercisegroup::find($evercisegroup_id)->pluck('name');
+			$date_time = Evercisesession::find($session_id)->pluck('date_time');
+			$timestamp = strtotime($date_time);
+			$niceTime = date('h:ia', $timestamp);
+			$niceDate = date('dS F Y', $timestamp);
+		    Trainerhistory::create(array('user_id'=> $user_id, 'type'=>'rated_session', 'display_name'=>$this->user->display_name, 'name'=>$groupname, 'time'=>$niceTime, 'date'=>$niceDate));
+
 		}
 
 		return Response::json(['callback' => 'refreshpage' ,'message' => $session_id]);
