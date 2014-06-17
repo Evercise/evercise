@@ -217,7 +217,7 @@ function DiscoverMapWidgetInit() {
     var icon = '/img/mapmark.png';
 
     for (i = 0; i < everciseGroups.length; i++) { 
-      if (everciseGroups[i].evercisegroup.length > 0) {
+      if (everciseGroups[i].evercisegroup.length >= 0) {
       
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),

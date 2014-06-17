@@ -6,37 +6,40 @@
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
-				<div class="user-block-wrap">
+				<div  class="user-block-wrap">
 					@include('users.user_block')
+
+					
 				</div>
 				<ul class="dashboard-tab">
-					<li data-view="profile" class="selected">Edit profile</li>
-					<li data-view="password">Change Password</li>
+					<li data-view="classespast" class="selected">Attended Classes</li>
 					<li data-view="classesfuture">Upcoming Classes</li>
-					<li data-view="classespast">Attended Classes</li>
+					<li data-view="profile" >Edit profile</li>
+					<li data-view="password">Change Password</li>
+					
+					
 				</ul>
 			</div>
 
 			<div class="dashboard-wrapper-right user-dash">
+
+				<div id="classespast" class="dashboard-block">
+					@include('users.classespast')
+				</div>
+				<div id="classesfuture" class="dashboard-block">
+					@include('users.classesfuture')
+				</div>
+
 				<div id="profile" class="dashboard-block">
-					<div class="dashboard-header"><h3>Profile</h3></div>
 					@include('users.edit_form', array())
 				</div>
 
 				<div id="password" class="dashboard-block">
-					<div class="dashboard-header"><h3>Password</h3></div>
 					@include('users.changepassword')
 				</div>
 
-				<div id="classesfuture" class="dashboard-block">
-					<div class="dashboard-header"><h3>Upcoming Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['future'].')' : '' }}</h3></div>
-					@include('users.classesfuture')
-				</div>
+				
 
-				<div id="classespast" class="dashboard-block">
-					<div class="dashboard-header"><h3>Attended Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['past'].')' : '' }}</h3></div>
-					@include('users.classespast')
-				</div>
 				
 				
 			</div>

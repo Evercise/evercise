@@ -2,16 +2,12 @@
 	@foreach ($sessions as $session)
 		@if (new DateTime($session->date_time) < new DateTime() ) 
 			<div class="class-list">
-				<div class="class-date">
-					<div class="day">{{ date('d', strtotime($session->date_time)) }}</div>
-					<div class="month">{{ date('M', strtotime($session->date_time)) }}</div>
-					<div class="year">{{ date('Y', strtotime($session->date_time)) }}</div>
-				</div>
 				<a href="{{ URL::to('evercisegroups/'.$groups[$session->evercisegroup_id]->id) }}">
 					{{ HTML::image('profiles/'.$groups[$session->evercisegroup_id]->user->directory .'/'. $groups[$session->evercisegroup_id]->image, 'class image', array('class' => 'class-list-img')) }}
 				</a>
 				<div class="list-details">
 					<h4>{{$groups[$session->evercisegroup_id]->name}}</h4>
+					<strong>{{ date('d', strtotime($session->date_time)) }}</strong>
 					<p>{{ Str::limit($groups[$session->evercisegroup_id]->description, 115) }}</p>	
 				</div>
 				<div class="list-rating">

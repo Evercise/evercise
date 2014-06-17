@@ -464,12 +464,23 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
-        $places = Venue::with(array('evercisegroup' =>function($query) use (&$category)
+       /* $places = Venue::with(array('evercisegroup' =>function($query) use (&$category)
         {
 
         	$query->where('category_id' , $category);
 
-        }))
+        }))*/
+         $places = Venue::whereHas('evercisegroup' , function($query) use (&$category)
+        {
+
+        	$query->where('category_id' , $category);
+
+        })
+         ->with('evercisesessions')
+        /*->whereHas('evercisesessions' , function($query)
+        {
+        	$query->where('date_time', '>=',  DB::raw('UNIX_TIMESTAMP(NOW())'));
+        })*/
         //->with('evercisegroup.Evercisesession.Sessionmembers')
         //->with('evercisegroup.user')
        	->select( array('*', DB::raw($haversine . ' as distance')) )
@@ -478,6 +489,9 @@ class EvercisegroupsController extends \BaseController {
 	    ->orderBy('distance', 'ASC')
 	    ->having('distance', '<', $radius)	    
 	    ->get(); 
+
+	    //return var_dump($places);
+	   
 
 	    $evercisegroups = [];  
 	    $evercisegroup_ids = [];  

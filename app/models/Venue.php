@@ -21,4 +21,9 @@ class Venue extends \Eloquent {
 	{
 		return $this->belongsToMany('Facility', 'venue_facilities', 'venue_id', 'facility_id')->withTimestamps();
 	}
+
+	 public function evercisesessions()
+    {
+        return $this->hasManyThrough('Evercisesession', 'Evercisegroup');
+    }
 }
