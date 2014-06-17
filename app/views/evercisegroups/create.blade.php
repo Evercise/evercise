@@ -11,7 +11,7 @@
             @if(Session::has('image_full'))
                 @include('widgets.upload-form', array('uploadImage' => Session::get('image_full') , 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
             @else
-                @include('widgets.upload-form', array('uploadImage' => null, 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
+                @include('widgets.upload-form', array('uploadImage' => null, 'default_image' => 'add_eg.png' , 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
             @endif
         </div>
 

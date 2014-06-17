@@ -1,5 +1,5 @@
 <div id="upload_wrapper">
-    @include('widgets.upload-form', array('uploadImage' => $userImage, 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
+    @include('widgets.upload-form', array('uploadImage' => $userImage, 'default_image' => 'add_users.png' , 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
 </div>
 	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$user->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 

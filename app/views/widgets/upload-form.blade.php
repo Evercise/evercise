@@ -39,7 +39,7 @@
 		<div class="formfield">
 			<div class="frame" >
 			  <div class="preview" >
-			    <img src="/img/add_users.png" alt="preview image">
+			    <img src="/img/{{$default_image}}" alt="preview image">
 			  </div>
 			</div>
 			<div id='image-upload'>		

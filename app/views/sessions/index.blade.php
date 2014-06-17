@@ -118,8 +118,8 @@
 		</div>
 		
 		@else
-			<div class="row12">
-				<div class="session-table">No members have signed up for this class yet</div>
+			<div class="col12">
+				<div class="session-table"><p>No members have signed up for this class yet</p></div>
 			</div>
 		@endif
 
