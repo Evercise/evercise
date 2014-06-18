@@ -4,7 +4,7 @@
 			<header>
 				Classes
 			</header>
-			{{ HTML::linkRoute('auth.login', 'Discover fitness classes') }}
+			{{ HTML::linkRoute('evercisegroups.search', 'Discover fitness classes') }}
 		</aside>
 		<aside>
 			<header>
