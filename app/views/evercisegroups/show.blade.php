@@ -8,7 +8,7 @@
 	</div>
 	<div id="class-trainer-wrapper" class="col3">
 
-		@include('trainers.trainerBlock', array('orientation' => 'portrait', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
+		@include('trainers.trainerBlock', array('id' =>  $userTrainer->id ,'orientation' => 'portrait', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
 	</div>
 	<div class="col9">
 		<ul class="class-nav sticky-header">
@@ -49,7 +49,10 @@
 								<li>&pound;{{ $value['price'] }}</li>
 								<li> <strong>{{$members[$key]}}</strong>/{{ $evercisegroup->capacity }} </li>
 								@if (isset($membersIds[$key]))
-									@if (in_array($user->id, $membersIds[$key])) 
+
+									@if (empty($user->id))
+										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
+									@elseif (in_array($user->id, $membersIds[$key])) 
 
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 									@else

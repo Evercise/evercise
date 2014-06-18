@@ -674,6 +674,9 @@ nav{
 			background-color: @white;
 		}
 	}
+	h1,h2,h3,h4,h5,h6{
+		font-weight: 300;
+	}
 }
 
 .full-width{
@@ -1397,6 +1400,7 @@ nav{
 	.border-radius();
 	border:1px solid @grey;
 	padding: 10px;
+	margin-bottom: 20px;
 	.class-block-img-wrap{
 		height: 135px;
 		overflow: hidden;
@@ -1629,6 +1633,8 @@ nav{
 /*ratings */
 
 .rating-wrap{
+	width: 100%;
+	float: left;
 	.rating-row{
 
 		width: 100%;
@@ -1649,6 +1655,9 @@ nav{
 				position: absolute;
 				top: 50%;
 				left: -82px;
+				height: 60px;
+				width: 60px;
+				.border-radius();
 			}
 			.star_wrap{
 				display: inline;

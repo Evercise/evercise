@@ -157,13 +157,39 @@ class TrainersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$trainer = User::with('Trainer')->find($id);
+		$userTrainer = User::has('Trainer')->find($id);
+		$trainer = Trainer::where('user_id' ,$userTrainer->id)->first();
 
 		$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
 
+		$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
+			->with('venue')
+			->where('user_id', $userTrainer->id)->get();
+
+		$stars = [];
+		$evercisegroup_ids = [];
+
+		foreach ($evercisegroups as $key => $evercisegroup) {
+			$evercisegroup_ids[] = $evercisegroup->id;
+		}
+
+		if (!empty($evercisegroup_ids)) {
+	    	$ratings = Rating::with('user')->whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+
+		    foreach ($ratings as $key => $rating) {
+		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
+		    }
+
+	    }
 		
 
-		return View::make('trainers.show')->with('trainer', $trainer)->with('speciality', $speciality);
+		return View::make('trainers.show')
+				->with('userTrainer', $userTrainer)
+				->with('trainer', $trainer)
+				->with('evercisegroups', $evercisegroups)
+				->with('stars', $stars)
+				->with('ratings', $ratings)
+				->with('speciality', $speciality);
 	}
 
 	/**

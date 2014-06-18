@@ -220,77 +220,80 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		if (!Sentry::check()) return Redirect::route('home');
+		//if (Sentry::check()) {
 
-		$trainerGroup = Sentry::findGroupByName('trainer');
+		 // return Redirect::route('home');
 
-		if ($this->user->inGroup($trainerGroup))
-		{
-			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+			$trainerGroup = Sentry::findGroupByName('trainer');
 
-			if ($evercisegroup->user_id == $this->user->id) {
-				//$evercisegroup_id;
-		if ( ! Sentry::check()) return 'Not logged in';
-
-		$directory = $this->user->directory;
-		$trainerGroup = Sentry::findGroupByName('trainer');
-		
-		if ($this->user->inGroup($trainerGroup))
-		{
-			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
-			if ($evercisegroup['Evercisesession']->isEmpty())
+			if (Sentry::check() && $this->user->inGroup($trainerGroup))
 			{
-				//return Redirect::route('evercisegroups.index');
+				$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
-				return View::make('sessions.index')
-					->with('evercisegroup' , $evercisegroup )
-					->with('directory' , $directory)
-					->with('members' , 0 );
-			}
-			else
-			{
-				$i = 0;
-				$totalSessionMembers = 0;
-				$totalCapacity = 0;
-				$averageSessionMembers = 0;
-				$averageCapacity = 0;
+				if ($evercisegroup->user_id == $this->user->id) {
+					//$evercisegroup_id;
+					if ( ! Sentry::check()) return 'Not logged in';
 
-				$members = [];
-				foreach ($evercisegroup->evercisesession as $key => $value) {
-					$totalCapacity = $totalCapacity + $evercisegroup->capacity;
-					$members[$key] = count($value['Sessionmembers']); // Count those members
-					$totalSessionMembers= $totalSessionMembers + $members[$key];
-					++$i;
+					$directory = $this->user->directory;
+					$trainerGroup = Sentry::findGroupByName('trainer');
+			
+					if ($this->user->inGroup($trainerGroup))
+					{
+						$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+						if ($evercisegroup['Evercisesession']->isEmpty())
+						{
+							//return Redirect::route('evercisegroups.index');
+
+							return View::make('sessions.index')
+								->with('evercisegroup' , $evercisegroup )
+								->with('directory' , $directory)
+								->with('members' , 0 );
+						}
+						else
+						{
+							$i = 0;
+							$totalSessionMembers = 0;
+							$totalCapacity = 0;
+							$averageSessionMembers = 0;
+							$averageCapacity = 0;
+
+									$members = [];
+							foreach ($evercisegroup->evercisesession as $key => $value) {
+								$totalCapacity = $totalCapacity + $evercisegroup->capacity;
+								$members[$key] = count($value['Sessionmembers']); // Count those members
+								$totalSessionMembers= $totalSessionMembers + $members[$key];
+								++$i;
+							}
+
+							$averageSessionMembers = round($totalSessionMembers/$i, 1);
+							$averageSessionMembers = round($totalSessionMembers/$i, 1);
+							$averageCapacity = round($totalCapacity/$i, 1);
+
+							//return '<h1>'. $averageCapacity . '</h1>';
+
+							JavaScript::put(array('mailAll' => 1 ));
+							JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
+							JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
+
+							return View::make('sessions.index')
+								->with('evercisegroup' , $evercisegroup )
+								->with('directory' , $directory)
+								->with('totalSessionMembers' , $totalSessionMembers)
+								->with('totalCapacity' , $totalCapacity)
+								->with('averageSessionMembers' , $averageSessionMembers)
+								->with('averageCapacity' , $averageCapacity)
+								->with('members' , $members);
+						}
+					}
+					else
+					{
+						return Redirect::route('home');
+					}
 				}
 
-				$averageSessionMembers = round($totalSessionMembers/$i, 1);
-				$averageSessionMembers = round($totalSessionMembers/$i, 1);
-				$averageCapacity = round($totalCapacity/$i, 1);
-
-				//return '<h1>'. $averageCapacity . '</h1>';
-
-				JavaScript::put(array('mailAll' => 1 ));
-				JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
-				JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
-
-				return View::make('sessions.index')
-					->with('evercisegroup' , $evercisegroup )
-					->with('directory' , $directory)
-					->with('totalSessionMembers' , $totalSessionMembers)
-					->with('totalCapacity' , $totalCapacity)
-					->with('averageSessionMembers' , $averageSessionMembers)
-					->with('averageCapacity' , $averageCapacity)
-					->with('members' , $members);
+				return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup); // change to trainer show view
 			}
-		}
-		else
-		{
-			return Redirect::route('home');
-		}
-			}
-
-			return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup); // change to trainer show view
-		}
+		//}
 		else
 		{
 			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
@@ -492,7 +495,24 @@ class EvercisegroupsController extends \BaseController {
 	    ->get(); 
 
 	    //return var_dump($places);
-	   
+
+	    //todo swap code above for below then change loops in view
+
+	    /*
+	    $places= Evercisegroup::with('evercisesession')
+		->with(array('venue' =>function($query) use (&$haversine,&$radius)
+        {
+
+        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
+
+
+        }))
+		->where('category_id' , $category)
+		->get();
+
+		*/
+
 
 	    $evercisegroups = [];  
 	    $evercisegroup_ids = [];  
