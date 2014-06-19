@@ -11,6 +11,11 @@ class ShowWalletComposer {
 
       $balance = $wallet->balance;
 
-      $view->with('balance', $balance);
+      $history = Wallethistory::where('user_id', $id)
+      ->orderBy('id', 'asc')
+      ->get();
+
+      $view ->with('balance', $balance)
+            ->with('history', $history);
   	}
 }

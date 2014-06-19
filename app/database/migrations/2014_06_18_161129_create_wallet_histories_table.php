@@ -12,12 +12,12 @@ class CreateWalletHistoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('wallet_history', function(Blueprint $table) {
+		Schema::create('wallethistory', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->decimal('transaction_amount');
 			$table->decimal('new_balance');
-			$table->integer('session_payment_id');
+			$table->integer('sessionpayment_id');
 			$table->timestamps();
 		});
 	}
