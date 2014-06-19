@@ -12,6 +12,7 @@
 					<li data-view="profile" >Edit profile</li>
 					<li data-view="trainer">Edit trainer details</li>
 					<li data-view="password">Change Password</li>
+					<li data-view="wallet">View Wallet</li>
 				{{--	<li data-view="upcoming">Upcoming Sessions</li> --}}
 				</ul>
 			</div>
@@ -35,6 +36,11 @@
 					<div class="dashboard-header"><h3>Password</h3></div>
 					@include('users.changepassword')
 				</div>
+				<div id="wallet" class="dashboard-block">
+					<div class="dashboard-header"><h3>Wallet</h3></div>
+					@include('wallets.show')
+				</div>
+
 				<div id="upcoming" class="dashboard-block">		
 					@include('trainers.upcoming')
 				</div>

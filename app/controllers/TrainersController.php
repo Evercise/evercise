@@ -103,7 +103,9 @@ class TrainersController extends \BaseController {
 			$website = Input::get('website');
 
 			$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
-			$trainer = Trainer::create(array('user_id'=>$user->id, 'bio'=>$bio, 'specialities_id'=>$speciality, 'website'=>$website));
+			$trainer = Trainer::create(['user_id'=>$user->id, 'bio'=>$bio, 'specialities_id'=>$speciality, 'website'=>$website]);
+
+			$wallet = Wallet::create(['user_id'=>$user->id, 'amount'=>0, 'previous_amount'=>0]);
 
 			// update user image
 

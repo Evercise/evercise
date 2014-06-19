@@ -40,7 +40,12 @@ class WalletsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$wallet = Wallet::find($id);
+
+		$amount = $wallet->amount;
+
+		return View::make('wallets.show')
+				->with('amount', $amount);
 	}
 
 	/**

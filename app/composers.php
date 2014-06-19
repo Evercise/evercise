@@ -21,6 +21,7 @@ require 'composers/VenueComposer.php';
 require 'composers/UserClassesComposer.php';
 require 'composers/TrainerHistoryComposer.php';
 require 'composers/UpcomingTrainerSessionsComposer.php';
+require 'composers/ShowWalletComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -44,3 +45,4 @@ View::composer('venues.select', 'VenueComposer');
 View::composer('users.edit', 'UserClassesComposer');
 View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');
 View::composer('trainers.upcoming', 'UpcomingTrainerSessionsComposer');
+View::composer('wallets.show', 'ShowWalletComposer');
