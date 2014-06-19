@@ -68,10 +68,10 @@ class CheckSessions extends Command {
 			// If the session has members, and a sessionpayment has not already been created, create a sessionpayment
 			if (count($session->sessionmembers) && count($session->sessionpayment)==0)
 			{
-				$this->info(' ...');
-				foreach ($session->sessionmembers as $m_key => $member) {
+				$this->info(' ... adding payment of '.$total.' minus '.($commission*100).'% commission = '.$totalAfterFees.', user: '.$session->evercisegroup->user_id);
+/*				foreach ($session->sessionmembers as $m_key => $member) {
 					$this->info(' ...member... '. $member->user_id);
-				}
+				}*/
 	
 				$payment = Sessionpayment::create([
 					'user_id'=>$session->evercisegroup->user_id,

@@ -9,8 +9,8 @@ class ShowWalletComposer {
   		
       $wallet = Wallet::where('user_id', $id)->first();
 
-      $amount = $wallet->amount;
+      $balance = $wallet->balance;
 
-      $view->with('amount', $amount);
+      $view->with('balance', $balance);
   	}
 }

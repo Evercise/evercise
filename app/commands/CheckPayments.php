@@ -40,11 +40,9 @@ class CheckPayments extends Command {
 		$days = $this->option('days');
 		$this->info('checking for unprocessed payments older than '.$days.' day'.($days!=1?'s':''));
 
-		$today = new DateTime('now');
-		$yesterday = (new DateTime('now'))->sub(new DateInterval('P1D'));
+		$cutOffDate = (new DateTime('now'))->sub(new DateInterval('P'.$days.'D'));
 
-		$payments = Sessionpayment::where('created_at', '<',  $today)
-		->where('created_at', '>',  $yesterday )
+		$payments = Sessionpayment::where('created_at', '<',  $cutOffDate)
 		->where('processed', 0)
 		->with('user.wallet')
 		->get();
@@ -54,8 +52,8 @@ class CheckPayments extends Command {
 			$currentBalance = $payment->user->wallet->balance;
 			$newBalance = $currentBalance + $payment->total_after_fees;
 
-			$this->info('payment id: '.$payment->total.'  : '.$currentBalance.' : '.$newBalance);
-			Wallet::where('id', $payment->user->wallet->id)->update(['balance'=>$newBalance]);
+			$this->info('processing payment. id: '.$payment->id.', total after fees: '.$payment->total_after_fees.', new balance: '.$newBalance);
+			Wallet::where('id', $payment->user->wallet->id)->update(['balance'=>$newBalance, 'previous_balance'=>$currentBalance]);
 
 			$payment->update(['processed'=>1]);
 		}
@@ -81,7 +79,7 @@ class CheckPayments extends Command {
 	protected function getOptions()
 	{
 		return array(
-			array('days', null, InputOption::VALUE_OPTIONAL, 'How many days to search back.', 1),
+			array('days', null, InputOption::VALUE_OPTIONAL, 'How many days to search back.', 3),
 		);
 	}
 
