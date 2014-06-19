@@ -15,6 +15,16 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Evercisesession')->orderBy('date_time', 'asc');
     }
 
+    public function futuresessions()
+    {
+        return $this->hasMany('Evercisesession')->where('date_time', '>=',DB::raw('NOW()'))->orderBy('date_time', 'asc');
+    }
+
+    public function pastsessions()
+    {
+        return $this->hasMany('Evercisesession')->where('date_time', '<',DB::raw('NOW()'))->orderBy('date_time', 'asc');
+    }
+
     public function venue()
     {
         return $this->belongsTo('Venue');

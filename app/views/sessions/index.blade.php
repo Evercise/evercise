@@ -80,7 +80,11 @@
 								<div class="session-members-row">
 							@endif
 							<div class="session-members-col">
-								{{ HTML::image('profiles/'.$val['Users']['directory'].'/'.$val['Users']['image'], 'session members profile image' , array('class' => 'session-list-profile')); }}
+								@if($val->users->image != '')
+									{{ HTML::image('profiles/'.$val->users->directory.'/'. $val->users->image, $memberUser->display_name , array('title' => $val->users->display_name ,'class' => 'session-list-profile')) }}
+								@else
+									{{ HTML::image('img/no-user-img.jpg', $val->users->display_name , array('title' => $val->users->display_name ,'class' => 'session-list-profile')) }}
+								@endif
 								<div class="session-list-info">
 									<p>{{ $val['Users']['display_name'] }}</p>
 									<p>Joined on the {{ date('dS-M', strtotime($val['created_at']) )  }}</p>

@@ -9,5 +9,5 @@
 
 	{{ Form::select( 'category' , $types ) }}
 	{{ Form::select( 'radius' , $radiuses ) }}
-	{{ Form::submit('Search classes' , array('class'=>'btn btn-darkyellow ')) }}
+	{{ Form::submit('Search classes' , array('class'=>'btn btn-yellow ')) }}
 {{ Form::close() }}

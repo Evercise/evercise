@@ -160,7 +160,11 @@
 					
 
 					@foreach ($memberUsers as $key => $memberUser)
-						{{ HTML::image('profiles/'.$memberUser->directory.'/'.$memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+						@if($memberUser->image != '')
+							{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+						@else
+							{{ HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+						@endif
 					@endforeach
 				</div>
 			</div>

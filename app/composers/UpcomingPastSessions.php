@@ -36,6 +36,6 @@ class UpcomingPastSessions {
 
 	    $key = (isset($viewdata['EGindex'])) ? $viewdata['EGindex'] : $viewdata['key'];
 	    //$key = $viewdata['EGindex'] ;
-	    $view->with('futureDates', $futureDates)->with('pastDates', $pastDates)->with('key', $key);
+	   // $view->with('futureDates', $futureDates)->with('pastDates', $pastDates)->with('key', $key);
 	}
 }

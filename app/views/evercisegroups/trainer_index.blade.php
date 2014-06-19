@@ -35,7 +35,8 @@
 					
 					
 					<div class="date-list" id="date-list-{{ $key }}">
-						@include('sessions.date_list' , array( 'ids' => $value['Evercisesession'] ))
+					{{--var_dump($value->futuresessions)--}}
+						@include('sessions.date_list' , array( 'evercisegroupId' => $value['id'], 'ids' => $value['Evercisesession'] , 'futuresessions' => $value->futuresessions , 'pastsessions' => $value->pastsessions ))
 					</div>
 					<div class="hub-buttons">
 					<a href="evercisegroups/clone_evercisegroups/{{$value['id']}}" class="btn">Clone Class{{ HTML::image('/img/clone_icon.png', 'clone icon' , array('class' => 'evercisegroup-icon')) }}</a>

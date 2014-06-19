@@ -4,7 +4,9 @@ class NavBarComposer {
  
   public function compose($view)
   {
-  	if ( ! Sentry::check())
+  	$trainerGroup = Sentry::findGroupByName('trainer');
+
+  	/*if ( ! Sentry::check())
 	{
 		$aboutNav = HTML::linkRoute('static.about', 'About');
 		$proNav = HTML::linkRoute('trainers.create', 'I&#039;m a trainer');
@@ -46,15 +48,16 @@ class NavBarComposer {
 
 	  	$proText = 'Be a pro';
 	}
-
+	*/
 	
 
-  	$view->with('aboutNav', $aboutNav)
-  			->with('proNav', $proNav)
-  			->with('discoverNav', $discoverNav)
-  			->with('helpNav', $helpNav)
-  			->with('joinNav', $joinNav)
-  			->with('userNav', $userNav);
-  		 
+  	$view//->with('aboutNav', $aboutNav)
+  			//->with('proNav', $proNav)
+  			//->with('discoverNav', $discoverNav)
+  			//->with('helpNav', $helpNav)
+  			//->with('joinNav', $joinNav)  			
+  			//->with('userNav', $userNav)
+  			->with('trainerGroup', $trainerGroup);
+  			 
   }
 }

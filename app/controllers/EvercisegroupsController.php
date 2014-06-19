@@ -17,6 +17,8 @@ class EvercisegroupsController extends \BaseController {
 		if ($this->user->inGroup($trainerGroup))
 		{
 			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
+			->with('futuresessions.sessionmembers')
+			->with('pastsessions')
 			->where('user_id', $this->user->id)->get();
 
 			if ($evercisegroups->isEmpty()) {
@@ -474,12 +476,28 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
+         $places= Evercisegroup::has('futuresessions')
+		->with(array('venue' =>function($query) use (&$haversine,&$radius)
+        {
+
+        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
+
+
+        }))
+        ->with('user')
+		->where('category_id' , $category)
+		->get();
+
+
+
        /* $places = Venue::with(array('evercisegroup' =>function($query) use (&$category)
         {
 
         	$query->where('category_id' , $category);
 
         }))*/
+/*
          $places = Venue::whereHas('evercisegroup' , function($query) use (&$category)
         {
 
@@ -493,13 +511,14 @@ class EvercisegroupsController extends \BaseController {
         })*/
         //->with('evercisegroup.Evercisesession.Sessionmembers')
         //->with('evercisegroup.user')
+/*
        	->select( array('*', DB::raw($haversine . ' as distance')) )
 	    ->whereBetween('lat', array(0,100))
 	    //->where('category_id' , $category)
 	    ->orderBy('distance', 'ASC')
 	    ->having('distance', '<', $radius)	    
 	    ->get(); 
-
+*/
 	    //return var_dump($places);
 
 	    //todo swap code above for below then change loops in view
@@ -520,23 +539,14 @@ class EvercisegroupsController extends \BaseController {
 		*/
 
 
+
 	    $evercisegroups = [];  
 	    $evercisegroup_ids = [];  
 	    $stars = [];
 
-	    foreach ($places as $key => $venue) {
-	    	foreach($venue->evercisegroup as $k => $eg){
-	    		$evercisegroup_ids[] = $eg->id;
-	    	}
-	    	
+	    foreach ($places as $key => $evercisegroup) {
+	    		$evercisegroup_ids[] = $evercisegroup->id;	    	
 	    };
-
-	    foreach ($places as $key => $venue) {
-	    	if (count($venue->evercisegroup) > 0) {
-	    		$evercisegroups[] = $venue->evercisegroup;
-	    	}
-	    	
-	    }
 
 	    //return var_dump($evercisegroups);
 	    //exit;

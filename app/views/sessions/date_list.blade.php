@@ -1,40 +1,18 @@
 <aside>
 	<h5>Class Stats</h5>
-	<p>
-		@if (!empty($pastDates[$key]))
-			@if (count($pastDates[$key]) == 1) 
-				Past Dates <span>{{ count($pastDates[$key])}} </span>
-			@else
-				Past Dates <span>{{ count($pastDates[$key])}}</span>
-			@endif
-		@else
-			Past Dates <span>0</span>
-		@endif
-	</p>
-	<p>
-		@if (!empty($futureDates[$key]))
-			@if (count($futureDates[$key]) == 1) 
-				Upcoming Dates <span>{{ count($futureDates[$key])}} </span>
-			@else
-				Upcoming Dates <span>{{ count($futureDates[$key])}} </span>
-			@endif
-		@else
-			Upcoming Dates <span>0</span>
-		@endif
+	<p>Past Dates <span>{{ count($pastsessions)}} </span></p>
+	<p>Upcoming Dates <span>{{ count($futuresessions)}} </span></p>
 
-	</p>
 	<div  class="stat-wrapper">
 		<p>Places Filled</p>
 		<div class="donut-chart">
 
 			@if ($totalCapacity[$key] == 0 ) 
-
+				<br>
 				<p>No Upcoming Sessions</p>
-
 			@else
 				@include('widgets.donutChart', array('label' => null, 'width' => 100 , 'id' => 'total-members-bookings-'.$key, 'total' => $totalCapacity[$key], 'fill' => isset($totalMembers[$key]) ? array_sum($totalMembers[$key]) : 0 ))
-			@endif
-			
+			@endif			
 		</div>
 	</div>
 	
@@ -43,10 +21,14 @@
 <aside>
 	<h5>Upcoming Dates</h5>
 	<ul>
-		@if (!empty($futureDates[$key]))
-			@foreach ($futureDates[$key] as $k => $futurevalue)
-			<li>{{ $futurevalue }} {{ HTML::link('sessions/' . $k , 'x',array('class' => 'session-delete', 'id' => 'delete-session-'.$key.'-'.$k,  'EGindex'=>$key)) }}</li>
-				
+		@if(count($futuresessions) >= 1)
+
+			@foreach ($futuresessions as $fs => $futuresession) 
+				@if(count($futuresession->sessionmembers) == 0)
+				<li>{{ date(' h:ia M-dS' ,strtotime($futuresession->date_time)) }}{{ HTML::link('sessions/' . $futuresession->id , 'x',array('class' => 'session-delete', 'id' => 'delete-session-'.$evercisegroupId.'-'.$futuresession->id)) }}</li>
+				@else
+					<li>{{ date(' h:ia M-dS' ,strtotime($futuresession->date_time)) }}</li> 
+				@endif
 			@endforeach
 		@else
 			No Upcoming Dates
