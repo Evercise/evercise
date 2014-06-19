@@ -11,3 +11,5 @@
 |
 */
 
+Artisan::add(new CheckSessions);
+Artisan::add(new CheckPayments);

@@ -26,6 +26,11 @@ class Evercisesession extends \Eloquent {
 		return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
 	}
 
+	public function sessionpayment()
+	{
+		return $this->hasOne('Sessionpayment');
+	}
+
 
 
 }

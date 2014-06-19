@@ -15,8 +15,8 @@ class CreateWalletsTable extends Migration {
 		Schema::create('wallets', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id');
-			$table->decimal('amount', 19, 4);
-			$table->decimal('previous_amount', 19, 4);
+			$table->decimal('balance', 19, 4);
+			$table->decimal('previous_balance', 19, 4);
 			$table->timestamps();
 		});
 	}
@@ -30,7 +30,7 @@ class CreateWalletsTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		//Schema::drop('wallets');
+		Schema::drop('wallets');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
