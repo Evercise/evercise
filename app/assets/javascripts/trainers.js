@@ -17,7 +17,7 @@ function initTrainerTitles(p)
     }).change();
 }
 
-registerInitFunction(initTrainerTitles);
+registerInitFunction('initTrainerTitles');
 
 
 function initCreateTrainer()
@@ -74,7 +74,7 @@ function initCreateTrainer()
         return false;
     });
 }
-registerInitFunction(initCreateTrainer);
+registerInitFunction('initCreateTrainer');
 
 
 function initSessionNew()

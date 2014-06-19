@@ -14,7 +14,8 @@
 // Add functions to 'initFunctions' array, to be run on document ready
 function registerInitFunction(f, always)
 {
-  functionName = /\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ];
+  trace("register: "+always+' : '+f)
+  functionName = f;///\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ];
   always = always || false;
   initFunctions.push({'name' : functionName, 'run' : f, 'always' : always});
 }
@@ -33,7 +34,8 @@ jQuery( document ).ready( function( $ )
         if (f.name == name)
         {
            initLog.push('RUNNING: '+name+' : '+laracasts[l]);
-           f.run(laracasts[l]);
+           //f.run(laracasts[l]);
+           window[f.run](laracasts[l]);
         }
       });
     }
@@ -43,8 +45,10 @@ jQuery( document ).ready( function( $ )
   {
     if(f.always)
     {
-        f.run(f.name);
-        //initLog.push("always: "+f.name);
+        //trace('ALWAYS: '+f.name);
+        initLog.push("ALWAYS: "+f.name);
+        //f.run(f.name);
+        window[f.run](f.name);
     }
   });
   trace(initLog, true);
@@ -129,7 +133,7 @@ function initLoginBox()
     $('.top-msg').fadeOut(500);
   }, 5000);
 }
-registerInitFunction(initLoginBox, true);
+registerInitFunction('initLoginBox', true);
 
 // params: name, min, max, step, value,
 // callback - a selector of a field to update with the value
@@ -159,7 +163,7 @@ function initSlider(params)
   });
   updateSlider(sliderName);
 }
-registerInitFunction(initSlider);
+registerInitFunction('initSlider');
 
 function updateSlider(sliderName)
 {
@@ -176,7 +180,7 @@ function initReadMore()
   })
 }
 
-registerInitFunction(initReadMore);
+registerInitFunction('initReadMore');
 
 
 /* use for creating charts */
@@ -225,7 +229,7 @@ function initChart(params)
 }
 
 
-registerInitFunction(initChart);
+registerInitFunction('initChart');
 
 // edit form
 
@@ -303,7 +307,7 @@ function fail(data, form)
   }, 300);
 }
 
-registerInitFunction(initPut);
+registerInitFunction('initPut');
 
 function initPlayVideo(){ 
   
@@ -312,7 +316,7 @@ function initPlayVideo(){
   });
 }
 
-registerInitFunction(initPlayVideo);
+registerInitFunction('initPlayVideo');
 
 function initSwitchView(){
     $(document).on('click','.icon-btn', function(){
@@ -324,7 +328,7 @@ function initSwitchView(){
     })
 }
 
-registerInitFunction(initSwitchView);
+registerInitFunction('initSwitchView');
 
 
 function initScrollAnchor(string) {
@@ -358,7 +362,7 @@ function initScrollAnchor(string) {
   });
 }
 
-registerInitFunction(initScrollAnchor);
+registerInitFunction('initScrollAnchor');
 
 function filterPath(string) {
   return string
@@ -384,10 +388,17 @@ function initStickHeader(){
   });
 }
 
-registerInitFunction(initStickHeader);
+registerInitFunction('initStickHeader');
 
 function refreshpage(){
   setTimeout(function() {
     window.location.href = '';
   }, 10);
+}
+
+function sendhome(data){
+  trace(data.message);
+  setTimeout(function() {
+    window.location.href = '/';
+  }, 1000);
 }

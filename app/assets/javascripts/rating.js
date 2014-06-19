@@ -67,4 +67,4 @@ function initAddRating()
 }
 
 
-registerInitFunction(initAddRating);
+registerInitFunction('initAddRating');

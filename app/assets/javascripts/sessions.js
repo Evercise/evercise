@@ -38,7 +38,7 @@ function initSessions()
     });
 
 }
-registerInitFunction(initSessions);
+registerInitFunction('initSessions');
 
 
 function updateNewSessionFields()
@@ -109,7 +109,7 @@ function initSessionListDropdown()
     })
 }
 
-registerInitFunction(initSessionListDropdown);
+registerInitFunction('initSessionListDropdown');
 
 function mailAll()
 {
@@ -153,4 +153,4 @@ function mailAll()
         return false;
     });
 }
-registerInitFunction(mailAll);
+registerInitFunction('mailAll');

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateFacilitiesTable extends Migration {
+class CreateWalletHistoriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateFacilitiesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('facilities', function(Blueprint $table) {
+		Schema::create('wallet_histories', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('name');
-			$table->string('category');
-			$table->string('image');
+			$table->integer('user_id');
+			$table->decimal('transaction_amount');
+			$table->decimal('new_balance');
+			$table->integer('session_payment_id');
 			$table->timestamps();
 		});
 	}
@@ -29,9 +30,7 @@ class CreateFacilitiesTable extends Migration {
 	 */
 	public function down()
 	{
-		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('facilities');
-		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+		Schema::drop('wallet_histories');
 	}
 
 }

@@ -80,5 +80,5 @@ function initVenues()
         return false;
     });
 }
-registerInitFunction(initVenues);
+registerInitFunction('initVenues');
 
