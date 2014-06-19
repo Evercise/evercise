@@ -1,10 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
-
 	
-	@include('trainers.trainerBlock', array('orientation' => 'landscape', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
-	<div class="col8 push2">
+	@if(count($ratings) == 0 )
+		@include('trainers.trainerBlock', array('orientation' => 'landscape', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
+
+	@else
+		@include('trainers.trainerBlock', array('orientation' => 'landscape', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
+
+	@endif
+		<div class="col8 push2">
 		<br>
 		<br>
 		<h5>{{$userTrainer->display_name}}&apos;s classes </h5>

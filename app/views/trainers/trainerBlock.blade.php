@@ -17,7 +17,14 @@
 					
 					<h4>{{$name}}</h4>
 					<h5>{{$speciality}}</h5>
-					<span class="rating">Rating</span>
+					@if(isset($trainerRating))
+						<div class="rating">
+							<span>Overall rating:</span>  
+							<div class="star_wrap">
+								@include('ratings.stars', array('rating' => $trainerRating ))
+							</div>
+						</div>
+					@endif
 					@if($orientation == 'portrait')
 							<p>{{ Str::limit($bio, 120) }}</p>
 					@else

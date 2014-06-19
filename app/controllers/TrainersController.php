@@ -169,6 +169,7 @@ class TrainersController extends \BaseController {
 			->where('user_id', $userTrainer->id)->get();
 
 		$stars = [];
+		$totalStars = 0;
 		$evercisegroup_ids = [];
 
 		foreach ($evercisegroups as $key => $evercisegroup) {
@@ -180,6 +181,7 @@ class TrainersController extends \BaseController {
 
 		    foreach ($ratings as $key => $rating) {
 		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
+		    	$totalStars = $totalStars + $rating->stars;
 		    }
 
 	    }
@@ -190,6 +192,7 @@ class TrainersController extends \BaseController {
 				->with('trainer', $trainer)
 				->with('evercisegroups', $evercisegroups)
 				->with('stars', $stars)
+				->with('totalStars', $totalStars)
 				->with('ratings', $ratings)
 				->with('speciality', $speciality);
 	}
