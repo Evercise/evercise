@@ -11,7 +11,7 @@ class WalletHistoriesTableSeeder extends Seeder {
 
 		foreach(range(1, 10) as $index)
 		{
-			WalletHistory::create([
+			Wallethistory::create([
 
 			]);
 		}

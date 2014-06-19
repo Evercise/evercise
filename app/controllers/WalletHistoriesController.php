@@ -1,6 +1,6 @@
 <?php
 
-class WalletHistoriesController extends \BaseController {
+class WallethistoriesController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
