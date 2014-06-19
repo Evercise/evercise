@@ -33,11 +33,24 @@
                     <div class="nav-end">
                         @if ($user->inGroup($trainerGroup))
                             <a  href="{{ URL::route( 'trainers.edit', $user->id ) }}">{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}</a>
-                           <li>{{ $user->display_name }}</li>
+                           <li id="displayName">{{ $user->display_name }}</li>
+                            <div id="displayName-dropdown" class="dropdown-menu">
+                                 <span>{{ HTML::linkRoute('trainers.edit', 'My Dashboard' , $user->id) }}</span>
+                                <span>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</span>
+                                <hr>
+                                <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+                            </div>
                        @else
                             <a  href="{{ URL::route( 'users.edit', $user->id ) }}">{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}</a>
                            <li>{{ $user->display_name }}</li>
+                           <div id="displayName-dropdown" class="dropdown-menu">
+                                 <span>{{ HTML::linkRoute('users.edit', 'My Dashboard' , $user->id) }}</span>
+                                <!--span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span--> 
+                                <hr>
+                                <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+                           </div>
                        @endif
+                       
                     </div>
 
                 @else
