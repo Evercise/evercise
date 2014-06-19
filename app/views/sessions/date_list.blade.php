@@ -27,7 +27,13 @@
 		<p>Places Filled</p>
 		<div class="donut-chart">
 
-			@include('widgets.donutChart', array('label' => null, 'width' => 100 , 'id' => 'total-members-bookings-'.$key, 'total' => $totalCapacity[$key], 'fill' => isset($totalMembers[$key]) ? array_sum($totalMembers[$key]) : 0 ))
+			@if ($totalCapacity[$key] == 0 ) 
+
+				<p>No Upcoming Sessions</p>
+
+			@else
+				@include('widgets.donutChart', array('label' => null, 'width' => 100 , 'id' => 'total-members-bookings-'.$key, 'total' => $totalCapacity[$key], 'fill' => isset($totalMembers[$key]) ? array_sum($totalMembers[$key]) : 0 ))
+			@endif
 			
 		</div>
 	</div>
