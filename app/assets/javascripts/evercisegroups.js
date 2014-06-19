@@ -133,7 +133,7 @@ function initEvercisegroups()
         return false;
     });
 }
-registerInitFunction(initEvercisegroups);
+registerInitFunction('initEvercisegroups');
 
 function initEvercisegroupsShow()
 {
@@ -160,7 +160,7 @@ function initEvercisegroupsShow()
         return false;
     });
 }
-registerInitFunction(initEvercisegroupsShow);
+registerInitFunction('initEvercisegroupsShow');
 
 function bindDelete()
 {
@@ -362,4 +362,4 @@ function initJoinEvercisegroup(params)
     })
 }
 
-registerInitFunction(initJoinEvercisegroup);
+registerInitFunction('initJoinEvercisegroup');

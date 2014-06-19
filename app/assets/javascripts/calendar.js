@@ -108,6 +108,6 @@ function calendarSlide () {
    
 }
 
-registerInitFunction(calendarSlide);
+registerInitFunction('calendarSlide');
 
 

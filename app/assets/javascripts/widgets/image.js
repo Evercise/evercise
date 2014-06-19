@@ -25,7 +25,7 @@ function initImage(params)
         trace("uploading image ... "+ratio);
      }); 
 }        
-registerInitFunction(initImage);
+registerInitFunction('initImage');
 
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();

@@ -9,7 +9,7 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function index()
 	{
-		if ( ! Sentry::check()) return 'Not logged in';
+		if ( ! Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
 
 		$directory = $this->user->directory;
 		$trainerGroup = Sentry::findGroupByName('trainer');
@@ -25,15 +25,21 @@ class EvercisegroupsController extends \BaseController {
 				$sessionDates = array();
 				$totalMembers = array();
 				$totalCapacity = array();
+	    		$currentDate = new DateTime();
 
-				// TODO - this counts past dates as well as future. Probably shouldn't
-				foreach ($evercisegroups as $key => $value) {
+				foreach ($evercisegroups as $key => $group) {
 
-					$sessionDates[$key] = $this->arrayDate($value->EverciseSession->lists('date_time', 'id'));
-					$totalCapacity[] =  $value->capacity;
-					foreach ($value['Evercisesession'] as $k => $val) {
-						$totalMembers[$key][] = count($val->sessionmembers);
+					$sessionDates[$key] = $this->arrayDate($group->EverciseSession->lists('date_time', 'id'));
+					//$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
+					$capacity = 0;
+					foreach ($group['Evercisesession'] as $k => $session) {
+						if ( new DateTime($session->date_time) > $currentDate )
+						{
+							$totalMembers[$key][] = count($session->sessionmembers);
+							$capacity += $group->capacity;
+						}
 					}
+					$totalCapacity[] = $capacity;
 
 				}
 
@@ -69,7 +75,7 @@ class EvercisegroupsController extends \BaseController {
 	public function create()
 	{
 
-		if ( ! Sentry::check()) return 'Not logged in';
+		if ( ! Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
 
 		$trainerGroup = Sentry::findGroupByName('trainer');
 

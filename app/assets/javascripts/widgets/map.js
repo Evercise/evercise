@@ -288,9 +288,4 @@ function MapWidgetloadScript(params) {
 //window.onload = MapWidgetloadScript;
 // Initialised from general.js using laracast.
 
-registerInitFunction(MapWidgetloadScript);
-
-
-function PostMapInit() {
-
-}
+registerInitFunction('MapWidgetloadScript');

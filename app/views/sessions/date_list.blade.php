@@ -26,13 +26,8 @@
 	<div  class="stat-wrapper">
 		<p>Places Filled</p>
 		<div class="donut-chart">
-		@if(isset($totalMembers[$key]))
-			@include('widgets.donutChart', array('label' => null, 'width' => 100 , 'id' => 'total-members-bookings-'.$key,'total' => $totalCapacity[$key], 'fill' => array_sum($totalMembers[$key]) ))
 
-		@else
-			@include('widgets.donutChart', array('label' => null, 'width' => 100 , 'id' => 'total-members-bookings-'.$key,'total' => $totalCapacity[$key], 'fill' => 0 ))
-		@endif
-
+			@include('widgets.donutChart', array('label' => null, 'width' => 100 , 'id' => 'total-members-bookings-'.$key, 'total' => $totalCapacity[$key], 'fill' => isset($totalMembers[$key]) ? array_sum($totalMembers[$key]) : 0 ))
 			
 		</div>
 	</div>

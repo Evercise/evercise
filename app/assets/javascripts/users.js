@@ -20,7 +20,7 @@ function initLogin()
         return false;
     });
 }
-registerInitFunction(initLogin, true);
+registerInitFunction('initLogin', true);
 
 function initUsers()
 {
@@ -146,7 +146,7 @@ function initUsers()
       this.value = this.checked ? 'yes' : 'no';
     }).change();
 }
-registerInitFunction(initUsers);
+registerInitFunction('initUsers');
 
 /*function initChangePassword()
 {

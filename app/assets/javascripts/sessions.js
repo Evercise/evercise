@@ -38,7 +38,7 @@ function initSessions()
     });
 
 }
-registerInitFunction(initSessions);
+registerInitFunction('initSessions');
 
 
 function updateNewSessionFields()
@@ -74,7 +74,7 @@ function updateTimeFields()
     var dur = parseInt($('#session-class-duration span').html());
 
     var dt = year+'-'+month+'-'+day+'T'+hour+':'+min+':00';
-    trace(dt);
+    //trace(dt);
     var date = new Date(dt);
 
     date.setMinutes(date.getMinutes());
@@ -109,7 +109,7 @@ function initSessionListDropdown()
     })
 }
 
-registerInitFunction(initSessionListDropdown);
+registerInitFunction('initSessionListDropdown');
 
 function mailAll()
 {
@@ -153,4 +153,4 @@ function mailAll()
         return false;
     });
 }
-registerInitFunction(mailAll);
+registerInitFunction('mailAll');

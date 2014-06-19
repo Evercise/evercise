@@ -52,7 +52,7 @@ function initDashboardPanel()
     });
 }
 
-registerInitFunction(initDashboardPanel);
+registerInitFunction('initDashboardPanel');
 
 function mailSent()
 {
