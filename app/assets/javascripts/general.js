@@ -12,12 +12,12 @@
 // of any parameters to pass to the JS function.
 
 // Add functions to 'initFunctions' array, to be run on document ready
-function registerInitFunction(f, always)
+function registerInitFunction(functionName, always)
 {
-  trace("register: "+always+' : '+f)
-  functionName = f;///\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ];
+  //trace("register: "+always+' : '+f)
+  //functionName = /\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ];
   always = always || false;
-  initFunctions.push({'name' : functionName, 'run' : f, 'always' : always});
+  initFunctions.push({'name' : functionName, 'always' : always});
 }
 
 // Loop through Laracasts, and run the ones that match a registered function
@@ -35,7 +35,7 @@ jQuery( document ).ready( function( $ )
         {
            initLog.push('RUNNING: '+name+' : '+laracasts[l]);
            //f.run(laracasts[l]);
-           window[f.run](laracasts[l]);
+           window[f.name](laracasts[l]);
         }
       });
     }
@@ -48,7 +48,7 @@ jQuery( document ).ready( function( $ )
         //trace('ALWAYS: '+f.name);
         initLog.push("ALWAYS: "+f.name);
         //f.run(f.name);
-        window[f.run](f.name);
+        window[f.name]();
     }
   });
   trace(initLog, true);

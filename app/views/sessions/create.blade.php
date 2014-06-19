@@ -1,7 +1,7 @@
 <div class='modal'>
 	<div id="cancel_login" class="cancel">x</div>
 	<div class="modal-head">
-		<h4>Create a class</h4>
+		<h4>Create a Session</h4>
 		<br>
 		<div id="complete-date">Date: {{ $date.'-'.$month.'-'.$year }}<span></span></div>
 	</div>
@@ -16,8 +16,8 @@
 				{{ Form::hidden( 's-date' , $date, array('id' => 's-date')) }}
 				@include('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time', 'hourDefault'=>$hour, 'minuteDefault'=>$minute))
 
-				@include('form.slider', array('fieldname'=>'s-price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$price))
-				@include('form.slider', array('fieldname'=>'s-duration', 'label'=>'Duration', 'placeholder'=>'Duration', 'maxlength'=>3, 'fieldtext'=>null, 'default'=>$duration))
+				@include('form.slider', array('fieldname'=>'s-price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>6, 'fieldtext'=>null, 'default'=>$price))
+				@include('form.slider', array('fieldname'=>'s-duration', 'label'=>'Duration', 'placeholder'=>'Duration', 'maxlength'=>6, 'fieldtext'=>null, 'default'=>$duration))
 			</div>
 			<div class="col3">
 				<div class="grey-box">

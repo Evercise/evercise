@@ -289,8 +289,3 @@ function MapWidgetloadScript(params) {
 // Initialised from general.js using laracast.
 
 registerInitFunction('MapWidgetloadScript');
-
-
-function PostMapInit() {
-
-}
