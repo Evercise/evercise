@@ -50,7 +50,7 @@ function initUsers()
                 "display_name": $( '#display_name' ).val(),
                 "first_name": $( '#first_name' ).val(),
                 "last_name": $( '#last_name' ).val(),
-                "dob": $( '#Dob' ).val(),
+                "dob": $( '#dob' ).val(),
                 "email": $( '#email' ).val(),
                 "password": $( '#password' ).val(),
                 "password_confirmation": $( '#password_confirmation' ).val(),
@@ -61,6 +61,7 @@ function initUsers()
                 trace("about to win.......");
                 if (data.validation_failed == 1)
                 {
+                    trace(data.errors);
                     trace('loose');
                     // show validation errors
                     var arr = data.errors;

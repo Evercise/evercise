@@ -93,9 +93,9 @@ class EvercisegroupsController extends \BaseController {
 		    $categoryDescriptions[$cat->id] = $cat->description;
 		}
 
-		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
-		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>120, 'step'=>5, 'value'=>1))));
-		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>99, 'step'=>1, 'value'=>1))));
+		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>120, 'step'=>0.50, 'value'=>1))));
+		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>240, 'step'=>5, 'value'=>1))));
+		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>200, 'step'=>1, 'value'=>1))));
 
         JavaScript::put(array('initImage' => json_encode(['ratio' => 'group_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
@@ -118,7 +118,7 @@ class EvercisegroupsController extends \BaseController {
 				'description' => 'required|max:500|min:100',
 				'category' => 'required',
 				'duration' => 'required|numeric|between:20,240',
-				'maxsize' => 'required|numeric|between:1,1000',
+				'maxsize' => 'required|numeric|between:1,200',
 				'price' => 'required|numeric|between:1,120',
 				'image'	=> 'required',
 				// 'lat' => 'required',

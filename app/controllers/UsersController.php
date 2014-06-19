@@ -33,16 +33,61 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
+
+		$dt = new DateTime();
+		$before = $dt->sub(new DateInterval('P16Y'));
+		$dateBefore=  $before->format('Y-m-d');
+		$after = $dt->sub(new DateInterval('P104Y'));	
+		$dateAfter=  $after->format('Y-m-d');
+
+		Validator::extend('has', function($attr, $value, $params) {
+		    if (!count($params)) {
+		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
+		    }
+		    
+		    foreach ($params as $param) {
+		        switch ($param) {
+		            case 'num':
+		                $regex = '/\pN/';
+		                break;
+		            case 'letter':
+		                $regex = '/\pL/';
+		                break;
+		            case 'lower':
+		                $regex = '/\p{Ll}/';
+		                break;
+		            case 'upper':
+		                $regex = '/\p{Lu}/';
+		                break;
+		            case 'special':
+		                $regex = '/[\pP\pS]/';
+		                break;
+		            default:
+		                $regex = $param;
+		        }
+		        
+		        if (! preg_match($regex, $value)) {
+		            return false;
+		        }
+		    }
+		    
+		    return true;
+		});
+		
+
 		$validator = Validator::make(
 			Input::all(),
-			array(
+			[
 				'display_name' => 'required|max:20|min:5|unique:users',
-				'first_name' => 'required|max:50|min:2',
-				'last_name' => 'required|max:50|min:2',
-				'dob' => 'required',
+				'first_name' => 'required|max:50|min:3',
+				'last_name' => 'required|max:50|min:3',
+				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email|unique:users',
-				'password' => 'required|confirmed|min:5',
-			)
+				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
+			],
+			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
+
+
 		);
 		if($validator->fails()) {
 			if(Request::ajax())
@@ -68,6 +113,7 @@ class UsersController extends \BaseController {
 			$password = Input::get('password');
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
+
 
 			$user = Sentry::register(array(
 				'display_name' => $display_name,

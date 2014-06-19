@@ -7,10 +7,10 @@
 	@endif
 	<div class="formfield">
 		@if( isset($form))
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array('placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form )) }}
+			{{ Form::text( $fieldname , isset($default) ? $default : '', array(  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form )) }}
 			<p>{{ $fieldtext }}</p>
 		@else
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array('placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname)) }}
+			{{ Form::text( $fieldname , isset($default) ? $default : '', array( 'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname)) }}
 			<p>{{ $fieldtext }}</p>
 		@endif
 	</div>

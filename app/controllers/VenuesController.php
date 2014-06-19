@@ -34,9 +34,11 @@ class VenuesController extends \BaseController {
 	{
 		$validator = Validator::make(
 			Input::all(),
-			array(
-				'venue_name' => 'required'
-			)
+			[
+			'venue_name' => 'required',
+				'latbox' => 'required'
+			]
+				
 		);
 		if($validator->fails()) {
 			if(Request::ajax()) return Response::json(['validation_failed' => 1, 'errors' =>  $validator->errors()->toArray() ]);

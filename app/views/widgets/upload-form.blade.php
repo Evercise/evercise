@@ -16,7 +16,7 @@
 				<div class="cover-up">
 					<span class="btn btn-blue">select file</span> 
 					<div class="cover-up-wrap">
-						<p>Accepted formats: JPG,JPEG,PNG,BMP</p>
+						<p>Accepted formats: JPG,JPEG,PNG,BMP,GIF(first frame)</p>
 					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}	 
@@ -46,7 +46,7 @@
 				<div class="cover-up">
 					<span class="btn btn-blue">select file</span> 
 					<div class="cover-up-wrap">
-						<p>Accepted formats: JPG,JPEG,PNG,BMP</p>
+						<p>Accepted formats: JPG,JPEG,PNG,BMP,GIF(first frame)</p>
 					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}	 
