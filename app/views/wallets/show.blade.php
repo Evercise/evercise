@@ -2,7 +2,7 @@
 
 	
 	<div>
-		{{ $amount }}
+		{{ $balance }}
 	</div>
 
 

@@ -14,8 +14,6 @@ class Trainer extends \Eloquent {
     {
         return $this->belongsTo('User');
     }
-
-
  
 
 }
