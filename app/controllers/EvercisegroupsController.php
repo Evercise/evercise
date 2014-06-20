@@ -129,6 +129,7 @@ class EvercisegroupsController extends \BaseController {
 				'maxsize' => 'required|numeric|between:1,200',
 				'price' => 'required|numeric|between:1,120',
 				'image'	=> 'required',
+				'gender'=> 'required',
 				// 'lat' => 'required',
 				// 'long' => 'required',
 			)
@@ -158,6 +159,7 @@ class EvercisegroupsController extends \BaseController {
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
 			$image = Input::get('image');
+			$gender = Input::get('gender');
 			// $address = Input::get('address');
 			// $city = Input::get('city');
 			// $postcode = Input::get('postcode');
@@ -180,6 +182,7 @@ class EvercisegroupsController extends \BaseController {
 				'capacity'=>$maxsize,
 				'default_price'=>$price,
 				'image' => $image,
+				'gender' => $gender,
 				// 'address'=>$address,
 				// 'town'=>$city,
 				// 'postcode'=>$postcode,
@@ -247,7 +250,10 @@ class EvercisegroupsController extends \BaseController {
 			
 					if ($this->user->inGroup($trainerGroup))
 					{
-						$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
+						$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
+						->with('Evercisesession.Sessionpayment')
+						->find($id);
+
 						if ($evercisegroup['Evercisesession']->isEmpty())
 						{
 							//return Redirect::route('evercisegroups.index');
@@ -384,28 +390,34 @@ class EvercisegroupsController extends \BaseController {
 	 * Remove the specified resource from storage.
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return Route
 	 */
 	public function destroy($id)
 	{
 
-		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
-		$name = $evercisegroup->name;
+		$evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
-		// If Evercisegroup contains Evercisesessions, delete them all.
-		if (!$evercisegroup['Evercisesession']->isEmpty())
+		// Check user id against group
+		if ($this->user->id == $evercisegroup->user_id)
 		{
-			foreach ($evercisegroup['Evercisesession'] as $value) {
-				$value->delete();
+			// Only delete if there's no members joined
+			if (count($evercisegroup->sessionmember)==0)
+			{
+				// If Evercisegroup contains Evercisesessions, delete them all.
+				if (!$evercisegroup['Evercisesession']->isEmpty())
+				{
+					foreach ($evercisegroup['Evercisesession'] as $value) {
+						$value->delete();
+					}
+				}
+				
+				// Now, delete actual Evercisegroup too.
+				$evercisegroupForDeletion = Evercisegroup::find($id);
+				$evercisegroupForDeletion->delete();
+
+				Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'deleted_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 			}
 		}
-		
-		// Now, delete actual Evercisegroup too.
-		$evercisegroupForDeletion = Evercisegroup::find($id);
-		//$evercisegroupForDeletion->delete();
-
-		Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'deleted_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
-		
 		return Route('evercisegroups.index');
 	}
 
@@ -414,29 +426,28 @@ class EvercisegroupsController extends \BaseController {
 	 * Bring up delete view in window
 	 *
 	 * @param  int  $id
-	 * @return Response
+	 * @return Route
 	 */
 	public function deleteEG($id)
 	{
 
-		$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
-		$name = $evercisegroup->name;
+		$evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
-		if (false /* If there are Users signed up */)
+		if (count($evercisegroup->sessionmember))
 		{
-			return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',3);
+			return View::make('evercisegroups.delete')->with('id','$id')->with('name',$evercisegroup->name)->with('evercisegroup',$evercisegroup)->with('deleteable',3);
 		}
 		else
 		{
-			if ($evercisegroup['Evercisesession']->isEmpty())
+			if ($evercisegroup->evercisesession->isEmpty())
 			{
 				//return $evercisegroup;
-				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',1);
+				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$evercisegroup->name)->with('evercisegroup',$evercisegroup)->with('deleteable',1);
 			}
 			else
 			{
 				//return $evercisegroup;
-				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$name)->with('evercisegroup',$evercisegroup)->with('deleteable',2);
+				return View::make('evercisegroups.delete')->with('id',$id)->with('name',$evercisegroup->name)->with('evercisegroup',$evercisegroup)->with('deleteable',2);
 			}
 		}
 		 return Redirect::route('home');

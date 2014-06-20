@@ -40,7 +40,7 @@
 					</div>
 					<div class="hub-buttons">
 					<a href="evercisegroups/clone_evercisegroups/{{$value['id']}}" class="btn">Clone Class{{ HTML::image('/img/clone_icon.png', 'clone icon' , array('class' => 'evercisegroup-icon')) }}</a>
-					<a href="evercisegroups/delete_evercisegroup/{{$value['id']}}" class="btn">Delete Class <span>X</span></a>
+					<a href="evercisegroups/delete/{{$value['id']}}" class="btn" id="delete_group">Delete Class <span>X</span></a>
 					</div>
 
 					

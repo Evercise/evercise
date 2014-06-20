@@ -7,14 +7,7 @@
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
-				<ul class="dashboard-tab">
-					<li data-view="activity" class="selected">View Activity</li>
-					<li data-view="profile" >Edit profile</li>
-					<li data-view="trainer">Edit trainer details</li>
-					<li data-view="password">Change Password</li>
-					<li data-view="wallet">View Wallet</li>
-				{{--	<li data-view="upcoming">Upcoming Sessions</li> --}}
-				</ul>
+				@include('trainers.dashboardDropdown')
 			</div>
 
 			<div class="dashboard-wrapper-right">
@@ -40,9 +33,13 @@
 					<div class="dashboard-header"><h3>Wallet</h3></div>
 					@include('wallets.show')
 				</div>
-
-				<div id="upcoming" class="dashboard-block">		
-					@include('trainers.upcoming')
+				<div id="classespast" class="dashboard-block">
+					<div class="dashboard-header"><h3>Attended Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['past'].')' : '' }}</h3></div>
+					@include('users.classespast')
+				</div>
+				<div id="classesfuture" class="dashboard-block">
+					<div class="dashboard-header"><h3>Upcoming Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['future'].')' : '' }}</h3></div>
+					@include('users.classesfuture')
 				</div>
 				
 				

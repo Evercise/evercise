@@ -41,7 +41,7 @@ class CheckSessions extends Command {
 		$this->info('checking for sessions in the last '.$days.' day'.($days!=1?'s':''));
 
 		$today = new DateTime('now');
-		$yesterday = (new DateTime('now'))->sub(new DateInterval('P1D'));
+		$yesterday = (new DateTime('now'))->sub(new DateInterval('P'.$days.'D'));
 
 		$sessions = Evercisesession::where('date_time', '<',  $today)
 		->where('date_time', '>',  $yesterday )

@@ -43,6 +43,7 @@ View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('venues.select', 'VenueComposer');
 View::composer('users.edit', 'UserClassesComposer');
+View::composer('trainers.edit', 'UserClassesComposer');
 View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');
 View::composer('trainers.upcoming', 'UpcomingTrainerSessionsComposer');
 View::composer('wallets.show', 'ShowWalletComposer');

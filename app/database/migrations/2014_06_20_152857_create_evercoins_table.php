@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateWalletsTable extends Migration {
+class CreateEvercoinsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateWalletsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('wallets', function(Blueprint $table) {
+		Schema::create('evercoins', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key;
-			$table->decimal('balance', 19, 4);
-			$table->decimal('previous_balance', 19, 4);
+			$table->integer('balance');
 			$table->timestamps();
 		});
 	}
@@ -30,7 +29,7 @@ class CreateWalletsTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('wallets');
+		Schema::drop('evercoins');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 

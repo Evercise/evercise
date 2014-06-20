@@ -88,7 +88,7 @@ class CheckPayments extends Command {
 	protected function getOptions()
 	{
 		return array(
-			array('days', null, InputOption::VALUE_OPTIONAL, 'How many days to search back.', 3),
+			array('days', null, InputOption::VALUE_OPTIONAL, 'How many days old records should be before processing.', 3),
 		);
 	}
 

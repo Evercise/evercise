@@ -53,13 +53,13 @@
 						@endif
 						{{ Form::submit('Leave Feedback' , array('class'=>'btn btn-yellow disabled')) }}
 					{{ Form::close() }}
-				@else
-					<h6>Your Feedback</h6>
+					@else
+						<h6>Your Feedback</h6>
 
-					<div class="rating-block">
-						<p>{{ $ratings[$session->id]['comment'] }}</p>
-					</div>
-				@endif
+						<div class="rating-block">
+							<p>{{ $ratings[$session->id]['comment'] }}</p>
+						</div>
+					@endif
 
 				</div>
 			</div>
