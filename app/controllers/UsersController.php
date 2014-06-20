@@ -139,6 +139,9 @@ class UsersController extends \BaseController {
 
 			$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreference_id'=>$chosenPreference));
 */
+
+			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
+
 			$activation_code = $user->getActivationCode();
 
 			if($user) {
