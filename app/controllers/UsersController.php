@@ -444,7 +444,8 @@ class UsersController extends \BaseController {
 		    {
 		        // User activation passed
 		        $display_name = $user->display_name;
-				return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
+				//return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
+				return View::make('home')->with('notification', 'Your account has been successfuly activated');
 		    }
 		}
 	    if (!$user)

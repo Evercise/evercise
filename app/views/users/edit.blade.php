@@ -12,6 +12,7 @@
 					
 				</div>
 				{{--@include('users.dashboardTabs') --}}
+				@include('evercisegroups.recommended')
 			</div>
 
 			<div class="dashboard-wrapper-right user-dash">

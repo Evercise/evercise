@@ -30,8 +30,8 @@
                 @endif
                 --}}
                 @if(isset($user))
-                    <div class="nav-end">
-                        @if ($user->inGroup($trainerGroup))
+                    @if ($user->inGroup($trainerGroup))
+                        <div class="nav-end">
                             <a  href="{{ URL::route( 'trainers.edit', $user->id ) }}">{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}</a>
                             <li id="displayName">
                                 {{ $user->display_name }}
@@ -43,7 +43,9 @@
                                 <hr>
                                 <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
                             </div>
-                       @else
+                        </div>                       
+                   @else
+                       <div class="nav-end">
                             <a  href="{{ URL::route( 'users.edit', $user->id ) }}">{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}</a>
                            <li id="displayName">
                                 {{ $user->display_name }}
@@ -55,9 +57,11 @@
                                 <hr>
                                 <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
                            </div>
-                       @endif
-                       
-                    </div>
+                       </div>
+                       <div class="nav-join">
+                            <li>{{  HTML::linkRoute('trainers.create', 'Register as Trainer')}}</li>
+                       </div>
+                   @endif
 
                 @else
                     <div class="nav-end">

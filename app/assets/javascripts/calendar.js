@@ -19,8 +19,9 @@ function calendarSlide () {
     	class_top.push($(this).offset().top);
     	class_height.push($(this).height());
         class_duration.push($(this).data('duration'));
-    })
 
+    })
+    trace(class_height);
     // set i
     var i = 0;
     var p = -1;
@@ -28,8 +29,6 @@ function calendarSlide () {
     mt = parseInt($('#calendar').css('marginTop'));
     topmt = mt;
     bottom = parseInt(class_height[class_height.length - 1] + mt);
-
-    trace(bottom);
 
     // get window position
 
@@ -53,6 +52,7 @@ function calendarSlide () {
     	} 
         else if( y > class_top[class_top.length - 1] ){
             trace('bottom');
+            /*
             $('#calendar-wrapper').css({
                 marginTop: bottom+ 'px',
                 '-webkit-transition': 'all 0.5s ease',
@@ -60,6 +60,7 @@ function calendarSlide () {
                 '-o-transition': 'all 0.5s ease',
                 'transition': 'all 0.5s ease'
             });
+            */
             $('#evercisegroupId').val(class_id.length-1);
             $('#evercisegroupName').val(class_name.length-1);
             $('#evercisegroupDuration').val(class_duration.length-1);

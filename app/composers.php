@@ -22,6 +22,7 @@ require 'composers/UserClassesComposer.php';
 require 'composers/TrainerHistoryComposer.php';
 require 'composers/UpcomingTrainerSessionsComposer.php';
 require 'composers/ShowWalletComposer.php';
+require 'composers/RecommendedClassesComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -46,3 +47,5 @@ View::composer('users.edit', 'UserClassesComposer');
 View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');
 View::composer('trainers.upcoming', 'UpcomingTrainerSessionsComposer');
 View::composer('wallets.show', 'ShowWalletComposer');
+View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
+View::composer('home', 'RecommendedClassesComposer');
