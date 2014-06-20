@@ -72,7 +72,7 @@ class CreateForeignKeys extends Migration {
 
 		Schema::table('sessionpayments', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('session_id')->references('id')->on('sessions');
+			$table->foreign('evercisesession_id')->references('id')->on('evercisesession_id');
 		});
 
 		Schema::table('wallets', function(Blueprint $table) {
