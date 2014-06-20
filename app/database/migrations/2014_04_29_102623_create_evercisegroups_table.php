@@ -20,11 +20,7 @@ class CreateEvercisegroupsTable extends Migration {
 			$table->string('name', 45);
 			$table->string('title', 45);
 			$table->string('description', 255);
-			$table->string('address', 45)->nullable();
-			$table->string('town', 45)->nullable();
-			$table->string('postcode', 45)->nullable();
-			$table->decimal('lat', 10, 8);
-			$table->decimal('lng', 11, 8);
+			$table->tinyInteger('gender');
 			$table->string('image', 100);
 			$table->integer('capacity');
 			$table->integer('default_duration');

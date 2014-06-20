@@ -88,6 +88,8 @@
                 {{ $errors->first('price', '<p class="error-msg">:message</p>')}}
             @endif
 
+            @include('form.select', array('fieldname'=>'gender', 'label'=>'Target Gender', 'values'=>array(0=>'Unisex',1=>'Male', 2=>'Female')))
+
             @if(Session::has('image'))
                 {{ Form::hidden( 'thumbFilename' , Session::get('image') , array('id' => 'thumbFilename')) }}
             @else

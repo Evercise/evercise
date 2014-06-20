@@ -23,6 +23,7 @@ require 'composers/TrainerHistoryComposer.php';
 require 'composers/UpcomingTrainerSessionsComposer.php';
 require 'composers/ShowWalletComposer.php';
 require 'composers/RecommendedClassesComposer.php';
+require 'composers/ShowEvercoinComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -44,8 +45,11 @@ View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('venues.select', 'VenueComposer');
 View::composer('users.edit', 'UserClassesComposer');
+View::composer('trainers.edit', 'UserClassesComposer');
 View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');
 View::composer('trainers.upcoming', 'UpcomingTrainerSessionsComposer');
 View::composer('wallets.show', 'ShowWalletComposer');
 View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
 View::composer('home', 'RecommendedClassesComposer');
+View::composer('evercoins.show', 'ShowEvercoinComposer');
+

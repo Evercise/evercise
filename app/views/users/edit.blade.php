@@ -36,6 +36,11 @@
 					@include('users.changepassword')
 				</div>
 
+				<div id="evercoins" class="dashboard-block">
+					<div class="dashboard-header"><h3>Evercoins</h3></div>
+					@include('evercoins.show')
+				</div>
+
 				
 
 				

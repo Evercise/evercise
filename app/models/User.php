@@ -102,5 +102,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->hasOne('Wallet');
     }
 
+	public function evercoin()
+    {
+        return $this->hasOne('Evercoin');
+    }
+
 
 }

@@ -14,10 +14,10 @@ class CreateWalletHistoriesTable extends Migration {
 	{
 		Schema::create('wallethistory', function(Blueprint $table) {
 			$table->increments('id');
-			$table->integer('user_id');
+			$table->integer('user_id')->unsigned();// Foreign key;
+			$table->integer('sessionpayment_id')->unsigned();// Foreign key;
 			$table->decimal('transaction_amount');
 			$table->decimal('new_balance');
-			$table->integer('sessionpayment_id');
 			$table->timestamps();
 		});
 	}
@@ -31,7 +31,7 @@ class CreateWalletHistoriesTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		//Schema::drop('wallet_history');
+		Schema::drop('wallet_history');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 

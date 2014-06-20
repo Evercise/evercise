@@ -28,6 +28,13 @@
 			@include('evercisegroups.category_box', array('category' =>  $evercisegroup->category_id))
 			<br>
 			<p>{{ $evercisegroup->description }}</p>
+			<br/>
+			<p>Gender: 
+				@if ($evercisegroup->gender == 0) Unisex
+				@elseif ($evercisegroup->gender == 1) Male
+				@elseif ($evercisegroup->gender == 2) Female
+				@endif
+			</p>
 						
 		</div>
 		<div class="class-wrap" id="sessions">

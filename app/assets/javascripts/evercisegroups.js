@@ -29,6 +29,7 @@ function initEvercisegroups()
                 "maxsize": $( '#maxsize' ).val(),
                 "price": $( '#price' ).val(),
                 "image": $( '#thumbFilename' ).val(),
+                "gender": $( '#gender' ).val(),
                 // "address": $( '#street' ).val() + ' '+ $( '#street' ).val(),
                 // "city": $( '#city' ).val(),
                 // "postcode": $( '#postcode' ).val(),
@@ -69,7 +70,7 @@ function initEvercisegroups()
         return false;
     });
 
-    $('.hub-block .btn-red').click(function(){
+    $('.hub-block #delete_group').click(function(){
         var url = $(this).attr('href');
         console.log('delete '+url);
 

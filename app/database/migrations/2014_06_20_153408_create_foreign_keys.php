@@ -69,6 +69,23 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('venue_id')->references('id')->on('venues');
 			$table->foreign('facility_id')->references('id')->on('facilities');
 		});
+
+		Schema::table('sessionpayments', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('session_id')->references('id')->on('sessions');
+		});
+
+		Schema::table('wallets', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users');
+		});
+
+		Schema::table('wallethistory', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('sessionpayment_id')->references('id')->on('sessionpayments');
+		});
+
+		Schema::table('evercoins', function(Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users');		});
 	}
 
 

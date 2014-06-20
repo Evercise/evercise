@@ -77,7 +77,7 @@ Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.f
 //Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
 Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
-Route::post('/evercisegroups/delete_evercisegroups/{id}', array('as' => 'evercisegroups.delete_evercisegroups', 'uses' => 'EvercisegroupsController@deleteEG'));
+Route::post('/evercisegroups/delete/{id}', array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG'));
 /* geo evercise groups for searching */
 
 Route::get('/evercisegroups/search/{id}', array('as' => 'evercisegroups.search', 'uses' => 'EvercisegroupsController@searchEg'));
