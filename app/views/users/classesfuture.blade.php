@@ -35,7 +35,7 @@
 							<div>{{ HTML::link("/sessions/".$session->id."/leave", 'Leave Session', array('data-href' => "/sessions/".$session->id."/leave", 'class'=>'btn-leave-session')) }}
 							</div>
 						@else
-							<p>You cannot leave this session as it takes place in under 2 days</p>
+							<p>You cannot leave this session as it takes place in less than two days</p>
 						@endif
 					</div>
 				</div>

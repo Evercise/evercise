@@ -500,7 +500,7 @@ class SessionsController extends \BaseController {
 					->with('sessionIds' , $sessionIds);
 	}
 
-	function getleaveSession($id)
+	function getLeaveSession($id)
 	{
 		$session = Evercisesession::find($id);
 
@@ -517,7 +517,7 @@ class SessionsController extends \BaseController {
 		->with('session', $session)
 		->with('status', $status);
 	}
-	public function postleaveSession($id)
+	public function postLeaveSession($id)
 	{
 		$session = Evercisesession::find($id);
 
@@ -557,6 +557,17 @@ class SessionsController extends \BaseController {
 		}
 
 
+	}
+	function getPayWithEvercoins($id)
+	{
+		$session = Evercisesession::find($id);
+
+		return View::make('sessions.paywithevercoins')
+		->with('session', $session);
+	}
+	public function postPayWithEvercoins($id)
+	{
+		return Response::json(['message' => ' yeah man ', 'callback' => 'paidWithEvercoins']);
 	}
 
 }

@@ -306,7 +306,7 @@ function initJoinEvercisegroup(params)
         if (total > 0) {
             $('#session-checkout').removeClass('disabled');
         };
-    })
+    });
 
     $(document).on('click','.undo-btn' , function(){
         var sessionId = $(this).data('session');
@@ -335,7 +335,7 @@ function initJoinEvercisegroup(params)
         if (total == 0) {
             $('#session-checkout').addClass('disabled');
         };
-    })
+    });
 
     $(document).on('click','.btn-cancel-session' , function(){
         var sessionId = $(this).data('session');
@@ -361,7 +361,33 @@ function initJoinEvercisegroup(params)
 
         $('#total-sessions').html(total);
         $('#total-price').html(price);
-    })
+    });
+
+
+    $('.btn-paywithevercoins').click(function(){
+
+        var url = $(this).data('href');
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                //trace('data : '+ data);
+                $('.mask').show();
+                $('.container').append(data);
+                initPut();
+             }
+        );
+
+        return false;
+    });
 }
 
 registerInitFunction('initJoinEvercisegroup');
+
+function paidWithEvercoins()
+{
+    trace('paidWithEvercoins');
+}
