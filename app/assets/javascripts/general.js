@@ -235,6 +235,7 @@ registerInitFunction('initChart');
 
 // NOW gets the method from the form and sends via that method
 function initPut () {
+  trace("init Put");
   $( '.create-form, .update-form' ).on( 'submit', function() {
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
       trace('submitting via initPut. Method: '+ method);

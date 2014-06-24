@@ -500,4 +500,63 @@ class SessionsController extends \BaseController {
 					->with('sessionIds' , $sessionIds);
 	}
 
+	function getleaveSession($id)
+	{
+		$session = Evercisesession::find($id);
+
+		$sessionDate = new DateTime($session->date_time);
+		$now = new DateTime();
+		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+
+		if ($sessionDate > $fivedaystime ) $status = 2;
+		else if ($sessionDate > $twodaystime ) $status = 1;
+		else $status = 0;
+
+		return View::make('sessions.leave')
+		->with('session', $session)
+		->with('status', $status);
+	}
+	public function postleaveSession($id)
+	{
+		$session = Evercisesession::find($id);
+
+		$sessionDate = new DateTime($session->date_time);
+		$now = new DateTime();
+		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+
+		if ($sessionDate > $fivedaystime ) $status = 2;
+		else if ($sessionDate > $twodaystime ) $status = 1;
+		else $status = 0;
+
+		if ($status > 0)
+		{
+			$user = User::find($this->user->id);
+			$user->sessions()->detach($session->id);
+
+			$refund = ($status == 1 ? ($session->price / 2) : $session->price);
+
+			$refundInEvercoins = $this->poundsToEvercoins($refund);
+
+			$evercoin = Evercoin::where('user_id', $user->id)->first();
+			$balanceBefore = $evercoin->balance;
+			$balanceAfter = $balanceBefore + $refundInEvercoins;
+			$evercoin->update(['balance' => $balanceAfter]);
+
+			$evercisegroup = Evercisegroup::find($session->evercisegroup_id);
+			$niceTime = date('h:ia', strtotime($session->date_time));
+			$niceDate = date('dS F Y', strtotime($session->date_time));
+			Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'left_session_'.($status == 1 ? 'half' : 'full'), 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+
+			return Response::json(['message' => ' session: '.$id, 'callback' => 'leftSession']);
+		}
+		else
+		{
+			return Response::json(['message' => ' Cannot leave session ']);
+		}
+
+
+	}
+
 }

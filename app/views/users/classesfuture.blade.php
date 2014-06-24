@@ -10,7 +10,7 @@
 				
 				<div class="list-details">
 					<h4>{{$groups[$session->evercisegroup_id]->name}}</h4>
-					<strong>{{ date('H:ia M-y', strtotime($session->date_time)) }}</strong>
+					<strong>{{ date('H:ia d-M-y', strtotime($session->date_time)) }}</strong>
 					<p>{{ Str::limit($groups[$session->evercisegroup_id]->description, 115) }}</p>	
 				</div>
 				<div class="list-info">
@@ -30,6 +30,13 @@
 						<br>
 						<span>Mail Trainer</span>
 						{{ HTML::decode(HTML::linkRoute('sessions.mail_trainer', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$session->id, 'trainerId' => $groups[$session->evercisegroup_id]->user_id), array('class'=>'mail_trainer session-icon '))) }}
+
+						@if( (new DateTime($session->date_time)) > (new DateTime())->add(new DateInterval('P2D')))
+							<div>{{ HTML::link("/sessions/".$session->id."/leave", 'Leave Session', array('data-href' => "/sessions/".$session->id."/leave", 'class'=>'btn-leave-session')) }}
+							</div>
+						@else
+							<p>You cannot leave this session as it takes place in under 2 days</p>
+						@endif
 					</div>
 				</div>
 				

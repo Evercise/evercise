@@ -8,4 +8,5 @@
 	<li data-view="trainer">Edit trainer details</li>
 	<li data-view="password">Change Password</li>
 	<li data-view="wallet">View Wallet</li>
+	<li data-view="evercoins">Evercoins</li>
 </ul>

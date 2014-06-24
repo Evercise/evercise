@@ -39,6 +39,14 @@ class Trainerhistory extends \Eloquent {
 				$message = $params['display_name'].' has left a review of '.$params['name'].' at '.$params['time'].' on the '.$params['date'];
 				$typeId = 6; // these need changing so they are picked up from the database
 				break;
+    		case 'left_session_full':
+				$message = $params['display_name'].' has left '.$params['name'].' at '.$params['time'].' on the '.$params['date'].' with a full refund';
+				$typeId = 7; // these need changing so they are picked up from the database
+				break;
+    		case 'left_session_half':
+				$message = $params['display_name'].' has left '.$params['name'].' at '.$params['time'].' on the '.$params['date'].' with a 50% refund';
+				$typeId = 8; // these need changing so they are picked up from the database
+				break;
 		}
 		if (isset($message))
 		{
