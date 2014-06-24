@@ -25,7 +25,7 @@
 						@if (isset($stars[$evercisegroup->id])) 
 							@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng, ))
 							@else
-							@include('evercisegroups.discover_classes_list', array('rating' => 0, 'lat'=> $evercisegroup-> venue->lat, 'lng' => $evercisegroup->venue->lng))
+							@include('evercisegroups.discover_classes_list', array('rating' => 0, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng))
 						@endif
 								
 								

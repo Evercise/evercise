@@ -3,7 +3,7 @@
 		<nav>		
 			<ul>
 				<a href="{{ URL::route('home', null) }}">{{ HTML::image('/img/evercise logo yellow.png', 'evercise logo', array('class' => 'logo')); }}</a>
-                <li>{{HTML::linkRoute('static.about', 'How it works')}}</li>
+                <li>{{HTML::linkRoute('static.how_it_works', 'How it works')}}</li>
                 {{--
                 @if(isset($aboutNav))
                     <li>{{ $aboutNav }}</li>

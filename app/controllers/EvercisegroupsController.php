@@ -487,7 +487,7 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
-        $places= Evercisegroup::has('futuresessions')
+        $evercisegroups= Evercisegroup::has('futuresessions')
 		->with(array('venue' =>function($query) use (&$haversine,&$radius)
         {
 
@@ -551,11 +551,11 @@ class EvercisegroupsController extends \BaseController {
 
 
 
-	    $evercisegroups = [];  
+	    //$evercisegroups = [];  
 	    $evercisegroup_ids = [];  
 	    $stars = [];
 
-	    foreach ($places as $key => $evercisegroup) {
+	    foreach ($evercisegroups as $key => $evercisegroup) {
 	    		$evercisegroup_ids[] = $evercisegroup->id;	    	
 	    };
 
@@ -573,14 +573,15 @@ class EvercisegroupsController extends \BaseController {
 
 	    }
 
-	    JavaScript::put(array('classes' => json_encode($places) ));
+	   // JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
 	    JavaScript::put(array('initSwitchView' => 1 ));
+	    JavaScript::put(array('InitSearchForm' => 1 ));
 
 	    return View::make('evercisegroups.search')
-	    		->with('places' , $places)
+	    		->with('places' , $evercisegroups)
 	    		->with('stars' , $stars)
-	    		->with('evercisegroups' , $places);
+	    		->with('evercisegroups' , $evercisegroups);
 	    		//->with('members' , $members);
 	}	
 

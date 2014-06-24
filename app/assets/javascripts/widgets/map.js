@@ -133,9 +133,7 @@ function DiscoverMapWidgetInit() {
 
   //trace(laracasts.classes.evercisegroup);
 
-
   var everciseGroups = JSON.parse($('#places').val());
-  trace(everciseGroups, true);
 
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>Your search returned 0 results, please refine your search');
@@ -217,21 +215,21 @@ function DiscoverMapWidgetInit() {
     var icon = '/img/mapmark.png';
 
     for (i = 0; i < everciseGroups.length; i++) { 
-      if (everciseGroups[i].evercisegroup.length >= 0) {
-      
+      var venue = everciseGroups[i].venue;
+      if (venue) {
         marker = new google.maps.Marker({
-          position: new google.maps.LatLng(everciseGroups[i].lat, everciseGroups[i].lng),
+          position: new google.maps.LatLng(venue.lat, venue.lng),
           icon: icon,
           map: map
         });
         markers.push(marker);
         var latlng = new google.maps.LatLng(
-                  parseFloat(everciseGroups[i].lat),
-                  parseFloat(everciseGroups[i].lng));
+                  parseFloat(venue.lat),
+                  parseFloat(venue.lng));
 
         bounds.extend(latlng);
         if (infowindow) infowindow.close();
-        var contentString = '<div style="width:200px; height:130px;" class="info-window"><p style="font-size:16px; text-align:center; padding: 10px 0">'+everciseGroups[i].name+'</p></div>';
+        var contentString = '<div style="width:200px; height:130px;" class="info-window"><p style="font-size:16px; text-align:center; padding: 10px 0">'+venue.name+'</p></div>';
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
@@ -289,3 +287,28 @@ function MapWidgetloadScript(params) {
 // Initialised from general.js using laracast.
 
 registerInitFunction('MapWidgetloadScript');
+
+function InitSearchForm(){
+   $(".search-form").submit(function(){
+      var isFormValid = true;
+
+      $("input").each(function(){
+          if ($.trim($(this).val()).length == 0){
+              $(this).addClass("highlight");
+              $(this).val($(this).data('default'));
+              isFormValid = true;
+          }
+          else{
+              $(this).removeClass("highlight");
+          }
+      });
+
+     // if (!isFormValid) alert("Please fill in all the required fields (indicated by *)");
+
+      return isFormValid;
+  });
+ 
+}
+
+registerInitFunction('InitSearchForm');
+

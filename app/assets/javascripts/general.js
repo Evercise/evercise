@@ -310,10 +310,12 @@ function fail(data, form)
 registerInitFunction('initPut');
 
 function initPlayVideo(){ 
-  
-  $('.video').click(function(){
-    this.paused?this.play():this.pause();
-  });
+  $(document).on('click', '.play-button' , function(){
+    $(this).fadeToggle(600 ,function(){
+      $('.video').fadeToggle(600).delay(100).get(0).play();
+    })
+  })
+    
 }
 
 registerInitFunction('initPlayVideo');
@@ -322,13 +324,36 @@ function initSwitchView(){
     $(document).on('click','.icon-btn', function(){
         $('.icon-btn').removeClass('selected');
         $(this).addClass('selected');
-        var view = $(this).data('view')
+        var view = $(this).data('view');
         $('.tab-view').removeClass('selected');
         $('#'+view).addClass('selected');
     })
 }
 
 registerInitFunction('initSwitchView');
+
+function InitAccordian(){
+  $(document).on('click', '.tab-header', function(){
+    var tab = $(this).data('tab');
+
+    if ($(this).hasClass('selected') ) {
+      $(this).removeClass('selected');
+      $('#'+tab).slideUp(500);
+      $('#'+tab).removeClass('selected');
+    }else{
+      $('.tab-header').removeClass('selected');
+      $(this).addClass('selected');
+      $('.tab-body.selected').slideUp(500);
+      $('#'+tab).slideDown(500);
+      $('.tab-body').removeClass('selected');
+      $('#'+tab).addClass('selected');
+    
+    };
+    
+  })
+}
+
+registerInitFunction('InitAccordian');
 
 
 function initScrollAnchor(string) {

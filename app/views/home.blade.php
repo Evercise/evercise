@@ -7,39 +7,44 @@
 <div class="container-full">
 	<div class="video-placeholder">
 		
-	{{ HTML::image('img/play-vid.png','play video', array('class' => 'play-button')) }}
-	</div>
-</div>
-<div class="search-box">
-	<div class="container-full">
-		<div class="search-box-wrap">
-			<h4>Search for a class or instructor near you</h4>
-			@include('evercisegroups.refine')
-		</div>
-		
+		{{ HTML::image('img/play-vid.png','play video', array('class' => 'play-button')) }}
+
+		<video id="video" class="video" controls>
+			<source src="/video/evercise944.mov"  type="video/mp4" />
+		</video>
 	</div>
 </div>
 
+
 <div class="home-body">
+	<div class="search-box">
+		<div class="container-full">
+			<div class="search-box-wrap">
+				<h4>Search for a class or instructor near you</h4>
+				@include('evercisegroups.refine')
+			</div>
+			
+		</div>
+	</div>
 	<div class="step_wrapper">
 		<div class="container-full">
 			<h4>Get fit with Evercise in four simple steps:</h4>
 			<hr>
 
-			<div id="step_1" class="home_step one_t">
-				{{ HTML::image('img/search_classes.png','search for classes', array('class' => 'home-step-img')) }}
+			<div id="step_1" class="four-step">
+				{{ HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')) }}
 				<h6>Search fitness classes</h6>
 			</div>
-			<div id="step_2" class="home_step">
-				{{ HTML::image('img/join_up.png','join up', array('class' => 'home-step-img')) }}
+			<div id="step_2" class="four-step">
+				{{ HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img')) }}
 				<h6>Sign up to a class online</h6>
 			</div>
-			<div id="step_3" class="home_step">
-				{{ HTML::image('img/get_fit.png','get fit', array('class' => 'home-step-img')) }}
+			<div id="step_3" class="four-step">
+				{{ HTML::image('img/Class.png','get fit', array('class' => 'home-step-img')) }}
 				<h6>Show up and shape up!</h6>
 			</div>
-			<div id="step_4" class="home_step">
-				{{ HTML::image('img/get_fit.png','get fit', array('class' => 'home-step-img')) }}
+			<div id="step_4" class="four-step">
+				{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
 				<h6>Rate and review</h6>
 			</div>
 		</div>

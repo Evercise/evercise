@@ -5,9 +5,9 @@
 	@else
 		{{ Form::hidden( 'places' ,null , array('id' => 'places')) }}
 	@endif
-	{{ Form::text( 'location' , null, array('placeholder' => 'Enter Location', 'maxlength' => 50)) }}
+	{{ Form::text( 'location' , null, array('placeholder' => 'Enter Location', 'maxlength' => 50 , 'data-default' => 'london')) }}
 
 	{{ Form::select( 'category' , $types ) }}
-	{{ Form::select( 'radius' , $radiuses ) }}
-	{{ Form::submit('Search classes' , array('class'=>'btn btn-yellow ')) }}
+	{{ Form::select( 'radius' , $radiuses , 25 ) }}
+	{{ Form::submit('Find a Class' , array('class'=>'btn btn-yellow ')) }}
 {{ Form::close() }}
