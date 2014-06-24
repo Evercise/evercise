@@ -29,17 +29,25 @@
 					<div class="dashboard-header"><h3>Password</h3></div>
 					@include('users.changepassword')
 				</div>
+				
 				<div id="wallet" class="dashboard-block">
 					<div class="dashboard-header"><h3>Wallet</h3></div>
 					@include('wallets.show')
 				</div>
+
 				<div id="classespast" class="dashboard-block">
 					<div class="dashboard-header"><h3>Attended Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['past'].')' : '' }}</h3></div>
 					@include('users.classespast')
 				</div>
+
 				<div id="classesfuture" class="dashboard-block">
 					<div class="dashboard-header"><h3>Upcoming Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['future'].')' : '' }}</h3></div>
 					@include('users.classesfuture')
+				</div>
+
+				<div id="evercoins" class="dashboard-block">
+					<div class="dashboard-header"><h3>Evercoins</h3></div>
+					@include('evercoins.show')
 				</div>
 				
 				

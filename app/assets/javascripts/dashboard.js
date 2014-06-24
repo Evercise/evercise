@@ -50,13 +50,43 @@ function initDashboardPanel()
 
         return false;
     });
+
+    $('.btn-leave-session').click(function(){
+
+        var url = $(this).data('href');
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                //trace('id: '+ data);
+                $('.mask').show();
+                $('.container').append(data);
+                initPut();
+             }
+        );
+
+        return false;
+    });
 }
 
 registerInitFunction('initDashboardPanel');
 
 function mailSent()
 {
-	trace('mail sent');
-	$('.mask').hide();
-	$('.login_wrap, .modal').remove();
+    trace('mail sent');
+    $('.mask').hide();
+    $('.login_wrap, .modal').remove();
+}
+
+function leftSession(data)
+{
+	trace('left session : '+(data.message));
+	//$('.mask').hide();
+	//$('.login_wrap, .modal').remove();
+    setTimeout(function() {
+        window.location.href = '';
+    }, 1000);
 }

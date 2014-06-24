@@ -19,20 +19,22 @@
 				<li class="hd">No. Joined</li>
 				<li class="hd">Cancel</li>
 				<ul>
-
-					@foreach ($evercisegroup->evercisesession as $key => $value)
-							<div class="session-list-row">
-								<li>{{ date('M-dS' , strtotime($value['date_time'])) }}</li>
-								<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
-								<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60))}}
-								<li>&pound;{{ $value['price'] }}</li>
-								<li> <strong>
-								{{$members[$key] ? $members[$key] : 0}}
-								</strong>/{{ $evercisegroup->capacity }} </li>
-								<li><button data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-cancel-session btn btn-red">Cancel</button></li>
-							</div>
+					@foreach ($evercisegroup->evercisesession as $key => $session)
+						<div class="session-list-row">
+							<li>{{ date('M-dS' , strtotime($session['date_time'])) }}</li>
+							<li>{{ date('h:ia' , strtotime($session['date_time'])) }}</li>
+							<li>{{ date('h:ia' , strtotime($session['date_time']) + ( $session['duration'] * 60))}}
+							<li>&pound;{{ $session['price'] }}</li>
+							<li> <strong>
+							{{$members[$key] ? $members[$key] : 0}}
+							</strong>/{{ $evercisegroup->capacity }} </li>
+							<li><button data-price="{{ $session['price'] }}" data-session="{{$session->id}}" class="btn-cancel-session btn btn-red">Cancel</button></li>
+						</div>
 					@endforeach
 				</ul>
+				<div class="pay-with-evercoins">
+					<button data-href="/sessions/{{$session->id}}/paywithevercoins" data-session="{{$session->id}}" class="btn-paywithevercoins btn btn-yellow">Pay with Evercoins</button>
+				</div>
 				<div class="session-total">
 					{{ Form::open(array('id' => 'join-sessions', 'url' => 'sessions/pay', 'method' => 'post', 'class' => '')) }}
 						<span>Total Sessions: <span id="total-sessions">{{ isset($totalSessions) ? $totalSessions : 0}}</span></span>

@@ -198,6 +198,7 @@ class UsersController extends \BaseController {
 			$userGroup = Sentry::findGroupById(2);
 			$user->addGroup($userGroup);
 
+			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 
 			//$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
 

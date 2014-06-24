@@ -25,6 +25,8 @@ require 'composers/ShowWalletComposer.php';
 require 'composers/RecommendedClassesComposer.php';
 require 'composers/ShowEvercoinComposer.php';
 require 'composers/AccordionComposer.php';
+require 'composers/PayWithEvercoinsComposer.php';
+
 
 View::composer('home', 'HomePageComposer');
 View::composer('layouts.header', 'NavBarComposer');
@@ -54,4 +56,6 @@ View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
 View::composer('home', 'RecommendedClassesComposer');
 View::composer('evercoins.show', 'ShowEvercoinComposer');
 View::composer('static.how_it_works', 'AccordionComposer');
+View::composer('sessions.paywithevercoins', 'PayWithEvercoinsComposer');
+
 
