@@ -13,7 +13,7 @@ function initLogin()
         .done(
             function(data) { 
                 $('.mask').show();
-                $('.container').append(data);
+                $('.lower_footer').append(data);
                 login();
              }
         );
