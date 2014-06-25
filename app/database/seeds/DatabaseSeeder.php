@@ -34,6 +34,9 @@ class DatabaseSeeder extends Seeder {
 
         $this->call('HistorytypesTableSeeder');
         $this->command->info('history type seeded!');
+
+        $this->call('AreacodesTableSeeder');
+        $this->command->info('areacode type seeded!');
 	}
 
 }

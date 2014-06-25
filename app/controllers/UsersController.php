@@ -123,7 +123,7 @@ class UsersController extends \BaseController {
 				'email' => $email,
 				'password' => $password,
 				'gender' => $gender,
-				'activated' => false,
+				'activated' => true,
 			));
 
 			$userGroup = Sentry::findGroupById(1);
@@ -142,22 +142,30 @@ class UsersController extends \BaseController {
 
 			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 
-			$activation_code = $user->getActivationCode();
+			
 
 			if($user) {
 				if(Request::ajax())
 	        	{
+
+	        		$activation_code = $user->getActivationCode();
+					
 					Event::fire('user.signup', array(
 		            	'email' => $user->email, 
 		            	'display_name' => $user->display_name, 
 		                'activationCode' => $activation_code
 		            ));
+		            
 
 					$this->makeUserDir($user);
 
 					$user->save();
 
-					return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
+					Sentry::login($user, true);
+
+					//return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
+					return Response::json(route('users.edit', $user->id));
+					//return Redirect::route('users.edit', $user->display_name);
 					//return Response::json($newsletter); // for testing
 				}
 			}

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration {
 			$table->string('display_name', 45);
 			$table->tinyInteger('gender');
 			$table->timestamp('dob');
+			$table->string('area_code', 20);
 			$table->string('phone', 20);
 			$table->string('directory', 45);
 			$table->string('image', 45);

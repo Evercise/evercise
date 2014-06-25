@@ -26,10 +26,13 @@ class UserMailer extends Mailer {
 	 * @param  string $activationCode 		
 	 * @return bool
 	 */
+
+
 	public function welcome($email, $display_name, $activation_code)
 	{
 		$subject = 'Welcome to Evercise';
-		$view = 'emails.auth.welcome';
+		//$view = 'emails.auth.welcome'; // use for validation email
+		$view = 'emails.user.welcome';
 		$data['display_name'] = $display_name;
 		$data['activation_code'] = $activation_code;
 		$data['email'] = $email;

@@ -75,7 +75,7 @@
 						</div>
 						<div class="tab-body" id="search">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/register.png','register as trainer', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -89,7 +89,7 @@
 						</div>
 						<div class="tab-body" id="class">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/Class.png','create classes', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -103,7 +103,7 @@
 						</div>
 						<div class="tab-body" id="show">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/create_class.png','add sessions', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -117,7 +117,7 @@
 						</div>
 						<div class="tab-body" id="rate">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/withdraw.png','manage account', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -133,7 +133,7 @@
 						{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow'))}}
 					</div>
 					<div id="step_1" class="four-step one_t">
-						{{ HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')) }}
+						{{ HTML::image('img/register.png','register as trainer', array('class' => 'home-step-img')) }}
 						<h6>Register</h6>
 						<ul>
 							<li>List item</li>
@@ -145,7 +145,7 @@
 						</ul>
 					</div>
 					<div id="step_2" class="four-step">
-						{{ HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img')) }}
+						{{ HTML::image('img/Class.png','create a class', array('class' => 'home-step-img')) }}
 						<h6>Create a Class</h6>
 						<ul>
 							<li>List item</li>
@@ -157,7 +157,7 @@
 						</ul>
 					</div>
 					<div id="step_3" class="four-step">
-						{{ HTML::image('img/Class.png','get fit', array('class' => 'home-step-img')) }}
+						{{ HTML::image('img/create_class.png','add sessions', array('class' => 'home-step-img')) }}
 						<h6>Add Sessions</h6>
 						<ul>
 							<li>List item</li>
@@ -169,7 +169,7 @@
 						</ul>
 					</div>
 					<div id="step_4" class="four-step">
-						{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+						{{ HTML::image('img/withdraw.png','manage trainer', array('class' => 'home-step-img')) }}
 						<h6>Manage Account</h6>
 						<ul>
 							<li>List item</li>
