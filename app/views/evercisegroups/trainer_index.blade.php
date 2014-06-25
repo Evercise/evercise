@@ -35,7 +35,7 @@
 					
 					
 					<div class="date-list" id="date-list-{{ $key }}">
-					{{--var_dump($value->futuresessions)--}}
+					
 						@include('sessions.date_list' , array( 'evercisegroupId' => $value['id'], 'ids' => $value['Evercisesession'] , 'futuresessions' => $value->futuresessions , 'pastsessions' => $value->pastsessions ))
 					</div>
 					<div class="hub-buttons">

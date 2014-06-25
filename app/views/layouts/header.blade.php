@@ -4,31 +4,9 @@
 			<ul>
 				<a href="{{ URL::route('home', null) }}">{{ HTML::image('/img/evercise logo yellow.png', 'evercise logo', array('class' => 'logo')); }}</a>
                 <li>{{HTML::linkRoute('static.how_it_works', 'How it works')}}</li>
-                {{--
-                @if(isset($aboutNav))
-                    <li>{{ $aboutNav }}</li>
-                @endif
-                
-                @if(isset($proNav))
-                    <li>{{ $proNav }}</li>
-                @endif
-                --}}
-                <li>{{HTML::linkRoute('evercisegroups.search', 'Discover classes')}}</li>
-                {{--
-                @if(isset($discoverNav))
-                    <li>{{ $discoverNav }}</li>
-                @endif
-                
-                 <li>
-                    {{ Form::open(array('id' => 'search_bar', 'url' => 'users', 'method' => 'post')) }}
-                        @include('form.textfield', array('fieldname'=>'search_bar', 'placeholder'=>'Find Classes near you', 'maxlength'=>50, 'label'=>null, 'fieldtext'=>null , 'default' => null ))
-                    {{ Form::close() }}
-                </li>
 
-                @if(isset($helpNav))
-                    <li>{{ $helpNav }}</li>
-                @endif
-                --}}
+                <li>{{HTML::linkRoute('evercisegroups.search', 'Discover classes')}}</li>
+
                 @if(isset($user))
                     @if ($user->inGroup($trainerGroup))
                         <div class="nav-end">
@@ -81,22 +59,6 @@
                     </div>
                 @endif
                 
-                {{--
-                @if(isset($userNav) )
-                     @if( $userNav == 'trainer')
-                        @include('layouts.loginStatus', array('group' => 'trainer'))
-
-                     @elseif($userNav == 'user')
-                         @include('layouts.loginStatus', array('group' => 'user'))
-                     @else
-
-                        <li>{{ $userNav }}</li>
-
-                     @endif
-
-                    
-                @endif
-                --}}
             </ul>
 		</nav>
 	</section>
