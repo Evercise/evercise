@@ -1,4 +1,3 @@
-
 <div class="formitem clearfix">
 	@if(isset($label))
 		<div class="formlabel">
@@ -7,21 +6,18 @@
 	@endif
 	<div class="formfield">
 		@if( isset($form))
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array('list' => 'area_codes' ,  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form )) }}
-			<datalist id="area_codes">
-				<option value="1">1</option>
-				<option value="2">2</option>
-			</datalist>
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array(  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form )) }}
+			{{ Form::text( 'areacode' , isset($default_area) ? $default_area : '', array('list' => 'area_codes' ,  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => 'Add area code', 'maxlength' => $maxlength, 'form' => $form , 'class' => 'half_input')) }}
+			{{ Form::text( $fieldname , isset($default) ? $default : '', array(  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form , 'class' => 'half_input')) }}
 			<p>{{ $fieldtext }}</p>
 		@else
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array('list' => 'area_codes' ,'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname)) }}
-			<datalist id="area_codes">
-				<option value="111">111</option>
-				<option value="2222">2222</option>
-			</datalist>
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array( 'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname)) }}
+			{{ Form::text( 'areacode' , isset($default_area) ? $default_area : '', array('list' => 'area_codes' ,'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => 'Add area code', 'maxlength' => $maxlength, 'id' => 'areacode' , 'class' => 'half_input')) }}
+			{{ Form::text( $fieldname , isset($default) ? $default : '', array( 'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname , 'class' => 'half_input')) }}
 			<p>{{ $fieldtext }}</p>
 		@endif
+		<datalist id="area_codes">
+			@foreach ($areacodes as $key => $areacode)
+				<option value="{{$areacode->area_code}}">{{$areacode->area_code}}</option>
+			@endforeach
+		</datalist>
 	</div>
 </div>

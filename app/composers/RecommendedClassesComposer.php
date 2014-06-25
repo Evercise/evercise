@@ -6,6 +6,7 @@ class RecommendedClassesComposer {
   	{
   		$evercisegroups = Evercisegroup::has('futuresessions')
   				->with('user')
+          ->has('confirmed')
   				->with('ratings')
   				->orderBy(DB::raw('RAND()'))->take(4)->get();		
 

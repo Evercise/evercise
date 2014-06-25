@@ -57,7 +57,9 @@ class TrainersController extends \BaseController {
 		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
 		JavaScript::put(array('initTrainerTitles' => json_encode(['titles' =>$titles]) )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
-		return View::make('trainers.create')->with('disciplines', $disciplines)->with('gyms', $gyms);
+		return View::make('trainers.create')
+			->with('disciplines', $disciplines)
+			->with('gyms', $gyms);
 
 
 	}
@@ -74,7 +76,8 @@ class TrainersController extends \BaseController {
 			array(
 				'title' => 'required',
 				'bio' => 'required|max:500|min:50',
-				'image' => 'required',
+				'thumbFilename' => 'required',
+				'phone' => 'required',
 				'website' => 'sometimes|active_url',
 			)
 		);
@@ -99,9 +102,10 @@ class TrainersController extends \BaseController {
 			$discipline = Input::get('discipline');
 			$title = Input::get('title');
 			$bio = Input::get('bio');
-			$image = Input::get('image');
+			$image = Input::get('thumbFilename');
 			$website = Input::get('website');
-
+			$area_code = Input::get('areacode');
+			$phone = Input::get('phone');
 			$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
 			$trainer = Trainer::create(['user_id'=>$user->id, 'bio'=>$bio, 'specialities_id'=>$speciality, 'website'=>$website]);
 
@@ -110,6 +114,9 @@ class TrainersController extends \BaseController {
 			// update user image
 
 			$user->image = $image;
+			$user->area_code = $area_code;
+			$user->phone = $phone;
+
 
 			$user->save();
 

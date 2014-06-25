@@ -40,6 +40,13 @@ class Evercisegroup extends \Eloquent {
         return $this->belongsTo('User');
     }
 
+     public function confirmed()
+     
+    {
+        //return $this->belongsToMany('Trainer', 'User', 'user_id', 'user_id')->withPivot('id');
+        return $this->belongsTo('Trainer', 'user_id', 'user_id')->where('confirmed', 1);
+    }
+
     public function ratings()
     {
         return $this->hasMany('Rating');

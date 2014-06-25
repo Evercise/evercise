@@ -36,7 +36,11 @@
 							<tr align="center">
 								<td valign="top">
 									<span style="font-size:24px; line-height:28.8px; font-weight:bold">So you want to Be a Pro?</span><br>
-									<span>Your Professional User application has being processed.</span>
+									<span>Your Professional User application is in the process of getting approved.</span>
+									<br>
+									<span>We aim to approve all professional accounts within 1 working day</span>
+									<br>
+									<span>You can still continue to us ethe site as a trainer and as soon as we are done proccesses your account your classes will become visable to our users</span>
 								</td>
 							</tr>
 						</table>

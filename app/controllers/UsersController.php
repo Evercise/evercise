@@ -111,6 +111,8 @@ class UsersController extends \BaseController {
 			$dob = Input::get('dob');
 			$email = Input::get('email');
 			$password = Input::get('password');
+			$area_code = Input::get('areacode');
+			$phone = Input::get('phone');
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
 
@@ -121,6 +123,8 @@ class UsersController extends \BaseController {
 				'last_name' => $last_name,
 				'dob' => $dob,
 				'email' => $email,
+				'area_code' => $area_code,
+				'phone' => $phone,
 				'password' => $password,
 				'gender' => $gender,
 				'activated' => true,

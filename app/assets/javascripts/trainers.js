@@ -31,14 +31,7 @@ function initCreateTrainer()
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
-            {
-                "discipline": $( '#discipline' ).val(),
-                "title": $( '#title' ).val(),
-                "bio": $( '#bio' ).val(),
-                "image": $( '#thumbFilename' ).val(),
-                "website": $( '#website' ).val(),
-
-            },
+            $( this ).serialize(),
             function( data ) {
                 trace("about to win.......");
                 if (data.validation_failed == 1)

@@ -10,10 +10,9 @@ class Trainer extends \Eloquent {
 	 */
 	protected $table = 'trainers';
 
-	public function Users()
+	public function User()
     {
         return $this->belongsTo('User');
     }
- 
 
 }

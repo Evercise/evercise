@@ -5,6 +5,7 @@ class NavBarComposer {
   public function compose($view)
   {
   	$trainerGroup = Sentry::findGroupByName('trainer');
+  	$adminGroup = Sentry::findGroupByName('admin');
 
   	/*if ( ! Sentry::check())
 	{
@@ -57,6 +58,7 @@ class NavBarComposer {
   			//->with('helpNav', $helpNav)
   			//->with('joinNav', $joinNav)  			
   			//->with('userNav', $userNav)
+  			->with('adminGroup', $adminGroup)
   			->with('trainerGroup', $trainerGroup);
   			 
   }

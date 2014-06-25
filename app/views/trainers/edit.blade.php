@@ -7,7 +7,7 @@
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
-				@include('trainers.dashboardDropdown')
+				@include('trainers.dashboardTabs')
 			</div>
 
 			<div class="dashboard-wrapper-right">

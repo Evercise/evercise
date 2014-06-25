@@ -70,7 +70,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function Trainer()
     {
-        return $this->hasMany('Trainer');
+        return $this->hasOne('Trainer');
     }
 
 
@@ -106,6 +106,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     {
         return $this->hasOne('Evercoin');
     }
+
 
 
 }

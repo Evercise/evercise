@@ -488,6 +488,7 @@ class EvercisegroupsController extends \BaseController {
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
         $evercisegroups= Evercisegroup::has('futuresessions')
+        ->has('confirmed')
 		->with(array('venue' =>function($query) use (&$haversine,&$radius)
         {
 

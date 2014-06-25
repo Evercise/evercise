@@ -20,6 +20,10 @@
                                 <span>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</span>
                                 <hr>
                                 <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+                                @if ($user->inGroup($adminGroup))
+                                  <hr>
+                                  <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>
+                                @endif
                             </div>
                         </div>                       
                    @else
@@ -34,6 +38,10 @@
                                 <!--span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span--> 
                                 <hr>
                                 <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+                                @if ($user->inGroup($adminGroup))
+                                  <hr>
+                                  <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>
+                                @endif
                            </div>
                        </div>
                        <div class="nav-join">

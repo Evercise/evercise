@@ -298,6 +298,12 @@ label{
 				width: 90%;
 				clear: both;
 				margin-bottom: 20px;
+				&.half_input{
+					width: 43%;
+					&:first-of-type{
+						margin-right: 3%;
+					}
+				}
 			}
 			.slider-input{
 				width: 30%;
@@ -2733,3 +2739,27 @@ footer{
 	z-index: 9998;
 }
 
+
+/* admin section  */
+
+.admin_table{
+	tr{
+		text-align: left;
+		
+		td, th{
+			border: 1px solid @grey;
+			.main-font(400);
+			.font-size(1.4);
+			padding: 5px;
+		}
+		th{
+			.heading-font(500);
+			.font-size(1.6);
+			background-color: @yellow;
+		}
+	}
+	img{
+		width: 100px;
+		margin-bottom: -25px;
+	}
+}

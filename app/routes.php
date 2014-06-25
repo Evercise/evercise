@@ -145,3 +145,8 @@ Route::get('/email_test', function(){
     ->with('subject', 'Message from your trainer Bob regarding the Yoga session on the 17th June');
 });
 
+/* ADMIN SECTION */
+
+
+Route::get('admin/pending_trainers', array('as' => 'admin.pending', 'uses' => 'AdminController@pendingTrainers'));
+Route::post('admin/approve_trainer', array('as' => 'admin.approve_trainer.post', 'uses' => 'AdminController@approveTrainer'));

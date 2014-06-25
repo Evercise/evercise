@@ -46,17 +46,7 @@ function initUsers()
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
-            {
-                "display_name": $( '#display_name' ).val(),
-                "first_name": $( '#first_name' ).val(),
-                "last_name": $( '#last_name' ).val(),
-                "dob": $( '#dob' ).val(),
-                "email": $( '#email' ).val(),
-                "password": $( '#password' ).val(),
-                "password_confirmation": $( '#password_confirmation' ).val(),
-                "gender": $( '#gender' ).val(),
-                "userNewsletter": $( '#userNewsletter' ).val()
-            },
+            $( this ).serialize(),
             function( data ) {
                 trace("about to win.......");
                 if (data.validation_failed == 1)
