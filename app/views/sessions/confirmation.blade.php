@@ -40,7 +40,9 @@
 					@endforeach
 				</ul>
 				<div class="session-total">
+					{{ 'amount paid: '. $amountPaid. ', evercoins used: ' . $deductEverciseCoins }}
 					{{ HTML::link('evercisegroups/'. $evercisegroup->id, 'class page' , ['class' => 'btn btn-yellow']); }}
+					
 				</div>
 			</div>
 		</div>

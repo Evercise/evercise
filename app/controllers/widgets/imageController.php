@@ -38,6 +38,12 @@ class ImageController extends \BaseController {
             // INTERMITTENT BUG - $file is sometimes null, so the following line fails. No idea why. Please fix
             $filename = $file->getClientOriginalName();
             $filename = str_replace(' ', '_', $filename);
+            $ext = '';
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            $filename = pathinfo($filename, PATHINFO_FILENAME);
+            $filename = substr($filename, 0, 20); // Truncate file name to 20 characters
+            $filename = $filename.'.'.$ext;
+
             Input::file('image')->move($destinationPath, $filename);
             
             

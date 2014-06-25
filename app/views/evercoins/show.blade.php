@@ -1,4 +1,4 @@
 
 <div>
-	{{ $evercoin_balance }}
+	{{ $evercoinBalance }}
 </div>

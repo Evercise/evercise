@@ -9,9 +9,10 @@ class ShowEvercoinComposer {
   		
       $evercoin = Evercoin::where('user_id', $id)->first();
 
-      $evercoin_balance = $evercoin->balance;
+      $evercoinBalance = $evercoin->balance;
 
+      //$evercoinbalanceInPounds = poundsToEvercoins($evercoinBalance);
 
-      $view ->with('evercoin_balance', $evercoin_balance);
+      $view	->with('evercoinBalance', $evercoinBalance);
   	}
 }
