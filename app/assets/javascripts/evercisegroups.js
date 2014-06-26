@@ -279,7 +279,6 @@ function initJoinEvercisegroup(params)
     }
 
     $(document).on('click','.btn-join-session,.undo-btn-reverse',function(){
-
         var sessionId = $(this).data('session');
 
         var sessionPrice = $(this).data('price');
@@ -397,7 +396,4 @@ function paidWithEvercoins(data)
     $('#pay-with-evercoins').html(data.usecoins);
     $('#pay-with-evercoins-in-pounds').html(data.usecoinsInPounds);
     $('#to-pay').html(data.amountRemaining);
-
-    $('.mask').hide();
-    $('.modal').remove();
 }
