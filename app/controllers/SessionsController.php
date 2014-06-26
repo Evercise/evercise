@@ -425,9 +425,12 @@ class SessionsController extends \BaseController {
 
 			$query->whereIn('id', $sessionIds);
 
-		}))->find($evercisegroupId);
+		}), 'evercisesession')->find($evercisegroupId);
 
-
+		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+		{
+			return Response::json('USER HAS ALREADY JOINED SESSION');
+		}
 
 		$userTrainer = User::find($evercisegroup->user_id);
 
@@ -442,6 +445,7 @@ class SessionsController extends \BaseController {
 	    }
 
 	    Session::put('sessionIds', $sessionIds);
+	    Session::put('amountToPay', $price);
 
 	    JavaScript::put(array('initJoinEvercisegroup' => json_encode(array('sessions'=> $sessionIds,'total' => $total,'price' => $price)) ));
 
@@ -461,8 +465,6 @@ class SessionsController extends \BaseController {
 		$sessionIds = json_decode(Input::get('session-ids'), true);
 		/* get currnet user */
 		$user = User::find($this->user->id);
-		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds);
 		/* create confirmation view */
 		$evercisegroupId = Input::get('evercisegroup-id');
 
@@ -471,11 +473,19 @@ class SessionsController extends \BaseController {
 
 			$query->whereIn('id', $sessionIds);
 
-		}), 'evercisesession.sessionmembers')->find($evercisegroupId);
+		}), 'evercisesession')->find($evercisegroupId);
 
+		//Make sure there is not already a matching entry in sessionmembers
+		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+		{
+			return Response::json('USER HAS ALREADY JOINED SESSION');
+		}
 
+		/*pivot current user with session via session members */
+		$user->sessions()->attach($sessionIds);
 
 		$userTrainer = User::find($evercisegroup->user_id);
+
 
 		$members = [];
 		$total = 0;
@@ -492,13 +502,13 @@ class SessionsController extends \BaseController {
 		    Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'joined_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 	    }
 
-	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : 0;
+	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
 
 		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
 		if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
 		{
-			return Response::json(['message' => ' User has not got enough evercoins to make this transaction ']);
+			return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
 		}
 
 		$deductEverciseCoins = $this->poundsToEvercoins( $price - $amountToPay );
