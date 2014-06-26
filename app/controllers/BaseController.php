@@ -68,11 +68,11 @@ class BaseController extends Controller {
 
 	public function poundsToEvercoins($amountInPounds)
 	{
-		return $amountInPounds * 2;
+		return $amountInPounds * 100;
 	}
 	public function evercoinsToPounds($amountInEvercoins)
 	{
-		return $amountInEvercoins * 0.5;
+		return $amountInEvercoins * 0.01;
 	}
 
 
