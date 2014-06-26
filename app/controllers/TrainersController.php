@@ -147,7 +147,9 @@ class TrainersController extends \BaseController {
 	public function edit($id)
 	{
 		if (!Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
-		$trainer = Trainer::where('user_id' , $this->user->id)->first();
+		$trainer = Trainer::where('user_id' , $this->user->id)
+				->with('speciality')
+				->first();
 		$speciality = Speciality::find($trainer->specialities_id);
 
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise dashboard panls JS.
@@ -166,14 +168,19 @@ class TrainersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$userTrainer = User::has('Trainer')->find($id);
-		$trainer = Trainer::where('user_id' ,$userTrainer->id)->first();
+		//$userTrainer = User::has('Trainer')->find($id);
+		//$trainer = Trainer::where('user_id' ,$userTrainer->id)->first();
 
-		$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
+		//$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
+
+		$trainer=Trainer::with('user')
+					->with('speciality')
+					->where('user_id', $id)
+					->first();
 
 		$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
 			->with('venue')
-			->where('user_id', $userTrainer->id)->get();
+			->where('user_id', $trainer->user->id)->get();
 
 		$stars = [];
 		$totalStars = 0;
@@ -195,13 +202,13 @@ class TrainersController extends \BaseController {
 		
 
 		return View::make('trainers.show')
-				->with('userTrainer', $userTrainer)
+				//->with('userTrainer', $userTrainer)
 				->with('trainer', $trainer)
 				->with('evercisegroups', $evercisegroups)
 				->with('stars', $stars)
 				->with('totalStars', $totalStars)
-				->with('ratings', $ratings)
-				->with('speciality', $speciality);
+				->with('ratings', $ratings);
+				//->with('speciality', $speciality);
 	}
 
 	/**

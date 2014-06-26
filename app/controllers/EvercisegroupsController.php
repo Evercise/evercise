@@ -315,7 +315,12 @@ class EvercisegroupsController extends \BaseController {
 			$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
 
 
-			$trainerDetails = $userTrainer->Trainer[0];
+			$trainerDetails = $userTrainer->trainer;
+
+			$trainer=Trainer::with('user')
+					->with('speciality')
+					->where('user_id', $evercisegroup->user_id)
+					->first();
 
 			$members = [];
 			$membersIds = [];
@@ -350,14 +355,15 @@ class EvercisegroupsController extends \BaseController {
 
 			return View::make('evercisegroups.show')
 						->with('evercisegroup',$evercisegroup)
-						->with('userTrainer',$userTrainer)
+						->with('trainer',$trainer)
 						->with('members' , $members)
 						->with('membersIds' , $membersIds)
 						->with('memberUsers' , $memberUsers)
 						->with('venue' , $venue)
 						->with('ratings' , $ratings)
 						//->with('memberUsers' , $memberUsers)
-						->with('trainer',$trainerDetails);
+						//->with('trainer',$trainerDetails)
+						;
 		}
 		
 	}

@@ -3,16 +3,16 @@
 @section('content')
 	
 	@if(count($ratings) == 0 )
-		@include('trainers.trainerBlock', array('orientation' => 'landscape', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
+		@include('trainers.trainerBlock', array('speciality' => $trainer->speciality->name.' '.$trainer->speciality->titles , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
 
 	@else
-		@include('trainers.trainerBlock', array('orientation' => 'landscape', 'image' => '/profiles/'.  $userTrainer->directory.'/'. $userTrainer->image , 'name' => $userTrainer->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $userTrainer->created_at))))
+		@include('trainers.trainerBlock', array('speciality' => $trainer->speciality->name.' '.$trainer->speciality->titles , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
 
 	@endif
 		<div class="col8 push2">
 		<br>
 		<br>
-		<h5>{{$userTrainer->display_name}}&apos;s classes </h5>
+		<h5>{{$trainer->user->display_name}}&apos;s classes </h5>
 		<br>
 		<br>
 		@foreach ($evercisegroups as $key => $evercisegroup)
@@ -20,9 +20,9 @@
 
 			<div class="col3">
 				@if (isset($stars[$evercisegroup->id]))
-					@include('layouts.classBlock', array( 'rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]),'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$userTrainer->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
+					@include('layouts.classBlock', array( 'rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]),'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$trainer->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
 				@else
-					@include('layouts.classBlock', array( 'rating' => 0,'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$userTrainer->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
+					@include('layouts.classBlock', array( 'rating' => 0,'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$trainer->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
 				@endif
 			</div>
 
@@ -31,7 +31,7 @@
 		<div class="rating-wrap">
 		<br>
 		<br>
-		<h5>{{$userTrainer->display_name}}&apos;s Ratings </h5>
+		<h5>{{$trainer->user->display_name}}&apos;s Ratings </h5>
 		<br>
 		<br>
 		@foreach ($ratings as $key => $rating) 

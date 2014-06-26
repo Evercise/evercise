@@ -15,4 +15,10 @@ class Trainer extends \Eloquent {
         return $this->belongsTo('User');
     }
 
+    public function speciality()
+    //return $this;
+    {
+        return $this->hasOne('Speciality' , 'id', 'specialities_id');
+    }
+
 }
