@@ -33,7 +33,7 @@ class CreateSessionPaymentsTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('session_payments');
+		Schema::drop('sessionpayments');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 

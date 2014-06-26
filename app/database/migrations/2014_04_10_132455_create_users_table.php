@@ -12,7 +12,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Artisan::call('migrate', ['--package' => 'cartalyst/sentry']);
+		//Artisan::call('migrate', ['--package' => 'cartalyst/sentry']);
 
 		Schema::table('users', function($table)
 		{
@@ -39,7 +39,9 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		//Schema::drop('users');
+/*		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+		Schema::drop('users');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');*/
 	}
 
 }
