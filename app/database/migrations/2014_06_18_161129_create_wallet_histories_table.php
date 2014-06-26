@@ -31,7 +31,7 @@ class CreateWalletHistoriesTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('wallet_history');
+		Schema::drop('wallethistory');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
