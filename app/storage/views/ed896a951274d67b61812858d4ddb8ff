@@ -1,0 +1,56 @@
+<div class="class-block">
+<?php /* image ratio 2.35:1 / size 317*135 */ ?>
+	<div class="class-block-img-wrap">
+		<div class="class-block-img-crop">
+			<a href="<?php echo URL::to('evercisegroups/'.$evercisegroupId); ?>">
+				<?php echo HTML::image($image, 'class image', array('class' => 'class-block-img'));; ?>
+			</a> 
+		</div>
+	</div>
+	<?php if(isset($title)): ?>
+		<h3><?php echo $title; ?></h3>
+	<?php endif; ?>
+	<?php if(isset($sessions)): ?>
+		<?php echo Form::select( 'session_dates' , $sessions); ?>
+
+	<?php endif; ?>
+	
+	<?php if(isset($title)): ?>
+		<div class="class-block-content">
+			<p><?php echo Str::limit($description, 115); ?> </p>
+		</div>
+	<?php endif; ?>
+	
+	<?php if(isset($distance)): ?>
+		<span>distance  &nbsp; &nbsp; <strong><?php echo number_format($distance, 2, '.', ''); ?> miles</strong></span>
+	<?php endif; ?>
+
+	<div class="class-block-stats">
+		<?php if(isset($participants)): ?>
+			<div class="class-block-stat">
+				<strong><?php echo $participants; ?> /<?php echo $default_size; ?></strong>
+				<span>class size</span>
+			</div>
+		<?php elseif(isset($default_size)): ?>
+			<div class="class-block-stat">
+				<strong><?php echo $default_size; ?></strong>
+				<span>capacity</span>
+			</div>
+		<?php endif; ?>
+		<div class="class-block-stat">
+			<div class="class-block-rating">
+				<?php if (isset($rating)): ?> 
+					<?php echo $__env->make('ratings.stars', array('rating' => $rating), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php endif; ?>
+				<span>rating</span>
+			</div>
+			
+		</div>
+		<?php if(isset($default_price)): ?>
+			<div class="class-block-stat">
+				<strong>&pound;<?php echo $default_price; ?></strong>
+				<span>price</span>
+			</div>
+		<?php endif; ?>
+	</div>
+</div>
