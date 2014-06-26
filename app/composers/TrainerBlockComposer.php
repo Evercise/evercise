@@ -34,9 +34,7 @@ class TrainerBlockComposer {
   		$age  =  $from->diff($to)->y;
 
       $trainerDetails = $viewdata['trainer'];
-
   		$bio =  $trainerDetails->bio;
-
       $speciality = Speciality::find($trainerDetails->specialities_id)->pluck(DB::raw("CONCAT(name, ' ', titles)"));
 
       if ($orientation == 'landscape') {

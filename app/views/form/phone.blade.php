@@ -6,8 +6,8 @@
 	@endif
 	<div class="formfield">
 		@if( isset($form))
-			{{ Form::text( 'areacode' , isset($default_area) ? $default_area : '', array('list' => 'area_codes' ,  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => 'Add area code', 'maxlength' => $maxlength, 'form' => $form , 'class' => 'half_input')) }}
-			{{ Form::text( $fieldname , isset($default) ? $default : '', array(  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form , 'class' => 'half_input')) }}
+			{{ Form::text( 'areacode' , isset($default_area) ? $default_area : '', array('list' => 'area_codes' ,  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => 'Add area code', 'maxlength' => $maxlength, 'id' => 'areacode', 'form' => $form , 'class' => 'half_input')) }}
+			{{ Form::text( $fieldname , isset($default) ? $default : '', array(  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname , 'form' => $form , 'class' => 'half_input')) }}
 			<p>{{ $fieldtext }}</p>
 		@else
 			{{ Form::text( 'areacode' , isset($default_area) ? $default_area : '', array('list' => 'area_codes' ,'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => 'Add area code', 'maxlength' => $maxlength, 'id' => 'areacode' , 'class' => 'half_input')) }}

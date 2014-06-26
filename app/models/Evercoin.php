@@ -10,9 +10,18 @@ class Evercoin extends \Eloquent {
 	 */
 	protected $table = 'evercoins';
 
-	/**
-	 * Concatenate name and title
-	 *
-	 * 
-	*/
+
+    public function recordedSave(array $params)
+    {
+    	//$transaction_amount = $params['balance'] - $params['previous_balance'];
+    	
+		Evercoinhistory::create([
+			'user_id'=>$params['user_id'],
+			'transaction_amount'=>$params['transaction_amount'],
+			'new_balance' => $params['new_balance']
+		]);
+
+   		parent::save();
+
+    }
 }
