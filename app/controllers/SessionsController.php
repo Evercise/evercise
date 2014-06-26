@@ -524,19 +524,40 @@ class SessionsController extends \BaseController {
 
 	function getLeaveSession($id)
 	{
-		$session = Evercisesession::find($id);
+		$session = Evercisesession::with('evercisegroup')
+				->find($id);
 
 		$sessionDate = new DateTime($session->date_time);
 		$now = new DateTime();
 		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
 		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
 
-		if ($sessionDate > $fivedaystime ) $status = 2;
-		else if ($sessionDate > $twodaystime ) $status = 1;
-		else $status = 0;
+		$evercoin = Evercoin::where('user_id',  $session->evercisegroup->user_id)->first();
+
+		//$everpound = $this->
+		if ($sessionDate > $fivedaystime ){
+			$status = 2;
+			$refund = $session->price;
+
+		} 
+		elseif ($sessionDate > $twodaystime ){
+			$status = 1;
+			$refund = $session->price / 2;
+		} 
+		else {
+			$status = 0;
+			$refund = 0;
+		} 
+
+		$refundInEvercoins = $this->poundsToEvercoins($refund);
+		$evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
 
 		return View::make('sessions.leave')
 		->with('session', $session)
+		->with('refund', $refund)
+		->with('refundInEvercoins', $refundInEvercoins)
+		->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
+		->with('evercoin', $evercoin)
 		->with('status', $status);
 	}
 	public function postLeaveSession($id)
@@ -569,7 +590,26 @@ class SessionsController extends \BaseController {
 			$evercisegroup = Evercisegroup::find($session->evercisegroup_id);
 			$niceTime = date('h:ia', strtotime($session->date_time));
 			$niceDate = date('dS F Y', strtotime($session->date_time));
+
+
 			Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'left_session_'.($status == 1 ? 'half' : 'full'), 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+
+			Event::fire('session.userLeft', array(
+	        	'email' => $user->email, 
+	        	'display_name' => $user->display_name, 
+	        	'everciseGroup' => $evercisegroup->name, 
+	        	'everciseSession' => date('dS M y', strtotime($session->date_time)), 
+			));
+
+			$trainer = User::find($evercisegroup->user_id);
+
+			Event::fire('session.trainerLeft', array(
+	        	'email' => $trainer->email, 
+	        	'display_name' => $trainer->display_name, 
+	        	'user_name' => $user->display_name, 
+	        	'everciseGroup' => $evercisegroup->name, 
+	        	'everciseSession' => date('dS M y', strtotime($session->date_time)), 
+			));
 
 			return Response::json(['message' => ' session: '.$id, 'callback' => 'leftSession']);
 		}

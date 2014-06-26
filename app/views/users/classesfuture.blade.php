@@ -1,4 +1,4 @@
-@if ($pastFutureCount['future'] == 0) 	
+@if (empty($pastFutureCount) || $pastFutureCount['future'] == 0) 	
 	
 		<h5>No upcoming classes placeholder</h5>
 @else

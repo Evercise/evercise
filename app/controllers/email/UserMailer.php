@@ -17,6 +17,8 @@ class UserMailer extends Mailer {
 		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
 		$events->listen('session.mail_all', 'email\UserMailer@mailAll');
 		$events->listen('session.mail_trainer', 'email\UserMailer@mailTrainer');
+		$events->listen('session.userLeft', 'email\UserMailer@userLeaveSession');
+		$events->listen('session.trainerLeft', 'email\UserMailer@trainerLeaveSession');
 	}
 
 	/**
@@ -110,6 +112,8 @@ class UserMailer extends Mailer {
 			$this->sendTo($email, $subject, $view, $data );
 		}
 	}
+
+	// needs more descriptive name
 	public function mailTrainer($trainer, $user, $group, $dateTime, $subject, $body)
 	{
 		$subject = $subject;
@@ -126,6 +130,37 @@ class UserMailer extends Mailer {
 			$this->sendTo($email, $subject, $view, $data );
 		}
 	}
+
+	// used to mail user to onfirm leaving a session
+
+	public function userLeaveSession($email, $display_name, $everciseGroup, $everciseSession)
+	{
+		$subject = 'Sorry to see you leave';
+		$view = 'emails.session.userLeft';
+		$data['display_name'] = $display_name;
+		$data['email'] = $email;
+		$data['everciseGroup'] = $everciseGroup;
+		$data['everciseSession'] = $everciseSession;
+
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
+	// used to mail trainer when someone leaves a session
+
+	public function trainerLeaveSession($email, $display_name, $user_name, $everciseGroup, $everciseSession)
+	{
+		$subject = 'Someone has left you class';
+		$view = 'emails.session.trainerLeft';
+		$data['display_name'] = $display_name;
+		$data['user_name'] = $user_name;
+		$data['email'] = $email;
+		$data['everciseGroup'] = $everciseGroup;
+		$data['everciseSession'] = $everciseSession;
+
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
+
 
 
 

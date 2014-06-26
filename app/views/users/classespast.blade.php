@@ -1,4 +1,4 @@
-@if ($pastFutureCount['past'] == 0) 	
+@if (empty($pastFutureCount) || $pastFutureCount['past'] == 0) 	
 	
 		<h5>No attended classes placeholder</h5>
 @else
