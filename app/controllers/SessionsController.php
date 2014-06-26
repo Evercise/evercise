@@ -425,9 +425,12 @@ class SessionsController extends \BaseController {
 
 			$query->whereIn('id', $sessionIds);
 
-		}))->find($evercisegroupId);
+		}), 'evercisesession')->find($evercisegroupId);
 
-
+		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+		{
+			return Response::json('USER HAS ALREADY JOINED SESSION');
+		}
 
 		$userTrainer = User::find($evercisegroup->user_id);
 
@@ -462,8 +465,6 @@ class SessionsController extends \BaseController {
 		$sessionIds = json_decode(Input::get('session-ids'), true);
 		/* get currnet user */
 		$user = User::find($this->user->id);
-		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds);
 		/* create confirmation view */
 		$evercisegroupId = Input::get('evercisegroup-id');
 
@@ -472,11 +473,19 @@ class SessionsController extends \BaseController {
 
 			$query->whereIn('id', $sessionIds);
 
-		}), 'evercisesession.sessionmembers')->find($evercisegroupId);
+		}), 'evercisesession')->find($evercisegroupId);
 
+		//Make sure there is not already a matching entry in sessionmembers
+		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+		{
+			return Response::json('USER HAS ALREADY JOINED SESSION');
+		}
 
+		/*pivot current user with session via session members */
+		$user->sessions()->attach($sessionIds);
 
 		$userTrainer = User::find($evercisegroup->user_id);
+
 
 		$members = [];
 		$total = 0;
