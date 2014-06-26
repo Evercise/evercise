@@ -442,6 +442,7 @@ class SessionsController extends \BaseController {
 	    }
 
 	    Session::put('sessionIds', $sessionIds);
+	    Session::put('amountToPay', $price);
 
 	    JavaScript::put(array('initJoinEvercisegroup' => json_encode(array('sessions'=> $sessionIds,'total' => $total,'price' => $price)) ));
 
@@ -492,13 +493,13 @@ class SessionsController extends \BaseController {
 		    Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'joined_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 	    }
 
-	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : 0;
+	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
 
 		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
 		if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
 		{
-			return Response::json(['message' => ' User has not got enough evercoins to make this transaction ']);
+			return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
 		}
 
 		$deductEverciseCoins = $this->poundsToEvercoins( $price - $amountToPay );

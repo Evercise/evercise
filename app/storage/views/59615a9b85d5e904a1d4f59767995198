@@ -1,0 +1,55 @@
+
+
+<?php $__env->startSection('content'); ?>
+	<div  class="full-width">
+		<div class="col3">
+			<?php echo $__env->make('layouts.classBlock', array('evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$userTrainer->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		</div>
+		<div class="col9">
+			<h1><?php echo $evercisegroup->name; ?></h1>
+
+			<hr>
+
+			<div class="session-table">
+				<li class="hd">Class Date</li>
+				<li class="hd">Start Time</li>
+				<li class="hd">End Time</li>
+				<li class="hd">Price <small>(Per Person)</small></li>
+				<li class="hd">No. Joined</li>
+				<li class="hd">Cancel</li>
+				<ul>
+					<?php foreach ($evercisegroup->evercisesession as $key => $session): ?>
+						<div class="session-list-row">
+							<li><?php echo date('M-dS' , strtotime($session['date_time'])); ?></li>
+							<li><?php echo date('h:ia' , strtotime($session['date_time'])); ?></li>
+							<li><?php echo date('h:ia' , strtotime($session['date_time']) + ( $session['duration'] * 60)); ?>
+							<li>&pound;<?php echo $session['price']; ?></li>
+							<li> <strong>
+							<?php echo $members[$key] ? $members[$key] : 0; ?>
+							</strong>/<?php echo $evercisegroup->capacity; ?> </li>
+							<li><button data-price="<?php echo $session['price']; ?>" data-session="<?php echo $session->id; ?>" class="btn-cancel-session btn btn-red">Cancel</button></li>
+						</div>
+					<?php endforeach; ?>
+				</ul>
+				<div class="pay-with-evercoins">
+					<span>Paid with Evercoins: <span id="pay-with-evercoins">0</span></span>
+					<span> = &pound;<span id="pay-with-evercoins-in-pounds">0</span></span>
+					<button data-href="/sessions/<?php echo $evercisegroup->id; ?>/paywithevercoins" class="btn-paywithevercoins btn btn-yellow">Pay with Evercoins</button>
+				</div>
+				<div class="session-total">
+					<?php echo Form::open(array('id' => 'join-sessions', 'url' => 'sessions/pay', 'method' => 'post', 'class' => '')); ?>
+						<span>Total Sessions: <span id="total-sessions"><?php echo isset($totalSessions) ? $totalSessions : 0; ?></span></span>
+						<span>Total Price: &pound;<span id="total-price"><?php echo isset($totalPrice) ? $totalPrice : 0.00; ?></span></span>
+						<span>To Pay: &pound;<span id="to-pay"><?php echo isset($totalPrice) ? $totalPrice : 0.00; ?></span></span>
+						<?php echo Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')); ?>
+						<?php echo Form::hidden( 'session-ids' , json_encode($sessionIds) , array('id' => 'session-ids')); ?>
+						<?php echo Form::submit('Pay Now' , array('class'=>'btn btn-green')); ?>
+					<?php echo Form::close(); ?>
+				</div>
+			</div>
+		</div>
+		
+
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

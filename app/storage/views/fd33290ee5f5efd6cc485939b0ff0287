@@ -1,0 +1,13 @@
+<?php echo Form::open(array('id' => 'search-by-location', 'url' => 'evercisegroups/search/'.Str::quickRandom(5), 'method' => 'get', 'class' => 'search-form')); ?>
+	<?php if(isset($places)): ?>
+		<?php echo Form::hidden( 'places' ,$places , array('id' => 'places')); ?>
+
+	<?php else: ?>
+		<?php echo Form::hidden( 'places' ,null , array('id' => 'places')); ?>
+	<?php endif; ?>
+	<?php echo Form::text( 'location' , null, array('placeholder' => 'Enter Location', 'maxlength' => 50 , 'data-default' => 'london')); ?>
+
+	<?php echo Form::select( 'category' , $types ); ?>
+	<?php echo Form::select( 'radius' , $radiuses , 25 ); ?>
+	<?php echo Form::submit('Find a Class' , array('class'=>'btn btn-yellow ')); ?>
+<?php echo Form::close(); ?>

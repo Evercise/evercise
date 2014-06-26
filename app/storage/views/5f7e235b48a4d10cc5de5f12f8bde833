@@ -1,0 +1,22 @@
+<div class='modal'>
+	<div id="cancel_login" class="cancel">x</div>
+	<div class="modal-head">
+		<h4>Pay with Your face</h4>
+		<br>
+	</div>
+
+	<div class="modal-body">
+		<div class="evercoins">
+			<p>Available Evercoins: <?php echo $evercoins; ?></p>
+			<p>Basket Price in Evercoins: <?php echo $priceInEvercoins; ?></p>
+		</div>
+		<?php echo Form::open(array('id' => 'paywithevercoins', 'url' => 'sessions/'.$evercisegroupId.'/paywithevercoins', 'method' => 'POST', 'class' => 'create-form')); ?>
+
+			<?php echo Form::text('usecoins', 0, array('maxlength' => 4)); ?>
+			<?php echo Form::submit('Pay' , array('class'=>'btn-yellow ')); ?>
+
+        	<div class="success_msg">Paid Successfully</div>
+
+		<?php echo Form::close(); ?>
+    </div>
+</div>

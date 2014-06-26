@@ -1,0 +1,184 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+<div  class="full-width">
+	<div class="full-bk" style="background-image: url(/profiles/<?php echo $trainer->user->directory; ?>/<?php echo $evercisegroup->image; ?>)">
+	</div>
+	<div id="class-trainer-wrapper" class="col3">
+		<?php echo $__env->make('trainers.trainerBlock', array('speciality' => $trainer->speciality->name.' '.$trainer->speciality->titles, 'id' =>  $trainer->user->id ,'orientation' => 'portrait', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	</div>
+	<div class="col9">
+		<ul class="class-nav sticky-header">
+			<li><a href="#description">Description</a></li>
+			<li><a href="#sessions">Sessions</a></li>
+			<li><a href="#venue">Venues</a></li>
+			<li><a href="#reviews">Reviews/Participants</a></li>
+		</ul>
+		<div class="class-wrap" id="description">
+			<h1><?php echo $evercisegroup->name; ?></h1>
+			<div class="share-wrap">
+				<a href="<?php echo Share::load(Request::url() , $evercisegroup->name)->facebook(); ?>"  class="btn"><?php echo HTML::image('img/fb-share.png','share on facebook', array('class' => 'share-btn')); ?></a>
+				<a href="<?php echo Share::load(Request::url() , $evercisegroup->name)->twitter(); ?>" class="btn"><?php echo HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')); ?></a>
+				<a href="<?php echo Share::load(Request::url() , $evercisegroup->name)->gplus(); ?>" class="btn"><?php echo HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')); ?></a>
+			</div>
+			
+			<?php echo $__env->make('evercisegroups.category_box', array('category' =>  $evercisegroup->category_id), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			<br>
+			<p><?php echo $evercisegroup->description; ?></p>
+			<br/>
+			<p>Gender: 
+				<?php if ($evercisegroup->gender == 0): ?> Unisex
+				<?php elseif ($evercisegroup->gender == 1): ?> Male
+				<?php elseif ($evercisegroup->gender == 2): ?> Female
+				<?php endif; ?>
+			</p>
+						
+		</div>
+		<div class="class-wrap" id="sessions">
+			<h4>Sessions</h4>
+			<br>
+			<div class="session-table">
+				<li class="hd">Class Date</li>
+				<li class="hd">Start Time</li>
+				<li class="hd">End Time</li>
+				<li class="hd">Price <small>(Per Person)</small></li>
+				<li class="hd">No. Joined</li>
+				<li class="hd">Join</li>
+				<ul>
+					<?php foreach ($evercisegroup->evercisesession as $key => $value): ?>
+							<div class="session-list-row">
+								<li><?php echo date('M-dS' , strtotime($value['date_time'])); ?></li>
+								<li><?php echo date('h:ia' , strtotime($value['date_time'])); ?></li>
+								<li><?php echo date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60)); ?>
+								<li>&pound;<?php echo $value['price']; ?></li>
+								<li> <strong><?php echo $members[$key]; ?></strong>/<?php echo $evercisegroup->capacity; ?> </li>
+								<?php if (isset($membersIds[$key])): ?>
+
+									<?php if (empty($user->id)): ?>
+										<li><button  data-price="<?php echo $value['price']; ?>" data-session="<?php echo $value->id; ?>" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
+									<?php elseif (in_array($user->id, $membersIds[$key])): ?> 
+
+										<li><button  data-price="<?php echo $value['price']; ?>" data-session="<?php echo $value->id; ?>" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
+									<?php else: ?>
+										<li><button  data-price="<?php echo $value['price']; ?>" data-session="<?php echo $value->id; ?>" class="btn-join-session btn btn-yellow">Join Session</button></li>
+									<?php endif; ?>
+								<?php else: ?>
+									<li><button  data-price="<?php echo $value['price']; ?>" data-session="<?php echo $value->id; ?>" class="btn-join-session btn btn-yellow">Join Session</button></li>
+								<?php endif; ?>
+								
+								
+							</div>
+					<?php endforeach; ?>
+				</ul>
+				<div class="session-total">
+					<?php echo Form::open(array('id' => 'join-sessions', 'url' => 'sessions/join', 'method' => 'post', 'class' => '')); ?>
+						<span>Total Sessions: <span id="total-sessions">0</span></span>
+						<span>Total Price: &pound;<span id="total-price">0.00</span></span>
+						<?php echo Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')); ?>
+						<?php echo Form::hidden( 'session-ids' , null, array('id' => 'session-ids')); ?>
+						<?php echo Form::submit('Checkout' , array( 'id' => 'session-checkout','class'=>'btn btn-green disabled')); ?>
+					<?php echo Form::close(); ?>
+				</div>
+			</div>
+		</div>
+		<div class="class-wrap" id="venue">
+			<div class="venue-details">
+				<h4>Venue</h4>
+				<br>
+				<h5><?php echo $venue->name; ?></h5>
+				<br>
+				<ul class="venue-address">
+					<li><?php echo $venue->address; ?></li>
+					<li><?php echo $venue->town; ?></li>
+					<li><?php echo $venue->postcode; ?></li>
+				</ul>
+			</div>
+			<div class="class-map-wrap">
+				<?php echo $__env->make('widgets.map', array('lat' =>$venue->lat, 'lng' =>  $venue->lng), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+			<hr>
+			
+			
+			<ul class="facilities-wrap">
+				<strong>Venue Facilities</strong>
+				<?php foreach($venue->facilities as $key => $value): ?>
+					<?php if ($value->category == 'facility'): ?> 
+						<li><?php echo HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')); ?><?php echo $value->name; ?></li>				
+					<?php endif; ?>										
+				<?php endforeach; ?>
+			</ul>
+
+			
+			
+			<ul class="facilities-wrap">
+				<strong>Venue Amenities</strong>
+				<?php foreach($venue->facilities as $key => $value): ?>
+					<?php if ($value->category == 'Amenity'): ?> 
+						<li><?php echo HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')); ?><?php echo $value->name; ?></li>				
+					<?php endif; ?>										
+				<?php endforeach; ?>
+			</ul>	
+			
+		</div>
+		<div class="class-wrap" id="reviews"> 
+			<h4>Reviews / Participants</h4>
+			<div class="tab-wrapper">
+				<div class="tab-header">
+					<button  data-view="review" id="review-btn" class="icon-btn btn selected">Reviews</button>
+					<button  data-view="participant" id="participant-btn" class="icon-btn btn">Participants</button>
+				</div>
+				<div id="review" class="tab-view selected">
+					<strong>Overall Rating</strong>
+					<br>
+					<br>
+					<br>
+					<div class="rating-wrap">
+						
+						<?php foreach ($ratings as $key => $rating): ?> 
+							<div class="rating-row">
+
+								
+								<div class="rating-block">
+									<?php echo HTML::image('profiles/'.$rating->user->directory.'/'.$rating->user->image,  $rating->user->display_name  , array('title' => $rating->user->display_name ,'class' => 'user-icon')); ?>
+									<?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?>
+
+
+									<span>
+									<div class="star_wrap">
+										<?php for ($i = 0; $i < 5; $i++): ?>
+											<?php echo HTML::image('img/yellow_' . ($i < $rating->stars ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')); ?>
+										<?php endfor; ?>
+									</div>
+									
+
+
+									<strong>  <?php echo $rating->user->display_name; ?></strong> on <?php echo date('d/m/Y' , strtotime($rating->created_at)); ?> </span>
+									<p><?php echo $rating->comment; ?></p> 
+								</div>
+							</div>
+
+						<?php endforeach; ?>
+					</div>
+				</div>
+				<div id="participant" class="tab-view">
+					
+
+					<?php foreach ($memberUsers as $key => $memberUser): ?>
+						<?php if($memberUser->image != ''): ?>
+							<?php echo HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')); ?>
+						<?php else: ?>
+							<?php echo HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')); ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
