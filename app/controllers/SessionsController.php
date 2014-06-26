@@ -505,6 +505,11 @@ class SessionsController extends \BaseController {
 		$newEvercoinBalance = $evercoin->balance - $deductEverciseCoins;
 
 		$evercoin->update(['balance' => $newEvercoinBalance]);
+		$evercoin->recordedSave([
+			'user_id' => $user->id,
+			'transaction_amount' => $deductEverciseCoins,
+			'new_balance' => $newEvercoinBalance
+		]);
 
 		return View::make('sessions.confirmation')
 					->with('evercisegroup' , $evercisegroup)

@@ -35,12 +35,9 @@
 						<table width="600px" height="73px" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:18px; line-height:21.6px; color:#000000; padding: 0px 0px 0px 0px; font-family: Exo, lato, Helvetica, ‘Helvetica Neue’, Arial; ">
 							<tr align="center">
 								<td valign="top">
-									<span style="font-size:24px; line-height:28.8px; font-weight:bold">So you want to Be a Pro?</span><br>
-									<span>Your Professional User application is in the process of getting approved.</span>
+									<span style="font-size:24px; line-height:28.8px; font-weight:bold">So you want to be a pro?</span><br>
+									<span>Your professional user application is in the process of getting approved.</span>
 									<br>
-									<span>We aim to approve all professional accounts within 1 working day</span>
-									<br>
-									<span>You can still continue to us ethe site as a trainer and as soon as we are done proccesses your account your classes will become visable to our users</span>
 								</td>
 							</tr>
 						</table>
@@ -52,8 +49,14 @@
 								<td valign="top" width="400">
 									<span>Hi {{{ $display_name }}}.</span>
 									<br>
-									<br>
+									
 									<span>Thank you for your interest to become a Professional User on Evercise. You made a great choice! There are so many benefits of joining Evercise as a professional.</span>
+									<br>
+									<br>
+									<span>We aim to approve all professional accounts within one working day</span>
+									<br>
+									<br>
+									<span>You can still continue to use the site as a trainer and as soon as we are done proccessing your account your classes will become visible to our users</span>
 									<br>
 									<br>
 									<span>Get started by adding classes today. </span>
