@@ -367,6 +367,7 @@ function initJoinEvercisegroup(params)
     $('.btn-paywithevercoins').click(function(){
 
         var url = $(this).data('href');
+        trace(url);
         $.ajax({
             url: url,
             type: 'GET',
@@ -374,7 +375,7 @@ function initJoinEvercisegroup(params)
         })
         .done(
             function(data) {
-                //trace('data : '+ data);
+                trace('paywithevercoins data : '+ data);
                 $('.mask').show();
                 $('.container').append(data);
                 initPut();
@@ -387,7 +388,12 @@ function initJoinEvercisegroup(params)
 
 registerInitFunction('initJoinEvercisegroup');
 
-function paidWithEvercoins()
+function paidWithEvercoins(data)
 {
-    trace('paidWithEvercoins');
+    trace('paidWithEvercoins : '+data.usecoins);
+    trace('amountRemaining : '+data.amountRemaining);
+
+    $('#pay-with-evercoins').html(data.usecoins);
+    $('#pay-with-evercoins-in-pounds').html(data.usecoinsInPounds);
+    $('#to-pay').html(data.amountRemaining);
 }

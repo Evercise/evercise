@@ -441,6 +441,8 @@ class SessionsController extends \BaseController {
 			$price = $price + $value->price;
 	    }
 
+	    Session::put('sessionIds', $sessionIds);
+
 	    JavaScript::put(array('initJoinEvercisegroup' => json_encode(array('sessions'=> $sessionIds,'total' => $total,'price' => $price)) ));
 
 		return View::make('sessions.join')
@@ -490,6 +492,19 @@ class SessionsController extends \BaseController {
 		    Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'joined_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 	    }
 
+	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : 0;
+
+		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
+
+		if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
+		{
+			return Response::json(['message' => ' User has not got enough evercoins to make this transaction ']);
+		}
+
+		$deductEverciseCoins = $this->poundsToEvercoins( $price - $amountToPay );
+		$newEvercoinBalance = $evercoin->balance - $deductEverciseCoins;
+
+		$evercoin->update(['balance' => $newEvercoinBalance]);
 
 		return View::make('sessions.confirmation')
 					->with('evercisegroup' , $evercisegroup)
@@ -497,7 +512,9 @@ class SessionsController extends \BaseController {
 					->with('userTrainer' , $userTrainer)
 					->with('totalPrice' , $price)
 					->with('totalSessions' , $total)
-					->with('sessionIds' , $sessionIds);
+					->with('sessionIds' , $sessionIds)
+					->with('amountPaid' , $amountToPay)
+					->with('deductEverciseCoins' , $deductEverciseCoins);
 	}
 
 	function getLeaveSession($id)
@@ -558,16 +575,66 @@ class SessionsController extends \BaseController {
 
 
 	}
-	function getPayWithEvercoins($id)
+	public function getPayWithEvercoins($evercisegroupId)
 	{
-		$session = Evercisesession::find($id);
+		//$session = Evercisesession::find($id);
+		$sessionIds = Session::get('sessionIds');
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
+		{
+			$query->whereIn('id', $sessionIds);
+
+		}))->find($evercisegroupId);
+
+		$price = 0;
+	    foreach ($evercisegroup->evercisesession as $key => $value)
+			$price = $price + $value->price;
+
+	    $priceInEvercoins = $this->poundsToEvercoins($price);
+
+		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
 		return View::make('sessions.paywithevercoins')
-		->with('session', $session);
+			->with('evercisegroupId' , $evercisegroupId)
+			->with('priceInEvercoins' , $priceInEvercoins)
+			->with('evercoinBalance', $evercoin->balance);
 	}
-	public function postPayWithEvercoins($id)
+	public function postPayWithEvercoins($evercisegroupId)
 	{
-		return Response::json(['message' => ' yeah man ', 'callback' => 'paidWithEvercoins']);
+		$usecoins = Input::get('usecoins');
+
+		$sessionIds = Session::get('sessionIds');
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
+		{
+			$query->whereIn('id', $sessionIds);
+
+		}))->find($evercisegroupId);
+
+		$price = 0;
+	    foreach ($evercisegroup->evercisesession as $key => $value)
+			$price = $price + $value->price;
+
+		// Check if more coins are selected than are needed.
+		if ($usecoins > $this->poundsToEvercoins($price))
+			$usecoins = $this->poundsToEvercoins($price);
+
+		//Check user has tried to use more evercoins than they have. if so, use every last one.
+		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
+		if ($usecoins > $evercoin->balance)
+			$usecoins = $evercoin->balance;
+
+		$usecoinsInPounds = $this->evercoinsToPounds($usecoins);
+		$amountRemaining = $price - $usecoinsInPounds;
+
+
+
+		Session::put('amountToPay', $amountRemaining);
+
+		return Response::json([
+			'usecoins' => $usecoins,
+			'amountRemaining' => $amountRemaining,
+			'usecoinsInPounds' => $usecoinsInPounds,
+			'callback' => 'paidWithEvercoins'
+		]);
 	}
 
 }
