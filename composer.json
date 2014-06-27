@@ -15,7 +15,8 @@
 		"toin0u/geotools-laravel": "~0.2",
     	"gloudemans/calendar": "dev-master",
     	"barryvdh/laravel-dompdf": "*",
-    	"thujohn/share": "dev-master"
+    	"thujohn/share": "dev-master",
+    	"anouar/paypalpayment": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
