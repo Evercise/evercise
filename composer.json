@@ -16,7 +16,10 @@
     	"gloudemans/calendar": "dev-master",
     	"barryvdh/laravel-dompdf": "*",
     	"thujohn/share": "dev-master",
-    	"anouar/paypalpayment": "dev-master"
+    	"ignited/laravel-omnipay": "1.*",
+    	"omnipay/paypal": "~2.0"
+
+
 	},
 	"autoload": {
 		"classmap": [

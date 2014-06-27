@@ -116,7 +116,7 @@ return array(
 		'Toin0u\Geotools\GeotoolsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Thujohn\Share\ShareServiceProvider',
-		'Anouar\Paypalpayment\PaypalpaymentServiceProvider',
+		'Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider',
 	),
 
 	/*
@@ -189,7 +189,7 @@ return array(
 		'Geotools' 		  => 'Toin0u\Geotools\GeotoolsFacade',
 		'PDF' 			  => 'Barryvdh\DomPDF\Facade',
 		'Share' 		  => 'Thujohn\Share\ShareFacade',
-		'Paypalpayment'   => 'Anouar\Paypalpayment\Facades\PaypalPayment',
+		'Omnipay'		  => 'Ignited\LaravelOmnipay\Facades\OmnipayFacade',
 	),
 
 );

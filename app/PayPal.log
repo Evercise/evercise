@@ -1,0 +1,13 @@
+PayPal\Core\PPHttpConnection: Connecting to https://api.sandbox.paypal.com/v1/oauth2/token
+PayPal\Core\PPHttpConnection: Payload grant_type=client_credentials
+PayPal\Core\PPHttpConnection: Adding header User-Agent: PayPalSDK/rest-sdk-php 0.6.0 (lang=PHP;v=5.4.12;bit=32;os=Windows_NT_6.1;machine=AMD64;openssl=1.0.1d;curl=7.29.0)
+PayPal\Core\PPHttpConnection: Adding header Authorization: Basic QVZiVUx4RHVFdHdNOUliNWh3ZE9BNVQybWlVZFdMc0dhYkh1ZGFKbUVNSW9vakZZUFd2MVFvcDJodXo0OkVBcjV5eENvRXdNZDJuc0J1ejhMQ1dINll3MmV6Vk5BOVU1Q3UyLTdqWXhTNUE5c2tvUEE3bS1qWmF6Vw==
+PayPal\Core\PPHttpConnection: Adding header Accept: */*
+PayPal\Core\PPHttpConnection: Invalid or no certificate authority found - Retrying using bundled CA certs file
+PayPal\Core\PPHttpConnection: Connecting to https://api.sandbox.paypal.com/v1/payments/payment
+PayPal\Core\PPHttpConnection: Payload {"intent":"sale","payer":{"payment_method":"credit_card","funding_instruments":[{"credit_card":{"type":"visa","number":"4462918758748020","expire_month":"07","expire_year":"2016","cvv2":"697","first_name":"lewis","last_name":"bayfield","billing_address":{"line1":"23 oman avenue","line2":"dollis hill","city":"london","postal_code":"nw26ax","country_code":"UK"}}}]},"transactions":[{"amount":{"currency":"GBP","total":"1.00"},"description":"This is the payment description."}]}
+PayPal\Core\PPHttpConnection: Adding header Content-Type: application/json
+PayPal\Core\PPHttpConnection: Adding header User-Agent: PayPalSDK/rest-sdk-php 0.6.0 (lang=PHP;v=5.4.12;bit=32;os=Windows_NT_6.1;machine=AMD64;openssl=1.0.1d;curl=7.29.0)
+PayPal\Core\PPHttpConnection: Adding header Authorization: Bearer A015zWwGP.H.1qQuIM8IaT-F6TNkq7xhH5kp4RcelsYS9iY
+PayPal\Core\PPHttpConnection: Adding header PayPal-Request-Id: 21307064334972140386956932607
+PayPal\Core\PPHttpConnection: Invalid or no certificate authority found - Retrying using bundled CA certs file
