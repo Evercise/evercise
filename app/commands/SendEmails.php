@@ -4,14 +4,14 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class CheckSessions extends Command {
+class SendEmails extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'check:sessions';
+	protected $name = 'emails';
 
 	/**
 	 * The console command description.
@@ -35,9 +35,24 @@ class CheckSessions extends Command {
 	 *
 	 * @return mixed
 	 */
+		// Check for sessions happening in less than 2 days
+		//    Send a reminder email to all users
+		//    Send a participant list to the trainer
 	public function fire()
 	{
-		
+		//$sessionDate = new DateTime($session->date_time);
+		$twodaysago = (new DateTime())->sub(new DateInterval('P2D'));
+
+
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$twodaysago)
+		{
+
+			//$query->where('date_time', '<', $twodaysago);
+			$query->where('id', 1);
+
+		}), 'evercisesession')->get();
+
+		$this->info(count($evercisegroup));
 	}
 
 	/**
