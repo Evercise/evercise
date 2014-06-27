@@ -140,9 +140,15 @@ Route::get('/user_marketingpreferences', function()
 });
 
 Route::get('/email_test', function(){
-    return View::make('emails.session.all')
-    ->with('body', 'blah blah blah blah blah blah blah blah')
-    ->with('subject', 'Message from your trainer Bob regarding the Yoga session on the 17th June');
+    return View::make('emails.session.userList')
+    ->with('dateTime', '2014-09-19 05:00:00')
+    ->with('name', 'Wayne Junior')
+    ->with('group', 'Bellyflopping')
+    ->with('location', 'The Biscuit Factory')
+    ->with('trainerEmail', 'trainer@email.com')
+    ->with('trainerName', 'Jeff the trainer')
+    ->with('location', 'The Biscuit Factory')
+    ->with('userList', ['bob'=>'bob@hisownface.com', 'fred'=>'fred@theshop.com']);
 });
 
 /* ADMIN SECTION */
