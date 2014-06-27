@@ -40,19 +40,69 @@ class SendEmails extends Command {
 		//    Send a participant list to the trainer
 	public function fire()
 	{
-		//$sessionDate = new DateTime($session->date_time);
-		$twodaysago = (new DateTime())->sub(new DateInterval('P2D'));
+		$this->info('Searching for Sessions in the next 2 days, which have not yet fired out emails');
+		
+		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
 
-
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$twodaysago)
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$twodaystime)
 		{
 
-			//$query->where('date_time', '<', $twodaysago);
-			$query->where('id', 1);
+			$query->where('date_time', '<', $twodaystime);
+			//$query->whereIn('id', [1,2,6]);
 
-		}), 'evercisesession')->get();
+		}), 'user', 'venue')->get();
 
-		$this->info(count($evercisegroup));
+		$numSessions = 0;
+		$emails = [];
+		$sessionIds = [];
+		foreach ($evercisegroup as $group)
+		{
+			$numSessions += count($group->evercisesession);
+			foreach ($group->evercisesession as $session)
+			{
+				if ($session->members_emailed == 0)
+				{
+					$userList = [];
+					foreach ($session->users as $user) {
+						$userList[$user->first_name.' '.$user->last_name] = $user->email;
+					}
+					$emails[] = ['group'=>$group->name, 'dateTime'=>$session->date_time, 'userList' =>$userList, 'trainer'=>$group->user, 'location'=>$group->venue->name];
+					$sessionIds[] = $session->id;
+				}
+			}
+		}
+		if (count($emails))
+		{
+			$this->info('Number of Sessions to be emailed: '.$numSessions);
+			foreach($emails as $email)
+			{
+				$this->info('');
+				$this->info('Session: '.$email['group'].' - '.$email['dateTime']);
+				$this->info('Trainer: '.$email['trainer']->id.' - '.$email['trainer']->display_name);
+				$this->info('Venue: '.$email['location']);
+				foreach ($email['userList'] as $name => $userEmail)
+				{
+					$this->info(' -- '.$name.' : '.$userEmail);
+
+				}
+				// Pang out an email with a list of users
+				Event::fire('session.upcoming_session', array(
+	            	'userList' => $email['userList'], 
+	            	'group' => $email['group'], 
+	                'location' => $email['location'],
+	                'dateTime' => $email['dateTime'],
+	                'trainerName' => $email['trainer']->first_name.' '.$email['trainer']->last_name,
+	                'trainerEmail' => $email['trainer']->email,
+	            ));
+			}
+			Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
+		}
+		else
+		{
+			$this->info('No sessions found which have not already sent out emails');
+		}
+
+
 	}
 
 	/**
