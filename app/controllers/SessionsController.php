@@ -468,6 +468,10 @@ class SessionsController extends \BaseController {
 		/* create confirmation view */
 		$evercisegroupId = Session::get('evercisegroupId'); 
 
+		/* get transaction id */
+		$paypalTransactionId = Session::get('paypalTransactionId');
+
+
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
 		{
 
@@ -509,18 +513,18 @@ class SessionsController extends \BaseController {
 		}
 
 		$deductEverciseCoins = Evercoin::poundsToEvercoins( $price - $amountToPay );
-		/*
+
 		$newEvercoinBalance = $evercoin->balance - $deductEverciseCoins;
 
 		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds);
+		$user->sessions()->attach($sessionIds, ['price' => 50]);
 
 		$evercoin->update(['balance' => $newEvercoinBalance]);
 		$evercoin->recordedSave([
 			'user_id' => $user->id,
 			'transaction_amount' => $deductEverciseCoins,
 			'new_balance' => $newEvercoinBalance
-		]);*/
+		]);
 		$evercoin->withdraw($deductEverciseCoins);
 
 		Session::forget('amountToPay');

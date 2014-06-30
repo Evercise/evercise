@@ -16,8 +16,10 @@ class CreateSessionmembersTable extends Migration {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->integer('evercisesession_id')->unsigned();// Foreign key
-			$table->decimal('price', 6, 2)->default(0.00);
-			$table->boolean('reviewed')->default(0);
+			$table->string('token', 64);
+			$table->string('transaction_id' , 64);
+			$table->string('payer_id' , 64);
+			$table->string('payment_method' , 64);
 			$table->timestamps();
 		});
 	}

@@ -51,7 +51,7 @@ class PaypalPaymentController extends BaseController {
 
         $evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
-        if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
+        if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
         {
             return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
         }
@@ -121,7 +121,7 @@ class PaypalPaymentController extends BaseController {
 
         $evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
-        if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
+        if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
         {
             return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
         }
@@ -144,8 +144,10 @@ class PaypalPaymentController extends BaseController {
         if ($response->isSuccessful()) {
              $data = $response->getData(); // this is the raw response object
 
-            // return var_dump($data);
-            return Redirect::to('sessions/'.$data['TOKEN'].'/pay');
+            //return var_dump($data);
+            return Redirect::to('sessions/'.$data['TOKEN'].'/pay')
+                    ->with('paypalTransactionId',$data['PAYMENTINFO_0_TRANSACTIONID'] )
+                    ->with('paypalPayerId',$data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'] );
             //return Redirect::action('SessionsController@payForSessions');
         }
 
