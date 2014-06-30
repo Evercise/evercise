@@ -89,6 +89,7 @@ class RatingsController extends \BaseController {
 			$niceTime = date('h:ia', $timestamp);
 			$niceDate = date('dS F Y', $timestamp);
 		    Trainerhistory::create(array('user_id'=> $user_id, 'type'=>'rated_session', 'display_name'=>$this->user->display_name, 'name'=>$group->name, 'time'=>$niceTime, 'date'=>$niceDate));
+		    Milestone::where('user_id', $this->user->id)->first()->add('review');
 
 		}
 
