@@ -29,7 +29,7 @@ Route::resource('payment', 'PaypalPaymentController');
 Route::get('sessions/{evercisegroup_id}/index', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
 Route::get('sessions/date_list', array('as'=>'sessions.date_list'));
 Route::post('sessions/join', array('as'=>'sessions.join' , 'uses'=>'SessionsController@joinSessions'));
-Route::post('sessions/pay', array('as'=>'sessions.pay' , 'uses'=>'SessionsController@payForSessions'));
+Route::get('sessions/{evercisegroupId}/pay', array('as'=>'sessions.pay' , 'uses'=>'SessionsController@payForSessions'));
 
 Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){
 		return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );

@@ -105,7 +105,7 @@
 				<strong>Venue Facilities</strong>
 				@foreach($venue->facilities as $key => $value)
 					@if ($value->category == 'facility') 
-						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
+						<li>{{ HTML::image('img/facility/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
 					@endif										
 				@endforeach
 			</ul>
@@ -116,7 +116,7 @@
 				<strong>Venue Amenities</strong>
 				@foreach($venue->facilities as $key => $value)
 					@if ($value->category == 'Amenity') 
-						<li>{{ HTML::image('facilities/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
+						<li>{{ HTML::image('img/facility/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
 					@endif										
 				@endforeach
 			</ul>	

@@ -12,42 +12,68 @@ class PaypalPaymentController extends BaseController {
     */
     public function create()
     {
-         $gateway = Omnipay::create('PayPal_Express');
-         $gateway->setUsername('fee_api1.evercise.com');
-         $gateway->setPassword('1382538555');
-         $gateway->setSignature('Aodo9BslGbWevZQXif8dMUdeGkPiAViLGU1nZKk2LGHUbAj0M5jbw84L');
-         $gateway->setTestMode(true);
+        /* get session ids */
 
-         $response = $gateway->purchase(
-                    array(
-                        'cancelUrl' => 'http://localhost:1234/cancelurl',
-                        'returnUrl' => 'http://localhost:1234/payment/5', 
-                        'amount' => 0.01,
-                        'currency' => 'GBP'
-                    )
-            )->send();
+        $sessionIdsRaw = Input::get('session-ids');
+        $sessionIds = json_decode(Input::get('session-ids'), true);
+        Session::put('sessionIds', $sessionIds);
+        /* get currnet user */
+        $user = User::find($this->user->id);
+        /* create confirmation view */
+        $evercisegroupId = Input::get('evercisegroup-id');
+        Session::put('evercisegroupId', $evercisegroupId);
+
+        //return var_dump(Session::get('sessionIds'));
+
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
+        {
+
+            $query->whereIn('id', $sessionIds);
+
+        }), 'evercisesession')->find($evercisegroupId);
+
+        //Make sure there is not already a matching entry in sessionmembers
+        if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+        {
+            return Response::json('USER HAS ALREADY JOINED SESSION');
+        }
+
+
+        $total = 0;
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value)
+        {
+            ++$total;
+            $price = $price + $value->price;
+        }
+
+        $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
+
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
+
+        if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
+        {
+            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
+        }
+
+
+     $gateway = Omnipay::create('PayPal_Express');
+     $gateway->setUsername('fee_api1.evercise.com');
+     $gateway->setPassword('1382538555');
+     $gateway->setSignature('Aodo9BslGbWevZQXif8dMUdeGkPiAViLGU1nZKk2LGHUbAj0M5jbw84L');
+     $gateway->setTestMode(true);
+
+     $response = $gateway->purchase(
+                array(
+                    'cancelUrl' => 'http://localhost:1234/cancelurl',
+                    'returnUrl' => 'http://localhost:1234/payment/'.$evercisegroupId, 
+                    'amount' => $amountToPay,
+                    'currency' => 'GBP'
+                )
+        )->send();
 
         $response->redirect();
 
-
-         /* $response = $gateway->completePurchase(
-                            array(
-                                'cancelUrl' => 'www.evercise.com/cancelurl',
-                                'returnUrl' => 'www.evercise.com/returnurl', 
-                                'amount' => 12.99,
-                                'currency' => 'GBP',
-                                'Description' => 'Test Purchase for 12.99'
-                            )
-                    )->send();
-
-
-            $data = $response->getData(); // this is the raw response object
-            echo '<pre>';
-            print_r($data);
-
-            */
-
-           // return var_dump($data);
     }
 
     /**
@@ -58,6 +84,49 @@ class PaypalPaymentController extends BaseController {
      */
     public function show($id)
     {
+        /* get session ids */
+        $sessionIds = Session::get('sessionIds');
+
+        /* get currnet user */
+        $user = User::find($this->user->id);
+        /* create confirmation view */
+        $evercisegroupId = $id;
+
+        //return var_dump(Session::get('sessionIds'));
+
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
+        {
+
+            $query->whereIn('id', $sessionIds);
+
+        }), 'evercisesession')->find($evercisegroupId);
+
+        //Make sure there is not already a matching entry in sessionmembers
+        if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+        {
+            return Response::json('USER HAS ALREADY JOINED SESSION');
+        }
+
+
+        $total = 0;
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value)
+        {
+            ++$total;
+            $price = $price + $value->price;
+
+        }
+
+        $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
+
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
+
+        if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
+        {
+            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
+        }
+
+
         $gateway = Omnipay::create('PayPal_Express');
         $gateway->setUsername('fee_api1.evercise.com');
         $gateway->setPassword('1382538555');
@@ -66,16 +135,22 @@ class PaypalPaymentController extends BaseController {
 
         $response = $gateway->completePurchase(
                         array(
-                            'amount' => 0.01,
+                            'amount' => $amountToPay,
                             'currency' => 'GBP',
                             'Description' => 'Test Purchase for a penny'
                         )
                 )->send();
 
+        if ($response->isSuccessful()) {
+             $data = $response->getData(); // this is the raw response object
 
-            $data = $response->getData(); // this is the raw response object
-            echo '<pre>';
-            var_dump($data);
+            // return var_dump($data);
+            return Redirect::to('sessions/'.$data['TOKEN'].'/pay');
+            //return Redirect::action('SessionsController@payForSessions');
+        }
+
+       
+
     }
 
 }

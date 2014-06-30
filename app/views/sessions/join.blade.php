@@ -38,7 +38,7 @@
 					<button data-href="/sessions/{{ $evercisegroup->id }}/paywithevercoins" class="btn-paywithevercoins btn btn-yellow">Pay with Evercoins</button>
 				</div>
 				<div class="session-total">
-					{{ Form::open(array('id' => 'join-sessions', 'url' => 'sessions/pay', 'method' => 'post', 'class' => '')) }}
+					{{ Form::open(array('id' => 'join-sessions', 'url' => 'payment/create', 'method' => 'get', 'class' => '')) }}
 						<span>Total Sessions: <span id="total-sessions">{{ isset($totalSessions) ? $totalSessions : 0}}</span></span>
 						<span>Total Price: &pound;<span id="total-price">{{ isset($totalPrice) ? $totalPrice : 0.00}}</span></span>
 						<span>To Pay: &pound;<span id="to-pay">{{ isset($totalPrice) ? $totalPrice : 0.00}}</span></span>

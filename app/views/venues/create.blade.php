@@ -10,14 +10,34 @@
 		</div>
 		<div class='formfield clearfix'>
 			<ul class='facilities'>
+				<h5>Amenities</h5>
 				@foreach ($facilities as $f_key => $facility) 
-					<li>
-						<div>
-						{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => $facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
-						{{Form::label('facilities_array[]', $facility->name, array('id'=>'fac_check'))}}
-						</div>
-						{{ HTML::image('img/facility/'.$facility->image, $facility->image) }}
-					</li>
+					@if($facility->category == 'Amenity')
+						<li>
+							<div>
+							{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => $facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
+							{{Form::label('facilities_array[]', $facility->name, array('id'=>'fac_check'))}}
+							</div>
+							{{ HTML::image('img/facility/'.$facility->image, $facility->image) }}
+						</li>
+
+					@endif
+
+				@endforeach
+				<hr>
+				<h5>Facilities</h5>
+				@foreach ($facilities as $f_key => $facility) 
+					@if($facility->category == 'facility')
+						<li>
+							<div>
+							{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => $facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
+							{{Form::label('facilities_array[]', $facility->name, array('id'=>'fac_check'))}}
+							</div>
+							{{ HTML::image('img/facility/'.$facility->image, $facility->image) }}
+						</li>
+
+					@endif
+
 				@endforeach
 			</ul>
 		</div>

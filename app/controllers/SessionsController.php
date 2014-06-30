@@ -25,7 +25,7 @@ class SessionsController extends \BaseController {
 
         $year = Input::get('year');
         $month = Input::get('month');
-        $date = Input::get('date');
+        $date = sprintf("%02s", Input::get('date'));
         $id = Input::get('evercisegroupId');
 
 		$evercisegroup = Evercisegroup::where('id', $id)->first();
@@ -459,14 +459,14 @@ class SessionsController extends \BaseController {
 		//return var_dump($sessionId);
 	}
 
-	function payForSessions(){
+	function payForSessions($token){
 
 		/* get session ids */
-		$sessionIds = json_decode(Input::get('session-ids'), true);
+		$sessionIds = Session::get('sessionIds'); 
 		/* get currnet user */
 		$user = User::find($this->user->id);
 		/* create confirmation view */
-		$evercisegroupId = Input::get('evercisegroup-id');
+		$evercisegroupId = Session::get('evercisegroupId'); 
 
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
 		{
@@ -480,9 +480,6 @@ class SessionsController extends \BaseController {
 		{
 			return Response::json('USER HAS ALREADY JOINED SESSION');
 		}
-
-		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds);
 
 		$userTrainer = User::find($evercisegroup->user_id);
 
@@ -514,12 +511,19 @@ class SessionsController extends \BaseController {
 		$deductEverciseCoins = $this->poundsToEvercoins( $price - $amountToPay );
 		$newEvercoinBalance = $evercoin->balance - $deductEverciseCoins;
 
+		/*pivot current user with session via session members */
+		$user->sessions()->attach($sessionIds);
+
 		$evercoin->update(['balance' => $newEvercoinBalance]);
 		$evercoin->recordedSave([
 			'user_id' => $user->id,
 			'transaction_amount' => $deductEverciseCoins,
 			'new_balance' => $newEvercoinBalance
 		]);
+
+		Session::forget('amountToPay');
+		Session::forget('sessionIds');
+		Session::forget('evercisegroupId');
 
 		return View::make('sessions.confirmation')
 					->with('evercisegroup' , $evercisegroup)
