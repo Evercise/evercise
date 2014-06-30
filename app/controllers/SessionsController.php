@@ -506,12 +506,13 @@ class SessionsController extends \BaseController {
 
 		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
-		if ($amountToPay + $this->evercoinsToPounds($evercoin->balance) < $price)
+		if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
 		{
 			return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
 		}
 
-		$deductEverciseCoins = $this->poundsToEvercoins( $price - $amountToPay );
+		$deductEverciseCoins = Evercoin::poundsToEvercoins( $price - $amountToPay );
+		/*
 		$newEvercoinBalance = $evercoin->balance - $deductEverciseCoins;
 
 		$evercoin->update(['balance' => $newEvercoinBalance]);
@@ -519,7 +520,8 @@ class SessionsController extends \BaseController {
 			'user_id' => $user->id,
 			'transaction_amount' => $deductEverciseCoins,
 			'new_balance' => $newEvercoinBalance
-		]);
+		]);*/
+		$evercoin->withdraw($deductEverciseCoins);
 
 		return View::make('sessions.confirmation')
 					->with('evercisegroup' , $evercisegroup)
@@ -559,7 +561,7 @@ class SessionsController extends \BaseController {
 			$refund = 0;
 		} 
 
-		$refundInEvercoins = $this->poundsToEvercoins($refund);
+		$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
 		$evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
 
 		return View::make('sessions.leave')
@@ -590,12 +592,13 @@ class SessionsController extends \BaseController {
 
 			$refund = ($status == 1 ? ($session->price / 2) : $session->price);
 
-			$refundInEvercoins = $this->poundsToEvercoins($refund);
+			$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
 
 			$evercoin = Evercoin::where('user_id', $user->id)->first();
-			$balanceBefore = $evercoin->balance;
+			/*$balanceBefore = $evercoin->balance;
 			$balanceAfter = $balanceBefore + $refundInEvercoins;
-			$evercoin->update(['balance' => $balanceAfter]);
+			$evercoin->update(['balance' => $balanceAfter]);*/
+			$evercoin->deposit($refundInEvercoins);
 
 			$evercisegroup = Evercisegroup::find($session->evercisegroup_id);
 			$niceTime = date('h:ia', strtotime($session->date_time));
@@ -644,7 +647,7 @@ class SessionsController extends \BaseController {
 	    foreach ($evercisegroup->evercisesession as $key => $value)
 			$price = $price + $value->price;
 
-	    $priceInEvercoins = $this->poundsToEvercoins($price);
+	    $priceInEvercoins = Evercoin::poundsToEvercoins($price);
 
 		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
@@ -669,15 +672,15 @@ class SessionsController extends \BaseController {
 			$price = $price + $value->price;
 
 		// Check if more coins are selected than are needed.
-		if ($usecoins > $this->poundsToEvercoins($price))
-			$usecoins = $this->poundsToEvercoins($price);
+		if ($usecoins > Evercoin::poundsToEvercoins($price))
+			$usecoins = Evercoin::poundsToEvercoins($price);
 
 		//Check user has tried to use more evercoins than they have. if so, use every last one.
 		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
 		if ($usecoins > $evercoin->balance)
 			$usecoins = $evercoin->balance;
 
-		$usecoinsInPounds = $this->evercoinsToPounds($usecoins);
+		$usecoinsInPounds = Evercoin::evercoinsToPounds($usecoins);
 		$amountRemaining = $price - $usecoinsInPounds;
 
 

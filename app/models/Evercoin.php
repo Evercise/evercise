@@ -11,6 +11,15 @@ class Evercoin extends \Eloquent {
 	protected $table = 'evercoins';
 
 
+	public static function poundsToEvercoins($amountInPounds)
+	{
+		return $amountInPounds * 100;
+	}
+	public static function evercoinsToPounds($amountInEvercoins)
+	{
+		return $amountInEvercoins * 0.01;
+	}
+
     public function recordedSave(array $params)
     {
     	//$transaction_amount = $params['balance'] - $params['previous_balance'];
@@ -23,5 +32,31 @@ class Evercoin extends \Eloquent {
 
    		parent::save();
 
+    }
+
+    public function deposit( $amount )
+    {
+    	$this->transaction($amount);
+    }
+
+    public function withdraw( $amount )
+    {
+    	$this->transaction(-$amount);
+    }
+
+    private function transaction( $amount )
+    {
+    	$user_id = $this->attributes['user_id'];
+    	$oldBalance = $this->attributes['balance'];
+    	$newBalance = $oldBalance + $amount;
+    	$this->attributes['balance'] = $newBalance;
+
+    	$this->save();
+
+		Evercoinhistory::create([
+			'user_id'=>$user_id,
+			'transaction_amount'=>$amount,
+			'new_balance' => $newBalance
+		]);
     }
 }
