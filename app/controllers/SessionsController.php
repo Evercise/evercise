@@ -512,15 +512,8 @@ class SessionsController extends \BaseController {
 		}
 
 		$deductEverciseCoins = Evercoin::poundsToEvercoins( $price - $amountToPay );
-		/*
-		$newEvercoinBalance = $evercoin->balance - $deductEverciseCoins;
 
-		$evercoin->update(['balance' => $newEvercoinBalance]);
-		$evercoin->recordedSave([
-			'user_id' => $user->id,
-			'transaction_amount' => $deductEverciseCoins,
-			'new_balance' => $newEvercoinBalance
-		]);*/
+
 		$evercoin->withdraw($deductEverciseCoins);
 
 		return View::make('sessions.confirmation')
@@ -595,9 +588,6 @@ class SessionsController extends \BaseController {
 			$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
 
 			$evercoin = Evercoin::where('user_id', $user->id)->first();
-			/*$balanceBefore = $evercoin->balance;
-			$balanceAfter = $balanceBefore + $refundInEvercoins;
-			$evercoin->update(['balance' => $balanceAfter]);*/
 			$evercoin->deposit($refundInEvercoins);
 
 			$evercisegroup = Evercisegroup::find($session->evercisegroup_id);

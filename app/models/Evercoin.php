@@ -9,15 +9,16 @@ class Evercoin extends \Eloquent {
 	 * @var string
 	 */
 	protected $table = 'evercoins';
+	private $evercoinValue = 0.01;
 
 
 	public static function poundsToEvercoins($amountInPounds)
 	{
-		return $amountInPounds * 100;
+		return $amountInPounds * 1 / $this->evercoinValue;
 	}
 	public static function evercoinsToPounds($amountInEvercoins)
 	{
-		return $amountInEvercoins * 0.01;
+		return $amountInEvercoins * $this->evercoinValue;
 	}
 
     public function recordedSave(array $params)
