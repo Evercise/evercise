@@ -19,3 +19,11 @@ elseif (App::environment('staging'))
 	        'secret' => '762e0e54c435804033d7ece1d4b50122' // donkey
 	    );
 }
+elseif (App::environment('production'))
+{
+	    // The environment is VS10319
+	return array(
+	        'appId' => '247621532113217', // VS10319
+	        'secret' => '762e0e54c435804033d7ece1d4b50122' // VS10319
+	    );
+}

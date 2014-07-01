@@ -8,7 +8,7 @@
 			<div class="trainer-dashboard-wrapper-left">
 				<div  class="user-block-wrap">
 					@include('users.user_block')
-					@include('users.dashboardDropdown')
+					@include('users.dashboardTabs')
 					
 				</div>
 				{{--@include('users.dashboardTabs') --}}

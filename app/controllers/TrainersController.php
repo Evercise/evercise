@@ -155,7 +155,7 @@ class TrainersController extends \BaseController {
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise dashboard panls JS.
 		JavaScript::put(array('initPut' => 1 )); // Initialise put ajax function JS.
 
-		JavaScript::put(array('selectTab' => $tab ));
+		JavaScript::put(array('selectTab' => ['tab'=>$tab] ));
 
 		return View::make('trainers.edit')
 			->with('trainer', $trainer)
@@ -266,7 +266,8 @@ class TrainersController extends \BaseController {
 
 			$result = array(
 		            'sp' =>  $speciality,
-		            'callback' => 'successAndRefresh'
+		            'callback' => 'gotoUrl',
+		            'url' => '/trainers/2/edit/profile'
 		         );	
 
 			return Response::json($result);
