@@ -74,6 +74,28 @@ function initDashboardPanel()
 
         return false;
     });
+
+    $('#withdrawalform').on( 'submit', function() {
+
+        var url = $(this).attr('action');
+        trace('URL: '+url);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: $( this ).serialize(),
+            dataType: 'html'
+        })
+        .done(
+            function(data) {
+                trace('data: '+ data);
+                $('.mask').show();
+                $('.container').append(data);
+                initPut();
+             }
+        );
+
+        return false;
+    });
 }
 
 registerInitFunction('initDashboardPanel');

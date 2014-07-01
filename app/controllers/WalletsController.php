@@ -56,7 +56,13 @@ class WalletsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$withdrawal = Input::get('withdrawal');
+		$paypal = Input::get('paypal');
+
+		//return Response::json(['callback' => 'gotoUrl', 'url' => '/ham']);
+		return View::make('wallets.create')
+		->with('withdrawal', $withdrawal)
+		->with('paypal', $paypal);
 	}
 
 	/**
@@ -67,7 +73,7 @@ class WalletsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		return Response::json(['callback' => 'gotoUrl', 'url' => '/users/2/edit/profile']);
 	}
 
 	/**

@@ -419,7 +419,7 @@ class UsersController extends \BaseController {
 			Milestone::where('user_id', $this->user->id)->first()->add('profile');
 			//$milestone->completeProfile();
 
-			return Response::json(['callback' => 'gotoUrl', 'url' => '/users/2/edit/profile']);
+			return Response::json(['callback' => 'gotoUrl', 'url' => '/users/'.$this->user->id.'/edit/profile']);
 
 		}
 		//return Response::json($result);
