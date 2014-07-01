@@ -26,6 +26,8 @@ Route::resource('trainers', 'TrainersController');
 Route::resource('venues', 'VenuesController');
 Route::resource('payment', 'PaypalPaymentController');
 
+Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
+
 Route::get('sessions/{evercisegroup_id}/index', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
 Route::get('sessions/date_list', array('as'=>'sessions.date_list'));
 Route::post('sessions/join', array('as'=>'sessions.join' , 'uses'=>'SessionsController@joinSessions'));
