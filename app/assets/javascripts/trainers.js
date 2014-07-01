@@ -105,4 +105,3 @@ function initSessionNew()
 
 }
 //registerInitFunction(initSessionNew);
-

@@ -145,7 +145,7 @@ class UsersController extends \BaseController {
 */
 
 			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
-
+			Milestone::create(['user_id'=>$user->id]);
 			
 
 			if($user) {
@@ -316,14 +316,14 @@ class UsersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($id, $tab=0)
 	{
 		if (!Sentry::check()) return Redirect::route('home');
 
 		JavaScript::put(array('initPut' => json_encode(['']) ));
 		JavaScript::put(array('initUsers' => 1 ));
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
-
+		JavaScript::put(array('selectTab' => ['tab'=>$tab] ));
 
 		return View::make('users.edit');
 	}
@@ -419,7 +419,7 @@ class UsersController extends \BaseController {
 			Milestone::where('user_id', $this->user->id)->first()->add('profile');
 			//$milestone->completeProfile();
 
-			return Response::json(['callback' => 'successAndRefresh']);
+			return Response::json(['callback' => 'gotoUrl', 'url' => '/users/2/edit/profile']);
 
 		}
 		//return Response::json($result);

@@ -1,5 +1,16 @@
 <?php
 
+
+
+
+return array(
+	'app' => __DIR__.'/../../evercise/app',
+	'public' => __DIR__,
+	'base' => __DIR__.'/../../evercise',
+	'storage' => __DIR__.'/../../evercise/app/storage',
+);
+
+
 return array(
 
 	/*

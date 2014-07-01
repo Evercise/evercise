@@ -294,6 +294,12 @@ function initPut () {
   });
 }
 
+function gotoUrl(data)
+{
+  setTimeout(function() {
+      window.location.href = data.url;
+  }, 300);
+}
 function successAndRefresh(data, form)
 {
   form.find('.success_msg').show();
