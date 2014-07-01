@@ -39,8 +39,8 @@
 						@include('sessions.date_list' , array( 'evercisegroupId' => $value['id'], 'ids' => $value['Evercisesession'] , 'futuresessions' => $value->futuresessions , 'pastsessions' => $value->pastsessions ))
 					</div>
 					<div class="hub-buttons">
-					<a href="evercisegroups/clone_evercisegroups/{{$value['id']}}" class="btn">Clone Class{{ HTML::image('/img/clone_icon.png', 'clone icon' , array('class' => 'evercisegroup-icon')) }}</a>
-					<a href="evercisegroups/delete/{{$value['id']}}" class="btn" id="delete_group">Delete Class <span>X</span></a>
+					<a href="evercisegroups/clone_evercisegroups/{{$value['id']}}" class="btn btn-green">Clone Class{{ HTML::image('/img/clone_icon_white.png', 'clone icon' , array('class' => 'evercisegroup-icon')) }}</a>
+					<a href="evercisegroups/delete/{{$value['id']}}" class="btn btn-red" id="delete_group">Delete Class <span>X</span></a>
 					</div>
 
 					

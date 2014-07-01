@@ -459,17 +459,23 @@ class SessionsController extends \BaseController {
 		//return var_dump($sessionId);
 	}
 
-	function payForSessions($token){
+	function payForSessions($id){
 
 		/* get session ids */
 		$sessionIds = Session::get('sessionIds'); 
 		/* get currnet user */
 		$user = User::find($this->user->id);
-		/* create confirmation view */
-		$evercisegroupId = Session::get('evercisegroupId'); 
+
+		$evercisegroupId = $id;
+
+		/* get token */
+		$paypalToken = Session::get('paypalToken');
 
 		/* get transaction id */
 		$paypalTransactionId = Session::get('paypalTransactionId');
+
+		/* get Payer id */
+		$paypalPayerId = Session::get('paypalPayerId');
 
 
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
@@ -477,7 +483,8 @@ class SessionsController extends \BaseController {
 
 			$query->whereIn('id', $sessionIds);
 
-		}), 'evercisesession')->find($evercisegroupId);
+		}), 'evercisesession')
+		->find($evercisegroupId);
 
 		//Make sure there is not already a matching entry in sessionmembers
 		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
@@ -517,7 +524,15 @@ class SessionsController extends \BaseController {
 		$evercoin->withdraw($deductEverciseCoins);
 
 		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds, ['price' => 50]);
+		$user->sessions()->attach($sessionIds, ['token' => $paypalToken , 'transaction_id' => $paypalTransactionId, 'payer_id' => $paypalPayerId, 'payment_method' => 'paypal_express' ]);
+
+		Event::fire('session.joined', array(
+	        	'email' => $user->email, 
+	        	'display_name' => $user->display_name, 
+	        	'evercisegroup' => $evercisegroup, 
+	        	'userTrainer' => $userTrainer, 
+	        	'transactionId' => $paypalTransactionId, 
+			));
 
 		Session::forget('amountToPay');
 		Session::forget('sessionIds');

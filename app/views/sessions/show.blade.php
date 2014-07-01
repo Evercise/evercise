@@ -24,16 +24,16 @@
 			</li>
 		@endif
 		<li class="session-list-controls">
-			{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img>', array('id'=>$session['id']), array('class'=>'mail_all session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))) ) }}
+			{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon_green.png"></img>', array('id'=>$session['id']), array('class'=>'mail_all session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))) ) }}
 			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 				{{ Form::hidden( 'postMembers' , $session['Sessionmembers'] , array('id' => 'postMembers')) }}
 				<button type="submit">
-					{{ HTML::image('/img/download_icon.png', 'download icon' , array('class' => 'session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }}
+					{{ HTML::image('/img/download_icon_blue.png', 'download icon' , array('class' => 'session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }}
 				</button>
 				 
 			{{ Form::close() }}
 			
-			{{ HTML::image('/img/view_icon.png', 'view icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }} 
+			{{ HTML::image('/img/view_icon_yellow.png', 'view icon' , array('id'=> 'view-session' ,'class' => 'session-icon session-icon-view '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }} 
 		</li>
 	</div>
 	
@@ -57,7 +57,7 @@
 					<p>Joined on the {{ date('dS-M', strtotime($sessionmember['created_at']) )  }}</p>
 
 				</div>
-				{{ HTML::decode(HTML::linkRoute('sessions.mail_one', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$session['id'], 'userId'=> $sessionmember['Users']['id']), array('class'=>'mail_all session-icon')) ) }}
+				{{ HTML::decode(HTML::linkRoute('sessions.mail_one', '<img src="/img/mail_icon_green.png"></img>', array('sessionId'=>$session['id'], 'userId'=> $sessionmember['Users']['id']), array('class'=>'mail_all session-icon')) ) }}
 				
 			</div>
 		@endforeach
@@ -68,16 +68,10 @@
 
 		<div class="session-members-footer">
 			<aside>
-				{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon.png"></img><span>Message All Users</span>', array('id'=>$session['id']), array('class'=>'mail_all session-icon')) ) }}
-					
-			</aside>
-			<aside>
+				{{ HTML::decode(HTML::linkRoute('sessions.mail_all', 'Message All Users', array('id'=>$session['id']), array('class'=>'mail_all btn btn-green session-icon')) ) }}
 				{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 					{{ Form::hidden( 'postMembers' , $session['Sessionmembers'] , array('id' => 'postMembers')) }}
-					<button type="submit">
-						{{ HTML::image('/img/download_icon.png', 'download icon' , array('class' => 'session-icon')); }}
-						<span>Download List</span>
-					</button>
+					<button class="btn btn-blue" type="submit">Download List</button>
 					 
 				{{ Form::close() }}
 			</aside>

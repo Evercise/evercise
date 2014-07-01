@@ -14,6 +14,7 @@ class SessionMailer extends Mailer {
 		$events->listen('session.userLeft', 'email\SessionMailer@userLeaveSession');
 		$events->listen('session.trainerLeft', 'email\SessionMailer@trainerLeaveSession');
 		$events->listen('session.upcoming_session', 'email\SessionMailer@remind');
+		$events->listen('session.joined', 'email\SessionMailer@joined');
 	}
 
 
@@ -105,6 +106,24 @@ class SessionMailer extends Mailer {
 		$data['email'] = $email;
 		$data['everciseGroup'] = $everciseGroup;
 		$data['everciseSession'] = $everciseSession;
+
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
+	// for whe  a user joines sessions
+
+	public function joined( $email, $display_name, $evercisegroup, $userTrainer, $transactionId)
+	{
+		$subject = 'You have joined a class.';
+		$view = 'emails.session.joined';
+		$data['email'] = $email;
+		$data['display_name'] = $display_name;
+		$data['evercisegroup_name'] = $evercisegroup->name;
+		$data['userTrainer_display_name'] = $userTrainer->display_name;
+		$data['transactionId'] = $transactionId;
+		foreach($evercisegroup->evercisesession as $key => $session){
+			$data['sessions'][] = $session->date_time;
+		}
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}

@@ -270,18 +270,26 @@ class EvercisegroupsController extends \BaseController {
 							$totalCapacity = 0;
 							$averageSessionMembers = 0;
 							$averageCapacity = 0;
+							$revenue = 0;
+							$totalRevenue = 0;
+							$averageRevenue = 0;
+							$averageTotalRevenue = 0;
 
-									$members = [];
-							foreach ($evercisegroup->evercisesession as $key => $value) {
+							$members = [];
+
+							foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
 								$totalCapacity = $totalCapacity + $evercisegroup->capacity;
-								$members[$key] = count($value['Sessionmembers']); // Count those members
+								$members[$key] = count($evercisesession['Sessionmembers']); // Count those members
 								$totalSessionMembers= $totalSessionMembers + $members[$key];
+								$revenue = $revenue + ($members[$key] * $evercisesession->price );
+								$totalRevenue = $totalRevenue + ($evercisesession->price * $evercisegroup->capacity);
 								++$i;
 							}
 
 							$averageSessionMembers = round($totalSessionMembers/$i, 1);
-							$averageSessionMembers = round($totalSessionMembers/$i, 1);
 							$averageCapacity = round($totalCapacity/$i, 1);
+							$averageRevenue = round($revenue/$i, 1);
+							$averageTotalRevenue = round($totalRevenue/$i, 1);
 
 							//return '<h1>'. $averageCapacity . '</h1>';
 
@@ -296,6 +304,10 @@ class EvercisegroupsController extends \BaseController {
 								->with('totalCapacity' , $totalCapacity)
 								->with('averageSessionMembers' , $averageSessionMembers)
 								->with('averageCapacity' , $averageCapacity)
+								->with('revenue' , $revenue)
+								->with('totalRevenue' , $totalRevenue)
+								->with('averageTotalRevenue' , $averageTotalRevenue)
+								->with('averageRevenue' , $averageRevenue)
 								->with('members' , $members);
 						}
 					}

@@ -32,10 +32,10 @@
 				@include('widgets.donutChart', array('label' => 'Average Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings2','total' => $averageCapacity, 'fill' => $averageSessionMembers ))
 			</div>
 			<div class="donut-chart">
-				@include('widgets.donutChart', array('label' => 'Total Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings3','total' => 500, 'fill' => 300 ))
+				@include('widgets.donutChart', array('label' => 'Total Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings3','total' => $totalRevenue, 'fill' => $revenue ))
 			</div>
 			<div class="donut-chart">
-				@include('widgets.donutChart', array('label' => 'Total Class Capacity', 'width' => 120 , 'id' => 'total-class-bookings4','total' => 500, 'fill' => 300 ))
+				@include('widgets.donutChart', array('label' => 'Average Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings4','total' => $averageTotalRevenue, 'fill' => $averageRevenue ))
 			</div>
 		
 		</div>
@@ -61,6 +61,8 @@
 		</div>
 
 		<div class="col12">
+		<br>
+		<br>
 			<h3>Past Sessions</h3>
 		</div>
 		<div class="session-table session-table-past">

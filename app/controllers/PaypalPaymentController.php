@@ -145,7 +145,8 @@ class PaypalPaymentController extends BaseController {
              $data = $response->getData(); // this is the raw response object
 
             //return var_dump($data);
-            return Redirect::to('sessions/'.$data['TOKEN'].'/pay')
+            return Redirect::to('sessions/'.$evercisegroupId.'/pay')
+                    ->with('paypalToken',$data['TOKEN'] )
                     ->with('paypalTransactionId',$data['PAYMENTINFO_0_TRANSACTIONID'] )
                     ->with('paypalPayerId',$data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'] );
             //return Redirect::action('SessionsController@payForSessions');
