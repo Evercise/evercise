@@ -238,12 +238,12 @@ function initPut () {
   trace("init Put");
   $( '.create-form, .update-form' ).on( 'submit', function() {
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
-      trace('submitting via initPut. Method: '+ method);
+      var url = $(this).attr('action');
+      trace('submitting via initPut. Method: '+ method+', url: '+url);
 
       $('.error-msg').remove();
       $('input').removeClass('error');
       // post to controller
-      var url = $(this).attr('action');
       var form = $(this);
       $.ajax({
           url: url,

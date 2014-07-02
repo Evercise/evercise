@@ -132,3 +132,8 @@ function selectTab(params)
     $('#'+view).show();
 }
 registerInitFunction('selectTab');
+
+function confirmWithdrawal(data)
+{
+    trace("withdrawal successful : "+data.amount);
+}

@@ -1,6 +1,6 @@
 <?php
 
-class WalletsController extends \BaseController {
+class WithdrawalrequestsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -40,12 +40,7 @@ class WalletsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$wallet = Wallet::find($id);
-
-		$amount = $wallet->amount;
-
-		return View::make('wallets.show')
-				->with('amount', $amount);
+		//
 	}
 
 	/**
@@ -56,15 +51,7 @@ class WalletsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$withdrawal = Input::get('withdrawal');
-		$paypal = Input::get('paypal');
-
-		//JavaScript::put(['mailAll' => 1]);
-
-		//return Response::json(['callback' => 'gotoUrl', 'url' => '/ham']);
-		return View::make('wallets.create')
-		->with('withdrawal', $withdrawal)
-		->with('paypal', $paypal);
+		//
 	}
 
 	/**
@@ -75,12 +62,7 @@ class WalletsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$withdrawal = Input::get('withdrawal');
-		$paypal = Input::get('paypal');
-
-		Withdrawalrequest::create(['user_id'=>$this->user->id, 'transaction_amount'=>$withdrawal, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
-
-		return Response::json(['callback' => 'confirmWithdrawal', 'amount' => $withdrawal]);
+		//
 	}
 
 	/**
