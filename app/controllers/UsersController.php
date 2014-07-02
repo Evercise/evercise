@@ -299,7 +299,8 @@ class UsersController extends \BaseController {
 		}
 		catch (Exception $e)
 		{
-			return 'Cannot make user folder : '.$userFolder;
+			echo 'Cannot make user folder : '.$userFolder;
+			exit;
 		}
 
 
