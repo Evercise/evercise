@@ -9,7 +9,7 @@ if ($env == 'production')
 
 	return array(
 		'app' => __DIR__.'/../../evercise/app',
-		'public' => __DIR__,
+		'public' => __DIR__.'../../html/dev',
 		'base' => __DIR__.'/../../evercise',
 		'storage' => __DIR__.'/../../evercise/app/storage',
 	);
