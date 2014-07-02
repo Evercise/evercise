@@ -84,7 +84,7 @@ Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'everciseg
 Route::post('/evercisegroups/delete/{id}', array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG'));
 /* geo evercise groups for searching */
 
-Route::get('/evercisegroups/search/{id}', array('as' => 'evercisegroups.search', 'uses' => 'EvercisegroupsController@searchEg'));
+Route::get('/evercisegroups/search/classes', array('as' => 'evercisegroups.search', 'uses' => 'EvercisegroupsController@searchEg'));
 
 Route::get('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll'));
 Route::post('/sessions/{id}/mail_all', array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll'));
@@ -96,6 +96,8 @@ Route::get('/sessions/{sessionId}/leave', array('as' => 'sessions.leave', 'uses'
 Route::post('/sessions/{sessionId}/leave', array('as' => 'sessions.leave.post', 'uses' => 'SessionsController@postLeaveSession'));
 Route::get('/sessions/{evercisegroupId}/paywithevercoins', array('as' => 'sessions.paywithevercoins', 'uses' => 'SessionsController@getPayWithEvercoins'));
 Route::post('/sessions/{evercisegroupId}/paywithevercoins', array('as' => 'sessions.paywithevercoins.post', 'uses' => 'SessionsController@postPayWithEvercoins'));
+Route::get('/sessions/{sessionId}/refund', array('as' => 'sessions.refund', 'uses' => 'SessionsController@getRefund'));
+Route::post('/sessions/{sessionId}/refund', array('as' => 'sessions.refund.post', 'uses' => 'SessionsController@postRefund'));
 
 
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));

@@ -478,10 +478,11 @@ class EvercisegroupsController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function searchEg($id)
+	public function searchEg()
 	{
 		$query = Input::get('location');
 		$radius = Input::get('radius');
+		$category = Input::get('category');
 		$category = Input::get('category');
 
         $geocoder = new \Geocoder\Geocoder();
@@ -505,68 +506,36 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
 
-        $evercisegroups= Evercisegroup::has('futuresessions')
-        ->has('confirmed')
-		->with(array('venue' =>function($query) use (&$haversine,&$radius)
-        {
+        if ($category == null && $query != null) {
+        	$evercisegroups= Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+			->with(array('venue' =>function($query) use (&$haversine,&$radius)
+	        {
 
-        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
-        		  ->having('distance', '<', $radius);
-
-
-        }))
-        ->with('user')
-		->where('category_id' , $category)
-		->get();
+	        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
 
 
+	        }))
+	        ->with('user')
+			->get();
+        }else{
+        	$evercisegroups= Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+			->with(array('venue' =>function($query) use (&$haversine,&$radius)
+	        {
 
-       /* $places = Venue::with(array('evercisegroup' =>function($query) use (&$category)
-        {
-
-        	$query->where('category_id' , $category);
-
-        }))*/
-/*
-         $places = Venue::whereHas('evercisegroup' , function($query) use (&$category)
-        {
-
-        	$query->where('category_id' , $category);
-
-        })
-         ->with('evercisesessions')
-        /*->whereHas('evercisesessions' , function($query)
-        {
-        	$query->where('date_time', '>=',  DB::raw('UNIX_TIMESTAMP(NOW())'));
-        })*/
-        //->with('evercisegroup.Evercisesession.Sessionmembers')
-        //->with('evercisegroup.user')
-/*
-       	->select( array('*', DB::raw($haversine . ' as distance')) )
-	    ->whereBetween('lat', array(0,100))
-	    //->where('category_id' , $category)
-	    ->orderBy('distance', 'ASC')
-	    ->having('distance', '<', $radius)	    
-	    ->get(); 
-*/
-	    //return var_dump($places);
-
-	    //todo swap code above for below then change loops in view
-
-	    /*
-	    $places= Evercisegroup::with('evercisesession')
-		->with(array('venue' =>function($query) use (&$haversine,&$radius)
-        {
-
-        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
-        		  ->having('distance', '<', $radius);
+	        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
 
 
-        }))
-		->where('category_id' , $category)
-		->get();
+	        }))
+	        ->with('user')
+			->where('category_id' , $category)
+			->get();
+        }
+        
 
-		*/
 
 
 

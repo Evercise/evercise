@@ -43,12 +43,14 @@ function initUsers()
     $( '#user_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
+        loading(); // when 
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
             $( this ).serialize(),
             function( data ) {
                 trace("about to win.......");
+                loaded();
                 if (data.validation_failed == 1)
                 {
                     trace(data.errors);

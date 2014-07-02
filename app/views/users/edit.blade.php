@@ -7,7 +7,10 @@
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
 				<div  class="user-block-wrap">
+				<div class="dashboard-user-wrap">
 					@include('users.user_block')
+				</div>
+					
 					@include('users.dashboardTabs')
 					
 				</div>
@@ -15,7 +18,7 @@
 				@include('evercisegroups.recommended')
 			</div>
 
-			<div class="dashboard-wrapper-right user-dash">
+			<div class="dashboard-wrapper-right">
 
 				<div id="classesfuture" class="dashboard-block">
 					<div class="dashboard-header"><h3>Upcoming Classes {{ !empty($pastFutureCount) ? '('.$pastFutureCount['future'].')' : '' }}</h3></div>

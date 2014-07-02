@@ -346,7 +346,7 @@ class UsersController extends \BaseController {
 				'email' => 'required|email',
 				// 'old_password' => 'required',
 				// 'new_password' => 'confirmed',
-				'thumbFilename' => 'required',
+				//'thumbFilename' => 'required',
 			)
 		);
 		if($validator->fails()) {

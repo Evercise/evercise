@@ -15,6 +15,7 @@ class SessionMailer extends Mailer {
 		$events->listen('session.trainerLeft', 'email\SessionMailer@trainerLeaveSession');
 		$events->listen('session.upcoming_session', 'email\SessionMailer@remind');
 		$events->listen('session.joined', 'email\SessionMailer@joined');
+		$events->listen('session.refund', 'email\SessionMailer@refundRequest');
 	}
 
 
@@ -127,6 +128,25 @@ class SessionMailer extends Mailer {
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
+
+	// for contacting us about a refund request
+
+	public function refundRequest($email, $userName, $userEmail , $group, $subject, $body)
+	{
+		$subject = $subject;
+		$view = 'emails.session.refundRequest';
+		$data['userName'] = $userName;
+		$data['userEmail'] = $userEmail;
+		$data['body'] = $body;
+		$data['group'] = $group;
+		$data['subject'] = $subject;
+
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
+	
+
+
 
 
 

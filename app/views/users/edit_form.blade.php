@@ -37,7 +37,7 @@
         @endif
 
         <div class="center-btn-wrapper" >
-    	   {{ Form::submit('Save changes' , array('class'=>'btn-yellow ')) }}
+    	   {{ Form::submit('Save changes' , array('class'=>'btn btn-yellow ')) }}
         </div>
         <div class="success_msg">Details updated</div>
 	{{ Form::close() }}

@@ -26,6 +26,8 @@
 		<li class="session-list-controls">
 			{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon_green.png"></img>', array('id'=>$session['id']), array('class'=>'mail_all session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))) ) }}
 			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
+				{{ Form::hidden( 'postEverciseGroup' , $evercisegroup->name , array('id' => 'postEverciseGroup')) }}
+				{{ Form::hidden( 'postEverciseSession' , $session->date_time , array('id' => 'postEverciseSession')) }}
 				{{ Form::hidden( 'postMembers' , $session['Sessionmembers'] , array('id' => 'postMembers')) }}
 				<button type="submit">
 					{{ HTML::image('/img/download_icon_blue.png', 'download icon' , array('class' => 'session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }}
@@ -70,6 +72,8 @@
 			<aside>
 				{{ HTML::decode(HTML::linkRoute('sessions.mail_all', 'Message All Users', array('id'=>$session['id']), array('class'=>'mail_all btn btn-green session-icon')) ) }}
 				{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
+					{{ Form::hidden( 'postEverciseGroup' , $evercisegroup->name , array('id' => 'postEverciseGroup')) }}
+					{{ Form::hidden( 'postEverciseSession' , $session->date_time , array('id' => 'postEverciseSession')) }}
 					{{ Form::hidden( 'postMembers' , $session['Sessionmembers'] , array('id' => 'postMembers')) }}
 					<button class="btn btn-blue" type="submit">Download List</button>
 					 

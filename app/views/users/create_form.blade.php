@@ -47,7 +47,7 @@
         	@include('form.checkbox', array('id' => 'userNewsletter', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.'))
 
             <div class="center-btn-wrapper" >
-        	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
+        	   {{ Form::submit('Sign Up' , array('class'=>'btn btn-yellow ')) }}
             </div>
             <div class="success_msg">Success, Please check your inbox for a validation email.</div>
     	{{ Form::close() }}

@@ -25,7 +25,7 @@
         </div>
         <div class="btn-wrapper">
             <div class="forgot-password">
-                    {{ Form::submit('Reset Password', array('class' => 'btn-yellow')) }}
+                    {{ Form::submit('Reset Password', array('class' => 'btn btn-yellow')) }}
             </div>
         </div>
     @endif

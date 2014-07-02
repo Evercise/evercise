@@ -15,14 +15,14 @@
         </div>
         <br>
         <div>
-            {{ Form::submit('Login', array('class' => 'btn-yellow')) }}
+            {{ Form::submit('Login', array('class' => 'btn btn-yellow')) }}
         </div>
         <div class="orSeperator"><span>or</span></div>
     {{ Form::close() }}
     @if ($redirect_after_login == 1)
-       {{ HTML::link('login/fb/'.$redirect_after_login_url, 'Log in with facebook', array('class' => 'btn-fb')) }}
+       {{ HTML::link('login/fb/'.$redirect_after_login_url, 'Log in with facebook', array('class' => 'btn btn-fb')) }}
     @else
-        {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn-fb')) }}
+        {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn btn-fb')) }}
     @endif
     <br>
     {{ HTML::link('auth/forgot', 'Forgot password?') }}

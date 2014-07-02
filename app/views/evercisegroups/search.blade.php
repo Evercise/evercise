@@ -6,6 +6,9 @@
 	<div class="col3" id="discover-left">
 		<h4>Refine Search</h4>
 		@include('evercisegroups.refine')
+		<br>
+		<br>
+		@include('evercisegroups.recommended')
 	</div>
 
 	<div class="col9" id="discover-right">

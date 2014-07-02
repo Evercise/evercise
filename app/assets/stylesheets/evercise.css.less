@@ -208,9 +208,9 @@ label{
 	outline: none;
 	cursor: pointer;
 }
-.btn-yellow{.btn(@yellow, @black);}
+.btn-yellow{.btn(@yellow, @black, 220px);}
 .btn-darkyellow{.btn(@darkYellow);}
-.btn-fb{.btn(#3b5998,20);}
+.btn-fb{.btn(#3b5998,@white);}
 .btn-blue{.btn(@blue);}
 .btn-red{.btn(@red);}
 .btn-green{.btn(@green);}
@@ -565,7 +565,7 @@ nav{
 			text-shadow: none;
 			.transition(all linear 0.1s);
 			&:hover{
-				.gradient (darken(@blue, 20%), @blue);
+				.gradient (darken(@blue, 5%), @blue);
 			}
 		}
 		hr{
@@ -617,6 +617,9 @@ nav{
 		margin-top: 20px;
 		text-align: center;
 	}
+	.btn{
+		width: 100%;
+	}
 }
 
 .modal{
@@ -657,6 +660,9 @@ nav{
 		.evercoins{
 			clear:both;
 		}
+	}
+	.modal-footer{
+		padding-top: 20px;
 	}
 	.formitem{
 		.formfield{
@@ -1979,8 +1985,12 @@ nav{
 	float: left;
 	padding: 0px 0 20px;
 	margin-bottom: 20px;
+	border-top: 1px solid @grey;
 	border-bottom: 1px solid @grey;
 	.box-sizing();
+	.dashboard-user-wrap{
+		padding: 24px 0 35px;
+	}
 	img.user-block-image{
 		height: 62px;
 		float: left;
@@ -2152,7 +2162,7 @@ nav{
 		border-top:  1px solid @grey;
 		border-left: 1px solid @grey;
 		margin-left: -10px;
-		min-height: 204px;
+		min-height: 349px;
 		
 		.box-sizing();
 		&.user-dash{
@@ -2208,6 +2218,9 @@ nav{
 			}
 			.success_msg{
 				width: 100%;
+			}
+			.btn{
+				width: 220px;
 			}
 			
 		}
@@ -2383,7 +2396,7 @@ nav{
 .class-list-box{
 	width: 736px;
 	float: left;
-	margin: 10px 0px 10px 10px;
+	margin: 10px 0px 10px 20px;
 	border: 1px solid @grey;
 	padding: 20px;
 	.box-sizing();
@@ -2455,14 +2468,22 @@ nav{
 			width: 75%;
 			float: left;
 			margin-right: 20px;
+			clear: both;
 		}
 		.btn{
 			float: right;
 			width: auto;
-			padding: 8px 10px 7px;
+			padding: 9px 10px 8px;
 		}
 		h6{
 			margin-bottom: 18px;
+			float: left;
+		}
+		.refund{
+			float: right;
+			margin: 1px 0 19px 10px;
+			.font-size(1.4);
+			color: @red;
 		}
 	}
 	.list-staradd{
@@ -2479,6 +2500,7 @@ nav{
 				background-image: url(/img/yellow_star.png);
 			}
 		}
+
 	}
 	.star_wrap{
 		margin-top: 19px;
@@ -2798,4 +2820,43 @@ footer{
 		width: 100px;
 		margin-bottom: -25px;
 	}
+}
+
+
+/* 404 missing */
+
+#missing{
+	h1{
+		.font-size(12.5);
+		font-weight: 800;
+		margin-bottom: 20px;
+	}
+	h3{
+		.font-size(3.0);
+		font-weight: 400;
+		.line-height(4.0);
+		margin-bottom: 32px;
+	}
+	p{
+		.font-size(1.6);
+	}
+	.search-box-wrap{
+		margin-top: 40px;
+		padding: 10px;
+		background-color: @grey;
+		.border-radius();
+		input{
+			width: 200px;
+			height: 42px;
+			margin-top: -1px;
+		}
+		.btn{
+			float: right;
+			width: 110px;
+			margin: 0;
+		}
+	}
+}
+.missing-potatoe{
+	margin-left: 10px;
 }

@@ -707,4 +707,91 @@ class SessionsController extends \BaseController {
 		]);
 	}
 
+	public function getRefund($id){
+		$session = Evercisesession::with('evercisegroup')
+				->find($id);
+
+		$sessionDate = new DateTime($session->date_time);
+		$now = new DateTime();
+		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+
+		$evercoin = Evercoin::where('user_id',  $session->evercisegroup->user_id)->first();
+
+		//$everpound = $this->
+		if ($sessionDate > $fivedaystime ){
+			$status = 2;
+			$refund = $session->price;
+
+		} 
+		elseif ($sessionDate > $twodaystime ){
+			$status = 1;
+			$refund = $session->price / 2;
+		} 
+		else {
+			$status = 0;
+			$refund = 0;
+		} 
+
+		$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
+		$evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
+
+		return View::make('sessions.refund_request')
+		->with('session', $session)
+		->with('refund', $refund)
+		->with('refundInEvercoins', $refundInEvercoins)
+		->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
+		->with('evercoin', $evercoin)
+		->with('status', $status);
+	}
+
+
+	public function postRefund($sessionId)
+	{
+
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'mail_subject' => 'required',
+				'mail_body' => 'required',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else
+		{
+			$subject = Input::get('mail_subject');
+			$body = Input::get('mail_body');
+			$contact = 'contact@evercise.com';
+
+			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+
+			Event::fire('session.refund', array(
+
+	        	'email' => $contact, 
+	        	'userName' => $this->user->display_name, 
+	        	'userEmail' => $this->user->email, 
+	        	'groupName' => $groupName, 
+	        	'subject' => $subject, 
+	            'body' => $body
+			));
+		}
+
+		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
+	}
+
 }

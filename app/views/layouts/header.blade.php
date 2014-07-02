@@ -9,6 +9,7 @@
 
                 @if(isset($user))
                     @if ($user->inGroup($trainerGroup))
+
                         <div class="nav-end">
                             <a  href="{{ URL::route( 'trainers.edit', $user->id ) }}">{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}</a>
                             <li id="displayName">
@@ -25,7 +26,12 @@
                                   <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>
                                 @endif
                             </div>
-                        </div>                       
+                        </div>   
+                        <div class="nav-join">
+                          <div class="nav-login">
+                            <li>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</li>
+                          </div>
+                        </div>                    
                    @else
                        <div class="nav-end">
                             <a  href="{{ URL::route( 'users.edit', $user->id ) }}">{{ HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}</a>

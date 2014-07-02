@@ -237,6 +237,8 @@ registerInitFunction('initChart');
 function initPut () {
   trace("init Put");
   $( '.create-form, .update-form' ).on( 'submit', function() {
+
+      loading();
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
       trace('submitting via initPut. Method: '+ method);
 
@@ -254,6 +256,7 @@ function initPut () {
       .done(
           function(data) {
               trace("initPut >> Sending data.....");
+              loaded()
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
@@ -272,7 +275,6 @@ function initPut () {
                          $("#" + index).after('<span class="error-msg">' + value + '</span>');
                       }
                   });
-                  $('#ajax-loading').hide();
               }else{
                   // redirect to login page
                  /* form.find('.success_msg').show();
@@ -433,4 +435,13 @@ function sendhome(data){
   setTimeout(function() {
     window.location.href = '/';
   }, 1000);
+}
+
+function loading(){
+  $('.mask').show();
+}
+
+function loaded(){
+  $('.mask').hide();
+  $('.modal').remove();
 }

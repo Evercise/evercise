@@ -27,9 +27,11 @@ require 'composers/ShowEvercoinComposer.php';
 require 'composers/AccordionComposer.php';
 require 'composers/PayWithEvercoinsComposer.php';
 require 'composers/AreacodeComposer.php';
+require 'composers/SearchClassesComposer.php';
 
 
 View::composer('home', 'HomePageComposer');
+View::composer('evercisegroups.refine', 'SearchClassesComposer');
 View::composer('layouts.header', 'NavBarComposer');
 View::composer('widgets.calendar', 'CalendarComposer');
 View::composer('widgets.mapForm', 'MapComposer');

@@ -55,9 +55,10 @@ function initDashboardPanel()
         return false;
     });
 
-    $('.btn-leave-session').click(function(){
+    $('.btn-leave-session , .refund').click(function(){
 
         var url = $(this).data('href');
+        trace(url);
         $.ajax({
             url: url,
             type: 'GET',
@@ -74,6 +75,7 @@ function initDashboardPanel()
 
         return false;
     });
+
 }
 
 registerInitFunction('initDashboardPanel');
