@@ -286,7 +286,7 @@ class UsersController extends \BaseController {
 
 	public function makeUserDir($user)
 	{
-        $path = public_path().'/dev/profiles/'.date('Y-m');
+        $path = public_path().'/profiles/'.date('Y-m');
         $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
 		try
 		{
@@ -299,7 +299,7 @@ class UsersController extends \BaseController {
 		}
 		catch (Exception $e)
 		{
-			echo 'Cannot make user folder : '.$userFolder;
+			echo 'Cannot make user folder : '.$userFolder.'/n';
 			echo $e;
 			exit;
 		}
