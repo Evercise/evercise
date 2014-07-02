@@ -25,6 +25,9 @@ Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 Route::resource('venues', 'VenuesController');
 Route::resource('payment', 'PaypalPaymentController');
+Route::resource('wallets', 'WalletsController');
+
+//Route::post('wallets/update', array('as'=>'wallets.update' , 'uses'=>'WalletsController@update'));
 
 Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
 Route::get('users/{id}/edit/{tab}', array('as'=>'users.edit.tab', 'uses'=>'UsersController@edit'));

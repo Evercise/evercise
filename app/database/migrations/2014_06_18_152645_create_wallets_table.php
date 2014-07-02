@@ -17,6 +17,7 @@ class CreateWalletsTable extends Migration {
 			$table->integer('user_id')->unsigned();// Foreign key;
 			$table->decimal('balance', 19, 4);
 			$table->decimal('previous_balance', 19, 4);
+			$table->string('paypal');
 			$table->timestamps();
 		});
 	}

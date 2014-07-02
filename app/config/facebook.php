@@ -23,7 +23,7 @@ elseif (App::environment('production'))
 {
 	    // The environment is VS10319
 	return array(
-	        'appId' => '247621532113217', // VS10319
-	        'secret' => '762e0e54c435804033d7ece1d4b50122' // VS10319
+	        'appId' => '425004847609443', // VS10319
+	        'secret' => 'cef796862987836c8bb175e4304de6da' // VS10319
 	    );
 }
