@@ -286,14 +286,22 @@ class UsersController extends \BaseController {
 
 	public function makeUserDir($user)
 	{
-
         $path = public_path().'/profiles/'.date('Y-m');
         $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
+		try
+		{
 
-        if(!file_exists($path)) File::makeDirectory($path);
-        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
 
-        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
+	        if(!file_exists($path)) File::makeDirectory($path);
+	        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
+
+	        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
+		}
+		catch (Exception $e)
+		{
+			return 'Cannot make user folder : '.$userFolder;
+		}
+
 
 	}
 
