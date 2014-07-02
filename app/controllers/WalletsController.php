@@ -59,6 +59,8 @@ class WalletsController extends \BaseController {
 		$withdrawal = Input::get('withdrawal');
 		$paypal = Input::get('paypal');
 
+		//JavaScript::put(['mailAll' => 1]);
+
 		//return Response::json(['callback' => 'gotoUrl', 'url' => '/ham']);
 		return View::make('wallets.create')
 		->with('withdrawal', $withdrawal)

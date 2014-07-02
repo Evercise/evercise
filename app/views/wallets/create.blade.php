@@ -6,7 +6,7 @@
 	</div>
 	
 	<div class="modal-body">
-		{{ Form::open(array('id' => 'newsession', 'url' => 'wallets/2/update', 'method' => 'PUT', 'class' => 'update-form')) }}
+		{{ Form::open(array('id' => 'withdrawal-confirmation', 'url' => 'wallets/2/update', 'method' => 'PUT', 'class' => 'update-form')) }}
 			<div class="col4">
 				Withdrawal amount: {{ $withdrawal }}
 			</div>
