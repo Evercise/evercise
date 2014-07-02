@@ -211,6 +211,7 @@ class UsersController extends \BaseController {
 			$user->addGroup($userGroup);
 
 			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
+			Milestone::create(['user_id'=>$user->id]);
 
 			//$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
 

@@ -9,17 +9,13 @@ class AdminController extends \BaseController {
 	 */
 	public function pendingTrainers()
 	{
-		$adminGroup = Sentry::findGroupByName('admin');
 
-		if ($this->user->inGroup($adminGroup)) {
 
-			$trainers=Trainer::with('user')->where('confirmed', 0)->get();
+		$trainers=Trainer::with('user')->where('confirmed', 0)->get();
 
-			return View::make('admin.pendingtrainers')
-					->with('trainers', $trainers);
-		}else{
-			return Redirect::route('home')->with('notification', 'you do not the correct priilages to view this page'); 
-		}
+		return View::make('admin.pendingtrainers')
+			->with('trainers', $trainers);
+
 		
 	}
 
@@ -39,6 +35,16 @@ class AdminController extends \BaseController {
 		$trainer->save();
 
 		return Redirect::route('admin.pending');
+	}
+
+	public function pendingWithdrawal()
+	{
+		return View::make('admin.pendingwithdrawals');
+	}
+
+	public function processWithdrawal()
+	{
+
 	}
 
 	
