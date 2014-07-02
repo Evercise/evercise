@@ -299,8 +299,8 @@ class UsersController extends \BaseController {
 		}
 		catch (Exception $e)
 		{
-			echo 'Cannot make user folder : '.$path.'       ';
-			echo 'public_path() : '.public_path().'       ';
+			echo 'Cannot make user folder : '.$path.'<br>';
+			echo 'public_path() : '.public_path().'<br>';
 			echo $e;
 			exit;
 		}
