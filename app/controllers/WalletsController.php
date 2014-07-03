@@ -123,22 +123,37 @@ class WalletsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$withdrawalAmount = Input::get('withdrawal');
-		$paypal = Input::get('paypal');
+		$validator = Validator::make(
+			Input::all(),
+			[
+				'withdrawal' => 'required|max:1000|min:1|numeric',
+				'paypal' => 'required|max:255|min:5',
+			]
+		);
+		if($validator->fails()) {
 
-		$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
-		
-		if($withdrawal)
-		{
-			$wallet = Wallet::where('user_id', $this->user->id)->first();
-			$wallet->withdraw( $withdrawalAmount );
-		
-			//return Response::json(['callback' => 'confirmWithdrawal', 'amount' => $withdrawalAmount]);
+        	$result = array(
+	            'validation_failed' => 1,
+	            'errors' =>  $validator->errors()->toArray()
+	         );
+		}
+		else{
+			$withdrawalAmount = Input::get('withdrawal');
+			$paypal = Input::get('paypal');
 
-			return Response::json([
-				'callback' => 'openConfirmPopup',
-				'popup' => (string)(View::make('wallets.confirm')->with('withdrawal', $withdrawalAmount)->with('paypal', $paypal))
-			]);
+			$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
+			
+			if($withdrawal)
+			{
+				$wallet = Wallet::where('user_id', $this->user->id)->first();
+				$wallet->withdraw( $withdrawalAmount );
+			
+				return Response::json([
+					'callback' => 'openConfirmPopup',
+					'popup' => (string)(View::make('wallets.confirm')->with('withdrawal', $withdrawalAmount)->with('paypal', $paypal))
+				]);
+			}
+
 		}
 	}
 
