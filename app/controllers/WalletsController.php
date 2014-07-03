@@ -92,7 +92,7 @@ class WalletsController extends \BaseController {
 
 	        	$result = array(
 		            'validation_failed' => 1,
-		            'errors' =>  ['withdrawal'=>'You don`t have that much in your wallet. ' ]
+		            'errors' =>  ['withdrawal'=>'You don`t have that much in your wallet. '.$withdrawal .'<='. $walletBalance ]
 		         );
 			}
 

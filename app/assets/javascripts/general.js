@@ -442,7 +442,6 @@ function loading(){
 }
 
 function loaded(){
-  trace("loaded");
   $('.mask').hide();
   $('.modal').remove();
 }
