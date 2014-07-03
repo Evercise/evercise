@@ -47,25 +47,29 @@
 				<li class="hd">No. Joined</li>
 				<li class="hd">Join</li>
 				<ul>
-					@foreach ($evercisegroup->evercisesession as $key => $value)
+					@foreach ($evercisegroup->futuresessions as $key => $value)
 							<div class="session-list-row">
 								<li>{{ date('M-dS' , strtotime($value['date_time'])) }}</li>
 								<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
 								<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60))}}
 								<li>&pound;{{ $value['price'] }}</li>
-								<li> <strong>{{$members[$key]}}</strong>/{{ $evercisegroup->capacity }} </li>
-								@if (isset($membersIds[$key]))
+								<li> <strong>{{$members[$value->id]}}</strong>/{{ $evercisegroup->capacity }} </li>
+								@if (isset($membersIds[$value->id]))
 
 									@if (empty($user->id))
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
-									@elseif (in_array($user->id, $membersIds[$key])) 
+									@elseif (in_array($user->id, $membersIds[$value->id])) 
 
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 									@else
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
 									@endif
 								@else
-									<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+									@if (empty($user->id))
+										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
+									@else
+										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+									@endif
 								@endif
 								
 								

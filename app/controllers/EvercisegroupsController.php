@@ -250,11 +250,11 @@ class EvercisegroupsController extends \BaseController {
 			
 					if ($this->user->inGroup($trainerGroup))
 					{
-						$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
+						$evercisegroup = Evercisegroup::with('futuresessions.Sessionmembers.Users')
 						->with('Evercisesession.Sessionpayment')
 						->find($id);
 
-						if ($evercisegroup['Evercisesession']->isEmpty())
+						if ($evercisegroup['futuresessions']->isEmpty())
 						{
 							//return Redirect::route('evercisegroups.index');
 
@@ -317,7 +317,8 @@ class EvercisegroupsController extends \BaseController {
 					}
 				}
 
-				return View::make('evercisegroups.show')->with('evercisegroup',$evercisegroup); // change to trainer show view
+				return View::make('evercisegroups.show')
+					->with('evercisegroup',$evercisegroup); // change to trainer show view
 			}
 		//}
 		else
@@ -339,9 +340,9 @@ class EvercisegroupsController extends \BaseController {
 			$memberAllIds = [];
 			$memberUsers = [];
 			foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
-				$members[$key] = count($evercisesession['sessionmembers']); // Count those members
+				$members[$evercisesession->id] = count($evercisesession['sessionmembers']); // Count those members
 				foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
-					$membersIds[$key][] =  $sessionmember->user_id;	
+					$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
 					$memberAllIds[]	 = 	$sessionmember->user_id;	
 					//$memberUsers[] = $sessionmember->users;
 
