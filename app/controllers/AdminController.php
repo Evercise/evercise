@@ -39,11 +39,22 @@ class AdminController extends \BaseController {
 
 	public function pendingWithdrawal()
 	{
-		return View::make('admin.pendingwithdrawals');
+		$pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->get();
+
+		$processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->get();
+
+		return View::make('admin.pendingwithdrawals')
+			->with('pendingWithdrawals', $pendingWithdrawals)
+			->with('processedWithdrawals', $processedWithdrawals);
 	}
 
 	public function processWithdrawal()
 	{
+		$withdrawal_id = Input::get('withdrawal_id');
+
+		Withdrawalrequest::find($withdrawal_id)->markProcessed();
+
+		return Redirect::route('admin.pending_withdrawal');
 
 	}
 

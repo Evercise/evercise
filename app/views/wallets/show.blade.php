@@ -19,7 +19,7 @@
 	<br/>
 	<br/>
 	<div>
-	{{ Form::open(array('id' => 'withdrawalform', 'url' => 'wallets/'.$user->id.'/edit', 'method' => 'GET', 'class' => 'withdrawal-form')) }}
+	{{ Form::open(array('id' => 'withdrawalform', 'url' => 'wallets/'.$user->id.'/edit', 'method' => 'GET', 'class' => 'update-form')) }}
 		{{ Form::text( 'withdrawal' , '', array( 'placeholder' => 'enter amount', 'maxlength' => 5, 'id' => 'withdrawal')) }}
 		{{ Form::text( 'paypal' , '', array( 'placeholder' => 'enter paypal account', 'maxlength' => 50, 'id' => 'paypal')) }}
 		{{ Form::submit('Withdraw funds' , array('class'=>'btn-yellow ')) }}

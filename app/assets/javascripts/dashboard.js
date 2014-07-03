@@ -76,7 +76,7 @@ function initDashboardPanel()
         return false;
     });
 
-    $('#withdrawalform').on( 'submit', function() {
+    /*$('#withdrawalform').on( 'submit', function() {
 
         var url = $(this).attr('action');
         trace('URL: '+url);
@@ -96,10 +96,18 @@ function initDashboardPanel()
         );
 
         return false;
-    });
+    });*/
 }
 
 registerInitFunction('initDashboardPanel');
+
+function openPopup(data)
+{
+    //trace(data.popup, true);
+    $('.mask').show();
+    $('.container').append(data.popup);
+    initPut();
+}
 
 function mailSent()
 {

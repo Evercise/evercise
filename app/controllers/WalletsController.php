@@ -56,15 +56,44 @@ class WalletsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$withdrawal = Input::get('withdrawal');
-		$paypal = Input::get('paypal');
 
-		//JavaScript::put(['mailAll' => 1]);
+		$validator = Validator::make(
+			Input::all(),
+			[
+				'withdrawal' => 'required|max:500|min:1|numeric',
+				'paypal' => 'required|max:255|min:5',
+			]
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
 
-		//return Response::json(['callback' => 'gotoUrl', 'url' => '/ham']);
-		return View::make('wallets.create')
-		->with('withdrawal', $withdrawal)
-		->with('paypal', $paypal);
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('trainers.edit')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else{
+
+			$withdrawal = Input::get('withdrawal');
+			$paypal = Input::get('paypal');
+
+			//JavaScript::put(['mailAll' => 1]);
+
+			return Response::json([
+				'callback' => 'openPopup',
+				'popup' => (string)(View::make('wallets.create')->with('withdrawal', $withdrawal)->with('paypal', $paypal))
+			]);
+/*			return View::make('wallets.create')
+			->with('withdrawal', $withdrawal)
+			->with('paypal', $paypal);*/
+		}
 	}
 
 	/**
@@ -75,12 +104,18 @@ class WalletsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$withdrawal = Input::get('withdrawal');
+		$withdrawalAmount = Input::get('withdrawal');
 		$paypal = Input::get('paypal');
 
-		Withdrawalrequest::create(['user_id'=>$this->user->id, 'transaction_amount'=>$withdrawal, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
-
-		return Response::json(['callback' => 'confirmWithdrawal', 'amount' => $withdrawal]);
+		$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
+		
+		if($withdrawal)
+		{
+			$wallet = Wallet::where('user_id', $this->user->id)->first();
+			$wallet->withdraw( $withdrawalAmount );
+		
+			return Response::json(['callback' => 'confirmWithdrawal', 'amount' => $withdrawalAmount]);
+		}
 	}
 
 	/**
