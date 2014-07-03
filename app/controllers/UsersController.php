@@ -211,6 +211,7 @@ class UsersController extends \BaseController {
 			$user->addGroup($userGroup);
 
 			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
+			Milestone::create(['user_id'=>$user->id]);
 
 			//$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
 
@@ -428,9 +429,8 @@ class UsersController extends \BaseController {
 			*/
 
 			Milestone::where('user_id', $this->user->id)->first()->add('profile');
-			//$milestone->completeProfile();
 
-			return Response::json(['callback' => 'gotoUrl', 'url' => '/users/'.$this->user->id.'/edit/profile']);
+			return Response::json(['callback' => 'gotoUrl', 'url' => Request::root().'/users/'.$this->user->id.'/edit/profile']);
 
 		}
 		//return Response::json($result);

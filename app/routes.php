@@ -162,5 +162,8 @@ Route::get('/email_test', function(){
 /* ADMIN SECTION */
 
 
-Route::get('admin/pending_trainers', array('as' => 'admin.pending', 'uses' => 'AdminController@pendingTrainers'));
-Route::post('admin/approve_trainer', array('as' => 'admin.approve_trainer.post', 'uses' => 'AdminController@approveTrainer'));
+Route::get('admin/pending_trainers', array('as' => 'admin.pending', 'before'=>'admin', 'uses' => 'AdminController@pendingTrainers'));
+Route::post('admin/approve_trainer', array('as' => 'admin.approve_trainer.post', 'before'=>'admin', 'uses' => 'AdminController@approveTrainer'));
+
+Route::get('admin/pending_withdrawal', array('as' => 'admin.pending_withdrawal', 'before'=>'admin', 'uses' => 'AdminController@pendingWithdrawal'));
+Route::post('admin/process_withdrawal', array('as' => 'admin.process_withdrawal.post', 'before'=>'admin', 'uses' => 'AdminController@processWithdrawal'));
