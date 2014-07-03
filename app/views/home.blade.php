@@ -59,7 +59,7 @@
 							@if (count($evercisegroup->ratings) == 0) 
 								@include('layouts.classBlock', array( 'rating' => 0 , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
 							@else
-								@include('layouts.classBlock', array( 'rating' => $ratings[$key] / count($evercisegroup->ratings) , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
+								@include('layouts.classBlock', array( 'rating' => $ratings[$evercisegroup->id] / count($evercisegroup->ratings) , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
 							@endif
 						</div>	
 								

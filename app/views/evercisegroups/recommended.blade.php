@@ -17,7 +17,7 @@
 				@if (count($evercisegroup->ratings) == 0) 
 					@include('ratings.stars', array('rating' => 0 ))
 				@else
-					@include('ratings.stars', array('rating' =>$evercisegroup->ratings / count($evercisegroup->ratings)))
+					@include('ratings.stars', array('rating' => $ratings[$evercisegroup->id] / count($evercisegroup->ratings)))
 				@endif
 				
 
