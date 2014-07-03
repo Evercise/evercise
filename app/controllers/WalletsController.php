@@ -74,12 +74,12 @@ class WalletsController extends \BaseController {
 		}
 		else{
 
-			$walletBalance = Wallet::where('user_id', $this->user->id)->first()->pluck('balance');
+			$wallet= Wallet::where('user_id', $this->user->id)->first();
 
 			$withdrawal = Input::get('withdrawal');
 			$paypal = Input::get('paypal');
 
-			if ($withdrawal <= $walletBalance)
+			if ($withdrawal <= $wallet->balance)
 			{
 
 				return Response::json([
@@ -92,7 +92,7 @@ class WalletsController extends \BaseController {
 
 	        	$result = array(
 		            'validation_failed' => 1,
-		            'errors' =>  ['withdrawal'=>'You don`t have that much in your wallet. '.$withdrawal .'<='. $walletBalance ]
+		            'errors' =>  ['withdrawal'=>'You don`t have that much in your wallet. '.$withdrawal .'<='. $wallet->balance ]
 		         );
 			}
 
