@@ -256,7 +256,7 @@ function initPut () {
       .done(
           function(data) {
               trace("initPut >> Sending data.....");
-              loaded()
+              loaded();
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);

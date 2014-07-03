@@ -40,12 +40,13 @@ class WalletsController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		// Not actually used in dashboard - check ShowWalletComposer
 		$wallet = Wallet::find($id);
 
-		$amount = $wallet->amount;
+		$balance = number_format((float)$wallet->balance, 2, '.', '');
 
 		return View::make('wallets.show')
-				->with('amount', $amount);
+				->with('balance', $balance);
 	}
 
 	/**
@@ -60,40 +61,58 @@ class WalletsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			[
-				'withdrawal' => 'required|max:500|min:1|numeric',
+				'withdrawal' => 'required|max:1000|min:1|numeric',
 				'paypal' => 'required|max:255|min:5',
 			]
 		);
 		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('trainers.edit')
-					->withErrors($validator)
-					->withInput();
-	        }
+        	$result = array(
+	            'validation_failed' => 1,
+	            'errors' =>  $validator->errors()->toArray()
+	         );
 		}
 		else{
+
+			$walletBalance = Wallet::where('user_id', $this->user->id)->first()->pluck('balance');
 
 			$withdrawal = Input::get('withdrawal');
 			$paypal = Input::get('paypal');
 
+			if ($withdrawal <= $walletBalance)
+			{
+
+				return Response::json([
+					'callback' => 'openPopup',
+					'popup' => (string)(View::make('wallets.create')->with('withdrawal', $withdrawal)->with('paypal', $paypal))
+				]);
+			}
+			else
+			{
+
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  ['withdrawal'=>'You don`t have that much in your wallet. ' ]
+		         );
+			}
+
 			//JavaScript::put(['mailAll' => 1]);
 
-			return Response::json([
-				'callback' => 'openPopup',
-				'popup' => (string)(View::make('wallets.create')->with('withdrawal', $withdrawal)->with('paypal', $paypal))
-			]);
+
 /*			return View::make('wallets.create')
 			->with('withdrawal', $withdrawal)
 			->with('paypal', $paypal);*/
 		}
+
+		if(Request::ajax())
+        { 	
+
+			return Response::json($result);
+        }else{
+        	return Redirect::route('trainers.edit')
+				->withErrors($validator)
+				->withInput();
+        }
 	}
 
 	/**
@@ -114,7 +133,12 @@ class WalletsController extends \BaseController {
 			$wallet = Wallet::where('user_id', $this->user->id)->first();
 			$wallet->withdraw( $withdrawalAmount );
 		
-			return Response::json(['callback' => 'confirmWithdrawal', 'amount' => $withdrawalAmount]);
+			//return Response::json(['callback' => 'confirmWithdrawal', 'amount' => $withdrawalAmount]);
+
+			return Response::json([
+				'callback' => 'openConfirmPopup',
+				'popup' => (string)(View::make('wallets.confirm')->with('withdrawal', $withdrawalAmount)->with('paypal', $paypal))
+			]);
 		}
 	}
 
@@ -127,6 +151,42 @@ class WalletsController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	public function updatePaypal($userId)
+	{
+		$validator = Validator::make(
+			Input::all(),
+			[
+				'updatepaypal' => 'required|max:255|min:5|email',
+			]
+		);
+		if($validator->fails()) {
+
+        	$result = array(
+	            'validation_failed' => 1,
+	            'errors' =>  $validator->errors()->toArray()
+	         );
+		}
+		else
+		{
+			$paypal = Input::get('updatepaypal');
+			$wallet = Wallet::where('user_id', $this->user->id)->first();
+			$wallet->updatePaypal($paypal);
+
+			return Response::json([
+				'callback' => 'refreshpage'
+			]);
+		}
+
+		if(Request::ajax())
+        { 	
+
+			return Response::json($result);
+        }else{
+        	return Redirect::route('trainers.edit')
+				->withErrors($validator)
+				->withInput();
+        }
 	}
 
 }
