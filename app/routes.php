@@ -149,15 +149,14 @@ Route::get('/user_marketingpreferences', function()
 });
 
 Route::get('/email_test', function(){
-    return View::make('emails.session.userList')
-    ->with('dateTime', '2014-09-19 05:00:00')
-    ->with('name', 'Wayne Junior')
-    ->with('group', 'Bellyflopping')
-    ->with('location', 'The Biscuit Factory')
-    ->with('trainerEmail', 'trainer@email.com')
-    ->with('trainerName', 'Jeff the trainer')
-    ->with('location', 'The Biscuit Factory')
-    ->with('userList', ['bob'=>'bob@hisownface.com', 'fred'=>'fred@theshop.com']);
+    return View::make('emails.template')
+    ->with('title', 'my test email')
+    ->with('mainHeader', 'my main header')
+    ->with('subHeader', 'My sub Header')
+    ->with('body', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. ')
+    ->with('link',  HTML::linkRoute('evercisegroups.index', 'Class Hub') )
+    ->with('linkLabel', 'you link is here')
+    ->with('sellups', [ 0 => ['body' => 'Gain evercise credits to spend on classes by reommending your friends. for every 3 friend who join due to you referral you will recieve &pounds;3&apos;s of credit and each person who joined will recieve &pound;1 of credit aswell' , 'image' =>HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img'))] , 1 => ['body' => 'Jeff the trainer' , 'image' => HTML::image('img/Class.png','get fit', array('class' => 'home-step-img'))] ]);
 });
 
 /* ADMIN SECTION */

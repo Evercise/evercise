@@ -1,6 +1,6 @@
 <?php namespace email;
 
-use Mail;
+use Mail, HTML;
 
 abstract class Mailer {
 

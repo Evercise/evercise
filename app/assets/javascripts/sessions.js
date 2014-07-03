@@ -73,21 +73,18 @@ function updateTimeFields()
 
     var dur = parseInt($('#session-class-duration span').html());
 
-    var dt = year+'-'+month+'-'+day+'T'+hour+':'+min+':00';
+    var dt = year+'-'+month+'-'+day+' '+hour+':'+min+':00';
     //trace(dt);
-    var date = new Date(dt);
+    var date =  moment(dt);
 
-    date.setMinutes(date.getMinutes());
-
-    start_time = date.getHours(date)+":"+(date.getMinutes(date)<10?"0":"") + date.getMinutes(date);
+    start_time = moment(date).format('HH:mma');
 
     $('#session-start-time span').html(start_time);
 
-    date.setMinutes(date.getMinutes()+dur);
-
-    end_time = date.getHours(date)+":"+(date.getMinutes(date)<10?"0":"") + date.getMinutes(date); 
+    end_time = moment(date).add('minutes', dur).format('HH:mma');
 
     $('#session-end-time span').html(end_time);
+
 }
 
 function initSessionListDropdown()

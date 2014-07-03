@@ -1,5 +1,7 @@
 <?php namespace email;
 
+use HTML;
+
 class UserMailer extends Mailer {
 
 	/**
@@ -28,12 +30,25 @@ class UserMailer extends Mailer {
 
 	public function welcome($email, $display_name, $activation_code)
 	{
+
+		$body = '<span>Hi '.$display_name.' .</span>
+				<br>
+				<br>
+				<span>You have just been connected with a network of great trainers and likeminded keep-fitters.</span>
+				<br>
+				<span>Evercise is an online network that gives everyone wanting to exercise access to fitness instructors and classes across London and soon the Uk.</span>';
+		
+
 		$subject = 'Welcome to Evercise';
 		//$view = 'emails.auth.welcome'; // use for validation email
-		$view = 'emails.user.welcome';
-		$data['display_name'] = $display_name;
-		$data['activation_code'] = $activation_code;
-		$data['email'] = $email;
+		$view = 'emails.template';
+		$data['title'] = 'Welcome to Evercise';
+		$data['mainHeader'] = 'Welcome to Evercise!';
+		$data['subHeader'] = 'Thank you for joining our community.';
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('home', 'evercise.com');
+		$data['linkLabel'] = 'Start with evercise today:';
+		$data['sellups'] = [ 0 => ['body' => 'Gain evercise credits to spend on classes by reommending your friends. for every 3 friend who join due to you referral you will recieve &pounds;3&apos;s of credit and each person who joined will recieve &pound;1 of credit aswell' , 'image' =>HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img'))] , 1 => ['body' => 'Jeff the trainer' , 'image' => HTML::image('img/Class.png','get fit', array('class' => 'home-step-img'))] ];
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
