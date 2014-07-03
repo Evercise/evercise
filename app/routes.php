@@ -37,6 +37,8 @@ Route::get('sessions/date_list', array('as'=>'sessions.date_list'));
 Route::post('sessions/join', array('as'=>'sessions.join' , 'uses'=>'SessionsController@joinSessions'));
 Route::get('sessions/{evercisegroupId}/pay', array('as'=>'sessions.pay' , 'uses'=>'SessionsController@payForSessions'));
 
+Route::post('wallets/{userId}/update_paypal', array('as'=>'wallets.updatepaypal' , 'uses'=>'WalletsController@updatePaypal'));
+
 Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.redirect_after_login', function($redirect_after_login_url){
 		return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
 }));

@@ -4,3 +4,7 @@ php artisan migrate:reset
 php artisan migrate --package=cartalyst/sentry
 php artisan migrate
 php artisan db:seed
+
+
+After installation ensure profiles (or dev) folder exists and has correct permissions.
+chmod 0777 dev  seems to set read/write but no file permissions - this can be done through VNC

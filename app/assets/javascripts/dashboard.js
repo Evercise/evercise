@@ -108,6 +108,18 @@ function openPopup(data)
     $('.container').append(data.popup);
     initPut();
 }
+function openConfirmPopup(data)
+{
+    //trace(data.popup, true);
+    $('.mask').show();
+    $('.container').append(data.popup);
+    
+    $('.close, .cancel').click(function(){
+      $('.mask').hide();
+      $('.modal').remove();
+        refreshpage();
+    });
+}
 
 function mailSent()
 {

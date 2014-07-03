@@ -47,5 +47,10 @@ class Wallet extends \Eloquent {
 			'new_balance' => $newBalance
 		]);
 	}
+	public function updatePaypal($newPaypal)
+	{
+		$this->attributes['paypal'] = $newPaypal;
+    	$this->save();
+	}
 }
   
