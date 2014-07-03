@@ -16,7 +16,6 @@ class BaseController extends Controller {
 	  	{
 			$this->user=  Sentry::getUser();
 			$userImage =  $this->user->image ? ('profiles/'. $this->user->directory.'/'.$this->user->image) : 'img/no-user-img.jpg' ;
-			
 		}
 		View::share('userImage', isset($userImage) ? $userImage : '');
 	  }
@@ -27,6 +26,7 @@ class BaseController extends Controller {
 		$displayName = "none";
 		$userId = 0;
 		$user = '';
+		$group = '';
 
 
 		View::share('user', $this->user);

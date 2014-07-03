@@ -10,7 +10,7 @@
 		{{ HTML::image('img/play-vid.png','play video', array('class' => 'play-button')) }}
 
 		<video id="video" class="video" controls>
-			<source src="/video/evercise944.mov"  type="video/mp4" />
+			<source src="/video/EVERCISE ALMOST (2).mov"  type="video/mp4" />
 		</video>
 	</div>
 </div>

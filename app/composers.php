@@ -2,7 +2,7 @@
 
 require 'Functions.php';
 require 'composers/HomePageComposer.php';
-require 'composers/NavBarComposer.php';
+require 'composers/GroupSetComposer.php';
 require 'composers/CalendarComposer.php';
 require 'composers/MapComposer.php';
 require 'composers/TimeComposer.php';
@@ -32,7 +32,8 @@ require 'composers/SearchClassesComposer.php';
 
 View::composer('home', 'HomePageComposer');
 View::composer('evercisegroups.refine', 'SearchClassesComposer');
-View::composer('layouts.header', 'NavBarComposer');
+View::composer('layouts.header', 'GroupSetComposer');
+View::composer('static.how_it_works', 'GroupSetComposer');
 View::composer('widgets.calendar', 'CalendarComposer');
 View::composer('widgets.mapForm', 'MapComposer');
 View::composer('widgets.time', 'TimeComposer');

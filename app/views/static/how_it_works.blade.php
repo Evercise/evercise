@@ -6,8 +6,9 @@
 	    <div class="col12" id="how-it-works">
 	    	<h1>How it Works</h1>
 	    	<hr>
-		    <video id="video" class="video" controls>
-				<source src="/video/evercise944.mov"  type="video/mp4" />
+		    <video id="video" class="video" controls poster="{{ asset('img/search.png') }}">
+				<source src="/video/EVERCISE ALMOST (2).mov"  type="video/mp4" />
+
 			</video>
 			<hr>
 			<div class="accordion how-tabs">
@@ -19,7 +20,9 @@
 				</div>
 				<div id="user" class="accordion-body tab-view selected">
 					<div class="btn-wrap">
+						@if(!isset($user))
 						{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow'))}}
+						@endif
 					</div>
 					<div id="step_1" class="four-step one_t">
 						{{ HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')) }}
@@ -130,7 +133,10 @@
 				</div>
 				<div id="trainer" class="accordion-body tab-view">
 					<div class="btn-wrap">
-						{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow'))}}
+						@if(!isset($user) || !$user->inGroup($trainerGroup))
+							{{HTML::link('trainers/create', 'Register', array('class' => 'btn btn-yellow'))}}
+
+						@endif
 					</div>
 					<div id="step_1" class="four-step one_t">
 						{{ HTML::image('img/register.png','register as trainer', array('class' => 'home-step-img')) }}
