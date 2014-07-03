@@ -2,7 +2,7 @@
 
 	
 	<div>
-		{{ $balance }}
+		Balance: {{ $balance }}
 	</div>
 	<br/>
 	<br/>
@@ -11,7 +11,11 @@
 		History:
 		@foreach($history as $record)
 			<div>
-				{{ 'Transaction amount: ' . $record->transaction_amount . ', balance: ' . $record->new_balance . ', date: ' . $record->created_at }}
+			@if($record->transaction_amount > 0)
+				{{ 'Deposit: ' . ($record->transaction_amount) . ', balance: ' . $record->new_balance . ', date: ' . $record->created_at }}
+			@else
+				{{ 'Withdrawal: ' . (-$record->transaction_amount) . ', balance: ' . $record->new_balance . ', date: ' . $record->created_at }}
+			@endif
 			</div>
 		@endforeach
 	</div>
