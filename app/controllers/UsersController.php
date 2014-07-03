@@ -118,7 +118,7 @@ class UsersController extends \BaseController {
 
 
 			$user = Sentry::register(array(
-				'display_name' => $display_name,
+				'display_name' => str_replace(' ', '_', $display_name),
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'dob' => $dob,

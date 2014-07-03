@@ -24,6 +24,7 @@
                                 @if ($user->inGroup($adminGroup))
                                   <hr>
                                   <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>
+                                  <span>{{ HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals') }}</span>
                                 @endif
                             </div>
                         </div>   
@@ -47,6 +48,7 @@
                                 @if ($user->inGroup($adminGroup))
                                   <hr>
                                   <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>
+                                  <span>{{ HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals') }}</span>
                                 @endif
                            </div>
                        </div>

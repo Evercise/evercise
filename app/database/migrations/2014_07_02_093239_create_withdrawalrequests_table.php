@@ -15,7 +15,7 @@ class CreateWithdrawalrequestsTable extends Migration {
 		Schema::create('withdrawalrequests', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('transaction_amount');
+			$table->decimal('amount', 19, 4);
 			$table->string('account');
 			$table->string('acc_type');
 			$table->integer('processed');
