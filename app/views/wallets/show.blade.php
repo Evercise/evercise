@@ -35,7 +35,11 @@
 
 		{{ Form::open(array('id' => 'withdrawalform', 'url' => 'wallets/'.$user->id.'/edit', 'method' => 'GET', 'class' => 'update-form')) }}
 			{{ Form::text( 'withdrawal' , $balance, array( 'placeholder' => 'enter amount', 'maxlength' => 7, 'id' => 'withdrawal')) }}
-			<p>Paypal account: {{ $paypal }}</p>
+			@if($paypal != '')
+				<p>Paypal account: {{ $paypal }}</p>
+			@else
+				<p>You have not yet set up a PayPal account. Please enter one above and press Update Paypal Account</p>
+			@endif 
 			{{ Form::hidden( 'paypal' , $paypal, array('id' => 'paypal')) }}
 			{{ Form::submit('Withdraw funds' , array('class'=>'btn-yellow ')) }}
 		{{ Form::close() }}
