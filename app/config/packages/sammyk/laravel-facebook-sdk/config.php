@@ -34,7 +34,7 @@ return [
      * The default endpoint that Facebook will redirect to after
      * an authentication attempt.
      */
-    'default_redirect_uri' => '/facebook/login',
+    'default_redirect_uri' => '/tokens',
 
     /*
      * For a full list of locales supported by Facebook visit:

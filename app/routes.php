@@ -61,8 +61,6 @@ Route::post('/users/changepassword', array('as' => 'users.changepassword.post', 
 
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
-Route::get('/users/{display_name}/tokens', array('as' => 'users.tokens', 'uses' => 'UsersController@getTokens'));
-
 
 Route::get('login/fb/{redirect_after_login_url}' , function($redirect_after_login_url) {
     $facebook = new Facebook(Config::get('facebook')); 
@@ -171,3 +169,10 @@ Route::post('admin/approve_trainer', array('as' => 'admin.approve_trainer.post',
 
 Route::get('admin/pending_withdrawal', array('as' => 'admin.pending_withdrawal', 'before'=>'admin', 'uses' => 'AdminController@pendingWithdrawal'));
 Route::post('admin/process_withdrawal', array('as' => 'admin.process_withdrawal.post', 'before'=>'admin', 'uses' => 'AdminController@processWithdrawal'));
+
+
+Route::get('/fblogin', function()
+{
+    return Redirect::to(Facebook::getLoginUrl());
+});
+Route::get('/tokens', array('as' => 'users.tokens', 'uses' => 'UsersController@getTokens'));

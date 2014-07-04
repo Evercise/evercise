@@ -683,10 +683,10 @@ class UsersController extends \BaseController {
 
 	public function getTokens()
 	{
-
+		$login_link = Facebook::getLoginUrl();
 		//Facebook::setAccessToken('access_token');
-		$user = Facebook::object('me')->fields('id', 'email')->get();
-	    /*try
+		//$user = Facebook::object('me')->fields('id', 'email')->get();
+	    try
 	    {
 	        $token = Facebook::getTokenFromRedirect();
 
@@ -700,11 +700,11 @@ class UsersController extends \BaseController {
 	    {
 	        //return Redirect::to('/')->with('error', $e->getPrevious()->getMessage());
 	         echo $e->getPrevious()->getMessage();
-	    }*/
+	    }
 
 
 
-		return View::make('users.tokens');
+		return View::make('users.tokens')->with('fb', $login_link);
 	}
 
 }
