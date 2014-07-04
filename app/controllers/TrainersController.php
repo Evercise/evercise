@@ -76,9 +76,9 @@ class TrainersController extends \BaseController {
 			array(
 				'title' => 'required',
 				'bio' => 'required|max:500|min:50',
-				'thumbFilename' => 'required',
+				'image' => 'required',
 				'phone' => 'required',
-				'website' => 'sometimes|active_url',
+				'website' => 'sometimes',
 			)
 		);
 		if($validator->fails()) {

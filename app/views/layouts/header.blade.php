@@ -53,7 +53,7 @@
                            </div>
                        </div>
                        <div class="nav-join">
-                            <li>{{  HTML::linkRoute('trainers.create', 'Register as Trainer')}}</li>
+                           {{--<li>{{  HTML::linkRoute('trainers.create', 'Register as Trainer')}}</li>--}} 
                        </div>
                    @endif
 

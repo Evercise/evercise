@@ -43,22 +43,7 @@ function MapWidgetInit() {
 	            { hue: '#00a651' },  
 	            { lightness: 0 }  
 	        ]  
-	    },{  
-		    featureType: 'road',  
-		    elementType: 'geometry',  
-		    stylers: [  
-		        { hue: '#F4E8B7' },  
-		        { lightness: 0 }  
-		    ]  
-		},{  
-		    featureType: 'road.local',  
-		    elementType: 'geometry',  
-		    stylers: [  
-		        { hue: '#F4E8B7' },  
-		        { saturation: 100 },  
-		        { lightness: -40 }  
-		    ]  
-		}     
+	    }  
 	];
 
   /* set lat and long  */

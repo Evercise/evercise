@@ -36,9 +36,9 @@
         @endif
 
         @if(basename($user->image) != 'no-user-img.jpg')
-            {{ Form::hidden( 'thumbFilename' , basename($user->image), array('id' => 'thumbFilename')) }}
+            {{ Form::hidden( 'image' , basename($user->image), array('id' => 'thumbFilename')) }}
         @else
-            {{ Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')) }}
+            {{ Form::hidden( 'image' , null, array('id' => 'thumbFilename')) }}
         @endif
 
         <div class="center-btn-wrapper" >

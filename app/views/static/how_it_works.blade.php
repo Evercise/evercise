@@ -134,7 +134,7 @@
 				<div id="trainer" class="accordion-body tab-view">
 					<div class="btn-wrap">
 						@if(!isset($user) || !$user->inGroup($trainerGroup))
-							{{HTML::link('trainers/create', 'Register', array('class' => 'btn btn-yellow'))}}
+							{{HTML::link('trainers/create', 'Register  as trainer', array('class' => 'btn btn-yellow'))}}
 
 						@endif
 					</div>

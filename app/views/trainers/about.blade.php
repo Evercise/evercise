@@ -17,12 +17,14 @@
 			<p>Once signup you will be able to click the register as a trainer button to upgrade your account</p>
 			<br>
 			{{ HTML::linkRoute('users.create', 'Join Evercise today!',null ,array('class' => 'btn btn-yellow', 'width' => '250px')) }}
+			{{--
 			<div class="orSeperator"><span>or alternatively</span></div>
 			@if(isset($redirect_after_login))
 				{{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , 'Log in',  array('id'=>'login', 'class' => 'login btn btn-yellow', 'width' => '250px')) }}
 			@else
 				{{ HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login')) }}
 			@endif
+			--}}
 		@endif
 		<hr>
 		<h2>What is Evercise to a fitness class instructor ?</h2>

@@ -27,7 +27,7 @@ function initCreateTrainer()
  
     $( '#trainer_create' ).on( 'submit', function() {
         $('.error-msg').remove();
-        $('input').removeClass('error');
+        $('input, select').removeClass('error');
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),

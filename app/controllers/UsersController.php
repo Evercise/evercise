@@ -168,7 +168,7 @@ class UsersController extends \BaseController {
 					Sentry::login($user, true);
 
 					//return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
-					return Response::json(route('users.edit', $user->id));
+					return Response::json(route('users.edit.tab', [$user->id ,'profile']));
 					//return Redirect::route('users.edit', $user->display_name);
 					//return Response::json($newsletter); // for testing
 				}
