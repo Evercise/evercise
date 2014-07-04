@@ -28,7 +28,7 @@ return [
      *
      * https://developers.facebook.com/docs/facebook-login/permissions
      */
-    'default_scope' => [],
+    'default_scope' => ['email','user_birthday','read_stream', 'publish_actions'],
 
     /*
      * The default endpoint that Facebook will redirect to after
@@ -41,7 +41,7 @@ return [
      *
      * https://www.facebook.com/translations/FacebookLocales.xml
      */
-    'locale' => 'en_US',
+    'locale' => 'en_GB',
 
     /*
      * Allows you to customize the channel endpoint. Most
@@ -61,11 +61,11 @@ return [
     'app_id' => ':247621532113217',
     'app_secret' => ':762e0e54c435804033d7ece1d4b50122',
 
-    'default_scope' => [],
+    'default_scope' => ['email','user_birthday','read_stream', 'publish_actions'],
 
     'default_redirect_uri' => '/facebook/login',
 
-    'locale' => 'en_US',
+    'locale' => 'en_GB',
     
     'channel_endpoint' => '/channel.html',
 
@@ -77,11 +77,11 @@ return [
     'app_id' => ':425004847609443',
     'app_secret' => ':cef796862987836c8bb175e4304de6da',
 
-    'default_scope' => [],
+    'default_scope' => ['email','user_birthday','read_stream', 'publish_actions'],
 
     'default_redirect_uri' => '/facebook/login',
 
-    'locale' => 'en_US',
+    'locale' => 'en_GB',
 
     'channel_endpoint' => '/channel.html',
 
