@@ -2,7 +2,7 @@
 
 	
 	<div>
-		{{ $balance }}
+		Balance: {{ $balance }}
 	</div>
 	<br/>
 	<br/>
@@ -11,7 +11,11 @@
 		History:
 		@foreach($history as $record)
 			<div>
-				{{ 'Transaction amount: ' . $record->transaction_amount . ', balance: ' . $record->new_balance . ', date: ' . $record->created_at }}
+			@if($record->transaction_amount > 0)
+				{{ 'Deposit: ' . ($record->transaction_amount) . ', balance: ' . $record->new_balance . ', date: ' . $record->created_at }}
+			@else
+				{{ 'Withdrawal: ' . (-$record->transaction_amount) . ', balance: ' . $record->new_balance . ', date: ' . $record->created_at }}
+			@endif
 			</div>
 		@endforeach
 	</div>
@@ -31,7 +35,11 @@
 
 		{{ Form::open(array('id' => 'withdrawalform', 'url' => 'wallets/'.$user->id.'/edit', 'method' => 'GET', 'class' => 'update-form')) }}
 			{{ Form::text( 'withdrawal' , $balance, array( 'placeholder' => 'enter amount', 'maxlength' => 7, 'id' => 'withdrawal')) }}
-			<p>Paypal account: {{ $paypal }}</p>
+			@if($paypal != '')
+				<p>Paypal account: {{ $paypal }}</p>
+			@else
+				<p>You have not yet set up a PayPal account. Please enter one above and press Update Paypal Account</p>
+			@endif 
 			{{ Form::hidden( 'paypal' , $paypal, array('id' => 'paypal')) }}
 			{{ Form::submit('Withdraw funds' , array('class'=>'btn-yellow ')) }}
 		{{ Form::close() }}

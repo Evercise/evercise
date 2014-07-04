@@ -74,12 +74,12 @@ class WalletsController extends \BaseController {
 		}
 		else{
 
-			$walletBalance = Wallet::where('user_id', $this->user->id)->first()->pluck('balance');
+			$wallet= Wallet::where('user_id', $this->user->id)->first();
 
 			$withdrawal = Input::get('withdrawal');
 			$paypal = Input::get('paypal');
 
-			if ($withdrawal <= $walletBalance)
+			if ($withdrawal <= $wallet->balance)
 			{
 
 				return Response::json([
@@ -104,6 +104,13 @@ class WalletsController extends \BaseController {
 			->with('paypal', $paypal);*/
 		}
 
+		if (!Input::get('paypal'))
+		{
+        	$result = array(
+	            'validation_failed' => 1,
+	            'errors' =>  ['updatepaypal' => 'No Paypal account set. ']
+	         );
+		}
 		if(Request::ajax())
         { 	
 
@@ -141,6 +148,7 @@ class WalletsController extends \BaseController {
 			$withdrawalAmount = Input::get('withdrawal');
 			$paypal = Input::get('paypal');
 
+
 			$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
 			
 			if($withdrawal)
@@ -155,6 +163,15 @@ class WalletsController extends \BaseController {
 			}
 
 		}
+		if(Request::ajax())
+        { 	
+
+			return Response::json($result);
+        }else{
+        	return Redirect::route('trainers.edit')
+				->withErrors($validator)
+				->withInput();
+        }
 	}
 
 	/**
