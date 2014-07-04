@@ -230,7 +230,7 @@ class UsersController extends \BaseController {
 				
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
-				$url = 'http://graph.facebook.com/' . $uid . '/picture?type=large';
+				$url = 'http://graph.facebook.com/' . $uid . '/picture?width=200&height=200';
 
 				try
 				{
