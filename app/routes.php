@@ -61,6 +61,8 @@ Route::post('/users/changepassword', array('as' => 'users.changepassword.post', 
 
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
+Route::get('/users/{display_name}/tokens', array('as' => 'users.tokens', 'uses' => 'UsersController@getTokens'));
+
 
 Route::get('login/fb/{redirect_after_login_url}' , function($redirect_after_login_url) {
     $facebook = new Facebook(Config::get('facebook')); 

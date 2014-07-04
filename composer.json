@@ -8,7 +8,7 @@
 		"way/generators": "2.6",
 		"codesleeve/asset-pipeline": "dev-master",
         "cartalyst/sentry": "2.1.*",
-		"facebook/php-sdk": "dev-master",
+		"sammyk/laravel-facebook-sdk": "1.0.*",
 		"laracasts/utilities":"1.0",
 		"intervention/image": "2.0",
 		"toin0u/geocoder-laravel": "0.4.0",
