@@ -684,6 +684,25 @@ class UsersController extends \BaseController {
 	public function getTokens()
 	{
 
+		//Facebook::setAccessToken('access_token');
+		$user = Facebook::object('me')->fields('id', 'email')->get();
+	    /*try
+	    {
+	        $token = Facebook::getTokenFromRedirect();
+
+	        if ( ! $token)
+	        {
+	            //return Redirect::to('/')->with('error', 'Unable to obtain access token.');
+	            echo 'Unable to obtain access token';
+	        }
+	    }
+	    catch (FacebookQueryBuilderException $e)
+	    {
+	        //return Redirect::to('/')->with('error', $e->getPrevious()->getMessage());
+	         echo $e->getPrevious()->getMessage();
+	    }*/
+
+
 
 		return View::make('users.tokens');
 	}
