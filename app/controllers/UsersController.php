@@ -681,4 +681,11 @@ class UsersController extends \BaseController {
 		return Redirect::route('home');
 	}
 
+	public function getTokens()
+	{
+
+
+		return View::make('users.tokens');
+	}
+
 }

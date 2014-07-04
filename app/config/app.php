@@ -117,6 +117,7 @@ return array(
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Thujohn\Share\ShareServiceProvider',
 		'Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider',
+		'SammyK\LaravelFacebookSdk\LaravelFacebookSdkServiceProvider',
 	),
 
 	/*
@@ -190,6 +191,7 @@ return array(
 		'PDF' 			  => 'Barryvdh\DomPDF\Facade',
 		'Share' 		  => 'Thujohn\Share\ShareFacade',
 		'Omnipay'		  => 'Ignited\LaravelOmnipay\Facades\OmnipayFacade',
+		'Facebook' => 'SammyK\LaravelFacebookSdk\FacebookFacade',
 	),
 
 );
