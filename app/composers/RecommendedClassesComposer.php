@@ -18,18 +18,12 @@ class RecommendedClassesComposer {
 
   		foreach ($evercisegroups as $key => $evercisegroup) {
         $stars = 0;
-      
-  			if (count($evercisegroup->ratings) == 0 ) {
-  				$ratings[$rating->evercisegroup_id] = 0;
-  			}else{
+
   				foreach ($evercisegroup->ratings as $k => $rating) {
 	  				$ratings[$rating->evercisegroup_id] = $stars + $rating->stars;
 	  				$stars = $stars + $rating->stars;
 	  			}
-         
-  			}
- 
-  			
+          			
   			
   		}
 
