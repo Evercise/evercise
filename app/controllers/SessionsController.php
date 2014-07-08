@@ -486,7 +486,7 @@ class SessionsController extends \BaseController {
 		}), 'evercisesession')
 		->find($evercisegroupId);
 
-		//Make sure there is not already a matching entry in sessionmembers
+		//Make sure there is not already a matching entry in sessionmember
 		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
 		{
 			return Response::json('USER HAS ALREADY JOINED SESSION');
@@ -507,7 +507,9 @@ class SessionsController extends \BaseController {
 			$timestamp = strtotime($value->date_time);
 			$niceTime = date('h:ia', $timestamp);
 			$niceDate = date('dS F Y', $timestamp);
+
 		    Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'joined_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+
 	    }
 
 	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
@@ -523,9 +525,11 @@ class SessionsController extends \BaseController {
 
 		$evercoin->withdraw($deductEverciseCoins);
 
-		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds, ['token' => $paypalToken , 'transaction_id' => $paypalTransactionId, 'payer_id' => $paypalPayerId, 'payment_method' => 'paypal_express' ]);
 
+		/*pivot current user with session via session members */
+
+		$user->sessions()->attach($sessionIds, ['token' => $paypalToken , 'transaction_id' => $paypalTransactionId, 'payer_id' => $paypalPayerId, 'payment_method' => 'paypal_express' ]);
+		
 		Event::fire('session.joined', array(
 	        	'email' => $user->email, 
 	        	'display_name' => $user->display_name, 
@@ -546,6 +550,8 @@ class SessionsController extends \BaseController {
 					->with('totalSessions' , $total)
 					->with('sessionIds' , $sessionIds)
 					->with('amountPaid' , $amountToPay)
+					->with('transactionId' , $paypalTransactionId)
+					->with('evercoins' , $evercoin->balance)
 					->with('deductEverciseCoins' , $deductEverciseCoins);
 	}
 
@@ -670,9 +676,11 @@ class SessionsController extends \BaseController {
 	}
 	public function postPayWithEvercoins($evercisegroupId)
 	{
-		$usecoins = Input::get('usecoins');
+		$usecoins = Input::get('redeem');
 
 		$sessionIds = Session::get('sessionIds');
+		//$sessionIds = json_decode(Input::get('session-ids')) ;
+
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
 		{
 			$query->whereIn('id', $sessionIds);

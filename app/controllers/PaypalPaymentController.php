@@ -17,6 +17,8 @@ class PaypalPaymentController extends BaseController {
         $sessionIdsRaw = Input::get('session-ids');
         $sessionIds = json_decode(Input::get('session-ids'), true);
         Session::put('sessionIds', $sessionIds);
+
+      //  return var_dump($sessionIds);
         /* get currnet user */
         $user = User::find($this->user->id);
         /* create confirmation view */

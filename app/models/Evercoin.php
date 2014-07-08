@@ -9,7 +9,7 @@ class Evercoin extends \Eloquent {
 	 * @var string
 	 */
 	protected $table = 'evercoins';
-	private static $evercoinValue = 0.01;
+	private static $evercoinValue = 1.00;
 
     public function deposit( $amount )
     {

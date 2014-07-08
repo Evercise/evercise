@@ -73,8 +73,8 @@ h1{.font-size(3.7); .heading-font(500); margin-bottom: 14px; color: #414141}
 h2{.font-size(3.1); .heading-font(500)}
 h3{.font-size(2.8); .heading-font(500)}
 h4{.font-size(2.3); .heading-font(500); margin-bottom: 14px;}
-h5{.font-size(2.0); .heading-font(400)}
-h6{.font-size(1.6); .heading-font(400)}
+h5{.font-size(2.0); .heading-font(500)}
+h6{.font-size(1.6); .heading-font(500)}
 
 p,a{
 	.font-size(1.6);
@@ -1122,6 +1122,7 @@ nav{
 		text-align: center;
 		border-bottom: 1px solid @grey;
 		height:62px;
+
 		&.hd{
 			border-bottom: 2px solid @white;
 			border-right: 2px solid @white;
@@ -1132,12 +1133,20 @@ nav{
 			&:last-of-type{
 				border-right: 2px solid #515151;
 			}
+			&.long{
+				padding-left: 20px;
+			}
 		}
-		strong{
+		&.long{
+			text-align: left;
+			width: 66.66666%;
+		}
+		/*strong{
 			.font-size(2.4);
 			margin: -10px 0;
 			display: inline-block;
-		}
+		}*/
+		
 		.session-icon{
 			margin:-18px 3px 0;
 			cursor: pointer;
@@ -1154,7 +1163,33 @@ nav{
 			&:hover{
 				opacity: 0.10;
 			}
+
 		}
+		&.cart-item{
+			padding: 17px 0;
+			height: 80px;
+			.delete-block{
+				float: left;
+				width: 16%;
+				padding-top: 10px;
+				text-align: center;
+				.delete-icon{
+					margin: auto;
+					display: block;
+					float: left;
+				}
+			}
+			.cart-info{
+				width: 84%;
+				float: left;
+			}
+			span{
+				color: @grey;
+				display: block;
+				margin-top: 7px;
+			}
+		}
+		
 		form{
 			display: inline-block;
 			margin: -18px 0;
@@ -1162,7 +1197,6 @@ nav{
 			button{
 				background: transparent;
 				border: none;
-				padding-top: 15px;
 				img{
 					margin: 0;
 				}
@@ -1253,22 +1287,6 @@ nav{
 			display: inline-block;
 		}
 	}
-	.pay-with-evercoins{
-		margin-top:25px;
-			display: inline-block;
-			width: 100%;
-		span{
-			.font-size(2.3);
-			.heading-font(400);
-			padding: 17px 0 4px;
-			color: #414141;
-		}
-		button{
-			width:23%;
-			float:right;
-		}
-		
-	}
 }
 .session-table-past li{
 	width:11.9%;
@@ -1277,6 +1295,192 @@ nav{
 	}
 }
 
+/* cart */
+
+.cart-total-block{
+	width: 100%;
+	float: left;
+	background-color: @yellow;
+	padding: 15px 0;
+	.box-sizing();
+	.left{
+		width: 85%;
+		float: left;
+		text-align: right;
+	}
+	.right{
+		float: left;
+		width: 15%;
+		padding-left: 10px;
+		.box-sizing();
+	}
+	p{
+		line-height: 30px;
+	}
+	.evercoin{
+		.heading-font(300);
+	}
+}
+.cart-btn-wrap{
+	margin-top: 35px;
+	text-align: right;
+	width: 100%;
+	float: left;
+}
+
+
+.cart-steps{
+	width: 100%;
+	float: left;
+	margin-bottom: 30px;
+	.cart-step{
+		.box-sizing();
+		float: left;
+		width: 100%;
+		padding: 24px 20px;
+		border: 1px solid @grey;	
+		border-bottom: none;	
+		&:last-of-type{
+			border-bottom: 1px solid @grey;
+		}
+		&.selected{
+			background-color: @yellow;
+			border-color: @yellow;
+		}
+		h6{
+			display: inline-block;
+		}
+		.lock-icon{
+			float: right;
+			margin: -5px 20px 0 0;
+		}
+		.payments-icon{
+			margin: 15px auto 0;
+			display: block; 
+		}
+		.left{
+			width: 75%;
+			float: left;
+
+		}
+		.right{
+			width: 25%;
+			float: left;
+		}
+		span.evercoin-highlight{
+			.font-size(2.3);
+			.heading-font(600);
+			margin-top: -5px;
+			color: @yellow;
+			display: block;
+		}
+		.evercoin-icon{
+			width: 25px;
+			margin-bottom: -5px;
+		}
+		h4{
+			margin: 0;
+		}
+	}
+}
+
+/* share wrap */
+
+.share-label{
+	float: left;
+	padding-top: 11px;
+}
+
+.share-wrap{
+	display: inline-block;
+	float: right;
+	padding-top: 8px;
+	.share-btn{
+		margin-left: 20px;
+	}
+}
+
+
+
+/* evercoins wrap */
+
+.pay-with-evercoins{
+	margin-top:25px;
+	display: inline-block;
+	width: 100%;
+	.evercoin-block{
+		float: left;
+		width: 25%;
+		text-align: center;
+		.evercoin-icon{
+			width: 90px;
+		}
+	}
+	.evercoin-wrap{
+		float: left;
+		width: 75%;
+		.box-sizing();
+		padding: 10px 0px 10px 20px;
+		.evercoin-icon{
+			width: 30px;
+			margin: 0px 3px -6px 10px;
+		}
+		span.evercoin-highlight{
+			.font-size(2.3);
+			.heading-font(600);
+			padding: 17px 0 4px;
+			color: @yellow;
+
+		}
+		.evercoin-redeem{
+			margin-top: 36px;
+			position: relative;
+			float: left;
+			label{
+				border-top: 1px solid @grey;
+				border-bottom: 1px solid @grey;
+				float: left;
+				width: 62.6666%;
+				margin-right: 4%;
+				.font-size(1.4);
+				font-weight: 300;
+				padding: 16px 0;
+			}
+			input{
+				border: none;
+				border-top: 1px solid @grey;
+				border-bottom: 1px solid @grey;
+				float: left;
+				padding: 11px 0 10px;
+				width: 33.33%;
+				.font-size(2.3);
+				text-align: center;
+			}
+			.redeem-btn{
+				position: absolute;
+				right: 0;
+				width: 33.33333%;
+				text-align: center;
+				cursor: pointer;
+				img{
+					width: 13px;
+				}
+				&.up{
+					top: -16px;
+				}
+				&.down{
+					bottom: -16px;
+				}
+			}
+
+		}
+		.btn{
+			margin-top: 40px;
+			float: right;
+		}
+	}
+	
+}
 /* create form */
 .formcheckbox{
 	text-align: center;
@@ -1734,14 +1938,6 @@ nav{
 	position: relative;
 	h1{
 		display: inline-block;
-	}
-	.share-wrap{
-		display: inline-block;
-		float: right;
-		padding-top: 8px;
-		.share-btn{
-			margin-left: 20px;
-		}
 	}
 	.venue-details{
 		float: left;
@@ -2654,6 +2850,17 @@ nav{
 			width: 100px;
 			max-width: none;
 		}
+	}
+}
+
+/* header block */
+
+.header-block{
+	width: 100%;
+	border-bottom: 1px solid @grey;
+	padding: 25px 0;
+	h1,h2,h3,h4,h5,h6{
+		margin: 0;
 	}
 }
 

@@ -339,11 +339,10 @@ function initJoinEvercisegroup(params)
     });
 
     $(document).on('click','.btn-cancel-session' , function(){
+
         var sessionId = $(this).data('session');
 
         var sessionPrice = $(this).data('price');
-        
-        $(this).replaceWith('<button class="undo-btn-reverse" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
 
         sessions = jQuery.grep(sessions, function(value) {
           return value != sessionId;
@@ -354,50 +353,23 @@ function initJoinEvercisegroup(params)
         var session = JSON.stringify(sessions);
 
         // add session id's to hidden  field in form
-        $('#session-ids').val(session);
+        $('.session-ids').val(session);
         
         --total;
 
+
         price = price - parseFloat(sessionPrice);
+        evercoin = $('#evercoin-redeemed').html();
 
-        $('#total-sessions').html(total);
-        $('#total-price').html(price);
+        trace(evercoin);
+
+        $('#cart-row-'+sessionId).remove();
+        $('#sub-total').html(price);
+        $('#balance-to-pay').html(price - evercoin);
     });
 
 
-    $('.btn-paywithevercoins').click(function(){
-
-        var url = $(this).data('href');
-        trace(url);
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'html'
-        })
-        .done(
-            function(data) {
-                trace('paywithevercoins data : '+ data);
-                $('.mask').show();
-                $('.container').append(data);
-                initPut();
-             }
-        );
-
-        return false;
-    });
 }
 
 registerInitFunction('initJoinEvercisegroup');
 
-function paidWithEvercoins(data)
-{
-    trace('paidWithEvercoins : '+data.usecoins);
-    trace('amountRemaining : '+data.amountRemaining);
-
-    $('#pay-with-evercoins').html(data.usecoins);
-    $('#pay-with-evercoins-in-pounds').html(data.usecoinsInPounds);
-    $('#to-pay').html(data.amountRemaining);
-
-    $('.mask').hide();
-    $('.modal').remove();
-}

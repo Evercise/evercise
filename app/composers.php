@@ -28,6 +28,7 @@ require 'composers/AccordionComposer.php';
 require 'composers/PayWithEvercoinsComposer.php';
 require 'composers/AreacodeComposer.php';
 require 'composers/SearchClassesComposer.php';
+require 'composers/CartRowsComposer.php';
 
 
 View::composer('home', 'HomePageComposer');
@@ -60,7 +61,8 @@ View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
 View::composer('home', 'RecommendedClassesComposer');
 View::composer('evercoins.show', 'ShowEvercoinComposer');
 View::composer('static.how_it_works', 'AccordionComposer');
-View::composer('sessions.paywithevercoins', 'PayWithEvercoinsComposer');
+View::composer('payments.paywithevercoins', 'PayWithEvercoinsComposer');
 View::composer('form.phone', 'AreacodeComposer');
+View::composer('payments.cartrows', 'CartRowsComposer');
 
 
