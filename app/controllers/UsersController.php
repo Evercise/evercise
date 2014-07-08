@@ -188,8 +188,8 @@ class UsersController extends \BaseController {
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
 	    $permissions = 'publish_stream';
-	    $url_app = Request::root();
-	    echo $url_app;exit;
+	    $url_app = Request::root().'/login/fb';
+	    //echo $url_app;exit;
 
 	    // getInstance
 	    FacebookConnect::getFacebook($application);
