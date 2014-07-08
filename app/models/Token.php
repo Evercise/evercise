@@ -11,13 +11,14 @@ class Token extends \Eloquent {
 	 */
 	protected $table = 'tokens';
 
-	public function addToken($name, $value)
+	public function addToken($name, $token)
 	{
+		$tokenJSON = json_encode($token);
 		if (! $this->attributes[$name])
 		{
 			Milestone::where('user_id', Sentry::getUser()->id)->first()->add($name);
 		}
-		$this->update([$name => $value]);
+		$this->update([$name => $tokenJSON]);
 
 
 	}
