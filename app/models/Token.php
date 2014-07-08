@@ -16,10 +16,18 @@ class Token extends \Eloquent {
 		$tokenJSON = json_encode($token);
 		if (! $this->attributes[$name])
 		{
-			Milestone::where('user_id', Sentry::getUser()->id)->first()->add($name);
+			Milestone::where('user_id', $this->attributes['id'])->first()->add($name);
 		}
 		$this->update([$name => $tokenJSON]);
 
 
+	}
+	public static function makeFacebookToken($getUser)
+	{
+		$facebookTokenArray = [
+			'id' => $getUser['user_profile']['id'],
+			'access_token' => $getUser['access_token']
+		];
+		return $facebookTokenArray;
 	}
 }

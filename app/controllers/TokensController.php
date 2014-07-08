@@ -87,17 +87,12 @@ class TokensController extends \BaseController {
 	    FacebookConnect::getFacebook($application);
 		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
-		$facebookTokenArray = [
-			'id' => $getUser['user_profile']['id'],
-			'access_token' => $getUser['access_token']
-		];
-
 		//return View::make('users/tokens')->with('accessToken', $facebookTokenJSON);
 
-		if($getUser['access_token'])
+		if($getUser)
 		{
 			$token = Token::where('user_id', $this->user->id)->first();
-			$token->addToken('facebook', $facebookTokenArray);
+			$token->addToken('facebook', Token::makeFacebookToken($getUser));
 		}
 		return Redirect::to('users/'.$this->user->id.'/edit/evercoins');
 	}

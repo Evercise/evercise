@@ -205,12 +205,14 @@ class UsersController extends \BaseController {
 
 	    $password = $this->randomPassword();
 
+	    $dob = isset( $me['birthday'] ) ? new DateTime($me['birthday']) : '';
+
 	    try{
 		    $user = Sentry::createUser(array(
 				'display_name' => str_replace(' ', '_', $me['name']),
 				'first_name' => $me['first_name'],
 				'last_name' => $me['last_name'],
-				'dob' => $date = new DateTime($me['birthday']),
+				'dob' => $dob,
 				'email' => $me['email'],
 				'password' => $password,
 				'gender' => isset($me['gender']) ? $me['gender'] : '',
@@ -226,7 +228,10 @@ class UsersController extends \BaseController {
 
 				Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 				Milestone::create(['user_id'=>$user->id]);
-				Token::create(['user_id'=>$user->id, 'facebook'=>$getUser['access_token']]);
+
+				Token::create(['user_id'=>$user->id]);
+				$token = Token::where('user_id', $user->id)->first();
+				$token->addToken('facebook', Token::makeFacebookToken($getUser));
 
 				User::find($user->id)->marketingpreferences()->attach(1);
 				
