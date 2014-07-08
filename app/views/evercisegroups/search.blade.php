@@ -23,7 +23,6 @@
 		</div>
 		<div id="list" class="discover-view tab-view">
 			<div class="row9">
-			{{ var_dump($evercisegroups)}}
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
 						@if (isset($stars[$evercisegroup->id])) 
