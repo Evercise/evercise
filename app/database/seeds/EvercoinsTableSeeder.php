@@ -7,14 +7,12 @@ class EvercoinsTableSeeder extends Seeder {
 
 	public function run()
 	{
-		$faker = Faker::create();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        DB::table('evercoins')->delete();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-		foreach(range(1, 10) as $index)
-		{
-			Evercoin::create([
+        Evercoin::create(array('user_id' => '1'));
 
-			]);
-		}
 	}
 
 }

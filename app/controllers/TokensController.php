@@ -87,12 +87,13 @@ class TokensController extends \BaseController {
 	    FacebookConnect::getFacebook($application);
 		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
-		if($getUser['access_token'])
+		//return View::make('users/tokens')->with('accessToken', $facebookTokenJSON);
+
+		if($getUser)
 		{
 			$token = Token::where('user_id', $this->user->id)->first();
-			$token->addToken('facebook', $getUser['access_token']);
+			$token->addToken('facebook', Token::makeFacebookToken($getUser));
 		}
-		//return View::make('users/tokens')->with('accessToken', $token);
 		return Redirect::to('users/'.$this->user->id.'/edit/evercoins');
 	}
 	public function tw()
@@ -113,9 +114,8 @@ class TokensController extends \BaseController {
 			$userId = $this->user->id;
 			if($accessToken)
 			{
-				$tokenJSON = json_encode($accessToken);
 				$token = Token::where('user_id', $userId)->first();
-				$token->addToken('twitter', $tokenJSON);
+				$token->addToken('twitter', $accessToken);
 			}
 		}
 		else

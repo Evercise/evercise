@@ -21,9 +21,6 @@ class CreateForeignKeys extends Migration {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('marketingpreference_id')->references('id')->on('marketingpreferences');
 		});
-		Schema::table('gyms', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users');
-		});
 		Schema::table('ratings', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('sessionmember_id')->references('id')->on('sessionmembers');
@@ -50,15 +47,6 @@ class CreateForeignKeys extends Migration {
 		Schema::table('sessionmembers', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
 			$table->foreign('evercisesession_id')->references('id')->on('evercisesessions');
-		});
-		Schema::table('gym_has_trainers', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('gym_id')->references('id')->on('gyms');
-			
-		});
-		Schema::table('featuredgymgroups', function(Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('evercisegroup_id')->references('id')->on('evercisegroups');
 		});
 
 		Schema::table('venues', function(Blueprint $table) {
