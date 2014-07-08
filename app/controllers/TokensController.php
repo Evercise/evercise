@@ -106,6 +106,7 @@ class TokensController extends \BaseController {
 		// Request access token
 		$accessToken = Twitter::oAuthAccessToken($oAuthToken, $verifier);
 
+		// redirect URL in twitter app settings: http://127.0.0.1:1234/tokens/tw
 		if($this->user) // This is just to stop it breaking from 127.0.0.1.
 		{
 			$userId = $this->user->id;
