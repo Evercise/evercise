@@ -8,7 +8,6 @@
 		"way/generators": "2.6",
 		"codesleeve/asset-pipeline": "dev-master",
         "cartalyst/sentry": "2.1.*",
-		"sammyk/laravel-facebook-sdk": "1.0.*",
 		"laracasts/utilities":"1.0",
 		"intervention/image": "2.0",
 		"toin0u/geocoder-laravel": "0.4.0",
@@ -17,7 +16,10 @@
     	"barryvdh/laravel-dompdf": "*",
     	"thujohn/share": "dev-master",
     	"ignited/laravel-omnipay": "1.*",
-    	"omnipay/paypal": "~2.0"
+    	"omnipay/paypal": "~2.0",
+    	"pitchanon/facebook-connect": "dev-master",
+    	"tijsverkoyen/twitteroauth": "dev-master",
+    	"philo/laravel-twitter": "dev-master"
 
 
 	},

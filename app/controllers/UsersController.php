@@ -1,5 +1,8 @@
 <?php
 
+use SammyK\FacebookQueryBuilder\FQB;
+use SammyK\FacebookQueryBuilder\FacebookQueryBuilderException;
+
 class UsersController extends \BaseController {
 
 	/**
@@ -146,6 +149,7 @@ class UsersController extends \BaseController {
 
 			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 			Milestone::create(['user_id'=>$user->id]);
+			Token::create(['user_id'=>$user->id]);
 			
 
 			if($user) {
@@ -179,17 +183,24 @@ class UsersController extends \BaseController {
  
 	}
 
-	public function fb_login($redirect_after_login_url)
+	public function fb_login()
 	{
-	    $code = Input::get('code');
+	    // Use a single object of a class throughout the lifetime of an application.
+	    $application = Config::get('facebook');
+	    $permissions = 'publish_stream';
+	    $url_app = Request::root();
 
-	    if (strlen($code) == 0) return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
-	 
-	    $facebook = new Facebook(Config::get('facebook'));
-	    $uid = $facebook->getUser();
-	    if ($uid == 0) return Redirect::to('/')->with('message', 'There was an error');
-	    $me = $facebook->api('/me');
-	    if (!isset($me['email'])) return Redirect::to('/')->with('message', 'There was an error');
+	    // getInstance
+	    FacebookConnect::getFacebook($application);
+		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
+
+		//return View::make('users.tokens')->with('fb', $getUser);
+
+
+	    if (!$getUser) return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
+
+		$me = $getUser['user_profile'];
+	
 
 	    $password = $this->randomPassword();
 
@@ -198,27 +209,25 @@ class UsersController extends \BaseController {
 				'display_name' => str_replace(' ', '_', $me['name']),
 				'first_name' => $me['first_name'],
 				'last_name' => $me['last_name'],
+				'dob' => $date = new DateTime($me['birthday']),
 				'email' => $me['email'],
 				'password' => $password,
 				'gender' => isset($me['gender']) ? $me['gender'] : '',
-				'activated' => true
+				'activated' => true,
 			));
 
-			$userGroup = Sentry::findGroupById(1);
-			$user->addGroup($userGroup);
-
-			$userGroup = Sentry::findGroupById(2);
-			$user->addGroup($userGroup);
-
-			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
-			Milestone::create(['user_id'=>$user->id]);
-
-			//$user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreferences_id'=>1));
-
-			User::find($user->id)->marketingpreferences()->attach(1);
-
 			if($user) {
+				$userGroup = Sentry::findGroupById(1);
+				$user->addGroup($userGroup);
 
+				$userGroup = Sentry::findGroupById(2);
+				$user->addGroup($userGroup);
+
+				Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
+				Milestone::create(['user_id'=>$user->id]);
+				Token::create(['user_id'=>$user->id, 'facebook'=>$getUser['access_token']]);
+
+				User::find($user->id)->marketingpreferences()->attach(1);
 				
 				Event::fire('user.fb_signup', array(
 		        	'email' => $user->email, 
@@ -230,7 +239,7 @@ class UsersController extends \BaseController {
 				
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
-				$url = 'http://graph.facebook.com/' . $uid . '/picture?width=200&height=200';
+				$url = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=200&height=200';
 
 				try
 				{
@@ -261,10 +270,10 @@ class UsersController extends \BaseController {
 			    Sentry::login($user,false);
 			    $trainerGroup = Sentry::findGroupByName('trainer');
 
-			    if ($redirect_after_login_url && $redirect_after_login_url != 'users.edit') {
+			    /*if ($redirect_after_login_url && $redirect_after_login_url != 'users.edit') {
 					return Redirect::route($redirect_after_login_url);
 				}
-				elseif ($user->inGroup($trainerGroup)) 
+				else*/if ($user->inGroup($trainerGroup)) 
 				{
 					return Redirect::route('trainers.edit', $user->display_name);
 				}
@@ -681,17 +690,30 @@ class UsersController extends \BaseController {
 		return Redirect::route('home');
 	}
 
-	public function getTokens()
+	public function getTokensSAMMYK()
 	{
 		$login_link = Facebook::getLoginUrl();
-		//Facebook::setAccessToken('access_token');
+
+		//$code = Input::get('code');
+		//echo $code;
+
+		//$login_link = Facebook::auth()->getLoginUrl('http://localhost');
+
+
+		//Facebook::setAccessToken($code);
 		//$user = Facebook::object('me')->fields('id', 'email')->get();
-	    try
+/*	    try
 	    {
 	        $token = Facebook::getTokenFromRedirect();
 
-	        if ( ! $token)
+	        if ( $token)
 	        {
+
+			    $token_info = $token->getInfo();
+			    echo $token_info;
+			}
+			else
+			{
 	            //return Redirect::to('/')->with('error', 'Unable to obtain access token.');
 	            echo 'Unable to obtain access token';
 	        }
@@ -700,11 +722,47 @@ class UsersController extends \BaseController {
 	    {
 	        //return Redirect::to('/')->with('error', $e->getPrevious()->getMessage());
 	         echo $e->getPrevious()->getMessage();
-	    }
+	    }*/
 
+
+/*	    FQB::setAppCredentials('306418789525126', 'd599aae625444706f9335ca10ae5f71d');
+	    $fqb = new FQB();
+	    $login_link = $fqb->auth()->getLoginUrl('http://locahost:1234/tokens', ['email','user_birthday','read_stream', 'publish_actions']);
+
+		try
+		{
+		    $token = $fqb->auth()->getTokenFromRedirect('http://locahost:1234/tokens');
+		}
+		catch (FacebookQueryBuilderException $e)
+		{
+		    // Failed to obtain access token
+		    echo 'Error:' . $e->getMessage();
+		}
+
+        if ( ! $token)
+        {
+            echo 'Unable to obtain access token';
+        }*/
 
 
 		return View::make('users.tokens')->with('fb', $login_link);
+	}
+
+	public function getFacebook()
+	{
+
+	    // Use a single object of a class throughout the lifetime of an application.
+	    $application = Config::get('facebook');
+	    $permissions = 'publish_stream';
+	    $url_app = Request::root();
+
+	    // getInstance
+	    FacebookConnect::getFacebook($application);
+		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
+		
+
+		return View::make('users.tokens')->with('fb', $getUser)->with('root', $url_app);
+	
 	}
 
 }
