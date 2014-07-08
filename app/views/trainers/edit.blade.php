@@ -31,7 +31,7 @@
 				</div>
 				
 				<div id="wallet" class="dashboard-block">
-					<div class="dashboard-header"><h3>Wallet</h3></div>
+					<div class="dashboard-header"><h3>My Wallet</h3></div>
 					@include('wallets.show')
 				</div>
 

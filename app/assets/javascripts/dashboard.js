@@ -117,7 +117,8 @@ function openConfirmPopup(data)
     $('.close, .cancel').click(function(){
       $('.mask').hide();
       $('.modal').remove();
-        refreshpage();
+      trace(data.url);
+       gotoUrl(data);
     });
 }
 

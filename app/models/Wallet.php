@@ -52,5 +52,6 @@ class Wallet extends \Eloquent {
 		$this->attributes['paypal'] = $newPaypal;
     	$this->save();
 	}
+
 }
   

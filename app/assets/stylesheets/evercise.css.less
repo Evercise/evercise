@@ -106,6 +106,10 @@ hr{
 
 }
 
+.highlight{
+	color: @yellow;
+}
+
 /* end tags */
 
 /*forms and inputs*/
@@ -647,6 +651,13 @@ nav{
 			padding: 3px 10px;
 		}
 	}
+	.modal-center{
+		text-align: center;
+		.btn{
+			margin: auto;
+			width: auto;
+		}
+	}
 	.modal-right{
 		text-align: right;
 	}
@@ -663,6 +674,8 @@ nav{
 		}
 	}
 	.modal-footer{
+		width: 100%;
+		float: left;
 		padding-top: 20px;
 	}
 	.formitem{
@@ -2390,6 +2403,53 @@ nav{
 				border-top: 1px solid @grey;
 			}	
 		}
+		.dashboard-title{
+			.box-sizing();
+			padding: 37px 0px 27px 40px;
+			border-bottom: 1px solid @grey;
+			width: 100%;
+			float: left;
+			h1{
+				.font-size(5.9);
+				margin-bottom: 0;
+			}
+			h5{
+				display: inline;
+			}
+			.left{
+				float: left;
+				width: 58%;
+			}
+			.right{
+				float: left;
+				width: 42%;
+				text-align: right;
+			}
+		}
+		.dashboard-body{
+			padding: 20px 0px 20px 40px;
+			width: 100%;
+			float: left;
+			.box-sizing();
+			border-bottom: 1px solid @grey;
+			&:last-of-type(){
+				border-bottom: none;
+			}
+			.formlabel{
+				width: 25%;
+				float: left;
+			}
+			.formfield{
+				float: left;
+				width: 75%;
+			}
+			.btn{
+				float: left;
+				margin-top: 30px;
+				width: auto;
+				padding: 10px 25px 9px;
+			}
+		}
 		
 		.dashboard-header{
 			padding-left: 40px;
@@ -3005,6 +3065,50 @@ footer{
 	background: url('/img/transparent_mask.png') repeat scroll 0 0 transparent;
 	opacity: 1;
 	z-index: 9998;
+}
+
+/* table class */
+
+.table{
+	width: 100%;
+	.table-row{
+		width: 100%;
+		float: left;
+		border-bottom: 1px solid @grey;
+		margin-bottom: 1px;
+		&:nth-of-type(2n+2){
+			background-color: #f5f5f5;
+		}
+		.table-field{
+			float: left;
+			padding: 12px 20px 11px;
+			text-align: center;
+			.box-sizing();
+			li{
+				list-style: none;
+				.font-size(1.4);
+			}
+			&.one-s{
+				width: 16.666%;
+			}
+			&.two-s{
+				width: 33.3333%;
+			}
+			&.align-l{
+				text-align: left;
+			}
+		}
+		.table-head{
+			background-color: #515151;
+			color: @white;	
+			padding: 17px 20px 16px;
+			border-right: 1px solid @white;
+			&:last-of-type{
+				border-right: none;
+			}
+		}
+	}
+
 }
 
 

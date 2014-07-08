@@ -2,24 +2,22 @@
 	<div id="cancel_login" class="cancel">x</div>
 	<div class="modal-head">
 		<h4>Withdrawal Complete</h4>
-		<br>
 	</div>
-	
-	<div class="modal-body">
-			<div class="col4">
-				Withdrawal amount: {{ $withdrawal }}
+
+	<div class="modal-body modal-center">
 		
-			</div>
-			<div class="col4">
-				Paypal account: {{ $paypal }}
+		<p>Withdrawal amount: &pound;{{ $withdrawal }}</p>
+
+		<br>
+		<p>Paypal account: {{ $paypal }}</p>
+
 				
-			</div>
-			<div class="col3">
-				<div class="grey-box">
-				</div>
-				{{ Form::submit('Close' , array('id'=>'close', 'class'=>'btn-yellow close')) }}
-			</div>
-				
+			
+	   
     </div>
+
+     <div class="modal-footer modal-center">
+     	{{ Form::submit('Close' , array('id'=>'close', 'class'=>'btn btn-yellow close')) }}
+     </div>
 
 </div>

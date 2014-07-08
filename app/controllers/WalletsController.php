@@ -149,7 +149,7 @@ class WalletsController extends \BaseController {
 			$paypal = Input::get('paypal');
 
 
-			$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
+			$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'transaction_amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
 			
 			if($withdrawal)
 			{
@@ -158,6 +158,7 @@ class WalletsController extends \BaseController {
 			
 				return Response::json([
 					'callback' => 'openConfirmPopup',
+					'url' => route('trainers.edit.tab', [$this->user->display_name ,'wallet']),
 					'popup' => (string)(View::make('wallets.confirm')->with('withdrawal', $withdrawalAmount)->with('paypal', $paypal))
 				]);
 			}
@@ -206,7 +207,8 @@ class WalletsController extends \BaseController {
 			$wallet->updatePaypal($paypal);
 
 			return Response::json([
-				'callback' => 'refreshpage'
+				'callback' => 'gotoUrl',
+				'url' => route('trainers.edit.tab', [$this->user->display_name ,'wallet']),
 			]);
 		}
 
