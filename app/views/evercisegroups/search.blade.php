@@ -23,6 +23,7 @@
 		</div>
 		<div id="list" class="discover-view tab-view">
 			<div class="row9">
+			{{ var_dump($evercisegroups)}}
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
 						@if (isset($stars[$evercisegroup->id])) 
@@ -30,10 +31,11 @@
 							@else
 							@include('evercisegroups.discover_classes_list', array('rating' => 0, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng))
 						@endif
-								
+							
 								
 					
 					@endforeach
+
 				@endif
 				
 			</div>

@@ -510,34 +510,28 @@ class EvercisegroupsController extends \BaseController {
         if ($category == null && $query != null) {
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
-			->with(array('venue' =>function($query) use (&$haversine,&$radius)
-	        {
-
-	        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);
 
-
-	        }))
+	        })
+	        ->with('venue')		
 	        ->with('user')
 			->get();
         }else{
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
-			->with(array('venue' =>function($query) use (&$haversine,&$radius)
-	        {
-
-	        	$query->select( array('*', DB::raw($haversine . ' as distance')) )
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);
 
-
-	        }))
+	        })
+	        ->with('venue')
 	        ->with('user')
 			->where('category_id' , $category)
 			->get();
         }
         
-
-
 
 
 	    //$evercisegroups = [];  
