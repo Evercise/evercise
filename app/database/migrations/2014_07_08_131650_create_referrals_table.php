@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateGymHasTrainersTable extends Migration {
+class CreateReferralsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,16 @@ class CreateGymHasTrainersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('gym_has_trainers', function($table)
-		{
-			$table->tinyinteger('status');
+		Schema::create('referrals', function(Blueprint $table) {
+			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('gym_id')->unsigned();// Foreign key
+			$table->string('email');
+			$table->string('code');
+			$table->integer('referee_id')->unsigned();
 			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -29,8 +31,8 @@ class CreateGymHasTrainersTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('gym_has_trainers');
-		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+		Schema::drop('referrals');
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1'); 
 	}
 
 }

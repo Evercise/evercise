@@ -1,20 +1,15 @@
 <?php
 
-// Composer: "fzaninotto/faker": "v1.3.0"
-use Faker\Factory as Faker;
-
 class MilestonesTableSeeder extends Seeder {
 
 	public function run()
 	{
-		$faker = Faker::create();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        DB::table('milestones')->delete();
+		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-		foreach(range(1, 10) as $index)
-		{
-			Milestone::create([
+        Milestone::create(array('user_id' => '1'));
 
-			]);
-		}
 	}
 
 }
