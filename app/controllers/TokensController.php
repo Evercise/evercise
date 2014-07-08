@@ -81,7 +81,7 @@ class TokensController extends \BaseController {
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
 	    $permissions = 'publish_stream';
-	    $url_app = Request::root();
+	    $url_app = 'balls';//Request::root();
 
 	    // getInstance
 	    FacebookConnect::getFacebook($application);
@@ -90,10 +90,10 @@ class TokensController extends \BaseController {
 		if($getUser['access_token'])
 		{
 			$token = Token::where('user_id', $this->user->id)->first();
-			$token->addToken('facebook', $getUser['access_token']);
+			//$token->addToken('facebook', $getUser['access_token']);
 		}
-
-		return Redirect::to('users/'.$this->user->id.'/edit/evercoins');
+		return View::make('users/tokens')->with('accessToken', $token);
+		//return Redirect::to('users/'.$this->user->id.'/edit/evercoins');
 	}
 	public function tw()
 	{

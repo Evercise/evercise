@@ -15,9 +15,11 @@ class ShowEvercoinComposer {
       //$evercoinbalanceInPounds = poundsToEvercoins($evercoinBalance);
 
       $fb = $user->token->facebook ? true : false;
+      $tw = $user->token->twitter ? true : false;
 
       $view
 	      ->with('evercoinBalance', $evercoinBalance)
-	      ->with('fb', $fb);
+	      ->with('fb', $fb)
+	      ->with('tw', $tw);
   	}
 }

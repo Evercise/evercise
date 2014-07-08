@@ -8,7 +8,7 @@
 @else
 	<p>facebook token got</p>
 @endif
-@if(!$fb)
+@if(!$tw)
 	{{ HTML::linkRoute('twitter', 'get twitter', null , array('class' => 'btn-yellow')) }}
 @else
 	<p>twitter token got</p>
