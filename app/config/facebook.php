@@ -7,8 +7,8 @@ if (App::environment('local'))
 {
 	    // The environment is local
 	return array(
-	        'appId' => '492492450851682',
-	        'secret' => 'b5f9e533949178ebe7c33936c81ad833'
+	        'appId' => '306418789525126',
+	        'secret' => 'd599aae625444706f9335ca10ae5f71d'
 	    );
 }
 elseif (App::environment('staging'))

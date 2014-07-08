@@ -5,7 +5,8 @@ class ShowEvercoinComposer {
 	 public function compose($view)
   	{
 
-      $id = Sentry::getUser()->id;
+      $user = User::find(Sentry::getUser()->id);
+      $id = $user->id;
   		
       $evercoin = Evercoin::where('user_id', $id)->first();
 
@@ -13,6 +14,10 @@ class ShowEvercoinComposer {
 
       //$evercoinbalanceInPounds = poundsToEvercoins($evercoinBalance);
 
-      $view	->with('evercoinBalance', $evercoinBalance);
+      $fb = $user->token->facebook ? true : false;
+
+      $view
+	      ->with('evercoinBalance', $evercoinBalance)
+	      ->with('fb', $fb);
   	}
 }

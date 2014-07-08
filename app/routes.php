@@ -71,14 +71,22 @@ Route::get('login/fb/{redirect_after_login_url}' , function($redirect_after_logi
     return Redirect::away($facebook->getLoginUrl($params));
 });
 
-Route::get('login/fb' , function() {
+/*Route::get('login/fb' , function() {
     $facebook = new Facebook(Config::get('facebook')); 
     $params = array(
         'redirect_uri' => url('/login/fb/callback/users.edit'),
         'scope' => 'email,user_birthday,read_stream'
     );
     return Redirect::away($facebook->getLoginUrl($params));
+});*/
+
+/*Route::get('login/fb' , function() {
+    return Redirect::route('users.fb');
 });
+
+Route::get('tokens/fb' , function() {
+    return Redirect::route('tokens.fb');
+});*/
 
 
 Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
@@ -171,8 +179,21 @@ Route::get('admin/pending_withdrawal', array('as' => 'admin.pending_withdrawal',
 Route::post('admin/process_withdrawal', array('as' => 'admin.process_withdrawal.post', 'before'=>'admin', 'uses' => 'AdminController@processWithdrawal'));
 
 
-Route::get('/fblogin', function()
+Route::get('/fbtest', function()
 {
-    return Redirect::to(Facebook::getLoginUrl());
+    //return Redirect::to(Facebook::getLoginUrl());
+
 });
-Route::get('/tokens', array('as' => 'users.tokens', 'uses' => 'UsersController@getTokens'));
+Route::get('login/fb', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
+Route::get('tokens/fb', array('as' => 'tokens.fbtoken', 'uses' => 'TokensController@fb'));
+
+Route::get('/tokens/tw', array('as' => 'tokens.twtoken', 'uses' => 'TokensController@tw'));
+
+Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
+    // Reqest tokens
+    $tokens = Twitter::oAuthRequestToken();
+
+    // Redirect to twitter
+    Twitter::oAuthAuthenticate(array_get($tokens, 'oauth_token'));
+    exit;
+}));

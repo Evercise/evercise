@@ -3,7 +3,9 @@
 
 @section('content')
 
-	<div>Get stupid tokens</div>
-	<div>{{ $fb }}</div>
+	<div style="width:500px;">Get token</div>
+	
+	
+	{{ var_dump($accessToken) }}
 
 @stop

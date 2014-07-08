@@ -5,7 +5,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	protected $fillable = array('display_name', 'password','first_name', 'last_name', 'email','gender', 'activation_code');
+	protected $fillable = array('display_name', 'password','first_name', 'last_name', 'email','gender', 'activation_code', 'dob');
 
 	/**
 	 * The database table used by the model.
@@ -106,6 +106,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function evercoin()
     {
         return $this->hasOne('Evercoin');
+    }
+
+	public function milestone()
+    {
+        return $this->hasOne('Milestone');
+    }
+
+	public function token()
+    {
+        return $this->hasOne('Token');
     }
 
 

@@ -11,8 +11,10 @@ return [
      *
      * Add an app: https://developers.facebook.com/apps
      */
-    'app_id' => ':492492450851682',
-    'app_secret' => ':b5f9e533949178ebe7c33936c81ad833',
+     'app_id' => '306418789525126',
+    'app_secret' => 'd599aae625444706f9335ca10ae5f71d',
+ /*  'app_id' => '492492450851682',
+    'app_secret' => 'b5f9e533949178ebe7c33936c81ad833',*/
 
     /*
      * The default list of permissions that are
@@ -34,7 +36,7 @@ return [
      * The default endpoint that Facebook will redirect to after
      * an authentication attempt.
      */
-    'default_redirect_uri' => '/tokens',
+    'default_redirect_uri' => ':1234/tokens',
 
     /*
      * For a full list of locales supported by Facebook visit:
@@ -58,8 +60,8 @@ return [
 if (App::environment('staging')) // donkey
 {
 return [
-    'app_id' => ':247621532113217',
-    'app_secret' => ':762e0e54c435804033d7ece1d4b50122',
+    'app_id' => '247621532113217',
+    'app_secret' => '762e0e54c435804033d7ece1d4b50122',
 
     'default_scope' => ['email','user_birthday','read_stream', 'publish_actions'],
 
@@ -74,8 +76,8 @@ return [
 if (App::environment('production')) // VS10319
 {
 return [
-    'app_id' => ':425004847609443',
-    'app_secret' => ':cef796862987836c8bb175e4304de6da',
+    'app_id' => '425004847609443',
+    'app_secret' => 'cef796862987836c8bb175e4304de6da',
 
     'default_scope' => ['email','user_birthday','read_stream', 'publish_actions'],
 
