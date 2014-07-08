@@ -81,7 +81,7 @@ class TokensController extends \BaseController {
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
 	    $permissions = 'publish_stream';
-	    $url_app = Request::root();
+	    $url_app = Request::root().'/tokens/fb';
 
 	    // getInstance
 	    FacebookConnect::getFacebook($application);
@@ -92,7 +92,7 @@ class TokensController extends \BaseController {
 			$token = Token::where('user_id', $this->user->id)->first();
 			$token->addToken('facebook', $getUser['access_token']);
 		}
-
+		//return View::make('users/tokens')->with('accessToken', $token);
 		return Redirect::to('users/'.$this->user->id.'/edit/evercoins');
 	}
 	public function tw()
@@ -106,13 +106,16 @@ class TokensController extends \BaseController {
 		// Request access token
 		$accessToken = Twitter::oAuthAccessToken($oAuthToken, $verifier);
 
+
+		// redirect URL in twitter app settings: http://127.0.0.1:1234/tokens/tw
 		if($this->user) // This is just to stop it breaking from 127.0.0.1.
 		{
 			$userId = $this->user->id;
 			if($accessToken)
 			{
+				$tokenJSON = json_encode($accessToken);
 				$token = Token::where('user_id', $userId)->first();
-				$token->addToken('twitter', $accessToken);
+				$token->addToken('twitter', $tokenJSON);
 			}
 		}
 		else

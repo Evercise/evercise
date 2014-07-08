@@ -188,14 +188,15 @@ class UsersController extends \BaseController {
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
 	    $permissions = 'publish_stream';
-	    $url_app = Request::root();
+	    $url_app = Request::root().'/login/fb';
+	    //echo $url_app;exit;
 
 	    // getInstance
 	    FacebookConnect::getFacebook($application);
 		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
 		//return View::make('users.tokens')->with('fb', $getUser);
-
+		
 
 	    if (!$getUser) return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
 
@@ -690,79 +691,5 @@ class UsersController extends \BaseController {
 		return Redirect::route('home');
 	}
 
-	public function getTokensSAMMYK()
-	{
-		$login_link = Facebook::getLoginUrl();
-
-		//$code = Input::get('code');
-		//echo $code;
-
-		//$login_link = Facebook::auth()->getLoginUrl('http://localhost');
-
-
-		//Facebook::setAccessToken($code);
-		//$user = Facebook::object('me')->fields('id', 'email')->get();
-/*	    try
-	    {
-	        $token = Facebook::getTokenFromRedirect();
-
-	        if ( $token)
-	        {
-
-			    $token_info = $token->getInfo();
-			    echo $token_info;
-			}
-			else
-			{
-	            //return Redirect::to('/')->with('error', 'Unable to obtain access token.');
-	            echo 'Unable to obtain access token';
-	        }
-	    }
-	    catch (FacebookQueryBuilderException $e)
-	    {
-	        //return Redirect::to('/')->with('error', $e->getPrevious()->getMessage());
-	         echo $e->getPrevious()->getMessage();
-	    }*/
-
-
-/*	    FQB::setAppCredentials('306418789525126', 'd599aae625444706f9335ca10ae5f71d');
-	    $fqb = new FQB();
-	    $login_link = $fqb->auth()->getLoginUrl('http://locahost:1234/tokens', ['email','user_birthday','read_stream', 'publish_actions']);
-
-		try
-		{
-		    $token = $fqb->auth()->getTokenFromRedirect('http://locahost:1234/tokens');
-		}
-		catch (FacebookQueryBuilderException $e)
-		{
-		    // Failed to obtain access token
-		    echo 'Error:' . $e->getMessage();
-		}
-
-        if ( ! $token)
-        {
-            echo 'Unable to obtain access token';
-        }*/
-
-
-		return View::make('users.tokens')->with('fb', $login_link);
-	}
-
-	public function getFacebook()
-	{
-
-	    // Use a single object of a class throughout the lifetime of an application.
-	    $application = Config::get('facebook');
-	    $permissions = 'publish_stream';
-	    $url_app = Request::root();
-
-	    // getInstance
-	    FacebookConnect::getFacebook($application);
-		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
-		
-
-		return View::make('users.tokens')->with('fb', $getUser)->with('root', $url_app);
-	
-	}
 
 }
