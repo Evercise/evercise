@@ -22,6 +22,11 @@
         @if ($errors->has('email'))
             {{ $errors->first('email', '<p class="error-msg">:message</p>')}}
         @endif
+        
+        @include('form.phone', array('fieldname'=>'phone', 'placeholder'=>'Add you phone number', 'maxlength'=>32,  'label'=>'Add you phone number', 'fieldtext'=>'(Optional) - Your phone number will never be shared and will only be used to contact you if there is any last minute changes with your classes', 'default_area'=>$area_code, 'default'=>$phone))
+        @if ($errors->has('password'))
+            {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
+        @endif
 
     	@include('form.select', array('fieldname'=>'gender', 'label'=>'gender', 'values'=>array(1=>'Male', 2=>'Female'), 'selected'=>$gender))
         {{-- 
