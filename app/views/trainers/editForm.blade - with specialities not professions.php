@@ -1,10 +1,14 @@
 
 {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
+    @include('form.select', array('fieldname'=>'discipline', 'label'=>'Discipline', 'values'=>$disciplines, 'selected'=>$speciality->name))
+    @if ($errors->has('discipline'))
+        {{ $errors->first('discipline', '<p class="error-msg">:message</p>')}}
+    @endif
 
-    @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'fieldtext'=>'Add your profession', 'default'=>$profession ))
-    @if ($errors->has('profession'))
-        {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}
+    @include('form.select', array('fieldname'=>'title', 'label'=>'Title', 'values'=>array('0'=>'Select a discipline')))
+    @if ($errors->has('title'))
+        {{ $errors->first('title', '<p class="error-msg">:message</p>')}}
     @endif
 
     @include('form.textfield', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'This is the bio that is displayed to our users', 'default'=>$bio ))

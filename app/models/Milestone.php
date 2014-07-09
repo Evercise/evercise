@@ -16,6 +16,9 @@ class Milestone extends \Eloquent {
 		'twitter' => ['count'=>1, 'reward'=>1, 'recur'=>1, 'column'=>'twitter'],
 		'review' => ['count'=>5, 'reward'=>5, 'recur'=>100, 'column'=>'reviews'],
 	];
+	private $freeCoins = [
+		'referral_signup' => 1,
+	];
 
 	public function add($type)
     {
@@ -46,4 +49,11 @@ class Milestone extends \Eloquent {
 	        $this->save();
 	    }
     }
+	public function freeCoin($type)
+	{
+		if (isset($this->milestones[$type]))
+		{
+			Evercoin::where('user_id', $this->attributes['user_id'])->first()->deposit(Evercoin::poundsToEvercoins($this->milestones[$type]));
+		}
+	}
 }

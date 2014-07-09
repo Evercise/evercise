@@ -2,7 +2,7 @@
 
 class Trainer extends \Eloquent {
 
-	protected $fillable = array('user_id', 'bio', 'website', 'specialities_id', 'gender');
+	protected $fillable = array('user_id', 'bio', 'website', 'specialities_id', 'gender', 'profession');
 	/**
 	 * The database table used by the model.
 	 *

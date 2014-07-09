@@ -30,7 +30,8 @@ class TrainerBlockComposer {
   		$age  =  $from->diff($to)->y;
 
       $trainerDetails = $viewdata['trainer'];
-  		$bio =  $trainerDetails->bio;
+      $bio =  $trainerDetails->bio;
+  		$profession =  $trainerDetails->profession;
       //$speciality = Speciality::find($trainerDetails->specialities_id)->pluck(DB::raw("CONCAT(name, ' ', titles)"));
       if ($orientation == 'landscape') {
         JavaScript::put(array('initReadMore' => 1 )); // Initialise read more.
@@ -40,6 +41,7 @@ class TrainerBlockComposer {
   		$view
         ->with('gender', $gender)
         ->with('age', $age)
-        ->with('bio' , $bio);
+        ->with('bio' , $bio)
+        ->with('profession' , $profession);
   	}
 } 

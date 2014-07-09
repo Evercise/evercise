@@ -49,7 +49,7 @@ class TrainersController extends \BaseController {
 		// http://odyniec.net/projects/imgareaselect
 
 		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
-		JavaScript::put(array('initTrainerTitles' => json_encode(['titles' =>$titles]) )); // Initialise title swap Trainer JS.
+		//JavaScript::put(array('initTrainerTitles' => json_encode(['titles' =>$titles]) )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		return View::make('trainers.create')
 			->with('disciplines', $disciplines);
@@ -67,11 +67,12 @@ class TrainersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'title' => 'required',
+				//'title' => 'required',
 				'bio' => 'required|max:500|min:50',
 				'image' => 'required',
 				'phone' => 'required',
 				'website' => 'sometimes',
+				'profession' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -92,15 +93,18 @@ class TrainersController extends \BaseController {
 		else {
 			$user = Sentry::getUser();
 
-			$discipline = Input::get('discipline');
-			$title = Input::get('title');
 			$bio = Input::get('bio');
 			$image = Input::get('image');
 			$website = Input::get('website');
 			$area_code = Input::get('areacode');
 			$phone = Input::get('phone');
-			$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
-			$trainer = Trainer::create(['user_id'=>$user->id, 'bio'=>$bio, 'specialities_id'=>$speciality, 'website'=>$website]);
+			//$discipline = Input::get('discipline');
+			//$title = Input::get('title');
+			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
+			$profession = Input::get('profession');
+
+
+			$trainer = Trainer::create(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
 
 			$wallet = Wallet::create(['user_id'=>$user->id, 'amount'=>0, 'previous_amount'=>0]);
 
@@ -141,9 +145,9 @@ class TrainersController extends \BaseController {
 	{
 		if (!Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
 		$trainer = Trainer::where('user_id' , $this->user->id)
-				->with('speciality')
+				//->with('speciality')
 				->first();
-		$speciality = Speciality::find($trainer->specialities_id);
+		//$speciality = Speciality::find($trainer->specialities_id);
 
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise dashboard panls JS.
 		JavaScript::put(array('initPut' => 1 )); // Initialise put ajax function JS.
@@ -152,7 +156,8 @@ class TrainersController extends \BaseController {
 
 		return View::make('trainers.edit')
 			->with('trainer', $trainer)
-			->with('speciality', $speciality);
+			->with('profession', $trainer->profession);
+			//->with('speciality', $speciality);
 	}
 
 	/**
@@ -169,7 +174,7 @@ class TrainersController extends \BaseController {
 		//$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
 
 		$trainer=Trainer::with('user')
-					->with('speciality')
+					//->with('speciality')
 					->where('user_id', $id)
 					->first();
 
@@ -192,7 +197,10 @@ class TrainersController extends \BaseController {
 		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
 		    	$totalStars = $totalStars + $rating->stars;
 		    }
-
+	    }
+	    else
+	    {
+	    	$ratings = [];
 	    }
 		
 
@@ -219,6 +227,7 @@ class TrainersController extends \BaseController {
 			Input::all(),
 			array(
 				'bio' => 'required|max:500|min:50',
+				'profession' => 'required|max:50|min:5',
 			)
 		);
 		if($validator->fails()) {
@@ -239,26 +248,27 @@ class TrainersController extends \BaseController {
 		else{
 			// Actually update the trainer record 
 
-			$discipline = Input::get('discipline');
-			$title = Input::get('title');
+			//$discipline = Input::get('discipline');
+			//$title = Input::get('title');
 			$bio = Input::get('bio');
 			$website = Input::get('website');
+			$profession = Input::get('profession');
 
 			$trainer = Trainer::find($id);
 
 			if ($this->user->id != $trainer->user_id) return Response::json(['callback' => 'fail']);
 
-			$speciality = Speciality::where('name', $discipline)->where('titles', $title)->first();
-			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
+			//$speciality = Speciality::where('name', $discipline)->where('titles', $title)->first();
 
 			$trainer->update(array(
 				'bio' => $bio,
 				'website' => $website,
-				'specialities_id' => $speciality->id, 
+				'profession' => $profession,
+				//'specialities_id' => $speciality->id, 
 			));
 
 			$result = array(
-		            'sp' =>  $speciality,
+		            //'sp' =>  $speciality,
 		            'callback' => 'gotoUrl',
 		            'url' => '/trainers/2/edit/profile'
 		         );	

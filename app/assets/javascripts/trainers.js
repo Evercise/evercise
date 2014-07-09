@@ -38,9 +38,10 @@ function initCreateTrainer()
                 loaded();
                 if (data.validation_failed == 1)
                 {
-                    trace('loose');
+                    trace('validation failed: ');
                     // show validation errors
                     var arr = data.errors;
+                    trace(arr, true);
                     var scroll = false;
                     $.each(arr, function(index, value)
                     {
