@@ -39,7 +39,7 @@
 		<div class="formfield">
 			<div class="frame" >
 			  <div class="preview" >
-			    <img src="/img/{{$default_image}}" alt="preview image">
+			    {{$default_image}}
 			  </div>
 			</div>
 			<div id='image-upload'>		
