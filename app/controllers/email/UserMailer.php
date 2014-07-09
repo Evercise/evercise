@@ -17,6 +17,8 @@ class UserMailer extends Mailer {
 		$events->listen('user.forgot',      'email\UserMailer@forgotPassword');
 		$events->listen('user.newpassword', 'email\UserMailer@newPassword');
 		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
+
+		$events->listen('referral.invite', 'email\UserMailer@invite');
 	}
 
 	/**
@@ -110,6 +112,29 @@ class UserMailer extends Mailer {
 	}
 
 
+	public function invite($email, $referralCode, $referrerName)
+	{
+		$body = '<span>Hi.</span>
+				<br>
+				<br>
+				<span>'.$referrerName.' has suggested that you join Evercise!</span>
+				<br>
+				<span>Evercise is an online network that gives everyone wanting to exercise access to fitness instructors and classes across London and soon the Uk.</span>
+				<br>
+				<span>By accepting this invitation, you will recieve 1 Evercoin, which can be used to help pay for classes!</span>';
+		
 
+		$subject = $referrerName.' Suggests Evercise';
+		//$view = 'emails.auth.welcome'; // use for validation email
+		$view = 'emails.template';
+		$data['title'] = 'Introducing Evercise';
+		$data['mainHeader'] = 'Introducing Evercise!';
+		$data['subHeader'] = 'Your referral code: '.$referralCode;
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('referral', 'Click here to join Evercise', [$referralCode]);
+		$data['linkLabel'] = 'Start with evercise today:';
+		$data['sellups'] = [ 0 => ['body' => 'Gain evercise credits to spend on classes by reommending your friends. for every 3 friend who join due to you referral you will recieve &pounds;3&apos;s of credit and each person who joined will recieve &pound;1 of credit aswell' , 'image' =>HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img'))] , 1 => ['body' => 'Jeff the trainer' , 'image' => HTML::image('img/Class.png','get fit', array('class' => 'home-step-img'))] ];
 
+		return $this->sendTo($email, $subject, $view, $data );
+	}
 }

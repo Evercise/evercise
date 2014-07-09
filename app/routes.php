@@ -19,13 +19,13 @@ Route::group(array('before' => 'auth'), function()
 
 Route::resource('users', 'UsersController');
 Route::resource('sessions', 'SessionsController');
-Route::resource('gyms', 'GymsController');
 Route::resource('ratings', 'RatingsController');
 Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 Route::resource('venues', 'VenuesController');
 Route::resource('payment', 'PaypalPaymentController');
 Route::resource('wallets', 'WalletsController');
+Route::resource('referrals', 'ReferralsController');
 
 //Route::post('wallets/update', array('as'=>'wallets.update' , 'uses'=>'WalletsController@update'));
 
@@ -197,3 +197,6 @@ Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
     Twitter::oAuthAuthenticate(array_get($tokens, 'oauth_token'));
     exit;
 }));
+
+
+Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));

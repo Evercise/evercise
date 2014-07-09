@@ -25,8 +25,10 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
+		$referralCode = (null !== Session::get('referralCode')) ? Session::get('referralCode') : 0;
+
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		return View::make('users.create');
+		return View::make('users.create')->with('referralCode'=>$referralCode);
 	}
 
 	/**
@@ -203,7 +205,7 @@ class UsersController extends \BaseController {
 		$me = $getUser['user_profile'];
 	
 
-	    $password = $this->randomPassword();
+	    $password = Functions::randomPassword(8);
 
 	    $dob = isset( $me['birthday'] ) ? new DateTime($me['birthday']) : '';
 	    

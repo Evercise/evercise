@@ -44,12 +44,6 @@ class TrainersController extends \BaseController {
 		   	else array_push($titles[$sp->name], $sp->titles);
 		}
 
-		$gyms_data = Gym::all();
-		$gyms = array();
-		foreach ($gyms_data as $gym)
-		{
-		    $gyms[$gym->id] = $gym->name;
-		}
 
 		// http://image.intervention.io/methods/crop
 		// http://odyniec.net/projects/imgareaselect
@@ -58,8 +52,7 @@ class TrainersController extends \BaseController {
 		JavaScript::put(array('initTrainerTitles' => json_encode(['titles' =>$titles]) )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		return View::make('trainers.create')
-			->with('disciplines', $disciplines)
-			->with('gyms', $gyms);
+			->with('disciplines', $disciplines);
 
 
 	}
