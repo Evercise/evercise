@@ -2,20 +2,23 @@ function MapWidgetInit() {
   trace('maps go');
   $(document).on('click', '#findLocation',function(){
     trace('clicked');
-    var url = '/dev/widgets/postGeo';
+    //var url = '/dev/widgets/postGeo';
     //var url = window.location.href;
 
    // url =  url.replace(url.substr(url.lastIndexOf('/') + 2), '')
 
     //url = url.split( '/' );
 
-     trace(url);
-
    // url = url+'/widgets/postGeo';
 
+   var pathname = window.location.pathname.split('/evercisegroups');
 
-
-   
+   if (pathname[0] != '') {
+     var url ='/'+pathname[0]+'widgets/postGeo';
+   }else{
+     var url = '/widgets/postGeo';
+   }
+  
 
     var data = {
           street: $('#street').val(),
