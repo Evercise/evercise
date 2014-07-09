@@ -7,7 +7,7 @@
 	    	<h1>How it Works</h1>
 	    	<hr>
 		    <video id="video" class="video" controls poster="{{ asset('img/search.png') }}">
-				<source src="/video/EVERCISE ALMOST (2).mov"  type="video/mp4" />
+				<source src="{{ url() }}/video/EVERCISE ALMOST (2).mov"  type="video/mp4" />
 
 			</video>
 			<hr>
