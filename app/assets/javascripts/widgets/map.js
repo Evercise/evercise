@@ -16,13 +16,13 @@ function MapWidgetInit() {
    var pathname = window.location.pathname.split('/evercisegroups');
 
    if (pathname[0] != '') {
-     var url = '/'+pathname[0]+'/widgets/postGeo';
+     var url = pathname[0]+'/widgets/postGeo';
    }else{
      var url = '/widgets/postGeo';
    }
   
    trace(url);
-   
+
     var data = {
           street: $('#street').val(),
           city: $('#city').val(),
