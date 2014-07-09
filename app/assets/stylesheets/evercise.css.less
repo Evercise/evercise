@@ -147,7 +147,7 @@ input,textarea,select,.drop_down{
 .slider_pre{
 	.border-radiuses(0,0,4px,4px);
 	border: 1px solid @grey;
-	height: 40px;
+	height: 38px;
 	width: 36px;
 	float: left;
 	.box-sizing();
@@ -2449,9 +2449,23 @@ nav{
 				margin-top: 30px;
 				width: auto;
 				padding: 10px 25px 9px;
+				&.center{
+					width: 140px;
+					float: none;
+				}
 			}
+			.search-img{
+				width: 164px;
+			}
+
 		}
-		
+
+		.center{
+			display: block;
+			margin: auto;
+			text-align: center;
+		}
+	
 		.dashboard-header{
 			padding-left: 40px;
 			border-bottom:  1px solid @grey;

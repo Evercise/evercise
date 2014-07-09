@@ -1,6 +1,19 @@
 @if (empty($pastFutureCount) || $pastFutureCount['future'] == 0) 	
 	
-		<h5>No upcoming classes placeholder</h5>
+	<div class="dashboard-title">
+		{{ HTML::image('img/cat-list.png', 'caegory list', array('class' => 'center cat-list-img')) }}
+		<br>
+		<br>
+		<p>Here you will be able to see the classes you have attended, you will be able view your class history and rate them.</p>
+	</div>
+
+	<div class="dashboard-body center">
+	{{ HTML::image('img/search.png', 'caegory list', array('class' => 'center search-img')) }}
+		<h5>You don&apos;t seem to have any classes coming up,<br> you can search for new classes here.</h5>
+
+		{{HTML::linkRoute('evercisegroups.search', 'Discover classes', null , ['class' => 'btn btn-yellow center'])}}
+	</div>
+	
 @else
 	<div class="row9">
 			@foreach ($sessions as $session)

@@ -1,6 +1,22 @@
 @if (empty($pastFutureCount) || $pastFutureCount['past'] == 0) 	
+	<div class="dashboard-title">
+		{{ HTML::image('img/cat-list.png', 'caegory list', array('class' => 'center cat-list-img')) }}
+		<br>
+		<br>
+		<p>Here you will see all your upcoming classes, from here you will be able to message the trainer or if you can no longer attend the class you can leave (if you leave a class we will refund the value into your evercoin account, you can then use this to purchase other classes on evercise at a time that suits you).</p>
+		<br>
+		<br>
+		<p><strong>You must leave a class more than 5 days in advanced to recieve the full amount in evercoins. Between 5 and 2 days you will receive 50% and any-less than 2 days you will not receive anything.</strong></p>
+	</div>
+
+	<div class="dashboard-body center">
+	{{ HTML::image('img/search.png', 'caegory list', array('class' => 'center search-img')) }}
+		<h5>You don&apos;t seem to have any classes coming up,<br> you can search for new classes here.</h5>
+
+		{{HTML::linkRoute('evercisegroups.search', 'Discover classes', null , ['class' => 'btn btn-yellow center'])}}
+	</div>
 	
-		<h5>No attended classes placeholder</h5>
+		
 @else
 	<div class="row9">
 		@foreach ($sessions as $session)
