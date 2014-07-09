@@ -19,7 +19,6 @@ function MapWidgetInit() {
       })
       .done(
           function(data) { 
-            trace(data);
             $('#latbox').val(data.lat);
             $('#lngbox').val(data.lng);
             MapWidgetInit();
@@ -64,7 +63,6 @@ function MapWidgetInit() {
         if(typeof laracasts.latitude !== 'undefined')
         {
         	var latitude = laracasts.latitude;
-          trace(latitude);
         }
 
         if(typeof laracasts.latitude !== 'undefined')
@@ -244,7 +242,6 @@ function MapWidgetloadScript(params) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=MapWidgetInit';
-
     document.body.appendChild(script);
 
   }
