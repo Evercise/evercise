@@ -2,10 +2,20 @@ function MapWidgetInit() {
   trace('maps go');
   $(document).on('click', '#findLocation',function(){
     trace('clicked');
-    //var url = '/dev/widgets/postGeo';
-    var url = window.location.origin+'/widgets/postGeo';
+    var url = '/dev/widgets/postGeo';
+    //var url = window.location.href;
 
-    trace(url);
+   // url =  url.replace(url.substr(url.lastIndexOf('/') + 2), '')
+
+    //url = url.split( '/' );
+
+     trace(url);
+
+   // url = url+'/widgets/postGeo';
+
+
+
+   
 
     var data = {
           street: $('#street').val(),
