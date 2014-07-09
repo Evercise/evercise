@@ -152,6 +152,13 @@ class UsersController extends \BaseController {
 			Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 			Milestone::create(['user_id'=>$user->id]);
 			Token::create(['user_id'=>$user->id]);
+
+			$referral = Referral::useReferralCode(Session::get('referralCode'), $user->id);
+			if( $referral )
+			{
+				Milestone::where('user_id', $referral->user_id)->first()->add('referral');
+				Milestone::where('user_id', $user->id)->first()->freeCoin('referral_signup');
+			}
 			
 
 			if($user) {
@@ -233,10 +240,11 @@ class UsersController extends \BaseController {
 				Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 				Milestone::create(['user_id'=>$user->id]);
 
-				if( $referral = Referral::useReferralCode(Session::get('referralCode'), $user->id) )
+				$referral = Referral::useReferralCode(Session::get('referralCode'), $user->id);
+				if( $referral )
 				{
-					Milestone::where('user_id', $user->id)->first()->add('referral');
-					Milestone::where('user_id', $referral->user_id)->first()->freeCoin('referral_signup');
+					Milestone::where('user_id', $referral->user_id)->first()->add('referral');
+					Milestone::where('user_id', $user->id)->first()->freeCoin('referral_signup');
 				}
 				
 				Token::create(['user_id'=>$user->id]);
@@ -301,7 +309,7 @@ class UsersController extends \BaseController {
 			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
 			{
 				$user = Sentry::findUserByLogin($me['email']);
-				return View::make('users.activate')->with('activation', 1)->with('display_name', $user->display_name);
+				return View::make('users.edit')->with('notification', 'you have successfully signed up with facebook. Your password has been emailed to you')->with('display_name', $user->display_name);
 			}
 		}
 
@@ -457,7 +465,13 @@ class UsersController extends \BaseController {
 			}
 			*/
 
-			Milestone::where('user_id', $this->user->id)->first()->add('profile');
+			if(
+					$this->user->gender
+				&&	$this->user->dob
+				&&	$this->user->area_code
+				&&	$this->user->phone
+				&&	$this->user->image
+			) Milestone::where('user_id', $this->user->id)->first()->add('profile');
 
 			return Response::json(['callback' => 'gotoUrl', 'url' => Request::root().'/users/'.$this->user->id.'/edit/profile']);
 

@@ -20,12 +20,12 @@ class Referral extends \Eloquent {
 	}
 	public static function useReferralCode($rc, $user_id)
 	{
-		$referralCode = 0;
+		$referral = 0;
 		if(Referral::checkReferralCode($rc))
 		{
-			$referralCode = $rc;
-			Referral::where('code', $rc)->first()->update(['code' => '', 'referee_id' => $user_id]);
+			$referral = Referral::where('code', $rc)->first();
+			$referral->update(['code' => '', 'referee_id' => $user_id]);
 		}
-		return $referralCode;
+		return $referral;
 	}
 }

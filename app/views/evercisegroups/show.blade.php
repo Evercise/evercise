@@ -7,7 +7,7 @@
 	<div class="full-bk" style="background-image: url(/profiles/{{$trainer->user->directory}}/{{$evercisegroup->image}})">
 	</div>
 	<div id="class-trainer-wrapper" class="col3">
-		@include('trainers.trainerBlock', array('speciality' => $trainer->speciality->name.' '.$trainer->speciality->titles, 'id' =>  $trainer->user->id ,'orientation' => 'portrait', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
+		@include('trainers.trainerBlock', array('speciality' => $trainer->profession, 'id' =>  $trainer->user->id ,'orientation' => 'portrait', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
 	</div>
 	<div class="col9">
 		<ul class="class-nav sticky-header">

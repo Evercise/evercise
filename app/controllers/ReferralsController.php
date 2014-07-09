@@ -69,8 +69,7 @@ class ReferralsController extends \BaseController {
 		        ));
 			}
 
-			//return Response::json(route('evercisegroups.index'));
-			return Response::json(['callback'=>'refreshpage', 'referral'=>$referral]); // for testing
+			return Response::json(['callback'=>'gotoUrl', 'url'=>route('users.edit.tab', [$this->user->id, 'evercoins'])]);
 		}
 	}
 
