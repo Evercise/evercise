@@ -187,7 +187,7 @@ class UsersController extends \BaseController {
 	{
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
-	    $permissions = 'publish_stream';
+	    $permissions = 'publish_stream,email,user_birthday,read_stream';
 	    $url_app = Request::root().'/login/fb';
 	    //echo $url_app;exit;
 
@@ -206,7 +206,7 @@ class UsersController extends \BaseController {
 	    $password = $this->randomPassword();
 
 	    $dob = isset( $me['birthday'] ) ? new DateTime($me['birthday']) : '';
-
+	    
 	    try{
 		    $user = Sentry::createUser(array(
 				'display_name' => str_replace(' ', '_', $me['name']),
