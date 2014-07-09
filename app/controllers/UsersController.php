@@ -413,6 +413,8 @@ class UsersController extends \BaseController {
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
 			$image = Input::get('thumbFilename');
+			$area_code = Input::get('areacode');
+			$phone = Input::get('phone');
 
 			//$user = Sentry::getUser();
 
@@ -443,6 +445,8 @@ class UsersController extends \BaseController {
 				'email' => $email,
 				'gender' => $gender,
 				'image' => $image,
+				'area_code' => $area_code,
+				'phone' => $phone,
 			));
 			/*
 			$savedNewsletter = User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
