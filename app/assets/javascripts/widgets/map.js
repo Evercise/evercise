@@ -243,8 +243,7 @@ function MapWidgetloadScript(params) {
     func = 'MapWidgetInit';
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
-        'callback='+func;
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=MapWidgetInit';
 
     document.body.appendChild(script);
   }
