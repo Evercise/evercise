@@ -28,7 +28,7 @@ class UsersController extends \BaseController {
 		$referralCode = (null !== Session::get('referralCode')) ? Session::get('referralCode') : 0;
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		return View::make('users.create')->with('referralCode'=>$referralCode);
+		return View::make('users.create')->with('referralCode', $referralCode);
 	}
 
 	/**
