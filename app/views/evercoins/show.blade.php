@@ -13,3 +13,11 @@
 @else
 	<p>twitter token got</p>
 @endif
+
+<br>
+<br>
+
+{{ Form::open(array('id' => 'send_invite', 'url' => 'referrals', 'method' => 'POST', 'class' => 'create-form')) }}
+	{{ Form::text( 'referee_email' , '', array('id' => 'referee_email')) }}
+	{{ Form::submit('Send Invite' , array('class'=>'btn btn-yellow ')) }}
+{{ Form::close() }}

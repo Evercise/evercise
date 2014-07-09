@@ -205,7 +205,7 @@ class SessionsController extends \BaseController {
 		$totalCapacity = array();
 		foreach ($evercisegroups as $key => $value) {
 
-			$sessionDates[$key] = $this->arrayDate($value->Evercisesession->lists('date_time', 'id'));
+			$sessionDates[$key] = $Functions::arrayDate($value->Evercisesession->lists('date_time', 'id'));
 			$totalCapacity[] =  $value->capacity;
 			foreach ($value['Evercisesession'] as $k => $val) {
 				$totalMembers[]= $val->members;

@@ -31,7 +31,7 @@ class EvercisegroupsController extends \BaseController {
 
 				foreach ($evercisegroups as $key => $group) {
 
-					$sessionDates[$key] = $this->arrayDate($group->EverciseSession->lists('date_time', 'id'));
+					$sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
 					//$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
 					$capacity = 0;
 					foreach ($group['Evercisesession'] as $k => $session) {

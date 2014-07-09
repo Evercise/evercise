@@ -29,7 +29,49 @@ class ReferralsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		
+		$validator = Validator::make(
+			Input::all(),
+			array(
+				'referee_email' => 'required|email',
+			)
+		);
+		if($validator->fails()) {
+			if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+
+				return Response::json($result);
+	        }else{
+	        	return Redirect::route('evercisegroups.create')
+					->withErrors($validator)
+					->withInput();
+	        }
+		}
+		else {
+
+			$refereeEmail = Input::get('referee_email');
+			$referralCode = Functions::randomPassword(20);
+
+			$referral = Referral::create(['user_id'=>$this->user->id, 'email'=>$refereeEmail, 'code'=>$referralCode]);
+
+			$referrerName = $this->user->first_name.' '.$this->user->last_name;
+
+			if ($referral)
+			{
+				Event::fire('referral.invite', array(
+		        	'email' => $refereeEmail,
+		            'referralCode' => $referralCode,
+		            'referrerName' => $referrerName
+		        ));
+			}
+
+			//return Response::json(route('evercisegroups.index'));
+			return Response::json(['callback'=>'refreshpage', 'referral'=>$referral]); // for testing
+		}
 	}
 
 	/**
@@ -74,6 +116,12 @@ class ReferralsController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	public function submitCode($code)
+	{
+		Session::put('referralCode', $code);
+
+		return Redirect::to('users/create');
 	}
 
 }

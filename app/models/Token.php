@@ -16,7 +16,7 @@ class Token extends \Eloquent {
 		$tokenJSON = json_encode($token);
 		if (! $this->attributes[$name])
 		{
-			$milestone = Milestone::where('user_id', $this->attributes['id'])->first();
+			$milestone = Milestone::where('user_id', $this->attributes['user_id'])->first();
 			$milestone->add($name);
 		}
 		$this->update([$name => $tokenJSON]);
