@@ -95,7 +95,7 @@ class TrainersController extends \BaseController {
 			$discipline = Input::get('discipline');
 			$title = Input::get('title');
 			$bio = Input::get('bio');
-			$image = Input::get('thumbFilename');
+			$image = Input::get('image');
 			$website = Input::get('website');
 			$area_code = Input::get('areacode');
 			$phone = Input::get('phone');

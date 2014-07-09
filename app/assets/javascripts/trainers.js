@@ -28,12 +28,14 @@ function initCreateTrainer()
     $( '#trainer_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input, select').removeClass('error');
+        loading();
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
             $( this ).serialize(),
             function( data ) {
                 trace("about to win.......");
+                loaded();
                 if (data.validation_failed == 1)
                 {
                     trace('loose');

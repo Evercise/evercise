@@ -298,6 +298,7 @@ function initPut () {
 
 function gotoUrl(data)
 {
+  
   setTimeout(function() {
       window.location.href = data.url;
   }, 300);
@@ -439,9 +440,11 @@ function sendhome(data){
 
 function loading(){
   $('.mask').show();
+  $('html').append('<img src="/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
 }
 
 function loaded(){
   $('.mask').hide();
   $('.modal').remove();
+  $('.loading_circle').remove();
 }
