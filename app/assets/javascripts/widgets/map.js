@@ -1,5 +1,5 @@
 function MapWidgetInit() {
-
+  trace('maps go');
   $(document).on('click', '#findLocation',function(){
     trace('clicked');
     var url = '/widgets/postGeo';
@@ -247,7 +247,6 @@ function MapWidgetloadScript(params) {
 
     document.body.appendChild(script);
 
-    MapWidgetInit();
   }
 
   
