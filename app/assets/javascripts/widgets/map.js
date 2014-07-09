@@ -246,6 +246,8 @@ function MapWidgetloadScript(params) {
     script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=MapWidgetInit';
 
     document.body.appendChild(script);
+
+    MapWidgetInit();
   }
 
   
