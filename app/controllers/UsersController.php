@@ -25,7 +25,7 @@ class UsersController extends \BaseController {
 	 */
 	public function create()
 	{
-		$referralCode = (null !== Session::get('referralCode')) ? Session::get('referralCode') : 0;
+		$referralCode = Referral::checkReferralCode(Session::get('referralCode'));
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('users.create')->with('referralCode', $referralCode);
@@ -222,6 +222,8 @@ class UsersController extends \BaseController {
 			));
 
 			if($user) {
+
+
 				$userGroup = Sentry::findGroupById(1);
 				$user->addGroup($userGroup);
 
@@ -231,6 +233,12 @@ class UsersController extends \BaseController {
 				Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 				Milestone::create(['user_id'=>$user->id]);
 
+				if( $referral = Referral::useReferralCode(Session::get('referralCode'), $user->id) )
+				{
+					Milestone::where('user_id', $user->id)->first()->add('referral');
+					Milestone::where('user_id', $referral->user_id)->first()->freeCoin('referral_signup');
+				}
+				
 				Token::create(['user_id'=>$user->id]);
 				$token = Token::where('user_id', $user->id)->first();
 				$token->addToken('facebook', Token::makeFacebookToken($getUser));

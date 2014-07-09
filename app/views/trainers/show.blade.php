@@ -3,10 +3,10 @@
 @section('content')
 	
 	@if(count($ratings) == 0 )
-		@include('trainers.trainerBlock', array('speciality' => $trainer->speciality->name.' '.$trainer->speciality->titles , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
+		@include('trainers.trainerBlock', array('speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
 
 	@else
-		@include('trainers.trainerBlock', array('speciality' => $trainer->speciality->name.' '.$trainer->speciality->titles , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
+		@include('trainers.trainerBlock', array('speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
 
 	@endif
 		<div class="col8 push2">

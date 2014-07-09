@@ -4,6 +4,11 @@
 @section('content')
 
 	@include('layouts.pagetitle', array('title'=>'Step 1: Create your user account', 'subtitle'=>'You can either fill in your details below, or sign up in one click using your Facebook account.'))
+    @if($referralCode)
+        <div class="referral-wrapper">
+            Your referral code, {{ $referralCode }}., is valid! If you sign up now you will receive 1 Evercoin!
+        </div>
+    @endif
     <div class="fb-wrapper">
         {{ HTML::link('login/fb', 'Sign up with facebook', array('class' => 'btn-fb')) }}
     </div>
