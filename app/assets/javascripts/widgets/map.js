@@ -11,10 +11,12 @@ function MapWidgetInit() {
 
    // url = url+'/widgets/postGeo';
 
+   var host = window.location.hostname.port;
+
    var pathname = window.location.pathname.split('/evercisegroups');
 
    if (pathname[0] != '') {
-     var url ='/'+pathname[0]+'/widgets/postGeo';
+     var url =host+'/'+pathname[0]+'/widgets/postGeo';
    }else{
      var url = '/widgets/postGeo';
    }
