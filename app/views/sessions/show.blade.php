@@ -28,9 +28,9 @@
 			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 				{{ Form::hidden( 'postEverciseGroup' , $evercisegroup->name , array('id' => 'postEverciseGroup')) }}
 				{{ Form::hidden( 'postEverciseSession' , $session->date_time , array('id' => 'postEverciseSession')) }}
-				{{ Form::hidden( 'postMembers' , $session['Sessionmembers'] , array('id' => 'postMembers')) }}
+				{{ Form::hidden( 'postMembers' , $session->users , array('id' => 'postMembers')) }}
 				<button type="submit">
-					{{ HTML::image('/img/download_icon_blue.png', 'download icon' , array('class' => 'session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))); }}
+					{{ HTML::image('/img/download_icon_blue.png', 'download icon' , array('class' => 'session-icon '.($session->users->isEmpty() ? 'session-no-members' : ''))); }}
 				</button>
 				 
 			{{ Form::close() }}

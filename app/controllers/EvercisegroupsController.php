@@ -250,8 +250,8 @@ class EvercisegroupsController extends \BaseController {
 			
 					if ($this->user->inGroup($trainerGroup))
 					{
-						$evercisegroup = Evercisegroup::with('futuresessions.Sessionmembers.Users')
-						->with('Evercisesession.Sessionpayment')
+						$evercisegroup = Evercisegroup::with('evercisesession.users')
+						->with('evercisesession.sessionpayment')
 						->find($id);
 
 						if ($evercisegroup['futuresessions']->isEmpty())

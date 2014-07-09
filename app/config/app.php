@@ -114,11 +114,12 @@ return array(
 		'Toin0u\Geocoder\GeocoderServiceProvider',
 		'Gloudemans\Calendar\CalendarServiceProvider',
 		'Toin0u\Geotools\GeotoolsServiceProvider',
-		'Barryvdh\DomPDF\ServiceProvider',
+		//'Barryvdh\DomPDF\ServiceProvider',
 		'Thujohn\Share\ShareServiceProvider',
 		'Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider',
 		'Pitchanon\FacebookConnect\FacebookConnectServiceProvider',
 		'Philo\Twitter\TwitterServiceProvider',
+		'Thujohn\Pdf\PdfServiceProvider',
 	),
 
 	/*
@@ -189,10 +190,11 @@ return array(
 		'Geocoder' 		  => 'Toin0u\Geocoder\GeocoderFacade',
 		'Calendar'        => 'Gloudemans\Calendar\Facades\Calendar',
 		'Geotools' 		  => 'Toin0u\Geotools\GeotoolsFacade',
-		'PDF' 			  => 'Barryvdh\DomPDF\Facade',
+		//'PDF' 			  => 'Barryvdh\DomPDF\Facade',
 		'Share' 		  => 'Thujohn\Share\ShareFacade',
 		'Omnipay'		  => 'Ignited\LaravelOmnipay\Facades\OmnipayFacade',
 		'Twitter' 		  => 'Philo\Twitter\Facades\Twitter',
+		'PDF'			  => 'Thujohn\Pdf\PdfFacade',
 	),
 
 );

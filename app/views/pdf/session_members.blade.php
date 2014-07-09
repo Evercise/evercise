@@ -7,17 +7,18 @@
 		<h3>{{ date('d-M-Y H:ia', strtotime($evercisesession)) }}</h3>
 
 		<div class="pdf-table">
-			@foreach ($sessionmembers as $key => $sessionmember) 
-				<div class="pdf-row">
-					@if($sessionmember['users']['image'] != null)
+			@foreach ($sessionmembers as $key => $users) 
 
-					{{ HTML::image('profiles/'.$sessionmember['users']['directory'].'/'.$sessionmember['users']['image'], 'session members profile image' , array('class' => 'session-list-profile')); }}
+				<div class="pdf-row">
+					@if($users['image'] != null)
+
+					{{ HTML::image('profiles/'.$users['directory'].'/'.$users['image'], 'session members profile image' , array('class' => 'session-list-profile')); }}
 					@else
 						{{ HTML::image('img/no-user-img.jpg', 'session members profile image' , array('class' => 'session-list-profile')); }}
 					@endif
 					<div class="pdf-wrap">
-						<p>{{ $sessionmember['users']['display_name']}}</p>
-						<p>{{ $sessionmember['users']['email']}}</p>
+						<p>{{ $users['display_name']}}</p>
+						<p>{{ $users['email']}}</p>
 					</div>
 					
 

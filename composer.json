@@ -13,13 +13,14 @@
 		"toin0u/geocoder-laravel": "0.4.0",
 		"toin0u/geotools-laravel": "~0.2",
     	"gloudemans/calendar": "dev-master",
-    	"barryvdh/laravel-dompdf": "*",
+    	"barryvdh/laravel-dompdf": "0.4.*",
     	"thujohn/share": "dev-master",
     	"ignited/laravel-omnipay": "1.*",
     	"omnipay/paypal": "~2.0",
     	"pitchanon/facebook-connect": "dev-master",
     	"tijsverkoyen/twitteroauth": "dev-master",
-    	"philo/laravel-twitter": "dev-master"
+    	"philo/laravel-twitter": "dev-master",
+    	"thujohn/pdf": "dev-master"
 
 
 	},
