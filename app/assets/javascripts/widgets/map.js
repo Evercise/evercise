@@ -18,7 +18,6 @@ function MapWidgetInit() {
           dataType: 'json'
       })
       .done(
-        trace('done');
           function(data) { 
             trace(data);
             $('#latbox').val(data.lat);
