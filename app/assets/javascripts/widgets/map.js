@@ -2,7 +2,7 @@ function MapWidgetInit() {
   trace('maps go');
   $(document).on('click', '#findLocation',function(){
     trace('clicked');
-    var url = '/widgets/postGeo';
+    var url = '/dev/widgets/postGeo';
 
     var data = {
           street: $('#street').val(),
