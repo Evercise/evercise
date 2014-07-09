@@ -14,10 +14,11 @@
 			{{ Form::text( $fieldname , isset($default) ? $default : '', array( 'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname , 'class' => 'half_input')) }}
 			<p>{{ $fieldtext }}</p>
 		@endif
-		<datalist id="area_codes">
+		{{-- <datalist id="area_codes">
 			@foreach ($areacodes as $key => $areacode)
 				<option value="{{$areacode->area_code}}">{{$areacode->area_code}}</option>
 			@endforeach
 		</datalist>
+		--}}
 	</div>
 </div>

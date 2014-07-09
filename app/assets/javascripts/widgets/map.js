@@ -1,6 +1,7 @@
 function MapWidgetInit() {
 
   $(document).on('click', '#findLocation',function(){
+    trace('clicked');
     var url = '/widgets/postGeo';
 
     var data = {
