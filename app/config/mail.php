@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'contact@evercise.com', 'name' => 'Evercise'),
+	'from' => array('address' => 'tristan@evercise.com', 'name' => 'Evercise'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'contact@evercise.com',
+	'username' => 'tristan@evercise.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'contact1234',
+	'password' => 'donkeylove',
 
 	/*
 	|--------------------------------------------------------------------------
