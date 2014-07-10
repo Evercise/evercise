@@ -9,7 +9,11 @@ class ShowEvercoinComposer {
   		
       $evercoin = Evercoin::where('user_id', $user->id)->first();
 
+      $evercoinHistory = Evercoinhistory::where('user_id', $user->id)->get();
+
       $evercoinBalance = $evercoin->balance;
+
+      $priceInEvercoins = Evercoin::poundsToEvercoins($evercoinBalance);
 
       $fb = $user->token->facebook ? true : false;
       $tw = $user->token->twitter ? true : false;
@@ -30,7 +34,9 @@ class ShowEvercoinComposer {
       $profile += $user->image ? 10 : 0;
 
       $view
-	      ->with('evercoinBalance', $evercoinBalance)
+        ->with('evercoinBalance', $evercoinBalance)
+        ->with('priceInEvercoins', $priceInEvercoins)
+	      ->with('evercoinHistory', $evercoinHistory)
 	      ->with('fb', $fb)
         ->with('tw', $tw)
         ->with('referrals', $referrals)

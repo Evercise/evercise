@@ -141,7 +141,7 @@ function leftSession(data)
 
 function selectTab(params)
 {
-    defaultTab = 'classespast';
+    defaultTab = $('.dashboard-tab li:first').data('view');
 
     selected = $('*[data-view="'+params.tab+'"]');
     selected = selected.length ? selected : $('*[data-view="'+defaultTab+'"]');
