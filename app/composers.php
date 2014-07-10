@@ -52,7 +52,7 @@ View::composer('users.changepassword', 'ChangePasswordComposer');
 View::composer('evercisegroups.refine', 'RefineComposer');
 View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('venues.select', 'VenueComposer');
-View::composer('venues.edit', 'VenueComposer');
+View::composer('venues.edit_form', 'VenueComposer');
 View::composer('users.edit', 'UserClassesComposer');
 View::composer('trainers.edit', 'UserClassesComposer');
 View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');

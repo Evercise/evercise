@@ -9,4 +9,3 @@
 	{{ Form::hidden( 'lngbox' , isset($lng) ? $lng : '', array('id' => 'lngbox')) }}
 	{{ Form::hidden( 'latbox' , isset($lat) ? $lat : '', array('id' => 'latbox')) }}
 @endif
-
