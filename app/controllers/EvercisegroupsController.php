@@ -235,143 +235,147 @@ class EvercisegroupsController extends \BaseController {
 
 		$trainerGroup = Sentry::findGroupByName('trainer');
 
-		if (Sentry::check() && $this->user->inGroup($trainerGroup))
+		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id))
 		{
-			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
-			if ($evercisegroup->user_id == $this->user->id) {
-				//$evercisegroup_id;
-				if ( ! Sentry::check()) return 'Not logged in';
+			if (Sentry::check() && $evercisegroup->user_id == $this->user->id)
+			{
+				$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
-				$directory = $this->user->directory;
-				$trainerGroup = Sentry::findGroupByName('trainer');
-		
-				if ($this->user->inGroup($trainerGroup))
-				{
-					$evercisegroup = Evercisegroup::with('evercisesession.users')
-					->with('evercisesession.sessionpayment')
-					->find($id);
+				if ($evercisegroup->user_id == $this->user->id) {
+					//$evercisegroup_id;
+					if ( ! Sentry::check()) return 'Not logged in';
 
-					if ($evercisegroup['futuresessions']->isEmpty())
+					$directory = $this->user->directory;
+					$trainerGroup = Sentry::findGroupByName('trainer');
+			
+					if ($this->user->inGroup($trainerGroup))
 					{
-						//return Redirect::route('evercisegroups.index');
+						$evercisegroup = Evercisegroup::with('evercisesession.users')
+						->with('evercisesession.sessionpayment')
+						->find($id);
 
-						return View::make('sessions.index')
-							->with('evercisegroup' , $evercisegroup )
-							->with('directory' , $directory)
-							->with('members' , 0 );
+						if ($evercisegroup['futuresessions']->isEmpty())
+						{
+							//return Redirect::route('evercisegroups.index');
+
+							return View::make('sessions.index')
+								->with('evercisegroup' , $evercisegroup )
+								->with('directory' , $directory)
+								->with('members' , 0 );
+						}
+						else
+						{
+							$i = 0;
+							$totalSessionMembers = 0;
+							$totalCapacity = 0;
+							$averageSessionMembers = 0;
+							$averageCapacity = 0;
+							$revenue = 0;
+							$totalRevenue = 0;
+							$averageRevenue = 0;
+							$averageTotalRevenue = 0;
+
+							$members = [];
+
+							foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
+								$totalCapacity = $totalCapacity + $evercisegroup->capacity;
+								$members[$key] = count($evercisesession['Sessionmembers']); // Count those members
+								$totalSessionMembers= $totalSessionMembers + $members[$key];
+								$revenue = $revenue + ($members[$key] * $evercisesession->price );
+								$totalRevenue = $totalRevenue + ($evercisesession->price * $evercisegroup->capacity);
+								++$i;
+							}
+
+							$averageSessionMembers = round($totalSessionMembers/$i, 1);
+							$averageCapacity = round($totalCapacity/$i, 1);
+							$averageRevenue = round($revenue/$i, 1);
+							$averageTotalRevenue = round($totalRevenue/$i, 1);
+
+							//return '<h1>'. $averageCapacity . '</h1>';
+
+							JavaScript::put(array('mailAll' => 1 ));
+							JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
+							JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
+
+							return View::make('sessions.index')
+								->with('evercisegroup' , $evercisegroup )
+								->with('directory' , $directory)
+								->with('totalSessionMembers' , $totalSessionMembers)
+								->with('totalCapacity' , $totalCapacity)
+								->with('averageSessionMembers' , $averageSessionMembers)
+								->with('averageCapacity' , $averageCapacity)
+								->with('revenue' , $revenue)
+								->with('totalRevenue' , $totalRevenue)
+								->with('averageTotalRevenue' , $averageTotalRevenue)
+								->with('averageRevenue' , $averageRevenue)
+								->with('members' , $members);
+						}
 					}
 					else
 					{
-						$i = 0;
-						$totalSessionMembers = 0;
-						$totalCapacity = 0;
-						$averageSessionMembers = 0;
-						$averageCapacity = 0;
-						$revenue = 0;
-						$totalRevenue = 0;
-						$averageRevenue = 0;
-						$averageTotalRevenue = 0;
-
-						$members = [];
-
-						foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
-							$totalCapacity = $totalCapacity + $evercisegroup->capacity;
-							$members[$key] = count($evercisesession['Sessionmembers']); // Count those members
-							$totalSessionMembers= $totalSessionMembers + $members[$key];
-							$revenue = $revenue + ($members[$key] * $evercisesession->price );
-							$totalRevenue = $totalRevenue + ($evercisesession->price * $evercisegroup->capacity);
-							++$i;
-						}
-
-						$averageSessionMembers = round($totalSessionMembers/$i, 1);
-						$averageCapacity = round($totalCapacity/$i, 1);
-						$averageRevenue = round($revenue/$i, 1);
-						$averageTotalRevenue = round($totalRevenue/$i, 1);
-
-						//return '<h1>'. $averageCapacity . '</h1>';
-
-						JavaScript::put(array('mailAll' => 1 ));
-						JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
-						JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
-
-						return View::make('sessions.index')
-							->with('evercisegroup' , $evercisegroup )
-							->with('directory' , $directory)
-							->with('totalSessionMembers' , $totalSessionMembers)
-							->with('totalCapacity' , $totalCapacity)
-							->with('averageSessionMembers' , $averageSessionMembers)
-							->with('averageCapacity' , $averageCapacity)
-							->with('revenue' , $revenue)
-							->with('totalRevenue' , $totalRevenue)
-							->with('averageTotalRevenue' , $averageTotalRevenue)
-							->with('averageRevenue' , $averageRevenue)
-							->with('members' , $members);
+						return Redirect::route('home');
 					}
 				}
-				else
-				{
-					return Redirect::route('home');
+
+				return View::make('evercisegroups.show')
+					->with('evercisegroup',$evercisegroup); // change to trainer show view
+			}
+			else
+			{
+				$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
+
+
+				$trainerDetails = $userTrainer->trainer;
+
+				$trainer=Trainer::with('user')
+						->with('speciality')
+						->where('user_id', $evercisegroup->user_id)
+						->first();
+
+				$members = [];
+				$membersIds = [];
+				$memberAllIds = [];
+				$memberUsers = [];
+				foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
+					$members[$evercisesession->id] = count($evercisesession['sessionmembers']); // Count those members
+					foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
+						$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
+						$memberAllIds[]	 = 	$sessionmember->user_id;	
+						//$memberUsers[] = $sessionmember->users;
+
+					}
 				}
-			}
 
-			return View::make('evercisegroups.show')
-				->with('evercisegroup',$evercisegroup); // change to trainer show view
-		}
-		else if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id))
-		{
-			$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
-
-
-			$trainerDetails = $userTrainer->trainer;
-
-			$trainer=Trainer::with('user')
-					->with('speciality')
-					->where('user_id', $evercisegroup->user_id)
-					->first();
-
-			$members = [];
-			$membersIds = [];
-			$memberAllIds = [];
-			$memberUsers = [];
-			foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
-				$members[$evercisesession->id] = count($evercisesession['sessionmembers']); // Count those members
-				foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
-					$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
-					$memberAllIds[]	 = 	$sessionmember->user_id;	
-					//$memberUsers[] = $sessionmember->users;
-
+				if (!empty($memberAllIds)) {
+					$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
 				}
+				
+
+
+				$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
+
+				$ratings = Rating::with('user')->where('evercisegroup_id', $evercisegroup->id)->get();
+
+				JavaScript::put(array('initJoinEvercisegroup' => 1 ));
+				JavaScript::put(array('initSwitchView' => 1 ));
+				JavaScript::put(array('initScrollAnchor' => 1 ));
+				JavaScript::put(array('initStickHeader' => 1 ));
+
+				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+
+				return View::make('evercisegroups.show')
+							->with('evercisegroup',$evercisegroup)
+							->with('trainer',$trainer)
+							->with('members' , $members)
+							->with('membersIds' , $membersIds)
+							->with('memberUsers' , $memberUsers)
+							->with('venue' , $venue)
+							->with('ratings' , $ratings)
+							//->with('memberUsers' , $memberUsers)
+							//->with('trainer',$trainerDetails)
+							;
 			}
-
-			if (!empty($memberAllIds)) {
-				$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
-			}
-			
-
-
-			$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
-
-			$ratings = Rating::with('user')->where('evercisegroup_id', $evercisegroup->id)->get();
-
-			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
-			JavaScript::put(array('initSwitchView' => 1 ));
-			JavaScript::put(array('initScrollAnchor' => 1 ));
-			JavaScript::put(array('initStickHeader' => 1 ));
-
-			JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
-
-			return View::make('evercisegroups.show')
-						->with('evercisegroup',$evercisegroup)
-						->with('trainer',$trainer)
-						->with('members' , $members)
-						->with('membersIds' , $membersIds)
-						->with('memberUsers' , $memberUsers)
-						->with('venue' , $venue)
-						->with('ratings' , $ratings)
-						//->with('memberUsers' , $memberUsers)
-						//->with('trainer',$trainerDetails)
-						;
 		}
 		else
 		{
