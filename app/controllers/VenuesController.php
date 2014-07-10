@@ -83,9 +83,17 @@ class VenuesController extends \BaseController {
 	 */
 	public function edit($id)
 	{
+		$venue = Venue::find($id);
+
+		$facilities = [];
+		foreach($venue->facilities as $facility)
+		{
+			$facilities[] = $facility->id;
+		}
+
 		JavaScript::put(array('MapWidgetloadScript ' => 1 ));
-		
-		return View::make('venues.edit');
+
+		return View::make('venues.edit_form')->with('venue', $venue)->with('selectedFacilities', $facilities);
 	}
 
 	/**
@@ -96,7 +104,41 @@ class VenuesController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		
+		$validator = Validator::make(
+			Input::all(),
+			[
+			'venue_name' => 'required',
+				'latbox' => 'required'
+			]
+				
+		);
+		if($validator->fails()) {
+			if(Request::ajax()) return Response::json(['validation_failed' => 1, 'errors' =>  $validator->errors()->toArray() ]);
+	        else return Redirect::route('users.edit')->withErrors($validator)->withInput();
+		}
+		else{
+			$venue_name = Input::get('venue_name');
+			$address = Input::get('street');
+			$town = Input::get('city');
+			$postcode = Input::get('postcode');
+			$lat = Input::get('latbox');
+			$lng = Input::get('lngbox');
+
+
+
+			$facilities = Input::get('facilities_array') ? Input::get('facilities_array') : [];
+
+			//return Response::json(['success' => $facilities]);
+
+			$venue = Venue::find($id);
+
+			$venue->update(['user_id' => $this->user->id, 'name' => $venue_name, 'address' => $address, 'town' => $town, 'postcode' => $postcode, 'lat' => $lat, 'lng' => $lng]);
+			
+			$venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+		}
+
+		return Response::json(['venue_id' => $venue->id]);
 	}
 
 	/**

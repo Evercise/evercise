@@ -11,7 +11,8 @@
 		{
 			$address = $location['address'];
 			$city = $location['city'];
-			$location = $location['location'];
+			$lat = $location['lat'];
+			$lng = $location['lng'];
 		}
 	?>
 
@@ -29,8 +30,12 @@
 
 
 	<button type="button" class="btn btn-blue" id="findLocation">find location</button>
-	
-		@include('widgets.map', array('form' => $form))
+
+		@if (isset($location))
+			@include('widgets.map', array('form' => $form, 'lat'=>$location['lat'], 'lng'=>$location['lng']))
+		@else
+			@include('widgets.map', array('form' => $form))
+		@endif
 		<br>
 		<p>{{ $fieldtext }}</p>
 	</div>

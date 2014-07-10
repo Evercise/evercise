@@ -2,8 +2,33 @@
 function initVenues()
 {
 	trace('initVenues');
-	$( '#new_venue_button' ).on( 'click', function() {
+    //$( '#new_venue_button' ).on( 'click', function() {
+    $(document).on('click', '#new_venue_button' , function() {
+        //trace($('#venue_create_form').css('display'));
+
+        if ($('#venue_create_form').css('display') == 'block')
+        {
+            $('#new_venue_button').removeClass('btn-red').addClass('btn-blue').html('Create new Venue');
+            $('#venue_create_form').slideToggle(600);
+        }
+        else
+        {
+            $('#new_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
+
+            getView('../venues/create', function(data){
+                MapWidgetloadScript();
+                $('#venue_create_form').html(data);
+                $('#venue_create_form').slideToggle(600/*, function(){initCheckboxes();}*/);
+                $('input[name=_method]').remove();
+                $('#venue_create').attr('action', '../venues');
+                
+            });
+        }
+    });
+	//$( '#edit_venue_button' ).on( 'click', function() {
+    $(document).on('click', '#edit_venue_button' , function() {
 		//trace($('#venue_create_form').css('display'));
+        trace('edit');
 
 		if ($('#venue_create_form').css('display') == 'block')
 		{
@@ -14,25 +39,23 @@ function initVenues()
 		{
 			$('#new_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
 
-			if ($('#venue_create_form').html() == '')
-			{
-		        getView('../venues/create', function(data){
-		        	MapWidgetloadScript();
-		        	$('#venue_create_form').html(data);
-		        	$('#venue_create_form').slideToggle(600/*, function(){initCheckboxes();}*/);
-		        	
-		        });
-		    }
-		    else
-		    {
-				$('#venue_create_form').slideToggle(600);
-			}
+            venueId = $('#venue').val();
+            trace(venueId);
+	        getView('../venues/'+venueId+'/edit', function(data){
+	        	MapWidgetloadScript();
+	        	$('#venue_create_form').html(data);
+                $('#venue_create_form').slideToggle(600/*, function(){initCheckboxes();}*/);
+                $('#venue_create').append('<input name="_method" type="hidden" value="PUT">');
+	        	$('#venue_create').attr('action', '../venues/'+venueId);
+	        	
+	        });
 	    }
 	});
 
 	$( '#venue_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
+        $('.venue_success_msg').hide();
         // post to controller
         $.post(
             $( this ).prop( 'action' ),
@@ -59,8 +82,9 @@ function initVenues()
                     $('#ajax-loading').hide();
                 }else{
                 	//trace(data.venue_id);
-                   // $('.success_msg').show();
+                    $('.venue_success_msg').show();
                     setTimeout(function() {
+                        trace('create venue success');
         				$('#venue_create_form').slideToggle(1000, function(){
         					$('#venue_create_form').hide();
                         	$('#venue_create_form').html('');
