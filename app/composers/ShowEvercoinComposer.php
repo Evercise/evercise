@@ -26,10 +26,9 @@ class ShowEvercoinComposer {
       $numReferrals = $user->milestone->referrals;
       $totalReferrals = ceil($numReferrals / $referralConfig['count']) * $referralConfig['count'];
 
-      $profile = 50; // 50 + the five tests below = 100%
+      $profile = 60; // 60 + the 4 tests below = 100%
       $profile += $user->gender ? 10 : 0;
       $profile += $user->dob ? 10 : 0;
-      $profile += $user->area_code ? 10 : 0;
       $profile += $user->phone ? 10 : 0;
       $profile += $user->image ? 10 : 0;
 
