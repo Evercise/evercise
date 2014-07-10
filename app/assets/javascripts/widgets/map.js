@@ -11,12 +11,15 @@ function MapWidgetInit() {
 
    // url = url+'/widgets/postGeo';
 
-   var host = window.location.hostname.port;
+   //var host = window.location.hostname.port;
+   //var pathname = window.location.pathname.split('/evercisegroups')[0];
 
-   var pathname = window.location.pathname.split('/evercisegroups');
+   trace((window.location.pathname.split('/dev')).length);
 
-   if (pathname[0] != '') {
-     var url = pathname[0]+'/widgets/postGeo';
+   var pathname = (window.location.pathname.split('/dev')).length ? 'dev/' : '';
+
+   if (pathname != '') {
+     var url = pathname+'/widgets/postGeo';
    }else{
      var url = '/widgets/postGeo';
    }

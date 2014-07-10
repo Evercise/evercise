@@ -83,7 +83,9 @@ class VenuesController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		JavaScript::put(array('MapWidgetloadScript ' => 1 ));
+		
+		return View::make('venues.edit');
 	}
 
 	/**

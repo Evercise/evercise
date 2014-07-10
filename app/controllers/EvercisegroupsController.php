@@ -233,12 +233,12 @@ class EvercisegroupsController extends \BaseController {
 	{
 		 // return Redirect::route('home');
 
-		$trainerGroup = Sentry::findGroupByName('trainer');
+		//$trainerGroup = Sentry::findGroupByName('trainer');
 
 		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id))
 		{
 
-			if (Sentry::check() && $evercisegroup->user_id == $this->user->id)
+			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
 			{
 				$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
