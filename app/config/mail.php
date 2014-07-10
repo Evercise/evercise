@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'contact@evercise.com',
+	'username' => 'noreply@evercise.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'contact1234',
+	'password' => 'evercise1234',
 
 	/*
 	|--------------------------------------------------------------------------
