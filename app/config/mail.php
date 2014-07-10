@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => ' noreply@evercise.com', 'name' => 'Evercise'),
+	'from' => array('address' => 'contact@evercise.com', 'name' => 'Evercise'),
 
 	/*
 	|--------------------------------------------------------------------------
