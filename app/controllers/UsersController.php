@@ -468,7 +468,6 @@ class UsersController extends \BaseController {
 			if(
 					$this->user->gender
 				&&	$this->user->dob
-				&&	$this->user->area_code
 				&&	$this->user->phone
 				&&	$this->user->image
 			) Milestone::where('user_id', $this->user->id)->first()->add('profile');
