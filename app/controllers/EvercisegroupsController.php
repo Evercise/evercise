@@ -231,13 +231,14 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//if (Sentry::check()) {
-
 		 // return Redirect::route('home');
 
-			$trainerGroup = Sentry::findGroupByName('trainer');
+		//$trainerGroup = Sentry::findGroupByName('trainer');
 
-			if (Sentry::check() && $this->user->inGroup($trainerGroup))
+		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id))
+		{
+
+			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
 			{
 				$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
 
@@ -320,63 +321,65 @@ class EvercisegroupsController extends \BaseController {
 				return View::make('evercisegroups.show')
 					->with('evercisegroup',$evercisegroup); // change to trainer show view
 			}
-		//}
+			else
+			{
+				$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
+
+
+				$trainerDetails = $userTrainer->trainer;
+
+				$trainer=Trainer::with('user')
+						->with('speciality')
+						->where('user_id', $evercisegroup->user_id)
+						->first();
+
+				$members = [];
+				$membersIds = [];
+				$memberAllIds = [];
+				$memberUsers = [];
+				foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
+					$members[$evercisesession->id] = count($evercisesession['sessionmembers']); // Count those members
+					foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
+						$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
+						$memberAllIds[]	 = 	$sessionmember->user_id;	
+						//$memberUsers[] = $sessionmember->users;
+
+					}
+				}
+
+				if (!empty($memberAllIds)) {
+					$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
+				}
+				
+
+
+				$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
+
+				$ratings = Rating::with('user')->where('evercisegroup_id', $evercisegroup->id)->get();
+
+				JavaScript::put(array('initJoinEvercisegroup' => 1 ));
+				JavaScript::put(array('initSwitchView' => 1 ));
+				JavaScript::put(array('initScrollAnchor' => 1 ));
+				JavaScript::put(array('initStickHeader' => 1 ));
+
+				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+
+				return View::make('evercisegroups.show')
+							->with('evercisegroup',$evercisegroup)
+							->with('trainer',$trainer)
+							->with('members' , $members)
+							->with('membersIds' , $membersIds)
+							->with('memberUsers' , $memberUsers)
+							->with('venue' , $venue)
+							->with('ratings' , $ratings)
+							//->with('memberUsers' , $memberUsers)
+							//->with('trainer',$trainerDetails)
+							;
+			}
+		}
 		else
 		{
-			$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id);
-
-			$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
-
-
-			$trainerDetails = $userTrainer->trainer;
-
-			$trainer=Trainer::with('user')
-					->with('speciality')
-					->where('user_id', $evercisegroup->user_id)
-					->first();
-
-			$members = [];
-			$membersIds = [];
-			$memberAllIds = [];
-			$memberUsers = [];
-			foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
-				$members[$evercisesession->id] = count($evercisesession['sessionmembers']); // Count those members
-				foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
-					$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
-					$memberAllIds[]	 = 	$sessionmember->user_id;	
-					//$memberUsers[] = $sessionmember->users;
-
-				}
-			}
-
-			if (!empty($memberAllIds)) {
-				$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
-			}
-			
-
-
-			$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
-
-			$ratings = Rating::with('user')->where('evercisegroup_id', $evercisegroup->id)->get();
-
-			JavaScript::put(array('initJoinEvercisegroup' => 1 ));
-			JavaScript::put(array('initSwitchView' => 1 ));
-			JavaScript::put(array('initScrollAnchor' => 1 ));
-			JavaScript::put(array('initStickHeader' => 1 ));
-
-			JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
-
-			return View::make('evercisegroups.show')
-						->with('evercisegroup',$evercisegroup)
-						->with('trainer',$trainer)
-						->with('members' , $members)
-						->with('membersIds' , $membersIds)
-						->with('memberUsers' , $memberUsers)
-						->with('venue' , $venue)
-						->with('ratings' , $ratings)
-						//->with('memberUsers' , $memberUsers)
-						//->with('trainer',$trainerDetails)
-						;
+			return View::make('errors.missing');
 		}
 		
 	}
