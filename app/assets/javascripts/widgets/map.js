@@ -14,9 +14,7 @@ function MapWidgetInit() {
    //var host = window.location.hostname.port;
    //var pathname = window.location.pathname.split('/evercisegroups')[0];
 
-   trace((window.location.pathname.split('/dev')).length);
-
-   var pathname = (window.location.pathname.split('/dev')).length ? 'dev/' : '';
+   var pathname = (window.location.pathname.split('/dev/')).length > 1 ? '/dev' : '';
 
    if (pathname != '') {
      var url = pathname+'/widgets/postGeo';
