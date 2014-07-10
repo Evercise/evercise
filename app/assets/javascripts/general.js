@@ -72,7 +72,7 @@ jQuery( document ).ready( function( $ )
 function checkUrlForDev(){
   if(window.location.href.indexOf("dev") > -1) {
       // alert("your url contains the name dev");
-      var check = 'dev';
+      var check = '/dev';
   }else{
       var check = '';
   }
