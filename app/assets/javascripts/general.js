@@ -455,7 +455,6 @@ function loading(){
   $('html').append('<img src="'+check+'/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
 }
 
-registerInitFunction('loading', true);
 
 function loaded(){
   $('.mask').hide();
