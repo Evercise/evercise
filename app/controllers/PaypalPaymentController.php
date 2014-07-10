@@ -67,8 +67,8 @@ class PaypalPaymentController extends BaseController {
 
      $response = $gateway->purchase(
                 array(
-                    'cancelUrl' => 'http://localhost:1234/cancelurl',
-                    'returnUrl' => 'http://localhost:1234/payment/'.$evercisegroupId, 
+                    'cancelUrl' => URL::to('/'),
+                    'returnUrl' => URL::to('payment', [$evercisegroupId]), 
                     'amount' => $amountToPay,
                     'currency' => 'GBP'
                 )
