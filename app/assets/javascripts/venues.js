@@ -8,12 +8,14 @@ function initVenues()
 
         if ($('#venue_create_form').css('display') == 'block')
         {
-            $('#new_venue_button').removeClass('btn-red').addClass('btn-blue').html('Create new Venue');
+            $('#edit_venue_button').removeClass('disabled');
+            $('#new_venue_button').removeClass('btn-red').addClass('btn-yellow').html('Create new Venue');
             $('#venue_create_form').slideToggle(600);
         }
         else
         {
-            $('#new_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
+            $('#edit_venue_button').addClass('disabled');
+            $('#new_venue_button').removeClass('btn-yellow').addClass('btn-red').html('Cancel');
 
             getView('../venues/create', function(data){
                 MapWidgetloadScript();
@@ -32,12 +34,14 @@ function initVenues()
 
 		if ($('#venue_create_form').css('display') == 'block')
 		{
-			$('#new_venue_button').removeClass('btn-red').addClass('btn-blue').html('Create new Venue');
+            $('#new_venue_button').removeClass('disabled');
+			$('#edit_venue_button').removeClass('btn-red').addClass('btn-blue').html('Edit Venue');
         	$('#venue_create_form').slideToggle(600);
 		}
 		else
 		{
-			$('#new_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
+            $('#new_venue_button').addClass('disabled');
+			$('#edit_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
 
             venueId = $('#venue').val();
             trace(venueId);
