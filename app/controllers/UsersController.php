@@ -281,8 +281,8 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false);
 
-
-				return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);	
+				return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
+				//return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);	
 				//return View::make('users.show');
 			}
 	    }
