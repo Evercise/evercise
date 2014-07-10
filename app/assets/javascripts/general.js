@@ -71,7 +71,7 @@ jQuery( document ).ready( function( $ )
 
 function checkUrlForDev(){
   if(window.location.href.indexOf("dev") > -1) {
-       alert("your url contains the name dev");
+      // alert("your url contains the name dev");
     }
 }
 
