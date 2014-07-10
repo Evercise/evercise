@@ -72,10 +72,12 @@ jQuery( document ).ready( function( $ )
 function checkUrlForDev(){
   if(window.location.href.indexOf("dev") > -1) {
       // alert("your url contains the name dev");
-    }
+      var check = 'dev';
+  }else{
+      var check = '';
+  }
+  return check;
 }
-
-registerInitFunction('checkUrlForDev', true);
 
 
 function getView(url, callback)
@@ -449,8 +451,11 @@ function sendhome(data){
 
 function loading(){
   $('.mask').show();
-  $('html').append('<img src="/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
+  check = checkUrlForDev();
+  $('html').append('<img src="'+check+'/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
 }
+
+registerInitFunction('loading', true);
 
 function loaded(){
   $('.mask').hide();
