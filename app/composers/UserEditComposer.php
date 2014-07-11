@@ -16,6 +16,7 @@ class UserEditComposer {
 		$area_code = $user->area_code;
 		$phone = $user->phone;
 
+
     	$markPref = User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
 
 		//JavaScript::put(array('initLeaveSession' => 1 )); 

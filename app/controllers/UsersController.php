@@ -89,6 +89,7 @@ class UsersController extends \BaseController {
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email|unique:users',
 				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
+				'phone' => 'numeric',
 			],
 			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
 
@@ -120,6 +121,11 @@ class UsersController extends \BaseController {
 			$phone = Input::get('phone');
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
+
+			if ($phone == '' && $area_code != '')
+				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
+			if ($phone != '' && $area_code == '')
+				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
 
 
 			$user = Sentry::register(array(
@@ -389,6 +395,7 @@ class UsersController extends \BaseController {
 				'last_name' => 'required|max:50|min:2',
 				'dob' => 'required',
 				'email' => 'required|email',
+				'phone' => 'numeric',
 				// 'old_password' => 'required',
 				// 'new_password' => 'confirmed',
 				//'thumbFilename' => 'required',
@@ -424,27 +431,10 @@ class UsersController extends \BaseController {
 			$area_code = Input::get('areacode');
 			$phone = Input::get('phone');
 
-			//$user = Sentry::getUser();
-
-			/*if (!$user->checkPassword($old_password))
-			{
-				$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  array(
-		            	'old_password'=>array(
-		            		'Your current password is incorrect'
-	            		)
-	            	)
-		         );	
-
-				return Response::json($result);
-			}
-			if ($new_password)
-			{
-				$user->update(array(
-					'password' => $new_password,
-				));
-			}*/
+			if ($phone == '' && $area_code != '')
+				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
+			if ($phone != '' && $area_code == '')
+				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
 
 			$this->user->update(array(
 				'first_name' => $first_name,
