@@ -20,7 +20,8 @@
     	"pitchanon/facebook-connect": "dev-master",
     	"tijsverkoyen/twitteroauth": "dev-master",
     	"philo/laravel-twitter": "dev-master",
-    	"thujohn/pdf": "dev-master"
+    	"thujohn/pdf": "dev-master",
+    	"abodeo/laravel-stripe": "dev-master"
 
 
 	},

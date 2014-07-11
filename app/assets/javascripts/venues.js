@@ -1,14 +1,16 @@
 
 function initVenues()
 {
-	trace('initVenues');
+	//trace('initVenues');
     //$( '#new_venue_button' ).on( 'click', function() {
     $(document).on('click', '#new_venue_button' , function() {
         //trace($('#venue_create_form').css('display'));
+        trace($('#venue option').length);
 
         if ($('#venue_create_form').css('display') == 'block')
         {
-            $('#edit_venue_button').removeClass('disabled');
+            if($('#venue option').length)
+                $('#edit_venue_button').removeClass('disabled');
             $('#new_venue_button').removeClass('btn-red').addClass('btn-yellow').html('Create new Venue');
             $('#venue_create_form').slideToggle(600);
         }
@@ -30,7 +32,7 @@ function initVenues()
 	//$( '#edit_venue_button' ).on( 'click', function() {
     $(document).on('click', '#edit_venue_button' , function() {
 		//trace($('#venue_create_form').css('display'));
-        trace('edit');
+        //trace('edit');
 
 		if ($('#venue_create_form').css('display') == 'block')
 		{
