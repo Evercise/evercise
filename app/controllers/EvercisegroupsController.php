@@ -496,19 +496,25 @@ class EvercisegroupsController extends \BaseController {
 
         try {
             $geocode = $geocoder->geocode($query);
+         	$latitude = $geocode->getLatitude();
+        	$longitude = $geocode->getLongitude();
         } catch (Exception $e) {
-            echo $e->getMessage();
+            //return $e->getMessage();
+        	$latitude = 0;
+        	$longitude = 0;
         }   
 
-        $coordToGeohash = Geotools::coordinate($geocode->getCoordinates());
+       /* $coordToGeohash = Geotools::coordinate($geocode->getCoordinates());
 
         $encoded = Geotools::geohash()->encode($coordToGeohash, 3);
 
         $boundingBox = $encoded->getBoundingBox();
-
+		*/
         //return var_dump($boundingBox);
 
-        $haversine = '(3959 * acos(cos(radians(' . $geocode->getLatitude() . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $geocode->getLongitude() . ')) + sin(radians(' . $geocode->getLatitude() . ')) * sin(radians(lat))))';
+        
+
+        $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
 
         if ($category == null && $query != null) {
         	$evercisegroups= Evercisegroup::has('futuresessions')
