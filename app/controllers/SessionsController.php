@@ -419,6 +419,10 @@ class SessionsController extends \BaseController {
 		$evercisegroupId = Input::get('evercisegroup-id');
 		$sessionIds = json_decode(Input::get('session-ids'), true);
 
+		if (empty($sessionIds)) {
+			return Redirect::route('evercisegroups.show' , [$evercisegroupId]);
+		}
+
 
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
 		{
