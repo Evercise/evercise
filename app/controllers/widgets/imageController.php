@@ -18,6 +18,8 @@ class ImageController extends \BaseController {
             'image' => 'image'
         );
 
+     //   return Response::json(['success' => false, 'errors' => 'ddd');
+
 
         //return Response::json(['success' => false, 'errors' => ['suck'=>$file]]);
 
@@ -36,6 +38,7 @@ class ImageController extends \BaseController {
 
 
             // INTERMITTENT BUG - $file is sometimes null, so the following line fails. No idea why. Please fix
+            // for some reason adding a trace funcion to the javascript has seemed to solve this
             $filename = $file->getClientOriginalName();
             $filename = str_replace(' ', '_', $filename);
             $ext = '';

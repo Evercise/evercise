@@ -37,6 +37,7 @@ function showResponse(response, statusText, xhr, form)  {
 
     if(response.success == false)
     {
+        trace(response.errors);
         var arr = response.errors;
         //trace(arr, true);
         $.each(arr, function(index, value)
