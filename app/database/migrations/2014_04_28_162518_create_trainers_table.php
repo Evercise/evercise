@@ -15,7 +15,7 @@ class CreateTrainersTable extends Migration {
 		Schema::create('trainers', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
-			$table->string('bio');
+			$table->string('bio', 500);
 			$table->string('website', 45);
 			$table->boolean('confirmed')->default(0);
 			$table->integer('specialities_id')->unsigned();// Foreign key
