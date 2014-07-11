@@ -3,7 +3,7 @@
 	<div class="modal-head">
 		<h4>Create a Session</h4>
 		<br>
-		<div id="complete-date">Date: {{ $date.'-'.$month.'-'.$year }}<span></span></div>
+		<div id="complete-date">Date: {{ $date.'-'.$displayMonth.' '.$year }}<span></span></div>
 	</div>
 	
 	<div class="modal-body">

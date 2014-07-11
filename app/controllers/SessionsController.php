@@ -26,6 +26,7 @@ class SessionsController extends \BaseController {
         $year = Input::get('year');
         $month = Input::get('month');
         $date = sprintf("%02s", Input::get('date'));
+        $displayMonth = date('M', strtotime($year.'-'.$month.'-'.$date));
         $id = Input::get('evercisegroupId');
 
 		$evercisegroup = Evercisegroup::where('id', $id)->first();
@@ -40,6 +41,8 @@ class SessionsController extends \BaseController {
 		return View::make('sessions.create')
 			->with('year',$year)
 			->with('month',$month)
+			->with('displayMonth',$displayMonth)
+			->with('date',$date)
 			->with('date',$date)
 			->with('id',$id)
 			->with('duration',$duration)
@@ -68,7 +71,8 @@ class SessionsController extends \BaseController {
 				's-date' => 'required',
 				's-time-hour' => 'required',
 				's-time-minute' => 'required',
-				's-price' => 'required',
+				's-price' => 'required|numeric|between:1,120',
+				's-duration' => 'required|numeric|between:10,240',
 			)
 		);
 		if($validator->fails()) {

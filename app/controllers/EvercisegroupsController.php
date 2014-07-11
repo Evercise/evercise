@@ -125,7 +125,7 @@ class EvercisegroupsController extends \BaseController {
 				'classname' => 'required|max:30|min:5',
 				'description' => 'required|max:500|min:100',
 				'category' => 'required',
-				'duration' => 'required|numeric|between:20,240',
+				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
 				'price' => 'required|numeric|between:1,120',
 				'image'	=> 'required',

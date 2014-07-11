@@ -25,9 +25,9 @@
 
 			@foreach ($futuresessions as $fs => $futuresession) 
 				@if(count($futuresession->sessionmembers) == 0)
-				<li>{{ date(' h:ia M-dS' ,strtotime($futuresession->date_time)) }}{{ HTML::link('sessions/' . $futuresession->id , 'x',array('class' => 'session-delete', 'id' => 'delete-session-'.$evercisegroupId.'-'.$futuresession->id)) }}</li>
+				<li>{{ date(' H:i M-dS Y' ,strtotime($futuresession->date_time)) }}{{ HTML::link('sessions/' . $futuresession->id , 'x',array('class' => 'session-delete', 'id' => 'delete-session-'.$evercisegroupId.'-'.$futuresession->id)) }}</li>
 				@else
-					<li>{{ date(' h:ia M-dS' ,strtotime($futuresession->date_time)) }}</li> 
+					<li>{{ date(' H:i M-dS Y' ,strtotime($futuresession->date_time)) }}</li> 
 				@endif
 			@endforeach
 		@else

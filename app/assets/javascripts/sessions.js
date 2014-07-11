@@ -3,7 +3,7 @@ function initSessions()
 {
    // $( '#newsession' ).on( 'submit', function() {
     $(document).on('submit', '#newsession' , function() {
-
+        $('.error-msg').remove();
         // post to controller
         $.post(
             $( this ).prop( 'action' ),
@@ -19,6 +19,7 @@ function initSessions()
                         if (value.length != 0)
                         {
                            trace( value );
+                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
                         }
                     });
 
@@ -77,11 +78,11 @@ function updateTimeFields()
     //trace(dt);
     var date =  moment(dt);
 
-    start_time = moment(date).format('HH:mma');
+    start_time = moment(date).format('HH:mm');
 
     $('#session-start-time span').html(start_time);
 
-    end_time = moment(date).add('minutes', dur).format('HH:mma');
+    end_time = moment(date).add('minutes', dur).format('HH:mm');
 
     $('#session-end-time span').html(end_time);
 
