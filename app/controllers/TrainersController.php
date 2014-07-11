@@ -70,7 +70,7 @@ class TrainersController extends \BaseController {
 				//'title' => 'required',
 				'bio' => 'required|max:500|min:50',
 				'image' => 'required',
-				'phone' => 'required',
+				'phone' => 'required|numeric',
 				'website' => 'sometimes',
 				'profession' => 'required',
 			)
@@ -102,6 +102,11 @@ class TrainersController extends \BaseController {
 			//$title = Input::get('title');
 			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
 			$profession = Input::get('profession');
+
+			if ($phone == '' && $area_code != '')
+				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
+			if ($phone != '' && $area_code == '')
+				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
 
 
 			$trainer = Trainer::create(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);

@@ -97,9 +97,20 @@ function initDashboardPanel()
 
         return false;
     });*/
+
 }
 
 registerInitFunction('initDashboardPanel');
+
+
+registerInitFunction('updateCountryCode');
+function updateCountryCode()
+{
+    $('#country_code').html( $('#areacode').val());
+    $('#areacode').on('change', function () {
+        updateCountryCode();
+    });
+}
 
 function openPopup(data)
 {

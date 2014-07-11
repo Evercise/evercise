@@ -309,7 +309,7 @@ label{
 				clear: both;
 				margin-bottom: 20px;
 				&.half_input{
-					width: 43%;
+					width: 30%;
 					&:first-of-type{
 						margin-right: 3%;
 					}
@@ -399,7 +399,46 @@ label{
 			margin-top: 10px;
 		}
 	}
+	 
+	.input-prepend .add-on {
+		float: left;
+		height: 25px;
+		line-height: 25px;
+		margin-right: -1px;
+		border-radius: 3px 0 0 3px;
+	}
+	.input-prepend .add-on, .input-append .add-on {
+		display: inline-block;
+		width: auto;
+		height: 30px;
+		min-width: 45px;
+		margin: 0;
+		padding: 4px 5px;
+		font-size: 13px;
+		font-weight: normal;
+		line-height: 28px;
+		text-align: center;
+		text-shadow: 0 1px 0 #fff;
+		vertical-align: middle;
+		background-color: #f5f8fa;
+		border: 1px solid #ccd6dd;
+		border-right:0;
+	}
 }
+
+.input-prepend{
+	input.half_input {
+		border-radius: 0 4px 4px 0;
+		width:30%;
+		height: 40px;
+	}
+	select{
+		clear: both;
+		float: left;
+		margin-right: 200px;
+	}
+}
+.input-prepend();
 
 /* end forms */
 
@@ -2552,6 +2591,7 @@ nav{
 		.create-form, .image-form{
 			margin: 0 0 0 40px;
 			width: 100%;
+
 			.formitem{
 				.formitems(8,1,8);
 				.formlabel{
@@ -2564,7 +2604,9 @@ nav{
 			.btn{
 				width: 220px;
 			}
-			
+			.input-prepend{
+				.input-prepend();
+			}
 		}
 	}
 	.class-list{
