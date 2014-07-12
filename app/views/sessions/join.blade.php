@@ -50,9 +50,10 @@
 					{{ Form::hidden( 'session-ids' , json_encode($sessionIds) , array('id' => 'session-ids', 'class' => 'session-ids')) }}
 					<script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
 			          data-key="@stripeKey"
-			          data-image="/img/evercoin.png"
+			          data-image="{{url()}}/img/evercoin.png"
 			          data-name="Evercise"
 			          data-currency="gbp"
+			          data-email="{{ $user->email}}"
 			          data-description="{{ $evercisegroup->name }}">
 			          </script>
           		{{ Form::close() }}
