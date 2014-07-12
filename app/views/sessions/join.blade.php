@@ -48,12 +48,12 @@
 					{{ Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')) }}
 					{{ Form::hidden( 'session-ids' , json_encode($sessionIds) , array('id' => 'session-ids', 'class' => 'session-ids')) }}
 					<script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-          data-key="@stripeKey"
-          data-amount="{{ $totalPrice }}" 
-          data-image="/img/evercoin.png"
-          data-name="Evercise"
-          data-description="{{ $evercisegroup->name }}">
-          </script>
+			          data-key="@stripeKey"
+			          data-amount="{{ $totalPrice }}" 
+			          data-image="/img/evercoin.png"
+			          data-name="Evercise"
+			          data-description="{{ $evercisegroup->name }}">
+			          </script>
           		{{ Form::close() }}
 			</div>
 		</div>
