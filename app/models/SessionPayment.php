@@ -15,4 +15,9 @@ class Sessionpayment extends \Eloquent {
         return $this->belongsTo('User');
     }
 
+    public static function poundsToPennies($pounds)
+    {
+    	return ($pounds / 100);
+    }
+
 }
