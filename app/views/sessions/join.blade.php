@@ -43,7 +43,10 @@
 					{{ Form::hidden( 'session-ids' , json_encode($sessionIds) , array('id' => 'session-ids', 'class' => 'session-ids')) }}
 					<button type="submit" class="btn">{{ HTML::image('img/paypal-express.png', 'evercoin', ['class' => 'evercoin-icon'])}}</button>
 				{{ Form::close() }}
-				</div>
+				<script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+          data-key="@stripeKey"
+          data-amount="3" data-description="Evercise Sessions"></script>
+			</div>
 		</div>
 		{{--<div class="col3">
 			@include('layouts.classBlock', array('evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$userTrainer->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
