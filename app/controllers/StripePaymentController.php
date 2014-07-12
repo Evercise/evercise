@@ -84,13 +84,15 @@ class StripePaymentController extends BaseController {
             }
         } // End of form submission conditional.
 
-        $customer = Stripe_Customer::create(array(
-            'email' => 'customer@example.com',
-            'card'  => $token
-        ));
+        
 
         try
         {
+            $customer = Stripe_Customer::create(array(
+                'email' => 'customer@example.com',
+                'card'  => $token
+            ));
+
             $charge = Stripe_Charge::create(array(
                 'customer' => $customer->id,
                 'amount'   => $amountToPay,
@@ -99,9 +101,8 @@ class StripePaymentController extends BaseController {
         }
         catch(Stripe_CardError $e)
         {
-            return var_dump($e);
-                return Redirect::route('evercisegroups', [$evercisegroupId])
-                    ->with('notification', 'There was a problem with processing your payment. Please try again.');
+                return Redirect::to('evercisegroups/'. $evercisegroupId)
+                    ->with('errorNotification', $e->getMessage());
         }
 
         return Redirect::to('sessions/'.$evercisegroupId.'/pay')
