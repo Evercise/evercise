@@ -84,7 +84,11 @@ class StripePaymentController extends BaseController {
             'currency' => 'gbp'
         ));
 
-        return var_dump($charge);
+        return Redirect::to('sessions/'.$evercisegroupId.'/pay')
+            ->with('token',$token )
+            ->with('transactionId', $charge['id'] )
+            ->with('payerId',$customer->id )
+            ->with('paymentMethod', 'stripe' );
     }
 
     /**

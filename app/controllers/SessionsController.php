@@ -452,6 +452,8 @@ class SessionsController extends \BaseController {
 			$price = $price + $value->price;
 	    }
 
+	    $pricePence = SessionPayment::poundsToPennies($price);
+
 	    Session::put('sessionIds', $sessionIds);
 	    Session::put('amountToPay', $price);
 
@@ -462,6 +464,7 @@ class SessionsController extends \BaseController {
 					->with('members' , $members)
 					->with('userTrainer' , $userTrainer)
 					->with('totalPrice' , $price)
+					->with('totalPricePence' , $pricePence)
 					->with('totalSessions' , $total)
 					->with('sessionIds' , $sessionIds);
 		//return var_dump($sessionId);
@@ -477,13 +480,16 @@ class SessionsController extends \BaseController {
 		$evercisegroupId = $id;
 
 		/* get token */
-		$paypalToken = Session::get('paypalToken');
+		$token = Session::get('token');
 
 		/* get transaction id */
-		$paypalTransactionId = Session::get('paypalTransactionId');
+		$transactionId = Session::get('transactionId');
 
 		/* get Payer id */
-		$paypalPayerId = Session::get('paypalPayerId');
+		$payerId = Session::get('payerId');
+
+		/* get payment method */
+		$paymentMethod = Session::get('paymentMethod');
 
 
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
@@ -536,14 +542,14 @@ class SessionsController extends \BaseController {
 
 		/*pivot current user with session via session members */
 
-		$user->sessions()->attach($sessionIds, ['token' => $paypalToken , 'transaction_id' => $paypalTransactionId, 'payer_id' => $paypalPayerId, 'payment_method' => 'paypal_express' ]);
+		$user->sessions()->attach($sessionIds, ['token' => $token , 'transaction_id' => $transactionId, 'payer_id' => $payerId, 'payment_method' => $paymentMethod ]);
 		
 		Event::fire('session.joined', array(
 	        	'email' => $user->email, 
 	        	'display_name' => $user->display_name, 
 	        	'evercisegroup' => $evercisegroup, 
 	        	'userTrainer' => $userTrainer, 
-	        	'transactionId' => $paypalTransactionId, 
+	        	'transactionId' => $transactionId, 
 			));
 
 		Session::forget('amountToPay');
@@ -558,7 +564,7 @@ class SessionsController extends \BaseController {
 					->with('totalSessions' , $total)
 					->with('sessionIds' , $sessionIds)
 					->with('amountPaid' , $amountToPay)
-					->with('transactionId' , $paypalTransactionId)
+					->with('transactionId' , $transactionId)
 					->with('evercoins' , $evercoin->balance)
 					->with('deductEverciseCoins' , $deductEverciseCoins);
 	}

@@ -17,7 +17,12 @@ class Sessionpayment extends \Eloquent {
 
     public static function poundsToPennies($pounds)
     {
-    	return ($pounds / 100);
+    	return ($pounds * 100);
+    }
+
+    public static function penniesToPounds($pennies)
+    {
+    	return ($pennies / 100);
     }
 
 }

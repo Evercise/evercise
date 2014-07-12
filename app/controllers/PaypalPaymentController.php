@@ -148,9 +148,10 @@ class PaypalPaymentController extends BaseController {
 
             //return var_dump($data);
             return Redirect::to('sessions/'.$evercisegroupId.'/pay')
-                    ->with('paypalToken',$data['TOKEN'] )
-                    ->with('paypalTransactionId',$data['PAYMENTINFO_0_TRANSACTIONID'] )
-                    ->with('paypalPayerId',$data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'] );
+                    ->with('token',$data['TOKEN'] )
+                    ->with('transactionId',$data['PAYMENTINFO_0_TRANSACTIONID'] )
+                    ->with('payerId',$data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'] )
+                    ->with('paymentMethod', 'PayPal_Express' );
             //return Redirect::action('SessionsController@payForSessions');
         }
 
