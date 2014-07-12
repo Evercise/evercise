@@ -78,8 +78,7 @@ class StripePaymentController extends BaseController {
             if (isset($_POST['stripeToken'])) {
                 $token = $_POST['stripeToken'];
             } else {
-                $errors['token'] = 'The order cannot be processed. You have not been charged. Please confirm that you have JavaScript enabled and try again.';
-                return var_dump($errors);
+
                 return Redirect::route('evercisegroups', [$evercisegroupId])
                     ->with('notification', 'There was a problem with processing your payment. Please try again.');
             }
@@ -90,11 +89,20 @@ class StripePaymentController extends BaseController {
             'card'  => $token
         ));
 
-        $charge = Stripe_Charge::create(array(
-            'customer' => $customer->id,
-            'amount'   => $amountToPay,
-            'currency' => 'gbp'
-        ));
+        try
+        {
+            $charge = Stripe_Charge::create(array(
+                'customer' => $customer->id,
+                'amount'   => $amountToPay,
+                'currency' => 'gbp'
+            ));
+        }
+        catch(Stripe_CardError $e)
+        {
+            return var_dump($e);
+                return Redirect::route('evercisegroups', [$evercisegroupId])
+                    ->with('notification', 'There was a problem with processing your payment. Please try again.');
+        }
 
         return Redirect::to('sessions/'.$evercisegroupId.'/pay')
             ->with('token',$token )
