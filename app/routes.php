@@ -24,6 +24,7 @@ Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 Route::resource('venues', 'VenuesController');
 Route::resource('payment', 'PaypalPaymentController');
+Route::resource('stripe', 'StripePaymentController');
 Route::resource('wallets', 'WalletsController');
 Route::resource('referrals', 'ReferralsController');
 

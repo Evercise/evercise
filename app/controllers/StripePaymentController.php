@@ -16,6 +16,77 @@ class StripePaymentController extends BaseController {
 
     }
 
+    /*
+     * Create payment using credit card
+     * url:payment/create
+    */
+    public function store()
+    {
+        /* get session ids */
+
+        $sessionIdsRaw = Input::get('session-ids');
+        $sessionIds = json_decode(Input::get('session-ids'), true);
+        Session::put('sessionIds', $sessionIds);
+
+      //  return var_dump($sessionIds);
+        /* get currnet user */
+        $user = User::find($this->user->id);
+        /* create confirmation view */
+        $evercisegroupId = Input::get('evercisegroup-id');
+        Session::put('evercisegroupId', $evercisegroupId);
+
+        //return var_dump(Session::get('sessionIds'));
+
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
+        {
+
+            $query->whereIn('id', $sessionIds);
+
+        }), 'evercisesession')->find($evercisegroupId);
+
+        //Make sure there is not already a matching entry in sessionmembers
+        if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
+        {
+            return Response::json('USER HAS ALREADY JOINED SESSION');
+        }
+
+
+        $total = 0;
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value)
+        {
+            ++$total;
+            $price = $price + $value->price;
+        }
+
+        $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
+
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
+
+        if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
+        {
+            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
+        }
+
+        $amountToPay = $amountToPay * 100;
+
+        
+        $token  = $_POST['stripeToken'];
+
+        $customer = Stripe_Customer::create(array(
+            'email' => 'customer@example.com',
+            'card'  => $token
+        ));
+
+        $charge = Stripe_Charge::create(array(
+            'customer' => $customer->id,
+            'amount'   => $amountToPay,
+            'currency' => 'gbp'
+        ));
+
+        return var_dump($charge);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -24,7 +95,9 @@ class StripePaymentController extends BaseController {
      */
     public function show($id)
     {
-        
+     
+
+      return 'show';
 
     }
 
