@@ -68,10 +68,22 @@ class StripePaymentController extends BaseController {
             return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
         }
 
-        $amountToPay = $amountToPay * 100;
+        $amountToPay = SessionPayment::poundsToPennies($amountToPay);
 
         
-        $token  = $_POST['stripeToken'];
+        $token  = '';
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $errors = array();
+            if (isset($_POST['stripeToken'])) {
+                $token = $_POST['stripeToken'];
+            } else {
+                $errors['token'] = 'The order cannot be processed. You have not been charged. Please confirm that you have JavaScript enabled and try again.';
+                return var_dump($errors);
+                return Redirect::route('evercisegroups', [$evercisegroupId])
+                    ->with('notification', 'There was a problem with processing your payment. Please try again.');
+            }
+        } // End of form submission conditional.
 
         $customer = Stripe_Customer::create(array(
             'email' => 'customer@example.com',
