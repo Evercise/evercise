@@ -5,7 +5,8 @@ class RecommendedClassesComposer {
 	public function compose($view)
   	{
   		$evercisegroups = Evercisegroup::has('futuresessions')
-  				->with('user')
+          ->with('user')
+  				->with('category')
           ->has('confirmed')
           ->with('ratings')
   				/*->with(['ratings' => function($query){
@@ -14,7 +15,6 @@ class RecommendedClassesComposer {
   				->orderBy(DB::raw('RAND()'))->take(4)->get();		
 
   		$ratings = [];
-  		
 
   		foreach ($evercisegroups as $key => $evercisegroup) {
         $stars = 0;

@@ -52,4 +52,9 @@ class Evercisegroup extends \Eloquent {
     {
         return $this->hasMany('Rating');
     }
+
+     public function category()
+    {
+        return $this->hasOne('Category', 'id', 'category_id');
+    }
 }

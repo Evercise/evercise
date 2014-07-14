@@ -384,3 +384,10 @@ function initJoinEvercisegroup(params)
 
 registerInitFunction('initJoinEvercisegroup');
 
+function initClassBlock(){
+    $(document).on('click', '#more-sessions', function(){
+        $(this).closest('div').find('.future-session-list').slideToggle(200);
+    })
+}
+registerInitFunction('initClassBlock');
+
