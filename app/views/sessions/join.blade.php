@@ -54,6 +54,7 @@
 			          data-name="Evercise"
 			          data-currency="gbp"
 			          data-email="{{ $user->email}}"
+			          data-address="true"
 			          data-description="{{ $evercisegroup->name }}">
 			          </script>
           		{{ Form::close() }}
