@@ -102,7 +102,6 @@ function initEvercisegroups()
 
         var id = $(this).attr('id');
         var undo = $(this).data('undo');
-        trace('id: '+id);
         //trace("deleting session.. "+url);
         $.ajax({
             url: url,
@@ -116,6 +115,7 @@ function initEvercisegroups()
                 var details = $.parseJSON(data);
                 if (details.mode == 'delete')
                 {
+                    trace(details.user_id);
                     $('#'+id).parent().addClass('session-undo');
                     $('#'+id).html('undo');
                     $('#'+id).data('undo', data);
@@ -126,7 +126,10 @@ function initEvercisegroups()
                     $('#'+id).attr('href', 'sessions/'+details.session_id);
                     $('#'+id).html('x');
                 }
-                trace(data);
+                else if (details.mode == 'hack')
+                {
+                   trace('Did your mother never tell you not to touch over peoples stuff');
+                }
                 initChart('total-members-bookings-'+EGindex);
              }
         );
@@ -178,10 +181,16 @@ function bindDelete()
                 trace(data);
                 //$('.mask').show();
                 //$('.container').append(data);
-
-                setTimeout(function() {
-                    window.location.href = data;
-                }, 1000);
+                var details = $.parseJSON(data);
+                if (details.mode == 'hack')
+                {
+                    loaded();
+                    alert('the class you are trying to delete does not belong to you');
+                }else{
+                    setTimeout(function() {
+                        window.location.href = details.url;
+                    }, 300); 
+                }                
              }
         );
 

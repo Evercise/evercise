@@ -9,7 +9,7 @@ function initRedeemEvercoin(params)
  	trace(priceInEvercoins);
  	if (evercoinBalance > 0) {
 		$(document).on('click' , '.redeem-btn.up', function(){
-			var redeem = parseInt($('#redeem').val()) ) - 1;
+			var redeem = parseInt($('#redeem').val());
 
 				if (redeem < evercoinBalance && redeem < priceInEvercoins) {
 					$('#redeem').val(redeem + 1);
@@ -18,13 +18,13 @@ function initRedeemEvercoin(params)
 		} )
 
 		$(document).on('click' , '.redeem-btn.down', function(){
-			var redeem = parseInt($('#redeem').val()) - 1;
+			var redeem = parseInt($('#redeem').val());
 				if (redeem > 0) {
 					$('#redeem').val(redeem - 1);
 				}
 		} )
 		$('#redeem').on('keyup', function(){
-			var redeem = parseInt($('#redeem').val()) ) - 1;
+			var redeem = parseInt($('#redeem').val());
 			if (redeem >= evercoinBalance && redeem < priceInEvercoins) {
 				$('#redeem').val(evercoinBalance);
 			}

@@ -419,6 +419,10 @@ class EvercisegroupsController extends \BaseController {
 
 		$evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
+		if ($evercisegroup->user_id != $this->user->id) {
+			return Response::json(['mode' => 'hack']);
+		}
+
 		// Check user id against group
 		if ($this->user->id == $evercisegroup->user_id)
 		{
@@ -440,7 +444,7 @@ class EvercisegroupsController extends \BaseController {
 				Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'deleted_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 			}
 		}
-		return Route('evercisegroups.index');
+		return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
 	}
 
 

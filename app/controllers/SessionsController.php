@@ -179,9 +179,12 @@ class SessionsController extends \BaseController {
 			$dateTime = $evercisesession->date_time;
 			$price = $evercisesession->price;
 			$duration = $evercisesession->duration;
+			$user_id = Evercisegroup::where('id' , $evercisegroupId)->pluck('user_id');
+			$undoDetails = ['mode'=>'delete', 'evercisegroup_id'=>$evercisegroupId, 'date_time'=>$dateTime, 'price'=>$price, 'duration'=>$duration, 'user_id' => $user_id];
 
-			$undoDetails = ['mode'=>'delete', 'evercisegroup_id'=>$evercisegroupId, 'date_time'=>$dateTime, 'price'=>$price, 'duration'=>$duration];
-
+			if ($user_id != $this->user->id) {
+				return Response::json(['mode' => 'hack']);
+			}
 			Evercisesession::destroy($id);
 			return Response::json($undoDetails);
 		}
