@@ -101,7 +101,7 @@ class EvercisegroupsController extends \BaseController {
 		    $categoryDescriptions[$cat->id] = $cat->description;
 		}
 
-		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>120, 'step'=>0.50, 'value'=>1))));
+		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>120, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>0, 'max'=>240, 'step'=>5, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>0, 'max'=>200, 'step'=>1, 'value'=>1))));
 
@@ -130,6 +130,7 @@ class EvercisegroupsController extends \BaseController {
 				'price' => 'required|numeric|between:1,120',
 				'image'	=> 'required',
 				'gender'=> 'required',
+				'venue'=> 'required',
 				// 'lat' => 'required',
 				// 'long' => 'required',
 			)

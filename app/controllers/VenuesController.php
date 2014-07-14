@@ -32,11 +32,88 @@ class VenuesController extends \BaseController {
 	 */
 	public function store()
 	{
+
+		Validator::extend('has_not', function($attr, $value, $params) {
+		    if (!count($params)) {
+		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
+		    }
+		    
+		    foreach ($params as $param) {
+		        switch ($param) {
+		            case 'num':
+		                $regex = '/\pN/';
+		                break;
+		            case 'letter':
+		                $regex = '/\pL/';
+		                break;
+		            case 'lower':
+		                $regex = '/\p{Ll}/';
+		                break;
+		            case 'upper':
+		                $regex = '/\p{Lu}/';
+		                break;
+		            case 'special':
+		                $regex = '/[\pP\pS]/';
+		                break;
+		            default:
+		                $regex = $param;
+		        }
+		        
+		        if (preg_match($regex, $value)) {
+		            return false;
+		        }
+		    }
+		    
+		    return true;
+		});
+
+		Validator::extend('has', function($attr, $value, $params) {
+		    if (!count($params)) {
+		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
+		    }
+		    
+		    foreach ($params as $param) {
+		        switch ($param) {
+		            case 'num':
+		                $regex = '/\pN/';
+		                break;
+		            case 'letter':
+		                $regex = '/\pL/';
+		                break;
+		            case 'lower':
+		                $regex = '/\p{Ll}/';
+		                break;
+		            case 'upper':
+		                $regex = '/\p{Lu}/';
+		                break;
+		            case 'special':
+		                $regex = '/[\pP\pS]/';
+		                break;
+		            default:
+		                $regex = $param;
+		        }
+		        
+		        if ( ! preg_match($regex, $value)) {
+		            return false;
+		        }
+		    }
+		    
+		    return true;
+		});
+
+		// todo validation extends needs its own class
+
 		$validator = Validator::make(
 			Input::all(),
 			[
-			'venue_name' => 'required',
-				'latbox' => 'required'
+			'venue_name' => 'required|max:45',
+				'latbox' => 'required',
+				'street' => 'required|min:2',
+				'city' => 'required|min:2',
+				'postcode' => 'required|has_not:special|has:letter,num|min:4',
+			],
+			['postcode.has_not' => 'Post code must not contain any special characters',
+				'postcode.has' => 'Post code must contain letters and numbers'
 			]
 				
 		);

@@ -158,6 +158,9 @@ function postCroppedImage()
                     remove: true
                 });
                 trace(data.uploadView);
+                if ($("#evercisegroup_create input[type=submit]")[0]){
+                  $("#evercisegroup_create input[type=submit]").removeClass('disabled');
+                }
                 $('#upload_wrapper').html(data.uploadView);
 
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);

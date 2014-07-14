@@ -72,7 +72,7 @@ class TrainersController extends \BaseController {
 				'image' => 'required',
 				'phone' => 'required|numeric',
 				'website' => 'sometimes',
-				'profession' => 'required',
+				'profession' => 'required|max:50|min:2',
 			)
 		);
 		if($validator->fails()) {

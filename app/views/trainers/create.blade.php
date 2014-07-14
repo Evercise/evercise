@@ -12,7 +12,7 @@
         {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
 
-        @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Add your profession', 'maxlength'=>500, 'label'=>'Add your profession', 'fieldtext'=>'Please add your profession' ))
+        @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'max 50 characters', 'maxlength'=>50, 'label'=>'Add your profession', 'fieldtext'=>'Please add your profession' ))
         @if ($errors->has('profession'))
             {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}
         @endif

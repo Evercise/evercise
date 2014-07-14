@@ -5,7 +5,6 @@ function initVenues()
     //$( '#new_venue_button' ).on( 'click', function() {
     $(document).on('click', '#new_venue_button' , function() {
         //trace($('#venue_create_form').css('display'));
-        trace($('#venue option').length);
 
         if ($('#venue_create_form').css('display') == 'block')
         {
@@ -20,6 +19,7 @@ function initVenues()
             $('#new_venue_button').removeClass('btn-yellow').addClass('btn-red').html('Cancel');
 
             getView('../venues/create', function(data){
+                $('#venue').val('');
                 MapWidgetloadScript();
                 $('#venue_create_form').html(data);
                 $('#venue_create_form').slideToggle(600/*, function(){initCheckboxes();}*/);

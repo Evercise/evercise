@@ -60,12 +60,13 @@ function calendarSlide () {
                 '-o-transition': 'all 0.5s ease',
                 'transition': 'all 0.5s ease'
             });
-            */
+            
             $('#evercisegroupId').val(class_id.length-1);
             $('#evercisegroupName').val(class_name.length-1);
             $('#evercisegroupDuration').val(class_duration.length-1);
             $('.hub-row').removeClass('selected');
             $('div[data-id="'+class_id[class_id.length-1]+'"]').addClass('selected');
+            */
         }
     	else if (y >= class_top[i] && y < class_top[class_top.length - 1] ) {
             trace('norm');

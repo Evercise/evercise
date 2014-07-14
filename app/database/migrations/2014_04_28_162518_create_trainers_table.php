@@ -19,7 +19,7 @@ class CreateTrainersTable extends Migration {
 			$table->string('website', 45);
 			$table->boolean('confirmed')->default(0);
 			$table->integer('specialities_id')->unsigned();// Foreign key
-			$table->string('profession');
+			$table->string('profession', 50);
 			$table->timestamps();
 			
 		});

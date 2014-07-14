@@ -153,15 +153,22 @@ function initSlider(params)
   sliderParams = JSON.parse(params);
   var sliderName = sliderParams.name;
   //trace("initSlider("+sliderName+") - callback:"+sliderParams.callback);
-
   $( "#"+sliderName+"-slider" ).slider({
     range: "min",
     min: sliderParams.min,
     max: sliderParams.max,
     step: sliderParams.step,
     value: sliderParams.value,
+    format: sliderParams.format,
+
     slide: function( event, ui ) {
+
+    if (ui.value % 1 != 0) {
       $( "#"+sliderName+"" ).val( ui.value .toFixed(2) );
+    }else{
+        $( "#"+sliderName+"" ).val( ui.value );
+    };
+      
       if (sliderParams.callback){
         window[sliderParams.callback]();
       } 

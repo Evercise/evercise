@@ -92,7 +92,7 @@
             @endif
             
             <div class="center-btn-wrapper" >
-        	   {{ Form::submit('Create Class' , array('class'=>'btn-yellow ')) }}
+        	   {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow  disabled')) }}
      
             </div>
 

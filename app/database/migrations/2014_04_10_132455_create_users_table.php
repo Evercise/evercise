@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration {
 			// Evercise
 			$table->string('display_name', 45);
 			$table->tinyInteger('gender');
-			$table->timestamp('dob');
+			$table->date('dob');
 			$table->string('area_code', 20);
 			$table->string('phone', 20);
 			$table->string('directory', 45);
