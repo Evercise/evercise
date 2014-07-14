@@ -186,8 +186,17 @@ class UsersController extends \BaseController {
 
 					Sentry::login($user, true);
 
+					$redirectAfter = Session::get('redirectAfter');
 					//return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
-					return Response::json(route('users.edit.tab', [$user->id ,'profile']));
+
+					if(isset($redirectAfter)) {
+						Session::forget('redirectAfter');
+						return Response::json(route('trainers.create'));
+					}else{
+						return Response::json(route('users.edit.tab', [$user->id ,'profile']));
+					}
+					
+					
 					//return Redirect::route('users.edit', $user->display_name);
 					//return Response::json($newsletter); // for testing
 				}
@@ -287,7 +296,16 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false);
 
-				return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
+				$redirectAfter = Session::get('redirectAfter');
+
+				if(isset($redirectAfter)) {
+					Session::forget('redirectAfter');
+					return Redirect::route('trainers.create')->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
+				}else{
+					return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
+				}
+
+				//return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
 				//return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);	
 				//return View::make('users.show');
 			}
@@ -315,7 +333,17 @@ class UsersController extends \BaseController {
 			catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
 			{
 				$user = Sentry::findUserByLogin($me['email']);
-				return View::make('users.edit')->with('notification', 'you have successfully signed up with facebook. Your password has been emailed to you')->with('display_name', $user->display_name);
+
+				$redirectAfter = Session::get('redirectAfter');
+
+				if(isset($redirectAfter)) {
+					Session::forget('redirectAfter');
+					return Response::json(route('trainers.create'));
+				}else{
+					return View::make('users.edit')->with('notification', 'you have successfully signed up with facebook. Your password has been emailed to you')->with('display_name', $user->display_name);
+				}
+				
+
 			}
 		}
 

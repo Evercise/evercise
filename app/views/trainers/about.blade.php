@@ -16,7 +16,7 @@
 			<p>Click the link below to signup.</p>
 			<p>Once signup you will be able to click the register as a trainer button to upgrade your account</p>
 			<br>
-			{{ HTML::linkRoute('users.create', 'Join Evercise today!',null ,array('class' => 'btn btn-yellow', 'width' => '250px')) }}
+			{{ HTML::linkRoute('trainers.trainerSignup', 'Join Evercise today!',null ,array('class' => 'btn btn-yellow', 'width' => '250px')) }}
 			{{--
 			<div class="orSeperator"><span>or alternatively</span></div>
 			@if(isset($redirect_after_login))

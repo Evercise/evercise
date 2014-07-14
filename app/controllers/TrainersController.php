@@ -284,4 +284,11 @@ class TrainersController extends \BaseController {
 		//return Response::json($result);
 		//return View::make('users.edit');
 	}
+
+	public function trainerSignup()
+	{
+		Session::put('redirectAfter', 'trainer/create');
+
+		return Redirect::to('users/create');
+	}
 }

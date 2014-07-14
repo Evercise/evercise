@@ -30,6 +30,9 @@ Route::resource('referrals', 'ReferralsController');
 
 //Route::post('wallets/update', array('as'=>'wallets.update' , 'uses'=>'WalletsController@update'));
 
+Route::get('trainers/trainer/signup', array('as'=>'trainers.trainerSignup', 'uses'=>'TrainersController@trainerSignup'));
+Route::get('trainers/create', array('as'=>'trainers.create', 'uses'=>'TrainersController@create'));
+
 Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
 Route::get('users/{id}/edit/{tab}', array('as'=>'users.edit.tab', 'uses'=>'UsersController@edit'));
 
