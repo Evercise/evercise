@@ -7,7 +7,7 @@
         {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}
     @endif
 
-    @include('form.textfield', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'This is the bio that is displayed to our users', 'default'=>$bio ))
+    @include('form.textfield', array('fieldarea'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'This is the bio that is displayed to our users', 'default'=>$bio ))
     @if ($errors->has('bio'))
         {{ $errors->first('bio', '<p class="error-msg">:message</p>')}}
     @endif
