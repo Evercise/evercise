@@ -209,7 +209,6 @@ function DiscoverMapWidgetInit() {
       var venue = everciseGroups[i].venue;
       var category = everciseGroups[i].category;
       var sessions = everciseGroups[i].futuresessions;
-      trace(sessions);
       if (venue) {
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(venue.lat, venue.lng),
@@ -223,7 +222,8 @@ function DiscoverMapWidgetInit() {
 
         bounds.extend(latlng);
         if (infowindow) infowindow.close();
-        var contentString = '<div class="info-window recommended-block"><div class="block-header"><p>'+everciseGroups[i].name+'</p></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound;</strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="category-icon" src="'+check+'/img/category/'+category.name+'.png"><span>'+category.name+'<span></div></div></div>';
+        
+        var contentString = '<div class="info-window recommended-block"><div class="block-header"><p>'+everciseGroups[i].name+'</p></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound; </strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="category-icon" src="'+check+'/img/category/'+category.name+'.png"><span>'+category.name+'<span></div></div><div class="block-footer"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div>';
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
