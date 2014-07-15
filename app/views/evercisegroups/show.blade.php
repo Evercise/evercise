@@ -61,7 +61,7 @@
 									@elseif (in_array($user->id, $membersIds[$value->id])) 
 
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
-									@elseif ($members[$value->id] <= $evercisegroup->capacity )
+									@elseif ($members[$value->id] >= $evercisegroup->capacity )
 										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn-blue disabled">class full</button></li>
 
 									@else
