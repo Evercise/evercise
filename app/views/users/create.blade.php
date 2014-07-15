@@ -51,7 +51,7 @@
             @if ($errors->has('password'))
                 {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
             @endif
-        	@include('form.select', array('fieldname'=>'gender', 'label'=>'Please select your sex', 'values'=>array(1=>'Male', 2=>'Female')))
+        	@include('form.select', array('fieldname'=>'gender', 'label'=>'Select Gender', 'values'=>array(1=>'Male', 2=>'Female')))
         	@include('form.checkbox', array('id' => 'userNewsletter', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.'))
 
             <div class="center-btn-wrapper" >
