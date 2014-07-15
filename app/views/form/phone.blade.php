@@ -11,7 +11,7 @@
 				{{-- Form::text( 'areacode' , isset($default_area) ? $default_area : '', array('list' => 'area_codes' ,  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => 'Add area code', 'maxlength' => $maxlength, 'id' => 'areacode', 'form' => $form , 'class' => 'half_input')) --}}
 				{{ Form::text( $fieldname , isset($default) ? $default : '', array(  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname , 'form' => $form , 'class' => 'half_input')) }}
 			@else
-				{{ Form::select( 'areacode',  $country_codes, isset($area_code)?$area_code:'', ['id'=>'areacode']) }}
+				{{ Form::select( 'areacode',  $country_codes, isset($default_area)?$default_area:'', ['id'=>'areacode']) }}
 				<br>
 				<br>
 				{{ Form::text( $fieldname , isset($default) ? $default : '', array( 'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname , 'class' => 'half_input')) }}<span class="add-on" id="country_code">-</span>
