@@ -19,6 +19,8 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
 			->with('futuresessions.sessionmembers')
 			->with('pastsessions')
+			->with('category')
+			->with('venue')
 			->where('user_id', $this->user->id)->get();
 
 			if ($evercisegroups->isEmpty()) {
@@ -29,11 +31,15 @@ class EvercisegroupsController extends \BaseController {
 				$totalCapacity = array();
 	    		$currentDate = new DateTime();
 
+	    		$evercisegroup_ids = [];  
+			    $stars = [];
+
 				foreach ($evercisegroups as $key => $group) {
 
 					$sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
 					//$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
 					$capacity = 0;
+					$evercisegroup_ids[] = $group->id;
 					foreach ($group['Evercisesession'] as $k => $session) {
 						if ( new DateTime($session->date_time) > $currentDate )
 						{
@@ -44,6 +50,17 @@ class EvercisegroupsController extends \BaseController {
 					$totalCapacity[] = $capacity;
 
 				}
+
+
+
+			    if (!empty($evercisegroup_ids)) {
+			    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+
+				    foreach ($ratings as $key => $rating) {
+				    	$stars[$rating->evercisegroup_id][] = $rating->stars;
+				    }
+
+			    }
 
 
 				$month = date("m");
@@ -57,6 +74,7 @@ class EvercisegroupsController extends \BaseController {
 						->with('evercisegroups' , $evercisegroups)
 						->with('sessionDates' , $sessionDates )
 						->with('totalMembers' , $totalMembers )
+						->with('stars' , $stars)
 						->with('totalCapacity' , $totalCapacity )
 						->with('year', $year)->with('month', $month)
 						->with('directory', $directory);	
@@ -552,7 +570,6 @@ class EvercisegroupsController extends \BaseController {
         
 
 
-	    //$evercisegroups = [];  
 	    $evercisegroup_ids = [];  
 	    $stars = [];
 
@@ -560,10 +577,6 @@ class EvercisegroupsController extends \BaseController {
 	    		$evercisegroup_ids[] = $evercisegroup->id;	    	
 	    };
 
-	    //return var_dump($evercisegroups);
-	    //exit;
-
-	    //return var_dump($evercisegroup_ids);
 
 	    if (!empty($evercisegroup_ids)) {
 	    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();

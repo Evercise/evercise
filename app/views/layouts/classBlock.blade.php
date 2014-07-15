@@ -38,8 +38,10 @@
 				<li>{{ date('d M Y - h:ia', strtotime($session->date_time))}}</li>
 			@endforeach
 		</ul>
+	@else
+		<div class="block-spacer">
+		</div>
 		
-
 	@endif
 	<div id="block-body-wrap">
 		@if(isset($venue))

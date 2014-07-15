@@ -23,30 +23,33 @@
 	</div>
 	<div class="hub-wrapper">
 
-		@foreach ($evercisegroups as $key=>$value)
-			<div class="hub-row {{ ($key == 0) ? 'selected' : '' }}" data-id="{{ $value['id'] }}" data-name="{{ $value['name'] }}"  data-duration="{{ $value['default_duration'] }}">
+		@foreach ($evercisegroups as $key=>$evercisegroup)
+			<div class="hub-row {{ ($key == 0) ? 'selected' : '' }}" data-id="{{ $evercisegroup['id'] }}" data-name="{{ $evercisegroup['name'] }}"  data-duration="{{ $evercisegroup['default_duration'] }}">
 				
 				<div class="hub-block">
 					<div class="hub-title">
-						<h3>{{ $value['name'] }}</h3>
-						{{ HTML::linkRoute('evercisegroups.show', 'Class Details',$value['id'] ,array('class' => 'btn btn-blue')) }}
+						<h3>{{ $evercisegroup['name'] }}</h3>
+						{{ HTML::linkRoute('evercisegroups.show', 'Class Details',$evercisegroup['id'] ,array('class' => 'btn btn-blue')) }}
 					</div>
 					
 					
 					
 					<div class="date-list" id="date-list-{{ $key }}">
 					
-						@include('sessions.date_list' , array( 'evercisegroupId' => $value['id'], 'ids' => $value['Evercisesession'] , 'futuresessions' => $value->futuresessions , 'pastsessions' => $value->pastsessions ))
+						@include('sessions.date_list' , array( 'evercisegroupId' => $evercisegroup['id'], 'ids' => $evercisegroup['Evercisesession'] , 'futuresessions' => $evercisegroup->futuresessions , 'pastsessions' => $evercisegroup->pastsessions ))
 					</div>
 					<div class="hub-buttons">
-					<a href="evercisegroups/clone_evercisegroups/{{$value['id']}}" class="btn btn-green">Clone Class{{ HTML::image('/img/clone_icon_white.png', 'clone icon' , array('class' => 'evercisegroup-icon')) }}</a>
-					<a href="evercisegroups/delete/{{$value['id']}}" class="btn btn-red" id="delete_group">Delete Class <span>X</span></a>
+					<a href="evercisegroups/clone_evercisegroups/{{$evercisegroup['id']}}" class="btn btn-green">Clone Class{{ HTML::image('/img/clone_icon_white.png', 'clone icon' , array('class' => 'evercisegroup-icon')) }}</a>
+					<a href="evercisegroups/delete/{{$evercisegroup['id']}}" class="btn btn-red" id="delete_group">Delete Class <span>X</span></a>
 					</div>
 
 					
 				</div>
 				<div class="class-hub-block">
-					@include('layouts.classBlock', array('evercisegroupId' => $value['id'],'title' => $value['name'] , 'description' =>$value['description'] ,  'image' => 'profiles/'.$directory .'/'. $value['image'],   'default_price' => $value['default_price'], 'default_size' => $value['capacity'] ))
+					@include('layouts.classBlock', array('evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,  'category' => $evercisegroup->category->name , 'venue' => $evercisegroup->venue  ,   'image' => 'profiles/'.$directory .'/'. $evercisegroup->image,   'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity, 'rating' => isset($stars[$evercisegroup->id])?  array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]) : 0 , ))
+
+					{{-- @include('layouts.classBlock', array( 'rating' => isset($stars[$evercisegroup->id])?  array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]) : 0 ,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image, 'category' => $evercisegroup->category->name , 'venue' => $evercisegroup->venue  , 'sessions' => $evercisegroup->futuresessions,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
+					--}}
 				</div>
 			</div>
 			<hr>
