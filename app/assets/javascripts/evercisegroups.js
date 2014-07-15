@@ -386,7 +386,10 @@ registerInitFunction('initJoinEvercisegroup');
 
 function initClassBlock(){
     $(document).on('click', '#more-sessions', function(){
-        $(this).closest('div').find('.future-session-list').slideToggle(200);
+
+        $(this).closest('div').find('.future-session-list').slideToggle(300);
+        $(this).closest('div').find('#block-body-wrap').slideToggle(300);
+        $(this).toggleClass('active');
     })
 }
 registerInitFunction('initClassBlock');

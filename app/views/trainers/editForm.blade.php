@@ -2,7 +2,7 @@
 {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
 
-    @include('form.textarea', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'fieldtext'=>'Add your profession', 'default'=>$profession ))
+    @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'fieldtext'=>'Add your profession', 'default'=>$profession ))
     @if ($errors->has('profession'))
         {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}
     @endif
@@ -12,7 +12,7 @@
         {{ $errors->first('bio', '<p class="error-msg">:message</p>')}}
     @endif
 
-    @include('form.textarea', array('fieldname'=>'website', 'placeholder'=>'website address', 'maxlength'=>100, 'label'=>'Add your website', 'fieldtext'=>'(Optional) - If you want users to learn more about you and what you do, you can include your web address, which will be visible on your profile.' ))
+    @include('form.textfield', array('fieldname'=>'website', 'placeholder'=>'website address', 'maxlength'=>100, 'label'=>'Add your website', 'fieldtext'=>'(Optional) - If you want users to learn more about you and what you do, you can include your web address, which will be visible on your profile.' ))
     @if ($errors->has('website'))
         {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
     @endif

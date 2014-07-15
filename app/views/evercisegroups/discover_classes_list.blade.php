@@ -8,14 +8,7 @@
 					<p>{{ Str::limit($evercisegroup->description, 115) }}</p>	
 				</div>
 				<div class="list-info">
-					<div class="list-row">
-						<div class="half">
-							<span>Distance</span>
-						</div>
-						<div class="half">
-							 <strong>{{ number_format($distance , 2, '.', '')}} miles</strong>
-						</div>
-					</div>
+
 					<div class="list-row">
 						<div class="half">
 							<strong>

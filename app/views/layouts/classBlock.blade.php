@@ -41,29 +41,37 @@
 		
 
 	@endif
-	
-	@if(isset($distance))
-		<span>distance  &nbsp; &nbsp; <strong>{{ number_format($distance, 2, '.', '')}} miles</strong></span>
-	@endif
-
-	<div class="class-block-stats">
-		@if(isset($participants))
-			<div class="class-block-stat">
-				<strong>{{ $participants}} /{{$default_size}}</strong>
-				<span>class size</span>
-			</div>
-		@elseif(isset($default_size))
-			<div class="class-block-stat">
-				<strong>{{$default_size}}</strong>
-				<span>capacity</span>
+	<div id="block-body-wrap">
+		@if(isset($venue))
+			<div class="block-inner" id="block-venue">
+				<div class="inner-float">
+					{{ HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon')); }}
+				</div>
+				<div class="inner-float">
+					<li>{{ $venue->name }}</li>
+					<li>{{ $venue->address }}</li>
+					<li>{{ $venue->town }}, {{ $venue->postcode }}</li>
+				</div>
 			</div>
 		@endif
-
-		@if(isset($default_price))
-			<div class="class-block-stat">
-				<strong>&pound;{{ $default_price }}</strong>
-				<span>price</span>
+		@if(isset($default_size))
+			<div class="block-inner" id="block-size">
+				<div class="inner-float">
+					{{ HTML::image('img/person_icon.png', 'date image', array('class' => 'block-icon')); }}
+				</div>
+				<div class="inner-float">
+					<li>Class Size: {{ $default_size }}</li>
+				</div>
 			</div>
 		@endif
 	</div>
+	
+	@if(isset($default_price))
+		<div class="block-footer">
+			<span>Price</span>
+			<strong>&pound;{{ $default_price }}</strong>
+		</div>
+	@endif
+	
+	
 </div>

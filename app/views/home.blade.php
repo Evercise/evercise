@@ -56,11 +56,7 @@
 				<div class='featured-wrap'>
 					@foreach ($evercisegroups as $key => $evercisegroup)	
 						<div class="col3">
-							@if (count($evercisegroup->ratings) == 0) 
-								@include('layouts.classBlock', array( 'rating' => 0 , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,  'category' => $evercisegroup->category->name , 'sessions' => $evercisegroup->futuresessions, 'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
-							@else
-								@include('layouts.classBlock', array( 'rating' => $ratings[$evercisegroup->id] / count($evercisegroup->ratings) , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,   'category' => $evercisegroup->category->name ,  'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
-							@endif
+							@include('layouts.classBlock', array( 'rating' => count($evercisegroup->ratings) == 0 ? 0 : $ratings[$evercisegroup->id] / count($evercisegroup->ratings)  , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,  'category' => $evercisegroup->category->name , 'venue' => $evercisegroup->venue  ,'sessions' => $evercisegroup->futuresessions, 'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
 						</div>	
 								
 					@endforeach

@@ -531,6 +531,7 @@ class EvercisegroupsController extends \BaseController {
 	        })
 	        ->with('venue')		
 	        ->with('user')
+	        ->with('category')
 			->get();
         }else{
         	$evercisegroups= Evercisegroup::has('futuresessions')
@@ -542,6 +543,7 @@ class EvercisegroupsController extends \BaseController {
 	        })
 	        ->with('venue')
 	        ->with('user')
+	        ->with('category')
 			->where('category_id' , $category)
 			->get();
         }
@@ -574,6 +576,7 @@ class EvercisegroupsController extends \BaseController {
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
 	    JavaScript::put(array('initSwitchView' => 1 ));
 	    JavaScript::put(array('InitSearchForm' => 1 ));
+	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
 
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $evercisegroups)

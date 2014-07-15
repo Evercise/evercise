@@ -1891,7 +1891,7 @@ nav{
 	.border-radius();
 	border:1px solid @grey;
 	margin-bottom: 20px;
-	padding: 10px 0;
+	padding: 10px 0 0;
 	.block-inner{
 		padding: 0 10px;
 		float: left;
@@ -1910,6 +1910,12 @@ nav{
 			}	
 		}
 		
+	}
+	li{
+		.font-size(1.2);
+		list-style: none;
+		.line-height(2.0);
+		color: #555555;
 	}
 	.class-block-header{
 		border-bottom: 1px solid @grey; 
@@ -1935,6 +1941,11 @@ nav{
 			vertical-align:middle;
 			line-height: 30px;
 		}
+	}
+	.inner-float{
+		float: left;
+		padding-right: 3px;
+		margin-bottom: 7px;
 	}
 	#block-rating{
 		padding-right: 7px;
@@ -1967,9 +1978,16 @@ nav{
 	#more-sessions{
 		width: 13%;
 		float: right;
-		height: 32px;
+		height: 33px;
+		.box-sizing();
+		margin-bottom: -1px;
+		text-align: center;
 		img{
 			margin-top: 13px;
+		}
+		&.active{
+			background-color: #f5f5f5;
+			border-left: 1px solid @grey;
 		}
 	}
 	.future-session-list{
@@ -1982,23 +2000,26 @@ nav{
 		.box-sizing();
 		padding: 7px 0 7px 40px;
 		border-top: 1px solid @grey;
-		border-bottom: 1px solid @grey;
-		li{
-			.font-size(1.2);
-			list-style: none;
-			.line-height(2.0);
-			color: #555555;
-		}
 	}
 
 	.block-icon{
 		margin: 0 7px -2px 0;
 	}
-	.class-block-no-dates{
-		padding: 3px 0;
-		p{
-			color: @black;
-		}
+}
+
+.block-footer{
+	float: left;
+	width: 100%;
+	border-top: 1px solid @grey;
+	padding: 6px 10px;
+	.box-sizing();
+	span{
+		float: left;
+		padding-top: 3px;
+	}
+	strong{
+		font-weight: 500;
+		float: right;
 	}
 }
 
@@ -2020,54 +2041,70 @@ nav{
 	width: 100%;
 	float: left;
 	border:1px solid @grey;
-	border-right: none;
-	.box-sizing();
-	padding: 10px;
 	h5{
 		font-weight: 500;
-		margin: 7px 0 25px;
+		text-align: center;
+		margin: 15px auto;
 	}
 	.recommended-block{
-		border-bottom: 1px dashed @grey;
-		margin-bottom: 20px;
-		padding-bottom: 20px;
+		border-top: 3px solid @yellow;
 		float: left;
 		width: 100%;
-		.recommended-block-img{
-			.border-radius();
-			display: block;
-			margin: 0 auto 20px;
+		
+		.block-header{
+			padding: 10px 10px;
+			.box-sizing();
+			float: left;
+			width: 100%;
+			border-bottom: 1px dashed @grey;
+			.recommended-block-img{
+				.border-radius();
+				float: left;
+				height: 60px;
+				margin-right: 10px;
+			}
+			h6{
+				font-weight: 500;
+				line-height: 60px;
+				vertical-align: middle;
+			}
 		}
-		h6{
-			font-weight: 500;
-			text-align: center;
-		}
+		
+		
 		.recommended-info{
 			width: 100%;
 			float: left;
-			margin-top: 15px;
+			.box-sizing();
+			padding: 4px 10px;
+			border-bottom: 1px dashed @grey;
 			.recommended-aside{
 				float: left;
-				width: 29%;
-				&:nth-of-type(2){
-					width: 42%;
+				width: 50%;
+				.box-sizing();
+				.category-icon{
+					height: 30px;
+					.border-radius();
+					float: left;
+					margin-right: 5px;
 				}
-				small{
-					.font-size(1.0);
-					color: #ccc;
-					text-transform: uppercase;
-					display: block;
-					margin-top: 5px;
-				}
-				p{
-					font-weight: 600;
-					.font-size(1.2);
-					.line-height(1.6);
+				span{
+					line-height: 30px;
+					vertical-align: middle;
+					display: inline-block;
 				}
 				.star-icons{
-					margin: 0;
+					margin-top: 7px;
+				}
+				&:last-of-type{
+					padding-left: 10px;
+					border-left: 1px solid @grey;
 				}
 			}
+		}
+		.block-footer{
+			padding:10px;
+			.box-sizing();
+			border: none;
 		}
 	}
 	
@@ -2487,7 +2524,6 @@ nav{
 	float: left;
 	.trainer-dashboard-wrapper-left{
 		.column(3);
-
 		.box-sizing();
 		ul.dashboard-tab{
 			li{
@@ -2540,6 +2576,9 @@ nav{
 					background-color: @yellow;
 				}
 			}
+		}
+		.recommended-vertical-wrap{
+			width: 95%;
 		}
 	}
 	.dashboard-wrapper-right{

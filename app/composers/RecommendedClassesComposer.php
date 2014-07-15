@@ -6,7 +6,8 @@ class RecommendedClassesComposer {
   	{
   		$evercisegroups = Evercisegroup::has('futuresessions')
           ->with('user')
-  				->with('category')
+          ->with('category')
+  				->with('venue')
           ->has('confirmed')
           ->with('ratings')
   				/*->with(['ratings' => function($query){
