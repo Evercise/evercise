@@ -1900,13 +1900,17 @@ nav{
 	}
 	.class-block-img-wrap{
 		a{
-			width: 100%;
+			height: 115px;
+			overflow: hidden;	
+			float: left;	
+			.border-radius();
 			overflow: hidden;
-			margin-bottom: 20px;		
+			width: 100%;
 			img.class-block-img{
-				width:100%;
+				max-width: none;
+				height: 100%;
 				float: left;
-				.border-radius();
+				margin-left: -28px;
 			}	
 		}
 		
@@ -2035,6 +2039,9 @@ nav{
 	}
 }
 
+
+
+
 /* recommended block */
 
 .recommended-vertical-wrap{
@@ -2046,67 +2053,76 @@ nav{
 		text-align: center;
 		margin: 15px auto;
 	}
-	.recommended-block{
-		border-top: 3px solid @yellow;
+	
+}
+
+.recommended-block{
+	border-top: 3px solid @yellow;
+	float: left;
+	width: 100%;
+	
+	.block-header{
+		padding: 10px 10px;
+		.box-sizing();
 		float: left;
 		width: 100%;
-		
-		.block-header{
-			padding: 10px 10px;
-			.box-sizing();
+		border-bottom: 1px dashed @grey;
+		.recommended-block-img{
+			.border-radius();
 			float: left;
-			width: 100%;
-			border-bottom: 1px dashed @grey;
-			.recommended-block-img{
-				.border-radius();
-				float: left;
-				height: 60px;
-				margin-right: 10px;
-			}
-			h6{
-				font-weight: 500;
-				line-height: 60px;
-				vertical-align: middle;
-			}
+			height: 60px;
+			margin-right: 10px;
 		}
-		
-		
-		.recommended-info{
-			width: 100%;
-			float: left;
-			.box-sizing();
-			padding: 4px 10px;
-			border-bottom: 1px dashed @grey;
-			.recommended-aside{
-				float: left;
-				width: 50%;
-				.box-sizing();
-				.category-icon{
-					height: 30px;
-					.border-radius();
-					float: left;
-					margin-right: 5px;
-				}
-				span{
-					line-height: 30px;
-					vertical-align: middle;
-					display: inline-block;
-				}
-				.star-icons{
-					margin-top: 7px;
-				}
-				&:last-of-type{
-					padding-left: 10px;
-					border-left: 1px solid @grey;
-				}
-			}
-		}
-		.block-footer{
-			padding:10px;
-			.box-sizing();
-			border: none;
+		h6{
+			font-weight: 500;
+			line-height: 60px;
+			vertical-align: middle;
 		}
 	}
+	
+	
+	.recommended-info{
+		width: 100%;
+		float: left;
+		.box-sizing();
+		padding: 4px 10px;
+		border-bottom: 1px dashed @grey;
+		.recommended-aside{
+			float: left;
+			width: 50%;
+			.box-sizing();
+			.category-icon{
+				height: 30px;
+				.border-radius();
+				float: left;
+				margin-right: 5px;
+			}
+			span{
+				line-height: 30px;
+				vertical-align: middle;
+				display: inline-block;
+			}
+			.star-icons{
+				margin-top: 7px;
+			}
+			&:last-of-type{
+				padding-left: 10px;
+				border-left: 1px solid @grey;
+			}
+		}
+	}
+	.block-footer{
+		padding:10px;
+		.box-sizing();
+		border: none;
+	}
+}
+
+/* map block */
+.info-window{
+	width:245px; 
+	height:145px;
+	
 	
 }
 

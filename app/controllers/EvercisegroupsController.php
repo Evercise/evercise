@@ -532,6 +532,7 @@ class EvercisegroupsController extends \BaseController {
 	        ->with('venue')		
 	        ->with('user')
 	        ->with('category')
+	        ->with('futuresessions')
 			->get();
         }else{
         	$evercisegroups= Evercisegroup::has('futuresessions')
@@ -544,6 +545,7 @@ class EvercisegroupsController extends \BaseController {
 	        ->with('venue')
 	        ->with('user')
 	        ->with('category')
+	        ->with('futuresessions')
 			->where('category_id' , $category)
 			->get();
         }

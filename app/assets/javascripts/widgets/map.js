@@ -1,7 +1,7 @@
 function MapWidgetInit() {
   trace('maps go');
   $(document).on('click', '#findLocation',function(){
-    trace('clicked');
+    
     //var url = '/dev/widgets/postGeo';
     //var url = window.location.href;
 
@@ -138,7 +138,7 @@ function DiscoverMapWidgetInit() {
   /* style the map  */
 
   //trace(laracasts.classes.evercisegroup);
-
+  check = checkUrlForDev();
   var everciseGroups = JSON.parse($('#places').val());
 
   if(!everciseGroups.length){
@@ -207,6 +207,9 @@ function DiscoverMapWidgetInit() {
 
     for (i = 0; i < everciseGroups.length; i++) { 
       var venue = everciseGroups[i].venue;
+      var category = everciseGroups[i].category;
+      var sessions = everciseGroups[i].futuresessions;
+      trace(sessions);
       if (venue) {
         marker = new google.maps.Marker({
           position: new google.maps.LatLng(venue.lat, venue.lng),
@@ -220,7 +223,7 @@ function DiscoverMapWidgetInit() {
 
         bounds.extend(latlng);
         if (infowindow) infowindow.close();
-        var contentString = '<div style="width:200px; height:130px;" class="info-window"><p style="font-size:16px; text-align:center; padding: 10px 0">'+venue.name+'</p></div>';
+        var contentString = '<div class="info-window recommended-block"><div class="block-header"><p>'+everciseGroups[i].name+'</p></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound;</strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="category-icon" src="'+check+'/img/category/'+category.name+'.png"><span>'+category.name+'<span></div></div></div>';
         var infowindow = new google.maps.InfoWindow({
             content: contentString
         });
