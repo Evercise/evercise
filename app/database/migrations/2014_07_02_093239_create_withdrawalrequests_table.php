@@ -13,6 +13,7 @@ class CreateWithdrawalrequestsTable extends Migration {
 	public function up()
 	{
 		Schema::create('withdrawalrequests', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->decimal('amount', 19, 4);

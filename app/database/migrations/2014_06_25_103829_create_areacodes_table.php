@@ -13,6 +13,7 @@ class CreateAreacodesTable extends Migration {
 	public function up()
 	{
 		Schema::create('areacodes', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->string('area_code', 20);
 			$table->string('area_covered', 200);

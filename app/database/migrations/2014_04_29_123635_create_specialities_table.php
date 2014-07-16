@@ -13,6 +13,7 @@ class CreateSpecialitiesTable extends Migration {
 	public function up()
 	{
 		Schema::create('specialities', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->string('name', 45);
 			$table->string('titles', 255);

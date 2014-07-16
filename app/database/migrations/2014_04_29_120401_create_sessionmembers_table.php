@@ -13,6 +13,7 @@ class CreateSessionmembersTable extends Migration {
 	public function up()
 	{
 		Schema::create('sessionmembers', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
 			$table->integer('evercisesession_id')->unsigned();// Foreign key

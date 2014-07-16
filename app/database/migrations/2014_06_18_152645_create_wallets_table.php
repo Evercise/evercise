@@ -13,6 +13,7 @@ class CreateWalletsTable extends Migration {
 	public function up()
 	{
 		Schema::create('wallets', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key;
 			$table->decimal('balance', 19, 4);
