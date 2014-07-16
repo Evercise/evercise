@@ -168,7 +168,7 @@ else if (App::environment('production'))
 				'host'      => '127.0.0.1',
 				'database'  => 'EverciseDB_beta_1_4',
 				'username'  => 'root',
-				'password'  => '',
+				'password'  => 'evercise',
 				'charset'   => 'utf8',
 				'collation' => 'utf8_unicode_ci',
 				'prefix'    => '',
