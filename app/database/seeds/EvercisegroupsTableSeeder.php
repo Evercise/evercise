@@ -7,7 +7,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 
 
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        DB::table('everciseGroups')->delete();
+        DB::table('evercisegroups')->delete();
         DB::table('migrate_groups')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
@@ -65,7 +65,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 						]);
 
 						$migrateGroups = DB::table('migrate_groups')->insert(['classInfoId' => $classinfo->classInfoId, 'evercisegroup_id' => $evercisegroup->id]);
-						
+
 
 					}
 					catch (Exception $e)
