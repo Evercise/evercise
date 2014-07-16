@@ -56,6 +56,8 @@ class UsersTableSeeder extends Seeder {
 			        {
 			        	$imageName = 'facebookimage.jpg';
 			        	$url = $user->UheadImageAddress .$user->UheadImageName;
+			        	$newUserRecord->update('image', 'facebookimage.jpg');
+			        	$newUserRecord->save();
 			        }
 			        else
 			        {
