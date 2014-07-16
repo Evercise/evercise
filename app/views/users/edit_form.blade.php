@@ -17,12 +17,12 @@
         @if ($errors->has('last_name'))
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif
-
+        {{--
     	@include('form.textfield', array('fieldname'=>'email', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Your email address', 'fieldtext'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.', 'default'=>$email))
         @if ($errors->has('email'))
             {{ $errors->first('email', '<p class="error-msg">:message</p>')}}
         @endif
-        
+        --}}
         @include('form.phone', array('fieldname'=>'phone', 'placeholder'=>'Add you phone number', 'maxlength'=>32,  'label'=>'Add you phone number', 'fieldtext'=>'(Optional) - Your phone number will never be shared and will only be used to contact you if there is any last minute changes with your classes', 'default_area'=>$area_code, 'default'=>$phone))
         @if ($errors->has('password'))
             {{ $errors->first('password', '<p class="error-msg">:message</p>')}}

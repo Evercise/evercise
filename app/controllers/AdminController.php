@@ -28,13 +28,21 @@ class AdminController extends \BaseController {
 	{
 		$trainer_id = Input::get('trainer');
 
-		$trainer= Trainer::find($trainer_id);
+		try{
+			$trainer= Trainer::find($trainer_id);
 
-		$trainer->confirmed = 1;
+			$trainer->confirmed = 1;
 
-		$trainer->save();
+			$trainer->save();
 
-		return Redirect::route('admin.pending');
+			return Redirect::route('admin.pending');
+		}
+		catch(Exception $e)
+		{
+			return $e;
+		}
+
+		
 	}
 
 	public function pendingWithdrawal()

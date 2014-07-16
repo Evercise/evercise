@@ -2,14 +2,18 @@
  
 class Functions {
  
-    public static function getPosition()
+    public static function getPosition($address = null)
     {
-        $query = Request::getClientIp();
+        if (is_null($address)) {
+            $query = Request::getClientIp();
 
-        if ($query = '127.0.0.1' || $query = null) {
-            $query = '151.237.238.126';
-           // $query = '10 rue Gambetta, Paris, France';
+            if ($query = '127.0.0.1' || $query = null) {
+                $query = '151.237.238.126'; /* london office? */
+            }
+        }else{
+            $query = $address;
         }
+        
 
         $geocoder = new \Geocoder\Geocoder();
         $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
@@ -27,12 +31,13 @@ class Functions {
         try {
             $geocode = $geocoder->geocode($query);
         } catch (Exception $e) {
-            //return $query;
+             $geocode = $geocoder->geocode('london');
         }   
 
+        /* catch should pick this up
         if ($geocode->getLatitude() == 0 && $geocode->getLongitude() == 0) {
            $geocode = $geocoder->geocode('london');
-        }
+        }*/
 
         return $geocode;
     }

@@ -183,7 +183,8 @@ class TrainersController extends \BaseController {
 					->where('user_id', $id)
 					->first();
 
-		$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
+		$evercisegroups = Evercisegroup::has('evercisesession')
+			->with('evercisesession')
 			->with('venue')
 			->where('user_id', $trainer->user->id)->get();
 
@@ -208,7 +209,8 @@ class TrainersController extends \BaseController {
 	    	$ratings = [];
 	    }
 		
-
+	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
+	    
 		return View::make('trainers.show')
 				//->with('userTrainer', $userTrainer)
 				->with('trainer', $trainer)

@@ -27,15 +27,6 @@ class EvercisegroupsTableSeeder extends Seeder {
 					'payment_method'=>'old',
 				]);
 
-
-				$payment = Sessionpayment::create([
-					'user_id'=>$newUser->id,
-					'evercisesession_id'=>$joingroup->groupId,
-					'total'=>$joingroup->userPaid,
-					'total_after_fees'=>$joingroup->userPaid,
-					'commission'=>0,
-					'processed'=>1,
-				]);
 			}
 		}
 	}

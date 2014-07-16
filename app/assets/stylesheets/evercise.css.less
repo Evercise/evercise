@@ -845,8 +845,9 @@ nav{
 		color: @black;
 		margin: 5px 0 15px;
 	}
-	p{
+	p,li{
 		.font-size(1.4);
+		margin-bottom: 7px;
 	}
 	hr{
 		border:none;
@@ -1006,7 +1007,7 @@ nav{
 		
 }
 
-.four_step(@img: 50%;){
+.four_step(@img: 50%){
 	float: left;
 	width: 25%;
 	h6{
@@ -1020,12 +1021,15 @@ nav{
 	}
 	ul{
 		padding: 17px 0px;
-		margin: 0 50px;
+		margin: 0 10px 0 50px;
 		border-bottom: 1px solid @grey;
+		height: 180px;
 		li{
 			background: url(/img/bullet.png) no-repeat left 7px;
 			padding-left: 17px;
 			display: block;
+			.font-size(1.4);
+			margin-bottom: 7px;
 		}
 	}
 }	

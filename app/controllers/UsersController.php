@@ -84,8 +84,8 @@ class UsersController extends \BaseController {
 			Input::all(),
 			[
 				'display_name' => 'required|max:20|min:5|unique:users',
-				'first_name' => 'required|max:50|min:3',
-				'last_name' => 'required|max:50|min:3',
+				'first_name' => 'required|max:15|min:3|alpha',
+				'last_name' => 'required|max:15|min:3|alpha',
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email|unique:users',
 				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
@@ -352,6 +352,26 @@ class UsersController extends \BaseController {
 
 	}
 
+	public function makeUserDir($user)
+	{
+        $path = public_path().'/profiles/'.date('Y-m');
+        $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
+		try
+		{
+
+
+	        if(!file_exists($path)) File::makeDirectory($path);
+	        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
+
+	        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
+		}
+		catch (Exception $e)
+		{
+			return Redirect::route('home')->with('errorNotification', 'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com');
+		}
+
+
+	}
 
 	/**
 	 * Display the specified resource.
@@ -392,14 +412,20 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
+		$dt = new DateTime();
+		$before = $dt->sub(new DateInterval('P16Y'));
+		$dateBefore=  $before->format('Y-m-d');
+		$after = $dt->sub(new DateInterval('P104Y'));	
+		$dateAfter=  $after->format('Y-m-d');
+
 
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'first_name' => 'required|max:50|min:2',
-				'last_name' => 'required|max:50|min:2',
-				'dob' => 'required',
-				'email' => 'required|email',
+				'first_name' => 'required|max:15|min:3|alpha',
+				'last_name' => 'required|max:15|min:3|alpha',
+				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
+				//'email' => 'required|email',
 				'phone' => 'numeric',
 				// 'old_password' => 'required',
 				// 'new_password' => 'confirmed',
@@ -429,7 +455,7 @@ class UsersController extends \BaseController {
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
 			$dob = Input::get('dob');
-			$email = Input::get('email');
+			//$email = Input::get('email');
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
 			$image = Input::get('thumbFilename');
@@ -445,7 +471,7 @@ class UsersController extends \BaseController {
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'dob' => $dob,
-				'email' => $email,
+				//'email' => $email,
 				'gender' => $gender,
 				'image' => $image,
 				'area_code' => $area_code,
@@ -491,6 +517,8 @@ class UsersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	/*
+	removed from current site but may return
 	public function activate($display_name, $code)
 	{
 		$user = 0;
@@ -522,6 +550,7 @@ class UsersController extends \BaseController {
 	    }
 
 	}
+	*/
 
 	/**
 	 * Activate the user using the emailed hash
@@ -697,18 +726,15 @@ class UsersController extends \BaseController {
 
 			    if ($user->checkResetPasswordCode($code))
 			    {
+			    	$success = $user->attemptResetPassword($code, $password);
 
-
-			        // Attempt to reset the user password
-			        if ($user->attemptResetPassword($code, $password))
-			        {
-			        	$success = true;
-			        }
 			    }
 			}
 			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 			{
 			    //return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
+				Session::flash('errorNotification', 'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com');
+		    		return Response::json(route('home'));
 			}
 			if ($success)
 			{

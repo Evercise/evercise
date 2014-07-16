@@ -139,7 +139,7 @@ class PaypalPaymentController extends BaseController {
                         array(
                             'amount' => $amountToPay,
                             'currency' => 'GBP',
-                            'Description' => 'Test Purchase for a penny'
+                            'Description' => $evercisegroup->name
                         )
                 )->send();
 
