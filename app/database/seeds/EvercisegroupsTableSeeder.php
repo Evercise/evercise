@@ -65,6 +65,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 						]);
 
 						$migrateGroups = DB::table('migrate_groups')->insert(['classInfoId' => $classinfo->classInfoId, 'evercisegroup_id' => $evercisegroup->id]);
+						$migrateGroups->save();
 
 					}
 					catch (Exception $e)
