@@ -52,15 +52,20 @@ class UsersTableSeeder extends Seeder {
 			        $newUserRecord->makeUserDir();
 			        $newUserRecord->save();
 
-					$url = 'http://evercise.com/'.$user->UheadImageAddress.'/'.$user->UheadImageName;
-			        //$this->command->info('retrieving image: '.$url);
-			        $savePath = public_path().'/profiles/'.$newUserRecord->directory.'/'.$newUserRecord->image;
-			        $this->command->info('saving image: '.$savePath);
-
 			        if ($user->UheadImageAddress == 'https://graph.facebook.com/')
 			        {
-			        	$url = $user->UheadImageAddress . $user->UheadImageName;
+			        	$imageName = 'facebookimage.jpg';
+			        	$url = $user->UheadImageAddress .$user->UheadImageName;
 			        }
+			        else
+			        {
+			        	$imageName = $user->UheadImageName;
+						$url = 'http://evercise.com/'.$user->UheadImageAddress.'/'.$imageName;
+					}
+			        //$this->command->info('retrieving image: '.$url);
+			        $savePath = public_path().'/profiles/'.$newUserRecord->directory.'/'.$imageName;
+			        $this->command->info('saving image: '.$savePath);
+
 
 					try
 					{
