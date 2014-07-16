@@ -8,7 +8,7 @@
 
 	@if(isset($title))
 		<div class="class-block-header block-inner">
-			<h3>{{ $title }}</h3>
+			<h3>{{ Str::limit($title, 21) }}</h3>
 		</div>
 		
 	@endif
