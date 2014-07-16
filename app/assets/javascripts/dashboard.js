@@ -57,7 +57,9 @@ function initDashboardPanel()
 
     $('.btn-leave-session , .refund').click(function(){
 
-        var url = $(this).data('href');
+        var url = $(this).attr('href');
+
+
         trace(url);
         $.ajax({
             url: url,
@@ -66,7 +68,7 @@ function initDashboardPanel()
         })
         .done(
             function(data) {
-                //trace('id: '+ data);
+                trace(data);
                 $('.mask').show();
                 $('.container').append(data);
                 initPut();
