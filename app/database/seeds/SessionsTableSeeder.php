@@ -23,7 +23,7 @@ class SessionsTableSeeder extends Seeder {
 			// classDatetimeEmailedParticipantList
 			// classDatetimeFeatured
 
-			$classinfo = DB::connection('mysql_import')->table('classInfo')->where('classInfoId', $classdatetime->classInfoId)->first();
+			$classinfo = DB::connection('mysql_import')->table('classinfo')->where('classInfoId', $classdatetime->classInfoId)->first();
 
 			$evercisegroupId = DB::connection('mysql_import')->table('migrate_groups')->where('classInfoId', $classdatetime->classInfoId)->pluck('evercisegroup_id');
 
