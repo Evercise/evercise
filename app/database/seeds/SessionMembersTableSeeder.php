@@ -18,14 +18,22 @@ class SessionMembersTableSeeder extends Seeder {
 				$userEmail = $user->Uemail;
 				$newUser = User::where('email', $userEmail)->first();
 
-				$newMember = Sessionmember::create([
-					'user_id'=>$newUser->id,
-					'evercisesession_id'=>$joingroup->groupId,
-					'token'=>$joingroup->groupToken,
-					'transaction_id'=>$joingroup->groupTransactionId,
-					'payer_id'=>$joingroup->groupPaymentId,
-					'payment_method'=>'old',
-				]);
+				try
+				{
+					$newMember = Sessionmember::create([
+						'user_id'=>$newUser->id,
+						'evercisesession_id'=>$joingroup->groupId,
+						'token'=>$joingroup->groupToken,
+						'transaction_id'=>$joingroup->groupTransactionId,
+						'payer_id'=>$joingroup->groupPaymentId,
+						'payment_method'=>'old',
+					]);
+				}
+				catch (Exception $e)
+				{
+					$this->command->info('Cannot make sessionmember. evercisesession_id: '.$joingroup->groupId);
+					
+				}
 
 			}
 		}

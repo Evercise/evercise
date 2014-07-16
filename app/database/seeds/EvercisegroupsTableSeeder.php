@@ -11,7 +11,7 @@ class EvercisegroupsTableSeeder extends Seeder {
         DB::table('migrate_groups')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
-		$classinfos = DB::connection('mysql_import')->table('classinfo')->get();
+		$classinfos = DB::connection('mysql_import')->table('classinfo')->where('classInfoPublished', 1)->get();
 
 		foreach ($classinfos as $classinfo)
 		{
