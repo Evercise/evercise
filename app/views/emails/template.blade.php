@@ -766,6 +766,50 @@
                             @endif
                             <tr>
                                 <td align="center" valign="top">
+                                    <!-- BEGIN signiture // -->
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
+                                        <tr>
+                                            <td align="center" valign="top">
+                                                <table border="0" cellpadding="0" cellspacing="0" width="600" class="templateContainer">
+                                                    <tr>
+                                                        <td valign="top" class="bodyContainer" style="padding-top:10px; padding-bottom:10px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock">
+														    <tbody class="mcnTextBlockOuter">
+														        <tr>
+														            <td valign="top" class="mcnTextBlockInner">
+														                
+														                <table align="left" border="0" cellpadding="0" cellspacing="0" width="600" class="mcnTextContentContainer">
+														                    <tbody>
+														                    	<tr>
+														                        
+															                        <td valign="top" class="mcnTextContent" style="padding: 9px 18px; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
+
+															                        	<p>Feel free to call or email us with any questions. We&apos;re always happy to help.</p>
+															                            <p><i>phone:</i> +44(0)2072 537000</p>
+															                            <p><i>email: </i> contact@evercise.com</p>
+																						<p>Best,</p>
+																						<p>The evercise team</p>
+																						{{ HTML::linkRoute('home', 'evercise.com'); }}
+
+															                        </td>
+															                    </tr>
+														                	</tbody>
+														                </table>
+														                
+														            </td>
+														        </tr>
+														    </tbody>
+														</table>
+														</td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // END signiture -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top">
                                     <!-- BEGIN FOOTER // -->
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateFooter">
                                         <tr>
