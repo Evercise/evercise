@@ -65,6 +65,17 @@ if (App::environment('local'))
 				'prefix'    => '',
 			),
 
+			'mysql_import' => array(
+				'driver'    => 'mysql',
+				'host'      => '127.0.0.1',
+				'database'  => 'evercise_import',
+				'username'  => 'root',
+				'password'  => '',
+				'charset'   => 'utf8',
+				'collation' => 'utf8_unicode_ci',
+				'prefix'    => '',
+			),
+
 			'pgsql' => array(
 				'driver'   => 'pgsql',
 				'host'     => 'localhost',

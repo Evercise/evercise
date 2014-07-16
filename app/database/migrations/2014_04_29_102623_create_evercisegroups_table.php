@@ -18,7 +18,7 @@ class CreateEvercisegroupsTable extends Migration {
 			$table->integer('category_id')->unsigned();// Foreign key
 			$table->integer('venue_id')->unsigned();// Foreign key
 			$table->string('name', 45);
-			$table->string('title', 45);
+			$table->string('title', 255);
 			$table->string('description', 255);
 			$table->tinyInteger('gender');
 			$table->string('image', 100);

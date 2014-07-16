@@ -180,7 +180,7 @@ class UsersController extends \BaseController {
 		            ));
 		            
 
-					$this->makeUserDir($user);
+					User::find($user->id)->makeUserDir();
 
 					$user->save();
 
@@ -274,7 +274,7 @@ class UsersController extends \BaseController {
 		            'password' => $password
 		        ));
 
-				$this->makeUserDir($user);
+				User::find($user->id)->makeUserDir();
 				
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';
@@ -352,29 +352,6 @@ class UsersController extends \BaseController {
 
 	}
 
-	public function makeUserDir($user)
-	{
-        $path = public_path().'/profiles/'.date('Y-m');
-        $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
-		try
-		{
-
-
-	        if(!file_exists($path)) File::makeDirectory($path);
-	        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
-
-	        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
-		}
-		catch (Exception $e)
-		{
-			echo 'Cannot make user folder : '.$path.'<br>';
-			echo 'public_path() : '.public_path().'<br>';
-			echo $e;
-			exit;
-		}
-
-
-	}
 
 	/**
 	 * Display the specified resource.

@@ -123,5 +123,29 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
 
+	public function makeUserDir()
+	{
+		$user = $this;
+
+        $path = public_path().'/profiles/'.date('Y-m');
+        $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
+		try
+		{
+
+
+	        if(!file_exists($path)) File::makeDirectory($path);
+	        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
+
+	        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
+		}
+		catch (Exception $e)
+		{
+			echo 'Cannot make user folder : '.$userFolder.'<br>';
+			echo 'public_path() : '.public_path().'<br>';
+			echo $e;
+		}
+
+		return;
+	}
 
 }

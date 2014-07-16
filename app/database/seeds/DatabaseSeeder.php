@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder {
 		$this->call('SentrySeeder');
                 $this->command->info('Sentry tables seeded!');
 
-        		$this->call('CategoriesTableSeeder');
+                $this->call('CategoriesTableSeeder');
                 $this->command->info('Categories seeded!');
 
-        		$this->call('SpecialitiesTableSeeder');
+        	$this->call('SpecialitiesTableSeeder');
                 $this->command->info('Specialities seeded!');
 
                 $this->call('MarketingpreferencesTableSeeder');
@@ -25,9 +25,6 @@ class DatabaseSeeder extends Seeder {
 
                 $this->call('FacilitiesTableSeeder');
                 $this->command->info('Facilities seeded!');
-
-                $this->call('VenuesTableSeeder');
-                $this->command->info('Venues seeded!');
 
                 $this->call('HistorytypesTableSeeder');
                 $this->command->info('history type seeded!');
@@ -40,6 +37,18 @@ class DatabaseSeeder extends Seeder {
 
                 $this->call('EvercoinsTableSeeder');
                 $this->command->info('evercoins seeded!');
+
+                $this->call('UsersTableSeeder');
+                $this->command->info('Users seeded!');
+
+                $this->call('TrainersTableSeeder');
+                $this->command->info('Trainers seeded!');
+
+                $this->call('EvercisegroupsTableSeeder');
+                $this->command->info('Evercisegroups seeded!');
+
+                $this->call('SessionsTableSeeder');
+                $this->command->info('Sessions seeded!');
 
 	}
 
