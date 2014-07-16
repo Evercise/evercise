@@ -1,6 +1,6 @@
 <?php
 
-class EvercisegroupsTableSeeder extends Seeder {
+class SessionMembersTableSeeder extends Seeder {
 
 	public function run()
 	{

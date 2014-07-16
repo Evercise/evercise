@@ -50,6 +50,9 @@ class DatabaseSeeder extends Seeder {
                 $this->call('SessionsTableSeeder');
                 $this->command->info('Sessions seeded!');
 
+                $this->call('SessionMembersTableSeeder');
+                $this->command->info('SessionMembers seeded!');
+
 	}
 
 }
