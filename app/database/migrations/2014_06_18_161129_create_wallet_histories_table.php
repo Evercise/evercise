@@ -13,6 +13,7 @@ class CreateWalletHistoriesTable extends Migration {
 	public function up()
 	{
 		Schema::create('wallethistory', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key;
 			$table->integer('sessionpayment_id')->unsigned();// Foreign key;

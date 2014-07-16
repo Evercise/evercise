@@ -180,7 +180,7 @@ class UsersController extends \BaseController {
 		            ));
 		            
 
-					$this->makeUserDir($user);
+					User::find($user->id)->makeUserDir();
 
 					$user->save();
 
@@ -274,7 +274,7 @@ class UsersController extends \BaseController {
 		            'password' => $password
 		        ));
 
-				$this->makeUserDir($user);
+				User::find($user->id)->makeUserDir();
 				
 				$path = public_path().'/profiles/'.date('Y-m');
 				$img_filename = 'facebook-image-'.$user->display_name.'-'.date('d-m').'.jpg';

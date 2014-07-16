@@ -13,6 +13,7 @@ class CreateSessionsTable extends Migration {
 	public function up()
 	{
 		Schema::create('evercisesessions', function(Blueprint $table) {
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('evercisegroup_id')->unsigned();// Foreign key
 			$table->timestamp('date_time');
