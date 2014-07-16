@@ -21,7 +21,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 				$newMember = Sessionmember::create([
 					'user_id'=>$newUser->id,
 					'evercisesession_id'=>$joingroup->groupId,
-					'token'=>$joingroup->groupTokenId,
+					'token'=>$joingroup->groupToken,
 					'transaction_id'=>$joingroup->groupTransactionId,
 					'payer_id'=>$joingroup->groupPaymentId,
 					'payment_method'=>'old',
