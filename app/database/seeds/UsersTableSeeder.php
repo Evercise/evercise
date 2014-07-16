@@ -57,6 +57,8 @@ class UsersTableSeeder extends Seeder {
 			        $savePath = public_path().'/profiles/'.$newUserRecord->directory.'/'.$newUserRecord->image;
 			        $this->command->info('saving image: '.$savePath);
 
+			        //if ($user)
+
 					try
 					{
 						$img = file_get_contents($url);
