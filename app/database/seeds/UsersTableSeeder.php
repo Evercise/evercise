@@ -61,7 +61,7 @@ class UsersTableSeeder extends Seeder {
 					catch (Exception $e)
 					{
 						$this->command->info('Cannot make User in DB. '.$e);
-						exit;
+
 					}
 					try
 					{
