@@ -29,6 +29,8 @@ class TrainersTableSeeder extends Seeder {
 						'confirmed'=>1,//$user->UproApplication == 2 ? 1 : 0,
 						'profession'=>$bodyinfo->bodyInfoJobTitle
 					]);
+
+					$wallet = Wallet::create(['user_id'=>$newUser->id, 'balance'=>0, 'previous_balance'=>0]);
 				}
 				else
 				{

@@ -111,7 +111,7 @@ class TrainersController extends \BaseController {
 
 			$trainer = Trainer::create(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
 
-			$wallet = Wallet::create(['user_id'=>$user->id, 'amount'=>0, 'previous_amount'=>0]);
+			$wallet = Wallet::create(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
 
 			// update user image
 
