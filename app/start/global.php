@@ -107,3 +107,4 @@ require app_path().'/composers.php';
 */
 
 require app_path().'/observables.php';
+

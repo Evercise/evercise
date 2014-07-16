@@ -367,10 +367,7 @@ class UsersController extends \BaseController {
 		}
 		catch (Exception $e)
 		{
-			echo 'Cannot make user folder : '.$path.'<br>';
-			echo 'public_path() : '.public_path().'<br>';
-			echo $e;
-			exit;
+			return Redirect::route('home')->with('errorNotification', 'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com');
 		}
 
 
@@ -520,6 +517,8 @@ class UsersController extends \BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	/*
+	removed from current site but may return
 	public function activate($display_name, $code)
 	{
 		$user = 0;
@@ -551,6 +550,7 @@ class UsersController extends \BaseController {
 	    }
 
 	}
+	*/
 
 	/**
 	 * Activate the user using the emailed hash
@@ -726,18 +726,15 @@ class UsersController extends \BaseController {
 
 			    if ($user->checkResetPasswordCode($code))
 			    {
+			    	$success = $user->attemptResetPassword($code, $password);
 
-
-			        // Attempt to reset the user password
-			        if ($user->attemptResetPassword($code, $password))
-			        {
-			        	$success = true;
-			        }
 			    }
 			}
 			catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 			{
 			    //return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
+				Session::flash('errorNotification', 'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com');
+		    		return Response::json(route('home'));
 			}
 			if ($success)
 			{
