@@ -160,12 +160,6 @@ Event::listen('illuminate.query', function($sql)
 */
 
 
-Route::get('/user_marketingpreferences', function()
-{
-    $user = User::find(2);
-    return $user->marketingpreferences()->where('name', 'newsletter')->first()['option'];
-});
-
 Route::get('/email_test', function(){
     return View::make('emails.template')
     ->with('title', 'my test email')
