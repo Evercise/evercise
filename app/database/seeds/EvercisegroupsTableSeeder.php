@@ -49,7 +49,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 
 					try
 					{
-						$evercisegroup = EverciseGroup::create([
+						$evercisegroup = Evercisegroup::create([
 							'user_id' => $newUser->id,
 							'category_id' => $classinfo->classInfoCategory,
 							'venue_id' => $venueId,
