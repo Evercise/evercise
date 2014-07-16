@@ -50,8 +50,8 @@
 					{{ HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon')); }}
 				</div>
 				<div class="inner-float">
-					<li>{{ $venue->name }}</li>
-					<li>{{ $venue->address }}</li>
+					<li>{{ Str::limit($venue->name, 31) }}</li>
+					<li>{{ Str::limit($venue->address, 31)  }}</li>
 					<li>{{ $venue->town }}, {{ $venue->postcode }}</li>
 				</div>
 			</div>
