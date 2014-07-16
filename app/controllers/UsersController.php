@@ -40,7 +40,7 @@ class UsersController extends \BaseController {
 	{
 
 		$dt = new DateTime();
-		$before = $dt->sub(new DateInterval('P14Y'));
+		$before = $dt->sub(new DateInterval('P16Y'));
 		$dateBefore=  $before->format('Y-m-d');
 		$after = $dt->sub(new DateInterval('P104Y'));	
 		$dateAfter=  $after->format('Y-m-d');
@@ -416,7 +416,7 @@ class UsersController extends \BaseController {
 	public function update($id)
 	{
 		$dt = new DateTime();
-		$before = $dt->sub(new DateInterval('P14Y'));
+		$before = $dt->sub(new DateInterval('P16Y'));
 		$dateBefore=  $before->format('Y-m-d');
 		$after = $dt->sub(new DateInterval('P104Y'));	
 		$dateAfter=  $after->format('Y-m-d');

@@ -183,7 +183,7 @@ class TrainersController extends \BaseController {
 					->where('user_id', $id)
 					->first();
 
-		$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
+		$evercisegroups = Evercisegroup::with('evercisesession')
 			->with('venue')
 			->where('user_id', $trainer->user->id)->get();
 
