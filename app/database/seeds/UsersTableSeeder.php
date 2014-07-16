@@ -56,10 +56,10 @@ class UsersTableSeeder extends Seeder {
 			        //$this->command->info('retrieving image: '.$url);
 			        $savePath = public_path().'/profiles/'.$newUserRecord->directory.'/'.$newUserRecord->image;
 			        $this->command->info('saving image: '.$savePath);
-
-			        /*if ($user->UheadImageAddress == 'https://graph.facebook.com/')
+/*
+			        if ($user->UheadImageAddress == 'https://graph.facebook.com/')
 			        {
-
+			        	
 			        }*/
 
 					try

@@ -8,7 +8,7 @@ class SessionsTableSeeder extends Seeder {
 	public function run()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-        DB::table('everciseSessions')->delete();
+        DB::table('evercisesessions')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
 		$classdatetimes = DB::connection('mysql_import')->table('classdatetime')->get();
