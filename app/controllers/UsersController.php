@@ -428,7 +428,7 @@ class UsersController extends \BaseController {
 				'first_name' => 'required|max:15|min:3|alpha',
 				'last_name' => 'required|max:15|min:3|alpha',
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
-				'email' => 'required|email',
+				//'email' => 'required|email',
 				'phone' => 'numeric',
 				// 'old_password' => 'required',
 				// 'new_password' => 'confirmed',
@@ -458,7 +458,7 @@ class UsersController extends \BaseController {
 			$first_name = Input::get('first_name');
 			$last_name = Input::get('last_name');
 			$dob = Input::get('dob');
-			$email = Input::get('email');
+			//$email = Input::get('email');
 			$gender = Input::get('gender');
 			$newsletter = Input::get('userNewsletter');
 			$image = Input::get('thumbFilename');
@@ -474,7 +474,7 @@ class UsersController extends \BaseController {
 				'first_name' => $first_name,
 				'last_name' => $last_name,
 				'dob' => $dob,
-				'email' => $email,
+				//'email' => $email,
 				'gender' => $gender,
 				'image' => $image,
 				'area_code' => $area_code,
