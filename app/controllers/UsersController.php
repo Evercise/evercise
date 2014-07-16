@@ -40,7 +40,7 @@ class UsersController extends \BaseController {
 	{
 
 		$dt = new DateTime();
-		$before = $dt->sub(new DateInterval('P16Y'));
+		$before = $dt->sub(new DateInterval('P14Y'));
 		$dateBefore=  $before->format('Y-m-d');
 		$after = $dt->sub(new DateInterval('P104Y'));	
 		$dateAfter=  $after->format('Y-m-d');
@@ -84,8 +84,8 @@ class UsersController extends \BaseController {
 			Input::all(),
 			[
 				'display_name' => 'required|max:20|min:5|unique:users',
-				'first_name' => 'required|max:50|min:3',
-				'last_name' => 'required|max:50|min:3',
+				'first_name' => 'required|max:15|min:3',
+				'last_name' => 'required|max:15|min:3',
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email|unique:users',
 				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
@@ -415,13 +415,19 @@ class UsersController extends \BaseController {
 	 */
 	public function update($id)
 	{
+		$dt = new DateTime();
+		$before = $dt->sub(new DateInterval('P14Y'));
+		$dateBefore=  $before->format('Y-m-d');
+		$after = $dt->sub(new DateInterval('P104Y'));	
+		$dateAfter=  $after->format('Y-m-d');
+
 
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'first_name' => 'required|max:50|min:2',
-				'last_name' => 'required|max:50|min:2',
-				'dob' => 'required',
+				'first_name' => 'required|max:15|min:3|alpha',
+				'last_name' => 'required|max:15|min:3|alpha',
+				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email',
 				'phone' => 'numeric',
 				// 'old_password' => 'required',
