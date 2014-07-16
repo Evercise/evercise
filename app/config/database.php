@@ -162,6 +162,17 @@ else if (App::environment('production'))
 				'collation' => 'utf8_unicode_ci',
 				'prefix'    => '',
 			),
+			
+			'mysql_import' => array(
+				'driver'    => 'mysql',
+				'host'      => '127.0.0.1',
+				'database'  => 'EverciseDB_beta_1_4',
+				'username'  => 'root',
+				'password'  => '',
+				'charset'   => 'utf8',
+				'collation' => 'utf8_unicode_ci',
+				'prefix'    => '',
+			),
 
 			'pgsql' => array(
 				'driver'   => 'pgsql',
