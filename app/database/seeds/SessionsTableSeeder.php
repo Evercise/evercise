@@ -25,7 +25,7 @@ class SessionsTableSeeder extends Seeder {
 
 			$classinfo = DB::connection('mysql_import')->table('classinfo')->where('classInfoId', $classdatetime->classInfoId)->first();
 
-			$evercisegroupId = DB::connection('mysql_import')->table('migrate_groups')->where('classInfoId', $classdatetime->classInfoId)->pluck('evercisegroup_id');
+			$evercisegroupId = DB::table('migrate_groups')->where('classInfoId', $classdatetime->classInfoId)->pluck('evercisegroup_id');
 
 			$evercisegroup = Evercisegroup::find($evercisegroupId);
 			if ($evercisegroup)

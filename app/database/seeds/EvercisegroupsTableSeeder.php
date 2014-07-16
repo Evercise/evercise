@@ -4,9 +4,11 @@ class EvercisegroupsTableSeeder extends Seeder {
 
 	public function run()
 	{
+
+
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('everciseGroups')->delete();
-        DB::connection('mysql_import')->table('migrate_groups')->delete();
+        DB::table('migrate_groups')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
 		$classinfos = DB::connection('mysql_import')->table('classinfo')->get();
@@ -62,7 +64,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 							'published' => 1,
 						]);
 
-						$migrateGroups = DB::connection('mysql_import')->table('migrate_groups')->insert(['classInfoId' => $classinfo->classInfoId, 'evercisegroup_id' => $evercisegroup->id]);
+						$migrateGroups = DB::table('migrate_groups')->insert(['classInfoId' => $classinfo->classInfoId, 'evercisegroup_id' => $evercisegroup->id]);
 
 					}
 					catch (Exception $e)
