@@ -52,7 +52,7 @@
 				<div class="inner-float">
 					<li>{{ Str::limit($venue->name, 31) }}</li>
 					<li>{{ Str::limit($venue->address, 31)  }}</li>
-					<li>{{ $venue->town }}, {{ $venue->postcode }}</li>
+					<li>{{ Str::limit($venue->town, 20)   }}, {{ Str::limit($venue->postcode, 8) }}</li>
 				</div>
 			</div>
 		@endif
