@@ -125,10 +125,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	public function makeUserDir()
 	{
-		$user = $this;
-
         $path = public_path().'/profiles/'.date('Y-m');
-        $userFolder = $path.'/'.$user->id.'_'.$user->display_name;
+        $userFolder = $path.'/'.$this->id.'_'.$this->display_name;
 		try
 		{
 
@@ -136,8 +134,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	        if(!file_exists($path)) File::makeDirectory($path);
 	        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
 
-	        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
-	        $user->save();
+	        $this->directory = date('Y-m').'/'.$this->id.'_'.$this->display_name;
+	        $this->save();
 		}
 		catch (Exception $e)
 		{
