@@ -21,7 +21,7 @@
 	<div class="search-box">
 		<div class="container-full">
 			<div class="search-box-wrap">
-				<h4>Search for a class or instructor near you</h4>
+				<h4>Search for a classes near you</h4>
 				@include('evercisegroups.refine')
 			</div>
 			
