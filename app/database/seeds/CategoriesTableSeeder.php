@@ -13,6 +13,7 @@ class CategoriesTableSeeder extends Seeder {
         Category::create(array('name' => 'Healthy Living', 'description' => 'Do you want to learn about nutritional, physical, emotional and spiritual practices and how to balance these factors in order to achieve a healthy lifestyle? Find therapists, practitioners, dieticians and trainers to help you strike the balance!'));
         Category::create(array('name' => 'Nutrition', 'description' => 'Find nutritional specialists who will help you learn what, how and when to eat in order to boost your energy levels and achieve maximum health and fitness. Get nutritional advice from the experts and learn healthy recipes.'));
         Category::create(array('name' => 'Injury Recovery', 'description' => 'Is your goal to recover from an injury? Would you benefit from physiotherapy, or would you like to learn exercise techniques to overcome damage to the body, and the safest ways to exercise without aggravating an injury? Find specialists who offer expert training and advice.'));
+        Category::create(array('name' => 'Injury Recovery', 'description' => 'awaiting details'));
 
 
 	}

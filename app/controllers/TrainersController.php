@@ -129,7 +129,7 @@ class TrainersController extends \BaseController {
 
 			// welcome email
 
-			Event::fire('user.upgrade', array(
+			Event::fire('user.confirm', array(
             	'email' => $user->email, 
             	'display_name' => $user->display_name
             ));

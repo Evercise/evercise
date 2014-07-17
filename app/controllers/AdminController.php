@@ -29,11 +29,18 @@ class AdminController extends \BaseController {
 		$trainer_id = Input::get('trainer');
 
 		try{
-			$trainer= Trainer::find($trainer_id);
+			$user= User::whereHas('trainer', function($query) use (&$trainer_id)
+			{
+				$query->where('id', $trainer_id );
+			})->first();
 
-			$trainer->confirmed = 1;
 
-			$trainer->save();
+			$trainer = Trainer::where('user_id', $user->id)->update(['confirmed' =>1]);
+
+			Event::fire('user.upgrade', array(
+            	'email' => $user->email, 
+            	'display_name' => $user->display_name
+            ));
 
 			return Redirect::route('admin.pending');
 		}

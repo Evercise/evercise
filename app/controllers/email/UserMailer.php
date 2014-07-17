@@ -17,7 +17,7 @@ class UserMailer extends Mailer {
 		$events->listen('user.forgot',      'email\UserMailer@forgotPassword');
 		$events->listen('user.newpassword', 'email\UserMailer@newPassword');
 		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
-
+		$events->listen('user.confirm', 'email\UserMailer@trainer_confirm');
 		$events->listen('referral.invite', 'email\UserMailer@invite');
 	}
 
@@ -63,7 +63,7 @@ class UserMailer extends Mailer {
 	public function welcome_fb($email, $display_name, $password)
 	{
 		$body = '
-			<p>Here is your unique password: {{$password }} - you can change this at amy time</p>
+			<p>Here is your unique password: '.$password .' - you can change this at amy time</p>
 			<p>You now have access to a huge range of fitness classes and trainers operating at multiple locations!</p>
 			<br>
 			<p>Here are a few tips to get you started.</p>
@@ -159,16 +159,16 @@ class UserMailer extends Mailer {
 	public function upgrade($email, $display_name)
 	{
 		$body = '
-			<p>Here is your unique password: '.$password.'  - you can change this at amy time</p>
-			<p>You now have access to a huge range of fitness classes and trainers operating at multiple locations!</p>
-			<br>
 			<p>Here are a few tips to get you started.</p>
-			<br>
-			<ul>
-				<li><strong>Search fitness classes:</strong> Simply click “discover classes” on the navigation bar, then search by category or location.</li>
-				<li><strong>Sign up to a class online:</strong> Click on the class panel and you will see a list of sessions. Choose the time and date you want, and pay for the class online.</li>
-				<li><strong>Show up and shape up:</strong> Make sure you know where to go, at what time you should arrive, how to dress appropriately for the class and if you should bring anything e.g. water.</li>
-				<li><strong>Rate and review:</strong> Once you have taken a class, help improve Evercise by rating the class and reviewing your experience.</li>
+			<p>
+				<li><strong>Create classes: </strong> : Simply click “class hub” on the navigation bar, then “create a new class”. Add all the class details and a photo to represent it. Choose a category so your class is easily searchable. Add your venues, which will appear in a drop down menu the next time you create a class.</li>
+				<li><strong>Manage classes online:</strong> View participant lists and easily contact those who have joined. You can delete a class up until it has its first participant. View class statistics onthe class hub page, so that you can monitor the progress and success of a class.
+				</li>
+				<li><strong>Run classes at your chosen location: </strong>Make sure all of your participants know where to go, at what time they should arrive, how to dress appropriately for the class and if they should bring anything e.g. water
+				</li>
+				<li><strong>Get Rated:</strong>Be sure to ask participants to rate you after a class so that you can build a reputation and gain trust within the Evercise community!
+				</li>
+			</p>
 		';
 		
 
@@ -178,11 +178,36 @@ class UserMailer extends Mailer {
 		$data['mainHeader'] = 'Congratulations, '.$display_name.', you are now an Evercise trainer!';
 		$data['subHeader'] = 'Why not join some classes right away?';
 		$data['body'] = $body;
-		$data['link'] = HTML::linkRoute('evercisegroups.search', 'Discover classes');
-		$data['linkLabel'] = 'Search for classes near you:';
+		$data['link'] = HTML::linkRoute('home', 'evercise');
+		$data['linkLabel'] = 'Start creating classes:';
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
+
+	public function trainer_confirm($email, $display_name)
+	{
+		$body = '
+			<p>Hi '.$display_name.'</p>
+			<p>We are delighted you have decided to become an Evercise trainer! You can start creating classes straight away, but these will only become visible to the public once your application has been processed. This should take no longer than 48 hours.
+			</p>
+			<p>
+				Thanks for your patience
+			</p>
+		';
+		
+
+		$subject = 'Evercise trainer verification';
+		$view = 'emails.template';
+		$data['title'] = 'Evercise trainer verification';
+		$data['mainHeader'] = 'Great to have you on board!';
+		$data['subHeader'] = 'Your application is being processed';
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('home', 'evercise');
+		$data['linkLabel'] = 'Start creating classes:';
+
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
 
 
 	public function invite($email, $referralCode, $referrerName)
@@ -193,7 +218,7 @@ class UserMailer extends Mailer {
 		<p>
 		May we introduce you to Evercise? We offer the perfect solution for those wanting to keep fit with maximum flexibility. It&apos;s simple:
 		</p>
-		
+
 		<p>
 			<li>Search a huge range of fitness classes by type or location</li>
 			<li>Purchase classes online (you can do this on a class by class basis)</li>
