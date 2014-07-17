@@ -55,6 +55,7 @@ function showResponse(response, statusText, xhr, form)  {
         $('#upload').attr('action', response.postCrop);
         $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
 
+        trace('img_url= '+response.image_url);
         $('#img_url').val(response.image_url);
 
         initCrop(ratio);
@@ -101,7 +102,7 @@ function preview(img, selection) {
 
 function saveCroppedImage(img, selection)
 {
-    trace('saveCroppedImage'+selection.width+' : '+img.src)
+    trace('saveCroppedImage'+selection.width+' : '+img.src);
     $('#width').val(selection.width);
     $('#height').val(selection.height);
     $('#pos_x').val(selection.x1);
