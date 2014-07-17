@@ -18,8 +18,8 @@
 |
 */
 
-//require __DIR__.'/../bootstrap/autoload.php';
-require __DIR__.'/../../evercise/bootstrap/autoload.php'; //Production
+require __DIR__.'/../bootstrap/autoload.php';
+//require __DIR__.'/../../evercise/bootstrap/autoload.php'; //Production
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +34,8 @@ require __DIR__.'/../../evercise/bootstrap/autoload.php'; //Production
 */
 
 
-//$app = require_once __DIR__.'/../bootstrap/start.php';
-$app = require_once __DIR__.'/../../evercise/bootstrap/start.php'; //Production
+$app = require_once __DIR__.'/../bootstrap/start.php';
+//$app = require_once __DIR__.'/../../evercise/bootstrap/start.php'; //Production
 
 /*
 |--------------------------------------------------------------------------

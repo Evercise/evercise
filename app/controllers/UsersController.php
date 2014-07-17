@@ -168,19 +168,21 @@ class UsersController extends \BaseController {
 			
 
 			if($user) {
+
+        		$activation_code = $user->getActivationCode();
+				
+				Event::fire('user.signup', array(
+	            	'email' => $user->email, 
+	            	'display_name' => $user->display_name, 
+	                'activationCode' => $activation_code
+	            ));
+	            
+
+				User::find($user->id)->makeUserDir();
+
 				if(Request::ajax())
 	        	{
 
-	        		$activation_code = $user->getActivationCode();
-					
-					Event::fire('user.signup', array(
-		            	'email' => $user->email, 
-		            	'display_name' => $user->display_name, 
-		                'activationCode' => $activation_code
-		            ));
-		            
-
-					User::find($user->id)->makeUserDir();
 
 					$user->save();
 
