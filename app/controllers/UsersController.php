@@ -169,7 +169,7 @@ class UsersController extends \BaseController {
 
 			if($user) {
 
-        		//$activation_code = $user->getActivationCode();
+        		$activation_code = $user->getActivationCode();
 				
 				Event::fire('user.signup', array(
 	            	'email' => $user->email, 
