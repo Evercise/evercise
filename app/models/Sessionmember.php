@@ -1,6 +1,7 @@
 <?php
 
 class Sessionmember extends \Eloquent {
+	protected $fillable = ['user_id', 'evercisesession_id', 'token', 'transaction_id', 'payer_id', 'payment_method'];
 	/**
 	 * The database table used by the model.
 	 *
