@@ -11,7 +11,7 @@ class RefineComposer {
   	$selectedTypes = Input::get('category');
   	$selectedLocation = Input::get('location');
 
-    $types = ['0' => 'Im looking for..'] + $types;
+    $types = [ null => 'Im looking for..'] + $types;
 
   	//$types[null] = 'All';
 
