@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder {
                 $this->call('UsersTableSeeder');
                 $this->command->info('Users seeded!');
 
-               $this->call('TrainersTableSeeder');
+/*                $this->call('TrainersTableSeeder');
                 $this->command->info('Trainers seeded!');
 
                 $this->call('EvercisegroupsTableSeeder');
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder {
                 $this->command->info('Sessions seeded!');
 
                 $this->call('SessionMembersTableSeeder');
-                $this->command->info('SessionMembers seeded!');
+                $this->command->info('SessionMembers seeded!');*/
 
 	}
 
