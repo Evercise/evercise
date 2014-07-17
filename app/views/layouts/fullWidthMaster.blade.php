@@ -12,7 +12,7 @@
 	{{ javascript_include_tag() }}
 
 </head>
-<body>
+<body class="full-width-body">
 		<div class="container-full">
 	
 
