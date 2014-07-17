@@ -30,6 +30,17 @@ class TrainersTableSeeder extends Seeder {
 						'profession'=>$bodyinfo->bodyInfoJobTitle
 					]);
 
+					try
+					{
+						$sentryUser = Sentry::getUserProvider()->findById($newUser->id);
+						$userGroup = Sentry::findGroupById(3);
+						$sentryUser->addGroup($userGroup);
+					}
+					catch (Exception $e)
+					{
+						$this->command->info('Cannot add trainer to group '.$e);
+					}
+
 					$wallet = Wallet::create(['user_id'=>$newUser->id, 'balance'=>0, 'previous_balance'=>0]);
 				}
 				else

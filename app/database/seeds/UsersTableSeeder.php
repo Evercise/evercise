@@ -52,12 +52,16 @@ class UsersTableSeeder extends Seeder {
 				            'directory'    => '',
 				            'image'    => '',
 				        ));
+
+						$userGroup = Sentry::findGroupById(1);
+						$newUser->addGroup($userGroup);
 				    }
 					catch (UserExistsException $e)
 					{
 						$this->command->info('user exists');
 						
 					}
+			
 					catch (Exception $e)
 					{
 						$this->command->info('Cannot make User in DB. '.$e);
