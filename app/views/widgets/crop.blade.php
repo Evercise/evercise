@@ -7,7 +7,7 @@
 	{{ Form::hidden( 'width' , 500, array('id' => 'width')) }}
 	{{ Form::hidden( 'height' , 500, array('id' => 'height')) }}
 	{{ Form::hidden( 'img_url' , null, array('id' => 'img_url')) }}
-	{{ Form::hidden( 'img_height' , null, array('id' => 'img_height')) }}
+	{{ Form::hidden( 'img_height' , 500, array('id' => 'img_height')) }}
 
 	{{ Form::submit('Save' , array('class'=>'btn-yellow')) }}
         
