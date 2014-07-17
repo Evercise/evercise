@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'api_key' => 'sk_test_BWydFkA5fh82K7hnh3r06k9U',
+	'api_key' => 'sk_live_uVDeMzMgfoDJ5pCUStKXLxgX',
 
-	'publishable_key' => 'pk_test_PfVE2js4RQeuZAWPyHIhw3wY'
+	'publishable_key' => 'pk_live_6Gp6i32byjL7XYaAaqKKs48d'
 );

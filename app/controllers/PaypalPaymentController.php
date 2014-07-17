@@ -60,10 +60,10 @@ class PaypalPaymentController extends BaseController {
 
 
      $gateway = Omnipay::create('PayPal_Express');
-     $gateway->setUsername('fee_api1.evercise.com');
-     $gateway->setPassword('1382538555');
-     $gateway->setSignature('Aodo9BslGbWevZQXif8dMUdeGkPiAViLGU1nZKk2LGHUbAj0M5jbw84L');
-     $gateway->setTestMode(true);
+     $gateway->setUsername('evercise.info_api1.gmail.com');
+     $gateway->setPassword('H2HGKAYP5A38P7TJ');
+     $gateway->setSignature('AiPC9BjkCyDFQXbSkoZcgqH3hpacArhVam-NDXjgAOd7UFYdySpW9nkW');
+     $gateway->setTestMode(false);
 
      $response = $gateway->purchase(
                 array(
@@ -130,10 +130,10 @@ class PaypalPaymentController extends BaseController {
 
 
         $gateway = Omnipay::create('PayPal_Express');
-        $gateway->setUsername('fee_api1.evercise.com');
-        $gateway->setPassword('1382538555');
-        $gateway->setSignature('Aodo9BslGbWevZQXif8dMUdeGkPiAViLGU1nZKk2LGHUbAj0M5jbw84L');
-        $gateway->setTestMode(true);
+        $gateway->setUsername('evercise.info_api1.gmail.com');
+         $gateway->setPassword('H2HGKAYP5A38P7TJ');
+         $gateway->setSignature('AiPC9BjkCyDFQXbSkoZcgqH3hpacArhVam-NDXjgAOd7UFYdySpW9nkW');
+         $gateway->setTestMode(false);
 
         $response = $gateway->completePurchase(
                         array(

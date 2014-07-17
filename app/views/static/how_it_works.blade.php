@@ -69,7 +69,7 @@
 						</div>
 						<div class="tab-body" id="search">
 							<div class="tab-screen">
-								{{ HTML::image('img/register.png','register as trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/User - Step1.png','register as trainer', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -83,7 +83,7 @@
 						</div>
 						<div class="tab-body" id="class">
 							<div class="tab-screen">
-								{{ HTML::image('img/Class.png','create classes', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/User - Step 2 .png','create classes', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
