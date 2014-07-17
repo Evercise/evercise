@@ -81,7 +81,6 @@ class UsersTableSeeder extends Seeder {
 	/*			        	$this->command->info($user->UheadImageAddress);
 				        	exit;*/
 
-				        //if ($user->UheadImageAddress == 'https://graph.facebook.com/')
 				        if (strpos($user->UheadImageAddress,'https://graph.facebook.com') !== false)
 				        {
 				        	

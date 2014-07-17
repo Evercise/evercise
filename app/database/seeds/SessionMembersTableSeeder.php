@@ -13,7 +13,7 @@ class SessionMembersTableSeeder extends Seeder {
 		foreach ($joingroups as $joingroup)
 		{
 			$user = DB::connection('mysql_import')->table('user')->where('Uid', $joingroup->Uid)->first();
-			if($user)
+			if($user && $joingroup->groupToken !== '666')
 			{
 				$userEmail = $user->Uemail;
 				$newUser = User::where('email', $userEmail)->first();
