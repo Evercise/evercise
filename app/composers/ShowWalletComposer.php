@@ -21,11 +21,17 @@ class ShowWalletComposer {
       $earningsLastMonth = (float)0.00;
 
       foreach ($history as $key => $record) {
-        if ( $record->created_at >= date('Y-m-d H:i:s', strtotime('-1 months')) ) {
-          $earningsThisMonth = $earningsThisMonth + $record->transaction_amount;
+        if ( $record->created_at >= date('Y-m-d H:i:s', strtotime('-1 months'))) {
+          if ( $record->transaction_amount > 0)
+          {
+            $earningsThisMonth += $record->transaction_amount;
+          }
         }
         if ($record->created_at >= date('Y-m-d H:i:s', strtotime('-2 months')) && $record->created_at < date('Y-m-d H:i:s', strtotime('-1 months'))) {
-           $earningsLastMonth = $earningsLastMonth + $record->transaction_amount;
+          if ( $record->transaction_amount > 0)
+          {
+            $earningsLastMonth += $record->transaction_amount;
+          }
         }
         
       }
