@@ -9,6 +9,7 @@ class SessionsTableSeeder extends Seeder {
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('evercisesessions')->delete();
+        DB::table('migrate_sessions')->delete();
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 
 		$classdatetimes = DB::connection('mysql_import')->table('classdatetime')->get();
@@ -49,6 +50,9 @@ class SessionsTableSeeder extends Seeder {
 						'commission'=>0,
 						'processed'=>1,
 					]);
+
+					$migrateGroups = DB::table('migrate_sessions')->insert(['classDatetimeId' => $classdatetime->classDatetimeId, 'evercisesession_id' => $session->id]);
+
 
 				}
 				else

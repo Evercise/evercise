@@ -18,23 +18,27 @@ class SessionMembersTableSeeder extends Seeder {
 				$userEmail = $user->Uemail;
 				$newUser = User::where('email', $userEmail)->first();
 
+				$evercisesessionId = DB::table('migrate_sessions')->where('classDatetimeId', $joingroup->groupId)->pluck('evercisesession_id');
+
 				if (Evercisesession::find($joingroup->groupId))
 				{
+					$newUserId = $newUser->id;
 					try
 					{
 						$newMember = Sessionmember::create([
-							'user_id'=>$newUser->id,
-							'evercisesession_id'=>$joingroup->groupId,
+							'user_id'=>$newUserId,
+							'evercisesession_id'=>$evercisesessionId,
 							'token'=>$joingroup->groupToken,
 							'transaction_id'=>$joingroup->groupTransactionId,
 							'payer_id'=>$joingroup->groupPaymentId,
-							'payment_method'=>'old',
+							'payment_method'=>'old'
 						]);
 					}
 					catch (Exception $e)
 					{
-						$this->command->info('Cannot make sessionmember. evercisesession_id: '.$joingroup->groupId);
-						
+						$this->command->info('Cannot make sessionmember. evercisesession_id: '.$evercisesessionId.', user id: '.$newUserId);
+						//$this->command->info($e);
+						//exit;
 					}
 				}
 			}
