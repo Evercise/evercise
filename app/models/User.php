@@ -137,6 +137,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	        if(!file_exists($userFolder)) File::makeDirectory($userFolder);
 
 	        $user->directory = date('Y-m').'/'.$user->id.'_'.$user->display_name;
+	        $user->save();
 		}
 		catch (Exception $e)
 		{
