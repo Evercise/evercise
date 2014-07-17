@@ -58,7 +58,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 							'description' => $classinfo->classInfoDescription,
 							'gender' => 0,
 							'image' => $classinfo->classInfoImageName,
-							'capacity' => $classinfo->classInfoMin,
+							'capacity' => $classinfo->classInfoMax,
 							'default_duration' => $classinfo->classInfoDuration,
 							'default_price' => $classinfo->classInfoPrice,
 							'published' => 1,
