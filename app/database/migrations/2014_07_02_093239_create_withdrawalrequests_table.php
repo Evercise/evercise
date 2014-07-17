@@ -16,7 +16,7 @@ class CreateWithdrawalrequestsTable extends Migration {
 			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
-			$table->decimal('amount', 19, 4);
+			$table->decimal('transaction_amount', 19, 4);
 			$table->string('account');
 			$table->string('acc_type');
 			$table->integer('processed');
