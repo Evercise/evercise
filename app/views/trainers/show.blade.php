@@ -9,7 +9,7 @@
 		@include('trainers.trainerBlock', array('speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
 
 	@endif
-		<div class="col8 push2">
+		<div class="col10 push2">
 		<br>
 		<br>
 		<h5>{{$trainer->user->display_name}}&apos;s classes </h5>
