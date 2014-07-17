@@ -6,9 +6,9 @@
 	    <div class="col12" id="how-it-works">
 	    	<h1>How it Works</h1>
 	    	<hr>
-		    <video id="video" class="video" controls poster="{{ asset('img/search.png') }}">
-				<source src="{{ url() }}/video/EVERCISE ALMOST (2).mov"  type="video/mp4" />
-
+		    <video id="video" class="video" controls poster="{{ asset('img/evercise logo BW.jpg') }}">
+				<source src="{{ url() }}/video/evercise.mov"  type="video/mp4" />
+				<source src="{{ url() }}/video/evercise.mp4"  type="video/mp4" />
 			</video>
 			<hr>
 			<div class="accordion how-tabs">

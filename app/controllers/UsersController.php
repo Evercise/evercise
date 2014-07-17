@@ -653,6 +653,7 @@ class UsersController extends \BaseController {
     		{
     			$this->user->password = $newPassword;
     			$this->user->save();
+    			
     			return Response::json(['result'=>'changed', 'callback' => 'successAndRefresh']);
     		}
     		return Response::json(['validation_failed' => 1, 'errors' => ['old_password'=>'Current password incorrect']]);
@@ -688,13 +689,47 @@ class UsersController extends \BaseController {
 	 */
 	public function postResetPassword()
 	{
+		Validator::extend('has', function($attr, $value, $params) {
+		    if (!count($params)) {
+		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
+		    }
+		    
+		    foreach ($params as $param) {
+		        switch ($param) {
+		            case 'num':
+		                $regex = '/\pN/';
+		                break;
+		            case 'letter':
+		                $regex = '/\pL/';
+		                break;
+		            case 'lower':
+		                $regex = '/\p{Ll}/';
+		                break;
+		            case 'upper':
+		                $regex = '/\p{Lu}/';
+		                break;
+		            case 'special':
+		                $regex = '/[\pP\pS]/';
+		                break;
+		            default:
+		                $regex = $param;
+		        }
+		        
+		        if (! preg_match($regex, $value)) {
+		            return false;
+		        }
+		    }
+		    
+		    return true;
+		});
 
 		$validator = Validator::make(
 			Input::all(),
 			array(
 				'email' => 'required|email',
-				'password' => 'required|confirmed',
-			)
+				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
+			),
+			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
 		);
 
 		$email = Input::get('email');
@@ -738,6 +773,10 @@ class UsersController extends \BaseController {
 			}
 			if ($success)
 			{
+				Event::fire('user.newpassword', array(
+		        	'email' => $email
+		        ));
+
 	        	if(Request::ajax())
 	        	{
 		    		Session::flash('notification', 'Password reset successful');

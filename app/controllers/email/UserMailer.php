@@ -97,11 +97,26 @@ class UserMailer extends Mailer {
 	 */
 	public function forgotPassword($email, $displayName, $resetCode)
 	{
-		$subject = 'Password Reset Confirmation | Laravel4 With Sentry';
+		/*$subject = 'Password Reset Confirmation | Laravel4 With Sentry';
 		$view = 'emails.auth.reset';
 		$data['displayName'] = $displayName;
 		$data['resetCode'] = $resetCode;
 		$data['email'] = $email;
+	*/
+		$body = '
+			<p>Hi '.$displayName.'</p>
+			<p>Simply click the link below.</p>
+		';
+		
+
+		$subject = 'Your Evercise password';
+		$view = 'emails.template';
+		$data['title'] = 'Your Evercise password';
+		$data['mainHeader'] = 'Password escaped you?';
+		$data['subHeader'] = 'No worries, it happens! Here&apos;s how to reset it.';
+		$data['body'] = $body;
+		$data['link'] = HTML::link('users/'.$displayName.'/resetpassword/'.urlencode($resetCode), 'Reset');
+		$data['linkLabel'] = 'click to reset password:';
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
@@ -113,22 +128,58 @@ class UserMailer extends Mailer {
 	 * @param  string $resetCode 		
 	 * @return bool
 	 */
-	public function newPassword($email, $newPassword)
+	public function newPassword($email)
 	{
+		/*
 		$subject = 'New Password Information | Laravel4 With Sentry';
 		$view = 'emails.auth.newpassword';
 		$data['newPassword'] = $newPassword;
 		$data['email'] = $email;
 
 		return $this->sendTo($email, $subject, $view, $data );
+		*/
+
+		$body = '
+			<p>Hi again</p>
+			<p>You can now log in to Evercise using your new password.</p>
+		';
+
+		$subject = 'Evercise password reset confirmation';
+		$view = 'emails.template';
+		$data['title'] = 'Evercise password reset confirmation';
+		$data['mainHeader'] = 'Sorted!';
+		$data['subHeader'] = 'You have successfully reset your password.';
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('home', 'Click here to login in to Evercise');
+		$data['linkLabel'] = 'Login to evercise:';
+
+		return $this->sendTo($email, $subject, $view, $data );
 	}
 
 	public function upgrade($email, $display_name)
 	{
-		$subject = 'Welcome to Evercise';
-		$view = 'emails.user.upgrade';
-		$data['display_name'] = $display_name;
-		$data['email'] = $email;
+		$body = '
+			<p>Here is your unique password: '.$password.'  - you can change this at amy time</p>
+			<p>You now have access to a huge range of fitness classes and trainers operating at multiple locations!</p>
+			<br>
+			<p>Here are a few tips to get you started.</p>
+			<br>
+			<ul>
+				<li><strong>Search fitness classes:</strong> Simply click “discover classes” on the navigation bar, then search by category or location.</li>
+				<li><strong>Sign up to a class online:</strong> Click on the class panel and you will see a list of sessions. Choose the time and date you want, and pay for the class online.</li>
+				<li><strong>Show up and shape up:</strong> Make sure you know where to go, at what time you should arrive, how to dress appropriately for the class and if you should bring anything e.g. water.</li>
+				<li><strong>Rate and review:</strong> Once you have taken a class, help improve Evercise by rating the class and reviewing your experience.</li>
+		';
+		
+
+		$subject = 'Welcome! Start selling classes on Evercise.';
+		$view = 'emails.template';
+		$data['title'] = 'Welcome! Start selling classes on Evercise.';
+		$data['mainHeader'] = 'Congratulations, '.$display_name.', you are now an Evercise trainer!';
+		$data['subHeader'] = 'Why not join some classes right away?';
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('evercisegroups.search', 'Discover classes');
+		$data['linkLabel'] = 'Search for classes near you:';
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
@@ -136,27 +187,38 @@ class UserMailer extends Mailer {
 
 	public function invite($email, $referralCode, $referrerName)
 	{
-		$body = '<span>Hi.</span>
-				<br>
-				<br>
-				<span>'.$referrerName.' has suggested that you join Evercise!</span>
-				<br>
-				<span>Evercise is an online network that gives everyone wanting to exercise access to fitness instructors and classes across London and soon the Uk.</span>
-				<br>
-				<span>By accepting this invitation, you will recieve 1 Evercoin, which can be used to help pay for classes!</span>';
+		$body = '
+		<p>Hi There</p>
+				
+		<p>
+		May we introduce you to Evercise? We offer the perfect solution for those wanting to keep fit with maximum flexibility. It&apos;s simple:
+		</p>
+		
+		<p>
+			<li>Search a huge range of fitness classes by type or location</li>
+			<li>Purchase classes online (you can do this on a class by class basis)</li>
+			<li>Show up and shape up</li>
+			<li>Rate and review</li>
+		</p>
+		<p>
+			On Evercise.com you can search for your favourite workout at a time and location that suits	you. Fit your training around your job or studies, find trainers with the best reviews, and keep fit without having to commit a thing
+		</p>
+		<p>
+			Does this sound interesting to you? Then what are you waiting for? It&apos;s completely free to join!
+		</p>
+		';
 		
 
-		$subject = $referrerName.' Suggests Evercise';
+		$subject = $referrerName.' thinks you should join Evercise!';
 		//$view = 'emails.auth.welcome'; // use for validation email
 		$view = 'emails.template';
-		$data['title'] = 'Introducing Evercise';
-		$data['mainHeader'] = 'Introducing Evercise!';
-		$data['subHeader'] = 'Your referral code: '.$referralCode;
+		$data['title'] = $referrerName.' thinks you should join Evercise!';
+		$data['mainHeader'] = 'Have you heard of Evercise?';
+		$data['subHeader'] = 'Your friend '.$referrerName.' thinks you would love it!';
 		$data['body'] = $body;
 		$data['link'] = HTML::linkRoute('referral', 'Click here to join Evercise', [$referralCode]);
 		$data['linkLabel'] = 'Start with evercise today:';
-		$data['sellups'] = [ 0 => ['body' => 'Gain evercise credits to spend on classes by reommending your friends. for every 3 friend who join due to you referral you will recieve &pounds;3&apos;s of credit and each person who joined will recieve &pound;1 of credit aswell' , 'image' =>HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img'))] , 1 => ['body' => 'Jeff the trainer' , 'image' => HTML::image('img/Class.png','get fit', array('class' => 'home-step-img'))] ];
-
+		
 		return $this->sendTo($email, $subject, $view, $data );
 	}
 }
