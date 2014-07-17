@@ -18,7 +18,7 @@
 					<td>{{ $withdrawal->user->first_name.' '.$withdrawal->user->last_name }}</td>
 					<td>{{ $withdrawal->acc_type }}</td>
 					<td>{{ $withdrawal->account }} </td>
-					<td>{{ $withdrawal->amount }} </td>
+					<td>{{ $withdrawal->transaction_amount }} </td>
 					<td>
 					{{ Form::open(array('id' => 'process'.$key, 'url' => 'admin/process_withdrawal', 'method' => 'post', 'class' => '')) }}
 
