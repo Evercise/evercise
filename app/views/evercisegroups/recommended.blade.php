@@ -6,7 +6,7 @@
 				<a href="{{ URL::to('evercisegroups/'.$evercisegroup->id) }}">
 					{{ HTML::image('profiles/'.$evercisegroup->user->directory.'/'.$evercisegroup->user->image, 'class image', array('class' => 'recommended-block-img')); }}
 				</a> 
-				<h6>{{ $evercisegroup->name }}</h6>
+				<h6>{{ Str::limit($evercisegroup->name, 14 )}}</h6>
 			</div>
 			
 			
