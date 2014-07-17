@@ -21,31 +21,71 @@ class SessionMailer extends Mailer {
 
 	public function remind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail)
 	{
-		$data['group'] = $group;
-		$data['location'] = $location;
-		$data['dateTime'] = $dateTime;
-		$data['trainerName'] = $trainerName;
-		$data['trainerEmail'] = $trainerEmail;
-
-		foreach($userList as $name => $email)
-		{
-			$data['name'] = $name;
-			$this->sendTo(
-				$email,
-				'You have an Evercise session coming up',
-				'emails.session.remind',
-				$data
-			);
-		}
 
 		$data['userList'] = $userList;
 
-		$this->sendTo(
-			$trainerEmail,
-			'List of members for your upcoming '.$group.' session',
-			'emails.session.userList',
-			$data
-		);
+
+		// ------ SEND EMAIL TO TRAINER ------
+		$body = '
+			<p>Hi '.$trainerName.',</p>
+			<br>
+			<p>You have arranged the class '.$group.' to take place tomorrow '.date('d-M-Y', strtotime($dateTime)).' at '.date('h:m', strtotime($dateTime)).'. We have attached a list of participants to this email.</p>
+			<br>
+			<p>Please note that more participants can join up until one hour before the class is due to commence.</p>
+			<p>We hope it goes well!</p>
+			<br>
+			<p>If you have any problems, please get in contact. We’re always happy to help.</p>
+		';
+		
+
+		$subject = 'Class reminder & participant list';
+		//$view = 'emails.auth.welcome'; // use for validation email
+		$view = 'emails.template';
+		$data['title'] = $subject;
+		$data['mainHeader'] = 'Feeling prepared?';
+		$data['subHeader'] = 'Your arranged class will take place in less than 24 hours.';
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('evercisegroups', 'Class hub');
+		$data['linkLabel'] = 'Go to your class hub: ';
+
+		$this->sendTo($trainerEmail, $subject, $view, $data );
+
+
+		// ------ SEND EMAIL TO USERS ------
+		foreach($userList as $name => $email)
+		{
+			$body = '
+				<p>Hi '.$name.',</p>
+				<br>
+				<p>Don`t forget you have a class scheduled for tomorrow!</p>
+				<br>
+				<ul>
+					<li>Class name: '.$group.'</li>
+					<li>Date and time: '.date('d-M-Y', strtotime($dateTime)).' at '.date('h:m', strtotime($dateTime)).'</li>
+					<li>Location: '.$location.'</li>
+					<li>Name of trainer: '.$trainerName.'</li>
+				</ul>
+				<br>
+				<p>Remember to bring a bottle of water and your ID. For those of you with Twitter accounts, let your friends know what you`re up to by using the hashtag #Evercise.</p>
+				<br>
+				<p>Most importantly, have fun!</p>
+			';
+			
+
+			$subject = 'Evercise class reminder';
+			//$view = 'emails.auth.welcome'; // use for validation email
+			$view = 'emails.template';
+			$data['title'] = $subject;
+			$data['mainHeader'] = 'Feeling prepared?';
+			$data['subHeader'] = 'Your class is tomorrow. Please find all the useful details below.';
+			$data['body'] = $body;
+			$data['link'] = HTML::linkRoute('evercisegroups', 'Class page');
+			$data['linkLabel'] = 'Visit your class page: ';
+
+
+			$data['name'] = $name;
+			$this->sendTo($email, $subject, $view, $data );
+		}
 	}
 
 
