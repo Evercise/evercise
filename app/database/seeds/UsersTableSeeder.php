@@ -82,20 +82,21 @@ class UsersTableSeeder extends Seeder {
 				        	exit;*/
 
 				        //if ($user->UheadImageAddress == 'https://graph.facebook.com/')
-				        if (strpos($user->UheadImageName,'picture?type=large') !== false)
+				        if (strpos($user->UheadImageAddress,'https://graph.facebook.com') !== false)
 				        {
 				        	
 				        	$imageName = 'facebookimage.jpg';
 				        	$url = $user->UheadImageAddress .$user->UheadImageName;
 				        	$newUserRecord->update(['image'=> $imageName]);
 				        	
-				        	//$this->command->info('FACEBOOK IMAGE');
+				        	$this->command->info('FACEBOOK IMAGE');
 				        	//exit;
 				        }
 				        else
 				        {
 				        	$imageName = $user->UheadImageName;
 							$url = 'http://evercise.com/'.$user->UheadImageAddress.'/'.$imageName;
+							$newUserRecord->update(['image'=> $imageName]);
 						}
 				        //$this->command->info('retrieving image: '.$url);
 				        $savePath = public_path().'/profiles/'.$newUserRecord->directory.'/'.$imageName;
