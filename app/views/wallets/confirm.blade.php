@@ -1,11 +1,14 @@
 <div class='modal'>
 	<div id="cancel_login" class="cancel">x</div>
 	<div class="modal-head">
-		<h4>Withdrawal Complete</h4>
+		<h4>Processing Withdrawal</h4>
 	</div>
 
 	<div class="modal-body modal-center">
 		
+		<p>Your withdrawal is currently being processed and should be complete within one working day.</p>
+
+		<br>
 		<p>Withdrawal amount: &pound;{{ $withdrawal }}</p>
 
 		<br>
