@@ -26,11 +26,13 @@ class RecommendedClassesComposer {
 	  				$ratings[$rating->evercisegroup_id] = $stars + $rating->stars;
 	  				$stars = $stars + $rating->stars;
 	  			}
+
           			
           // See if group belongs to a tester
+          $sentryUser = Sentry::getUser();
           $sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
           if ($sentryUserGroup->inGroup($testers))
-            if (!($this->user->inGroup($testers)) )
+            if (!($sentryUser->inGroup($testers)) )
               unset($evercisegroups[$key]);
   			
   		}
