@@ -80,7 +80,7 @@ class UsersController extends \BaseController {
 		});
 		
 
-/*		$validator = Validator::make(
+		$validator = Validator::make(
 			Input::all(),
 			[
 				'display_name' => 'required|max:20|min:5|unique:users',
@@ -92,19 +92,8 @@ class UsersController extends \BaseController {
 				'phone' => 'numeric',
 			],
 			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
-		);*/
-		$validator = Validator::make(
-			Input::all(),
-			[
-				'display_name' => 'required|unique:users',
-				'first_name' => 'required|alpha',
-				'last_name' => 'required|alpha',
-				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
-				'email' => 'required|email|unique:users',
-				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
-				'phone' => 'numeric',
-			],
-			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
+
+
 		);
 		if($validator->fails()) {
 			if(Request::ajax())

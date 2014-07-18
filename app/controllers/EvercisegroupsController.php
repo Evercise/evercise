@@ -572,9 +572,18 @@ class EvercisegroupsController extends \BaseController {
 
 	    $evercisegroup_ids = [];  
 	    $stars = [];
+	    $testGroups = [];
+
+		$testers = Sentry::findGroupById(5);
 
 	    foreach ($evercisegroups as $key => $evercisegroup) {
-	    		$evercisegroup_ids[] = $evercisegroup->id;	    	
+	    		$evercisegroup_ids[] = $evercisegroup->id;	
+
+	    		// See if group belongs to a tester
+				$sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
+				if ($sentryUserGroup->inGroup($testers))
+					if (!($this->user->inGroup($testers)) )
+						array_push($testGroups, $evercisegroup->id);
 	    };
 
 
@@ -587,6 +596,8 @@ class EvercisegroupsController extends \BaseController {
 
 	    }
 
+
+
 	   // JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
 	    JavaScript::put(array('initSwitchView' => 1 ));
@@ -596,7 +607,8 @@ class EvercisegroupsController extends \BaseController {
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $evercisegroups)
 	    		->with('stars' , $stars)
-	    		->with('evercisegroups' , $evercisegroups);
+	    		->with('evercisegroups' , $evercisegroups)
+	    		->with('testGroups' , $testGroups);
 	    		//->with('members' , $members);
 	}	
 

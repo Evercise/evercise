@@ -1,16 +1,7 @@
 <div class="recommended-vertical-wrap">
 	<h5>Recommended Classes</h5>
 	@foreach( $evercisegroups as $key => $evercisegroup)
-		<?php
-			 $sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
-			 $sentryUser = Sentry::getUser();
-			 $testers = Sentry::findGroupById(5);
-
-			 $testerLoggedIn = false;
-			 if($sentryUser) $testerLoggedIn = $sentryUser->inGroup($testers);
-
-		 ?>
-		 @if (!$sentryUserGroup->inGroup($testers) || $testerLoggedIn)
+		@if (!in_array($evercisegroup->id, $testGroups))
 			<div class="recommended-block">
 				<div class="block-header">
 					<a href="{{ URL::to('evercisegroups/'.$evercisegroup->id) }}">
