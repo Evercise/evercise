@@ -68,7 +68,7 @@ class TrainersController extends \BaseController {
 			Input::all(),
 			array(
 				//'title' => 'required',
-				'bio' => 'required|max:500|min:50',
+				//'bio' => 'required|max:500|min:50',
 				'image' => 'required',
 				'phone' => 'required|numeric',
 				'website' => 'sometimes',
