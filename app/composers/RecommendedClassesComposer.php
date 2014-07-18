@@ -32,8 +32,11 @@ class RecommendedClassesComposer {
           $sentryUser = Sentry::getUser();
           $sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
           if ($sentryUserGroup->inGroup($testers))
-            if (!($sentryUser->inGroup($testers)) )
+          {
+            $testerLoggedIn = $sentryUser ? $sentryUser->inGroup($testers) : false;
+            if (!($testerLoggedIn) )
               unset($evercisegroups[$key]);
+          }
   			
   		}
 
