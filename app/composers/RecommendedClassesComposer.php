@@ -16,7 +16,6 @@ class RecommendedClassesComposer {
   				->orderBy(DB::raw('RAND()'))->take(4)->get();		
 
   		$ratings = [];
-      $testGroups = [];
 
       $testers = Sentry::findGroupById(5);
 
@@ -32,12 +31,11 @@ class RecommendedClassesComposer {
           $sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
           if ($sentryUserGroup->inGroup($testers))
             if (!($this->user->inGroup($testers)) )
-              array_push($testGroups, $evercisegroup->id);
+              unset($evercisegroups[$key]);
   			
   		}
 
   		$view->with('evercisegroups', $evercisegroups)
-  			 ->with('ratings', $ratings)
-        ->with('testGroups' , $testGroups);
+  			 ->with('ratings', $ratings);
   	}
 }

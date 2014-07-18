@@ -572,7 +572,6 @@ class EvercisegroupsController extends \BaseController {
 
 	    $evercisegroup_ids = [];  
 	    $stars = [];
-	    $testGroups = [];
 
 		$testers = Sentry::findGroupById(5);
 
@@ -583,7 +582,7 @@ class EvercisegroupsController extends \BaseController {
 				$sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
 				if ($sentryUserGroup->inGroup($testers))
 					if (!($this->user->inGroup($testers)) )
-						array_push($testGroups, $evercisegroup->id);
+						unset($evercisegroups[$key]);
 	    };
 
 
@@ -607,8 +606,7 @@ class EvercisegroupsController extends \BaseController {
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $evercisegroups)
 	    		->with('stars' , $stars)
-	    		->with('evercisegroups' , $evercisegroups)
-	    		->with('testGroups' , $testGroups);
+	    		->with('evercisegroups' , $evercisegroups);
 	    		//->with('members' , $members);
 	}	
 
