@@ -14,7 +14,7 @@
 					@include('users.dashboardTabs')
 					
 				</div>
-				{{--@include('users.dashboardTabs') --}}
+				
 				@include('evercisegroups.recommended')
 			</div>
 

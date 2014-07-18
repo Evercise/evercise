@@ -32,6 +32,10 @@ class SentrySeeder extends Seeder {
             'name'        => 'Admin',
             'permissions' => array('admin' => 1),
         ));
+        Sentry::getGroupProvider()->create(array(
+            'name'        => 'Tester',
+            'permissions' => array('tester' => 1),
+        ));
  
         // Assign user permissions
         $adminUser  = Sentry::getUserProvider()->findByLogin('admin@evercise.com');
