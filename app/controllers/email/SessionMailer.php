@@ -89,7 +89,7 @@ class SessionMailer extends Mailer {
 	}
 
 
-	public function mailAll($trainer, $userList, $group, $subject, $messageBody)
+	public function mailAll($trainer, $userList, $group, $messageSubject, $messageBody)
 	{
 
 		// ------ SEND EMAIL TO PARTICIPANT ------
@@ -109,6 +109,8 @@ class SessionMailer extends Mailer {
 				<br>
 				<p>Please see the message below:</p>
 				<br>
+				<p>'.$messageSubject.'</p>
+				<br>
 				<p>'.$messageBody.'</p>
 			';
 			
@@ -119,7 +121,7 @@ class SessionMailer extends Mailer {
 	}
 
 	// needs more descriptive name
-	public function mailTrainer($trainer, $user, $group, $dateTime, $subject, $messageBody)
+	public function mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody)
 	{
 		// ------ SEND EMAIL TO TRAINER ------
 		foreach($trainer as $name => $email)
@@ -130,6 +132,8 @@ class SessionMailer extends Mailer {
 				<p>You’ve received a new message through Evercise from '.$user.', who will be taking part in your class '.$group.'.</p>
 				<br>
 				<p>Please see the message below:</p>
+				<br>
+				<p>'.$messageSubject.'</p>
 				<br>
 				<p>'.$messageBody.'</p>
 			';
