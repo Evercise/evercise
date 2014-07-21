@@ -89,40 +89,68 @@ class SessionMailer extends Mailer {
 	}
 
 
-	public function mailAll($userList, $group, $subject, $body)
+	public function mailAll($userList, $group, $subject, $messageBody)
 	{
-		$subject = $subject;
-		$view = 'emails.session.all';
-		$data['body'] = $body;
-		$data['group'] = $group;
-		$data['subject'] = $subject;
 
+		// ------ SEND EMAIL TO PARTICIPANT ------
+		$subject = 'You have a new message.';
+		$view = 'emails.template';
+		$data['title'] = $subject;
+		$data['mainHeader'] = 'You have a new message in your Evercise inbox.';
+		$data['subHeader'] = 'Your fitness trainer has contacted you.';
+		$data['link'] = 'http://evercise.com';
+		$data['linkLabel'] = 'evercise.com';
 		foreach($userList as $name => $email)
 		{
+			$emailBody = '
+				<p>Hi '.$name.',</p>
+				<br>
+				<p>You’ve received a new message through Evercise from '.$user.', who will be taking part in your class '.$group.'.</p>
+				<br>
+				<p>Please see the message below:</p>
+				<br>
+				<p>'.$messageBody.'</p>
+			';
+			
+			$data['body'] = $emailBody;
 			$data['name'] = $name;
 			$this->sendTo($email, $subject, $view, $data );
 		}
 	}
 
 	// needs more descriptive name
-	public function mailTrainer($trainer, $user, $group, $dateTime, $subject, $body)
+	public function mailTrainer($trainer, $user, $group, $dateTime, $subject, $messageBody)
 	{
-		$subject = $subject;
-		$view = 'emails.session.trainer';
-		$data['user_name'] = $user;
-		$data['body'] = $body;
-		$data['group'] = $group;
-		$data['dateTime'] = $dateTime;
-		$data['subject'] = $subject;
-
+		// ------ SEND EMAIL TO TRAINER ------
 		foreach($trainer as $name => $email)
 		{
+			$emailBody = '
+				<p>Hi '.$name.',</p>
+				<br>
+				<p>You’ve received a new message through Evercise from '.$user.', who will be taking part in your class '.$group.'.</p>
+				<br>
+				<p>Please see the message below:</p>
+				<br>
+				<p>'.$messageBody.'</p>
+			';
+			
+
+			$subject = 'You have a new message.';
+			$view = 'emails.template';
+			$data['title'] = $subject;
+			$data['mainHeader'] = 'You have a new message in your Evercise inbox.';
+			$data['subHeader'] = 'A participant has contacted you.';
+			$data['body'] = $emailBody;
+			$data['link'] = 'http://evercise.com';
+			$data['linkLabel'] = 'evercise.com';
+
 			$data['name'] = $name;
 			$this->sendTo($email, $subject, $view, $data );
 		}
+		
 	}
 
-	// used to mail user to onfirm leaving a session
+	// used to mail user to confirm leaving a session
 
 	public function userLeaveSession($email, $display_name, $everciseGroup, $everciseSession)
 	{
@@ -171,24 +199,49 @@ class SessionMailer extends Mailer {
 
 	// for contacting us about a refund request
 
-	public function refundRequest($email, $userName, $userEmail , $group, $subject, $body)
+	public function refundRequest($email, $userName, $userEmail , $group, $messageSubject, $messageBody)
 	{
-		$subject = $subject;
-		$view = 'emails.session.refundRequest';
-		$data['userName'] = $userName;
-		$data['userEmail'] = $userEmail;
+
+		// ------ SEND EMAIL TO USER ACKNOWLEDGING THEIR REFUND REQUEST ------
+
+		$emailBody = '
+			<p>Hi '.$userName.',</p>
+			<br>
+			<p>We are sorry to hear that your recently attended class was not what you expected. We have received your request for a refund and our Customer Relations Manager is investigating your claim. We will do our best to get back to you within 5 working days..</p>
+			<br>
+			<p>Please note the following:</p>
+			<ul>
+				<li>Refund requests must be sent no more than 5 working days after you have taken part in the class concerned.</li>
+				<li>You may only be refunded up to the amount of your original transaction.</li>
+				<li>The refund will only be sent to the account associated with the original transaction.</li>
+				<li>You must wait at least 24 hours after the original payment has been received before you can request a refund.</li>
+				<li>Please allow 24-72 hours for refunds to be fully processed (the length of time is dependent on the payment gateway services and financial institutions involved in the transaction).</li>
+			</ul>
+			<br>
+			<p>Feel free to call or email us with any questions. We’re always happy to help.</p>
+			<br>
+			<br>
+			<p>Message:</p>
+			<br>
+			<p>'.$messageSubject.'</p>
+			<br>
+			<p>'.$messageBody.'</p>
+		';
+		
+
+		$subject = 'Evercise refund request';
+		$view = 'emails.template';
+		$data['title'] = $subject;
+		$data['mainHeader'] = 'You have a new message in your Evercise inbox.';
+		$data['subHeader'] = 'Let`s try and resolve this';
 		$data['body'] = $body;
-		$data['group'] = $group;
-		$data['subject'] = $subject;
+		$data['link'] = 'http://evercise.com';
+		$data['linkLabel'] = 'evercise.com';
 
-		return $this->sendTo($email, $subject, $view, $data );
+		$data['name'] = $name;
+		$this->sendTo($email, $subject, $view, $data );
+		$this->sendTo($userEmail, $subject, $view, $data );
+
 	}
-
-	
-
-
-
-
-
 
 }

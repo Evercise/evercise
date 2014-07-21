@@ -40,14 +40,14 @@ class SendEmails extends Command {
 		//    Send a participant list to the trainer
 	public function fire()
 	{
-		$this->info('Searching for Sessions in the next 2 days, which have not yet fired out emails');
+		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
 		
-		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+		$onedaystime = (new DateTime())->add(new DateInterval('P1D'));
 
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$twodaystime)
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$onedaystime)
 		{
 
-			$query->where('date_time', '<', $twodaystime);
+			$query->where('date_time', '<', $onedaystime);
 			//$query->whereIn('id', [1,2,6]);
 
 		}), 'user', 'venue')->get();
