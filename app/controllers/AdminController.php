@@ -73,5 +73,30 @@ class AdminController extends \BaseController {
 
 	}
 
+	public function showLog()
+	{
+		
+	    $logFile = file_get_contents('../app/storage/logs/laravel.log', true);
+
+
+	    $logFile = str_replace('[] []', '[] []<br><br><br>', $logFile);
+	    $logFile = str_replace('#', '<br><span style="color:red;">#</span>', $logFile);
+
+	    return View::make('admin.log')
+	    ->with('log', $logFile);
+	}
+
+	public function deleteLog()
+	{
+		$del = Input::get('del');
+
+		if($del == 'delete_all')
+		{
+			file_put_contents('../app/storage/logs/laravel.log', '');
+		}
+
+	    return Redirect::route('admin.log');
+	}
+
 	
 }
