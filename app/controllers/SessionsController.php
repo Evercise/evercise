@@ -264,7 +264,9 @@ class SessionsController extends \BaseController {
 			$body = Input::get('mail_body');
 
 			$groupId = Evercisesession::where('id', $id)->pluck('evercisegroup_id');
-			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+			$group = Evercisegroup::where('id', $groupId)->first();
+			$groupName = $group->name;
+			$trainerName = $group->user->first_name.' '.$group->user->last_name;
 
 			$users = Evercisesession::find($id)->users()->get();
 
@@ -276,6 +278,7 @@ class SessionsController extends \BaseController {
 
 
 			Event::fire('session.mail_all', array(
+	        	'trainer' => $trainerName, 
 	        	'email' => $userList, 
 	        	'name' => $groupName, 
 	        	'subject' => $subject, 
@@ -325,7 +328,9 @@ class SessionsController extends \BaseController {
 			$body = Input::get('mail_body');
 
 			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+			$group = Evercisegroup::where('id', $groupId)->first();
+			$groupName = $group->name;
+			$trainerName = $group->user->first_name.' '.$group->user->last_name;
 			$userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
 
 			$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
@@ -333,6 +338,7 @@ class SessionsController extends \BaseController {
 			$userList = [$name => $email];
 
 			Event::fire('session.mail_all', array(
+	        	'trainer' => $trainerName, 
 	        	'email' => $userList, 
 	        	'groupName' => $groupName, 
 	        	'subject' => $subject, 

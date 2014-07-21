@@ -89,7 +89,7 @@ class SessionMailer extends Mailer {
 	}
 
 
-	public function mailAll($userList, $group, $subject, $messageBody)
+	public function mailAll($trainer, $userList, $group, $subject, $messageBody)
 	{
 
 		// ------ SEND EMAIL TO PARTICIPANT ------
@@ -105,7 +105,7 @@ class SessionMailer extends Mailer {
 			$emailBody = '
 				<p>Hi '.$name.',</p>
 				<br>
-				<p>You’ve received a new message through Evercise from '.$user.', who will be taking part in your class '.$group.'.</p>
+				<p>You’ve received a new message through Evercise from '.$trainer.', who is running the class '.$group.'.</p>
 				<br>
 				<p>Please see the message below:</p>
 				<br>
