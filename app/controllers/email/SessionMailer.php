@@ -234,7 +234,7 @@ class SessionMailer extends Mailer {
 		$data['title'] = $subject;
 		$data['mainHeader'] = 'You have a new message in your Evercise inbox.';
 		$data['subHeader'] = 'Let`s try and resolve this';
-		$data['body'] = $body;
+		$data['body'] = $emailBody;
 		$data['link'] = 'http://evercise.com';
 		$data['linkLabel'] = 'evercise.com';
 
