@@ -242,7 +242,7 @@ class SessionMailer extends Mailer {
 		$data['link'] = 'http://evercise.com';
 		$data['linkLabel'] = 'evercise.com';
 
-		$data['name'] = $name;
+		$data['name'] = $userName;
 		$this->sendTo($email, $subject, $view, $data );
 		$this->sendTo($userEmail, $subject, $view, $data );
 
