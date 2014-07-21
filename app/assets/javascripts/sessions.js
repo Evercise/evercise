@@ -115,6 +115,8 @@ function mailAll()
     trace("mail all");
     $(document).on('submit', '#mail_all, #mail_one' , function() {
         $('.error-msg').remove();
+        var thisForm = $(this);
+        thisForm.addClass('disabled');
         // post to controller
         $.post(
             $( this ).prop( 'action' ),
@@ -124,6 +126,7 @@ function mailAll()
                 if (data.validation_failed == 1)
                 {
                     trace('loose: '+data);
+                    thisForm.removeClass('disabled');
                     var arr = data.errors;
                     $.each(arr, function(index, value)
                     {
