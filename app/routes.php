@@ -211,3 +211,17 @@ Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
 
 
 Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
+
+
+Route::get('/log', function()
+{
+    $logFile = file_get_contents('../app/storage/logs/laravel.log', true);
+
+
+    $logFile = str_replace('[] []', '[] []<br><br><br>', $logFile);
+    $logFile = str_replace('#', '<br><span style="color:red;">#</span>', $logFile);
+
+    return View::make('admin.log')
+    ->with('log', $logFile);
+
+});
