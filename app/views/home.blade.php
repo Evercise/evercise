@@ -67,7 +67,7 @@
 	</div>
 	<div class="join_wrapper">
 		<div class="container-full">
-			<h4>Join the Evecise community today and find your way<br> to a happier, fitter you...</h4>
+			<h4>Join the Evecise community today and find<br>your way to a happier, fitter you...</h4>
 			{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow'))}}
 			{{ HTML::image('img/WIE_4.jpg','join us ', array('class' => 'register-img')) }}
 		</div>
