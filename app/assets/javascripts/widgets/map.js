@@ -144,6 +144,7 @@ function DiscoverMapWidgetInit() {
 
   everciseGroups = everciseGroups.data;
 
+  trace(everciseGroups.length, true);
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>Your search returned 0 results, please refine your search');
   }else{
