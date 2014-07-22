@@ -600,7 +600,7 @@ class EvercisegroupsController extends \BaseController {
 
 	    }
 
-	 //   return $evercisegroups;
+	   // return $evercisegroups->toJson();
 
 
 	   // JavaScript::put(array('classes' => json_encode($places) ));

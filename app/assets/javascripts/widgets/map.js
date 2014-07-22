@@ -141,7 +141,9 @@ function DiscoverMapWidgetInit() {
   check = checkUrlForDev();
   var everciseGroups = JSON.parse($('#places').val());
 
+
   everciseGroups = everciseGroups.data;
+
 
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>Your search returned 0 results, please refine your search');
@@ -206,6 +208,8 @@ function DiscoverMapWidgetInit() {
     var markers = [];
     var bounds = new google.maps.LatLngBounds();
     var icon = '/img/mapmark.png';
+    var infos = [];
+
 
     for (i = 0; i < everciseGroups.length; i++) { 
       var venue = everciseGroups[i].venue;
@@ -217,28 +221,64 @@ function DiscoverMapWidgetInit() {
           icon: icon,
           map: map
         });
-        markers.push(marker);
+        
         var latlng = new google.maps.LatLng(
                   parseFloat(venue.lat),
                   parseFloat(venue.lng));
 
         bounds.extend(latlng);
-        if (infowindow) infowindow.close();
+       
         
-        var contentString = '<div class="info-window recommended-block"><div class="block-header"><p>'+everciseGroups[i].name+'</p></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound; </strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="category-icon" src="'+check+'/img/category/'+category.name+'.png"><span>'+category.name+'<span></div></div><div class="block-footer"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div>';
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-        google.maps.event.addListener(marker, 'click', function() {
-          infowindow.open(map,this);
-        });
+        var content = '<div class="info-window recommended-block"><div class="block-header"><p>'+everciseGroups[i].name+'</p></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound; </strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="category-icon" src="'+check+'/img/category/'+category.name+'.png"><span>'+category.name+'<span></div></div><div class="block-footer"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div>';
+       
+        var infowindow = new google.maps.InfoWindow();
 
+        /*google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                return function() {
+                   infowindow.setContent(content);
+                   infowindow.open(map,marker);
+                };
+            })(marker,content,infowindow)); 
+  */
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+        return function() {
+        
+        /* close the previous info-window */
+       closeInfos(infos);
+        
+           infowindow.setContent(content);
+           infowindow.open(map,marker);
+        
+        /* keep the handle, in order to close it on next click event */
+       infos[0]=infowindow;
+        
+        };
+      })(marker,content,infowindow)); 
+
+
+        markers.push(marker);
       }
       map.fitBounds(bounds);
       //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
     }
   }
 
+}
+
+
+function closeInfos(infos){
+ 
+   if(infos.length > 0){
+ 
+      /* detach the info-window from the marker ... undocumented in the API docs */
+      infos[0].set("marker", null);
+ 
+      /* and close it */
+      infos[0].close();
+ 
+      /* blank the array */
+      infos.length = 0;
+   }
 }
 
 function MapWidgetloadScript(params) {
