@@ -20,7 +20,7 @@
 	        @endif
 
 	        <div class="modal-footer">
-	        	{{ Form::submit('Send Message' , array('class'=>'btn-yellow ')) }}
+	        	{{ Form::submit('Send Message' , array('class'=>'btn-yellow button')) }}
 	        </div>
 
 			
