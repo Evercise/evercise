@@ -3406,6 +3406,28 @@ nav{
 	}
 }
 
+/* pagination */
+
+.pagination{
+	li{
+		float: left;
+		.heading-font(400);
+		height: 30px;
+		width: 30px;
+		text-align: center;
+		span{
+			border: 1px solid @black;
+			.border-radius();
+			padding: 7px 10px 5px;
+			margin-top: 1px;
+			display: block;
+		}	
+		&.disabled{
+			display: none;
+		}	
+	}
+}
+
 
 /*footer */
 	

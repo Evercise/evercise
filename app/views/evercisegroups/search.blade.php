@@ -21,10 +21,13 @@
 		<div id="grid" class="discover-view tab-view selected">
 			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups, 'rating' => $stars ))
 		</div>
+		{{ $evercisegroups->appends(['category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
 		<div id="list" class="discover-view tab-view">
+
 			<div class="row9">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
+
 						@if (isset($stars[$evercisegroup->id])) 
 							@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng, ))
 							@else
@@ -34,6 +37,8 @@
 								
 					
 					@endforeach
+
+
 
 				@endif
 				

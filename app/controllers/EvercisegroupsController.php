@@ -551,7 +551,8 @@ class EvercisegroupsController extends \BaseController {
 	        ->with('user')
 	        ->with('category')
 	        ->with('futuresessions')
-			->get();
+	        ->paginate(6);
+			//->get();
         }else{
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
@@ -565,9 +566,12 @@ class EvercisegroupsController extends \BaseController {
 	        ->with('category')
 	        ->with('futuresessions')
 			->where('category_id' , $category)
-			->get();
+			->paginate(6);
+			//->get();
         }
         
+
+      //  return var_dump($evercisegroups);
 
 
 	    $evercisegroup_ids = [];  
@@ -596,6 +600,7 @@ class EvercisegroupsController extends \BaseController {
 
 	    }
 
+	 //   return $evercisegroups;
 
 
 	   // JavaScript::put(array('classes' => json_encode($places) ));
@@ -605,7 +610,7 @@ class EvercisegroupsController extends \BaseController {
 	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
 
 	    return View::make('evercisegroups.search')
-	    		->with('places' , $evercisegroups)
+	    		->with('places' , $evercisegroups->toJson())
 	    		->with('stars' , $stars)
 	    		->with('evercisegroups' , $evercisegroups);
 	    		//->with('members' , $members);
