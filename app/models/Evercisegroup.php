@@ -57,4 +57,11 @@ class Evercisegroup extends \Eloquent {
     {
         return $this->hasOne('Category', 'id', 'category_id');
     }
+
+     public function notTester()
+     
+    {
+        //return $this->belongsToMany('Trainer', 'User', 'user_id', 'user_id')->withPivot('id');
+        return $this->belongsTo('Users_groups', 'user_id', 'user_id')->where('group_id', '<>', 5);
+    }
 }
