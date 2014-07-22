@@ -10,7 +10,7 @@ class RecommendedClassesComposer {
   				->with('venue')
           ->has('confirmed')
           ->with('ratings')
-          ->has('notTester', '<', 1) // testin g to make sure class does not belong to the tester
+          ->has('tester', '<', 1) // testin g to make sure class does not belong to the tester
   				/*->with(['ratings' => function($query){
               $query->select('stars');
           }])*/

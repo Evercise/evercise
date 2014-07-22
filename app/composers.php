@@ -30,6 +30,7 @@ require 'composers/AreacodeComposer.php';
 require 'composers/SearchClassesComposer.php';
 require 'composers/CartRowsComposer.php';
 require 'composers/PhoneComposer.php';
+require 'composers/AutocompleteComposer.php';
 
 
 View::composer('home', 'HomePageComposer');
@@ -67,5 +68,6 @@ View::composer('payments.paywithevercoins', 'PayWithEvercoinsComposer');
 View::composer('form.phone', 'AreacodeComposer');
 View::composer('payments.cartrows', 'CartRowsComposer');
 View::composer('form.phone', 'PhoneComposer');
+View::composer('widgets.autocomplete', 'AutocompleteComposer');
 
 

@@ -144,7 +144,7 @@ function DiscoverMapWidgetInit() {
 
   everciseGroups = everciseGroups.data;
 
-  trace(everciseGroups, true);
+  trace('DiscoverMapWidgetInit');
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>Your search returned 0 results, please refine your search');
   }else{
@@ -233,16 +233,9 @@ function DiscoverMapWidgetInit() {
        
         
         var content = '<div class="info-window recommended-block"><div class="block-header"><p>'+everciseGroups[i].name+'</p></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound; </strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="category-icon" src="'+check+'/img/category/'+category.name+'.png"><span>'+category.name+'<span></div></div><div class="block-footer"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div>';
-        trace(i, true);
+        //trace(i, true);
         var infowindow = new google.maps.InfoWindow();
 
-        /*google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-                return function() {
-                   infowindow.setContent(content);
-                   infowindow.open(map,marker);
-                };
-            })(marker,content,infowindow)); 
-  */
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
         return function() {
         
@@ -263,7 +256,10 @@ function DiscoverMapWidgetInit() {
       }
       map.fitBounds(bounds);
       //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
+
     }
+    trace('FINISHING MAP WHIZZLE');
+    initAutocomplete();
   }
 
 }
@@ -285,6 +281,7 @@ function closeInfos(infos){
 }
 
 function MapWidgetloadScript(params) {
+  trace('MapWidgetloadScript');
   params = params ? params : 1;
 
   var func = 'MapWidgetInit';
@@ -296,7 +293,7 @@ function MapWidgetloadScript(params) {
     func = 'DiscoverMapWidgetInit';
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=DiscoverMapWidgetInit';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=DiscoverMapWidgetInit&libraries=places';
 
     document.body.appendChild(script);
     var cluster = document.createElement('script');
@@ -311,13 +308,10 @@ function MapWidgetloadScript(params) {
     func = 'MapWidgetInit';
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=MapWidgetInit';
+    script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=MapWidgetInit&libraries=places';
     document.body.appendChild(script);
 
   }
-
-  
-
   
 }
 

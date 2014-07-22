@@ -535,14 +535,15 @@ class EvercisegroupsController extends \BaseController {
 		*/
         //return var_dump($boundingBox);
 
-        
+        $testers = Sentry::findGroupById(5);
+		$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
 
         if ($category == null && $query != null) {
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
-	        ->has('notTester', '<', 1) // testin g to make sure class does not belong to the tester
+	        ->has('tester', '<', $testerLoggedIn ? 1 : 5) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
 	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);
@@ -557,7 +558,7 @@ class EvercisegroupsController extends \BaseController {
         }else{
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
-	        ->has('notTester', '<', 1) // testing to make sure class does not belong to the tester
+	        ->has('tester', '<', $testerLoggedIn ? 1 : 5) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
 	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);
@@ -579,7 +580,7 @@ class EvercisegroupsController extends \BaseController {
 	    $evercisegroup_ids = [];  
 	    $stars = [];
 
-		$testers = Sentry::findGroupById(5);
+		
 
 	    foreach ($evercisegroups as $key => $evercisegroup) {
 	    		$evercisegroup_ids[] = $evercisegroup->id;	
