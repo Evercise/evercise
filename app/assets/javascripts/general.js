@@ -265,6 +265,7 @@ function initPut () {
       $('input').removeClass('error');
       // post to controller
       var form = $(this);
+      form.find('.button').addClass('disabled');
       $.ajax({
           url: url,
           type: method,
@@ -278,6 +279,7 @@ function initPut () {
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
+                  form.find('.button').removeClass('disabled');
                   // show validation errors
                   var arr = data.errors;
                   var scroll = false;

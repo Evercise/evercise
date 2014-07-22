@@ -233,8 +233,9 @@ class SessionMailer extends Mailer {
 		';
 		
 
+		$subject = 'Evercise refund request';
 		$view = 'emails.template';
-		$data['title'] = 'Evercise refund request';
+		$data['title'] = $subject;
 		$data['mainHeader'] = 'You have a new message in your Evercise inbox.';
 		$data['subHeader'] = 'Let`s try and resolve this';
 		$data['body'] = $emailBody;
