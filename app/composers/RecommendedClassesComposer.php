@@ -10,6 +10,7 @@ class RecommendedClassesComposer {
   				->with('venue')
           ->has('confirmed')
           ->with('ratings')
+          ->has('notTester', '<', 1) // testin g to make sure class does not belong to the tester
   				/*->with(['ratings' => function($query){
               $query->select('stars');
           }])*/
@@ -29,14 +30,14 @@ class RecommendedClassesComposer {
 
           			
           // See if group belongs to a tester
-          $sentryUser = Sentry::getUser();
+/*          $sentryUser = Sentry::getUser();
           $sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
           if ($sentryUserGroup->inGroup($testers))
           {
             $testerLoggedIn = $sentryUser ? $sentryUser->inGroup($testers) : false;
             if (!($testerLoggedIn) )
               unset($evercisegroups[$key]);
-          }
+          }*/
   			
   		}
 
