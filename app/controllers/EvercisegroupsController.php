@@ -583,11 +583,12 @@ class EvercisegroupsController extends \BaseController {
 	    		$evercisegroup_ids[] = $evercisegroup->id;	
 
 	    		// See if group belongs to a tester
-				$sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
+			/*	$sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
 				$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
 				if ($sentryUserGroup->inGroup($testers))
 					if (!($testerLoggedIn) )
 						unset($evercisegroups[$key]);
+						*/
 	    };
 
 
