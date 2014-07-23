@@ -109,20 +109,19 @@ class TrainersController extends \BaseController {
 				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
 
 
-			$trainer = Trainer::upgradeToTrainer(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
+			$trainer = Trainer::createOrFail(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
 
 			// Duck out if record already exists
 			if (!$trainer) return Response::json(route('trainers.edit', array('id'=> $user->id)));
 
-			$wallet = Wallet::create(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
+			// Use firstOrCreate just incase to make sure no duplicates are made
+			$wallet = Wallet::firstOrCreate(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
 
 			// update user image
 
 			$user->image = $image;
 			$user->area_code = $area_code;
 			$user->phone = $phone;
-
-
 			$user->save();
 
 			// add to trainer group

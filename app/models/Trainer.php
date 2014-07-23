@@ -21,7 +21,7 @@ class Trainer extends \Eloquent {
         return $this->hasOne('Speciality' , 'id', 'specialities_id');
     }
 
-    public static function upgradeToTrainer($params)
+    public static function createOrFail($params)
     {
     	$user_id = $params['user_id'];
 
