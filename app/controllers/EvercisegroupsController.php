@@ -543,7 +543,7 @@ class EvercisegroupsController extends \BaseController {
         if ($category == null && $query != null) {
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
-	        ->has('tester', '<', $testerLoggedIn ? 1 : 5) // testing to make sure class does not belong to the tester
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
 	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);
@@ -558,7 +558,7 @@ class EvercisegroupsController extends \BaseController {
         }else{
         	$evercisegroups= Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
-	        ->has('tester', '<', $testerLoggedIn ? 1 : 5) // testing to make sure class does not belong to the tester
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
 	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);

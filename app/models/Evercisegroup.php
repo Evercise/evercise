@@ -53,15 +53,15 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Rating');
     }
 
-     public function category()
+    public function category()
     {
         return $this->hasOne('Category', 'id', 'category_id');
     }
 
-     public function tester()
+    public function tester()
      
     {
         //return $this->belongsToMany('Trainer', 'User', 'user_id', 'user_id')->withPivot('id');
-        return $this->belongsTo('Users_groups', 'user_id', 'user_id')->where('group_id', '<>', 5);
+        return $this->belongsTo('Users_groups', 'user_id', 'user_id')->where('group_id', 5); // WRONG!!
     }
 }
