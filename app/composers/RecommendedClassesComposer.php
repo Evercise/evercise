@@ -4,8 +4,9 @@ class RecommendedClassesComposer {
 
 	public function compose($view)
   	{
+      $sentryUser = Sentry::getUser();
       $testers = Sentry::findGroupById(5);
-      $testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
+      $testerLoggedIn = $sentryUser ? $sentryUser->inGroup($testers) : false;
 
   		$evercisegroups = Evercisegroup::has('futuresessions')
           ->has('confirmed')
@@ -25,22 +26,10 @@ class RecommendedClassesComposer {
   		foreach ($evercisegroups as $key => $evercisegroup) {
         $stars = 0;
 
-  				foreach ($evercisegroup->ratings as $k => $rating) {
-	  				$ratings[$rating->evercisegroup_id] = $stars + $rating->stars;
-	  				$stars = $stars + $rating->stars;
-	  			}
-
-          			
-          // See if group belongs to a tester
-/*          $sentryUser = Sentry::getUser();
-          $sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
-          if ($sentryUserGroup->inGroup($testers))
-          {
-            $testerLoggedIn = $sentryUser ? $sentryUser->inGroup($testers) : false;
-            if (!($testerLoggedIn) )
-              unset($evercisegroups[$key]);
-          }*/
-  			
+				foreach ($evercisegroup->ratings as $k => $rating) {
+  				$ratings[$rating->evercisegroup_id] = $stars + $rating->stars;
+  				$stars = $stars + $rating->stars;
+  			}
   		}
 
   		$view->with('evercisegroups', $evercisegroups)
