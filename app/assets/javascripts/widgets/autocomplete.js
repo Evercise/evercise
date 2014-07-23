@@ -1,8 +1,13 @@
 
 
 var initAutocompleteStarted = false;
+
 function initAutocomplete()
 {
+    trace('autocomplete');
+
+
+
 
     if (window['google'] != undefined && !initAutocompleteStarted)
     {
@@ -35,4 +40,5 @@ function initAutocomplete()
 }
 
 registerInitFunction('initAutocomplete');
+
 

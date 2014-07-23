@@ -258,8 +258,6 @@ function DiscoverMapWidgetInit() {
       //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
     }
-    trace('FINISHING MAP WHIZZLE');
-    initAutocomplete();
   }
 
 }

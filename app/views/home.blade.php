@@ -22,7 +22,7 @@
 		<div class="container-full">
 			<div class="search-box-wrap">
 				<h4>Search for classes near you</h4>
-				@include('evercisegroups.refine')
+				@include('evercisegroups.refine', ['loadAutocompleteScript'=>1])
 			</div>
 			
 		</div>
