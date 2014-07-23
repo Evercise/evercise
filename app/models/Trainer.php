@@ -25,9 +25,9 @@ class Trainer extends \Eloquent {
     {
     	$user_id = $params['user_id'];
 
-    	if (! count( Trainer::where('user_id',$user_id) ) )
+    	if ( count( Trainer::where('user_id',$user_id)->get() ) < 1 )
     	{
-			$newRecord = $this->create($params);
+			$newRecord = Trainer::create($params);
 			return $newRecord;
 		}
 		else
