@@ -14,7 +14,7 @@ class CreateMigrateSessionsTable extends Migration {
 	{
 		Schema::create('migrate_sessions', function(Blueprint $table) {
 			$table->engine = "InnoDB";
-			$table->increments('id')->unsigned();// Foreign key;
+			$table->increments('id')->unsigned();
 			$table->integer('classDatetimeId')->unsigned();
 			$table->integer('evercisesession_id')->unsigned();
 		});

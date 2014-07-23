@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSubcategoriesTable extends Migration {
+class CreateSubcategoryCategoriesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateSubcategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('subcategories', function(Blueprint $table) {
-			$table->engine = "InnoDB";
+		Schema::create('subcategory_categories', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('name',45);
-			$table->string('description',255);
+			$table->integer('subcategory_id')->unsigned();// Foreign key
+			$table->integer('category_id')->unsigned();// Foreign key
 			$table->timestamps();
 		});
 	}
@@ -30,7 +29,7 @@ class CreateSubcategoriesTable extends Migration {
 	public function down()
 	{
 		DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-		Schema::drop('subcategories');
+		Schema::drop('subcategory_categories');
 		DB::statement('SET FOREIGN_KEY_CHECKS = 1'); 
 	}
 
