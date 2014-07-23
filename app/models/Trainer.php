@@ -21,4 +21,19 @@ class Trainer extends \Eloquent {
         return $this->hasOne('Speciality' , 'id', 'specialities_id');
     }
 
+    public static function upgradeToTrainer($params)
+    {
+    	$user_id = $params['user_id'];
+
+    	if (! count( Trainer::where('user_id',$user_id) ) )
+    	{
+			$newRecord = $this->create($params);
+			return $newRecord;
+		}
+		else
+		{
+			return false;
+		}
+    }
+
 }
