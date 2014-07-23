@@ -4,5 +4,5 @@
 @endif
 
 <div id="locationField">
-  <input id="location" placeholder="Enter a city" type="text" name="location" />
+  <input id="location" placeholder="Enter a location" type="text" name="location" value="{{ isset($selectedLocation) ? $selectedLocation : '' }}"/>
 </div>

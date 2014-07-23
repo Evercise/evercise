@@ -6,7 +6,7 @@
 
 	@include('widgets.autocomplete')
 
-	{{ Form::select( 'radius' , $radiuses , isset($selectedLocation) ? $selectedLocation : 3958 ) }}
+	{{ Form::select( 'radius' , $radiuses , isset($selectedRadius) ? $selectedRadius : 3958 ) }}
 	{{ Form::submit('Find a Class' , array('class'=>'btn btn-yellow ')) }}
 {{ Form::close() }}
 @if(isset($places))
