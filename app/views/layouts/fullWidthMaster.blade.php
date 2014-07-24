@@ -11,13 +11,15 @@
 	{{ javascript_include_tag() }}
 
 </head>
-<body class="full-width-body">
-		<div class="container-full">
-	
+<body class="full-width-body">	
 
 		@include('layouts.redirectmessage')
-		@include('layouts.header')
-		</div>
+		<section id="homepage-banner" class="banner">
+			@include('layouts.header')
+		
+			@yield('top')
+		</section>
+		
 		@yield('content')
 		<div class="container-full">
 		@include('layouts.footer')

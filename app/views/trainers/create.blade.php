@@ -3,7 +3,7 @@
 
 @section('content')
 
-	@include('layouts.pagetitle', array('title'=>'Become a Trainer', 'subtitle'=>'Fill in your details below.'))
+	@include('layouts.pagetitle', array('title'=>'You&apos;re almost there', 'subtitle'=>'We have created a user account for you, please fille in the details below to updgrade to a trainer.'))
     <div class="col10 push1">
         <div id="upload_wrapper">
             @include('widgets.upload-form', array('uploadImage' => $userImage, 'default_image' => HTML::image( '/img/add_users.png', 'preview image', array('class' => 'class-block-img')) , 'label' => 'Upload you user image', 'fieldtext'=>'This image will appear on your profile and will be visible to Evercise members.'))
@@ -38,7 +38,7 @@
         @endif
 
         <div class="center-btn-wrapper" >
-    	   {{ Form::submit('Sign Up' , array('class'=>'btn-yellow ')) }}
+    	   {{ Form::submit('Finish trainer registration' , array('class'=>'btn btn-yellow btn-large')) }}
         </div>
         {{ Form::close() }}
      </div>

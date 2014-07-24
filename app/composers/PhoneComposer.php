@@ -12,6 +12,10 @@ class PhoneComposer {
       }
       natsort($country_codes);
 
+      
+      $country_codes = [ '+1' => $country_codes['+1']] + $country_codes;
+      $country_codes = [ '+44' => $country_codes['+44']] + $country_codes;
+
       Javascript::put(['updateCountryCode'=>1]);
       $view->with('country_codes', $country_codes);
   	}
