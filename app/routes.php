@@ -97,7 +97,7 @@ Route::get('tokens/fb' , function() {
 });*/
 
 
-Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
+
 
 //Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
@@ -150,6 +150,9 @@ Route::get('contact_us', array('as' => 'static.contact_us', 'uses' => 'StaticCon
 Route::get('how_it_works', array('as' => 'static.how_it_works', 'uses' => 'StaticController@show'));
 Route::get('test', array('as' => 'static.test', 'uses' => 'StaticController@show'));
 
+/* video */
+
+Route::get('video/create', array('as' => 'video', 'uses' => 'VideoController@create'));
 
 /*
 // uncomment for sql statement breakdown
@@ -195,7 +198,10 @@ Route::get('/fbtest', function()
     //return Redirect::to(Facebook::getLoginUrl());
 
 });
+
 Route::get('login/fb', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
+Route::get('login/fb/{redirect}', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
+//Route::get('login/fb/callback/{redirect_after_login_url}', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 Route::get('tokens/fb', array('as' => 'tokens.fbtoken', 'uses' => 'TokensController@fb'));
 
 Route::get('/tokens/tw', array('as' => 'tokens.twtoken', 'uses' => 'TokensController@tw'));

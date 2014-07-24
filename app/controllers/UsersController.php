@@ -28,7 +28,7 @@ class UsersController extends \BaseController {
 		$referralCode = Referral::checkReferralCode(Session::get('referralCode'));
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		return View::make('users.create')->with('referralCode', $referralCode);
+		return View::make('users.register')->with('referralCode', $referralCode);
 	}
 
 	/**
@@ -188,12 +188,11 @@ class UsersController extends \BaseController {
 
 					Sentry::login($user, true);
 
-					$redirectAfter = Session::get('redirectAfter');
+					$redirectAfter = Input::get('redirect');
 					//return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
 
 					if(isset($redirectAfter)) {
-						Session::forget('redirectAfter');
-						return Response::json(route('trainers.create'));
+						return Response::json($redirectAfter);
 					}else{
 						return Response::json(route('users.edit.tab', [$user->id ,'profile']));
 					}
@@ -209,7 +208,7 @@ class UsersController extends \BaseController {
  
 	}
 
-	public function fb_login()
+	public function fb_login($redirect = null)
 	{
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
@@ -298,10 +297,7 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false);
 
-				$redirectAfter = Session::get('redirectAfter');
-
-				if(isset($redirectAfter)) {
-					Session::forget('redirectAfter');
+				if(isset($redirect) && $redirect != null ) {
 					return Redirect::route('trainers.create')->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
 				}else{
 					return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
@@ -336,10 +332,9 @@ class UsersController extends \BaseController {
 			{
 				$user = Sentry::findUserByLogin($me['email']);
 
-				$redirectAfter = Session::get('redirectAfter');
 
-				if(isset($redirectAfter)) {
-					Session::forget('redirectAfter');
+				if(isset($redirect) && $redirect != null ) {
+
 					return Response::json(route('trainers.create'));
 				}else{
 					return View::make('users.edit')->with('notification', 'you have successfully signed up with facebook. Your password has been emailed to you')->with('display_name', $user->display_name);

@@ -24,40 +24,42 @@ registerInitFunction('initLogin', true);
 
 function initUsers()
 {
-    trace('initUsers');
 
-    $( ".datepicker" ).datepicker({
-      dateFormat: "yy-mm-dd" ,
-      defaultDate: "-30y",
-      yearRange: "-100:+0", 
-      minDate: '-120y', 
-      maxDate: '-16y',
-      changeMonth: true,
-      changeYear: true,
-      showOtherMonths: true,
-      selectOtherMonths: true
+    $('.datepicker').each(function(){
+        $( this ).datepicker({
+          dateFormat: "yy-mm-dd" ,
+          defaultDate: "-30y",
+          yearRange: "-100:+0", 
+          minDate: '-120y', 
+          maxDate: '-16y',
+          changeMonth: true,
+          changeYear: true,
+          showOtherMonths: true,
+          selectOtherMonths: true
+        });
     });
+    
 
     // create a new user
  
-    $( '#user_create' ).on( 'submit', function() {
+    $( '.create-form' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
+        var create = $( this ).attr('id');
+        trace(create);
         loading(); // when 
         // post to sontroller
         $.post(
             $( this ).prop( 'action' ),
             $( this ).serialize(),
             function( data ) {
-                trace("about to win.......");
                 loaded();
                 if (data.validation_failed == 1)
                 {
-                    trace(data.errors);
-                    trace('loose');
                     // show validation errors
                     var arr = data.errors;
                     var scroll = false;
+                    trace(create, true);
                     $.each(arr, function(index, value)
                     {
                         if (scroll == false) {
@@ -66,8 +68,8 @@ function initUsers()
                         };
                         if (value.length != 0)
                         {
-                           $("#" + index).addClass('error');
-                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
+                           $("#" +create +" #" + index).addClass('error');
+                           $("#" +create +" #" + index).after('<span class="error-msg">' + value + '</span>');
                         }
                     });
                     $('#ajax-loading').hide();
@@ -77,7 +79,6 @@ function initUsers()
                     setTimeout(function() {
                         window.location.href = data;
                     }, 1000);
-                    //trace(data);
                 }
             },
             'json'

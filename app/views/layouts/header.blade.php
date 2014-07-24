@@ -1,4 +1,4 @@
-<header>
+<header class="row">
 	<section>
 		<nav>		
 			<ul>
@@ -59,10 +59,9 @@
 
                 @else
                     <div class="nav-end">
-                       <li>{{  HTML::linkRoute('trainers.create', 'Register as Trainer')}}</li>
+                       <li>{{  HTML::linkRoute('users.create', 'Register')}}</li>
                     </div>
                     <div class="nav-join">
-                         <li>{{ HTML::linkRoute('users.create', 'Register') }}</li>
                          <div class="nav-login">
                             @if(isset($redirect_after_login))
                                <li>{{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , 'Login',  array('id'=>'login', 'class' => 'login'))}}</li>

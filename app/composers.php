@@ -64,6 +64,7 @@ View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
 View::composer('home', 'RecommendedClassesComposer');
 View::composer('evercoins.show', 'ShowEvercoinComposer');
 View::composer('static.how_it_works', 'AccordionComposer');
+View::composer('users.register', 'AccordionComposer');
 View::composer('payments.paywithevercoins', 'PayWithEvercoinsComposer');
 View::composer('form.phone', 'AreacodeComposer');
 View::composer('payments.cartrows', 'CartRowsComposer');
