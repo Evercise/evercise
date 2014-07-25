@@ -39,7 +39,7 @@ function initAutocompleteLocation()
 
 registerInitFunction('initAutocompleteLocation');
 
-
+var autoCompletesOnPage = 0;
 function initAutocompleteCategory()
 {
     trace('autocomplete-category');
@@ -47,6 +47,12 @@ function initAutocompleteCategory()
     var force = laracasts['initAutocompleteCategory']['force'];
     trace(categories, true);
 
+    $('.category').each(function(){
+      autoCompletesOnPage++;
+      $(this).data('num', autoCompletesOnPage);
+    });
+
+    var match = false;
     $('.category').autocomplete({
       source: function( request, response )
       {
@@ -70,15 +76,20 @@ function initAutocompleteCategory()
           if (allmatches.length == 0) allmatches = ['no matches'];
         response(allmatches);
       },
+      select:function(){
+        trace('cock');
+        match = true;
+      },
       close:function(){
         if(force)
         {
-          if( $('#category').val() !== '' )
+          if( $(this).val() !== '' && !match)
           {
-            var firstinlist = $('.ui-autocomplete:first a:first').html();
+            var firstinlist = $('#ui-id-'+$(this).data('num')+' a:first').html();
             if ( firstinlist == 'no matches') firstinlist = '';
-            $('#category').val( firstinlist );
+            $(this).val( firstinlist );
           }
+          match = false;
         }
       }
     });

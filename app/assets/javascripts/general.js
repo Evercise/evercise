@@ -314,6 +314,7 @@ function initPut (params) {
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
+                  console.debug(data, true);
                   form.find('.btn').removeClass('disabled');
                   // show validation errors
                   var arr = data.errors;

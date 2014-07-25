@@ -15,7 +15,7 @@ function initEvercisegroups()
 
     // create a new evercisegroup
  
-    $( '#evercisegroup_create' ).on( 'submit', function() {
+   /* $( '#evercisegroup_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
         // post to controller
@@ -68,7 +68,7 @@ function initEvercisegroups()
             'json'
         );
         return false;
-    });
+    });*/
 
     $('.hub-block #delete_group').click(function(){
         var url = $(this).attr('href');

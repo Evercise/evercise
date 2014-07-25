@@ -118,7 +118,7 @@ class EvercisegroupsController extends \BaseController {
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>1, 'max'=>200, 'step'=>1, 'value'=>1))));
 
         JavaScript::put(array('initImage' => json_encode(['ratio' => 'group_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
-		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
+		JavaScript::put(array('initPut' => 1 )); // Initialise EverciseGroups JS.
 		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 		//JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
@@ -141,7 +141,7 @@ class EvercisegroupsController extends \BaseController {
 				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
 				'price' => 'required|numeric|between:1,1000',
-				'image'	=> 'required',
+				'thumbFilename'	=> 'required',
 				'gender'=> 'required',
 				'venue'=> 'required',
 				// 'lat' => 'required',
@@ -172,7 +172,7 @@ class EvercisegroupsController extends \BaseController {
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
-			$image = Input::get('image');
+			$image = Input::get('thumbFilename');
 			$gender = Input::get('gender');
 			// $address = Input::get('address');
 			// $city = Input::get('city');
@@ -186,15 +186,15 @@ class EvercisegroupsController extends \BaseController {
 			$category3 = Input::get('category3');
 
 			$categories = [];
-			array_push($categories, $category1);
-			array_push($categories, $category2);
-			array_push($categories, $category3);
+			if ($category1 != '') array_push($categories, $category1);
+			if ($category2 != '') array_push($categories, $category2);
+			if ($category3 != '') array_push($categories, $category3);
 			if (empty($categories)) return Response::json(['validation_failed' => 1, 'errors' => ['category1'=>'you must choose at least one category']]);
 
 			// convert array of category names into id's
 			foreach ($categories as $key => $category) {
 				if (! $categories[$key] = Subcategory::where('name', $category)->pluck('id'))
-					return Response::json(['validation_failed' => 1, 'errors' => ['category1'=>'One of the categories you have chosen is not in the list']]);
+					return Response::json(['validation_failed' => 1, 'errors' => [('category'.($key+1)) => 'One of the categories you have chosen is not in the list']]);
 			}
 
 			if ( ! Sentry::check()) return 'Not logged in';
@@ -221,14 +221,14 @@ class EvercisegroupsController extends \BaseController {
 				'venue_id' => $venue,
 			));
 
-			$evercisegroup->subcategories->attach($categories);
+			$evercisegroup->subcategories()->attach($categories);
 
 			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 
 			//return Response::json(route('home', array('display_name'=> $this->user->display_name)));
 			//return Response::json($evercisegroup); // for testing
 			//return View::make('evercisegroups.index');
-			return Response::json(route('evercisegroups.index'));
+			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
 		}
 	}
 
