@@ -7,7 +7,7 @@ class AutocompleteCategoryComposer {
   	$subcategories = Subcategory::lists('name');
   	sort($subcategories);
 
-    JavaScript::put(array('initAutocompleteCategory' => $subcategories));
+    JavaScript::put(array('initAutocompleteCategory' => ['force'=>1, 'list'=>$subcategories]));
 
   }
  

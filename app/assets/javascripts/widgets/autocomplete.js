@@ -39,13 +39,20 @@ function initAutocompleteLocation()
 
 registerInitFunction('initAutocompleteLocation');
 
-
+var autoCompletesOnPage = 0;
 function initAutocompleteCategory()
 {
     trace('autocomplete-category');
-    var categories = laracasts['initAutocompleteCategory'];
+    var categories = laracasts['initAutocompleteCategory']['list'];
+    var force = laracasts['initAutocompleteCategory']['force'];
     trace(categories, true);
 
+    $('.category').each(function(){
+      autoCompletesOnPage++;
+      $(this).data('num', autoCompletesOnPage);
+    });
+
+    var match = false;
     $('.category').autocomplete({
       source: function( request, response )
       {
@@ -65,15 +72,24 @@ function initAutocompleteCategory()
           }
         });
         var allmatches = matches.concat(notsomuches);
-        if (allmatches.length == 0) allmatches = ['no matches'];
+        if(force)
+          if (allmatches.length == 0) allmatches = ['no matches'];
         response(allmatches);
       },
+      select:function(){
+        trace('cock');
+        match = true;
+      },
       close:function(){
-        if( $('#category').val() !== '' )
+        if(force)
         {
-          var firstinlist = $('.ui-autocomplete:first a:first').html();
-          if ( firstinlist == 'no matches') firstinlist = '';
-          $('#category').val( firstinlist );
+          if( $(this).val() !== '' && !match)
+          {
+            var firstinlist = $('#ui-id-'+$(this).data('num')+' a:first').html();
+            if ( firstinlist == 'no matches') firstinlist = '';
+            $(this).val( firstinlist );
+          }
+          match = false;
         }
       }
     });
