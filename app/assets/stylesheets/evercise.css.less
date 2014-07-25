@@ -2741,24 +2741,7 @@ video{
 			&:last-of-type(){
 				border-bottom: none;
 			}
-			.formlabel{
-				width: 25%;
-				float: left;
-			}
-			.formfield{
-				float: left;
-				width: 75%;
-			}
-			.btn{
-				float: left;
-				margin-top: 30px;
-				width: auto;
-				padding: 10px 25px 9px;
-				&.center{
-					width: 140px;
-					float: none;
-				}
-			}
+
 			.search-img{
 				width: 164px;
 			}
@@ -2790,12 +2773,7 @@ video{
 			margin: 0 0 0 40px;
 			width: 100%;
 
-			.formitem{
-				.formitems(8,1,8);
-				.formlabel{
-					display: none;
-				}
-			}
+			
 			.success_msg{
 				width: 100%;
 			}
@@ -3655,11 +3633,15 @@ footer{
 		margin-top: 40px;
 		padding: 10px;
 		background-color: @grey;
+		float: left;
+		width: 100%;
 		.border-radius();
-		input{
-			width: 200px;
+		input, select{
+			width: 143px;
 			height: 42px;
+			float: left;
 			margin-top: -1px;
+			margin-right: 5px;
 		}
 		.btn{
 			float: right;

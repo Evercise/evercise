@@ -400,6 +400,7 @@ class UsersController extends \BaseController {
 
 		JavaScript::put(array('initPut' => json_encode(['selector' => '#user_edit']) ));
 		JavaScript::put(array('initUsers' => 1 ));
+		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('selectTab' => ['tab'=>$tab] ));
 

@@ -1,5 +1,6 @@
 @extends('layouts.fullWidthMaster')
-
+<?php View::share('title', 'Exercise for Everyone Everywhere') ?>
+<?php View::share('metaDescription', 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.') ?>
 @section('top' )
 
 <div class="row">

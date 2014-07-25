@@ -6,7 +6,7 @@
 	<div class="formfield">
 		{{ Form::password( $fieldname ,  array('data-tooltip' => isset($tooltip) ? $tooltip : null , 'placeholder' => $placeholder, 'maxlength' => 32, 'class' => isset($tooltip) ? 'tooltip' : null))}}
 		@if ($confirmation)
-			{{ Form::password( $fieldname.'_confirmation' ,  array('placeholder' => $confirmation, 'maxlength' => 32, 'id' => $fieldname.'_confirmation', 'class' => isset($tooltip) ? 'tooltip' : null))}}
+			{{ Form::password( $fieldname.'_confirmation' ,  array('placeholder' => $confirmation, 'maxlength' => 32, 'id' => $fieldname.'_confirmation', 'class' => isset($tooltip) ? 'tooltip mt10' : 'mt10'))}}
 		@endif
 		@if(isset($fieldtext))
 			<p>{{ $fieldtext  }}</p>
