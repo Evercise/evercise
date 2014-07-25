@@ -40,54 +40,6 @@ function initUsers()
     });
     
 
-    // create a new user
- 
-    $( '.create-form' ).on( 'submit', function() {
-        $('.error-msg').remove();
-        $('input').removeClass('error');
-        var create = $( this ).attr('id');
-        trace(create);
-        loading(); // when 
-        // post to sontroller
-        $.post(
-            $( this ).prop( 'action' ),
-            $( this ).serialize(),
-            function( data ) {
-                loaded();
-                if (data.validation_failed == 1)
-                {
-                    // show validation errors
-                    var arr = data.errors;
-                    var scroll = false;
-                    trace(create, true);
-                    $.each(arr, function(index, value)
-                    {
-                        if (scroll == false) {
-                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
-                            scroll = true;
-                        };
-                        if (value.length != 0)
-                        {
-                           $("#" +create +" #" + index).addClass('error');
-                           $("#" +create +" #" + index).after('<span class="error-msg">' + value + '</span>');
-                        }
-                    });
-                    $('#ajax-loading').hide();
-                }else{
-                    // redirect to login page
-                    $('.success_msg').show();
-                    setTimeout(function() {
-                        window.location.href = data;
-                    }, 1000);
-                }
-            },
-            'json'
-        );
-        return false;
-    });
-
-
-
     // Reset password
     $( '#passwords_reset' ).on( 'submit', function() {
         $('.error-msg').remove();

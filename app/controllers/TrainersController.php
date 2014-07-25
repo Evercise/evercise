@@ -44,12 +44,10 @@ class TrainersController extends \BaseController {
 		   	else array_push($titles[$sp->name], $sp->titles);
 		}
 
-
 		// http://image.intervention.io/methods/crop
 		// http://odyniec.net/projects/imgareaselect
-
-		JavaScript::put(array('initCreateTrainer' => 1 )); // Initialise Create Trainer JS.
-		//JavaScript::put(array('initTrainerTitles' => json_encode(['titles' =>$titles]) )); // Initialise title swap Trainer JS.
+		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
+		JavaScript::put(array('initPut' => json_encode(['selector' => '#trainer_create']) )); // Initialise initu put for ajax posting of trainer create form
 		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		return View::make('trainers.create')
 			->with('disciplines', $disciplines);
@@ -137,7 +135,9 @@ class TrainersController extends \BaseController {
             ));
 
 			//respond
-			return Response::json(route('trainers.edit', array('id'=> $user->id)));
+			//return Response::json(route('trainers.edit', array('id'=> $user->id)));
+			//return Response::json(route('evercisegroups.index'));
+			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
 		}
 
 	}

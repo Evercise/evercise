@@ -119,12 +119,13 @@ class EvercisegroupsController extends \BaseController {
 		    $categoryDescriptions[$cat->id] = $cat->description;
 		}
 
-		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>1, 'max'=>120, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
+		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>1, 'max'=>20, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>10, 'max'=>240, 'step'=>5, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>1, 'max'=>200, 'step'=>1, 'value'=>1))));
 
         JavaScript::put(array('initImage' => json_encode(['ratio' => 'group_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
+		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
 		return View::make('evercisegroups.create')->with('categories', $categories);
@@ -145,7 +146,7 @@ class EvercisegroupsController extends \BaseController {
 				'category' => 'required',
 				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
-				'price' => 'required|numeric|between:1,120',
+				'price' => 'required|numeric|between:1,1000',
 				'image'	=> 'required',
 				'gender'=> 'required',
 				'venue'=> 'required',

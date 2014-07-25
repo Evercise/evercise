@@ -4,11 +4,13 @@
 		{{ Form::label( $fieldname, $label) }}
 	</div>
 	<div class="formfield">
-		{{ Form::password( $fieldname ,  array('placeholder' => $placeholder, 'maxlength' => 32))}}
+		{{ Form::password( $fieldname ,  array('data-tooltip' => isset($tooltip) ? $tooltip : null , 'placeholder' => $placeholder, 'maxlength' => 32, 'class' => isset($tooltip) ? 'tooltip' : null))}}
 		@if ($confirmation)
-			{{ Form::password( $fieldname.'_confirmation' ,  array('placeholder' => $confirmation, 'maxlength' => 32, 'id' => $fieldname.'_confirmation'))}}
+			{{ Form::password( $fieldname.'_confirmation' ,  array('placeholder' => $confirmation, 'maxlength' => 32, 'id' => $fieldname.'_confirmation', 'class' => isset($tooltip) ? 'tooltip' : null))}}
 		@endif
-		<p>{{ $fieldtext }}</p>
+		@if(isset($fieldtext))
+			<p>{{ $fieldtext  }}</p>
+		@endif
 		@if(isset($forgot))
 			<br><br><br><p>{{ link_to('auth/forgot', $forgot) }}</p>
 		@endif

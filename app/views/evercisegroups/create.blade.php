@@ -11,7 +11,7 @@
             @if(Session::has('image_full'))
                 @include('widgets.upload-form', array('uploadImage' => Session::get('image_full') , 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
             @else
-                @include('widgets.upload-form', array('uploadImage' => null, 'default_image' => HTML::image( '/img/add_eg.png', 'preview image', array('class' => 'class-block-img')) , 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
+                @include('widgets.upload-form', array('uploadImage' => null, 'default_image' => HTML::image( '/img/add_eg.png', 'preview image', array('class' => 'class-block-img')) , 'label' => 'Upload you class image', 'fieldtext'=>'<span class="tooltip" data-tooltip="You must own the image or have the permission of the image owner to use it. <br>The image you choose for your profile and/or class must not contain any of the following:<li>Trademarks or company names – eg, images marked with ® or ™ signs</li> <li>mages or text protected by copyright – eg, images marked with © or other watermarks or notations</li><li>Contact information – telephone numbers, URLs or email addresses</li><li>Political statements or images relating to ethnicity or religion</li><li>Provocative, lewd or sexual images or content</li><li>Offensive material – images, signs, symbols or text relating to violence, death, injury, racism, cruelty, profanity, obscenity, weapons, firearms, ammunition or terrorism</li><li>Content where drinking, being drunk, smoking or gambling is the focus</li>">Choose a suitable image to represent your class.<br> Uploaded images must conform to the following guidelines: (* click to see guidelines)</span>'))
             @endif
         </div>
 
@@ -22,9 +22,9 @@
 
 
             @if(Session::has('name'))
-                @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name', 'fieldtext'=>'Your class name should be simple, specific and memorable, and it should clarify the nature of the service you are going to provide. Try not to be too general.', 'default' => Session::get('name') ))
+                @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', 'default' => Session::get('name') ))
             @else
-                @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name', 'fieldtext'=>'Your class name should be simple, specific and memorable, and it should clarify the nature of the service you are going to provide. Try not to be too general.' ))
+                @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', ))
             @endif
 
             @if ($errors->has('classname'))
@@ -32,9 +32,9 @@
             @endif
 
             @if(Session::has('description'))
-                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'fieldtext'=>'This summary will appear in the Class Panel under the title. Use your words wisely to explain as concisely and clearly as possible what a participant can hope to gain from joining your class.', 'default' => Session::get('description') ))
+                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'tooltip'=>'Tell people what’s special about this class.  Use your words wisely to describe as concisely and clearly as possible what a participant can hope to gain from joining your class. <br>Contact details can not be provided (telephone numbers, URLs or email addresses) in this panel. Any information not related to your fitness class will be deleted.', 'default' => Session::get('description') ))
             @else
-                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'fieldtext'=>'This summary will appear in the Class Panel under the title. Use your words wisely to explain as concisely and clearly as possible what a participant can hope to gain from joining your class.' ))
+                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'tooltip'=>'Tell people what’s special about this class.  Use your words wisely to describe as concisely and clearly as possible what a participant can hope to gain from joining your class. <br>Contact details can not be provided (telephone numbers, URLs or email addresses) in this panel. Any information not related to your fitness class will be deleted.' ))
             @endif
 
             @if ($errors->has('summary'))
@@ -54,9 +54,9 @@
 
 
             @if(Session::has('duration'))
-                @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class', 'default'=>Session::get('duration') ))
+                @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration (mins)', 'tooltip'=>'Use the slider to input the duration of your class. Minimum: 10 minutes.', 'default'=>Session::get('duration') ))
             @else
-                @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration', 'fieldtext'=>'Use the slider to input the duration of your class', 'default'=>50 ))
+                @include('form.slider', array('fieldname'=>'duration', 'placeholder'=>'Between 20 and 240 mins', 'maxlength'=>3, 'label'=>'Class Duration (mins)', 'tooltip'=>'Use the slider to input the duration of your class. Minimum: 10 minutes.', 'default'=>50 ))
             @endif
 
             @if ($errors->has('duration'))
@@ -64,9 +64,9 @@
             @endif
 
             @if(Session::has('maxsize'))
-                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.' , 'default' => Session::get('maxsize') ))
+                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'tooltip'=>'Use the slider to select the maximum number of participants you are willing to have in your class. Minimum: 1 participant' , 'default' => Session::get('maxsize') ))
             @else
-                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'fieldtext'=>'Use the slider to select the maximum number of participants you are willing to have in your class.', 'default'=>10 ))
+                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'tooltip'=>'Use the slider to select the maximum number of participants you are willing to have in your class. Minimum: 1 participant', 'default'=>10 ))
             @endif
 
             @if ($errors->has('maxsize'))
@@ -74,9 +74,9 @@
             @endif
 
             @if(Session::has('price'))
-                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.' , 'default' => Session::get('price') ))
+                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'tooltip'=>'Use the slider to input the price you want to charge each participant for your class. There is no minimum.' , 'default' => Session::get('price') ))
             @else
-                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'fieldtext'=>'Use the slider to input the price you want to charge each participant for your class.', 'default'=>15 ))
+                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'tooltip'=>'Use the slider to input the price you want to charge each participant for your class. There is no minimum.', 'default'=>5 ))
             @endif
 
             @if ($errors->has('price'))

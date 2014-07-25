@@ -190,7 +190,7 @@ label{
 
 // buttons 
 
-.btn(@bk, @colour: #ffffff , @width : 100% , @margin : 0){
+.btn(@bk, @colour: #ffffff , @width : 230px , @margin : 0){
 	.font-size(1.6);
 	text-align: center;
 	padding: 10px 4px;
@@ -201,7 +201,7 @@ label{
 	.gradient (lighten(@bk, 10%), @bk);
 	width: @width;
 	//.text-shadow(0 0px 1px contrast(@bk,lighten(@bk, (100 - lightness(@bk))), darken(@bk, lightness(@bk) ), 50%));
-	display: block;
+	display: inline-block;
 	margin-top:@margin+px;
 	&:hover{
 		cursor: pointer;
@@ -343,7 +343,6 @@ label{
 			}
 			p{
 				.line-height(2.2);
-				display: none;
 			}
 			.slider-input{
 				width: 30%;
@@ -351,15 +350,15 @@ label{
 			
 			.location-input{
 				width: auto;
-				margin-right: 2%;
+				margin-right: 2.7%;
 				&:nth-of-type(1){
-					width: 90%;
+					width: 92%;
 				};
 				&:nth-of-type(2){
 					width: 58%;
 				};
 				&:nth-of-type(3){
-					width: 30%;
+					width: 31%;
 				};
 			}
 			
@@ -382,11 +381,6 @@ label{
 	}
 	.success_msg{
 		.success_msgs();
-	}
-
-	.btn-blue{
-		width: 90%;
-		margin-bottom: 20px;
 	}
 	
 	.facilities{
@@ -1033,9 +1027,7 @@ video{
 		margin: 0;
 		.heading-font(500);
 	}
-	.four-step{
-		.four_step(60%);
-	}
+
 		
 }
 
@@ -3245,7 +3237,7 @@ video{
 #venue_create_form{
 	display:none;
 	.map-wrapper{
-		width: 90%;
+		width: 92%;
 	}
 }
 
@@ -3347,7 +3339,7 @@ video{
 			padding: 5px 0;
 		}
 		.cover-up-wrap{
-			background: lighten(@grey, 10%);
+			background: #f5f5f5;
 			position: absolute;
 			bottom: 5px;
 			left: 5px;

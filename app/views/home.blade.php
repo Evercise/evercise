@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col12 tc">
-		<h1 class="mt20">Lower your barrier to enjoy fitness classes!</h1>
+		<h1 class="mt20">Lower your barrier to enjoy fitness classes</h1>
 		<h3>Flexible schedule and multiple options across London.</h3>
 		<div class="video-placeholder mb20">
 			
@@ -29,22 +29,19 @@
 		<h4>Get fit with Evercise in four simple steps:</h4>
 		<hr>
 
-		<div id="step_1" class="four-step">
+		<div id="step_1" class="four-step col4">
 			{{ HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')) }}
 			<h6>Search fitness classes</h6>
 		</div>
-		<div id="step_2" class="four-step">
+		<div id="step_2" class="four-step col4">
 			{{ HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img')) }}
 			<h6>Sign up to a class online</h6>
 		</div>
-		<div id="step_3" class="four-step">
+		<div id="step_3" class="four-step col4">
 			{{ HTML::image('img/Class.png','get fit', array('class' => 'home-step-img')) }}
 			<h6>Show up and shape up!</h6>
 		</div>
-		<div id="step_4" class="four-step">
-			{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
-			<h6>Rate and review</h6>
-		</div>
+
 		
 	</div>
 	<hr>
