@@ -4,7 +4,7 @@
 
 	{{ Form::select( 'category' , $types, isset($selectedTypes) ? $selectedTypes : null)  }}
 
-	@include('widgets.autocomplete')
+	@include('widgets.autocomplete-location')
 
 	{{ Form::select( 'radius' , $radiuses , isset($selectedRadius) ? $selectedRadius : 3958 ) }}
 	{{ Form::submit('Find a Class' , array('class'=>'btn btn-yellow ')) }}

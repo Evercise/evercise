@@ -33,7 +33,7 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('evercisegroups', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('category_id')->references('id')->on('categories');
+			//$table->foreign('category_id')->references('id')->on('categories');
 			$table->foreign('venue_id')->references('id')->on('venues');
 		});
 		Schema::table('trainerhistory', function(Blueprint $table) {

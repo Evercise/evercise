@@ -41,11 +41,11 @@
                 {{ $errors->first('summary', '<p class="error-msg">:message</p>')}}
             @endif
 
-            @if(Session::has('category'))
-                @include('form.select', array('fieldname'=>'category', 'label'=>'Category', 'values'=>$categories , 'selected' => Session::get('category')))
-            @else
-                @include('form.select', array('fieldname'=>'category', 'label'=>'Category', 'values'=>$categories ))
-            @endif
+
+            @include('widgets.autocomplete-category', ['fieldname'=>'category1', 'label'=>'category 1'])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category2', 'label'=>'category 2'])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category3', 'label'=>'category 3'])
+
             @if ($errors->has('category'))
                 {{ $errors->first('category', '<p class="error-msg">:message</p>')}}
             @endif

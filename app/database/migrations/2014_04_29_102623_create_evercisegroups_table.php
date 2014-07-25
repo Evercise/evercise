@@ -16,7 +16,7 @@ class CreateEvercisegroupsTable extends Migration {
 			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('category_id')->unsigned();// Foreign key
+			//$table->integer('category_id')->unsigned();// Foreign key
 			$table->integer('venue_id')->unsigned();// Foreign key
 			$table->string('name', 45);
 			$table->string('title', 255);

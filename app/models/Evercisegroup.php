@@ -53,9 +53,9 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Rating');
     }
 
-    public function category()
+    public function subcategory()
     {
-        return $this->hasOne('Category', 'id', 'category_id');
+        return $this->belongsToMany('Subcategory', 'evercisegroup_subcategories', 'subcategory_id', 'evercisegroup_id')->withTimestamps();
     }
 
     public function tester()

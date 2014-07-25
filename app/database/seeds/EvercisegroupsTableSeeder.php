@@ -51,7 +51,7 @@ class EvercisegroupsTableSeeder extends Seeder {
 					{
 						$evercisegroup = Evercisegroup::create([
 							'user_id' => $newUser->id,
-							'category_id' => $classinfo->classInfoCategory,
+							//'category_id' => $classinfo->classInfoCategory,
 							'venue_id' => $venueId,
 							'name' => $classinfo->classInfoName,
 							'title' => $classinfo->classInfoSubtitle,

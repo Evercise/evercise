@@ -1,10 +1,8 @@
 
-
 var initAutocompleteStarted = false;
-
-function initAutocomplete()
+function initAutocompleteLocation()
 {
-    trace('autocomplete');
+    trace('autocomplete-location');
 
 
 
@@ -31,7 +29,7 @@ function initAutocomplete()
     else
     {
       setTimeout(function() {
-        initAutocomplete();
+        initAutocompleteLocation();
       }, 500);
     }
 
@@ -39,6 +37,46 @@ function initAutocomplete()
 
 }
 
-registerInitFunction('initAutocomplete');
+registerInitFunction('initAutocompleteLocation');
 
 
+function initAutocompleteCategory()
+{
+    trace('autocomplete-category');
+    var categories = laracasts['initAutocompleteCategory'];
+    trace(categories, true);
+
+    $('.category').autocomplete({
+      source: function( request, response )
+      {
+        // Array of matches starting with typed query
+        var matches = $.map( categories, function(c)
+        {
+          if ( c.toUpperCase().indexOf(request.term.toUpperCase()) === 0 ) {
+            return c;
+          }
+        });
+        //response(matches);
+        // Array of the rest of them
+        var notsomuches = $.map( categories, function(c)
+        {
+          if ( c.toUpperCase().indexOf(request.term.toUpperCase()) > 0 ) {
+            return c;
+          }
+        });
+        var allmatches = matches.concat(notsomuches);
+        if (allmatches.length == 0) allmatches = ['no matches'];
+        response(allmatches);
+      },
+      close:function(){
+        if( $('#category').val() !== '' )
+        {
+          var firstinlist = $('.ui-autocomplete:first a:first').html();
+          if ( firstinlist == 'no matches') firstinlist = '';
+          $('#category').val( firstinlist );
+        }
+      }
+    });
+}
+
+registerInitFunction('initAutocompleteCategory');

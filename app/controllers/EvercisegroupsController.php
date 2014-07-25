@@ -109,15 +109,19 @@ class EvercisegroupsController extends \BaseController {
 			return View::make('trainers.about');
 		} 
 
-		$categoriesDB = Category::all();
 
+		/*
+		$categoriesDB = Category::all();
 		$categories = array();
 		$categoryDescriptions = array();
 		foreach ($categoriesDB as $cat)
 		{
 		    $categories[$cat->id] = $cat->name;
 		    $categoryDescriptions[$cat->id] = $cat->description;
-		}
+		}*/
+
+		$subcategories = Subcategory::lists('name');
+		natsort($subcategories);
 
 		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>1, 'max'=>20, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>10, 'max'=>240, 'step'=>5, 'value'=>1))));
@@ -127,8 +131,8 @@ class EvercisegroupsController extends \BaseController {
 		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
 		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
-		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
-		return View::make('evercisegroups.create')->with('categories', $categories);
+		//JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
+		return View::make('evercisegroups.create')->with('subcategories', $subcategories);
 	}
 
 	/**
@@ -143,7 +147,7 @@ class EvercisegroupsController extends \BaseController {
 			array(
 				'classname' => 'required|max:30|min:5',
 				'description' => 'required|max:500|min:100',
-				'category' => 'required',
+				//'category' => 'required',
 				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
 				'price' => 'required|numeric|between:1,1000',
@@ -173,7 +177,7 @@ class EvercisegroupsController extends \BaseController {
 
 			$classname = Input::get('classname');
 			$description = Input::get('description');
-			$category = Input::get('category');
+			//$category = Input::get('category');
 			$venue = 1;
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
@@ -187,6 +191,22 @@ class EvercisegroupsController extends \BaseController {
 			// $lng = Input::get('long');
 			$venue = Input::get('venue');
 
+			$category1 = Input::get('category1');
+			$category2 = Input::get('category2');
+			$category3 = Input::get('category3');
+
+			$categories = [];
+			array_push($categories, $category1);
+			array_push($categories, $category2);
+			array_push($categories, $category3);
+			if (empty($categories)) return Response::json(['validation_failed' => 1, 'errors' => ['category1'=>'you must choose at least one category']]);
+
+			// convert array of category names into id's
+			foreach ($categories as $key => $category) {
+				if (! $categories[$key] = Subcategory::where('name', $category)->pluck('id'))
+					return Response::json(['validation_failed' => 1, 'errors' => ['category1'=>'One of the categories you have chosen is not in the list']]);
+			}
+
 			if ( ! Sentry::check()) return 'Not logged in';
 			
 			if (Trainer::where('user_id', $this->user->id)->count())
@@ -195,7 +215,7 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroup = Evercisegroup::create(array(
 				'name'=>$classname,
 				'user_id'=>$this->user->id,
-				'category_id'=>$category,
+				//'category_id'=>$category,
 				'venue_id'=>$venue,
 				'description'=>$description,
 				'default_duration'=>$duration,
@@ -210,6 +230,8 @@ class EvercisegroupsController extends \BaseController {
 				// 'lng' => $lng
 				'venue_id' => $venue,
 			));
+
+			$evercisegroup->subcategories->attach($categories);
 
 			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 

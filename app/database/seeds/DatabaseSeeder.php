@@ -53,6 +53,9 @@ class DatabaseSeeder extends Seeder {
                 $this->call('SessionMembersTableSeeder');
                 $this->command->info('SessionMembers seeded!');
 
+                $this->call('SubcategoriesTableSeeder');
+                $this->command->info('Subcategories seeded!');
+
 	}
 
 }
