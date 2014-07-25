@@ -42,9 +42,9 @@
             @endif
 
 
-            @include('widgets.autocomplete-category', ['fieldname'=>'category1', 'label'=>'category 1'])
-            @include('widgets.autocomplete-category', ['fieldname'=>'category2', 'label'=>'category 2'])
-            @include('widgets.autocomplete-category', ['fieldname'=>'category3', 'label'=>'category 3'])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category1', 'label'=>'category 1', 'force'=>1])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category2', 'label'=>'category 2', 'force'=>1])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category3', 'label'=>'category 3', 'force'=>1])
 
             @if ($errors->has('category'))
                 {{ $errors->first('category', '<p class="error-msg">:message</p>')}}

@@ -2,8 +2,7 @@
 	
 	
 
-	{{ Form::select( 'category' , $types, isset($selectedTypes) ? $selectedTypes : null)  }}
-
+    @include('widgets.autocomplete-category', ['fieldname'=>'category', 'label'=>'category'])
 	@include('widgets.autocomplete-location')
 
 	{{ Form::select( 'radius' , $radiuses , isset($selectedRadius) ? $selectedRadius : 3958 ) }}
