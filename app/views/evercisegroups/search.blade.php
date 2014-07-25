@@ -8,13 +8,17 @@
 		@include('evercisegroups.refine')
 		<br>
 		<br>
-		@include('evercisegroups.recommended')
+		@include('evercisegroups.recommended', ['loadAutocompleteScript'=>1])
 	</div>
 
 	<div class="col9" id="discover-right">
 		@include('evercisegroups.discover_map', array('places' => $evercisegroups))
 		<div class="heading-block">
-			<h4>Classes</h4>
+			@if(Input::get('location'))
+				<h4>Classes near {{ Str::limit( Input::get('location'),52)}}</h4>
+			@else
+				<h4>Search for classes in you area</h4>
+			@endif
 			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
 			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
 		</div>

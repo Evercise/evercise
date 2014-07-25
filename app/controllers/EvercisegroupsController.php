@@ -135,7 +135,7 @@ class EvercisegroupsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'classname' => 'required|max:30|min:5',
+				'classname' => 'required|max:100|min:5',
 				'description' => 'required|max:500|min:100',
 				//'category' => 'required',
 				'duration' => 'required|numeric|between:10,240',
