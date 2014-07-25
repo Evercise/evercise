@@ -16,10 +16,7 @@
 				@include('ratings.stars', ['rating' => count($evercisegroup->ratings) == 0 ?  0 :  $ratings[$evercisegroup->id] / count($evercisegroup->ratings)])
 				
 				</div>
-				<div class="recommended-aside">
-					{{ HTML::image('img/category/'.$evercisegroup->category->name.'.png', 'category image', array('class' => 'category-icon')); }}
-					<span>{{ Str::limit($evercisegroup->category->name, 9) }}</span>
-				</div>
+
 			</div>
 			<div class=" block-footer">
 				<span>Price</span>
