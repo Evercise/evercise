@@ -24,7 +24,7 @@
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
 			</div>
 			
-			@include('evercisegroups.category_box', array('category' =>  $evercisegroup->category_id))
+			
 			<br>
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>

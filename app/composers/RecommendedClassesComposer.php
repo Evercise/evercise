@@ -12,7 +12,6 @@ class RecommendedClassesComposer {
           ->has('confirmed')
           ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
           ->with('user')
-          ->with('category')
   				->with('venue')
           ->with('ratings')
   				/*->with(['ratings' => function($query){

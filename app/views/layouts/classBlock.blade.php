@@ -18,6 +18,8 @@
 				@include('ratings.stars', array('rating' => $rating))
 			</div>
 		@endif
+		{{--
+		removed categorys
 		@if (isset($category))
 			<div id="block-category" class="inner-half">
 				{{ HTML::image('img/category/'.$category.'.png', 'category image', array('class' => 'category-icon')); }}
@@ -25,6 +27,7 @@
 			</div> 
 			
 		@endif
+		--}}
 	</div>
 	@if(isset($sessions))
 		<div class="future-session-header">

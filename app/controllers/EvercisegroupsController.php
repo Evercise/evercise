@@ -19,7 +19,6 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
 			->with('futuresessions.sessionmembers')
 			->with('pastsessions')
-			->with('category')
 			->with('venue')
 			->where('user_id', $this->user->id)->get();
 
@@ -110,15 +109,6 @@ class EvercisegroupsController extends \BaseController {
 		} 
 
 
-		/*
-		$categoriesDB = Category::all();
-		$categories = array();
-		$categoryDescriptions = array();
-		foreach ($categoriesDB as $cat)
-		{
-		    $categories[$cat->id] = $cat->name;
-		    $categoryDescriptions[$cat->id] = $cat->description;
-		}*/
 
 		$subcategories = Subcategory::lists('name');
 		natsort($subcategories);
@@ -254,7 +244,6 @@ class EvercisegroupsController extends \BaseController {
 		return Redirect::route('evercisegroups.create')
 				->with('name', $evercisegroups->name)
 				->with('description', $evercisegroups->description)
-				->with('category', $evercisegroups->category_id)
 				->with('duration', $evercisegroups->default_duration)
 				->with('maxsize', $evercisegroups->capacity)
 				->with('price', $evercisegroups->default_price)
@@ -562,39 +551,21 @@ class EvercisegroupsController extends \BaseController {
 		$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
+        	
+    	$evercisegroups= Evercisegroup::has('futuresessions')
+        ->has('confirmed')
+        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+        	$query->select( array( DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
 
-        if ($category == null && $query != null) {
-        	$evercisegroups= Evercisegroup::has('futuresessions')
-	        ->has('confirmed')
-	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
-	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
-	        	$query->select( array( DB::raw($haversine . ' as distance')) )
-	        		  ->having('distance', '<', $radius);
-
-	        })
-	        ->with('venue')		
-	        ->with('user')
-	        ->with('category')
-	        ->with('futuresessions')
-	        ->paginate(6);
+        })
+        ->with('venue')		
+        ->with('user')
+        ->with('futuresessions')
+        ->paginate(6);
 			//->get();
-        }else{
-        	$evercisegroups= Evercisegroup::has('futuresessions')
-	        ->has('confirmed')
-	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
-	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
-	        	$query->select( array( DB::raw($haversine . ' as distance')) )
-	        		  ->having('distance', '<', $radius);
-
-	        })
-	        ->with('venue')
-	        ->with('user')
-	        ->with('category')
-	        ->with('futuresessions')
-			->where('category_id' , $category)
-			->paginate(6);
-			//->get();
-        }
+   
         
 
       //  return var_dump($evercisegroups);
