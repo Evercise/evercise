@@ -22,7 +22,7 @@
 
 
             @if(Session::has('name'))
-                @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', 'default' => Session::get('name') ))
+                @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 100 characters', 'maxlength'=>100, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', 'default' => Session::get('name') ))
             @else
                 @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 30 characters', 'maxlength'=>30, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', ))
             @endif
@@ -64,9 +64,9 @@
             @endif
 
             @if(Session::has('maxsize'))
-                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'tooltip'=>'Use the slider to select the maximum number of participants you are willing to have in your class. Minimum: 1 participant' , 'default' => Session::get('maxsize') ))
+                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Available tickets', 'tooltip'=>'Use the slider to select the maximum number of participants you are willing to have in your class. Minimum: 1 participant' , 'default' => Session::get('maxsize') ))
             @else
-                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Maximum Class Size', 'tooltip'=>'Use the slider to select the maximum number of participants you are willing to have in your class. Minimum: 1 participant', 'default'=>10 ))
+                @include('form.slider', array('fieldname'=>'maxsize', 'placeholder'=>'Between 1 and 100', 'maxlength'=>3, 'label'=>'Available tickets', 'tooltip'=>'Use the slider to select the maximum number of participants you are willing to have in your class. Minimum: 1 participant', 'default'=>10 ))
             @endif
 
             @if ($errors->has('maxsize'))
@@ -83,7 +83,7 @@
                 {{ $errors->first('price', '<p class="error-msg">:message</p>')}}
             @endif
 
-            @include('form.select', array('fieldname'=>'gender', 'label'=>'Target Gender', 'values'=>array(0=>'Unisex',1=>'Male', 2=>'Female')))
+            @include('form.select', array('fieldname'=>'gender', 'label'=>'Target Gender', 'values'=>array(0=>'All',1=>'Male', 2=>'Female')))
 
             @if(Session::has('image'))
                 {{ Form::hidden( 'thumbFilename' , Session::get('image') , array('id' => 'thumbFilename')) }}

@@ -15,8 +15,8 @@
 					@if($facility->category == 'Amenity')
 						<li>
 							<div>
-							{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => $facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
-							{{Form::label('facilities_array[]', $facility->name, array('id'=>'fac_check'))}}
+							{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => 'facilities_array_'.$facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
+							{{Form::label('facilities_array_'.$facility->id, $facility->name, array('id'=>'fac_check'))}}
 							</div>
 							{{ HTML::image('img/facility/'.$facility->image, $facility->image) }}
 						</li>
@@ -30,8 +30,8 @@
 					@if($facility->category == 'facility')
 						<li>
 							<div>
-							{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => $facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
-							{{Form::label('facilities_array[]', $facility->name, array('id'=>'fac_check'))}}
+							{{ Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => 'facilities_array_'.$f_key, 'form' => 'venue_create', 'class' => 'facility_checkbox')) }}
+							{{Form::label('facilities_array_'.$f_key, $facility->name, array('id'=>'fac_check'))}}
 							</div>
 							{{ HTML::image('img/facility/'.$facility->image, $facility->image) }}
 						</li>
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 
-    <div class="center-btn-wrapper" >
+    <div class="center-btn-wrapper mb30" >
 	   {{ Form::submit('Create Venue' , array('class'=>'btn-yellow ', 'form' => 'venue_create')) }}
     </div>
 

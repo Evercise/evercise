@@ -51,7 +51,7 @@
 		<div class='featured-wrap'>
 			@foreach ($evercisegroups as $key => $evercisegroup)	
 				<div class="col3">
-					@include('layouts.classBlock', array( 'rating' => count($evercisegroup->ratings) == 0 ? 0 : $ratings[$evercisegroup->id] / count($evercisegroup->ratings)  , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,   'venue' => $evercisegroup->venue  ,'sessions' => $evercisegroup->futuresessions, 'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
+					@include('layouts.classBlock', array( 'rating' => count($evercisegroup->ratings) == 0 ? 0 : $ratings[$evercisegroup->id] / count($evercisegroup->ratings)  , 'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,   'venue' => $evercisegroup->venue  ,'sessions' => $evercisegroup->futuresessions, 'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price ))
 				</div>	
 						
 			@endforeach

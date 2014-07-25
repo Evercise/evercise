@@ -44,16 +44,21 @@
 				<li class="hd">Start Time</li>
 				<li class="hd">End Time</li>
 				<li class="hd">Price <small>(Per Person)</small></li>
-				<li class="hd">No. Joined</li>
+				<li class="hd">Tickets Left</li>
 				<li class="hd">Join</li>
 				<ul>
 					@foreach ($evercisegroup->futuresessions as $key => $value)
+							@if ($key == 3) 
+								<div class="session-list-row tc expand">
+									<h5>Click to view more</h5>
+								</div>
+							@endif
 							<div class="session-list-row">
 								<li>{{ date('M-dS' , strtotime($value['date_time'])) }}</li>
 								<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
 								<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60))}}
 								<li>&pound;{{ $value['price'] }}</li>
-								<li> <strong>{{$members[$value->id]}}</strong>/{{ $evercisegroup->capacity }} </li>
+								<li> <strong>{{ $evercisegroup->capacity - $members[$value->id] }}</strong></li>
 								@if (isset($membersIds[$value->id]))
 
 									@if (empty($user->id))
