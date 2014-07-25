@@ -43,7 +43,8 @@ registerInitFunction('initAutocompleteLocation');
 function initAutocompleteCategory()
 {
     trace('autocomplete-category');
-    var categories = laracasts['initAutocompleteCategory'];
+    var categories = laracasts['initAutocompleteCategory']['list'];
+    var force = laracasts['initAutocompleteCategory']['force'];
     trace(categories, true);
 
     $('.category').autocomplete({
@@ -65,15 +66,19 @@ function initAutocompleteCategory()
           }
         });
         var allmatches = matches.concat(notsomuches);
-        if (allmatches.length == 0) allmatches = ['no matches'];
+        if(force)
+          if (allmatches.length == 0) allmatches = ['no matches'];
         response(allmatches);
       },
       close:function(){
-        if( $('#category').val() !== '' )
+        if(force)
         {
-          var firstinlist = $('.ui-autocomplete:first a:first').html();
-          if ( firstinlist == 'no matches') firstinlist = '';
-          $('#category').val( firstinlist );
+          if( $('#category').val() !== '' )
+          {
+            var firstinlist = $('.ui-autocomplete:first a:first').html();
+            if ( firstinlist == 'no matches') firstinlist = '';
+            $('#category').val( firstinlist );
+          }
         }
       }
     });
