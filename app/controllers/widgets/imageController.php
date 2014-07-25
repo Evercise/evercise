@@ -18,6 +18,13 @@ class ImageController extends \BaseController {
             'image' => 'image'
         );
 
+        
+        if (!isset($file))
+            return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
+
+        if ($file->getSize() > \Config::get('image')['max_size'])
+            return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
+
      //   return Response::json(['success' => false, 'errors' => 'ddd');
 
 
@@ -47,7 +54,7 @@ class ImageController extends \BaseController {
             $filename = substr($filename, 0, 20); // Truncate file name to 20 characters
             $filename = $filename.'.'.$ext;
 
-            Input::file('image')->move($destinationPath, $filename);
+            $file->move($destinationPath, $filename);
             
             
             if(Request::ajax())

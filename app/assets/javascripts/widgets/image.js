@@ -30,24 +30,25 @@ registerInitFunction('initImage');
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
-        trace("showRequest..");       
+        trace("showRequest..");  
+    $('.error-msg').remove();     
     return true; 
 } 
 function showResponse(response, statusText, xhr, form)  { 
 
     if(response.success == false)
     {
-        trace(response.errors);
+        trace(response.errors, true);
         var arr = response.errors;
         //trace(arr, true);
         $.each(arr, function(index, value)
         {
             if (value.length != 0)
             {
-                $("#validation-errors").append('<div class="alert alert-error"><strong>'+ value +'</strong><div>');
+                trace(value);
+                $("#image-upload").append('<span class="error-msg">'+ value +'</span>');
             }
         });
-        $("#validation-errors").show();
     } else {
         $('#image-upload').html(response.crop);
         $('.preview img').attr('src', response.image_url);
