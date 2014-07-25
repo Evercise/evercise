@@ -25,10 +25,6 @@ class ImageController extends \BaseController {
         if ($file->getSize() > \Config::get('image')['max_size'])
             return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
 
-     //   return Response::json(['success' => false, 'errors' => 'ddd');
-
-
-        //return Response::json(['success' => false, 'errors' => ['suck'=>$file]]);
 
         $validator = Validator::make($input, $rules);
         if ( $validator->fails() )
