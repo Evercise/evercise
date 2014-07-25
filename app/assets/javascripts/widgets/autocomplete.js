@@ -77,8 +77,8 @@ function initAutocompleteCategory()
         response(allmatches);
       },
       select:function(){
-        trace('cock');
-        match = true;
+        var firstinlist = $('#ui-id-'+$(this).data('num')+' a:first').html();
+        if ( firstinlist != 'no matches') match = true;
       },
       close:function(){
         if(force)
