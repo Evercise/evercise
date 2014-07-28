@@ -42,6 +42,8 @@ registerInitFunction('initAutocompleteLocation');
 var autoCompletesOnPage = 0;
 function initAutocompleteCategory()
 {
+    var max_results = 6;
+
     trace('autocomplete-category');
     var categories = laracasts['initAutocompleteCategory']['list'];
     var force = laracasts['initAutocompleteCategory']['force'];
@@ -74,11 +76,11 @@ function initAutocompleteCategory()
         var allmatches = matches.concat(notsomuches);
         if(force)
           if (allmatches.length == 0) allmatches = ['no matches'];
-        response(allmatches);
+        response(allmatches.slice(0, max_results));
       },
       select:function(){
-        trace('cock');
-        match = true;
+        var firstinlist = $('#ui-id-'+$(this).data('num')+' a:first').html();
+        if ( firstinlist != 'no matches') match = true;
       },
       close:function(){
         if(force)
