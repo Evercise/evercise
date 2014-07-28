@@ -632,26 +632,9 @@ class EvercisegroupsController extends \BaseController {
         ->with('futuresessions')
         ->get();
 
-        //return var_dump($level4results);
-
-        /*$allResults = [];
-	    foreach ($level1results as $key => $result) {
-	    	array_push($allResults, $result);
-	    }
-	    foreach ($level2results as $key => $result) {
-	    	if(! in_array($result, $allResults))
-	    		array_push($allResults, $result);
-	    }
-   		foreach ($level3results as $key => $result) {
-	    	if(! in_array($result, $allResults))
-	    		array_push($allResults, $result);
-	    }*/
-
 	    $allResults = Evercisegroup::concatenateResults([$level1results, $level2results, $level3results, $level4results ]);
 
-	    $perPage = 3;
-	    //$paginatedResults = Paginator::make($allResults, count($allResults), $resultsPerPage);
-
+	    $perPage = 6;
 	    $page = Input::get('page', 1);
 
 	    if ($page > count($allResults) or $page < 1) { $page = 1; }
