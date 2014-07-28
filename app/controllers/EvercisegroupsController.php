@@ -395,6 +395,21 @@ class EvercisegroupsController extends \BaseController {
 
 				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 
+				/* open graph meta tags */
+				/* git site https://github.com/chriskonnertz/open-graph */
+
+				$og = new OpenGraph();
+
+			    $og->title($evercisegroup->name)
+			        ->type('article')
+			        ->image(url().'/profiles/'.$trainer->user->directory.'/'.$evercisegroup->image,
+			        	[
+				            'width'     => 400,
+				            'height'    => 200
+				        ])
+			        ->description($evercisegroup->description)
+			        ->url();
+
 				return View::make('evercisegroups.show')
 							->with('evercisegroup',$evercisegroup)
 							->with('trainer',$trainer)
@@ -403,6 +418,7 @@ class EvercisegroupsController extends \BaseController {
 							->with('memberUsers' , $memberUsers)
 							->with('venue' , $venue)
 							->with('ratings' , $ratings)
+							->with('og' , $og)
 							//->with('memberUsers' , $memberUsers)
 							//->with('trainer',$trainerDetails)
 							;

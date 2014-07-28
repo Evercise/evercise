@@ -190,7 +190,7 @@ label{
 
 // buttons 
 
-.btn(@bk, @colour: #ffffff , @width : 230px , @margin : 0){
+.btn(@bk, @colour: #ffffff , @width : 230px ){
 	.font-size(1.6);
 	text-align: center;
 	padding: 10px 4px;
@@ -200,9 +200,7 @@ label{
 	color: @colour;
 	.gradient (lighten(@bk, 10%), @bk);
 	width: @width;
-	//.text-shadow(0 0px 1px contrast(@bk,lighten(@bk, (100 - lightness(@bk))), darken(@bk, lightness(@bk) ), 50%));
 	display: inline-block;
-	margin-top:@margin+px;
 	&:hover{
 		cursor: pointer;
 		.gradient (darken(@bk, 5%), @bk);
@@ -1214,6 +1212,7 @@ video{
 	float: left;
 	.font-size(1.4);
 	.expand{
+		cursor: pointer;
 		width: 100%;
 		float: left;
 		padding: 20px 0;
@@ -1320,6 +1319,12 @@ video{
 					margin: 0;
 				}
 			}
+		}
+	}
+
+	.extra{
+		&.hidden{
+			display: none;
 		}
 	}
 	.session-list-row-past li{
@@ -1822,7 +1827,6 @@ video{
 					float: left;
 					color: @white;
 					width: 140px;
-					text-shadow: none;
 					img{
 						margin-left: 5px;
 						margin-bottom: -4px;
@@ -1990,7 +1994,7 @@ video{
 		}
 
 	}
-	#block-category{
+	#block-category, #block-share{
 		border-left: 1px solid @grey;
 		padding-left: 10px;
 		img{
@@ -2127,7 +2131,8 @@ video{
 			float: left;
 			width: 50%;
 			.box-sizing();
-			.category-icon{
+			padding: 0 0px 0 10px;
+			.share-icon{
 				height: 30px;
 				.border-radius();
 				float: left;
@@ -2141,9 +2146,9 @@ video{
 			.star-icons{
 				margin-top: 7px;
 			}
-			&:last-of-type{
-				padding-left: 10px;
-				border-left: 1px solid @grey;
+			&:first-of-type{
+				padding: 0 10px 0 0;
+				border-right: 1px solid @grey;
 			}
 		}
 	}
@@ -2179,8 +2184,17 @@ video{
 	li{
 		float: left;
 		font-weight: 500;
-		padding: 19px;
+		padding: 22px 19px;
+		margin: 0;
 		cursor: pointer;
+		border-right: 1px solid @grey;
+		&:hover, &.selected{
+			background: @yellow;
+		}
+		a{
+			font-weight: 500;
+			//border-bottom: 2px solid @yellow;
+		}
 	}
 	&:after{
 		position: absolute;
@@ -2195,6 +2209,12 @@ video{
 	&.fixed{
 		position: fixed;
 		top: 0;
+		&:after{
+			left: -11px;
+			height: 75px;
+			background: @white;
+			border-left: 1px solid @grey;
+		}
 	}
 }
 
@@ -2211,6 +2231,8 @@ video{
 	}
 	.venue-details{
 		float: left;
+		.box-sizing();
+		padding-right: 10px;
 		width: 33.33333%;
 	}
 	.class-map-wrap{
@@ -3494,6 +3516,10 @@ footer{
 			padding: 20px 35px 0 0;
 			a{
 				margin: 2px;
+				img{
+					height: 40px;
+					.border-radius();
+				}
 			}
 			p{
 				display: inline;

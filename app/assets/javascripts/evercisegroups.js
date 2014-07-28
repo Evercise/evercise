@@ -379,6 +379,20 @@ function initJoinEvercisegroup(params)
         $('#balance-to-pay').html(price - evercoin);
     });
 
+     $(document).on('click','#expand-sessions' , function(){
+        $(this).find('.extra').toggleClass('hidden');
+        $('.session-list-row.extra').toggleClass('hidden');
+
+        /* remove lick event so that the offsets dont stack for the page scrolling */
+         $('a[href*=#]').each(function() {
+            $(this).unbind('click');
+         });
+
+       initScrollAnchor();
+    });
+
+
+
 
 }
 

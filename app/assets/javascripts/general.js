@@ -447,6 +447,7 @@ function initScrollAnchor(string) {
 
   var locationPath = filterPath(location.pathname);
 
+
   var sticky_header = 0;
 
   if ($('.sticky-header')) {
@@ -461,6 +462,7 @@ function initScrollAnchor(string) {
       var $target = $(this.hash), target = this.hash;
       
       if (target) {
+       
         var targetOffset = ($target.offset().top - sticky_header) - sticky_header;
         //targetOffset = (targetOffset - sticky_header)- sticky_header;
         $(this).click(function(event) {
@@ -471,6 +473,7 @@ function initScrollAnchor(string) {
         });
       }
     }
+
   });
 }
 

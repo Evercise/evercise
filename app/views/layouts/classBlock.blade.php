@@ -18,6 +18,11 @@
 				@include('ratings.stars', array('rating' => $rating))
 			</div>
 		@endif
+		<div id="block-share" class="inner-half">
+			<a href="{{ Share::load(URL::to('evercisegroups/'.$evercisegroupId) , $evercisegroup->name)->facebook()  }}" target="_blank"  class="btn">{{ HTML::image('img/facebook.png','share on facebook', array('class' => 'share-btn')) }}</a>
+			<a href="{{ Share::load(URL::to('evercisegroups/'.$evercisegroupId) , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/twitter.png','tweet', array('class' => 'share-btn')) }}</a>
+
+		</div>
 		{{--
 		removed categorys
 		@if (isset($category))

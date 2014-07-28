@@ -1,5 +1,6 @@
 @extends('layouts.master')
 
+<?php View::share('og', $og) ?>
 
 @section('content')
 
@@ -19,9 +20,9 @@
 		<div class="class-wrap" id="description">
 			<h1>{{ $evercisegroup->name }}</h1>
 			<div class="share-wrap">
-				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->facebook()  }}"  class="btn">{{ HTML::image('img/fb-share.png','share on facebook', array('class' => 'share-btn')) }}</a>
-				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
-				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
+				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->facebook()  }}" target="_blank"  class="btn">{{ HTML::image('img/fb-share.png','share on facebook', array('class' => 'share-btn')) }}</a>
+				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
+				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" target="_blank" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
 			</div>
 			
 			
@@ -29,7 +30,7 @@
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>
 			<p>Gender: 
-				@if ($evercisegroup->gender == 0) Unisex
+				@if ($evercisegroup->gender == 0) All
 				@elseif ($evercisegroup->gender == 1) Male
 				@elseif ($evercisegroup->gender == 2) Female
 				@endif
@@ -47,41 +48,55 @@
 				<li class="hd">Tickets Left</li>
 				<li class="hd">Join</li>
 				<ul>
-					@foreach ($evercisegroup->futuresessions as $key => $value)
-							@if ($key == 3) 
-								<div class="session-list-row tc expand">
-									<h5>Click to view more</h5>
+					@foreach ($evercisegroup->futuresessions as $key => $futuresession)
+
+							
+							@if ($key < 3) 
+								<div class="session-list-row">
+							@else
+								<div class="session-list-row extra hidden">
+							@endif
+									<li>{{ date('M-dS' , strtotime($futuresession->date_time)) }}</li>
+									<li>{{ date('h:ia' , strtotime($futuresession->date_time)) }}</li>
+									<li>{{ date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))}}
+									<li>&pound;{{ $futuresession->price }}</li>
+									<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
+									@if (isset($membersIds[$futuresession->id]))
+
+										@if (empty($user->id))
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
+										@elseif (in_array($user->id, $membersIds[$futuresession->id])) 
+
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
+										@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">class full</button></li>
+
+										@else
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+										@endif
+									@else
+										@if (empty($user->id))
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
+										@else
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+										@endif
+									@endif
+
+							@if ($key > 3) 
+								</div>
+							@else
 								</div>
 							@endif
-							<div class="session-list-row">
-								<li>{{ date('M-dS' , strtotime($value['date_time'])) }}</li>
-								<li>{{ date('h:ia' , strtotime($value['date_time'])) }}</li>
-								<li>{{ date('h:ia' , strtotime($value['date_time']) + ( $value['duration'] * 60))}}
-								<li>&pound;{{ $value['price'] }}</li>
-								<li> <strong>{{ $evercisegroup->capacity - $members[$value->id] }}</strong></li>
-								@if (isset($membersIds[$value->id]))
 
-									@if (empty($user->id))
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
-									@elseif (in_array($user->id, $membersIds[$value->id])) 
-
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
-									@elseif ($members[$value->id] >= $evercisegroup->capacity )
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn-blue disabled">class full</button></li>
-
-									@else
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
-									@endif
-								@else
-									@if (empty($user->id))
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
-									@else
-										<li><button  data-price="{{ $value['price'] }}" data-session="{{$value->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
-									@endif
-								@endif
+							@if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1) 
+								<div id="expand-sessions" class="session-list-row tc expand">
+									<h5 class="extra">-- Click to view more --</h5>
+									<h5 class="extra hidden">-- Click to hide extra --</h5>
+								</div>
+							@endif
+							
 								
 								
-							</div>
 					@endforeach
 				</ul>
 				<div class="session-total">
@@ -95,6 +110,8 @@
 				</div>
 			</div>
 		</div>
+
+
 		<div class="class-wrap" id="venue">
 			<div class="venue-details">
 				<h4>Venue</h4>
@@ -113,25 +130,28 @@
 			<hr>
 			
 			
-			<ul class="facilities-wrap">
-				<strong>Venue Facilities</strong>
-				@foreach($venue->facilities as $key => $value)
-					@if ($value->category == 'facility') 
-						<li>{{ HTML::image('img/facility/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
-					@endif										
-				@endforeach
-			</ul>
+			@if(count($venue->facilities) > 0)
+				<ul class="facilities-wrap">
+					<strong>Venue Facilities</strong>
+					@foreach($venue->facilities as $key => $facilities)
+						@if ($facilities->category == 'facility') 
+							<li>{{ HTML::image('img/facility/'.$value->facilities,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->facilities}}</li>				
+						@endif										
+					@endforeach
+				</ul>
+			@endif
 
 			
-			
-			<ul class="facilities-wrap">
-				<strong>Venue Amenities</strong>
-				@foreach($venue->facilities as $key => $value)
-					@if ($value->category == 'Amenity') 
-						<li>{{ HTML::image('img/facility/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
-					@endif										
-				@endforeach
-			</ul>	
+			@if(count($venue->facilities) > 0)
+				<ul class="facilities-wrap">
+					<strong>Venue Amenities</strong>
+					@foreach($venue->facilities as $key => $value)
+						@if ($value->category == 'Amenity') 
+							<li>{{ HTML::image('img/facility/'.$value->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $value->name}}</li>				
+						@endif										
+					@endforeach
+				</ul>	
+			@endif
 			
 		</div>
 		<div class="class-wrap" id="reviews"> 
