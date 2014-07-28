@@ -22,8 +22,9 @@
 			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
 			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
 		</div>
+		{{ var_dump($evercisegroups)}}
 		<div id="grid" class="discover-view tab-view selected">
-			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups, 'rating' => $stars ))
+			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ))
 		</div>
 		{{ $evercisegroups->appends(['category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
 		<div id="list" class="discover-view tab-view">
@@ -31,19 +32,8 @@
 			<div class="row9">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
-
-						@if (isset($stars[$evercisegroup->id])) 
-							@include('evercisegroups.discover_classes_list', array('rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng, ))
-						@else
-							@include('evercisegroups.discover_classes_list', array('rating' => 0, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng))
-						@endif
-							
-								
-					
+						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
 					@endforeach
-
-
-
 				@endif
 				
 			</div>

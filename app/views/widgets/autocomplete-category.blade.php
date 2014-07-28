@@ -9,7 +9,7 @@
 	<div class="formfield">
 
 		<div id="categoryField">
-		  <input class="category" placeholder="Start typing" type="text" name="{{ $fieldname }}" id="{{ $fieldname }}" value=""/>
+		  <input class="category" placeholder="Start typing" type="text" name="{{ $fieldname }}" id="{{ $fieldname }}" value="{{ isset($selectedCategory) ? $selectedCategory : '' }}"/>
 		</div>
 	</div>
 </div>

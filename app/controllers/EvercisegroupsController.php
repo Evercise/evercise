@@ -535,9 +535,8 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function searchEg()
 	{
-		$query = Input::get('location');
+		$location = Input::get('location');
 		$radius = Input::get('radius');
-		$category = Input::get('category');
 		$category = Input::get('category');
 
         $geocoder = new \Geocoder\Geocoder();
@@ -546,7 +545,7 @@ class EvercisegroupsController extends \BaseController {
         $geocoder->registerProvider(new \Geocoder\Provider\GoogleMapsProvider($adapter));
 
         try {
-            $geocode = $geocoder->geocode($query);
+            $geocode = $geocoder->geocode($location);
          	$latitude = $geocode->getLatitude();
         	$longitude = $geocode->getLongitude();
         } catch (Exception $e) {
@@ -555,12 +554,6 @@ class EvercisegroupsController extends \BaseController {
         	$longitude = 0;
         }   
 
-       /* $coordToGeohash = Geotools::coordinate($geocode->getCoordinates());
-
-        $encoded = Geotools::geohash()->encode($coordToGeohash, 3);
-
-        $boundingBox = $encoded->getBoundingBox();
-		*/
         //return var_dump($boundingBox);
 
         $testers = Sentry::findGroupById(5);
@@ -568,54 +561,98 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
         	
-    	$evercisegroups= Evercisegroup::has('futuresessions')
+
+        // SEARCH LEVEL 1
+    	$level1results= Evercisegroup::has('futuresessions')
         ->has('confirmed')
         ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
         ->whereHas('venue', function($query) use (&$haversine,&$radius){
         	$query->select( array( DB::raw($haversine . ' as distance')) )
         		  ->having('distance', '<', $radius);
-
+        })
+        ->whereHas('subcategories', function($query) use ($category){
+        	$query->where('name', 'LIKE', '%'.$category.'%' );
         })
         ->with('venue')		
         ->with('user')
+        ->with('ratings')
         ->with('futuresessions')
-        ->paginate(6);
-			//->get();
-   
+        ->get();
+
+        // SEARCH LEVEL 2 ( if level 1 returns less than 9 results)
+    	$level2results= Evercisegroup::has('futuresessions')
+        ->has('confirmed')
+        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+        	$query->select( array( DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
+        })
+        ->whereHas('subcategories', function($query) use ($category){
+        	
+	        $query->whereHas('categories', function($subquery) use ($category){
+	        	$subquery->where('name', 'LIKE', '%'.$category.'%' );
+	        });
+        })
+        //->with('categories')		
+        ->with('venue')
+        ->with('user')
+        ->with('ratings')
+        ->with('futuresessions')
+        ->get();
+
+        //return var_dump($level2results);
         
+        // SEARCH LEVEL 3 ( if level 1 andf level 2 returns less than 9 results)
+    	$level3results= Evercisegroup::has('futuresessions')
+        ->has('confirmed')
+        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+        	$query->select( array( DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
+        })
+        ->where('name', 'LIKE', '%'.$category.'%' )
+        ->with('venue')		
+        ->with('user')
+        ->with('ratings')
+        ->with('futuresessions')
+        ->get();
 
-      //  return var_dump($evercisegroups);
+        // SEARCH LEVEL 4 ( if level 1, 2 and 3 return less than 9 results)
+    	$level4results= Evercisegroup::has('futuresessions')
+        //->has('confirmed')
+        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+        	$query->select( array( DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
+        })
+        ->where('description', 'LIKE', '%'.$category.'%' )
+        ->with('venue')		
+        ->with('user')
+        ->with('ratings')
+        ->with('futuresessions')
+        ->get();
 
+        //return var_dump($level4results);
 
-	    $evercisegroup_ids = [];  
-	    $stars = [];
-
-		
-
-	    foreach ($evercisegroups as $key => $evercisegroup) {
-	    		$evercisegroup_ids[] = $evercisegroup->id;	
-
-	    		// See if group belongs to a tester
-			/*	$sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
-				$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
-				if ($sentryUserGroup->inGroup($testers))
-					if (!($testerLoggedIn) )
-						unset($evercisegroups[$key]);
-						*/
-	    };
-
-
-	    if (!empty($evercisegroup_ids)) {
-	    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
-
-		    foreach ($ratings as $key => $rating) {
-		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
-		    }
-
+        /*$allResults = [];
+	    foreach ($level1results as $key => $result) {
+	    	array_push($allResults, $result);
 	    }
+	    foreach ($level2results as $key => $result) {
+	    	if(! in_array($result, $allResults))
+	    		array_push($allResults, $result);
+	    }
+   		foreach ($level3results as $key => $result) {
+	    	if(! in_array($result, $allResults))
+	    		array_push($allResults, $result);
+	    }*/
 
-	   // return $evercisegroups->toJson();
+	    $allResults = Evercisegroup::concatenateResults([$level1results, $level2results, $level3results, $level4results ]);
 
+	    //$paginatedResults = Paginator::make($allResults, count($allResults), 6);
+
+
+	   // return $paginatedResults->toJson();
 
 	   // JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
@@ -624,10 +661,9 @@ class EvercisegroupsController extends \BaseController {
 	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
 
 	    return View::make('evercisegroups.search')
-	    		->with('places' , $evercisegroups->toJson())
-	    		->with('stars' , $stars)
-	    		->with('evercisegroups' , $evercisegroups);
+	    		->with('places' , $allResults->toJson())
+	    		//->with('stars' , $stars)
+	    		->with('evercisegroups' , $allResults);
 	    		//->with('members' , $members);
-	}	
-
+	}
 }

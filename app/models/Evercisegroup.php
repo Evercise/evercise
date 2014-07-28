@@ -8,7 +8,8 @@ class Evercisegroup extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'evercisegroups';
+    protected $table = 'evercisegroups';
+	protected $stars = 0;
 
 	public function Evercisesession()
     {
@@ -53,14 +54,57 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Rating');
     }
 
+    public function stars()
+    {
+       return $this->hasMany('Rating')->select([ 'evercisegroup_id', 'stars']);
+    }
+
     public function subcategories()
     {
         return $this->belongsToMany('Subcategory', 'evercisegroup_subcategories', 'evercisegroup_id', 'subcategory_id')->withTimestamps();
     }
+
+  /*  public function categories()
+    {
+        return $this->hasManyThrough('categories', 'subcategories_categories');
+    }*/
 
     public function tester()
      
     {
         return $this->belongsTo('Users_groups', 'user_id', 'user_id')->where('group_id', 5);
     }
+
+    public static function concatenateResults($resultsArray)
+    {
+        $allResults = [];
+
+        foreach ($resultsArray as $results)
+        {
+            foreach ($results as $result) {
+                if(! in_array($result, $allResults))
+                {
+                    $stars = 0;
+                    foreach ($result->ratings as $key => $rating) {
+                        $stars += $rating->stars;
+                    }
+                    $stars = count($result->ratings) ? $stars / count($result->ratings) : 0;
+                    $result->setStars($stars);
+                    array_push($allResults, $result);
+                }
+            }
+        }
+
+        return Paginator::make($allResults, count($allResults), 6);
+    }
+
+    public function setStars($value)
+    {
+        $this->stars = $value;
+    }
+    public function getStars()
+    {
+        return $this->stars;
+    }
+
 }

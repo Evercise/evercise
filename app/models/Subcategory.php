@@ -13,6 +13,6 @@ class Subcategory extends Eloquent {
 
 	public function categories()
     {
-        return $this->belongsToMany('Category', 'subcategory_categories', 'category_id', 'subcategory_id')->withTimestamps();
+        return $this->belongsToMany('Category', 'subcategory_categories', 'subcategory_id', 'category_id')->withTimestamps();
     }
 }
