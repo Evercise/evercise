@@ -1,5 +1,5 @@
 @extends('layouts.fullWidthMaster')
-<?php View::share('title', 'Exercise for Everyone Everywhere') ?>
+<?php View::share('title', 'Exercise for Everyone Everywhere') ?> 
 <?php View::share('metaDescription', 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.') ?>
 @section('top' )
 
@@ -62,7 +62,7 @@
 	<div class="join_wrapper">
 		<h4>Join the Evecise community today and find<br>your way to a happier, fitter you...</h4>
 		{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow btn-large'))}}
-		{{ HTML::image('img/WIE_4.jpg','join us ', array('class' => 'register-img')) }}
+		{{ HTML::image('img/potato men group fitness.png','join us ', array('class' => 'register-img')) }}
 	</div>
 </section>
 
