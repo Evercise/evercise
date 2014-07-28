@@ -17,7 +17,7 @@ class Evercisegroup extends \Eloquent {
 
     public function futuresessions()
     {
-        return $this->hasMany('Evercisesession')/*->where('date_time', '>=',DB::raw('NOW()'))*/->orderBy('date_time', 'asc');
+        return $this->hasMany('Evercisesession')->where('date_time', '>=',DB::raw('NOW()'))->orderBy('date_time', 'asc');
         
     }
 
