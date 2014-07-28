@@ -652,6 +652,23 @@ class EvercisegroupsController extends \BaseController {
 	        ->get();
 	    }
 
+        // SEARCH LEVEL 5 
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) < 9)
+        {
+	    	$results[4] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->with('venue')		
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
+
 	    $allResults = Evercisegroup::concatenateResults( $results );
 
 	    $perPage = 6;

@@ -80,16 +80,25 @@ class Evercisegroup extends \Eloquent {
 
         foreach ($resultsArray as $results)
         {
+            $theseResults = [];
+
             foreach ($results as $result) {
                 //Remove duplicates
                 if(! in_array($result, $allResults))
                 {
-                    array_push($allResults, $result);
+                    $date = $result->futuresessions[0]->date_time;
+                    array_push($theseResults, $result);
                 }
             }
+            usort($theseResults, ['Evercisegroup', "sortFunction"]);
+            
+            $allResults = array_merge($allResults, $theseResults);
         }
 
         return $allResults;
+    }
+    public static function sortFunction( $a, $b ) {
+        return strtotime($a->futuresessions[0]->date_time) - strtotime($b->futuresessions[0]->date_time);
     }
 
     public function getStars()
