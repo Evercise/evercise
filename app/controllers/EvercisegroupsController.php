@@ -545,7 +545,13 @@ class EvercisegroupsController extends \BaseController {
 			}
 		}
 
-		$radius = Input::get('radius');
+		/* check if search form posted otherwise set default for radius */
+		if (Input::get('radius')) {
+			$radius = Input::get('radius');
+		}else{
+			$radius = 10;
+		}
+		
 		$category = Input::get('category');
 
 		try {
