@@ -217,7 +217,6 @@ function DiscoverMapWidgetInit() {
     
 
     for (i = 0; i < everciseGroups.length; i++) { 
-      trace('loop+i', true);
       var venue = everciseGroups[i].venue;
      // var category = everciseGroups[i].category;
       var sessions = everciseGroups[i].futuresessions;

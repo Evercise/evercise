@@ -535,17 +535,21 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function searchEg()
 	{
-		$location = Input::get('location');
+		/* check for seached location, otherwise use the ip address */
+		if ( Input::get('location')) {
+			$location = Input::get('location');
+		}else{
+			$location = Request::getClientIp();
+			if ($location == '127.0.0.1') {
+				$location = '188.39.12.12';
+			}
+		}
+
 		$radius = Input::get('radius');
 		$category = Input::get('category');
 
-        $geocoder = new \Geocoder\Geocoder();
-        $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-
-        $geocoder->registerProvider(new \Geocoder\Provider\GoogleMapsProvider($adapter));
-
-        try {
-            $geocode = $geocoder->geocode($location);
+		try {
+       		$geocode = Geocoder::geocode($location);
          	$latitude = $geocode->getLatitude();
         	$longitude = $geocode->getLongitude();
         } catch (Exception $e) {
@@ -554,7 +558,6 @@ class EvercisegroupsController extends \BaseController {
         	$longitude = 0;
         }   
 
-        //return var_dump($boundingBox);
 
         $testers = Sentry::findGroupById(5);
 		$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
