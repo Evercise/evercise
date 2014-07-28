@@ -210,9 +210,12 @@ function DiscoverMapWidgetInit() {
     var icon = '/img/mapmark.png';
     var infos = [];
 
+    trace(everciseGroups.length, true);
 
+    
 
     for (i = 0; i < everciseGroups.length; i++) { 
+
       var venue = everciseGroups[i].venue;
       var category = everciseGroups[i].category;
       var sessions = everciseGroups[i].futuresessions;
