@@ -9,7 +9,6 @@ class Evercisegroup extends \Eloquent {
 	 * @var string
 	 */
     protected $table = 'evercisegroups';
-	protected $stars = 0;
 
 	public function Evercisesession()
     {
@@ -84,27 +83,24 @@ class Evercisegroup extends \Eloquent {
             foreach ($results as $result) {
                 if(! in_array($result, $allResults))
                 {
-                    $stars = 0;
-                    foreach ($result->ratings as $key => $rating) {
-                        $stars += $rating->stars;
-                    }
-                    $stars = count($result->ratings) ? $stars / count($result->ratings) : 0;
-                    $result->setStars($stars);
                     array_push($allResults, $result);
                 }
             }
         }
 
-        return Paginator::make($allResults, count($allResults), 6);
+        return $allResults;
     }
 
-    public function setStars($value)
-    {
-        $this->stars = $value;
-    }
     public function getStars()
     {
-        return $this->stars;
+        $stars = 0;
+        foreach ($this->ratings as $key => $rating) {
+            $stars += $rating->stars;
+        }
+        $stars = count($this->ratings) ? $stars / count($this->ratings) : 0;
+        
+
+        return $stars;
     }
 
 }

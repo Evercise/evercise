@@ -649,8 +649,17 @@ class EvercisegroupsController extends \BaseController {
 
 	    $allResults = Evercisegroup::concatenateResults([$level1results, $level2results, $level3results, $level4results ]);
 
-	    //$paginatedResults = Paginator::make($allResults, count($allResults), 6);
+	    $perPage = 3;
+	    //$paginatedResults = Paginator::make($allResults, count($allResults), $resultsPerPage);
 
+	    $page = Input::get('page', 1);
+
+	    if ($page > count($allResults) or $page < 1) { $page = 1; }
+	    $offset = ($page * $perPage) - $perPage;
+	    $articles = array_slice($allResults,$offset,$perPage);
+	    $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
+
+	    //return var_dump($data);
 
 	   // return $paginatedResults->toJson();
 
@@ -661,9 +670,10 @@ class EvercisegroupsController extends \BaseController {
 	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
 
 	    return View::make('evercisegroups.search')
-	    		->with('places' , $allResults->toJson())
+	    		->with('places' , $paginatedResults->toJson())
+	    		//->with('places' , json_encode($paginatedResults))
 	    		//->with('stars' , $stars)
-	    		->with('evercisegroups' , $allResults);
+	    		->with('evercisegroups' , $paginatedResults);
 	    		//->with('members' , $members);
 	}
 }

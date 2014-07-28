@@ -22,7 +22,7 @@
 			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
 			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
 		</div>
-		{{ var_dump($evercisegroups)}}
+		
 		<div id="grid" class="discover-view tab-view selected">
 			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ))
 		</div>
