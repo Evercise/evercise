@@ -17,7 +17,7 @@ class Evercisegroup extends \Eloquent {
 
     public function futuresessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '>=',DB::raw('NOW()'))->orderBy('date_time', 'asc');
+        return $this->hasMany('Evercisesession')/*->where('date_time', '>=',DB::raw('NOW()'))*/->orderBy('date_time', 'asc');
         
     }
 
@@ -81,6 +81,7 @@ class Evercisegroup extends \Eloquent {
         foreach ($resultsArray as $results)
         {
             foreach ($results as $result) {
+                //Remove duplicates
                 if(! in_array($result, $allResults))
                 {
                     array_push($allResults, $result);

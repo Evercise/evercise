@@ -564,9 +564,10 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
         	
+        $results = [[],[],[],[]];
 
         // SEARCH LEVEL 1
-    	$level1results= Evercisegroup::has('futuresessions')
+    	$results[0] = Evercisegroup::has('futuresessions')
         ->has('confirmed')
         ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
         ->whereHas('venue', function($query) use (&$haversine,&$radius){
@@ -582,60 +583,70 @@ class EvercisegroupsController extends \BaseController {
         ->with('futuresessions')
         ->get();
 
+
         // SEARCH LEVEL 2 ( if level 1 returns less than 9 results)
-    	$level2results= Evercisegroup::has('futuresessions')
-        ->has('confirmed')
-        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
-        ->whereHas('venue', function($query) use (&$haversine,&$radius){
-        	$query->select( array( DB::raw($haversine . ' as distance')) )
-        		  ->having('distance', '<', $radius);
-        })
-        ->whereHas('subcategories', function($query) use ($category){
-        	
-	        $query->whereHas('categories', function($subquery) use ($category){
-	        	$subquery->where('name', 'LIKE', '%'.$category.'%' );
-	        });
-        })
-        //->with('categories')		
-        ->with('venue')
-        ->with('user')
-        ->with('ratings')
-        ->with('futuresessions')
-        ->get();
+        if (count($results[0]) < 9)
+        {
+	    	$results[1] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->whereHas('subcategories', function($query) use ($category){
+	        	
+		        $query->whereHas('categories', function($subquery) use ($category){
+		        	$subquery->where('name', 'LIKE', '%'.$category.'%' );
+		        });
+	        })
+	        //->with('categories')		
+	        ->with('venue')
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
 
         //return var_dump($level2results);
         
-        // SEARCH LEVEL 3 ( if level 1 andf level 2 returns less than 9 results)
-    	$level3results= Evercisegroup::has('futuresessions')
-        ->has('confirmed')
-        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
-        ->whereHas('venue', function($query) use (&$haversine,&$radius){
-        	$query->select( array( DB::raw($haversine . ' as distance')) )
-        		  ->having('distance', '<', $radius);
-        })
-        ->where('name', 'LIKE', '%'.$category.'%' )
-        ->with('venue')		
-        ->with('user')
-        ->with('ratings')
-        ->with('futuresessions')
-        ->get();
+        // SEARCH LEVEL 3 ( if level 1 and level 2 return less than 9 results)
+        if (count($results[0]) + count($results[1]) < 9)
+        {
+	    	$results[2] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->where('name', 'LIKE', '%'.$category.'%' )
+	        ->with('venue')		
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
 
         // SEARCH LEVEL 4 ( if level 1, 2 and 3 return less than 9 results)
-    	$level4results= Evercisegroup::has('futuresessions')
-        //->has('confirmed')
-        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
-        ->whereHas('venue', function($query) use (&$haversine,&$radius){
-        	$query->select( array( DB::raw($haversine . ' as distance')) )
-        		  ->having('distance', '<', $radius);
-        })
-        ->where('description', 'LIKE', '%'.$category.'%' )
-        ->with('venue')		
-        ->with('user')
-        ->with('ratings')
-        ->with('futuresessions')
-        ->get();
+        if (count($results[0]) + count($results[1]) + count($results[2]) < 9)
+        {
+	    	$results[3] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->where('description', 'LIKE', '%'.$category.'%' )
+	        ->with('venue')		
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
 
-	    $allResults = Evercisegroup::concatenateResults([$level1results, $level2results, $level3results, $level4results ]);
+	    $allResults = Evercisegroup::concatenateResults( $results );
 
 	    $perPage = 6;
 	    $page = Input::get('page', 1);
