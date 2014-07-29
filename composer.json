@@ -21,8 +21,8 @@
     	"tijsverkoyen/twitteroauth": "dev-master",
     	"philo/laravel-twitter": "dev-master",
     	"thujohn/pdf": "dev-master",
-    	"abodeo/laravel-stripe": "dev-master"
-
+    	"abodeo/laravel-stripe": "dev-master",
+    	"chriskonnertz/open-graph": "dev-master"
 
 	},
 	"autoload": {

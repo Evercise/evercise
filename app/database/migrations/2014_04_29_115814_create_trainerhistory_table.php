@@ -12,14 +12,17 @@ class CreateTrainerhistoryTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('trainerhistory', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('historytype_id')->unsigned();// Foreign key
-			$table->string('message');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('trainerhistory'))
+		{
+			Schema::create('trainerhistory', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key
+				$table->integer('historytype_id')->unsigned();// Foreign key
+				$table->string('message');
+				$table->timestamps();
+			});
+		}
 	}
 
 	/**

@@ -12,15 +12,18 @@ class CreateWalletsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('wallets', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key;
-			$table->decimal('balance', 19, 4);
-			$table->decimal('previous_balance', 19, 4);
-			$table->string('paypal');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('wallets'))
+		{
+			Schema::create('wallets', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key;
+				$table->decimal('balance', 19, 4);
+				$table->decimal('previous_balance', 19, 4);
+				$table->string('paypal');
+				$table->timestamps();
+			});
+		}
 	}
 
 

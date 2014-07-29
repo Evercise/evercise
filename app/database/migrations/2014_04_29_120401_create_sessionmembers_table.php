@@ -12,17 +12,20 @@ class CreateSessionmembersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sessionmembers', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('evercisesession_id')->unsigned();// Foreign key
-			$table->string('token', 64);
-			$table->string('transaction_id' , 64);
-			$table->string('payer_id' , 64);
-			$table->string('payment_method' , 64);
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('sessionmembers'))
+		{
+			Schema::create('sessionmembers', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key
+				$table->integer('evercisesession_id')->unsigned();// Foreign key
+				$table->string('token', 64);
+				$table->string('transaction_id' , 64);
+				$table->string('payer_id' , 64);
+				$table->string('payment_method' , 64);
+				$table->timestamps();
+			});
+		}
 	}
 
 	/**

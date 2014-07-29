@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>{{ isset($title)? $title : 'Exercise for Everyone Everywhere'}}</title>
+	<meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" /> 
@@ -11,13 +13,15 @@
 	{{ javascript_include_tag() }}
 
 </head>
-<body class="full-width-body">
-		<div class="container-full">
-	
+<body class="full-width-body">	
 
 		@include('layouts.redirectmessage')
-		@include('layouts.header')
-		</div>
+		<section id="homepage-banner" class="banner">
+			@include('layouts.header')
+		
+			@yield('top')
+		</section>
+		
 		@yield('content')
 		<div class="container-full">
 		@include('layouts.footer')

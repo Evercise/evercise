@@ -196,6 +196,7 @@ return array(
 		'Omnipay'		  => 'Ignited\LaravelOmnipay\Facades\OmnipayFacade',
 		'Twitter' 		  => 'Philo\Twitter\Facades\Twitter',
 		'PDF'			  => 'Thujohn\Pdf\PdfFacade',
+		'OpenGraph' 	  => 'ChrisKonnertz\\OpenGraph\\OpenGraph',
 	),
 
 );

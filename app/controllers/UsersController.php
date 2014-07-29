@@ -28,7 +28,9 @@ class UsersController extends \BaseController {
 		$referralCode = Referral::checkReferralCode(Session::get('referralCode'));
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		return View::make('users.create')->with('referralCode', $referralCode);
+		JavaScript::put(array('initPut' => 1 ));
+		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
+		return View::make('users.register')->with('referralCode', $referralCode);
 	}
 
 	/**
@@ -88,10 +90,10 @@ class UsersController extends \BaseController {
 				'last_name' => 'required|max:15|min:3|alpha',
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email|unique:users',
-				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
+				'password' => 'required|confirmed|min:6|max:32|has:letter,num',
 				'phone' => 'numeric',
 			],
-			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
+			['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
 
 
 		);
@@ -188,14 +190,16 @@ class UsersController extends \BaseController {
 
 					Sentry::login($user, true);
 
-					$redirectAfter = Session::get('redirectAfter');
+					$redirectAfter = Input::get('redirect');
 					//return Response::json(route('users.activate', array('display_name'=> $user->display_name)));
 
 					if(isset($redirectAfter)) {
-						Session::forget('redirectAfter');
-						return Response::json(route('trainers.create'));
+						//return Response::json($redirectAfter);
+						return Response::json(['callback' => 'gotoUrl', 'url' => $redirectAfter]);
 					}else{
-						return Response::json(route('users.edit.tab', [$user->id ,'profile']));
+						//return Response::json(route('users.edit.tab', [$user->id ,'profile']));
+						return Response::json(['callback' => 'gotoUrl', 'url' => route('users.edit.tab', [$user->id ,'profile'])]);
+			
 					}
 					
 					
@@ -209,7 +213,7 @@ class UsersController extends \BaseController {
  
 	}
 
-	public function fb_login()
+	public function fb_login($redirect = null)
 	{
 	    // Use a single object of a class throughout the lifetime of an application.
 	    $application = Config::get('facebook');
@@ -298,10 +302,7 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false);
 
-				$redirectAfter = Session::get('redirectAfter');
-
-				if(isset($redirectAfter)) {
-					Session::forget('redirectAfter');
+				if(isset($redirect) && $redirect != null ) {
 					return Redirect::route('trainers.create')->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
 				}else{
 					return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
@@ -336,10 +337,9 @@ class UsersController extends \BaseController {
 			{
 				$user = Sentry::findUserByLogin($me['email']);
 
-				$redirectAfter = Session::get('redirectAfter');
 
-				if(isset($redirectAfter)) {
-					Session::forget('redirectAfter');
+				if(isset($redirect) && $redirect != null ) {
+
 					return Response::json(route('trainers.create'));
 				}else{
 					return View::make('users.edit')->with('notification', 'you have successfully signed up with facebook. Your password has been emailed to you')->with('display_name', $user->display_name);
@@ -398,8 +398,9 @@ class UsersController extends \BaseController {
 	{
 		if (!Sentry::check()) return Redirect::route('home');
 
-		JavaScript::put(array('initPut' => json_encode(['']) ));
+		JavaScript::put(array('initPut' => json_encode(['selector' => '#user_edit']) ));
 		JavaScript::put(array('initUsers' => 1 ));
+		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
 		JavaScript::put(array('selectTab' => ['tab'=>$tab] ));
 
@@ -496,7 +497,7 @@ class UsersController extends \BaseController {
 			) Milestone::where('user_id', $this->user->id)->first()->add('profile');
 
 			return Response::json(['callback' => 'gotoUrl', 'url' => Request::root().'/users/'.$this->user->id.'/edit/profile']);
-
+			//return Response::json(['callback' => 'gotoUrl', 'url' => Request::route('users.edit.tab', [$user->id ,'profile'])]);
 		}
 		//return Response::json($result);
 		//return View::make('users.edit');
@@ -626,9 +627,9 @@ class UsersController extends \BaseController {
 			Input::all(),
 			[
 				'old_password' => 'required',
-				'new_password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
+				'new_password' => 'required|confirmed|min:6|max:32|has:letter,num',
 			],
-			['new_password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
+			['new_password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
 		);
 
 		$oldPassword = Input::get('old_password');
@@ -729,9 +730,9 @@ class UsersController extends \BaseController {
 			Input::all(),
 			array(
 				'email' => 'required|email',
-				'password' => 'required|confirmed|min:6|max:32|has:upper,lower,num',
+				'password' => 'required|confirmed|min:6|max:32|has:letter,num',
 			),
-			['password.has' => 'The password must contain at least one upper and one lower case letter and a number.',]
+			['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
 		);
 
 		$email = Input::get('email');

@@ -12,17 +12,20 @@ class CreateMilestonesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('milestones', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key;
-			$table->integer('referrals');
-			$table->integer('profile');
-			$table->integer('facebook');
-			$table->integer('twitter');
-			$table->integer('reviews');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('milestones'))
+		{
+			Schema::create('milestones', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key;
+				$table->integer('referrals');
+				$table->integer('profile');
+				$table->integer('facebook');
+				$table->integer('twitter');
+				$table->integer('reviews');
+				$table->timestamps();
+			});
+		}
 	}
 
 

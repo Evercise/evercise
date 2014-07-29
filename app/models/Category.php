@@ -2,7 +2,7 @@
 
 class Category extends Eloquent {
 
-	protected $fillable = array('id', 'name','description');
+	protected $fillable = array('id', 'name','image');
 
 	/**
 	 * The database table used by the model.
@@ -10,5 +10,10 @@ class Category extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'categories';
+
+	public function subcategories()
+    {
+        return $this->belongsToMany('Subcategory', 'subcategory_categories', 'category_id', 'subcategory_id')->withTimestamps();
+    }
 
 }

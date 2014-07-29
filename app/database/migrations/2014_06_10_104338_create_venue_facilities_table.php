@@ -12,13 +12,16 @@ class CreateVenueFacilitiesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('venue_facilities', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->integer('venue_id')->unsigned();// Foreign key;
-			$table->integer('facility_id')->unsigned();// Foreign key;
-			$table->string('details');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('venue_facilities'))
+		{
+			Schema::create('venue_facilities', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->integer('venue_id')->unsigned();// Foreign key;
+				$table->integer('facility_id')->unsigned();// Foreign key;
+				$table->string('details');
+				$table->timestamps();
+			});
+		}
 	}
 
 

@@ -12,13 +12,16 @@ class CreateMarketingpreferencesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('marketingpreferences', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->string('name', 45);
-			$table->string('option', 255);
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('marketingpreferences'))
+		{
+			Schema::create('marketingpreferences', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->string('name', 45);
+				$table->string('option', 255);
+				$table->timestamps();
+			});
+		}
 	}
 
 	/**

@@ -12,14 +12,16 @@
 			
 
 			<div class="recommended-info">
+				<div id="block-share" class="recommended-aside">
+					<a href="{{ Share::load(URL::to('evercisegroups/'.$evercisegroup->id) , $evercisegroup->name)->facebook()  }}" target="_blank"  class="btn">{{ HTML::image('img/facebook.png','share on facebook', array('class' => 'share-icon')) }}</a>
+					<a href="{{ Share::load(URL::to('evercisegroups/'.$evercisegroup->id) , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/twitter.png','tweet', array('class' => 'share-icon')) }}</a>
+
+				</div>
 				<div class="recommended-aside">
 				@include('ratings.stars', ['rating' => count($evercisegroup->ratings) == 0 ?  0 :  $ratings[$evercisegroup->id] / count($evercisegroup->ratings)])
 				
 				</div>
-				<div class="recommended-aside">
-					{{ HTML::image('img/category/'.$evercisegroup->category->name.'.png', 'category image', array('class' => 'category-icon')); }}
-					<span>{{ Str::limit($evercisegroup->category->name, 9) }}</span>
-				</div>
+
 			</div>
 			<div class=" block-footer">
 				<span>Price</span>

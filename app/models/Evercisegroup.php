@@ -8,7 +8,7 @@ class Evercisegroup extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'evercisegroups';
+    protected $table = 'evercisegroups';
 
 	public function Evercisesession()
     {
@@ -53,9 +53,19 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Rating');
     }
 
-    public function category()
+    public function stars()
     {
-        return $this->hasOne('Category', 'id', 'category_id');
+       return $this->hasMany('Rating')->select([ 'evercisegroup_id', 'stars']);
+    }
+
+    public function subcategories()
+    {
+        return $this->belongsToMany('Subcategory', 'evercisegroup_subcategories', 'evercisegroup_id', 'subcategory_id')->withTimestamps();
+    }
+
+   public function categories()
+    {
+        return $this->hasManyThrough('Category', 'Subcategory');
     }
 
     public function tester()
@@ -63,4 +73,44 @@ class Evercisegroup extends \Eloquent {
     {
         return $this->belongsTo('Users_groups', 'user_id', 'user_id')->where('group_id', 5);
     }
+
+    public static function concatenateResults($resultsArray)
+    {
+        $allResults = [];
+
+        foreach ($resultsArray as $results)
+        {
+            $theseResults = [];
+
+            foreach ($results as $result) {
+                //Remove duplicates
+                if(! in_array($result, $allResults))
+                {
+                    $date = $result->futuresessions[0]->date_time;
+                    array_push($theseResults, $result);
+                }
+            }
+            usort($theseResults, ['Evercisegroup', "sortFunction"]);
+            
+            $allResults = array_merge($allResults, $theseResults);
+        }
+
+        return $allResults;
+    }
+    public static function sortFunction( $a, $b ) {
+        return strtotime($a->futuresessions[0]->date_time) - strtotime($b->futuresessions[0]->date_time);
+    }
+
+    public function getStars()
+    {
+        $stars = 0;
+        foreach ($this->ratings as $key => $rating) {
+            $stars += $rating->stars;
+        }
+        $stars = count($this->ratings) ? $stars / count($this->ratings) : 0;
+        
+
+        return $stars;
+    }
+
 }

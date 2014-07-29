@@ -33,7 +33,7 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('evercisegroups', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('category_id')->references('id')->on('categories');
+			//$table->foreign('category_id')->references('id')->on('categories');
 			$table->foreign('venue_id')->references('id')->on('venues');
 		});
 		Schema::table('trainerhistory', function(Blueprint $table) {
@@ -85,6 +85,67 @@ class CreateForeignKeys extends Migration {
 	public function down()
 	{
 
+		Schema::table('trainers', function(Blueprint $table) {
+			$table->dropForeign('trainers_user_id_foreign');
+		});
+
+		Schema::table('user_marketingpreferences', function(Blueprint $table) {
+			$table->dropForeign('user_marketingpreferences_user_id_foreign');
+			$table->dropForeign('user_marketingpreferences_marketingpreference_id_foreign');
+		});
+
+		Schema::table('ratings', function(Blueprint $table) {
+			$table->dropForeign('ratings_user_id_foreign');
+			$table->dropForeign('ratings_sessionmember_id_foreign');
+			$table->dropForeign('ratings_session_id_foreign');
+			$table->dropForeign('ratings_evercisegroup_id_foreign');
+			$table->dropForeign('ratings_user_created_id_foreign');
+		});
+
+		Schema::table('evercisesessions', function(Blueprint $table) {
+			$table->dropForeign('evercisesessions_evercisegroup_id_foreign');
+		});
+
+		Schema::table('evercisegroups', function(Blueprint $table) {
+			$table->dropForeign('evercisegroups_user_id_foreign');
+			$table->dropForeign('evercisegroups_venue_id_foreign');
+		});
+		
+		Schema::table('trainerhistory', function(Blueprint $table) {
+			$table->dropForeign('trainerhistory_user_id_foreign');
+			$table->dropForeign('trainerhistory_historytype_id_foreign');
+		});
+		
+		Schema::table('user_has_categories', function(Blueprint $table) {
+			$table->dropForeign('user_has_categories_user_id_foreign');
+			$table->dropForeign('user_has_categories_category_id_foreign');
+		});
+
+		Schema::table('sessionmembers', function(Blueprint $table) {
+			$table->dropForeign('sessionmembers_user_id_foreign');
+			$table->dropForeign('sessionmembers_evercisesession_id_foreign');
+		});
+
+		Schema::table('venues', function(Blueprint $table) {
+		$table->dropForeign('venues_user_id_foreign');
+		});
+
+		Schema::table('venue_facilities', function(Blueprint $table) {
+			$table->dropForeign('venue_facilities_venue_id_foreign');
+			$table->dropForeign('venue_facilities_facility_id_foreign');
+		});
+
+		Schema::table('wallets', function(Blueprint $table) {
+			$table->dropForeign('wallets_user_id_foreign');
+		});
+
+		Schema::table('wallethistory', function(Blueprint $table) {
+			$table->dropForeign('wallethistory_user_id_foreign');
+		});
+
+		Schema::table('evercoins', function(Blueprint $table) {
+			$table->dropForeign('evercoins_user_id_foreign');
+		});
 	}
 
 }

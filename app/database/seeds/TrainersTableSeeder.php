@@ -22,7 +22,7 @@ class TrainersTableSeeder extends Seeder {
 
 				if($newUser)
 				{
-					$newTrainer = Trainer::create([
+					$newTrainer = Trainer::firstOrCreate([
 						'user_id'=>$newUser->id,
 						'bio'=>$bodyinfo->bodyInfoBio,
 						'website'=>$bodyinfo->bodyInfoWebsite,
@@ -41,7 +41,7 @@ class TrainersTableSeeder extends Seeder {
 						$this->command->info('Cannot add trainer to group '.$e);
 					}
 
-					$wallet = Wallet::create(['user_id'=>$newUser->id, 'balance'=>0, 'previous_balance'=>0]);
+					$wallet = Wallet::firstOrCreate(['user_id'=>$newUser->id, 'balance'=>0, 'previous_balance'=>0]);
 				}
 				else
 				{

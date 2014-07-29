@@ -12,14 +12,17 @@ class CreateEvercoinhistoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('evercoinhistory', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key;
-			$table->decimal('transaction_amount');
-			$table->decimal('new_balance');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('evercoinhistory'))
+		{
+			Schema::create('evercoinhistory', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key;
+				$table->decimal('transaction_amount');
+				$table->decimal('new_balance');
+				$table->timestamps();
+			});
+		}
 	}
 
 

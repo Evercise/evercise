@@ -5,13 +5,15 @@
 		<div class="{{$fieldname}}_pre slider_pre"></div>
 
 		@if(isset($default))
-			{{ Form::text( $fieldname , $default, array( 'class' => 'slider-input', 'placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
+			{{ Form::text( $fieldname , $default, array( 'data-tooltip' => isset($tooltip) ? $tooltip : null , 'class' => isset($tooltip) ? ' tooltip slider-input' : 'slider-input', 'placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
 		@else
-			{{ Form::text( $fieldname , '', array( 'class' => 'slider-input', 'placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
+			{{ Form::text( $fieldname , '', array( 'data-tooltip' => isset($tooltip) ? $tooltip : null , 'class' => isset($tooltip) ? ' tooltip slider-input' : 'slider-input', 'placeholder' => $placeholder, 'maxlength' => $maxlength)) }}
 		@endif
 
-		<div id="{{$fieldname}}-slider" class="slider"></div>
+		<div id="{{$fieldname}}-slider" class="slider mt10"></div>
 		<br>
-		<p>{{ $fieldtext }}</p>
+		@if(isset($fieldtext))
+			<p>{{ $fieldtext  }}</p>
+		@endif
 
 	</div>

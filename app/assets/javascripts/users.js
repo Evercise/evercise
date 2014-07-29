@@ -24,68 +24,21 @@ registerInitFunction('initLogin', true);
 
 function initUsers()
 {
-    trace('initUsers');
 
-    $( ".datepicker" ).datepicker({
-      dateFormat: "yy-mm-dd" ,
-      defaultDate: "-30y",
-      yearRange: "-100:+0", 
-      minDate: '-120y', 
-      maxDate: '-16y',
-      changeMonth: true,
-      changeYear: true,
-      showOtherMonths: true,
-      selectOtherMonths: true
+    $('.datepicker').each(function(){
+        $( this ).datepicker({
+          dateFormat: "yy-mm-dd" ,
+          defaultDate: "-30y",
+          yearRange: "-100:+0", 
+          minDate: '-120y', 
+          maxDate: '-16y',
+          changeMonth: true,
+          changeYear: true,
+          showOtherMonths: true,
+          selectOtherMonths: true
+        });
     });
-
-    // create a new user
- 
-    $( '#user_create' ).on( 'submit', function() {
-        $('.error-msg').remove();
-        $('input').removeClass('error');
-        loading(); // when 
-        // post to sontroller
-        $.post(
-            $( this ).prop( 'action' ),
-            $( this ).serialize(),
-            function( data ) {
-                trace("about to win.......");
-                loaded();
-                if (data.validation_failed == 1)
-                {
-                    trace(data.errors);
-                    trace('loose');
-                    // show validation errors
-                    var arr = data.errors;
-                    var scroll = false;
-                    $.each(arr, function(index, value)
-                    {
-                        if (scroll == false) {
-                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
-                            scroll = true;
-                        };
-                        if (value.length != 0)
-                        {
-                           $("#" + index).addClass('error');
-                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
-                        }
-                    });
-                    $('#ajax-loading').hide();
-                }else{
-                    // redirect to login page
-                    $('.success_msg').show();
-                    setTimeout(function() {
-                        window.location.href = data;
-                    }, 1000);
-                    //trace(data);
-                }
-            },
-            'json'
-        );
-        return false;
-    });
-
-
+    
 
     // Reset password
     $( '#passwords_reset' ).on( 'submit', function() {

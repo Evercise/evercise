@@ -19,7 +19,6 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
 			->with('futuresessions.sessionmembers')
 			->with('pastsessions')
-			->with('category')
 			->with('venue')
 			->where('user_id', $this->user->id)->get();
 
@@ -109,25 +108,21 @@ class EvercisegroupsController extends \BaseController {
 			return View::make('trainers.about');
 		} 
 
-		$categoriesDB = Category::all();
 
-		$categories = array();
-		$categoryDescriptions = array();
-		foreach ($categoriesDB as $cat)
-		{
-		    $categories[$cat->id] = $cat->name;
-		    $categoryDescriptions[$cat->id] = $cat->description;
-		}
 
-		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>1, 'max'=>120, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
+		$subcategories = Subcategory::lists('name');
+		natsort($subcategories);
+
+		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>1, 'max'=>20, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
 		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>10, 'max'=>240, 'step'=>5, 'value'=>1))));
 		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>1, 'max'=>200, 'step'=>1, 'value'=>1))));
 
         JavaScript::put(array('initImage' => json_encode(['ratio' => 'group_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
-		JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
+		JavaScript::put(array('initPut' => 1 )); // Initialise EverciseGroups JS.
+		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
-		JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
-		return View::make('evercisegroups.create')->with('categories', $categories);
+		//JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
+		return View::make('evercisegroups.create')->with('subcategories', $subcategories);
 	}
 
 	/**
@@ -140,13 +135,13 @@ class EvercisegroupsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'classname' => 'required|max:30|min:5',
+				'classname' => 'required|max:100|min:5',
 				'description' => 'required|max:500|min:100',
-				'category' => 'required',
+				//'category' => 'required',
 				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
-				'price' => 'required|numeric|between:1,120',
-				'image'	=> 'required',
+				'price' => 'required|numeric|between:1,1000',
+				'thumbFilename'	=> 'required',
 				'gender'=> 'required',
 				'venue'=> 'required',
 				// 'lat' => 'required',
@@ -172,12 +167,12 @@ class EvercisegroupsController extends \BaseController {
 
 			$classname = Input::get('classname');
 			$description = Input::get('description');
-			$category = Input::get('category');
+			//$category = Input::get('category');
 			$venue = 1;
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
-			$image = Input::get('image');
+			$image = Input::get('thumbFilename');
 			$gender = Input::get('gender');
 			// $address = Input::get('address');
 			// $city = Input::get('city');
@@ -185,6 +180,22 @@ class EvercisegroupsController extends \BaseController {
 			// $lat = Input::get('lat');
 			// $lng = Input::get('long');
 			$venue = Input::get('venue');
+
+			$category1 = Input::get('category1');
+			$category2 = Input::get('category2');
+			$category3 = Input::get('category3');
+
+			$categories = [];
+			if ($category1 != '') array_push($categories, $category1);
+			if ($category2 != '') array_push($categories, $category2);
+			if ($category3 != '') array_push($categories, $category3);
+			if (empty($categories)) return Response::json(['validation_failed' => 1, 'errors' => ['category1'=>'you must choose at least one category']]);
+
+			// convert array of category names into id's
+			foreach ($categories as $key => $category) {
+				if (! $categories[$key] = Subcategory::where('name', $category)->pluck('id'))
+					return Response::json(['validation_failed' => 1, 'errors' => [('category'.($key+1)) => 'One of the categories you have chosen is not in the list']]);
+			}
 
 			if ( ! Sentry::check()) return 'Not logged in';
 			
@@ -194,7 +205,7 @@ class EvercisegroupsController extends \BaseController {
 			$evercisegroup = Evercisegroup::create(array(
 				'name'=>$classname,
 				'user_id'=>$this->user->id,
-				'category_id'=>$category,
+				//'category_id'=>$category,
 				'venue_id'=>$venue,
 				'description'=>$description,
 				'default_duration'=>$duration,
@@ -210,12 +221,14 @@ class EvercisegroupsController extends \BaseController {
 				'venue_id' => $venue,
 			));
 
+			$evercisegroup->subcategories()->attach($categories);
+
 			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_evercisegroup', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name));
 
 			//return Response::json(route('home', array('display_name'=> $this->user->display_name)));
 			//return Response::json($evercisegroup); // for testing
 			//return View::make('evercisegroups.index');
-			return Response::json(route('evercisegroups.index'));
+			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
 		}
 	}
 
@@ -231,7 +244,6 @@ class EvercisegroupsController extends \BaseController {
 		return Redirect::route('evercisegroups.create')
 				->with('name', $evercisegroups->name)
 				->with('description', $evercisegroups->description)
-				->with('category', $evercisegroups->category_id)
 				->with('duration', $evercisegroups->default_duration)
 				->with('maxsize', $evercisegroups->capacity)
 				->with('price', $evercisegroups->default_price)
@@ -254,7 +266,8 @@ class EvercisegroupsController extends \BaseController {
 
 		//$trainerGroup = Sentry::findGroupByName('trainer');
 
-		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id))
+		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')
+			->with('subcategories.categories')->find($id))
 		{
 
 			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
@@ -316,7 +329,8 @@ class EvercisegroupsController extends \BaseController {
 							JavaScript::put(array('mailAll' => 1 ));
 							JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
 							JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
-
+							
+							
 							return View::make('sessions.index')
 								->with('evercisegroup' , $evercisegroup )
 								->with('directory' , $directory)
@@ -380,8 +394,23 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initSwitchView' => 1 ));
 				JavaScript::put(array('initScrollAnchor' => 1 ));
 				JavaScript::put(array('initStickHeader' => 1 ));
-
+				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+
+				/* open graph meta tags */
+				/* git site https://github.com/chriskonnertz/open-graph */
+
+				$og = new OpenGraph();
+
+			    $og->title($evercisegroup->name)
+			        ->type('article')
+			        ->image(url().'/profiles/'.$trainer->user->directory.'/'.$evercisegroup->image,
+			        	[
+				            'width'     => 400,
+				            'height'    => 200
+				        ])
+			        ->description($evercisegroup->description)
+			        ->url();
 
 				return View::make('evercisegroups.show')
 							->with('evercisegroup',$evercisegroup)
@@ -391,6 +420,7 @@ class EvercisegroupsController extends \BaseController {
 							->with('memberUsers' , $memberUsers)
 							->with('venue' , $venue)
 							->with('ratings' , $ratings)
+							->with('og' , $og)
 							//->with('memberUsers' , $memberUsers)
 							//->with('trainer',$trainerDetails)
 							;
@@ -507,18 +537,27 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function searchEg()
 	{
-		$query = Input::get('location');
-		$radius = Input::get('radius');
+		/* check for seached location, otherwise use the ip address */
+		if ( Input::get('location')) {
+			$location = Input::get('location');
+		}else{
+			$location = Request::getClientIp();
+			if ($location == '127.0.0.1') {
+				$location = '188.39.12.12';
+			}
+		}
+
+		/* check if search form posted otherwise set default for radius */
+		if (Input::get('radius')) {
+			$radius = Input::get('radius');
+		}else{
+			$radius = 10;
+		}
+		
 		$category = Input::get('category');
-		$category = Input::get('category');
 
-        $geocoder = new \Geocoder\Geocoder();
-        $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
-
-        $geocoder->registerProvider(new \Geocoder\Provider\GoogleMapsProvider($adapter));
-
-        try {
-            $geocode = $geocoder->geocode($query);
+		try {
+       		$geocode = Geocoder::geocode($location);
          	$latitude = $geocode->getLatitude();
         	$longitude = $geocode->getLongitude();
         } catch (Exception $e) {
@@ -527,85 +566,124 @@ class EvercisegroupsController extends \BaseController {
         	$longitude = 0;
         }   
 
-       /* $coordToGeohash = Geotools::coordinate($geocode->getCoordinates());
-
-        $encoded = Geotools::geohash()->encode($coordToGeohash, 3);
-
-        $boundingBox = $encoded->getBoundingBox();
-		*/
-        //return var_dump($boundingBox);
 
         $testers = Sentry::findGroupById(5);
 		$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
+        	
+        $results = [[],[],[],[]];
 
-        if ($category == null && $query != null) {
-        	$evercisegroups= Evercisegroup::has('futuresessions')
+        // SEARCH LEVEL 1
+    	$results[0] = Evercisegroup::has('futuresessions')
+        ->has('confirmed')
+        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+        	$query->select( array( DB::raw($haversine . ' as distance')) )
+        		  ->having('distance', '<', $radius);
+        })
+        ->whereHas('subcategories', function($query) use ($category){
+        	$query->where('name', 'LIKE', '%'.$category.'%' );
+        })
+        ->with('venue')		
+        ->with('user')
+        ->with('ratings')
+        ->with('futuresessions')
+        ->get();
+
+
+        // SEARCH LEVEL 2 ( if level 1 returns less than 9 results)
+        if (count($results[0]) < 9)
+        {
+	    	$results[1] = Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
 	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
 	        	$query->select( array( DB::raw($haversine . ' as distance')) )
 	        		  ->having('distance', '<', $radius);
+	        })
+	        ->whereHas('subcategories', function($query) use ($category){
+	        	
+		        $query->whereHas('categories', function($subquery) use ($category){
+		        	$subquery->where('name', 'LIKE', '%'.$category.'%' );
+		        });
+	        })
+	        //->with('categories')		
+	        ->with('venue')
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
 
+        //return var_dump($level2results);
+        
+        // SEARCH LEVEL 3 ( if level 1 and level 2 return less than 9 results)
+        if (count($results[0]) + count($results[1]) < 9)
+        {
+	    	$results[2] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->where('name', 'LIKE', '%'.$category.'%' )
+	        ->with('venue')		
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
+
+        // SEARCH LEVEL 4 ( if level 1, 2 and 3 return less than 9 results)
+        if (count($results[0]) + count($results[1]) + count($results[2]) < 9)
+        {
+	    	$results[3] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->where('description', 'LIKE', '%'.$category.'%' )
+	        ->with('venue')		
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
+
+        // SEARCH LEVEL 5 
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) < 9)
+        {
+	    	$results[4] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
 	        })
 	        ->with('venue')		
 	        ->with('user')
-	        ->with('category')
+	        ->with('ratings')
 	        ->with('futuresessions')
-	        ->paginate(6);
-			//->get();
-        }else{
-        	$evercisegroups= Evercisegroup::has('futuresessions')
-	        ->has('confirmed')
-	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
-	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
-	        	$query->select( array( DB::raw($haversine . ' as distance')) )
-	        		  ->having('distance', '<', $radius);
-
-	        })
-	        ->with('venue')
-	        ->with('user')
-	        ->with('category')
-	        ->with('futuresessions')
-			->where('category_id' , $category)
-			->paginate(6);
-			//->get();
-        }
-        
-
-      //  return var_dump($evercisegroups);
-
-
-	    $evercisegroup_ids = [];  
-	    $stars = [];
-
-		
-
-	    foreach ($evercisegroups as $key => $evercisegroup) {
-	    		$evercisegroup_ids[] = $evercisegroup->id;	
-
-	    		// See if group belongs to a tester
-			/*	$sentryUserGroup = Sentry::findUserById($evercisegroup->user->id);
-				$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
-				if ($sentryUserGroup->inGroup($testers))
-					if (!($testerLoggedIn) )
-						unset($evercisegroups[$key]);
-						*/
-	    };
-
-
-	    if (!empty($evercisegroup_ids)) {
-	    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
-
-		    foreach ($ratings as $key => $rating) {
-		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
-		    }
-
+	        ->get();
 	    }
 
-	   // return $evercisegroups->toJson();
+	    $allResults = Evercisegroup::concatenateResults( $results );
 
+	    $perPage = 6;
+	    $page = Input::get('page', 1);
+
+	    if ($page > count($allResults) or $page < 1) { $page = 1; }
+	    $offset = ($page * $perPage) - $perPage;
+	    $articles = array_slice($allResults,$offset,$perPage);
+	    $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
+
+	    //return var_dump($data);
+
+	   // return $paginatedResults->toJson();
 
 	   // JavaScript::put(array('classes' => json_encode($places) ));
 	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
@@ -614,10 +692,10 @@ class EvercisegroupsController extends \BaseController {
 	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
 
 	    return View::make('evercisegroups.search')
-	    		->with('places' , $evercisegroups->toJson())
-	    		->with('stars' , $stars)
-	    		->with('evercisegroups' , $evercisegroups);
+	    		->with('places' , $paginatedResults->toJson())
+	    		//->with('places' , json_encode($paginatedResults))
+	    		//->with('stars' , $stars)
+	    		->with('evercisegroups' , $paginatedResults);
 	    		//->with('members' , $members);
-	}	
-
+	}
 }

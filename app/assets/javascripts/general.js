@@ -146,6 +146,32 @@ function initLoginBox()
 }
 registerInitFunction('initLoginBox', true);
 
+// jquery ui's tool tip for input fields
+
+function initToolTip()
+{
+    $('.tooltip').each(function(){
+      var info = $(this);
+      info.tooltip({
+          items: "[data-tooltip]",
+          content: function () {
+              return info.data("tooltip");
+          }
+      })
+      .off( "mouseover" )
+      .on( "click", function(){
+          $( this ).tooltip( "open" );
+          return false;
+        })
+      .attr( "title", "" ).css({ cursor: "pointer" });
+     // $(this).tooltip('option', {disabled: false}).tooltip('open'); // uncomment for testing
+    })
+
+    
+}
+
+registerInitFunction('initToolTip');
+
 // params: name, min, max, step, value,
 // callback - a selector of a field to update with the value
 function initSlider(params)
@@ -252,8 +278,17 @@ registerInitFunction('initChart');
 // edit form
 
 // NOW gets the method from the form and sends via that method
-function initPut () {
-  trace("init Put");
+function initPut (params) {
+
+  if (params == null) {
+      selector = '.create-form';
+  }else{
+      params = JSON.parse(params);
+      selector = params.selector;
+  }
+
+
+  trace(selector, true);
   $( '.create-form, .update-form' ).on( 'submit', function() {
 
       loading();
@@ -265,7 +300,7 @@ function initPut () {
       $('input').removeClass('error');
       // post to controller
       var form = $(this);
-      form.find('.button').addClass('disabled');
+      form.find('.btn').addClass('disabled');
       $.ajax({
           url: url,
           type: method,
@@ -279,7 +314,8 @@ function initPut () {
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
-                  form.find('.button').removeClass('disabled');
+                  console.debug(data, true);
+                  form.find('.btn').removeClass('disabled');
                   // show validation errors
                   var arr = data.errors;
                   var scroll = false;
@@ -291,23 +327,20 @@ function initPut () {
                       };
                       if (value.length != 0)
                       {
-                         $("#" + index).addClass('error');
+                        form.find("#" + index).addClass('error');
+                        form.find("#" + index).after('<span class="error-msg">' + value + '</span>');
+                         /*$("#" + index).addClass('error');
                          $("#" + index).after('<span class="error-msg">' + value + '</span>');
+                         */
                       }
                   });
               }else{
-                  // redirect to login page
-                 /* form.find('.success_msg').show();
-                  trace("Updated: "+data.message);
-                  trace(form, true);
-                  */
+                  // call back
+
                   var callback = data.callback;
 
                   window[callback](data, form);
 
-                  /*setTimeout(function() {
-                      window.location.href = '';
-                  }, 300);*/
               }
           }
       );
@@ -322,6 +355,7 @@ function gotoUrl(data)
   setTimeout(function() {
       window.location.href = data.url;
   }, 300);
+
 }
 function successAndRefresh(data, form)
 {
@@ -340,15 +374,37 @@ function fail(data, form)
 registerInitFunction('initPut');
 
 function initPlayVideo(){ 
-  $(document).on('click', '.play-button' , function(){
+  $(".play-button").click(function(e){
+        var url = this.href;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) { 
+                $('.mask').show();
+               $('.lower_footer').append(data);
+               videoControl();
+             }
+        );
+        return false;
+    });
+
+
+  /*$(document).on('click', '.play-button' , function(){
     $(this).fadeToggle(600 ,function(){
       $('.video').fadeToggle(600).delay(100).get(0).play();
     })
-  })
+  })*/
     
 }
 
 registerInitFunction('initPlayVideo');
+
+function videoControl(){
+  $('.video').get(0).play();
+}
 
 function initSwitchView(){
     $(document).on('click','.icon-btn', function(){
@@ -357,6 +413,7 @@ function initSwitchView(){
         var view = $(this).data('view');
         $('.tab-view').removeClass('selected');
         $('#'+view).addClass('selected');
+
     })
 }
 
@@ -390,6 +447,7 @@ function initScrollAnchor(string) {
 
   var locationPath = filterPath(location.pathname);
 
+
   var sticky_header = 0;
 
   if ($('.sticky-header')) {
@@ -404,6 +462,7 @@ function initScrollAnchor(string) {
       var $target = $(this.hash), target = this.hash;
       
       if (target) {
+       
         var targetOffset = ($target.offset().top - sticky_header) - sticky_header;
         //targetOffset = (targetOffset - sticky_header)- sticky_header;
         $(this).click(function(event) {
@@ -414,6 +473,7 @@ function initScrollAnchor(string) {
         });
       }
     }
+
   });
 }
 

@@ -5,7 +5,32 @@
 				</a>
 				<div class="list-details">
 					<h4>{{$evercisegroup->name}}</h4>
-					<p>{{ Str::limit($evercisegroup->description, 115) }}</p>	
+					<div class="inner-float">
+						{{ HTML::image('img/person_icon.png', 'date image', array('class' => 'block-icon mr10')); }}
+						<span>Class Size: {{ $evercisegroup->capacity}}</span>
+					</div>
+					@if(isset($evercisegroup->futuresessions))
+						<div class="future-session-header mt10">
+							{{ HTML::image('img/date_icon.png', 'date image', array('class' => 'block-icon mr10')); }}
+							<span>{{ date('d M Y - h:ia', strtotime($evercisegroup->futuresessions[0]->date_time))}}</span>
+						</div>
+						
+					@else
+						<div class="block-spacer">
+						</div>
+						
+					@endif
+
+					@if(isset($evercisegroup->venue))
+						<div class="block-inner mt10" id="block-venue">
+							<div class="inner-float">
+								{{ HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon mr10')); }}
+								<span>{{ $evercisegroup->venue->address  }}</span><br>
+								<span class="ml25"> &nbsp;{{ $evercisegroup->venue->town  }}, {{$evercisegroup->venue->postcode }}</span>
+							</div>
+						</div>
+					@endif
+
 				</div>
 				<div class="list-info">
 

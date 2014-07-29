@@ -30,7 +30,8 @@ require 'composers/AreacodeComposer.php';
 require 'composers/SearchClassesComposer.php';
 require 'composers/CartRowsComposer.php';
 require 'composers/PhoneComposer.php';
-require 'composers/AutocompleteComposer.php';
+require 'composers/AutocompleteLocationComposer.php';
+require 'composers/AutocompleteCategoryComposer.php';
 
 
 View::composer('home', 'HomePageComposer');
@@ -64,10 +65,12 @@ View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
 View::composer('home', 'RecommendedClassesComposer');
 View::composer('evercoins.show', 'ShowEvercoinComposer');
 View::composer('static.how_it_works', 'AccordionComposer');
+View::composer('users.register', 'AccordionComposer');
 View::composer('payments.paywithevercoins', 'PayWithEvercoinsComposer');
 View::composer('form.phone', 'AreacodeComposer');
 View::composer('payments.cartrows', 'CartRowsComposer');
 View::composer('form.phone', 'PhoneComposer');
-View::composer('widgets.autocomplete', 'AutocompleteComposer');
+View::composer('widgets.autocomplete-location', 'AutocompleteLocationComposer');
+View::composer('widgets.autocomplete-category', 'AutocompleteCategoryComposer');
 
 

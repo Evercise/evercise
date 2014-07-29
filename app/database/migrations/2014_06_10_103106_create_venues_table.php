@@ -12,19 +12,22 @@ class CreateVenuesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('venues', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key;
-			$table->string('name', 45);
-			$table->string('address', 45);
-			$table->string('town', 45);
-			$table->string('postcode', 45);
-			$table->decimal('lat', 10, 8);
-			$table->decimal('lng', 11, 8);
-			$table->string('image', 45);
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('venues'))
+		{
+			Schema::create('venues', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key;
+				$table->string('name', 45);
+				$table->string('address', 45);
+				$table->string('town', 45);
+				$table->string('postcode', 45);
+				$table->decimal('lat', 10, 8);
+				$table->decimal('lng', 11, 8);
+				$table->string('image', 45);
+				$table->timestamps();
+			});
+		}
 	}
 
 

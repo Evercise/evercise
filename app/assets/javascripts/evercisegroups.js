@@ -15,7 +15,7 @@ function initEvercisegroups()
 
     // create a new evercisegroup
  
-    $( '#evercisegroup_create' ).on( 'submit', function() {
+   /* $( '#evercisegroup_create' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
         // post to controller
@@ -68,7 +68,7 @@ function initEvercisegroups()
             'json'
         );
         return false;
-    });
+    });*/
 
     $('.hub-block #delete_group').click(function(){
         var url = $(this).attr('href');
@@ -378,6 +378,20 @@ function initJoinEvercisegroup(params)
         $('#sub-total').html(price);
         $('#balance-to-pay').html(price - evercoin);
     });
+
+     $(document).on('click','#expand-sessions' , function(){
+        $(this).find('.extra').toggleClass('hidden');
+        $('.session-list-row.extra').toggleClass('hidden');
+
+        /* remove lick event so that the offsets dont stack for the page scrolling */
+         $('a[href*=#]').each(function() {
+            $(this).unbind('click');
+         });
+
+       initScrollAnchor();
+    });
+
+
 
 
 }
