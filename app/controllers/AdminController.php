@@ -98,5 +98,18 @@ class AdminController extends \BaseController {
 	    return Redirect::route('admin.log');
 	}
 
+	public function showGroups()
+	{
+		
+	    return View::make('admin.groups');
+	    //->with('log', $logFile);
+	}
+
+	public function addGroup()
+	{
+		
+	    return View::make('admin.groups');
+	    //->with('log', $logFile);
+	}
 	
 }
