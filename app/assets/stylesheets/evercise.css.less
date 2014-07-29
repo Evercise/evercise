@@ -2035,7 +2035,7 @@ video{
 	}
 	.future-session-list{
 		display: none;
-		height: 67px;
+		height: 88px;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		width: 100%;
@@ -2132,7 +2132,6 @@ video{
 		border-bottom: 1px dashed @grey;
 		.recommended-aside{
 			float: left;
-			width: 50%;
 			.box-sizing();
 			padding: 0 0px 0 10px;
 			.share-icon{
@@ -2140,6 +2139,10 @@ video{
 				.border-radius();
 				float: left;
 				margin-right: 5px;
+			}
+			.date-icon{
+				margin: 7px 5px 0 0;
+				float: left;
 			}
 			span{
 				line-height: 30px;
@@ -2380,6 +2383,9 @@ video{
 			border: 1px solid @grey;
 			.box-sizing();
 			padding: 20px 0;
+			&:hover{
+				.box-shadow(0 0 10px 3px @yellow);
+			}
 			.switch-image{
 				margin: 10px auto;
 				display: block;
