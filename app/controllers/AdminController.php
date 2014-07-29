@@ -100,20 +100,16 @@ class AdminController extends \BaseController {
 
 	public function showGroups()
 	{
-		return var_dump(stylesheet_link_tag()) ;
 		
-	    return View::make('admin.groups');
-	    //->with('log', $logFile);
+		$evercisegroups = Evercisegroup::with('subcategories.categories')->get();
+		
+	    return View::make('admin.groups')
+	    ->with('evercisegroups', $evercisegroups);
 	}
 
 	public function addGroup()
 	{
 		
-		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')
-			->with('subcategories.categories')->find($id))
-		{
-
-		}
 
 	    return View::make('admin.groups');
 	    //->with('log', $logFile);

@@ -140,4 +140,5 @@ class RatingsController extends \BaseController {
 		//
 	}
 
+
 }
