@@ -393,7 +393,6 @@ function initJoinEvercisegroup(params)
 
 
 
-
 }
 
 registerInitFunction('initJoinEvercisegroup');

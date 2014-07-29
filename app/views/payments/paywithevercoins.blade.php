@@ -31,7 +31,7 @@
 
 
 
-{{--<div class='modal'>
+<?php /*<div class='modal'>
 	<div id="cancel_login" class="cancel">x</div>
 	<div class="modal-head">
 		<h4>Pay with Evercoins</h4>
@@ -53,4 +53,4 @@
 		{{ Form::close() }}
     </div>
 </div>
---}}
+*/?>

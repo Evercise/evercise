@@ -27,7 +27,6 @@ Subcategory::create(array('name' => 'salsa', 'description' => 'awaiting details'
 Subcategory::create(array('name' => 'street dance', 'description' => 'awaiting details'))->categories()->attach([1]);
 Subcategory::create(array('name' => 'urban funk', 'description' => 'awaiting details'))->categories()->attach([1]);
 Subcategory::create(array('name' => 'line dance', 'description' => 'awaiting details'))->categories()->attach([1]);
-Subcategory::create(array('name' => 'zumba step', 'description' => 'awaiting details'))->categories()->attach([1,3]);
 Subcategory::create(array('name' => 'Puma HIIT ', 'description' => 'awaiting details'))->categories()->attach([3]);
 Subcategory::create(array('name' => 'v tread', 'description' => 'awaiting details'))->categories()->attach([3]);
 Subcategory::create(array('name' => 'v row', 'description' => 'awaiting details'))->categories()->attach([3]);
@@ -56,20 +55,17 @@ Subcategory::create(array('name' => 'kickboxing', 'description' => 'awaiting det
 Subcategory::create(array('name' => 'boxing', 'description' => 'awaiting details'))->categories()->attach([3,4,6]);
 Subcategory::create(array('name' => 'skipping', 'description' => 'awaiting details'))->categories()->attach([3,4,6]);
 Subcategory::create(array('name' => 'thai kickboxing', 'description' => 'awaiting details'))->categories()->attach([3,4,6]);
-Subcategory::create(array('name' => 'muay thai', 'description' => 'awaiting details'))->categories()->attach([3,4,6]);
 Subcategory::create(array('name' => 'wu shu kwan', 'description' => 'awaiting details'))->categories()->attach([3,4,6]);
 Subcategory::create(array('name' => 'cycling', 'description' => 'awaiting details'))->categories()->attach([3,9,6]);
 Subcategory::create(array('name' => 'group cycle', 'description' => 'awaiting details'))->categories()->attach([3,9,6]);
 Subcategory::create(array('name' => 'rpm', 'description' => 'awaiting details'))->categories()->attach([3,9,6]);
 Subcategory::create(array('name' => 'spinning', 'description' => 'awaiting details'))->categories()->attach([3,9,6]);
 Subcategory::create(array('name' => '​aqua', 'description' => 'awaiting details'))->categories()->attach([10,6]);
-Subcategory::create(array('name' => 'aqua zumba', 'description' => 'awaiting details'))->categories()->attach([10,1]);
 Subcategory::create(array('name' => '​aerobics', 'description' => 'awaiting details'))->categories()->attach([8,3]);
 Subcategory::create(array('name' => 'body attack', 'description' => 'awaiting details'))->categories()->attach([8,3]);
 Subcategory::create(array('name' => 'body step', 'description' => 'awaiting details'))->categories()->attach([8,3]);
 Subcategory::create(array('name' => 'body vive', 'description' => 'awaiting details'))->categories()->attach([8,3]);
 Subcategory::create(array('name' => 'cardio mix', 'description' => 'awaiting details'))->categories()->attach([8,3]);
-Subcategory::create(array('name' => 'step', 'description' => 'awaiting details'))->categories()->attach([8,3]);
 Subcategory::create(array('name' => 'willpower and grace', 'description' => 'awaiting details'))->categories()->attach([8,3]);
 Subcategory::create(array('name' => 'sports', 'description' => 'awaiting details'))->categories()->attach([6]);
 Subcategory::create(array('name' => '​tennis', 'description' => 'awaiting details'))->categories()->attach([6]);
@@ -90,8 +86,6 @@ Subcategory::create(array('name' => 'workout', 'description' => 'awaiting detail
 Subcategory::create(array('name' => 'acro dance', 'description' => 'awaiting details'))->categories()->attach([1]);
 Subcategory::create(array('name' => 'bachata dance', 'description' => 'awaiting details'))->categories()->attach([1]);
 Subcategory::create(array('name' => 'contemporary dance', 'description' => 'awaiting details'))->categories()->attach([1]);
-Subcategory::create(array('name' => 'hip hop dance', 'description' => 'awaiting details'))->categories()->attach([1]);
-Subcategory::create(array('name' => 'hula dance', 'description' => 'awaiting details'))->categories()->attach([1]);
 Subcategory::create(array('name' => 'jazz dance', 'description' => 'awaiting details'))->categories()->attach([1]);
 Subcategory::create(array('name' => 'brazilian jiu jitsu', 'description' => 'awaiting details'))->categories()->attach([3,4]);
 Subcategory::create(array('name' => 'judo', 'description' => 'awaiting details'))->categories()->attach([3,4]);
@@ -118,7 +112,6 @@ Subcategory::create(array('name' => 'ice skating', 'description' => 'awaiting de
 Subcategory::create(array('name' => 'figure skating', 'description' => 'awaiting details'))->categories()->attach([6]);
 Subcategory::create(array('name' => 'zumba', 'description' => 'awaiting details'))->categories()->attach([3,1]);
 Subcategory::create(array('name' => 'circuits', 'description' => 'awaiting details'))->categories()->attach([3]);
-Subcategory::create(array('name' => 'aqua aerobic', 'description' => 'awaiting details'))->categories()->attach([8,10]);
 Subcategory::create(array('name' => '20 20 20', 'description' => 'awaiting details'))->categories()->attach([3]);
 Subcategory::create(array('name' => 'Abs Attack ', 'description' => 'awaiting details'))->categories()->attach([3]);
 Subcategory::create(array('name' => 'Booiaka', 'description' => 'awaiting details'))->categories()->attach([1]);
@@ -138,8 +131,6 @@ Subcategory::create(array('name' => 'Jazzercise', 'description' => 'awaiting det
 Subcategory::create(array('name' => 'Kettlercise', 'description' => 'awaiting details'))->categories()->attach([3]);
 Subcategory::create(array('name' => 'Pre/Post natal Yoga', 'description' => 'awaiting details'))->categories()->attach([5]);
 Subcategory::create(array('name' => 'Legs, Bums, Tums', 'description' => 'awaiting details'))->categories()->attach([3]);
-Subcategory::create(array('name' => 'Power Plate', 'description' => 'awaiting details'))->categories()->attach([3]);
-Subcategory::create(array('name' => 'Swimming', 'description' => 'awaiting details'))->categories()->attach([3,6]);
 Subcategory::create(array('name' => 'Powerbags', 'description' => 'awaiting details'))->categories()->attach([3]);
 Subcategory::create(array('name' => 'Horse ball', 'description' => 'awaiting details'))->categories()->attach([6]);
 Subcategory::create(array('name' => 'Powerhoop', 'description' => 'awaiting details'))->categories()->attach([8,3]);
