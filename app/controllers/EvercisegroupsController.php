@@ -542,10 +542,12 @@ class EvercisegroupsController extends \BaseController {
 			$location = Input::get('location');
 		}else{
 			$location = Request::getClientIp();
-			if ($location == '127.0.0.1') {
+			if ($location == '127.0.0.1' || $location == null) {
 				$location = '188.39.12.12';
 			}
 		}
+
+
 
 		/* check if search form posted otherwise set default for radius */
 		if (Input::get('radius')) {
