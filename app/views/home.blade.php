@@ -27,7 +27,7 @@
 @section('content' )
 <section class="home-body row">
 	<div class="step_wrapper">
-		<h4>Get fit with Evercise in four simple steps:</h4>
+		<h4>Get fit with Evercise in three simple steps:</h4>
 		<hr>
 
 		<div id="step_1" class="four-step col4">
