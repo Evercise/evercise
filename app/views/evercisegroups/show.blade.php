@@ -137,9 +137,9 @@
 			@if(count($venue->facilities) > 0)
 				<ul class="facilities-wrap">
 					<strong>Venue Facilities</strong>
-					@foreach($venue->facilities as $key => $facilities)
-						@if ($facilities->category == 'facility') 
-							<li>{{ HTML::image('img/facility/'.$facilities->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facilities->name}}</li>				
+					@foreach($venue->facilities as $key => $facility)
+						@if ($facility->category == 'facility') 
+							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>				
 						@endif										
 					@endforeach
 				</ul>
@@ -149,9 +149,9 @@
 			@if(count($venue->facilities) > 0)
 				<ul class="facilities-wrap">
 					<strong>Venue Amenities</strong>
-					@foreach($venue->facilities as $key => $facilities)
-						@if ($facilities->category == 'Amenity') 
-							<li>{{ HTML::image('img/facility/'.$facilities->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facilities->name}}</li>				
+					@foreach($venue->facilities as $key => $facility)
+						@if ($facility->category == 'Amenity') 
+							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>				
 						@endif										
 					@endforeach
 				</ul>	
