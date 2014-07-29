@@ -393,25 +393,6 @@ function initJoinEvercisegroup(params)
 
 
 
-     $('#session-checkout').click(function(event){
-        event.preventDefault();
-
-        var url = '/auth/login';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'html'
-        })
-        .done(
-            function(data) { 
-                $('.mask').show();
-                $('.lower_footer').append(data);
-                login();
-             }
-        );
-        return false;
-    });
-
 }
 
 registerInitFunction('initJoinEvercisegroup');
