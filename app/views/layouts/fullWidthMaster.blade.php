@@ -10,7 +10,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
 	<link href="/assets/application.css?version=2.1" rel="stylesheet" type="text/css">
-	<script src="/assets/application.js?version=2.1"></script>
+	{{ javascript_include_tag() }}
 
 </head>
 <body class="full-width-body">	
