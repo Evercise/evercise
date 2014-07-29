@@ -70,36 +70,6 @@ Route::post('/users/changepassword', array('as' => 'users.changepassword.post', 
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
 
-/*Route::get('login/fb/{redirect_after_login_url}' , function($redirect_after_login_url) {
-    $facebook = new Facebook(Config::get('facebook')); 
-    $params = array(
-        'redirect_uri' => url('/login/fb/callback/'.$redirect_after_login_url),
-        'scope' => 'email,user_birthday,read_stream'
-    );
-    return Redirect::away($facebook->getLoginUrl($params));
-});*/
-
-/*Route::get('login/fb' , function() {
-    $facebook = new Facebook(Config::get('facebook')); 
-    $params = array(
-        'redirect_uri' => url('/login/fb/callback/users.edit'),
-        'scope' => 'email,user_birthday,read_stream'
-    );
-    return Redirect::away($facebook->getLoginUrl($params));
-});*/
-
-/*Route::get('login/fb' , function() {
-    return Redirect::route('users.fb');
-});
-
-Route::get('tokens/fb' , function() {
-    return Redirect::route('tokens.fb');
-});*/
-
-
-
-
-//Route::get('login/fb/callback', array('as' => 'user.fb-login', 'uses' => 'UsersController@fb_login'));
 
 Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
 Route::post('/evercisegroups/delete/{id}', array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG'));
