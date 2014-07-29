@@ -24,8 +24,7 @@
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" target="_blank" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
 			</div>
-			
-			
+
 			<br>
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>

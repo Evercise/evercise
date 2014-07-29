@@ -6,10 +6,7 @@
 	    <div class="col12" id="how-it-works">
 	    	<h1>How it Works</h1>
 	    	<hr>
-		    <video id="video" class="video" controls poster="{{ asset('img/evercise logo BW.jpg') }}">
-				<source src="{{ url() }}/video/evercise.mov"  type="video/mp4" />
-				<source src="{{ url() }}/video/evercise.mp4"  type="video/mp4" />
-			</video>
+		    <iframe class="youtube-player" width="615" height="346" src="//www.youtube.com/embed/dtCbSpQ8NY8?autoplay=0&autohide=2" frameborder="0" allowfullscreen></iframe>
 			<hr>
 			<div class="accordion how-tabs">
 				<div class="accordion-header icon-btn selected" data-view="user">

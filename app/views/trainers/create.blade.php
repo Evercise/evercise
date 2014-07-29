@@ -17,7 +17,7 @@
             {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textarea', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'tooltip'=>'Your biography will be visible on your profile and will give members a more personal insight into you as an instructor. (example: Kayla is a qualified pool yoga instructor with 5 years of experience helping swimmers improve strength and flexibility in the pool. She is excited to meet new swimmers and help them improve their practice while decreasing chances of injury. She loves canoeing and camping, and is very happy to be a part of the evercise team!)' ))
+        @include('form.textarea', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'tooltip'=>'Your biography will be visible on your profile and will give members a more personal insight into you as an instructor. (example: Kayla is a qualified aqua spin instructor with 5 years of experience helping swimmers improve strength and flexibility in the pool. She is excited to meet new swimmers and spinners to help them improving their practice while decreasing chances of injury. She loves canoeing and camping, and is very happy to be a part of the evercise community!)' ))
         @if ($errors->has('bio'))
             {{ $errors->first('bio', '<p class="error-msg">:message</p>')}}
         @endif

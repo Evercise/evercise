@@ -6,6 +6,8 @@ function initVenues()
     $(document).on('click', '#new_venue_button' , function() {
         //trace($('#venue_create_form').css('display'));
 
+        initToolTip();
+
         if ($('#venue_create_form').css('display') == 'block')
         {
             if($('#venue option').length)

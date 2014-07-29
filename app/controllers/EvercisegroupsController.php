@@ -266,7 +266,8 @@ class EvercisegroupsController extends \BaseController {
 
 		//$trainerGroup = Sentry::findGroupByName('trainer');
 
-		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')->find($id))
+		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')
+			->with('subcategories')->find($id))
 		{
 
 			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
