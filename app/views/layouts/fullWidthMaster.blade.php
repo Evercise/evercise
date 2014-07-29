@@ -9,8 +9,8 @@
 	<link href='http://fonts.googleapis.com/css?family=Exo:300,400,500,600,300italic,400italic,500italic,600italic' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
-	{{ stylesheet_link_tag() }}
-	{{ javascript_include_tag() }}
+	<link href="/assets/application.css?version=2.1" rel="stylesheet" type="text/css">
+	<script src="/assets/application.js?version=2.1"></script>
 
 </head>
 <body class="full-width-body">	
