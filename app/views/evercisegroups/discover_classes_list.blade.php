@@ -38,14 +38,13 @@
 						<div class="half">
 							<strong>
 								@if(isset($members[$key]))
-									{{ count($members[$key])}}
+									{{ $evercisegroup->capacity -  count($members[$key])}}
 								@else
-								 	0
+								 	{{ $evercisegroup->capacity }}
 								@endif
-								/{{ $evercisegroup->capacity }}
 							</strong>
 							<br>
-							<span>Class size</span>
+							<span>Tickets Left</span>
 						</div>
 						<div class="half">
 							<strong>&pound;{{ $evercisegroup->default_price }}</strong>
