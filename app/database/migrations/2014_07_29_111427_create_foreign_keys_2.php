@@ -27,7 +27,7 @@ class CreateForeignKeys2 extends Migration {
 		});
 		Schema::table('referrals', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('referee_id')->references('id')->on('users');
+			//$table->foreign('referee_id')->references('id')->on('users');
 		});
 		Schema::table('evercisegroup_subcategories', function(Blueprint $table) {
 			$table->foreign('evercisegroup_id')->references('id')->on('evercisegroups');
