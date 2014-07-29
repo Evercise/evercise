@@ -92,7 +92,7 @@
 						</div>
 						<div class="tab-body" id="show">
 							<div class="tab-screen">
-								{{ HTML::image('img/create_class.png','add sessions', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/User - Step3.jpg','add sessions', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -106,7 +106,7 @@
 						</div>
 						<div class="tab-body" id="rate">
 							<div class="tab-screen">
-								{{ HTML::image('img/withdraw.png','manage account', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/ratings.jpg','manage account', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Search Classes</h4>
@@ -166,7 +166,7 @@
 						</div>
 						<div class="tab-body" id="register">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/Trainers-Step1.png','rate trainer', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>It&apos;s easy and FREE!</h4>
@@ -184,7 +184,7 @@
 						</div>
 						<div class="tab-body" id="create">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/Class Hub.png','add class', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>They will be promoted by evercise on multiple platforms</h4>
@@ -203,7 +203,7 @@
 						</div>
 						<div class="tab-body" id="session">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/Calendar.png','add session', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>No need to start from scratch each time.</h4>
@@ -220,7 +220,7 @@
 						</div>
 						<div class="tab-body" id="manage">
 							<div class="tab-screen">
-								{{ HTML::image('img/Rate-Review.png','rate trainer', array('class' => 'home-step-img')) }}
+								{{ HTML::image('img/Dashboard.png','manage account', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
 								<h4>Managaging your accounts couldn&apos;t be easier</h4>
