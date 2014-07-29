@@ -6,10 +6,20 @@ class CategoryBoxComposer {
   	{
   		$viewdata = $view->getData();
 
-  		$categoryId = $viewdata['category'];
+  		$subcategories = $viewdata['subcategories'];
 
-  		$category = Category::find($categoryId);
+  		/*loop through the sub cats to get category pivot */
+  		foreach ($subcategories as $key => $subcategory) {
+  			$subcats[] = $subcategory->categories;
+  		}
 
-  		$view->with('category', $category);
+  		/*loop though pivot to get catehory */
+  		foreach ($subcats as $key => $cat) {
+  			foreach ($cat as $key => $cats) {
+  				$categories[] = $cats;
+  			}
+  		}
+
+  		$view->with('categories', $categories);
   	}
 }

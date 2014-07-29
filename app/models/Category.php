@@ -11,4 +11,9 @@ class Category extends Eloquent {
 	 */
 	protected $table = 'categories';
 
+	public function subcategories()
+    {
+        return $this->belongsToMany('Subcategory', 'subcategory_categories', 'category_id', 'subcategory_id')->withTimestamps();
+    }
+
 }

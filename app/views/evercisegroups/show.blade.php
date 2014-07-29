@@ -24,16 +24,18 @@
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" target="_blank" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
 			</div>
-
+			
 			<br>
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>
+
 			<p>Gender: 
 				@if ($evercisegroup->gender == 0) All
 				@elseif ($evercisegroup->gender == 1) Male
 				@elseif ($evercisegroup->gender == 2) Female
 				@endif
 			</p>
+			@include('evercisegroups.category_box', ['subcategories' => $evercisegroup->subcategories])
 						
 		</div>
 		<div class="class-wrap" id="sessions">

@@ -267,7 +267,7 @@ class EvercisegroupsController extends \BaseController {
 		//$trainerGroup = Sentry::findGroupByName('trainer');
 
 		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')
-			->with('subcategories')->find($id))
+			->with('subcategories.categories')->find($id))
 		{
 
 			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
@@ -329,7 +329,8 @@ class EvercisegroupsController extends \BaseController {
 							JavaScript::put(array('mailAll' => 1 ));
 							JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
 							JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
-
+							
+							
 							return View::make('sessions.index')
 								->with('evercisegroup' , $evercisegroup )
 								->with('directory' , $directory)
@@ -393,7 +394,7 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initSwitchView' => 1 ));
 				JavaScript::put(array('initScrollAnchor' => 1 ));
 				JavaScript::put(array('initStickHeader' => 1 ));
-
+				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
 
 				/* open graph meta tags */

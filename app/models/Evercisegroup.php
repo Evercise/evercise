@@ -63,10 +63,10 @@ class Evercisegroup extends \Eloquent {
         return $this->belongsToMany('Subcategory', 'evercisegroup_subcategories', 'evercisegroup_id', 'subcategory_id')->withTimestamps();
     }
 
-  /*  public function categories()
+   public function categories()
     {
-        return $this->hasManyThrough('categories', 'subcategories_categories');
-    }*/
+        return $this->hasManyThrough('Category', 'Subcategory');
+    }
 
     public function tester()
      
