@@ -243,7 +243,9 @@ function DiscoverMapWidgetInit() {
        rating /= everciseGroups[i].ratings.length;
         
         //trace(i, true);
-        var infowindow = new google.maps.InfoWindow();
+        var infowindow = new google.maps.InfoWindow({
+          maxWidth: 280
+        });
         var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+everciseGroups[i].default_price+'<span></div></div>';
 
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
@@ -273,7 +275,9 @@ function DiscoverMapWidgetInit() {
 
     }
 
-    var clusterWindow = new google.maps.InfoWindow();
+    var clusterWindow = new google.maps.InfoWindow({
+      maxWidth: 320
+    });
     var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
       google.maps.event.addListener(markerCluster, 'click', function(cluster) {
@@ -281,23 +285,28 @@ function DiscoverMapWidgetInit() {
           var markers = cluster.getMarkers(); 
 
           content = '';
-          content+= '<div class="cluster-wrap">';
+          content+= '<div style="width:300px; height:140px;" class="cluster-wrap">';
           for(var i = 0; i < markers.length; i++) {
             content+= '<div class="cluster">';
             
             content+= markers[i].get('content');
             content+= '</div>';
+
+            position = markers[i].getPosition();
           }
           content+= '</div>';
 
           /* close the previous info-window */
           closeInfos(infos);
         
-          clusterWindow.setContent(content);
-          clusterWindow.open(map,this);
+          trace(position , true);
+          trace(cluster.getCenter() , true);
 
           map.setCenter(cluster.getCenter());
           map.setZoom(15);
+
+          clusterWindow.setContent(content);
+          clusterWindow.open(map,this);
 
            /* keep the handle, in order to close it on next click event */
           infos[0]=clusterWindow;
