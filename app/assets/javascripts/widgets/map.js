@@ -201,9 +201,9 @@ function DiscoverMapWidgetInit() {
     ];
 
     var mcOptions = { 
-      gridSize: 10,
+      gridSize: 8,
       maxZoom: 15,
-      zoom: 1,
+      zoom: 5,
       styles: clusterStyles
      };
 
@@ -244,7 +244,7 @@ function DiscoverMapWidgetInit() {
         
         //trace(i, true);
         var infowindow = new google.maps.InfoWindow();
-        var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><span><strong>&pound; </strong>'+everciseGroups[i].default_price+'<span></div><div class="recommended-aside"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-header"><p>'+getStars(rating)+'</p></div></div>';
+        var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+everciseGroups[i].default_price+'<span></div></div>';
 
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
         return function() {
@@ -253,7 +253,8 @@ function DiscoverMapWidgetInit() {
        closeInfos(infos);
         
            infowindow.setContent(content);
-           infowindow.open(map,marker);
+           infowindow.open(map,this);
+           
         
         /* keep the handle, in order to close it on next click event */
        infos[0]=infowindow;
@@ -261,13 +262,47 @@ function DiscoverMapWidgetInit() {
         };
       })(marker,content,infowindow)); 
 
-
+        marker.set('content', content);
         markers.push(marker);
       }
       map.fitBounds(bounds);
-      //var markerCluster = new MarkerClusterer(map, markers,mcOptions);
+
+
+      
+
 
     }
+
+    var clusterWindow = new google.maps.InfoWindow();
+    var markerCluster = new MarkerClusterer(map, markers,mcOptions);
+
+      google.maps.event.addListener(markerCluster, 'click', function(cluster) {
+        //Get markers
+          var markers = cluster.getMarkers(); 
+
+          content = '';
+          content+= '<div class="cluster-wrap">';
+          for(var i = 0; i < markers.length; i++) {
+            content+= '<div class="cluster">';
+            
+            content+= markers[i].get('content');
+            content+= '</div>';
+          }
+          content+= '</div>';
+
+          /* close the previous info-window */
+          closeInfos(infos);
+        
+          clusterWindow.setContent(content);
+          clusterWindow.open(map,this);
+
+          map.setCenter(cluster.getCenter());
+          map.setZoom(15);
+
+           /* keep the handle, in order to close it on next click event */
+          infos[0]=clusterWindow;
+          
+      })
   }
 
 }
