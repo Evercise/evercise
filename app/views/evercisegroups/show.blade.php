@@ -35,8 +35,12 @@
 				@elseif ($evercisegroup->gender == 2) Female
 				@endif
 			</p>
-			@include('evercisegroups.category_box', ['subcategories' => $evercisegroup->subcategories])
-						
+
+			<?php /*
+			@if(count($evercisegroup->subcategories) == 0)
+				@include('evercisegroups.category_box', ['subcategories' => $evercisegroup->subcategories])
+			@endif	
+			*/ ?>
 		</div>
 		<div class="class-wrap" id="sessions">
 			<h4>Sessions</h4>
