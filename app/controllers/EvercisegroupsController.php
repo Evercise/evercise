@@ -681,7 +681,7 @@ class EvercisegroupsController extends \BaseController {
 	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
 	        	$query->select( array( DB::raw($haversine . ' as distance')) )
-	        		  ->having('distance', '<', $radius);
+	        		  ->having('distance', '<', 200);
 	        })
 	        ->with('venue')		
 	        ->with('user')
