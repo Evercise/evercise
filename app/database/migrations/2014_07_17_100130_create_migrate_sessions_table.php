@@ -12,12 +12,15 @@ class CreateMigrateSessionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('migrate_sessions', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id')->unsigned();
-			$table->integer('classDatetimeId')->unsigned();
-			$table->integer('evercisesession_id')->unsigned();
-		});
+		if (! Schema::hasTable('migrate_sessions'))
+		{
+			Schema::create('migrate_sessions', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id')->unsigned();
+				$table->integer('classDatetimeId')->unsigned();
+				$table->integer('evercisesession_id')->unsigned();
+			});
+		}
 	}
 
 

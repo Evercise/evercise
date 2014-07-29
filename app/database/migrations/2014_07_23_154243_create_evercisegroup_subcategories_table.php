@@ -12,12 +12,15 @@ class CreateEvercisegroupSubcategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('evercisegroup_subcategories', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->integer('evercisegroup_id')->unsigned();// Foreign key
-			$table->integer('subcategory_id')->unsigned();// Foreign key
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('evercisegroup_subcategories'))
+		{
+			Schema::create('evercisegroup_subcategories', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->integer('evercisegroup_id')->unsigned();// Foreign key
+				$table->integer('subcategory_id')->unsigned();// Foreign key
+				$table->timestamps();
+			});
+		}
 	}
 
 

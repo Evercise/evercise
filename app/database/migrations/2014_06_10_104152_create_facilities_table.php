@@ -12,14 +12,17 @@ class CreateFacilitiesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('facilities', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->string('name');
-			$table->string('category');
-			$table->string('image');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('facilities'))
+		{
+			Schema::create('facilities', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->string('name');
+				$table->string('category');
+				$table->string('image');
+				$table->timestamps();
+			});
+		}
 	}
 
 

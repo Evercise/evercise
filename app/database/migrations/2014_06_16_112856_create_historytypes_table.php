@@ -12,13 +12,16 @@ class CreateHistorytypesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('historytypes', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->string('name');
-			$table->string('description');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('historytypes'))
+		{
+			Schema::create('historytypes', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->string('name');
+				$table->string('description');
+				$table->timestamps();
+			});
+		}
 	}
 
 	/**

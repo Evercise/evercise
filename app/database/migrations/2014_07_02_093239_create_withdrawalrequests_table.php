@@ -12,16 +12,19 @@ class CreateWithdrawalrequestsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('withdrawalrequests', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->decimal('transaction_amount', 19, 4);
-			$table->string('account');
-			$table->string('acc_type');
-			$table->integer('processed');
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('withdrawalrequests'))
+		{
+			Schema::create('withdrawalrequests', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key
+				$table->decimal('transaction_amount', 19, 4);
+				$table->string('account');
+				$table->string('acc_type');
+				$table->integer('processed');
+				$table->timestamps();
+			});
+		}
 	}
 
 

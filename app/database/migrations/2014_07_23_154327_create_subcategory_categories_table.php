@@ -12,12 +12,15 @@ class CreateSubcategoryCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('subcategory_categories', function(Blueprint $table) {
-			$table->increments('id');
-			$table->integer('subcategory_id')->unsigned();// Foreign key
-			$table->integer('category_id')->unsigned();// Foreign key
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('subcategory_categories'))
+		{
+			Schema::create('subcategory_categories', function(Blueprint $table) {
+				$table->increments('id');
+				$table->integer('subcategory_id')->unsigned();// Foreign key
+				$table->integer('category_id')->unsigned();// Foreign key
+				$table->timestamps();
+			});
+		}
 	}
 
 

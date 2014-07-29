@@ -12,12 +12,15 @@ class CreateMigrateGroupsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('migrate_groups', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id')->unsigned();// Foreign key;
-			$table->integer('classInfoId')->unsigned();
-			$table->integer('evercisegroup_id')->unsigned();
-		});
+		if (! Schema::hasTable('migrate_groups'))
+		{
+			Schema::create('migrate_groups', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id')->unsigned();// Foreign key;
+				$table->integer('classInfoId')->unsigned();
+				$table->integer('evercisegroup_id')->unsigned();
+			});
+		}
 	}
 
 

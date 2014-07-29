@@ -12,15 +12,18 @@ class CreateReferralsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('referrals', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->string('email');
-			$table->string('code');
-			$table->integer('referee_id')->unsigned();
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('referrals'))
+		{
+			Schema::create('referrals', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key
+				$table->string('email');
+				$table->string('code');
+				$table->integer('referee_id')->unsigned();
+				$table->timestamps();
+			});
+		}
 	}
 
 

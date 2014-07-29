@@ -12,15 +12,18 @@ class CreateAreacodesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('areacodes', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->string('area_code', 20);
-			$table->string('area_covered', 200);
-			$table->string('official_Ofcom', 200);
-			$table->string('Previous_BT', 200);
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('areacodes'))
+		{
+			Schema::create('areacodes', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->string('area_code', 20);
+				$table->string('area_covered', 200);
+				$table->string('official_Ofcom', 200);
+				$table->string('Previous_BT', 200);
+				$table->timestamps();
+			});
+		}
 	}
 
 	/**

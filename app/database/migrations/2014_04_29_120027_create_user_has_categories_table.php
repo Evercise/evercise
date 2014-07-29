@@ -12,12 +12,15 @@ class CreateUserHasCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_has_categories', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('category_id')->unsigned();// Foreign key
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('user_has_categories'))
+		{
+			Schema::create('user_has_categories', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->integer('user_id')->unsigned();// Foreign key
+				$table->integer('category_id')->unsigned();// Foreign key
+				$table->timestamps();
+			});
+		}
 	}
 
 	/**

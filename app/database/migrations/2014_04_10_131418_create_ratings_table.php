@@ -12,18 +12,21 @@ class CreateRatingsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('ratings', function(Blueprint $table) {
-			$table->engine = "InnoDB";
-			$table->increments('id');
-			$table->integer('user_id')->unsigned();// Foreign key
-			$table->integer('sessionmember_id')->unsigned();// Foreign key
-			$table->integer('session_id')->unsigned();// Foreign key
-			$table->integer('evercisegroup_id')->unsigned();// Foreign key
-			$table->integer('user_created_id')->unsigned();// Foreign key
-			$table->tinyinteger('stars');
-			$table->string('comment', 255);
-			$table->timestamps();
-		});
+		if (! Schema::hasTable('ratings'))
+		{
+			Schema::create('ratings', function(Blueprint $table) {
+				$table->engine = "InnoDB";
+				$table->increments('id');
+				$table->integer('user_id')->unsigned();// Foreign key
+				$table->integer('sessionmember_id')->unsigned();// Foreign key
+				$table->integer('session_id')->unsigned();// Foreign key
+				$table->integer('evercisegroup_id')->unsigned();// Foreign key
+				$table->integer('user_created_id')->unsigned();// Foreign key
+				$table->tinyinteger('stars');
+				$table->string('comment', 255);
+				$table->timestamps();
+			});
+		}
 	}
 
 
