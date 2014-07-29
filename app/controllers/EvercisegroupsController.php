@@ -547,6 +547,8 @@ class EvercisegroupsController extends \BaseController {
 			}
 		}
 
+		return Request::getClientIp();
+
 
 
 		/* check if search form posted otherwise set default for radius */
