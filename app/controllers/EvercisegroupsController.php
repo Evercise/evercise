@@ -548,7 +548,6 @@ class EvercisegroupsController extends \BaseController {
 		}
 
 
-
 		/* check if search form posted otherwise set default for radius */
 		if (Input::get('radius')) {
 			$radius = Input::get('radius');
@@ -574,7 +573,8 @@ class EvercisegroupsController extends \BaseController {
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
         	
-        $results = [[],[],[],[]];
+        /* set the number of arrays needed per level */
+        $results = [[],[],[],[],[]];
 
         // SEARCH LEVEL 1
     	$results[0] = Evercisegroup::has('futuresessions')
@@ -660,6 +660,23 @@ class EvercisegroupsController extends \BaseController {
         if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) < 9)
         {
 	    	$results[4] = Evercisegroup::has('futuresessions')
+	        ->has('confirmed')
+	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
+	        	$query->select( array( DB::raw($haversine . ' as distance')) )
+	        		  ->having('distance', '<', $radius);
+	        })
+	        ->with('venue')		
+	        ->with('user')
+	        ->with('ratings')
+	        ->with('futuresessions')
+	        ->get();
+	    }
+
+	     // SEARCH LEVEL 6 
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) + count($results[4]) < 9)
+        {
+	    	$results[5] = Evercisegroup::has('futuresessions')
 	        ->has('confirmed')
 	        ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
 	        ->whereHas('venue', function($query) use (&$haversine,&$radius){
