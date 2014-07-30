@@ -45,10 +45,7 @@ ol, ul {
 blockquote, q {
 	quotes:  "\201C""\201D""\2018""\2019";
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: 'open-quote';
-}
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
@@ -1953,6 +1950,7 @@ nav{
 		list-style: none;
 		.line-height(2.0);
 		color: #555555;
+		margin: 0;
 	}
 	.class-block-header{
 		border-bottom: 1px solid @grey; 
@@ -2029,7 +2027,7 @@ nav{
 	}
 	.future-session-list{
 		display: none;
-		height: 88px;
+		height: 66px;
 		overflow-y: scroll;
 		overflow-x: hidden;
 		width: 100%;
@@ -2967,6 +2965,7 @@ nav{
 		height: 246px;
 		.milestone-form{
 			margin: 28px 0 0;
+			position: relative;
 			label{
 				.heading-font(500);
 				float: left;
@@ -2983,6 +2982,12 @@ nav{
 				margin: 0 0 0 20px;
 				padding: 0;
 				height: 38px;
+			}
+			.error-msg{
+				position: absolute;
+				bottom: -75px;
+				left: 0;
+				width: 100%;
 			}
 		}
 	}

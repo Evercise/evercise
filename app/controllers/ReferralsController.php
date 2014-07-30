@@ -33,7 +33,7 @@ class ReferralsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'referee_email' => 'required|email',
+				'referee_email' => 'required|email|unique:users,email',
 			)
 		);
 		if($validator->fails()) {
