@@ -58,12 +58,14 @@
 		</div>
 				
 	</div>
-	<hr>
-	<div class="join_wrapper">
-		<h4>Join the Evercise community today and find<br>your way to a happier, fitter you...</h4>
-		{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow btn-large'))}}
-		{{ HTML::image('img/potato men group fitness.png','join us ', array('class' => 'register-img')) }}
-	</div>
+	@if(!isset($user))
+		<hr>
+		<div class="join_wrapper">
+			<h4>Join the Evercise community today and find<br>your way to a happier, fitter you...</h4>
+			{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow btn-large'))}}
+			{{ HTML::image('img/potato men group fitness.png','join us ', array('class' => 'register-img')) }}
+		</div>
+	@endif
 </section>
 
 @stop
