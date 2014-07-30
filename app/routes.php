@@ -39,6 +39,7 @@ Route::get('users/{id}/edit/{tab}', array('as'=>'users.edit.tab', 'uses'=>'Users
 Route::get('sessions/{evercisegroup_id}/index', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
 Route::get('sessions/date_list', array('as'=>'sessions.date_list'));
 Route::post('sessions/join', array('as'=>'sessions.join' , 'uses'=>'SessionsController@joinSessions'));
+Route::get('sessions/join/class', array('as'=>'sessions.join.get' , 'uses'=>'SessionsController@joinSessions'));
 Route::get('sessions/{evercisegroupId}/pay', array('as'=>'sessions.pay' , 'uses'=>'SessionsController@payForSessions'));
 
 Route::get('sessions/{evercisegroupId}/paywithstripe', array('as'=>'sessions.pay.stripe' , 'uses'=>'SessionsController@payForSessionsStripe'));
@@ -51,8 +52,10 @@ Route::get('auth/login/{redirect_after_login_url}', array('as' => 'auth.login.re
 		return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
 }));
 Route::get('auth/login', array('as' => 'auth.login', function(){
-		return View::make('auth.login')->with('redirect_after_login', false)->with('redirect_after_login_url', false);
+        return View::make('auth.login')->with('redirect_after_login', false)->with('redirect_after_login_url', false);
 }));
+Route::post('auth/checkout', array('as' => 'auth.checkout', 'uses'=>'SessionsController@checkout'));
+
 Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
 Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout'));
 Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthController@getForgot'));

@@ -67,9 +67,7 @@
 									<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
 									@if (isset($membersIds[$futuresession->id]))
 
-										@if (empty($user->id))
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
-										@elseif (in_array($user->id, $membersIds[$futuresession->id])) 
+										@if (in_array($user->id, $membersIds[$futuresession->id])) 
 
 											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 										@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
@@ -79,11 +77,8 @@
 											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
 										@endif
 									@else
-										@if (empty($user->id))
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Login to join</button></li>
-										@else
 											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
-										@endif
+										
 									@endif
 
 							@if ($key > 3) 

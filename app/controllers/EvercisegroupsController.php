@@ -413,17 +413,17 @@ class EvercisegroupsController extends \BaseController {
 			        ->url();
 
 				return View::make('evercisegroups.show')
-							->with('evercisegroup',$evercisegroup)
-							->with('trainer',$trainer)
-							->with('members' , $members)
-							->with('membersIds' , $membersIds)
-							->with('memberUsers' , $memberUsers)
-							->with('venue' , $venue)
-							->with('ratings' , $ratings)
-							->with('og' , $og)
-							//->with('memberUsers' , $memberUsers)
-							//->with('trainer',$trainerDetails)
-							;
+					->with('evercisegroup',$evercisegroup)
+					->with('trainer',$trainer)
+					->with('members' , $members)
+					->with('membersIds' , $membersIds)
+					->with('memberUsers' , $memberUsers)
+					->with('venue' , $venue)
+					->with('ratings' , $ratings)
+					->with('og' , $og)
+					//->with('memberUsers' , $memberUsers)
+					//->with('trainer',$trainerDetails)
+					;
 			}
 		}
 		else

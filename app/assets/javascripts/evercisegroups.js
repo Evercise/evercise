@@ -393,6 +393,54 @@ function initJoinEvercisegroup(params)
 
 
 
+     $('#join-sessions').submit(function(event){
+        event.preventDefault();
+
+
+        var url = '/auth/checkout';
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'html',
+            data: $( this ).serialize()
+        })
+        .done(
+            function(data) {
+                try
+                {
+                   var parsedData = JSON.parse(data);
+                   trace(parsedData.status);
+                   if (parsedData.status == 'logged_in')
+                   {
+                        $(event.currentTarget).unbind('submit');
+                        event.currentTarget.submit();
+                    }
+                }
+                catch(e)
+                {
+                    $('.mask').show();
+                    $('.lower_footer').append(data);
+                    login();
+                }
+             }
+        );
+        return false;
+
+/*        var url = '/auth/login';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html'
+        })
+        .done(
+            function(data) { 
+                $('.mask').show();
+                $('.lower_footer').append(data);
+                login();
+             }
+        );
+        return false;*/
+    });
 }
 
 registerInitFunction('initJoinEvercisegroup');

@@ -25,7 +25,7 @@ class AuthController extends \BaseController {
 		);
 		$redirect_after_login = Input::get('redirect_after_login');
 		$redirect_after_login_url = Input::get('redirect_after_login_url');
-
+		//return(var_dump($redirect_after_login_url));
 		try
 		{
 			$user = Sentry::authenticate($credentials, false);

@@ -424,13 +424,43 @@ class SessionsController extends \BaseController {
 	/*
 	*
 	*
+	* check login status and either direct to checkout, or open login box
+	*/
+	public function checkout()
+	{
+		$sessionIds = json_decode(Input::get('session-ids'), true);
+		$evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
+		Session::put('sessionIds', $sessionIds);
+		Session::put('evercisegroupId', $evercisegroupId);
+		//return Response::json(['status' => Input::get('session-ids')]);
+
+		$redirect_after_login_url = 'sessions.join.get';
+
+		if (!$this->user)
+		{
+			//return View::make('auth.login')->with('redirect_after_login', false)->with('redirect_after_login_url', false);
+			return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
+		}
+		else
+		{
+			return Response::json(['status' => 'logged_in']);
+		}
+	}
+
+	/*
+	*
+	*
 	* confirmation for join sessions
 	*/
 
 	public function joinSessions()
 	{
-		$evercisegroupId = Input::get('evercisegroup-id');
-		$sessionIds = json_decode(Input::get('session-ids'), true);
+		//return 'nope';
+
+		$sessionIds = Session::get('sessionIds', false);
+		$evercisegroupId = Session::get('evercisegroupId', false);
+		if(!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
+		if(!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
 
 		if (empty($sessionIds)) {
 			return Redirect::route('evercisegroups.show' , [$evercisegroupId]);

@@ -8,7 +8,7 @@
 				<div class="class-thumb-wrap">
 					{{ HTML::image('/profiles/'.$directory .'/'. $evercisegroup->image, 'class image' , array('class' => 'class-thumb-img')); }}
 				</div>
-			</div>					
+			</div>
 		</div>
 		<div id="class-info" class="full-width-three-q">
 			<h3>{{ $evercisegroup->name }}</h3>
