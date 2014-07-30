@@ -296,7 +296,7 @@ function DiscoverMapWidgetInit() {
           }
           content+= '</div>';
 
-          /* close the previous info-window */
+          // close the previous info-window 
           closeInfos(infos);
         
           trace(position , true);
@@ -308,7 +308,7 @@ function DiscoverMapWidgetInit() {
           clusterWindow.setContent(content);
           clusterWindow.open(map,this);
 
-           /* keep the handle, in order to close it on next click event */
+          // keep the handle, in order to close it on next click event 
           infos[0]=clusterWindow;
           
       })
