@@ -171,13 +171,7 @@ class UsersController extends \BaseController {
 
 			if($user) {
 
-        		$activation_code = $user->getActivationCode();
-				
-				Event::fire('user.signup', array(
-	            	'email' => $user->email, 
-	            	'display_name' => $user->display_name, 
-	                'activationCode' => $activation_code
-	            ));
+        		
 	            
 
 				User::find($user->id)->makeUserDir();
@@ -197,6 +191,13 @@ class UsersController extends \BaseController {
 						//return Response::json($redirectAfter);
 						return Response::json(['callback' => 'gotoUrl', 'url' => $redirectAfter]);
 					}else{
+						$activation_code = $user->getActivationCode();
+				
+						Event::fire('user.signup', array(
+			            	'email' => $user->email, 
+			            	'display_name' => $user->display_name, 
+			                'activationCode' => $activation_code
+			            ));
 						//return Response::json(route('users.edit.tab', [$user->id ,'profile']));
 						return Response::json(['callback' => 'gotoUrl', 'url' => route('users.edit.tab', [$user->id ,'profile'])]);
 			
