@@ -81,13 +81,13 @@ class UsersController extends \BaseController {
 		    return true;
 		});
 		
-
+		// validation rules for input field on register form
 		$validator = Validator::make(
 			Input::all(),
 			[
 				'display_name' => 'required|max:20|min:5|unique:users',
-				'first_name' => 'required|max:15|min:3|alpha',
-				'last_name' => 'required|max:15|min:3|alpha',
+				'first_name' => 'required|max:15|min:3',
+				'last_name' => 'required|max:15|min:3',
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				'email' => 'required|email|unique:users',
 				'password' => 'required|confirmed|min:6|max:32|has:letter,num',
@@ -122,7 +122,7 @@ class UsersController extends \BaseController {
 			$area_code = Input::get('areacode');
 			$phone = Input::get('phone');
 			$gender = Input::get('gender');
-			$newsletter = Input::get('userNewsletter');
+			//$newsletter = Input::get('userNewsletter'); // newsletter not currently captured
 
 			if ($phone == '' && $area_code != '')
 				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
@@ -425,8 +425,8 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'first_name' => 'required|max:15|min:3|alpha',
-				'last_name' => 'required|max:15|min:3|alpha',
+				'first_name' => 'required|max:15|min:3',
+				'last_name' => 'required|max:15|min:3',
 				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				//'email' => 'required|email',
 				'phone' => 'numeric',

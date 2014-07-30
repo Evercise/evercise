@@ -3,12 +3,12 @@
 </div>
 	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$user->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
-        @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'first name', 'tooltip'=>'This is your first name.', 'default'=>$firstName ))
+        @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>15, 'label'=>'first name', 'tooltip'=>'This is your first name.', 'default'=>$firstName ))
         @if ($errors->has('first_name'))
             {{ $errors->first('first_name', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>20, 'label'=>'last name', 'tooltip'=>'your last name.', 'default'=>$lastName ))
+        @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>15, 'label'=>'last name', 'tooltip'=>'your last name.', 'default'=>$lastName ))
         @if ($errors->has('last_name'))
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif
