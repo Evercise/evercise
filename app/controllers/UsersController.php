@@ -302,9 +302,15 @@ class UsersController extends \BaseController {
 
 				Sentry::login($user, false);
 
-				if(isset($redirect) && $redirect != null ) {
-					return Redirect::route('trainers.create')->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
-				}else{
+				if(isset($redirect) && $redirect != null )
+				{
+					if ($redirect == 'trainer') // Used when the 'i want to list classes' button is clicked in the register page
+						return Redirect::route('trainers.create')->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
+					else // Used when logging in before hitting the checkout
+						return Redirect::route($redirect);
+				}
+				else
+				{
 					return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
 				}
 
@@ -321,10 +327,11 @@ class UsersController extends \BaseController {
 			    Sentry::login($user,false);
 			    $trainerGroup = Sentry::findGroupByName('trainer');
 
-			    if ($redirect && $redirect != 'users.edit') {
+			    if ($redirect && $redirect != null)
+			    {
 					return Redirect::route($redirect);
 				}
-				elseif ($user->inGroup($trainerGroup)) 
+				elseif ($user->inGroup($trainerGroup))
 				{
 					return Redirect::route('trainers.edit', $user->display_name);
 				}
@@ -344,8 +351,6 @@ class UsersController extends \BaseController {
 				}else{
 					return View::make('users.edit')->with('notification', 'you have successfully signed up with facebook. Your password has been emailed to you')->with('display_name', $user->display_name);
 				}
-				
-
 			}
 		}
 

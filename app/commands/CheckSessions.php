@@ -4,6 +4,8 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+// php artisan check:sessions
+
 class CheckSessions extends Command {
 
 	/**

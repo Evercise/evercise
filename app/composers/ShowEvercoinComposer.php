@@ -22,7 +22,7 @@ class ShowEvercoinComposer {
 
       $profile = $user->milestone->profile;
 
-      $referralConfig = Config::get('milestones')['milestones']['referral'];
+      $referralConfig = Config::get('values')['milestones']['referral'];
       $numReferrals = $user->milestone->referrals;
       $totalReferrals = ceil($numReferrals / $referralConfig['count']) * $referralConfig['count'];
 

@@ -10,7 +10,7 @@ class Milestone extends \Eloquent {
 
 	public function add($type)
     {
-    	$milestones = Config::get('milestones')['milestones'];
+    	$milestones = Config::get('values')['milestones'];
 
     	$column = $milestones[$type]['column'];
 
@@ -41,7 +41,7 @@ class Milestone extends \Eloquent {
     }
 	public function freeCoin($type)
 	{
-    	$freeCoins = Config::get('milestones')['freeCoins'];
+    	$freeCoins = Config::get('values')['freeCoins'];
 
 		if (isset($freeCoins[$type]))
 		{

@@ -9,7 +9,7 @@ class Evercoin extends \Eloquent {
 	 * @var string
 	 */
 	protected $table = 'evercoins';
-	private static $evercoinValue = 1.00;
+	
 
     public function deposit( $amount )
     {
@@ -23,11 +23,11 @@ class Evercoin extends \Eloquent {
 
 	public static function poundsToEvercoins($amountInPounds)
 	{
-		return $amountInPounds * 1 / self::$evercoinValue;
+		return $amountInPounds * 1 / Config::get('values')['evercoin'];
 	}
 	public static function evercoinsToPounds($amountInEvercoins)
 	{
-		return $amountInEvercoins * self::$evercoinValue;
+		return $amountInEvercoins * Config::get('values')['evercoin'];
 	}
 
     protected function transaction( $amount )
