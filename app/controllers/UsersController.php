@@ -93,7 +93,7 @@ class UsersController extends \BaseController {
 				'password' => 'required|confirmed|min:6|max:32|has:letter,num',
 				'phone' => 'numeric',
 			],
-			['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
+			['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
 
 
 		);
