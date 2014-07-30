@@ -101,7 +101,7 @@ class AdminController extends \BaseController {
 	public function showGroups()
 	{
 		
-		$evercisegroups = Evercisegroup::with('subcategories.categories')->get();
+		$evercisegroups = Evercisegroup::with('subcategories')->get();
 		
 	    return View::make('admin.groups')
 	    ->with('evercisegroups', $evercisegroups);

@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration {
 
 		Schema::table('users', function($table)
 		{
-			if (Schema::hasColumn('display_name', 'gender'))
+			if (!Schema::hasColumn('display_name', 'gender'))
 			{
 				$table->string('display_name', 45);
 				$table->tinyInteger('gender');
