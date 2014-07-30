@@ -98,7 +98,7 @@
 		@if($profile < 100)
 			<div id="link-profile" class="milestone-block">
 				<div class="header">
-					1 Evercoin
+					100 Evercoin
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-user.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -114,7 +114,7 @@
 		@else
 			<div id="link-profile" class="milestone-block complete">
 				<div class="header">
-					1 Evercoin
+					100 Evercoin
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-user.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -134,7 +134,7 @@
 		@if(!$fb)
 			<div id="link-fb" class="milestone-block">
 				<div class="header">
-					1 Evercoin
+					100 Evercoin
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-fb.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -150,7 +150,7 @@
 		@else
 			<div id="link-fb" class="milestone-block complete">
 				<div class="header">
-					1 Evercoin
+					100 Evercoin
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-fb.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -170,7 +170,7 @@
 		@if(!$tw)
 			<div id="link-twitter" class="milestone-block">
 				<div class="header">
-					1 Evercoin
+					100 Evercoin
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-twitter.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -186,7 +186,7 @@
 		@else
 			<div id="link-twitter" class="milestone-block complete">
 				<div class="header">
-					1 Evercoin
+					100 Evercoin
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-twitter.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -206,13 +206,13 @@
 		<div class="milestone-refer">
 			<div class="milestone-block refer">
 				<div class="header">
-					5 Evercoins
+					500 Evercoins
 				</div>
 				<div class="body">
 					<br>
 					<strong>Refer Friends</strong>
 					<br>
-					<p>Refer 3 friends to claim<br> 5 Evercoins*</p>
+					<p>Refer 3 friends to claim<br> 500 Evercoins*</p>
 					<span class="highlight">{{  $numReferrals }}/3</span>
 
 					
@@ -223,7 +223,7 @@
 			</div>
 			<div class="milestone-refer-wrap">
 				<h4>Refer a Friend</h4>
-				<p>Enter a friends email address below and they&apos;ll be sent a referral<br> code. If they then register with Evercise using the referral code,<br> they&apos;ll count towards your 5 Evercoin total. They will also recieve a evercoin for using your referral</p>
+				<p>Enter a friends email address below and they&apos;ll be sent a referral<br> code. If they then register with Evercise using the referral code,<br> they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral</p>
 				{{ Form::open(array('id' => 'send_invite', 'url' => 'referrals', 'method' => 'POST', 'class' => 'create-form milestone-form')) }}
 					{{ Form::label( 'referee_email', 'Email') }}
 					{{ Form::text( 'referee_email' , '', array('id' => 'referee_email','placeholder' => 'Enter friends email address')) }}
