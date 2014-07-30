@@ -13,7 +13,7 @@ class ShowEvercoinComposer {
 
       $evercoinBalance = $evercoin->balance;
 
-      $priceInEvercoins = Evercoin::poundsToEvercoins($evercoinBalance);
+      $priceInEvercoins = Evercoin::evercoinsToPounds($evercoinBalance);
 
       $fb = $user->token->facebook ? true : false;
       $tw = $user->token->twitter ? true : false;
