@@ -156,6 +156,10 @@ function initToolTip()
           items: "[data-tooltip]",
           content: function () {
               return info.data("tooltip");
+          },
+          position: {
+              my: "left top-15",
+              at: "right top"
           }
       })
       .off( "mouseover" )
@@ -164,7 +168,7 @@ function initToolTip()
           return false;
         })
       .attr( "title", "" ).css({ cursor: "pointer" });
-     // $(this).tooltip('option', {disabled: false}).tooltip('open'); // uncomment for testing
+      //$(this).tooltip('option', {disabled: false}).tooltip('open'); // uncomment for testing
     })
 
     

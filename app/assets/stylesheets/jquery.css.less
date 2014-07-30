@@ -766,16 +766,23 @@ button.ui-button::-moz-focus-inner {
 	border: none;
 
 }
+
+
 body .ui-tooltip {
 	background: #2b2b2b;
+	width: 220px;
 	&:after{
 		position: absolute;
-		top: -19px;
-		left: 20px;
+		top: 24px;
+		left: -19px;
 		width: 20px;
 		height: 20px;
 		content: '';
-		background:url('/img/tooltip-up-arrow.png');
+		background:url('/img/tooltip-up-down.png');
+	}
+	@media only screen 
+	and (max-device-width : 1200px) {
+		left: 239px
 	}
 }
 
