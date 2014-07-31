@@ -418,6 +418,8 @@ class SessionsController extends \BaseController {
 			));
 		}
 
+
+
 		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId, 'callback' => 'mailSent']);
 	}
 
@@ -771,6 +773,7 @@ class SessionsController extends \BaseController {
 				->with('evercisegroupId' , $evercisegroupId)
 				->with('priceInEvercoins' , $priceInEvercoins)
 				->with('evercoinBalance', $evercoin->balance)
+				->with('usecoinsInPounds', $usecoinsInPounds)
 			]);
 			
 
@@ -850,19 +853,14 @@ class SessionsController extends \BaseController {
 			)
 		);
 		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
+        	$result = array(
+	            'validation_failed' => 1,
+	            'errors' =>  $validator->errors()->toArray()
+	         );	
+
+			return Response::json($result);
+	       
 		}
 		else
 		{
@@ -884,7 +882,7 @@ class SessionsController extends \BaseController {
 			));
 		}
 
-		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
+		return Response::json(['callback' => 'successAndRefresh']);
 	}
 
 }

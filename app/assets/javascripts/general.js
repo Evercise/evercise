@@ -323,9 +323,11 @@ function initPut (params) {
                       console.debug(data, true);
                       // show validation errors
                       var arr = data.errors;
+                      trace(arr, true);
                       var scroll = false;
                       $.each(arr, function(index, value)
                       {
+                        trace(form, true);
                           if (scroll == false) {
                               $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
                               scroll = true;
@@ -533,7 +535,8 @@ function loading(){
 
 
 function loaded(){
-  $('.mask').hide();
-  $('.modal').remove();
+  if (!$('.modal')) {
+    $('.mask').hide();
+  };
   $('.loading_circle').remove();
 }

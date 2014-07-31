@@ -2,7 +2,7 @@ function initAddRating()
 {
 	var base = this;
 	this.checkButton = function(id){
-		if ($('#classlist_'+id+' #stars').val() > 0 && $('#classlist_'+id+' input#feedback_text').val().length > 0 )
+		if ($('#classlist_'+id+' #stars').val() > 0 && $('#classlist_'+id+' #feedback_text').val().length > 0 )
 		{
 			$('#classlist_'+id+' form#feedback input.btn').removeClass('disabled');
 		}
