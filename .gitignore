@@ -11,5 +11,7 @@ composer.lock
 Thumbs.db
 public/profiles/
 app/config/facebook.php
-docs/seed_power_rangers.sql
-app/storage/
+app/storage/cache
+app/storage/logs
+app/storage/sessions
+app/storage/views
