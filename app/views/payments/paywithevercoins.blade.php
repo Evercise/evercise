@@ -4,7 +4,7 @@
 	</div>
 	<div class="evercoin-wrap">
 		<p>Your current Evercoin balance is : <span class="evercoin-highlight">{{ HTML::image('img/evercoin.png', 'evercoin', ['class' => 'evercoin-icon'])}} {{ $evercoins }} Evercoins</span></p>
-		{{ Form::open(array('id' => 'paywithevercoinsform', 'url' => 'sessions/'.$evercisegroupId.'/openPayWithEvercoinsDialogue', 'method' => 'POST', 'class' => 'update-form')) }}
+		{{ Form::open(array('id' => 'paywithevercoinsform', 'url' => 'sessions/'.$evercisegroupId.'/redeemEvercoins', 'method' => 'POST', 'class' => 'update-form')) }}
 			<div class="evercoin-redeem">
 				{{ Form::hidden( 'session-ids' , json_encode($sessionIds) , array('id' => 'session-ids', 'class' => 'session-ids')) }}
 				
