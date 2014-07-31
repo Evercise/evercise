@@ -29,6 +29,7 @@ $env = $app->detectEnvironment(array(
   'local' => array('*Tris*', '*Mewis*' , '*QINTECH*'),
   'staging' => array('*avi*', '*donkey*', '*Donkey*'),
   'production' => array('*VS10319*'),
+  'amazonsandbox' => array('*ec2-user*'),
 ));
 
 /*

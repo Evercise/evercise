@@ -717,4 +717,14 @@ class EvercisegroupsController extends \BaseController {
 	    		->with('evercisegroups' , $paginatedResults);
 	    		//->with('members' , $members);
 	}
+
+	public function searchLocations($country, $city, $area)
+	{
+		
+	}
+	
+	public function searchLocationsCategories($country, $city, $area, $category)
+	{
+
+	}
 }
