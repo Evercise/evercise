@@ -1,0 +1,45 @@
+
+<?php $__env->startSection('content' ); ?>
+
+<div class="full-width">
+	<div class="col3" id="discover-left">
+		<h4>Refine Search</h4>
+		<?php echo $__env->make('evercisegroups.refine', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		<br>
+		<br>
+		<?php echo $__env->make('evercisegroups.recommended', ['loadAutocompleteScript'=>1], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	</div>
+
+	<div class="col9" id="discover-right">
+		<?php echo $__env->make('evercisegroups.discover_map', array('places' => $evercisegroups), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		<div class="heading-block">
+			<?php if(Input::get('location')): ?>
+				<h4><?php echo ucfirst((Input::get('category')?Input::get('category').' ':'').'classes near ') . Str::limit( Input::get('location'),52); ?></h4>
+			<?php else: ?>
+				<h4><?php echo ucfirst((Input::get('category')?Input::get('category').' ':'').'classes in your area'); ?></h4>
+			<?php endif; ?>
+			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
+			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
+		</div>
+		
+		<div id="grid" class="discover-view tab-view selected">
+			<?php echo $__env->make('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		</div>
+		<?php echo $evercisegroups->appends(['category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links(); ?>
+		<div id="list" class="discover-view tab-view">
+
+			<div class="row9">
+				<?php if (isset($evercisegroups)): ?> 
+					<?php foreach ($evercisegroups as $key => $evercisegroup): ?> 
+						<?php echo $__env->make('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

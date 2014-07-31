@@ -1,0 +1,30 @@
+<div class='modal'>
+	<div id="cancel_login" class="cancel">x</div>
+	<div class="modal-head">
+		<h4>Confirm withdrawal</h4>
+		<br>
+	</div>
+	
+	<div class="modal-body">
+		<?php echo Form::open(array('id' => 'withdrawal-confirmation', 'url' => 'wallets/update', 'method' => 'PUT', 'class' => 'update-form')); ?>
+			<div class="col4">
+				Withdrawal amount: <?php echo $withdrawal; ?>
+		
+			</div>
+			<div class="col4">
+				Paypal account: <?php echo $paypal; ?>
+				
+			</div>
+			<div class="col3">
+				<div class="grey-box">
+				</div>
+				<?php echo Form::hidden( 'withdrawal' , $withdrawal, array( 'placeholder' => 'enter amount', 'maxlength' => 5, 'id' => 'withdrawal')); ?>
+				<?php echo Form::hidden( 'paypal' , $paypal, array( 'placeholder' => 'enter paypal account', 'maxlength' => 50, 'id' => 'paypal')); ?>
+				<?php echo Form::submit('Confirm Withdrawal' , array('class'=>'btn-yellow ')); ?>
+			</div>
+				
+			
+	    <?php echo Form::close(); ?>
+    </div>
+
+</div>

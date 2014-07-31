@@ -1,0 +1,11 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+	<div style="width:500px;">Get token</div>
+	
+	
+	<?php echo var_dump($accessToken); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

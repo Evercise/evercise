@@ -1,0 +1,98 @@
+
+<?php $__env->startSection('content'); ?>
+
+	<div class="full-width">
+		<div id="class-info-image" class="full-width-one-q">
+			<div class="class-thumb">
+				<div class="class-thumb-wrap">
+					<?php echo HTML::image('/profiles/'.$directory .'/'. $evercisegroup->image, 'class image' , array('class' => 'class-thumb-img'));; ?>
+				</div>
+			</div>
+		</div>
+		<div id="class-info" class="full-width-three-q">
+			<h3><?php echo $evercisegroup->name; ?></h3>
+			<p><?php echo $evercisegroup->description; ?></p>
+			<br/>
+			<p>Gender: 
+				<?php if ($evercisegroup->gender == 0): ?> Unisex
+				<?php elseif ($evercisegroup->gender == 1): ?> Male
+				<?php elseif ($evercisegroup->gender == 2): ?> Female
+				<?php endif; ?>
+			</p>
+		</div>
+		<hr class="col12">
+		<?php if($members): ?>
+		<!-- chart s to display members info when done -->
+		<div class="row12">
+			<div class="donut-chart">
+				<?php echo $__env->make('widgets.donutChart', array('label' => 'Total Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings1','total' => $totalCapacity, 'fill' => $totalSessionMembers ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+			<div class="donut-chart">
+				<?php echo $__env->make('widgets.donutChart', array('label' => 'Average Class Bookings', 'width' => 120 , 'id' => 'total-class-bookings2','total' => $averageCapacity, 'fill' => $averageSessionMembers ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+			<div class="donut-chart">
+				<?php echo $__env->make('widgets.donutChart', array('label' => 'Total Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings3','total' => $totalRevenue, 'fill' => $revenue ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+			<div class="donut-chart">
+				<?php echo $__env->make('widgets.donutChart', array('label' => 'Average Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings4','total' => $averageTotalRevenue, 'fill' => $averageRevenue ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+		
+		</div>
+
+		<hr class="col12">
+
+		<div class="col12">
+			<h3>Upcoming Sessions</h3>
+		</div>
+		<div class="session-table">
+			<li class="hd">Class Date</li>
+			<li class="hd">Start Time</li>
+			<li class="hd">End Time</li>
+			<li class="hd">Price Per Person</li>
+			<li class="hd">Places Filled</li>
+			<li class="hd">Options</li>
+			
+			<?php foreach ($evercisegroup['Evercisesession'] as $s_key => $session): ?>
+				<?php if((new DateTime($session['date_time'])) > (new DateTime('now'))): ?>
+					<?php echo $__env->make('sessions.show', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
+
+		<div class="col12">
+		<br>
+		<br>
+			<h3>Past Sessions</h3>
+		</div>
+		<div class="session-table session-table-past">
+			<li class="hd">Class Date</li>
+			<li class="hd">Start Time</li>
+			<li class="hd">Price Per Person</li>
+			<li class="hd">Places Filled</li>
+			<li class="hd">Status</li>
+			<li class="hd">Commission</li>
+			<li class="hd">Total revenue</li>
+			<li class="hd">Options</li>
+			
+			<?php foreach ($evercisegroup['Evercisesession'] as $s_key => $session): ?>
+				<?php if((new DateTime($session['date_time'])) < (new DateTime('now'))): ?>
+					<?php echo $__env->make('sessions.show', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
+		
+		<?php else: ?>
+			<div class="col12">
+				<div class="session-table"><p>No members have signed up for this class yet</p></div>
+			</div>
+		<?php endif; ?>
+
+	</div>
+
+
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

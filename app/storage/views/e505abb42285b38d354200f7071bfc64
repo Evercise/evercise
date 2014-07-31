@@ -1,0 +1,25 @@
+
+<?php echo Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form')); ?>
+
+
+    <?php echo $__env->make('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'fieldtext'=>'Add your profession', 'default'=>$profession ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php if ($errors->has('profession')): ?>
+        <?php echo $errors->first('profession', '<p class="error-msg">:message</p>'); ?>
+    <?php endif; ?>
+
+    <?php echo $__env->make('form.textarea', array('fieldname'=>'bio', 'placeholder'=>'between 50 and 500 characters', 'maxlength'=>500, 'label'=>'Add your bio', 'fieldtext'=>'This is the bio that is displayed to our users', 'default'=>$bio ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php if ($errors->has('bio')): ?>
+        <?php echo $errors->first('bio', '<p class="error-msg">:message</p>'); ?>
+    <?php endif; ?>
+
+    <?php echo $__env->make('form.textfield', array('fieldname'=>'website', 'placeholder'=>'website address', 'maxlength'=>100, 'label'=>'Add your website', 'fieldtext'=>'(Optional) - If you want users to learn more about you and what you do, you can include your web address, which will be visible on your profile.' ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php if ($errors->has('website')): ?>
+        <?php echo $errors->first('website', '<p class="error-msg">:message</p>'); ?>
+    <?php endif; ?>
+
+    <div class="center-btn-wrapper" >
+        <?php echo Form::submit('Save changes' , array('class'=>'btn-yellow ')); ?>
+    </div>
+    <div class="success_msg">Details updated</div>
+<?php echo Form::close(); ?>
+        

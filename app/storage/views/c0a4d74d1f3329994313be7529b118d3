@@ -1,0 +1,60 @@
+
+<?php $__env->startSection('content'); ?>
+	<div class="full-width">
+
+		<h1>Pending Withdrawals</h1>
+		<table class="admin_table">
+			<tr>
+				<th>user</th>
+				<th>payment type</th>
+				<th>payment details</th>
+				<th>amount</th>
+				<th>action</th>
+			</tr>
+			
+			<?php foreach($pendingWithdrawals as $key => $withdrawal): ?>
+				<tr>
+					<td><?php echo $withdrawal->user->first_name.' '.$withdrawal->user->last_name; ?></td>
+					<td><?php echo $withdrawal->acc_type; ?></td>
+					<td><?php echo $withdrawal->account; ?> </td>
+					<td><?php echo $withdrawal->amount; ?> </td>
+					<td>
+					<?php echo Form::open(array('id' => 'process'.$key, 'url' => 'admin/process_withdrawal', 'method' => 'post', 'class' => '')); ?>
+
+						<?php echo Form::hidden( 'withdrawal_id' , $withdrawal->id, array('id' => 'withdrawal_id')); ?>
+
+						<?php echo Form::submit('Mark Processed' , array('class'=>'btn-yellow ')); ?>
+
+					<?php echo Form::close(); ?>
+
+
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+		<br>
+		<br>
+		<br>
+		<h1>Recently Processed Withdrawals</h1>
+		<table class="admin_table">
+			<tr>
+				<th>user</th>
+				<th>payment type</th>
+				<th>payment details</th>
+				<th>amount</th>
+				<th>processed</th>
+			</tr>
+			
+			<?php foreach($processedWithdrawals as $key => $withdrawal): ?>
+				<tr>
+					<td><?php echo $withdrawal->user->first_name.' '.$withdrawal->user->last_name; ?></td>
+					<td><?php echo $withdrawal->acc_type; ?></td>
+					<td><?php echo $withdrawal->account; ?> </td>
+					<td><?php echo $withdrawal->amount; ?> </td>
+					<td><?php echo $withdrawal->updated_at; ?></td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

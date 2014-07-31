@@ -230,7 +230,7 @@ else if (App::environment('amazonsandbox'))
 
 			'mysql' => array(
 				'driver'    => 'mysql',
-				'host'      => 'london-evercise.c9va6rttuzwm.us-west-2.rds.amazonaws.com:3306',
+				'host'      => 'http://london-evercise.c9va6rttuzwm.us-west-2.rds.amazonaws.com:3306',
 				'database'  => 'everciseDB',
 				'username'  => 'evercise_db',
 				'password'  => 'FlQZnB7823',

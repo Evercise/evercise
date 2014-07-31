@@ -1,0 +1,39 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+<div class="row">
+	<div class="full-width">
+		<br>
+		<h1 class="tc">What is your goal?</h1>
+		<div class="switch">
+			<div class="switch-header icon-btn tc" data-view="user">
+				<div class="switch-inner">
+					<?php echo HTML::image( '/img/join-new.png', 'choose user', array('class' => 'switch-image')); ?>
+					<span><?php echo HTML::image( '/img/tick.png', 'choose user', array('class' => 'tick')); ?>I want to join classes</span>
+
+					
+				</div>
+				
+			</div>
+			<div class="switch-header icon-btn tc" data-view="trainer">
+				<div class="switch-inner">
+					<?php echo HTML::image( '/img/list-new.png', 'choose trainer', array('class' => 'switch-image')); ?>
+					<span><?php echo HTML::image( '/img/tick.png', 'choose user', array('class' => 'tick')); ?>I want to list classes</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="user" class="switch-body tab-view">
+		<?php echo $__env->make('users.create', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	</div>
+	<div id="trainer" class="switch-body tab-view">
+		<?php echo $__env->make('users.create' , ['type' => route('trainers.create') , 'typeId' => 'trainer'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	</div>
+		
+</div>
+
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

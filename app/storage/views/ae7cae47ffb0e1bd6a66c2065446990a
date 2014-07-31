@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+</head>
+<body>
+	<div class="container">
+
+		<?php echo $__env->yieldContent('content'); ?>
+	</div>
+</body>
+</html>

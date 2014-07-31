@@ -1,0 +1,9 @@
+
+<div class="category-box">
+	<?php foreach($categories as $key => $category): ?>
+		<?php echo HTML::image('img/category/'.$category->image, $category->name, array('class'=> 'tooltip category-image', 'data-tooltip' => $category->name)); ?>
+	<?php endforeach; ?>
+	
+</div>
+
+

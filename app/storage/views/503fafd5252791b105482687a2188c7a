@@ -1,0 +1,2 @@
+<?php echo HTML::image($userImage, 'users image', array('class'=> 'user-block-image')); ?>
+<h6><?php echo $user->display_name; ?></h6>

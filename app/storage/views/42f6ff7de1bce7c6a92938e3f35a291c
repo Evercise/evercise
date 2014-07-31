@@ -1,0 +1,10 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+<script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+          data-key="pk_test_PfVE2js4RQeuZAWPyHIhw3wY"
+          data-amount="3" data-description="Evercise Sessions"></script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
