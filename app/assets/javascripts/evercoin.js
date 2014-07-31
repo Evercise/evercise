@@ -44,6 +44,7 @@ registerInitFunction('initRedeemEvercoin');
 
 function paidWithEvercoins(data)
 {
+	$('.mask').hide();
     trace('paidWithEvercoins : '+data.usecoins);
     trace('amountRemaining : '+data.amountRemaining);
 

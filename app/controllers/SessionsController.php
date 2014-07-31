@@ -773,6 +773,7 @@ class SessionsController extends \BaseController {
 				->with('evercisegroupId' , $evercisegroupId)
 				->with('priceInEvercoins' , $priceInEvercoins)
 				->with('evercoinBalance', $evercoin->balance)
+				->with('usecoinsInPounds', $usecoinsInPounds)
 			]);
 			
 
