@@ -33,6 +33,7 @@ class RatingsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
+				'sessionmember_id' => 'unique:ratings,sessionmember_id',
 				'feedback_text' => 'required',
 			)
 		);
