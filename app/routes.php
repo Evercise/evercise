@@ -88,7 +88,7 @@ Route::get('/sessions/{sessionId}/mail_trainer/{trainerId}', array('as' => 'sess
 Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}', array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer'));
 Route::get('/sessions/{sessionId}/leave', array('as' => 'sessions.leave', 'uses' => 'SessionsController@getLeaveSession'));
 Route::post('/sessions/{sessionId}/leave', array('as' => 'sessions.leave.post', 'uses' => 'SessionsController@postLeaveSession'));
-Route::post('/sessions/{evercisegroupId}/openPayWithEvercoinsDialogue', array('as' => 'sessions.openPayWithEvercoinsDialogue.post', 'uses' => 'SessionsController@openPayWithEvercoinsDialogue'));
+Route::post('/sessions/{evercisegroupId}/redeemEvercoins', array('as' => 'sessions.redeemEvercoins.post', 'uses' => 'SessionsController@redeemEvercoins'));
 Route::get('/sessions/{evercisegroupId}/paywithevercoins', function($evercisegroupId)
 {
     return Redirect::to('evercisegroups/'.$evercisegroupId);

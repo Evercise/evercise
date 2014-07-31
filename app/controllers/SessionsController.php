@@ -728,7 +728,7 @@ class SessionsController extends \BaseController {
 	}*/
 
 
-	public function openPayWithEvercoinsDialogue($evercisegroupId)
+	public function redeemEvercoins($evercisegroupId)
 	{
 		$usecoins = Input::get('redeem');
 		$sessionIds = Session::get('sessionIds');
