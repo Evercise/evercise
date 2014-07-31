@@ -1,6 +1,0 @@
-<?php if(isset($notification)): ?>
-	<div class="notification-msg"><?php echo $notification; ?></div>
-<?php endif; ?>
-<?php if ($notification = Session::get('notification')): ?>
-	<div class="notification-msg"><?php echo $notification; ?></div>
-<?php endif; ?>

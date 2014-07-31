@@ -1,3 +1,0 @@
-<div class="progress-bar">
-	<div class="progress-bar-filler" style="width: <?php echo $progress; ?>%"></div>
-</div>
