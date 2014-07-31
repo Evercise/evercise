@@ -1,0 +1,49 @@
+
+	<?php echo $__env->make('form.textfield', array('fieldname'=>'venue_name', 'placeholder'=>'Max 45 characters', 'maxlength'=>45, 'label'=>'Venue Name', 'tooltip'=>'Enter the venue name', 'form' => 'venue_create' ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<?php echo $__env->make('widgets.mapForm', array( 'label'=>'Class Location','fieldname1'=>'street', 'placeholder1'=>'Street name and number', 'maxlength1'=>50, 'fieldname2'=>'city', 'placeholder2'=>'City', 'maxlength2'=>50, 'fieldname3'=>'postcode', 'placeholder3'=>'Post Code', 'maxlength3'=>10, 'fieldtext'=>'Make sure the marker appears in the correct place on the map below. (You can drag the marker to the correct place if it doesn&apos;t match up)', 'form' => 'venue_create'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<?php /* var_dump($facilities) */ ?>
+	<div class='formitem clearfix'>
+		<div class='formlabel clearfix'>
+			<label>Facilities</label>
+		</div>
+		<div class='formfield clearfix'>
+			<ul class='facilities'>
+				<h5>Amenities</h5>
+				<?php foreach ($facilities as $f_key => $facility): ?> 
+					<?php if($facility->category == 'Amenity'): ?>
+						<li>
+							<div>
+							<?php echo Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => 'facilities_array_'.$facility->id, 'form' => 'venue_create', 'class' => 'facility_checkbox')); ?>
+							<?php echo Form::label('facilities_array_'.$facility->id, $facility->name, array('id'=>'fac_check')); ?>
+							</div>
+							<?php echo HTML::image('img/facility/'.$facility->image, $facility->image); ?>
+						</li>
+
+					<?php endif; ?>
+
+				<?php endforeach; ?>
+				<hr>
+				<h5>Facilities</h5>
+				<?php foreach ($facilities as $f_key => $facility): ?> 
+					<?php if($facility->category == 'facility'): ?>
+						<li>
+							<div>
+							<?php echo Form::checkbox( 'facilities_array[]',  $facility->id , false , array('id' => 'facilities_array_'.$f_key, 'form' => 'venue_create', 'class' => 'facility_checkbox')); ?>
+							<?php echo Form::label('facilities_array_'.$f_key, $facility->name, array('id'=>'fac_check')); ?>
+							</div>
+							<?php echo HTML::image('img/facility/'.$facility->image, $facility->image); ?>
+						</li>
+
+					<?php endif; ?>
+
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	</div>
+
+    <div class="center-btn-wrapper mb30" >
+	   <?php echo Form::submit('Create Venue' , array('class'=>'btn-yellow ', 'form' => 'venue_create')); ?>
+    </div>
+

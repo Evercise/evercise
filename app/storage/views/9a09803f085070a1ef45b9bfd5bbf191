@@ -1,0 +1,21 @@
+	<a href="<?php echo URL::route( $group . 's.edit', $user->id ); ?>">
+		<?php echo HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic'));; ?>
+	</a>
+	<li id="displayName" class="float-right">
+		<?php echo $user->display_name; ?>
+	</li>
+
+<div id="displayName-dropdown" class="dropdown-menu">
+	<?php if($group == 'trainer'): ?>	
+		<span><?php echo HTML::linkRoute('trainers.edit', 'My Dashboard' , $user->id); ?></span>
+		<span><?php echo HTML::linkRoute('evercisegroups.index', 'Class Hub'); ?></span>
+		<hr>
+		<span><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></span>
+			
+	<?php else: ?>
+		<span><?php echo HTML::linkRoute('users.edit', 'My Dashboard' , $user->id); ?></span>
+		<!--span><?php echo HTML::linkRoute('evercisegroups.index', 'My Cart'); ?></span--> 
+		<hr>
+		<span><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></span>
+	<?php endif; ?>
+</div>

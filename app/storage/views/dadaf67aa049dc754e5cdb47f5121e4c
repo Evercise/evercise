@@ -1,0 +1,12 @@
+<div class="formitem clearfix">
+	<div class="formlabel">
+		<?php echo Form::label( $fieldname, $label); ?>
+	</div>
+	<div class="formfield">
+	<?php if(isset($selected)): ?>
+		<?php echo Form::select( $fieldname , $values , $selected, ['data-tooltip' => isset($tooltip) ? $tooltip : null , 'class' => isset($tooltip) ? 'tooltip' : null]); ?>
+	<?php else: ?>
+		<?php echo Form::select( $fieldname , $values , null , ['data-tooltip' => isset($tooltip) ? $tooltip : null , 'class' => isset($tooltip) ? 'tooltip' : null] ); ?>
+	<?php endif; ?>
+	</div>
+</div>

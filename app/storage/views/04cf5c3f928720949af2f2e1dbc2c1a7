@@ -1,0 +1,11 @@
+
+
+<?php $__env->startSection('title', 'View Classes'); ?>
+<?php $__env->startSection('content'); ?>
+
+	<?php echo $__env->make('layouts.pagetitle', array('title'=>'View Classes', 'subtitle'=>'and stuff'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	User View
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

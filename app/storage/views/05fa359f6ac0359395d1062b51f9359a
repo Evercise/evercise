@@ -1,0 +1,80 @@
+<header class="row">
+	<section>
+		<nav>		
+			<ul>
+				<a href="<?php echo URL::route('home', null); ?>"><?php echo HTML::image('/img/evercise logo yellow.png', 'evercise logo', array('class' => 'logo'));; ?></a>
+                <li><?php echo HTML::linkRoute('static.how_it_works', 'How it works'); ?></li>
+
+                <li><?php echo HTML::linkRoute('evercisegroups.search', 'Discover classes'); ?></li>
+
+                <?php if(isset($user)): ?>
+                    <?php if ($user->inGroup($trainerGroup)): ?>
+
+                        <div class="nav-end">
+                            <a  href="<?php echo URL::route( 'trainers.edit', $user->id ); ?>"><?php echo HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic'));; ?></a>
+                            <li id="displayName">
+                                <?php echo $user->display_name; ?>
+                                <?php echo HTML::image( 'img/down-arrow.png', 'down-arrow', array('class'=> 'displayName-dropdown-arrow')); ?>
+                            </li>
+                            <div id="displayName-dropdown" class="dropdown-menu">
+                                 <span><?php echo HTML::linkRoute('trainers.edit', 'My Dashboard' , $user->id); ?></span>
+                                <span><?php echo HTML::linkRoute('evercisegroups.index', 'Class Hub'); ?></span>
+                                <hr>
+                                <span><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></span>
+                                <?php if ($user->inGroup($adminGroup)): ?>
+                                  <hr>
+                                  <span><?php echo HTML::linkRoute('admin.pending', 'pending trainers'); ?></span>
+                                  <span><?php echo HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals'); ?></span>
+                                <?php endif; ?>
+                            </div>
+                        </div>   
+                        <div class="nav-join">
+                          <div class="nav-login">
+                            <li><?php echo HTML::linkRoute('evercisegroups.index', 'Class Hub'); ?></li>
+                          </div>
+                        </div>                    
+                   <?php else: ?>
+                       <div class="nav-end">
+                            <a  href="<?php echo URL::route( 'users.edit', $user->id ); ?>"><?php echo HTML::image( $userImage, $user->display_name.'s image', array('class'=> 'profile-pic'));; ?></a>
+                           <li id="displayName">
+                                <?php echo $user->display_name; ?>
+                                <?php echo HTML::image( 'img/down-arrow.png', 'down-arrow', array('class'=> 'displayName-dropdown-arrow')); ?>
+                           </li>
+                           <div id="displayName-dropdown" class="dropdown-menu">
+                                 <span><?php echo HTML::linkRoute('users.edit', 'My Dashboard' , $user->id); ?></span>
+                                <!--span><?php echo HTML::linkRoute('evercisegroups.index', 'My Cart'); ?></span--> 
+                                <hr>
+                                <span><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></span>
+                                <?php if ($user->inGroup($adminGroup)): ?>
+                                  <hr>
+                                  <span><?php echo HTML::linkRoute('admin.pending', 'pending trainers'); ?></span>
+                                  <span><?php echo HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals'); ?></span>
+                                <?php endif; ?>
+                           </div>
+                       </div>
+                       <div class="nav-join">
+                           <?php /*<li><?php echo HTML::linkRoute('trainers.create', 'Register as Trainer'); ?></li>*/ ?> 
+                       </div>
+                   <?php endif; ?>
+
+                <?php else: ?>
+                    <div class="nav-end">
+                       <li><?php echo HTML::linkRoute('users.create', 'Register'); ?></li>
+                    </div>
+                    <div class="nav-join">
+                         <div class="nav-login">
+                            <?php if(isset($redirect_after_login)): ?>
+                               <li><?php echo HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , 'Login',  array('id'=>'login', 'class' => 'login')); ?></li>
+                              
+                            <?php else: ?>
+                               <li> <?php echo HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login')); ?></li>
+                            <?php endif; ?>
+                         </div>
+                        
+                    </div>
+                <?php endif; ?>
+                
+            </ul>
+		</nav>
+	</section>
+</header>

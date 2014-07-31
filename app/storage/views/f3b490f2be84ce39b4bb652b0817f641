@@ -1,0 +1,38 @@
+
+
+<?php $__env->startSection('content'); ?>
+    <div id="reset" class="center_col">
+        <?php echo Form::open(array('id' => 'passwords_reset', 'url' => 'users/resetpassword', 'method' => 'post')); ?>
+
+            <?php if ($errors->has('forgot')): ?>
+                <div class="input-wrapper">
+                    <div class="error-msg"><?php echo $errors->first('forgot', ':message'); ?></div>
+                </div>
+            <?php endif; ?>
+            <?php if (isset($message)): ?>
+                <div class="input-wrapper">
+                    <div class="error-msg"><?php echo $message; ?></div>
+                </div>
+            <?php else: ?>
+                <div class="input-wrapper">
+                    <?php echo $__env->make('form.textfield', array('fieldname'=>'email', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Your email address', 'fieldtext'=>'Please confirm the email address associated with your account.'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php if ($errors->has('email')): ?>
+                        <?php echo $errors->first('email', '<p class="error_msg">:message</p>'); ?>
+                    <?php endif; ?>
+
+                    <?php echo $__env->make('form.password', array('fieldname'=>'password', 'placeholder'=>'Choose a password', 'maxlength'=>20, 'confirmation'=> 'Please re-enter your password', 'label'=>'Create your password', 'fieldtext'=>'For increased security, please choose a password with a combination of lowercase, capital letters and numbers (but no symbols).'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php if ($errors->has('password')): ?>
+                        <?php echo $errors->first('password', '<p class="error_msg">:message</p>'); ?>
+                    <?php endif; ?>
+                    <?php echo $__env->make('form.hidden', array('fieldname'=>'code', 'value'=>$code), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                </div>
+                <div class="btn-wrapper">
+                    <div class="forgot-password">
+                            <?php echo Form::submit('Reset Password', array('class' => 'btn-yellow')); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        <?php echo Form::close(); ?>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

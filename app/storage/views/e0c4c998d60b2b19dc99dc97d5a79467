@@ -1,0 +1,85 @@
+
+<?php $__env->startSection('content'); ?>
+	
+	<?php if(count($ratings) == 0 ): ?>
+		<?php echo $__env->make('trainers.trainerBlock', array('speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<?php else: ?>
+		<?php echo $__env->make('trainers.trainerBlock', array('speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'trainerRating' => $totalStars / count($ratings) ,'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+	<?php endif; ?>
+		<div class="col10 push2">
+		<br>
+		<br>
+		<h5><?php echo $trainer->user->display_name; ?>&apos;s classes </h5>
+		<br>
+		<br>
+		<?php foreach ($evercisegroups as $key => $evercisegroup): ?>
+
+
+			<div class="col3">
+				<?php echo $__env->make('layouts.classBlock', array( 'rating' => isset($stars[$evercisegroup->id])?  array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]) : 0 ,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$evercisegroup->user->directory .'/'. $evercisegroup->image, 'category' => $evercisegroup->category->name , 'venue' => $evercisegroup->venue  , 'sessions' => $evercisegroup->evercisesession,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php /*
+				<?php if (isset($stars[$evercisegroup->id])): ?>
+					<?php echo $__env->make('layouts.classBlock', array( 'rating' => array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]),'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$trainer->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php else: ?>
+					<?php echo $__env->make('layouts.classBlock', array( 'rating' => 0,'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ,  'evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$trainer->user->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php endif; ?>
+				*/ ?>
+			</div>
+
+		<?php endforeach; ?>
+
+		<div class="rating-wrap">
+		<br>
+		<br>
+		<h5><?php echo $trainer->user->display_name; ?>&apos;s Ratings </h5>
+		<br>
+		<br>
+		<?php foreach ($ratings as $key => $rating): ?> 
+			<div class="rating-row col10">
+				<div class="rating-block">
+					<?php echo HTML::image('profiles/'.$rating->user->directory.'/'.$rating->user->image,  $rating->user->display_name  , array('title' => $rating->user->display_name ,'class' => 'user-icon')); ?>
+					<?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?>
+
+
+					<span>
+					<div class="star_wrap">
+						<?php echo $__env->make('ratings.stars', array('rating' => $rating->stars ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					</div>
+					
+
+
+					<strong>  <?php echo $rating->user->display_name; ?></strong> on <?php echo date('d/m/Y' , strtotime($rating->created_at)); ?> </span>
+					<p><?php echo $rating->comment; ?></p> 
+				</div>
+			</div>
+			
+		<?php endforeach; ?>
+		<?php foreach ($ratings as $key => $rating): ?> 
+			<div class="rating-row col10">
+				<div class="rating-block">
+					<?php echo HTML::image('profiles/'.$rating->user->directory.'/'.$rating->user->image,  $rating->user->display_name  , array('title' => $rating->user->display_name ,'class' => 'user-icon')); ?>
+					<?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?>
+
+
+					<span>
+					<div class="star_wrap">
+						<?php echo $__env->make('ratings.stars', array('rating' => $rating->stars ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					</div>
+					
+
+
+					<strong>  <?php echo $rating->user->display_name; ?></strong> on <?php echo date('d/m/Y' , strtotime($rating->created_at)); ?> </span>
+					<p><?php echo $rating->comment; ?></p> 
+				</div>
+			</div>
+			
+		<?php endforeach; ?>
+		</div>
+	</div>
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

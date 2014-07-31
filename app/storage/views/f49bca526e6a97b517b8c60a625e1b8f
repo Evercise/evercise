@@ -1,0 +1,9 @@
+
+<div>
+	User:
+	<?php if(Session::has('username')): ?>
+		<?php echo $username; ?>
+	<?php else: ?>
+		None
+	<?php endif; ?>
+</div>
