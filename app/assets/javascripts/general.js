@@ -317,27 +317,30 @@ function initPut (params) {
               loaded();
               if (data.validation_failed == 1)
               {
-                  console.debug("failed: "+data);
-                  console.debug(data, true);
-                  form.find('.btn').removeClass('disabled');
-                  // show validation errors
-                  var arr = data.errors;
-                  var scroll = false;
-                  $.each(arr, function(index, value)
-                  {
-                      if (scroll == false) {
-                          $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
-                          scroll = true;
-                      };
-                      if (value.length != 0)
+                  setTimeout(function() {
+                      console.debug("failed: "+data);
+                      console.debug(data, true);
+                      form.find('.btn').removeClass('disabled');
+                      // show validation errors
+                      var arr = data.errors;
+                      var scroll = false;
+                      $.each(arr, function(index, value)
                       {
-                        form.find("#" + index).addClass('error');
-                        form.find("#" + index).after('<span class="error-msg">' + value + '</span>');
-                         /*$("#" + index).addClass('error');
-                         $("#" + index).after('<span class="error-msg">' + value + '</span>');
-                         */
-                      }
-                  });
+                          if (scroll == false) {
+                              $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
+                              scroll = true;
+                          };
+                          if (value.length != 0)
+                          {
+                            form.find("#" + index).addClass('error');
+                            form.find("#" + index).after('<span class="error-msg">' + value + '</span>');
+                             /*$("#" + index).addClass('error');
+                             $("#" + index).after('<span class="error-msg">' + value + '</span>');
+                             */
+                          }
+                      });
+                  }, 300);
+                  
               }else{
                   // call back
 
