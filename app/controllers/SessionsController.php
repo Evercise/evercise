@@ -544,7 +544,7 @@ class SessionsController extends \BaseController {
 		//Make sure there is not already a matching entry in sessionmember
 		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
 		{
-			return Response::json('USER HAS ALREADY JOINED SESSION');
+			return Response::json('error: USER HAS ALREADY JOINED SESSION');
 		}
 
 		$userTrainer = User::find($evercisegroup->user_id);
@@ -582,7 +582,6 @@ class SessionsController extends \BaseController {
 
 
 		/*pivot current user with session via session members */
-
 		$user->sessions()->attach($sessionIds, ['token' => $token , 'transaction_id' => $transactionId, 'payer_id' => $payerId, 'payment_method' => $paymentMethod ]);
 		
 		Event::fire('session.joined', array(
@@ -706,7 +705,7 @@ class SessionsController extends \BaseController {
 
 
 	}
-	public function getPayWithEvercoins($evercisegroupId)
+	/*public function getPayWithEvercoins($evercisegroupId)
 	{
 		//$session = Evercisesession::find($id);
 		$sessionIds = Session::get('sessionIds');
@@ -728,11 +727,12 @@ class SessionsController extends \BaseController {
 			->with('evercisegroupId' , $evercisegroupId)
 			->with('priceInEvercoins' , $priceInEvercoins)
 			->with('evercoinBalance', $evercoin->balance);
-	}
-	public function postPayWithEvercoins($evercisegroupId)
+	}*/
+
+
+	public function openPayWithEvercoinsDialogue($evercisegroupId)
 	{
 		$usecoins = Input::get('redeem');
-
 		$sessionIds = Session::get('sessionIds');
 		//$sessionIds = json_decode(Input::get('session-ids')) ;
 
@@ -745,10 +745,12 @@ class SessionsController extends \BaseController {
 		$price = 0;
 	    foreach ($evercisegroup->evercisesession as $key => $value)
 			$price = $price + $value->price;
+		$priceInEvercoins = Evercoin::poundsToEvercoins($price);
+
 
 		// Check if more coins are selected than are needed.
-		if ($usecoins > Evercoin::poundsToEvercoins($price))
-			$usecoins = Evercoin::poundsToEvercoins($price);
+		if ($usecoins > $priceInEvercoins)
+			$usecoins = $priceInEvercoins;
 
 		//Check user has tried to use more evercoins than they have. if so, use every last one.
 		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
@@ -758,16 +760,46 @@ class SessionsController extends \BaseController {
 		$usecoinsInPounds = Evercoin::evercoinsToPounds($usecoins);
 		$amountRemaining = $price - $usecoinsInPounds;
 
-
-
 		Session::put('amountToPay', $amountRemaining);
 
-		return Response::json([
-			'usecoins' => $usecoins,
-			'amountRemaining' => $amountRemaining,
-			'usecoinsInPounds' => $usecoinsInPounds,
-			'callback' => 'paidWithEvercoins'
-		]);
+		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
+
+		if($priceInEvercoins == $usecoins)
+		{
+
+			return Response::json([
+				'callback' => 'openPopup',
+				'popupHtml' => (string)View::make('sessions.checkoutwithevercoins')
+				->with('evercisegroupId' , $evercisegroupId)
+				->with('priceInEvercoins' , $priceInEvercoins)
+				->with('evercoinBalance', $evercoin->balance)
+			]);
+			
+
+		}
+		else
+		{
+
+			return Response::json([
+				'usecoins' => $usecoins,
+				'amountRemaining' => $amountRemaining,
+				'usecoinsInPounds' => $usecoinsInPounds,
+				'callback' => 'paidWithEvercoins'
+			]);
+		}
+	}
+
+
+	public function postPayWithEvercoins($evercisegroupId)
+	{
+		$transactionId = Functions::randomPassword(16);
+		Session::put('payerId', $this->user->id);
+		Session::put('paymentMethod', 'evercoins');
+		Session::put('token', 'ever'.$transactionId);
+		Session::put('transactionId', $transactionId);
+
+		return $this->payForSessions($evercisegroupId);
+
 	}
 
 	public function getRefund($id){
