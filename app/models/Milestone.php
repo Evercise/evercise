@@ -27,7 +27,7 @@ class Milestone extends \Eloquent {
 	    {
 	    	$this->attributes[$column] = $this->attributes[$column] + 1;
 
-	    	if ($this->attributes[$column] <= $milestones[$type]['recur'])
+	    	if ($this->attributes[$column] <= ($milestones[$type]['recur']*$milestones[$type]['count']))
 	    	{
 		        if ( !( $this->attributes[$column] % $milestones[$type]['count'] ) )
 		        {

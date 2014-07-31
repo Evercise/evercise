@@ -1,7 +1,7 @@
 
     @if($referralCode)
          <div class="referral-wrapper">
-            <p>Your referral code is valid! If you sign up now you will receive 1 Evercoin!</p>
+            <p>Your referral code is valid! If you sign up now you will receive {{ Evercoin::poundsToEvercoins(Config::get('values')['freeCoins']['referral_signup']) }} Evercoins!</p>
         </div>
      @endif
 
