@@ -91,6 +91,16 @@ class TokensController extends \BaseController {
 
 		if($getUser)
 		{
+			$fbUserProfile = $getUser['user_profile']; // grab the user profile from facebook connect
+
+			$fbUserEmail = $fbUserProfile['email']; // grab the email address
+			
+			$checkForUser = User::where('email', $fbUserEmail)->first(); // check if a user already exists with this fb account
+
+			if ($checkForUser) {
+				return Redirect::to('users/'.$this->user->id.'/edit/evercoins')->with('errorNotification', 'This facebook account has already been redeemed');
+			}
+			
 			$token = Token::where('user_id', $this->user->id)->first();
 			$token->addToken('facebook', Token::makeFacebookToken($getUser));
 		}
