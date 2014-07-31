@@ -7,13 +7,14 @@
 
 	<div class="modal-body">
 		<div class="evercoins">
-			<p>Available Evercoins: {{ $evercoins }}</p>
+			<p>Woohoo you have enough Evercoins to pay for this entire class!</p>
+			<p>Available Evercoins: {{ $evercoinBalance }}</p>
 			<p>Basket Price in Evercoins: {{ $priceInEvercoins }}</p>
 		</div>
 		{{ Form::open(array('id' => 'paywithevercoins', 'url' => 'sessions/'.$evercisegroupId.'/paywithevercoins', 'method' => 'POST', 'class' => 'create-form')) }}
 
-			{{ Form::text('usecoins', 0, array('maxlength' => 4)) }}
-			{{ Form::submit('Pay' , array('class'=>'btn-yellow ')) }}
+			{{ Form::hidden('usecoins', $priceInEvercoins, array('maxlength' => 10)) }}
+			{{ Form::submit('Pay with evercoins' , array('class'=>'btn-yellow ')) }}
 
         	<div class="success_msg">Paid Successfully</div>
 

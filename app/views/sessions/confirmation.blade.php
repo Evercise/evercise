@@ -51,7 +51,7 @@
 			@include('payments.cartOverview')
 		</div>
 
-	{{--
+	<?php /*
 		<div class="col3">
 			@include('layouts.classBlock', array('evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name , 'description' =>$evercisegroup->description ,  'image' => 'profiles/'.$userTrainer->directory .'/'. $evercisegroup->image,  'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity ))
 				
@@ -96,6 +96,6 @@
 			</div>
 		</div>
 		
-	--}}
+	*/ ?>
 	</div>
 @stop

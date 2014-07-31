@@ -315,11 +315,11 @@ function initPut (params) {
           function(data) {
               trace("initPut >> Sending data.....");
               loaded();
+              form.find('.btn').removeClass('disabled');
               if (data.validation_failed == 1)
               {
                   console.debug("failed: "+data);
                   console.debug(data, true);
-                  form.find('.btn').removeClass('disabled');
                   // show validation errors
                   var arr = data.errors;
                   var scroll = false;
