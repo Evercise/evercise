@@ -11,5 +11,3 @@ composer.lock
 Thumbs.db
 public/profiles/
 app/config/facebook.php
-docs/seed_power_rangers.sql
-app/storage/
