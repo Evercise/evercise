@@ -20,7 +20,7 @@
 	        <?php endif; ?>
 
 	        <div class="modal-footer">
-	        	<?php echo Form::submit('Send Message' , array('class'=>'btn-yellow button')); ?>
+	        	<?php echo Form::submit('Send Message' , array('class'=>'btn btn-yellow button')); ?>
 	        </div>
 
 			
