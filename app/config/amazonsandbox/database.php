@@ -54,7 +54,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'http://london-evercise.c9va6rttuzwm.us-west-2.rds.amazonaws.com:3306',
+			'host'      => 'london-evercise.c9va6rttuzwm.us-west-2.rds.amazonaws.com',
 			'database'  => 'everciseDB',
 			'username'  => 'evercise_db',
 			'password'  => 'FlQZnB7823',

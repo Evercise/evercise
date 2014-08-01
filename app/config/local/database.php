@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'london-evercise.c9va6rttuzwm.us-west-2.rds.amazonaws.com',
-			'database'  => 'everciseDB',
-			'username'  => 'evercise_db',
-			'password'  => 'FlQZnB7823',
+			'host'      => '127.0.0.1',
+			'database'  => 'evercise_2_0',
+			'username'  => 'root',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
