@@ -83,19 +83,19 @@
 								{{ HTML::image('img/User - Step 2 .png','create classes', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
-								<h4>Search Classes</h4>
+								<h4>Join a class</h4>
 								<p>Not only does exercising in a group significantly reduce the cost per participant, many studies have proven that it also inspires willpower and discipline and therefore greater results!</p>
 							</div>							
 						</div>
 						<div class="tab-header" data-tab="show">
-							<h4>Step 3- show Up and Shape Up</h4>
+							<h4>Step 3- Show Up and Shape Up</h4>
 						</div>
 						<div class="tab-body" id="show">
 							<div class="tab-screen">
 								{{ HTML::image('img/User - Step3.jpg','add sessions', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
-								<h4>Search Classes</h4>
+								<h4>Show Up and Shape Up</h4>
 								<p>Once you have purchased a class you can easily contact  the trainer if you have any questions, Will will send you a reminder about the class the day before so all you have to do is show up and shape up.</p>
 								<br>
 								<p>If something comes up and you can&apos;t attend the class you can cancel, if you cancel more than 5 days in advance we will credit you evercoin account with the full amount of the class to spend on another class at a time that bests suits you. If you need to do a last minute cancellation we will credit you 50% of the cost up to 2 days before the class, unfortunately on closer to that we can not offer any credit</p>
@@ -109,7 +109,7 @@
 								{{ HTML::image('img/ratings.jpg','manage account', array('class' => 'home-step-img')) }}
 							</div>
 							<div class="tab-info">
-								<h4>Search Classes</h4>
+								<h4>Rate and Review</h4>
 								<p>Your evaluation has an impact on future classes. Tell users what happened during the class and how you felt with the group. You are more than welcome to join our community, let&apos;s inspire each other.</p>
 							</div>							
 						</div>
