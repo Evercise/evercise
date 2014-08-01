@@ -318,9 +318,10 @@ function initPut (params) {
               form.find('.btn').removeClass('disabled');
               if (data.validation_failed == 1)
               {
-                  if(!('.modal')){
+                  if (!$('.modal')) {
                     $('.mask').hide();
-                  }
+                    trace('nob');
+                  };
                   
                   setTimeout(function() {
                       console.debug("failed: "+data);
