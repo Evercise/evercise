@@ -11,7 +11,7 @@
 
 	<div class="dashboard-body center">
 	{{ HTML::image('img/search.png', 'caegory list', array('class' => 'center search-img')) }}
-		<h5>You don&apos;t seem to have any classes coming up,<br> you can search for new classes here.</h5>
+		<h5>You don&apos;t seem to have any attended classes,<br> you can search for new classes here.</h5>
 
 		{{HTML::linkRoute('evercisegroups.search', 'Discover classes', null , ['class' => 'btn btn-yellow center'])}}
 	</div>

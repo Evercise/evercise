@@ -11,4 +11,3 @@ composer.lock
 Thumbs.db
 public/profiles/
 app/config/facebook.php
-app/storage
