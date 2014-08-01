@@ -1,0 +1,13 @@
+<?php if(isset($notification)): ?>
+	<div class="notification-msg"><?php echo $notification; ?></div>
+<?php endif; ?>
+<?php if ($notification = Session::get('notification')): ?>
+	<div class="notification-msg"><?php echo $notification; ?></div>
+<?php endif; ?>
+
+<?php if(isset($errorNotification)): ?>
+	<div class="notification-msg"><?php echo $errorNotification; ?></div>
+<?php endif; ?>
+<?php if ($errorNotification = Session::get('errorNotification')): ?>
+	<div class="notification-msg-error"><?php echo $errorNotification; ?></div>
+<?php endif; ?>

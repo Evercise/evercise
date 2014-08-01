@@ -318,6 +318,7 @@ function initPut (params) {
               form.find('.btn').removeClass('disabled');
               if (data.validation_failed == 1)
               {
+                  $('.mask').hide();
                   setTimeout(function() {
                       console.debug("failed: "+data);
                       console.debug(data, true);
@@ -345,7 +346,7 @@ function initPut (params) {
                   
               }else{
                   // call back
-
+                  
                   var callback = data.callback;
 
                   window[callback](data, form);
