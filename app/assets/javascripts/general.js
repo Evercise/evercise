@@ -364,7 +364,7 @@ function initPut (params) {
 
 function gotoUrl(data)
 {
-  
+  trace('gotourl');
   setTimeout(function() {
       window.location.href = data.url;
   }, 300);
