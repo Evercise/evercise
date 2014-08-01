@@ -6,10 +6,17 @@ class Rating extends \Eloquent {
 
 	protected $table = 'ratings';
 
+    /* the user this rating belongs to */
 	public function user()
     {
         return $this->belongsTo('User' , 'user_id');
     }
+
+    /* the user that rated this class */
+    public function rator()
+    {
+        return $this->belongsTo('User' , 'user_created_id');
+    }    
 
     public function evercisegroup()
     {
