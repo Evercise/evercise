@@ -566,17 +566,17 @@ class EvercisegroupsController extends \BaseController {
         	$latitude = 0;
         	$longitude = 0;
         }
-        $page = Input::get('page', 1);
-
-        /*return $this->doSearch(['lat'=>$longitude, 'lng'=>$latitude], $category, $radius, $page);
+        
+        return $this->doSearch(['lat'=>$latitude, 'lng'=>$longitude], $category, $radius);
     }
 
-    public function doSearch($location, $category, $radius, $page)
+    public function doSearch($location, $category, $radius)
     {
 
     	$latitude = $location['lat'];
-    	$longitude = $location['lng'];*/
+    	$longitude = $location['lng'];
 
+        $page = Input::get('page', 1);
 
         $testers = Sentry::findGroupById(5);
 		$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false;
