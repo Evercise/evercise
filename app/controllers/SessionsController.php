@@ -619,7 +619,7 @@ class SessionsController extends \BaseController {
 		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
 		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
 
-		$evercoin = Evercoin::where('user_id',  $session->evercisegroup->user_id)->first();
+		$evercoin = Evercoin::where('user_id',  $this->user->id)->first();
 
 		//$everpound = $this->
 		if ($sessionDate > $fivedaystime ){

@@ -108,7 +108,7 @@
 		<?php endif; ?> 
 		
 
-		<?php echo Form::submit('Update paypal account' , array('class'=>'btn btn-green ')); ?>
+		<?php echo Form::submit('Update paypal account' , array('class'=>'btn btn-green mt10')); ?>
 	<?php echo Form::close(); ?>
 </div>
 
@@ -126,9 +126,9 @@
 		
 		<?php echo Form::hidden( 'paypal' , $paypal, array('id' => 'paypal')); ?>
 		<?php if($paypal != ''): ?>
-			<?php echo Form::submit('Withdraw' , array('class'=>'btn btn-yellow ')); ?>
+			<?php echo Form::submit('Withdraw' , array('class'=>'btn btn-yellow mt10')); ?>
 		<?php else: ?>
-			<?php echo Form::submit('Withdraw' , array('class'=>'btn btn-yellow disabled')); ?>
+			<?php echo Form::submit('Withdraw' , array('class'=>'btn btn-yellow disabled mt10')); ?>
 		<?php endif; ?>
 	<?php echo Form::close(); ?>
 

@@ -108,7 +108,7 @@
 		@endif 
 		
 
-		{{ Form::submit('Update paypal account' , array('class'=>'btn btn-green ')) }}
+		{{ Form::submit('Update paypal account' , array('class'=>'btn btn-green mt10')) }}
 	{{ Form::close() }}
 </div>
 
@@ -126,9 +126,9 @@
 		
 		{{ Form::hidden( 'paypal' , $paypal, array('id' => 'paypal')) }}
 		@if($paypal != '')
-			{{ Form::submit('Withdraw' , array('class'=>'btn btn-yellow ')) }}
+			{{ Form::submit('Withdraw' , array('class'=>'btn btn-yellow mt10')) }}
 		@else
-			{{ Form::submit('Withdraw' , array('class'=>'btn btn-yellow disabled')) }}
+			{{ Form::submit('Withdraw' , array('class'=>'btn btn-yellow disabled mt10')) }}
 		@endif
 	{{ Form::close() }}
 
