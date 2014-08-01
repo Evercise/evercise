@@ -204,6 +204,14 @@ Route::get('/admin/groups', array('as' => 'admin.groups', 'before'=>'admin', 'us
 Route::post('/admin/groups', array('as' => 'admin.groups.addcat', 'before'=>'admin', 'uses' => 'AdminController@addCategory'));
 
 
+Route::get('/classes/{country}', array(
+    'as' => 'classes.country.city.area',
+    'uses' => 'EvercisegroupsController@searchLocations'
+));
+Route::get('/classes/{country}/{london}', array(
+    'as' => 'classes.country.city.area',
+    'uses' => 'EvercisegroupsController@searchLocations'
+));
 Route::get('/classes/{country}/{london}/{area}', array(
     'as' => 'classes.country.city.area',
     'uses' => 'EvercisegroupsController@searchLocations'
