@@ -205,18 +205,18 @@ Route::post('/admin/groups', array('as' => 'admin.groups.addcat', 'before'=>'adm
 
 
 Route::get('/classes/{country}', array(
-    'as' => 'classes.country.city.area',
-    'uses' => 'EvercisegroupsController@searchLocations'
+    'as' => 'classes.country',
+    'uses' => 'EvercisegroupsController@search_C'
 ));
-Route::get('/classes/{country}/{london}', array(
-    'as' => 'classes.country.city.area',
-    'uses' => 'EvercisegroupsController@searchLocations'
+Route::get('/classes/{country}/{city}', array(
+    'as' => 'classes.country.city',
+    'uses' => 'EvercisegroupsController@search_C_C'
 ));
-Route::get('/classes/{country}/{london}/{area}', array(
+Route::get('/classes/{country}/{city}/{area}', array(
     'as' => 'classes.country.city.area',
-    'uses' => 'EvercisegroupsController@searchLocations'
+    'uses' => 'EvercisegroupsController@search_C_C_A'
 ));
-Route::get('/classes/{country}/{london}/{area}/{category}', array(
+Route::get('/classes/{country}/{city}/{area}/{category}', array(
     'as' => 'classes.country.city.area.category',
-    'uses' => 'EvercisegroupsController@searchLocationsCategories'
+    'uses' => 'EvercisegroupsController@search_C_C_A_C'
 ));
