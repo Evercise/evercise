@@ -18,7 +18,7 @@
 	            {{ $errors->first('mail_body', '<p class="error-msg">:message</p>')}}
 	        @endif
 
-			{{ Form::submit('Send Email' , array('class'=>'btn-yellow button')) }}
+			{{ Form::submit('Send Email' , array('class'=>'btn btn-yellow button')) }}
 
         	<div class="success_msg">Message sent</div>
 
