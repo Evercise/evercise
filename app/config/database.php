@@ -212,7 +212,7 @@ else if (App::environment('production'))
 
 	);
 }
-else if (App::environment('amazon'))
+else if (App::environment('amazonsandbox'))
 {
 	return array(
 
@@ -230,10 +230,10 @@ else if (App::environment('amazon'))
 
 			'mysql' => array(
 				'driver'    => 'mysql',
-				'host'      => '127.0.0.1',
-				'database'  => 'evercise_2_0',
-				'username'  => '',
-				'password'  => '',
+				'host'      => 'http://london-evercise.c9va6rttuzwm.us-west-2.rds.amazonaws.com:3306',
+				'database'  => 'everciseDB',
+				'username'  => 'evercise_db',
+				'password'  => 'FlQZnB7823',
 				'charset'   => 'utf8',
 				'collation' => 'utf8_unicode_ci',
 				'prefix'    => '',

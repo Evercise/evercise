@@ -1,0 +1,37 @@
+<div class='modal'>
+	<div id="cancel_login" class="cancel">x</div>
+	<div class="modal-head">
+		<h4>Create a Session</h4>
+		<br>
+		<div id="complete-date">Date: <?php echo $date.'-'.$displayMonth.' '.$year; ?><span></span></div>
+	</div>
+	
+	<div class="modal-body">
+		<?php echo Form::open(array('id' => 'newsession', 'url' => 'sessions', 'method' => 'post', 'class' => '')); ?>
+			<div class="col4">
+				
+				<?php echo Form::hidden( 's-evercisegroupId' , $id, array('id' => 's-evercisegroupId')); ?>
+				<?php echo Form::hidden( 's-year' , $year, array('id' => 's-year')); ?>
+				<?php echo Form::hidden( 's-month' , $month, array('id' => 's-month')); ?>
+				<?php echo Form::hidden( 's-date' , $date, array('id' => 's-date')); ?>
+				<?php echo $__env->make('widgets.time', array('fieldname'=>'s-time', 'label'=>'Time', 'hourDefault'=>$hour, 'minuteDefault'=>$minute), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+				<?php echo $__env->make('form.slider', array('fieldname'=>'s-price', 'label'=>'Price', 'placeholder'=>'Price', 'maxlength'=>6, 'fieldtext'=>null, 'default'=>$price), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				<?php echo $__env->make('form.slider', array('fieldname'=>'s-duration', 'label'=>'Duration', 'placeholder'=>'Duration', 'maxlength'=>6, 'fieldtext'=>null, 'default'=>$duration), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+			<div class="col3">
+				<div class="grey-box">
+					<p id="session-class-name">Class name: <span><?php echo $name; ?></span></p>
+					<p id="session-class-price">Class price: &pound;<span><?php echo $price; ?></span></p>
+					<p id="session-class-duration">Class duration: <span><?php echo $duration; ?></span></p>
+					<p id="session-start-time">Start time: <span></span></p>
+					<p id="session-end-time">End time: <span></span></p>
+				</div>
+				<?php echo Form::submit('Create session' , array('class'=>'btn-yellow ')); ?>
+			</div>
+				
+			
+	    <?php echo Form::close(); ?>
+    </div>
+
+</div>

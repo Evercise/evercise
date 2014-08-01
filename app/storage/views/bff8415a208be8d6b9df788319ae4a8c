@@ -1,0 +1,53 @@
+<div class="cart-steps">
+	<div class="cart-step" id="review">
+		<div class="left">
+			<h6>Evercoin Balance</h6>
+
+		</div>
+		<div class="right">
+			<span class="evercoin-highlight"><?php echo HTML::image('img/evercoin.png', 'evercoin', ['class' => 'evercoin-icon']); ?> <?php echo $evercoins; ?></span>
+		</div>
+	</div>
+	<div class="cart-step">
+		
+		<?php foreach ($evercisegroup->evercisesession as $key => $session): ?>
+			<div class="left">
+				<strong>1x <?php echo $evercisegroup->name; ?></strong>
+				<br>
+
+				<p><?php echo date('M-dS - H:ia' , strtotime($session->date_time)); ?> </p>
+			</div>
+			<div class="right">
+				<p>&pound;<?php echo $session->price; ?></p>
+			</div>
+		<?php endforeach; ?>
+
+		
+	</div>
+
+	<div class="cart-step">
+		<div class="left">
+			<p>Sub Total</p>
+			<br>
+
+			<p>Evercoins Used</p>
+		</div>
+		<div class="right">
+			<p>&pound;<?php echo $totalPrice; ?></p>
+			<br>
+
+			<p><?php echo $deductEverciseCoins; ?></p>
+		</div>
+	</div>
+	<div class="cart-step">
+		<div class="left">
+			<h4>Total</h4>
+		</div>
+		<div class="right">	
+
+			<h4>&pound;<?php echo $amountPaid; ?></h4>
+		</div>
+	</div>
+
+	
+</div>

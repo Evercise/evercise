@@ -1,0 +1,9 @@
+<?php for ($i = 0; $i < 5; $i++): ?>
+	<?php if($i < floor($rating)): ?>
+		<?php echo HTML::image('img/yellow_star.png', 'stars' , array('class' => 'star-icons')); ?>
+	<?php elseif($i < ceil($rating)): ?>
+		<?php echo HTML::image('img/yellow_halfstar.png', 'stars' , array('class' => 'star-icons')); ?>
+	<?php else: ?>
+		<?php echo HTML::image('img/yellow_emptystar.png', 'stars' , array('class' => 'star-icons')); ?>
+	<?php endif; ?>
+<?php endfor; ?>

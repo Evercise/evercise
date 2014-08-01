@@ -200,5 +200,15 @@ Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'Referra
 Route::get('/admin/log', array('as' => 'admin.log', 'before'=>'admin', 'uses' => 'AdminController@showLog'));
 Route::post('/admin/log', array('as' => 'admin.log.delete', 'before'=>'admin', 'uses' => 'AdminController@deleteLog'));
 
-Route::get('/admin/groups', array('as' => 'admin.log', 'before'=>'admin', 'uses' => 'AdminController@showGroups'));
-Route::post('/admin/groups', array('as' => 'admin.log.addcat', 'before'=>'admin', 'uses' => 'AdminController@addCategory'));
+Route::get('/admin/groups', array('as' => 'admin.groups', 'before'=>'admin', 'uses' => 'AdminController@showGroups'));
+Route::post('/admin/groups', array('as' => 'admin.groups.addcat', 'before'=>'admin', 'uses' => 'AdminController@addCategory'));
+
+
+Route::get('/classes/{country}/{london}/{area}', array(
+    'as' => 'classes.country.city.area',
+    'uses' => 'EvercisegroupsController@searchLocations'
+));
+Route::get('/classes/{country}/{london}/{area}/{category}', array(
+    'as' => 'classes.country.city.area.category',
+    'uses' => 'EvercisegroupsController@searchLocationsCategories'
+));

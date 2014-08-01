@@ -1,0 +1,35 @@
+
+<?php $__env->startSection('content'); ?>
+	<div class="full-width">
+		<table class="admin_table">
+			<tr>
+				<th>User Link</th>
+				<th>Display Name</th>
+				<th>Email Address</th>
+				<th>Bio</th>
+				<th>Approval</th>
+			</tr>
+			<?php foreach($trainers as $key => $trainer): ?>
+				<tr>
+					<td><a href="<?php echo URL::route('trainers.show', $trainer->user->id); ?>" ><?php echo HTML::image('profiles/'.$trainer->user->directory.'/'.$trainer->user->image, 'trainers image', array('class'=> 'trainer-block-image')); ?></a></td>
+					<td><?php echo $trainer->user->display_name; ?></td>
+					<td><?php echo $trainer->user->email; ?></td>
+					<td><?php echo $trainer->bio; ?></td>
+					<td>
+					<?php echo Form::open(array('id' => 'approve'.$key, 'url' => 'admin/approve_trainer', 'method' => 'post', 'class' => '')); ?>
+
+						<?php echo Form::hidden( 'trainer' , $trainer->id, array('id' => 'trainer')); ?>
+
+						<?php echo Form::submit('Approval' , array('class'=>'btn-yellow ')); ?>
+
+					<?php echo Form::close(); ?>
+
+
+					</td>
+				</tr>
+			<?php endforeach; ?>
+			
+		</table>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

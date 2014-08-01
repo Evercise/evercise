@@ -1,0 +1,87 @@
+<div class="class-block">
+<?php /* image ratio 2.35:1 / size 317*135 */ ?>
+	<div class="class-block-img-wrap block-inner">
+		<a href="<?php echo URL::to('evercisegroups/'.$evercisegroupId); ?>">
+			<?php echo HTML::image($image, 'class image', array('class' => 'class-block-img'));; ?>
+		</a> 
+	</div>
+
+	<?php if(isset($title)): ?>
+		<div class="class-block-header block-inner">
+			<h3><?php echo Str::limit($title, 21); ?></h3>
+		</div>
+		
+	<?php endif; ?>
+	<div class="block-inner class-block-body">
+		<?php if (isset($rating)): ?> 
+			<div id="block-rating" class="inner-half">
+				<?php echo $__env->make('ratings.stars', array('rating' => $rating), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			</div>
+		<?php endif; ?>
+		<div id="block-share" class="inner-half">
+			<a href="<?php echo Share::load(URL::to('evercisegroups/'.$evercisegroupId) , $evercisegroup->name)->facebook(); ?>" target="_blank"  class="btn"><?php echo HTML::image('img/facebook.png','share on facebook', array('class' => 'share-btn')); ?></a>
+			<a href="<?php echo Share::load(URL::to('evercisegroups/'.$evercisegroupId) , $evercisegroup->name)->twitter(); ?>" target="_blank" class="btn"><?php echo HTML::image('img/twitter.png','tweet', array('class' => 'share-btn')); ?></a>
+
+		</div>
+		<?php /*
+		removed categorys
+		<?php if (isset($category)): ?>
+			<div id="block-category" class="inner-half">
+				<?php echo HTML::image('img/category/'.$category.'.png', 'category image', array('class' => 'category-icon'));; ?>
+				<span><?php echo Str::limit($category, 9); ?></span>
+			</div> 
+			
+		<?php endif; ?>
+		*/ ?>
+	</div>
+	<?php if(isset($sessions)): ?>
+		<div class="future-session-header">
+			<?php echo HTML::image('img/date_icon.png', 'date image', array('class' => 'block-icon'));; ?>
+			<span><?php echo date('d M Y - h:ia', strtotime($sessions[0]->date_time)); ?></span>
+		</div>
+		<span id="more-sessions" class="btn"><?php echo HTML::image('img/down-arrow.png', 'show more sessions', array('class' => 'more-sessions'));; ?></span>
+		
+		<ul class="future-session-list ">
+			<?php foreach ($sessions as $key => $session): ?>
+				<li><?php echo date('d M Y - h:ia', strtotime($session->date_time)); ?></li>
+			<?php endforeach; ?>
+		</ul>
+	<?php else: ?>
+		<div class="block-spacer">
+		</div>
+		
+	<?php endif; ?>
+	<div id="block-body-wrap">
+		<?php if(isset($venue)): ?>
+			<div class="block-inner" id="block-venue">
+				<div class="inner-float">
+					<?php echo HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon'));; ?>
+				</div>
+				<div class="inner-float">
+					<li><?php echo Str::limit($venue->name, 31); ?></li>
+					<li><?php echo Str::limit($venue->address, 31); ?></li>
+					<li><?php echo Str::limit($venue->town, 20); ?>, <?php echo Str::limit($venue->postcode, 8); ?></li>
+				</div>
+			</div>
+		<?php endif; ?>
+		<?php if(isset($default_size)): ?>
+			<div class="block-inner" id="block-size">
+				<div class="inner-float">
+					<?php echo HTML::image('img/person_icon.png', 'date image', array('class' => 'block-icon'));; ?>
+				</div>
+				<div class="inner-float">
+					<li>Class Size: <?php echo $default_size; ?></li>
+				</div>
+			</div>
+		<?php endif; ?>
+	</div>
+	
+	<?php if(isset($default_price)): ?>
+		<div class="block-footer">
+			<span>Price</span>
+			<strong>&pound;<?php echo $default_price; ?></strong>
+		</div>
+	<?php endif; ?>
+	
+	
+</div>

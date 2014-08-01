@@ -1,0 +1,63 @@
+
+<?php $__env->startSection('content'); ?>
+
+	<?php echo $__env->make('layouts.pagetitle', array('title'=> $user->display_name.'&apos;s class hub', 'subtitle'=>'You can add sessions, create new classes, clone classes and remove sessions from here'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'evercisegroupId', 'value'=>$evercisegroups[0]->id), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'evercisegroupName', 'value'=>$evercisegroups[0]->name), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'originalprice', 'value'=>$evercisegroups[0]->default_price), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'evercisegroupDuration', 'value'=>$evercisegroups[0]->default_duration), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'year', 'value'=>$year), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'month', 'value'=>$month), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('form.hidden', array('fieldname'=>'date', 'value'=>''), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	
+	<div class="hub-top">
+		<h3>Classes</h3>
+		<?php echo HTML::linkRoute('evercisegroups.create', 'Create a new class!',null ,array('class' => 'btn btn-yellow ')); ?>
+	</div>
+    <div class="hub-header">
+		<div class="hub-header-col large">Class</div>
+		<div class="hub-header-col">Preview</div>
+		<div class="hub-header-col cal">Class Dates</div>
+	</div>
+	<div class="hub-wrapper">
+
+		<?php foreach ($evercisegroups as $key=>$evercisegroup): ?>
+			<div class="hub-row <?php echo ($key == 0) ? 'selected' : ''; ?>" data-id="<?php echo $evercisegroup['id']; ?>" data-name="<?php echo $evercisegroup['name']; ?>"  data-duration="<?php echo $evercisegroup['default_duration']; ?>">
+				
+				<div class="hub-block">
+					<div class="hub-title">
+						<h3><?php echo $evercisegroup['name']; ?></h3>
+						<?php echo HTML::linkRoute('evercisegroups.show', 'Class Details',$evercisegroup['id'] ,array('class' => 'btn btn-blue')); ?>
+					</div>
+					
+					
+					
+					<div class="date-list" id="date-list-<?php echo $key; ?>">
+					
+						<?php echo $__env->make('sessions.date_list' , array( 'evercisegroupId' => $evercisegroup['id'], 'ids' => $evercisegroup['Evercisesession'] , 'futuresessions' => $evercisegroup->futuresessions , 'pastsessions' => $evercisegroup->pastsessions ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+					</div>
+					<div class="hub-buttons">
+					<a href="evercisegroups/clone_evercisegroups/<?php echo $evercisegroup['id']; ?>" class="btn btn-green">Clone Class<?php echo HTML::image('/img/clone_icon_white.png', 'clone icon' , array('class' => 'evercisegroup-icon')); ?></a>
+					<a href="evercisegroups/delete/<?php echo $evercisegroup['id']; ?>" class="btn btn-red" id="delete_group">Delete Class <span>X</span></a>
+					</div>
+
+					
+				</div>
+				<div class="class-hub-block">
+					<?php echo $__env->make('layouts.classBlock', array('evercisegroupId' => $evercisegroup->id,'title' => $evercisegroup->name ,  'venue' => $evercisegroup->venue  ,   'image' => 'profiles/'.$directory .'/'. $evercisegroup->image,   'default_price' => $evercisegroup->default_price, 'default_size' => $evercisegroup->capacity, 'rating' => isset($stars[$evercisegroup->id])?  array_sum($stars[$evercisegroup->id])/ count($stars[$evercisegroup->id]) : 0 , ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+				</div>
+			</div>
+			<hr>
+		<?php endforeach; ?>	
+	</div>
+
+
+	<div class="hub-calendar-wrapper">
+		<div id="calendar-wrapper">
+			<?php echo $__env->make('widgets.calendar', array('month'=>$month, 'year'=>$year), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		</div>
+	</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
