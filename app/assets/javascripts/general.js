@@ -119,7 +119,7 @@ function initLoginBox()
   })
   
   //$('input').keyup(function(){
-  $(document).on('keyup','input', function(){
+  $(document).on('keyup','input, textarea', function(){
      $(this).removeClass('error');
      $(this).closest('div').find('.error-msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
   });

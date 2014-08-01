@@ -154,6 +154,7 @@ function login(){
     $( '#login_wrap form' ).on( 'submit', function() {
         $('.error-msg').remove();
         $('input').removeClass('error');
+        $('textarea').removeClass('error');
         // post to controller
         $.post(
             $( this ).prop( 'action' ),
