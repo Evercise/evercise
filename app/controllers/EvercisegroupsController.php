@@ -560,12 +560,22 @@ class EvercisegroupsController extends \BaseController {
 		try {
        		$geocode = Geocoder::geocode($location);
          	$latitude = $geocode->getLatitude();
-        	$longitude = $geocode->getLongitude();
+        	$longitude = $geocode->getlongitude();
         } catch (Exception $e) {
             //return $e->getMessage();
         	$latitude = 0;
         	$longitude = 0;
-        }   
+        }
+        $page = Input::get('page', 1);
+
+        /*return $this->doSearch(['lat'=>$longitude, 'lng'=>$latitude], $category, $radius, $page);
+    }
+
+    public function doSearch($location, $category, $radius, $page)
+    {
+
+    	$latitude = $location['lat'];
+    	$longitude = $location['lng'];*/
 
 
         $testers = Sentry::findGroupById(5);
@@ -693,7 +703,7 @@ class EvercisegroupsController extends \BaseController {
 	    $allResults = Evercisegroup::concatenateResults( $results );
 
 	    $perPage = 6;
-	    $page = Input::get('page', 1);
+	    
 
 	    if ($page > count($allResults) or $page < 1) { $page = 1; }
 	    $offset = ($page * $perPage) - $perPage;
@@ -718,12 +728,19 @@ class EvercisegroupsController extends \BaseController {
 	    		//->with('members' , $members);
 	}
 
-	public function searchLocations($country, $city, $area)
+	public function search_C($country, $city, $area)
 	{
 		
 	}
-	
-	public function searchLocationsCategories($country, $city, $area, $category)
+	public function search_C_C($country, $city, $area, $category)
+	{
+
+	}
+	public function search_C_C_A($country, $city, $area)
+	{
+		
+	}
+	public function search_C_C_A_C($country, $city, $area, $category)
 	{
 
 	}

@@ -30,6 +30,7 @@ $env = $app->detectEnvironment(array(
   'staging' => array('*avi*', '*donkey*', '*Donkey*'),
   'production' => array('*VS10319*'),
   'amazonsandbox' => array('*ip-172-31-18-83*'),
+  'sunjie' => array('*sunjie*'),
 ));
 
 /*
