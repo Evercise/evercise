@@ -172,7 +172,7 @@
 
 								
 								<div class="rating-block">
-									{{ HTML::image('profiles/'.$rating->user->directory.'/'.$rating->user->image,  $rating->user->display_name  , array('title' => $rating->user->display_name ,'class' => 'user-icon')) }}
+									{{ HTML::image('profiles/'.$rating->rator->directory.'/'.$rating->rator->image,  $rating->rator->display_name  , array('title' => $rating->rator->display_name ,'class' => 'user-icon')) }}
 									{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}
 
 
@@ -185,7 +185,7 @@
 									
 
 
-									<strong>  {{ $rating->user->display_name }}</strong> on {{ date('d/m/Y' , strtotime($rating->created_at))}} </span>
+									<strong>  {{ $rating->rator->display_name }}</strong> on {{ date('d/m/Y' , strtotime($rating->created_at))}} </span>
 									<p>{{ $rating->comment}}</p> 
 								</div>
 							</div>
