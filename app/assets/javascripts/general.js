@@ -318,7 +318,8 @@ function initPut (params) {
               form.find('.btn').removeClass('disabled');
               if (data.validation_failed == 1)
               {
-                  if (!$('.modal')) {
+                trace('nob');
+                  if (!$('.modal').length) {
                     $('.mask').hide();
                     trace('nob');
                   };
@@ -540,7 +541,7 @@ function loading(){
 
 
 function loaded(){
-  if (!$('.modal')) {
+  if (!$('.modal').length) {
     $('.mask').hide();
   };
   $('.loading_circle').remove();
