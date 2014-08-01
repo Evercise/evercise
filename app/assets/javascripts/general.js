@@ -349,7 +349,7 @@ function initPut (params) {
                   
               }else{
                   // call back
-                  
+                  trace('callback');
                   var callback = data.callback;
 
                   window[callback](data, form);
