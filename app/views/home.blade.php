@@ -29,7 +29,7 @@
 	<div class="step_wrapper">
 		<h4>{{Loc::text($view_name, 'three_steps')}}</h4>
 		<hr>
-		
+			
 
 		<div id="step_1" class="four-step col4">
 			{{ HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')) }}
