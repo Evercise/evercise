@@ -147,7 +147,7 @@ return array(
 	| command php artisan assets:clean -f somefilename.js -f application.css ...
 	|
 	*/
-	'cache' => 	array('production'),
+	'cache' => 	array('production', 'amazonsandbox'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -207,7 +207,7 @@ return array(
 	| of minification stuff on each page refresh)
 	|
 	*/
-	'concat' => array('production', 'local', 'staging'),
+	'concat' => array('production', 'local', 'staging', 'amazonsandbox'),
 
 	/*
 	|--------------------------------------------------------------------------
