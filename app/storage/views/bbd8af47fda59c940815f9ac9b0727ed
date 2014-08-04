@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col12 tc">
-		<h1 class="mt20">Lower your barrier to enjoy fitness classes</h1>
+		<h1 class="mt20"><?php echo Loc::text('home', 'main_header'); ?></h1>
 		<h3>Flexible schedule and multiple options across London.</h3>
 		<div class="video-placeholder mb20">
 			
