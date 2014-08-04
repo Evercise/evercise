@@ -27,8 +27,8 @@
 <section class="home-body row">
 	<div class="step_wrapper">
 		<h4>Get fit with Evercise in three simple steps:</h4>
-		<img src="<?php echo url().'/img/facebook.png'; ?>" alt="facebook" id="facebook">
 		<hr>
+		<img src="<?php echo url().'/img/facebook.png'; ?>" alt="facebook" id="facebook">
 
 		<div id="step_1" class="four-step col4">
 			<?php echo HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')); ?>

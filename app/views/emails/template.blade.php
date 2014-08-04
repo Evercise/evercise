@@ -867,7 +867,7 @@
 			                                                                       <img src="{{ url().'/img/facebook.png' }}" alt="facebook" id="facebook">
 					       		 	</a>
 			                                                                    </td>
-			                                                                url
+			                                                                
 			                                                                
 			                                                            </tr>
 			                                                        </tbody></table>
