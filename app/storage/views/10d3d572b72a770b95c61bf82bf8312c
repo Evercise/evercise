@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="col12 tc">
-		<h1 class="mt20">Lower your barrier to enjoy fitness classes</h1>
+		<h1 class="mt20"><?php echo Loc::text('home', 'main_header'); ?></h1>
 		<h3>Flexible schedule and multiple options across London.</h3>
 		<div class="video-placeholder mb20">
 			
@@ -26,8 +26,8 @@
 <?php $__env->startSection('content' ); ?>
 <section class="home-body row">
 	<div class="step_wrapper">
-		<h4>Get fit with Evercise in three simple steps:
-		<?php echo HTML::link('evercisegroups/73', 'Class page'); ?></h4>
+		<h4>Get fit with Evercise in three simple steps:</h4>
+		<img src="<?php echo URL::asset('img/facebook.png'); ?>" alt="facebook" id="facebook">
 		<hr>
 
 		<div id="step_1" class="four-step col4">
