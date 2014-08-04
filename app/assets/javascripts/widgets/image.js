@@ -20,24 +20,21 @@ function initImage(params)
         success:       showResponse,
         dataType: 'json' 
         }; 
-     $('body').delegate('#image','change', function(){
-        setTimeout(function() {
-               $('#upload').ajaxForm(options).submit(); 
-          }, 300);
-          
-        trace("uploading image ... "+ratio);
+
+     $(document).on('change', '#image', function(){
+         $('#upload').ajaxForm(options).submit(); 
+         trace("uploading image ... "+ratio);
      }); 
+
 }        
 registerInitFunction('initImage');
 
 function showRequest(formData, jqForm, options) { 
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
-        trace("showRequest..");  
-        setTimeout(function() {
-               $('.error-msg').remove();     
-                return true; 
-          }, 300);
+    trace("showRequest..");  
+    $('.error-msg').remove();     
+    return true; 
     
 } 
 function showResponse(response, statusText, xhr, form)  { 
