@@ -66,7 +66,7 @@ class SendEmails extends Command {
 					foreach ($session->users as $user) {
 						$userList[$user->first_name.' '.$user->last_name] = $user->email;
 					}
-					$emails[] = ['group'=>$group->name, 'dateTime'=>$session->date_time, 'userList' =>$userList, 'trainer'=>$group->user, 'location'=>$group->venue->name];
+					$emails[] = ['group'=>$group->name, 'dateTime'=>$session->date_time, 'userList' =>$userList, 'trainer'=>$group->user, 'location'=>$group->venue->name, 'classId' => $group->id];
 					$sessionIds[] = $session->id;
 				}
 			}
@@ -93,6 +93,7 @@ class SendEmails extends Command {
 	                'dateTime' => $email['dateTime'],
 	                'trainerName' => $email['trainer']->first_name.' '.$email['trainer']->last_name,
 	                'trainerEmail' => $email['trainer']->email,
+	                'classId' => $email['classId'],
 	            ));
 			}
 			Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);

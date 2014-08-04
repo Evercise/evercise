@@ -26,7 +26,8 @@
 <?php $__env->startSection('content' ); ?>
 <section class="home-body row">
 	<div class="step_wrapper">
-		<h4>Get fit with Evercise in three simple steps:</h4>
+		<h4>Get fit with Evercise in three simple steps:
+		<?php echo HTML::link('evercisegroups/73', 'Class page'); ?></h4>
 		<hr>
 
 		<div id="step_1" class="four-step col4">
