@@ -1,4 +1,4 @@
-<?php View::share('title', 'Exercise for Everyone Everywhere') ?> 
+<?php View::share('title', 'Everyone exercise') ?> 
 <?php View::share('metaDescription', 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.') ?>
 <?php $__env->startSection('top' ); ?>
 
