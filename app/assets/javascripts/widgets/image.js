@@ -24,7 +24,7 @@ function initImage(params)
     /* reset image value to null */
      $(document).on('click', '#image', function(){
         trace('nulling input: '+$(this).val());  
-        
+        $( '#upload' ).unbind('submit');
      }); 
 
 
@@ -69,10 +69,10 @@ function showResponse(response, statusText, xhr, form)  {
 
         trace('img_url= '+response.image_url);
         $('#img_url').val(response.image_url);
-
+        trace("init postCroppedImage");
         initCrop(ratio);
         postCroppedImage();
-        trace("init postCroppedImage");
+        
     }
 }
 
@@ -86,7 +86,7 @@ function initCrop(ratio)
         onSelectEnd: saveCroppedImage,
         onSelectChange: preview
     });
-    
+
 }
 
 function preview(img, selection) {
@@ -183,7 +183,7 @@ function postCroppedImage()
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 //$('.preview img').attr('src', data.newImage);
                 $('#thumbFilename').val(data.thumbFilename);
-               
+                
             }
         },
         'json'
