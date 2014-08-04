@@ -63,7 +63,7 @@
 		<hr>
 		<div class="join_wrapper">
 			<h4>{{Loc::text($view_name, 'register_text')}}</h4>
-			{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow btn-large'))}}
+			{{HTML::link('users/create', Loc::text('general', 'register', true), array('class' => 'btn btn-yellow btn-large'))}}
 			{{ HTML::image('img/potato men group fitness.png','join us ', array('class' => 'register-img')) }}
 		</div>
 	@endif

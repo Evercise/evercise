@@ -3,8 +3,19 @@
 class Loc {
 
 
-	public static function text($page, $section)
+	public static function text($page, $section, $uc=false)
 	{
-		return Config::get('localisations/'.$page)[$section];
+    try
+    {
+      $text = Config::get('localisations/'.$page)[$section];
+      if ($uc)
+        $text = ucfirst($text);
+    }
+    catch(Exception $e)
+    {
+      return 'ERROR: '.$section;
+    }
+
+		return $text;
 	}
 }
