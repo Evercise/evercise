@@ -19,7 +19,14 @@ function initImage(params)
         beforeSubmit:  showRequest,
         success:       showResponse,
         dataType: 'json' 
-        }; 
+        };
+
+    /* reset image value to null */
+     $(document).on('click', '#image', function(){
+        trace('nulling input: '+$(this).val());  
+        
+     }); 
+
 
      $(document).on('change', '#image', function(){
         trace("uploading image ... "+ratio);
@@ -71,6 +78,7 @@ function showResponse(response, statusText, xhr, form)  {
 
 function initCrop(ratio)
 {
+    trace('initcrop');
     $('#img-crop img').imgAreaSelect({
         aspectRatio: ratio + ':1',
         fadeSpeed: 300,
@@ -78,6 +86,7 @@ function initCrop(ratio)
         onSelectEnd: saveCroppedImage,
         onSelectChange: preview
     });
+    
 }
 
 function preview(img, selection) {
