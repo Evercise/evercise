@@ -864,7 +864,7 @@
 			                                                                
 			                                                                    <td align="center" valign="middle" width="24" class="mcnFollowIconContent">
 			                                                                       <a target="_blank" href="https://www.facebook.com/evercise" style="margin: 0px 5px 0px 0px">
-			                                                                       <img src="{{ url().'/img/facebook.png' }}" alt="facebook" id="facebook">
+					        		    {{HTML::image('img/facebook.png', 'facebook', array('id' => 'facebook'));}}
 					       		 	</a>
 			                                                                    </td>
 			                                                                
