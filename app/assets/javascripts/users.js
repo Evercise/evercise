@@ -89,7 +89,7 @@ function initUsers()
     });
 
 
-    $('#userNewsletter').on('change', function () {
+    $('.checkbox').on('change', function () {
       this.value = this.checked ? 'yes' : 'no';
     }).change();
 }

@@ -333,7 +333,7 @@ function initPut (params) {
                       {
                         trace(form, true);
                           if (scroll == false) {
-                              $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
+                              $('html, body').animate({ scrollTop: form.find("#" + index).offset().top }, 400);
                               scroll = true;
                           };
                           if (value.length != 0)
