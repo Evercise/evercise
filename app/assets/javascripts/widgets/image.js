@@ -34,8 +34,11 @@ function showRequest(formData, jqForm, options) {
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
         trace("showRequest..");  
-    $('.error-msg').remove();     
-    return true; 
+        setTimeout(function() {
+               $('.error-msg').remove();     
+                return true; 
+          }, 300);
+    
 } 
 function showResponse(response, statusText, xhr, form)  { 
 
