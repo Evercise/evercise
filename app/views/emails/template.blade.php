@@ -864,10 +864,10 @@
 			                                                                
 			                                                                    <td align="center" valign="middle" width="24" class="mcnFollowIconContent">
 			                                                                       <a target="_blank" href="https://www.facebook.com/evercise" style="margin: 0px 5px 0px 0px">
-			                                                                       <img src="{{ public_path().'/img/facebook.png' }}" alt="facebook" id="facebook">
+			                                                                       <img src="{{ url().'/img/facebook.png' }}" alt="facebook" id="facebook">
 					       		 	</a>
 			                                                                    </td>
-			                                                                
+			                                                                url
 			                                                                
 			                                                            </tr>
 			                                                        </tbody></table>

@@ -28,7 +28,6 @@
 <section class="home-body row">
 	<div class="step_wrapper">
 		<h4>Get fit with Evercise in three simple steps:</h4>
-		<img src="{{ public_path().'/img/facebook.png' }}" alt="facebook" id="facebook">
 		<hr>
 
 		<div id="step_1" class="four-step col4">
