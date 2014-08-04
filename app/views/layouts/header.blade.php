@@ -3,9 +3,9 @@
 		<nav>		
 			<ul>
 				<a href="{{ URL::route('home', null) }}">{{ HTML::image('/img/evercise logo yellow.png', 'evercise logo', array('class' => 'logo')); }}</a>
-                <li>{{HTML::linkRoute('static.how_it_works', 'How it works')}}</li>
+                <li>{{HTML::linkRoute('static.how_it_works', Loc::text('header', 'how_it_works'))}}</li>
 
-                <li>{{HTML::linkRoute('evercisegroups.search', 'Discover classes')}}</li>
+                <li>{{HTML::linkRoute('evercisegroups.search', Loc::text('header', 'discover_classes'))}}</li>
 
                 @if(isset($user))
                     @if ($user->inGroup($trainerGroup))
@@ -59,12 +59,12 @@
 
                 @else
                     <div class="nav-end">
-                       <li>{{  HTML::linkRoute('users.create', 'Register')}}</li>
+                       <li>{{  HTML::linkRoute('users.create', Loc::text('header', 'register'))}}</li>
                     </div>
                     <div class="nav-join">
                          <div class="nav-login">
                             @if(isset($redirect_after_login))
-                               <li>{{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , 'Login',  array('id'=>'login', 'class' => 'login'))}}</li>
+                               <li>{{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , Loc::text('header', 'login'),  array('id'=>'login', 'class' => 'login'))}}</li>
                               
                             @else
                                <li> {{HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login'))}}</li>
