@@ -31,7 +31,7 @@ class SessionMailer extends Mailer {
 		$body = '
 			<p>Hi '.$trainerName.',</p>
 			<br>
-			<p>You have arranged the class '.$group.' to take place tomorrow '.date('d-M-Y', strtotime($dateTime)).' at '.date('h:m', strtotime($dateTime)).'. We have attached a list of participants to this email.</p>
+			<p>You have arranged the class '.$group.' to take place tomorrow '.date('d-M-Y', strtotime($dateTime)).' at '.date('h:m', strtotime($dateTime)).'.</p>
 			<br>
 			<p>Please note that more participants can join up until one hour before the class is due to commence.</p>
 			<p>We hope it goes well!</p>

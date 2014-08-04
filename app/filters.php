@@ -114,3 +114,10 @@ App::missing(function($exception)
 {
     return Response::view('errors.missing', array(), 404);
 });
+
+View::composer('*', function($view)
+{
+		// Share the name of the view, to be passed to the locatlisations (it's used to load the correct localisation file)
+    View::share('view_name', $view->getName());
+
+});
