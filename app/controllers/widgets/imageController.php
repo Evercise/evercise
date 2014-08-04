@@ -56,10 +56,9 @@ class ImageController extends \BaseController {
             if(Request::ajax())
             { 
                 $viewString = View::make('widgets/crop')->__toString();
-               // $imgSrc = url() .'/'. $destinationPath . '/' . $filename;
-                $imgSrc = 'localhost/'. $destinationPath . '/' . $filename;
+                $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
                // $postCrop = Response::json(route('image.crop.post'));
-                $postCrop = url().'/widgets/crop';
+                $postCrop = url('/').'/widgets/crop';
                 return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
             }
             else
