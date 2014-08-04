@@ -22,8 +22,9 @@ function initImage(params)
         }; 
 
      $(document).on('change', '#image', function(){
-         $('#upload').ajaxForm(options).submit(); 
-         trace("uploading image ... "+ratio);
+        trace("uploading image ... "+ratio);
+        $('#upload').ajaxForm(options).submit(); 
+         
      }); 
 
 }        
