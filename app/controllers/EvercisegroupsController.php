@@ -529,33 +529,15 @@ class EvercisegroupsController extends \BaseController {
 		//return 'delete '.$id;
 	}
 
-	/**
-	 * query eg's based on location
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function searchEg()
+	private function getLatLng($location)
 	{
 		/* check for seached location, otherwise use the ip address */
-		if ( Input::get('location')) {
-			$location = Input::get('location');
-		}else{
+		if ( $location == '') {
 			$location = Request::getClientIp();
 			if ($location == '127.0.0.1' || $location == null) {
 				$location = '188.39.12.12';
 			}
 		}
-
-
-		/* check if search form posted otherwise set default for radius */
-		if (Input::get('radius')) {
-			$radius = Input::get('radius');
-		}else{
-			$radius = 10;
-		}
-		
-		$category = Input::get('category');
 
 		try {
        		$geocode = Geocoder::geocode($location);
@@ -566,15 +548,45 @@ class EvercisegroupsController extends \BaseController {
         	$latitude = 0;
         	$longitude = 0;
         }
+        return (['lat'=>$latitude, 'lng'=>$longitude]);
+	}
+
+	/**
+	 * query eg's based on location
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function searchEg()
+	{
+		/* check if search form posted otherwise set default for radius */
+		if (Input::get('radius')) {
+			$radius = Input::get('radius');
+		}else{
+			$radius = 10;
+		}
+		
+		$category = Input::get('category');
+		$locationString = Input::get('location') ? Input::get('location') : '';
+
         
-        return $this->doSearch(['lat'=>$latitude, 'lng'=>$longitude], $category, $radius);
+        return $this->doSearch(['address'=>$locationString], $category, $radius);
     }
 
     public function doSearch($location, $category, $radius)
     {
+    	//return $location['address'];
+    	if (isset($location['lat']) && isset($location['lng']))
+    	{
+	    }
+	    else
+	    {
+			$latlng = $this->getLatLng($location['address']);
+	    }
+    	$latitude = $latlng['lat'];
+    	$longitude = $latlng['lng'];
 
-    	$latitude = $location['lat'];
-    	$longitude = $location['lng'];
+
 
         $page = Input::get('page', 1);
 
@@ -728,20 +740,31 @@ class EvercisegroupsController extends \BaseController {
 	    		//->with('members' , $members);
 	}
 
-	public function search_C($country, $city, $area)
+	public function search_C($country)
 	{
-		
+		$location = $country;
+		$radius = 25;
+		$category = '';
+		return $this->doSearch(['address'=>$location], $category, $radius);
 	}
-	public function search_C_C($country, $city, $area, $category)
+	public function search_C_C($country, $city)
 	{
-
+		$location = $country.', '.$city;
+		$radius = 25;
+		$category = '';
+		return $this->doSearch(['address'=>$location], $category, $radius);
 	}
 	public function search_C_C_A($country, $city, $area)
 	{
-		
+		$location = $country.', '.$city.', '.$area;
+		$category = '';
+		$radius = 25;
+		return $this->doSearch(['address'=>$location], $category, $radius);
 	}
 	public function search_C_C_A_C($country, $city, $area, $category)
 	{
-
+		$location = $country.', '.$city.', '.$area;
+		$radius = 25;
+		return $this->doSearch(['address'=>$location], $category, $radius);
 	}
 }

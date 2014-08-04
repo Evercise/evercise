@@ -171,7 +171,7 @@
 
 								
 								<div class="rating-block">
-									<?php echo HTML::image('profiles/'.$rating->user->directory.'/'.$rating->user->image,  $rating->user->display_name  , array('title' => $rating->user->display_name ,'class' => 'user-icon')); ?>
+									<?php echo HTML::image('profiles/'.$rating->rator->directory.'/'.$rating->rator->image,  $rating->rator->display_name  , array('title' => $rating->rator->display_name ,'class' => 'user-icon')); ?>
 									<?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?>
 
 
@@ -184,7 +184,7 @@
 									
 
 
-									<strong>  <?php echo $rating->user->display_name; ?></strong> on <?php echo date('d/m/Y' , strtotime($rating->created_at)); ?> </span>
+									<strong>  <?php echo $rating->rator->display_name; ?></strong> on <?php echo date('d/m/Y' , strtotime($rating->created_at)); ?> </span>
 									<p><?php echo $rating->comment; ?></p> 
 								</div>
 							</div>
@@ -198,8 +198,13 @@
 					<?php foreach ($memberUsers as $key => $memberUser): ?>
 						<?php if($memberUser->image != ''): ?>
 							<?php echo HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')); ?>
+							<span class="display_name"><?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?><?php echo $memberUser->display_name; ?></span>
+							<?php echo HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')); ?>
+							<span class="display_name"><?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?><?php echo $memberUser->display_name; ?></span>
+
 						<?php else: ?>
 							<?php echo HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')); ?>
+							<p><?php echo $memberUser->display_name; ?></p>
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</div>

@@ -27,3 +27,11 @@ elseif (App::environment('production'))
 	        'secret' => 'cef796862987836c8bb175e4304de6da' // VS10319
 	    );
 }
+elseif (App::environment('amazonsandbox'))
+{
+	    // The environment is VS10319
+	return array(
+	        'appId' => '', // 
+	        'secret' => '' // 
+	    );
+}
