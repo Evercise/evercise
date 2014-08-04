@@ -21,7 +21,10 @@ function initImage(params)
         dataType: 'json' 
         }; 
      $('body').delegate('#image','change', function(){
-         $('#upload').ajaxForm(options).submit();   
+        setTimeout(function() {
+               $('#upload').ajaxForm(options).submit(); 
+          }, 300);
+          
         trace("uploading image ... "+ratio);
      }); 
 }        
