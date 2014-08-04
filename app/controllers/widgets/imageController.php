@@ -1,6 +1,6 @@
 <?php namespace widgets;
 
-use Auth, BaseController, Form, Input, Redirect, Sentry, View, Request, Response, Validator, Image;
+use Auth, BaseController, Form, Input, Redirect, Sentry, View, Request, Response, Validator, Image, Config;
  
 class ImageController extends \BaseController {
 
@@ -22,7 +22,7 @@ class ImageController extends \BaseController {
         if (!isset($file))
             return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
 
-        if ($file->getSize() > \Config::get('image')['max_size'])
+        if ($file->getSize() > Config::get('image')['max_size'])
             return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
 
 
@@ -58,7 +58,7 @@ class ImageController extends \BaseController {
                 $viewString = View::make('widgets/crop')->__toString();
                 $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
                // $postCrop = Response::json(route('image.crop.post'));
-                $postCrop = url('/').'/widgets/crop';
+                $postCrop = url().'/widgets/crop';
                 return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
             }
             else
