@@ -1,5 +1,7 @@
 <?php namespace email;
 
+use HTML;
+
 class SessionMailer extends Mailer {
 
 	/**
