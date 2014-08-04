@@ -167,7 +167,7 @@ function initToolTip()
           $( this ).tooltip( "open" );
           return false;
         })
-      .attr( "title", "" ).css({ cursor: "pointer" });
+      //.attr( "title", "" ).css({ cursor: "pointer" });
       //$(this).tooltip('option', {disabled: false}).tooltip('open'); // uncomment for testing
     })
 

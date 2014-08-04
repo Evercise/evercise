@@ -108,8 +108,10 @@ registerInitFunction('initDashboardPanel');
 registerInitFunction('updateCountryCode');
 function updateCountryCode()
 {
-    $('#country_code').html( $('#areacode').val());
-    $('#areacode').on('change', function () {
+
+    $('.country_code').html( $(this).closest('div').find('.areacode').val());
+    $('.areacode').on('change', function () {
+        $(this).closest('div').find('.country_code').html($(this).val());
         updateCountryCode();
     });
 }
