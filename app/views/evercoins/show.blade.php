@@ -108,7 +108,7 @@
 				</div>
 				<div class="footer">
 					<p>Your profile is {{  $profile }}% complete </p>
-					{{ HTML::linkRoute('users.edit.tab', 'Compete Profile', [$id, 'profile'] , array('class' => 'milestone-btn btn-yellow')) }}
+					{{ HTML::linkRoute('users.edit.tab', 'Complete Profile', [$id, 'profile'] , array('class' => 'milestone-btn btn-yellow')) }}
 				</div>
 			</div>
 		@else
