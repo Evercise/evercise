@@ -64,7 +64,7 @@ class SendEmails extends Command {
 			$numSessions += count($group->evercisesession);
 			foreach ($group->evercisesession as $session)
 			{
-				if ($session->members_emailed == 1)
+				if ($session->members_emailed == 0)
 				{
 					$userList = [];
 					foreach ($session->users as $user) {
