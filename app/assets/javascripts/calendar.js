@@ -27,7 +27,7 @@ function calendarSlide () {
     var p = -1;
 
     mt = parseInt($('#calendar').css('marginTop'));
-    topmt = mt+12;
+    topmt = mt;
     bottom = parseInt(class_height[class_height.length - 1] + mt);
 
     // get window position
