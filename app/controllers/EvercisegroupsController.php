@@ -396,7 +396,7 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initStickHeader' => 1 ));
 				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
-				JavaScript::put(['zero_results'=>Loc::text('discover', 'zero_results')]); 
+				JavaScript::put(['zero_results'=>trans('discover.zero_results')]); 
 
 				/* open graph meta tags */
 				/* git site https://github.com/chriskonnertz/open-graph */
@@ -733,7 +733,7 @@ class EvercisegroupsController extends \BaseController {
 	    	'initSwitchView' => 1 ,
 	    	'InitSearchForm' => 1 ,
 	    	'initClassBlock' => 1 ,
-	    	'zero_results'=>Loc::text('discover', 'zero_results')
+	    	'zero_results'=>trans('discover.zero_results')
 	    ]);
 	     
 

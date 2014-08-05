@@ -15,9 +15,9 @@
 		@include('evercisegroups.discover_map', array('places' => $evercisegroups))
 		<div class="heading-block">
 			@if(Input::get('location'))
-				<h4>{{ ucfirst((Input::get('category')?Input::get('category').' ':'').Loc::text('discover', 'classes_near')).' ') . Str::limit( Input::get('location'),52)}}</h4>
+				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_near').' ') . Str::limit( Input::get('location'),52)}}</h4>
 			@else
-				<h4>{{ ucfirst((Input::get('category')?Input::get('category').' ':'').Loc::text('discover', 'classes_in_your_area'))) }}</h4>
+				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_in_your_area') ) }}</h4>
 			@endif
 			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
 			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
