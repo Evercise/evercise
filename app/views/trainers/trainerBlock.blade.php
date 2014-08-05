@@ -12,10 +12,20 @@
 					@else
 						{{ HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image'))}}
 					@endif
+					
+	
 				</div>
+
 				<div class="trainer-block-info-wrapper">
 					
-					<h4>{{$name}}</h4>
+					<h4>
+						{{$name}}
+						@if(isset($orientation))
+						@if($orientation == 'landscape')
+							<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+						@endif
+					@endif
+					</h4>
 					<h5>{{$speciality}}</h5>
 					@if(isset($trainerRating))
 						<div class="rating">
@@ -28,7 +38,7 @@
 					@if($orientation == 'portrait')
 							<p>{{ Str::limit($bio, 120) }}</p>
 					@else
-						<div class="expand-wrapper" id="trainer-block-info-about">	
+						<div id="trainer-block-info-about">	
 						{{--				
 								<p class="expand expand-short">{{  Str::limit($bio, 70)  }} <span>(read more)</span></p>
 								<p class="expand expand-full">{{ $bio }}
@@ -42,3 +52,4 @@
 	@if(isset($orientation))
 		</div>
 	@endif
+	

@@ -19,8 +19,8 @@
                             <div id="displayName-dropdown" class="dropdown-menu">
                                  <span>{{ HTML::linkRoute('trainers.edit', 'My Dashboard' , $user->id) }}</span>
                                 <span>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</span>
-                                <hr>
-                                <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+
+                                
                                 @if ($user->inGroup($adminGroup))
                                   <hr>
                                   <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>
@@ -43,8 +43,7 @@
                            <div id="displayName-dropdown" class="dropdown-menu">
                                  <span>{{ HTML::linkRoute('users.edit', 'My Dashboard' , $user->id) }}</span>
                                 <!--span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span--> 
-                                <hr>
-                                <span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+
                                 @if ($user->inGroup($adminGroup))
                                   <hr>
                                   <span>{{ HTML::linkRoute('admin.pending', 'pending trainers') }}</span>

@@ -12,10 +12,20 @@
 					<?php else: ?>
 						<?php echo HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image')); ?>
 					<?php endif; ?>
+					
+	
 				</div>
+
 				<div class="trainer-block-info-wrapper">
 					
-					<h4><?php echo $name; ?></h4>
+					<h4>
+						<?php echo $name; ?>
+						<?php if(isset($orientation)): ?>
+						<?php if($orientation == 'landscape'): ?>
+							<span><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></span>
+						<?php endif; ?>
+					<?php endif; ?>
+					</h4>
 					<h5><?php echo $speciality; ?></h5>
 					<?php if(isset($trainerRating)): ?>
 						<div class="rating">
@@ -28,7 +38,7 @@
 					<?php if($orientation == 'portrait'): ?>
 							<p><?php echo Str::limit($bio, 120); ?></p>
 					<?php else: ?>
-						<div class="expand-wrapper" id="trainer-block-info-about">	
+						<div id="trainer-block-info-about">	
 						<?php /*				
 								<p class="expand expand-short"><?php echo Str::limit($bio, 70); ?> <span>(read more)</span></p>
 								<p class="expand expand-full"><?php echo $bio; ?>
@@ -42,3 +52,4 @@
 	<?php if(isset($orientation)): ?>
 		</div>
 	<?php endif; ?>
+	

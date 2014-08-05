@@ -16,6 +16,10 @@ function session_overview() {
     $('select.time-box').on('change', function(){
         updateTimeFields();
     });
+    $(document).on('keyup', '#s-duration', function(){
+        trace('inut change');
+        updateNewSessionFields();
+    })
     updateTimeFields();
 
     initSlider('{"name":"s-price","min":10,"max":120,"step":0.5,"value":1}');

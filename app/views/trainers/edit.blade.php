@@ -4,10 +4,12 @@
 @section('content')
 
 	@include('trainers.trainerBlock', array('speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $user->directory.'/'. $user->image , 'name' => $user->display_name , 'member_since' => date('dS M-Y', strtotime( $user->created_at))))
+
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
 			<div class="trainer-dashboard-wrapper-left">
 				@include('trainers.dashboardTabs')
+				
 			</div>
 
 			<div class="dashboard-wrapper-right">
