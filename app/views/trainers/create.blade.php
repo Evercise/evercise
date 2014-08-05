@@ -11,7 +11,10 @@
     
         {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
-
+         @include('form.blank', array('blank'=>'image'))
+        @if ($errors->has('image'))
+            {{ $errors->first('image', '<p class="error-msg">:message</p>')}}
+        @endif
         @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'max 50 characters', 'maxlength'=>50, 'label'=>'Add your profession', 'tooltip'=>'Please add your profession (example: “Personal trainer”, “Yoga instructor”, “Tennis coach”, “fitness specialist”, ...)' ))
         @if ($errors->has('profession'))
             {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}

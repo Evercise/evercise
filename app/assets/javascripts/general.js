@@ -338,6 +338,7 @@ function initPut (params) {
                           };
                           if (value.length != 0)
                           {
+                            trace(index);
                             form.find("#" + index).addClass('error');
                             form.find("#" + index).after('<span class="error-msg">' + value + '</span>');
                              /*$("#" + index).addClass('error');

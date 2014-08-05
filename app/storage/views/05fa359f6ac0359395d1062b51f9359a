@@ -3,9 +3,9 @@
 		<nav>		
 			<ul>
 				<a href="<?php echo URL::route('home', null); ?>"><?php echo HTML::image('/img/evercise logo yellow.png', 'evercise logo', array('class' => 'logo'));; ?></a>
-                <li><?php echo HTML::linkRoute('static.how_it_works', Loc::text('header', 'how_it_works')); ?></li>
+                <li><?php echo HTML::linkRoute('static.how_it_works', trans('header.how_it_works')); ?></li>
 
-                <li><?php echo HTML::linkRoute('evercisegroups.search', Loc::text('header', 'discover_classes')); ?></li>
+                <li><?php echo HTML::linkRoute('evercisegroups.search', trans('header.discover_classes')); ?></li>
 
                 <?php if(isset($user)): ?>
                     <?php if ($user->inGroup($trainerGroup)): ?>
@@ -59,12 +59,12 @@
 
                 <?php else: ?>
                     <div class="nav-end">
-                       <li><?php echo HTML::linkRoute('users.create', Loc::text('header', 'register')); ?></li>
+                       <li><?php echo HTML::linkRoute('users.create', trans('header.register')); ?></li>
                     </div>
                     <div class="nav-join">
                          <div class="nav-login">
                             <?php if(isset($redirect_after_login)): ?>
-                               <li><?php echo HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , Loc::text('header', 'login'),  array('id'=>'login', 'class' => 'login')); ?></li>
+                               <li><?php echo HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , trans('header.login'),  array('id'=>'login', 'class' => 'login')); ?></li>
                               
                             <?php else: ?>
                                <li> <?php echo HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login')); ?></li>

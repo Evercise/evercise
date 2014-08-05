@@ -18,7 +18,7 @@
                     <?php echo $errors->first('old_password', '<p class="error_msg">:message</p>'); ?>
                 <?php endif; ?>
 
-                <?php echo $__env->make('form.password', array('fieldname'=>'new_password', 'placeholder'=>'Choose a password', 'maxlength'=>20, 'confirmation'=> 'Please re-enter your password', 'label'=>'Your new password', 'tooltip'=>'For increased security, please choose a password with a combination of lowercase, capital letters and numbers (but no symbols).'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                <?php echo $__env->make('form.password', array('fieldname'=>'new_password', 'placeholder'=>'Choose a password', 'maxlength'=>20, 'confirmation'=> 'Please re-enter your password', 'label'=>'Your new password', 'tooltip'=>'For increased security, please choose a password with a combination of lowercase and numbers'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <?php if ($errors->has('new_password')): ?>
                     <?php echo $errors->first('new_password', '<p class="error_msg">:message</p>'); ?>
                 <?php endif; ?>

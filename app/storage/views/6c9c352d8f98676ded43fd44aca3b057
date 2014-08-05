@@ -10,7 +10,10 @@
     
         <?php echo Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')); ?>
 
-
+         <?php echo $__env->make('form.blank', array('blank'=>'image'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <?php if ($errors->has('image')): ?>
+            <?php echo $errors->first('image', '<p class="error-msg">:message</p>'); ?>
+        <?php endif; ?>
         <?php echo $__env->make('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'max 50 characters', 'maxlength'=>50, 'label'=>'Add your profession', 'tooltip'=>'Please add your profession (example: “Personal trainer”, “Yoga instructor”, “Tennis coach”, “fitness specialist”, ...)' ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         <?php if ($errors->has('profession')): ?>
             <?php echo $errors->first('profession', '<p class="error-msg">:message</p>'); ?>
