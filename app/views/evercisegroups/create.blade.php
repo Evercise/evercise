@@ -92,8 +92,12 @@
             @endif
             
             <div class="center-btn-wrapper" >
-        	   {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow  disabled', 'id' => 'create_class')) }}
-     
+                @if(Session::has('image'))
+                {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow', 'id' => 'create_class')) }}
+            @else
+                {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow disabled', 'id' => 'create_class')) }}
+            @endif
+                 
             </div>
 
         	<div class="success_msg">Success!</div>

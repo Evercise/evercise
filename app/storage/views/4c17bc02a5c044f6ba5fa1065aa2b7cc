@@ -91,8 +91,12 @@
             <?php endif; ?>
             
             <div class="center-btn-wrapper" >
-        	   <?php echo Form::submit('Create Class' , array('class'=>'btn btn-yellow  disabled', 'id' => 'create_class')); ?>
-     
+                <?php if(Session::has('image')): ?>
+                <?php echo Form::submit('Create Class' , array('class'=>'btn btn-yellow', 'id' => 'create_class')); ?>
+            <?php else: ?>
+                <?php echo Form::submit('Create Class' , array('class'=>'btn btn-yellow disabled', 'id' => 'create_class')); ?>
+            <?php endif; ?>
+                 
             </div>
 
         	<div class="success_msg">Success!</div>
