@@ -29,7 +29,7 @@
 		
 		<div id="list" class="discover-view tab-view">
 
-			<div class="row9">
+			<div class="row9 mb20">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
 						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
