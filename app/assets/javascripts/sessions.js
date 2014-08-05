@@ -16,8 +16,8 @@ function session_overview() {
     $('select.time-box').on('change', function(){
         updateTimeFields();
     });
-    $(document).on('keyup', '#s-duration', function(){
-        trace('inut change');
+    // keyup on price and duration fields
+    $(document).on('keyup', '#s-duration, #s-price', function(){
         updateNewSessionFields();
     })
     updateTimeFields();

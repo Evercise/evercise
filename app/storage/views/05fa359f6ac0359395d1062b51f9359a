@@ -27,7 +27,7 @@
                                   <span><?php echo HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals'); ?></span>
                                 <?php endif; ?>
                             </div>
-                        </div>   
+                        </div>
                         <div class="nav-join">
                           <div class="nav-login">
                             <li><?php echo HTML::linkRoute('evercisegroups.index', 'Class Hub'); ?></li>
