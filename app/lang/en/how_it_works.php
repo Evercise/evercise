@@ -4,6 +4,7 @@ return [
   'title' => 'How It Works',
   'choose_user' => 'I am a participant',
   'chooser_trainer' => 'I am a trainer',
+
   'step_1_1' => 'Get fit with maximum flexibility',
   'step_1_2' => 'Access a huge range of fitness classes',
   'step_1_3' => 'Find a class wherever you are',
@@ -19,7 +20,22 @@ return [
   'step_4_1' => 'Make an impact with your review',
   'step_4_2' => 'Tell users how you felt during the class',
   'step_4_3' => 'Help like minded people with their fitness needs',
-  '' => '',
+
+  'tr_step_1_1' => 'No expensive monthly fees',
+  'tr_step_1_2' => 'Membership is FREE',
+  'tr_step_1_3' => 'Great exposure',
+  'tr_step_2_1' => 'Easily create a class',
+  'tr_step_2_2' => 'Reuse an edit venue details',
+  'tr_step_2_3' => 'View data on participants',
+  'tr_step_2_4' => 'Classes are promoted',
+  'tr_step_3_1' => 'Add sessions to a class with a click of a button',
+  'tr_step_3_2' => 'Directly message any participants',
+  'tr_step_3_3' => 'Get sent your participant list before each session',
+  'tr_step_4_1' => 'Withdraw money from you evercise wallet to your paypal account',
+  'tr_step_4_2' => 'View statistics on all classes',
+  'tr_step_4_3' => 'View your activity',
+  'tr_step_4_4' => 'Monitor your success',
+  
   '' => '',
   '' => '',
 ];
