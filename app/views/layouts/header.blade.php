@@ -42,7 +42,7 @@
                            </li>
                            <div id="displayName-dropdown" class="dropdown-menu">
                                  <span>{{ HTML::linkRoute('users.edit', 'My Dashboard' , $user->id) }}</span>
-                                <!--span>{{ HTML::linkRoute('evercisegroups.index', 'My Cart') }}</span--> 
+      
 
                                 @if ($user->inGroup($adminGroup))
                                   <hr>

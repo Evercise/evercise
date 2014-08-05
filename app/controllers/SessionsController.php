@@ -771,7 +771,7 @@ class SessionsController extends \BaseController {
 
 			return Response::json([
 				'callback' => 'openPopup',
-				'popupHtml' => (string)View::make('sessions.checkoutwithevercoins')
+				'popup' => (string)View::make('sessions.checkoutwithevercoins')
 				->with('evercisegroupId' , $evercisegroupId)
 				->with('priceInEvercoins' , $priceInEvercoins)
 				->with('evercoinBalance', $evercoin->balance)

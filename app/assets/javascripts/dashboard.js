@@ -121,7 +121,7 @@ function updateCountryCode()
 
 function openPopup(data)
 {
-    //trace(data.popup, true);
+    trace(data.popup, true);
     $('.mask').show();
     $('.container').append(data.popup);
     initPut();

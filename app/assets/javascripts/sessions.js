@@ -118,11 +118,3 @@ function mailAll()
     });
 }
 registerInitFunction('mailAll');
-
-function openPopup(data)
-{
-
-    //trace(data.popupHtml, true);
-    $('.mask').show();
-    $('.container').append(data.popupHtml);
-}

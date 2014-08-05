@@ -336,7 +336,6 @@ function initPut (params) {
                           };
                           if (value.length != 0)
                           {
-                            trace(index);
                             form.find("#" + index).addClass('error');
                             form.find("#" + index).after('<span class="error-msg">' + value + '</span>');
                              /*$("#" + index).addClass('error');
@@ -347,7 +346,6 @@ function initPut (params) {
                  form.find('.btn').removeClass('disabled');                   
               }else{
                   // call back
-                  trace('callback');
                   form.find('.btn').removeClass('disabled');
                   var callback = data.callback;
 
@@ -519,6 +517,14 @@ function refreshpage(){
 function sendhome(data){
   trace(data.message);
   window.location.href = '/';
+}
+
+function openPopup(data)
+{
+    $('.mask').show();
+    trace('openPopup', true);
+    $('body').append(data.popup);
+   // initPut();
 }
 
 function loading(){

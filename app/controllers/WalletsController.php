@@ -148,12 +148,21 @@ class WalletsController extends \BaseController {
 			$withdrawalAmount = Input::get('withdrawal');
 			$paypal = Input::get('paypal');
 
+			$wallet = Wallet::where('user_id', $this->user->id)->first();
 
+			if ($withdrawalAmount > $wallet->balance) {
+				/* test to see if user has enough in there wallet, they can only submit more by using the console, if they dont log them out and send them home */
+				Sentry::logout();
+				return Response::json([
+					'callback' => 'sendhome'
+				]);
+				
+			}
 			$withdrawal = Withdrawalrequest::create(['user_id'=>$this->user->id, 'transaction_amount'=>$withdrawalAmount, 'account'=>$paypal, 'acc_type'=>'paypal', 'processed'=>0]);
 			
 			if($withdrawal)
 			{
-				$wallet = Wallet::where('user_id', $this->user->id)->first();
+				
 				$wallet->withdraw( $withdrawalAmount );
 			
 				return Response::json([
