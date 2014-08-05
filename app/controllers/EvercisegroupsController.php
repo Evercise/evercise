@@ -396,6 +396,7 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initStickHeader' => 1 ));
 				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
 				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+				JavaScript::put(['zero_results'=>Loc::text('discover', 'zero_results')]); 
 
 				/* open graph meta tags */
 				/* git site https://github.com/chriskonnertz/open-graph */
@@ -727,10 +728,14 @@ class EvercisegroupsController extends \BaseController {
 	   // return $paginatedResults->toJson();
 
 	   // JavaScript::put(array('classes' => json_encode($places) ));
-	    JavaScript::put(array('MapWidgetloadScript' =>  json_encode(array('discover'=> true))));
-	    JavaScript::put(array('initSwitchView' => 1 ));
-	    JavaScript::put(array('InitSearchForm' => 1 ));
-	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
+	    JavaScript::put([
+	    	'MapWidgetloadScript' =>  json_encode(array('discover'=> true)),
+	    	'initSwitchView' => 1 ,
+	    	'InitSearchForm' => 1 ,
+	    	'initClassBlock' => 1 ,
+	    	'zero_results'=>Loc::text('discover', 'zero_results')
+	    ]);
+	     
 
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $paginatedResults->toJson())

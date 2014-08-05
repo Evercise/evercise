@@ -5,9 +5,4 @@ return array(
   'discover_classes' => 'Discover classes',
   'login' => 'login',
   'register' => 'register',
-  '' => '',
-  '' => '',
-  '' => '',
-  '' => '',
-  '' => '',
 );
