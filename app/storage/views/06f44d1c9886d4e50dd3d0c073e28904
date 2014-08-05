@@ -9,7 +9,7 @@
 	<div class="formfield">
 
 		<div id="categoryField">
-		  <input class="category" placeholder="Start typing" type="text" name="<?php echo $fieldname; ?>" id="<?php echo $fieldname; ?>" value="<?php echo isset($selectedCategory) ? $selectedCategory : ''; ?>"/>
+		  <input class="category" placeholder="<?php echo Loc::text('discover', 'search_box'); ?>" type="text" name="<?php echo $fieldname; ?>" id="<?php echo $fieldname; ?>" value="<?php echo isset($selectedCategory) ? $selectedCategory : ''; ?>"/>
 		</div>
 	</div>
 </div>

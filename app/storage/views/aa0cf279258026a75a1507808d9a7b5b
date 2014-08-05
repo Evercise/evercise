@@ -4,5 +4,5 @@
 <?php endif; ?>
 
 <div id="locationField">
-  <input id="location" placeholder="Enter a location" type="text" name="location" value="<?php echo isset($selectedLocation) ? $selectedLocation : ''; ?>"/>
+  <input id="location" placeholder="<?php echo Loc::text('discover', 'location_box'); ?>" type="text" name="location" value="<?php echo isset($selectedLocation) ? $selectedLocation : ''; ?>"/>
 </div>

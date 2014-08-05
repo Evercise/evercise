@@ -635,7 +635,7 @@ class UsersController extends \BaseController {
 				'old_password' => 'required',
 				'new_password' => 'required|confirmed|min:6|max:32|has:letter,num',
 			],
-			['new_password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
+			['new_password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
 		);
 
 		$oldPassword = Input::get('old_password');
