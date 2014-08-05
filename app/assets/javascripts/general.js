@@ -314,15 +314,14 @@ function initPut (params) {
           function(data) {
               trace("initPut >> Sending data.....");
               loaded();
-              form.find('.btn').removeClass('disabled');
+              
               if (data.validation_failed == 1)
               {
                   if (!$('.modal').length) {
                     $('.mask').hide();
                   };
-                  
-                  setTimeout(function() {
-                      console.debug("failed: "+data);
+
+                  console.debug("failed: "+data);
                       console.debug(data, true);
                       // show validation errors
                       var arr = data.errors;
@@ -345,11 +344,11 @@ function initPut (params) {
                              */
                           }
                       });
-                  }, 300);
-                  
+                 form.find('.btn').removeClass('disabled');                   
               }else{
                   // call back
                   trace('callback');
+                  form.find('.btn').removeClass('disabled');
                   var callback = data.callback;
 
                   window[callback](data, form);
@@ -365,23 +364,18 @@ function initPut (params) {
 function gotoUrl(data)
 {
   trace('gotourl');
-  setTimeout(function() {
-      window.location.href = data.url;
-  }, 300);
+  window.location.href = data.url;
 
 }
 function successAndRefresh(data, form)
 {
   form.find('.success_msg').show();
-  setTimeout(function() {
-      window.location.href = '';
-  }, 300);
+  window.location.href = '';
+
 }
 function fail(data, form)
 {
-  setTimeout(function() {
-      window.location.href = './';
-  }, 300);
+  window.location.href = './';
 }
 
 registerInitFunction('initPut');
@@ -519,16 +513,12 @@ function initStickHeader(){
 registerInitFunction('initStickHeader');
 
 function refreshpage(){
-  setTimeout(function() {
-    window.location.href = '';
-  }, 10);
+  window.location.href = '';
 }
 
 function sendhome(data){
   trace(data.message);
-  setTimeout(function() {
-    window.location.href = '/';
-  }, 1000);
+  window.location.href = '/';
 }
 
 function loading(){
