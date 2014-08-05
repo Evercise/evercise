@@ -1,0 +1,25 @@
+<?php
+
+return [
+  'title' => 'How It Works',
+  'choose_user' => 'I am a participant',
+  'chooser_trainer' => 'I am a trainer',
+  'step_1_1' => 'Get fit with maximum flexibility',
+  'step_1_2' => 'Access a huge range of fitness classes',
+  'step_1_3' => 'Find a class wherever you are',
+  'step_1_4' => 'Join for FREE',
+  'step_2_1' => 'See reviews of a class before you join',
+  'step_2_2' => 'Review and join multiple timeslots',
+  'step_2_3' => 'View details about the venue and facilities',
+  'step_2_4' => 'Ask the trainer any questions you may have',
+  'step_3_1' => 'Train with like minded people',
+  'step_3_2' => 'Achieve your goals',
+  'step_3_3' => 'Receive a reminder well in advance',
+  'step_3_4' => 'Make new friends',
+  'step_4_1' => 'Make an impact with your review',
+  'step_4_2' => 'Tell users how you felt during the class',
+  'step_4_3' => 'Help like minded people with their fitness needs',
+  '' => '',
+  '' => '',
+  '' => '',
+];

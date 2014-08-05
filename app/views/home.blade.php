@@ -33,15 +33,15 @@
 
 		<div id="step_1" class="four-step col4">
 			{{ HTML::image('img/search.png','search for classes', array('class' => 'home-step-img')) }}
-			<h6>{{Loc::text($view_name, 'step_1')}}</h6>
+			<h6>{{Loc::text('general', 'step_1')}}</h6>
 		</div>
 		<div id="step_2" class="four-step col4">
 			{{ HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img')) }}
-			<h6>{{Loc::text($view_name, 'step_2')}}</h6>
+			<h6>{{Loc::text('general', 'step_2')}}</h6>
 		</div>
 		<div id="step_3" class="four-step col4">
 			{{ HTML::image('img/Class.png','get fit', array('class' => 'home-step-img')) }}
-			<h6>{{Loc::text($view_name, 'step_3')}}</h6>
+			<h6>{{Loc::text('general', 'step_3')}}</h6>
 		</div>
 
 		

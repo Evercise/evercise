@@ -42,12 +42,16 @@ class SendEmails extends Command {
 	{
 		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
 		
+		$today = new DateTime();
 		$onedaystime = (new DateTime())->add(new DateInterval('P1D'));
 
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$onedaystime)
+		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$onedaystime, &$today)
 		{
 
-			$query->where('date_time', '<', $onedaystime);
+			$query
+				->where('date_time', '<', $onedaystime)
+				->where('date_time', '>', $today)
+				->whereHas('sessionmembers', function($query2){});
 			//$query->whereIn('id', [1,2,6]);
 
 		}), 'user', 'venue')->get();
@@ -60,7 +64,7 @@ class SendEmails extends Command {
 			$numSessions += count($group->evercisesession);
 			foreach ($group->evercisesession as $session)
 			{
-				if ($session->members_emailed == 1)
+				if ($session->members_emailed == 0)
 				{
 					$userList = [];
 					foreach ($session->users as $user) {
