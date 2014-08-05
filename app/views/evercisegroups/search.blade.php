@@ -19,15 +19,28 @@
 			@else
 				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_in_your_area') ) }}</h4>
 			@endif
-			<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
-			<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
+			@if(Input::get('view'))
+				@if(Input::get('view') == 'grid')
+					<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
+					<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
+
+				@else
+					<span data-view="list" id="list-view" class="icon-btn list-icon selected"></span>
+					<span data-view="grid" id="grid-view" class="icon-btn grid-icon"></span>
+				@endif
+			@else
+				<span data-view="list" id="list-view" class="icon-btn list-icon"></span>
+				<span data-view="grid" id="grid-view" class="icon-btn grid-icon selected"></span>
+			@endif
+			{{ Form::hidden( 'view-select' , 'grid', array('id' => 'view-select')) }}
 		</div>
 		
-		<div id="grid" class="discover-view tab-view selected">
-			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ))
-		</div>
-		
-		<div id="list" class="discover-view tab-view">
+		@if(Input::get('view'))
+			<div id="grid" class="discover-view tab-view {{Input::get('view') == 'grid'? 'selected' : null}}">
+				@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ))
+			</div>
+
+			<div id="list" class="discover-view tab-view {{Input::get('view') == 'list'? 'selected' : null}}">
 
 			<div class="row9 mb20">
 				@if (isset($evercisegroups)) 
@@ -38,7 +51,42 @@
 				
 			</div>
 		</div>
-		{{ $evercisegroups->appends(['category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
+		@else
+			<div id="grid" class="discover-view tab-view selected">
+				@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ))
+			</div>
+
+			<div id="list" class="discover-view tab-view">
+
+			<div class="row9 mb20">
+				@if (isset($evercisegroups)) 
+					@foreach ($evercisegroups as $key => $evercisegroup) 
+						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
+					@endforeach
+				@endif
+				
+			</div>
+		</div>
+		@endif
+		
+		@if(Input::get('view'))
+			<div id="gridView" class="view-pag {{Input::get('view') == 'grid'? 'selected' : 'hidden'}}"> 
+				{{ $evercisegroups->appends(['view' => 'grid', 'category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
+			</div>
+			<div id="listView" class="view-pag {{Input::get('view') == 'list'? 'selected' : 'hidden'}}">
+				{{ $evercisegroups->appends(['view' => 'list', 'category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
+			</div>
+		@else
+			<div id="gridView" class="view-pag"> 
+				{{ $evercisegroups->appends(['view' => 'grid', 'category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
+			</div>
+			<div id="listView" class="view-pag hidden">
+				{{ $evercisegroups->appends(['view' => 'list', 'category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
+			</div>
+
+		@endif
+			
+		
 		
 	</div>
 </div>

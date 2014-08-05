@@ -418,6 +418,10 @@ function initSwitchView(){
         var view = $(this).data('view');
         $('.tab-view').removeClass('selected');
         $('#'+view).addClass('selected');
+        // add view to hidden field
+
+        $('#view-select').val(view);
+        $( '.view-pag').toggleClass('hidden');
 
     })
 }
