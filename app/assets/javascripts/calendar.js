@@ -37,7 +37,7 @@ function calendarSlide () {
     	var y = $(this).scrollTop();
 
     	if( y == 0 ){
-    		$('#calendar-wrapper').css({
+    		$('#calendar').css({
         		marginTop: topmt+ 'px',
         		'-webkit-transition': 'all 0.5s ease',
         		'-moz-transition': 'all 0.5s ease',
@@ -53,7 +53,7 @@ function calendarSlide () {
         else if( y > class_top[class_top.length - 1] ){
             trace('bottom');
             /*
-            $('#calendar-wrapper').css({
+            $('#calendar').css({
                 marginTop: bottom+ 'px',
                 '-webkit-transition': 'all 0.5s ease',
                 '-moz-transition': 'all 0.5s ease',
@@ -72,7 +72,7 @@ function calendarSlide () {
             trace('norm');
     		mt = parseInt(mt + class_height[i]);
     		
-    		$('#calendar-wrapper').css({
+    		$('#calendar').css({
         		marginTop: mt+'px',
         		'-webkit-transition': 'all 0.5s ease',
         		'-moz-transition': 'all 0.5s ease',
@@ -96,7 +96,7 @@ function calendarSlide () {
             $('#evercisegroupDuration').val(class_duration[p]);
     		i--;
     		mt = parseInt(mt - class_height[i]);
-    		$('#calendar-wrapper').css({
+    		$(''/'').css({
         		marginTop: mt+'px',
         		'-webkit-transition': 'all 0.5s ease',
         		'-moz-transition': 'all 0.5s ease',
