@@ -4,5 +4,5 @@
 @endif
 
 <div id="locationField">
-  <input id="location" placeholder="{{Loc::text('discover', 'location_box')}}" type="text" name="location" value="{{ isset($selectedLocation) ? $selectedLocation : '' }}"/>
+  <input id="location" placeholder="{{trans('discover.location_box')}}" type="text" name="location" value="{{ isset($selectedLocation) ? $selectedLocation : '' }}"/>
 </div>
