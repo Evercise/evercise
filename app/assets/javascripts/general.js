@@ -284,16 +284,15 @@ registerInitFunction('initChart');
 // NOW gets the method from the form and sends via that method
 function initPut (params) {
 
-  if (params == null) {
-      selector = '.create-form';
+
+  if (params == null || params == 1) {
+      selector = '.create-form, .update-form' ;
   }else{
       params = JSON.parse(params);
       selector = params.selector;
   }
 
-
-  trace(selector, true);
-  $( '.create-form, .update-form' ).on( 'submit', function() {
+  $( document ).on( 'submit', selector , function() {
 
       loading();
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');

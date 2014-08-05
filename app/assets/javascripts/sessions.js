@@ -1,45 +1,4 @@
 //Sessions.js
-function initSessions()
-{
-   // $( '#newsession' ).on( 'submit', function() {
-    $(document).on('submit', '#newsession' , function() {
-        $('.error-msg').remove();
-        // post to controller
-        $.post(
-            $( this ).prop( 'action' ),
-             $( this ).serialize(),
-            function( data ) {
-                trace("about to win.......");
-                if (data.validation_failed == 1)
-                {
-                    trace('loose: '+data);
-                    var arr = data.errors;
-                    $.each(arr, function(index, value)
-                    {
-                        if (value.length != 0)
-                        {
-                           trace( value );
-                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
-                        }
-                    });
-
-                    $('#ajax-loading').hide();
-                }else{
-                    trace("data: "+data);
-                    // redirect to login page
-                    $('.success_msg').show();
-                    setTimeout(function() {
-                        window.location.href = data;
-                    }, 1000);
-                }
-            },
-            'json'
-        );
-        return false;
-    });
-
-}
-registerInitFunction('initSessions');
 
 
 function updateNewSessionFields()

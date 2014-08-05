@@ -7,7 +7,7 @@
 	</div>
 	
 	<div class="modal-body">
-		{{ Form::open(array('id' => 'newsession', 'url' => 'sessions', 'method' => 'post', 'class' => '')) }}
+		{{ Form::open(array('id' => 'newsession', 'url' => 'sessions', 'method' => 'post', 'class' => 'newsession')) }}
 			<div class="col4">
 				
 				{{ Form::hidden( 's-evercisegroupId' , $id, array('id' => 's-evercisegroupId')) }}
@@ -27,7 +27,7 @@
 					<p id="session-start-time">Start time: <span></span></p>
 					<p id="session-end-time">End time: <span></span></p>
 				</div>
-				{{ Form::submit('Create session' , array('class'=>'btn-yellow ')) }}
+				{{ Form::submit('Create session' , array('class'=>'btn btn-yellow ')) }}
 			</div>
 				
 			
