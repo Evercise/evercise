@@ -26,7 +26,7 @@
 		<div id="grid" class="discover-view tab-view selected">
 			@include('evercisegroups.discover_classes_block', array('classes' => $evercisegroups ))
 		</div>
-		{{ $evercisegroups->appends(['category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
+		
 		<div id="list" class="discover-view tab-view">
 
 			<div class="row9">
@@ -38,6 +38,7 @@
 				
 			</div>
 		</div>
+		{{ $evercisegroups->appends(['category' => Input::get('category'), 'location' => Input::get('location') , 'radius' => Input::get('radius')])->links()}}
 		
 	</div>
 </div>
