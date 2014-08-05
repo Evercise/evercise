@@ -240,19 +240,23 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function cloneEG($id)
 	{
-		$evercisegroups = Evercisegroup::where('id', $id)->get()->first();
+		$evercisegroup = Evercisegroup::where('id', $id)->get()->first();
+
+		if ($evercisegroup->user_id != $this->user->id) {
+			return  Redirect::route('evercisegroups.index')->with('errorNotification', 'You do not own the class you are trying to clone');
+		}
 		
 		return Redirect::route('evercisegroups.create')
-				->with('name', $evercisegroups->name)
-				->with('description', $evercisegroups->description)
-				->with('duration', $evercisegroups->default_duration)
-				->with('maxsize', $evercisegroups->capacity)
-				->with('price', $evercisegroups->default_price)
-				->with('lat', $evercisegroups->lat)
-				->with('lng', $evercisegroups->lng)
-				->with('location', array('address' => $evercisegroups->address , 'city' => $evercisegroups->town , 'postCode' => $evercisegroups->postcode ) )
-				->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroups->image)
-				->with( 'image' , $evercisegroups->image );
+				->with('name', $evercisegroup->name)
+				->with('description', $evercisegroup->description)
+				->with('duration', $evercisegroup->default_duration)
+				->with('maxsize', $evercisegroup->capacity)
+				->with('price', $evercisegroup->default_price)
+				->with('lat', $evercisegroup->lat)
+				->with('lng', $evercisegroup->lng)
+				->with('location', array('address' => $evercisegroup->address , 'city' => $evercisegroup->town , 'postCode' => $evercisegroup->postcode ) )
+				->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroup->image)
+				->with( 'image' , $evercisegroup->image );
 	}
 
 	/**
