@@ -12,10 +12,10 @@
 	</div>
 	<div class="col9">
 		<ul class="class-nav sticky-header">
-			<li><a href="#description">Description</a></li>
-			<li><a href="#sessions">Sessions</a></li>
-			<li><a href="#venue">Venues</a></li>
-			<li><a href="#reviews">Reviews/Participants</a></li>
+			<li><a href="#description">{{trans('evercisegroups-show.tab_description')}}</a></li>
+			<li><a href="#sessions">{{Lang::choice('general.session', 2)}}</a></li>
+			<li><a href="#venue">{{Lang::choice('general.venue', 2)}}</a></li>
+			<li><a href="#reviews">{{trans('evercisegroups-show.tab_reviews')}}</a></li>
 		</ul>
 		<div class="class-wrap" id="description">
 			<h1>{{ $evercisegroup->name }}</h1>
@@ -29,7 +29,7 @@
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>
 
-			<p>Gender: 
+			<p>{{Lang::choice('general.gender', 2)}}: 
 				@if ($evercisegroup->gender == 0) All
 				@elseif ($evercisegroup->gender == 1) Male
 				@elseif ($evercisegroup->gender == 2) Female
@@ -42,15 +42,15 @@
 			@endif	
 		</div>
 		<div class="class-wrap" id="sessions">
-			<h4>Sessions</h4>
+			<h4>{{Lang::choice('general.session', 2)}}</h4>
 			<br>
 			<div class="session-table">
-				<li class="hd">Class Date</li>
-				<li class="hd">Start Time</li>
-				<li class="hd">End Time</li>
-				<li class="hd">Price <small>(Per Person)</small></li>
-				<li class="hd">Tickets Left</li>
-				<li class="hd">Join</li>
+				<li class="hd">{{trans('evercisegroups-show.sessions_head_1')}}</li>
+				<li class="hd">{{trans('evercisegroups-show.sessions_head_2')}}</li>
+				<li class="hd">{{trans('evercisegroups-show.sessions_head_3')}}</li>
+				<li class="hd">{{trans('evercisegroups-show.sessions_head_4')}}</li>
+				<li class="hd">{{trans('evercisegroups-show.sessions_head_5')}}</li>
+				<li class="hd">{{trans('evercisegroups-show.sessions_head_6')}}</li>
 				<ul>
 					@foreach ($evercisegroup->futuresessions as $key => $futuresession)
 
@@ -63,7 +63,7 @@
 									<li>{{ date('M-dS' , strtotime($futuresession->date_time)) }}</li>
 									<li>{{ date('h:ia' , strtotime($futuresession->date_time)) }}</li>
 									<li>{{ date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))}}
-									<li>&pound;{{ $futuresession->price }}</li>
+									<li>{{trans('general.currency_sign')}}{{ $futuresession->price }}</li>
 									<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
 									@if (isset($membersIds[$futuresession->id]))
 
@@ -100,8 +100,8 @@
 				</ul>
 				<div class="session-total">
 					{{ Form::open(array('id' => 'join-sessions', 'url' => 'sessions/join', 'method' => 'post', 'class' => '')) }}
-						<span>Total Sessions: <span id="total-sessions">0</span></span>
-						<span>Total Price: &pound;<span id="total-price">0.00</span></span>
+						<span>{{trans('evercisegroups-show.total_sessions')}}: <span id="total-sessions">0</span></span>
+						<span>{{trans('evercisegroups-show.total_price')}}: {{trans('general.currency_sign')}}<span id="total-price">0.00</span></span>
 						{{ Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')) }}
 						{{ Form::hidden( 'session-ids' , null, array('id' => 'session-ids')) }}
 						{{ Form::submit('Checkout' , array( 'id' => 'session-checkout','class'=>'btn btn-green disabled')) }}

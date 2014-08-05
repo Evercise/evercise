@@ -27,7 +27,7 @@
                                   <span>{{ HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals') }}</span>
                                 @endif
                             </div>
-                        </div>   
+                        </div>
                         <div class="nav-join">
                           <div class="nav-login">
                             <li>{{ HTML::linkRoute('evercisegroups.index', 'Class Hub') }}</li>

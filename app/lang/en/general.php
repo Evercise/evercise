@@ -4,10 +4,11 @@ return [
   'title' => 'Everyone exercise',
   'meta_description' => 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.',  
   
-  'class' => 'Class',
+  'class' => 'Class|Classes',
   'classes' => 'Classes',
-  'session' => 'Session',
+  'session' => 'Session|Sessions',
   'sessions' => 'Sessions',
+  'venue' => 'Venue|Venues',
   'create' => 'Create',
   'about' => 'About',
   'stay_in_touch' => 'Stay in touch',
@@ -16,5 +17,6 @@ return [
   'step_2' => 'Sign up to a class online',
   'step_3' => 'Show up and shape up!',
   'step_4' => 'Rate and review',
-  '' => '',
+  'gender' => 'Gender',
+  'currency_sign' => '&pound;',
 ];
