@@ -22,8 +22,8 @@ function session_overview() {
     })
     updateTimeFields();
 
-    initSlider('{"name":"s-price","min":10,"max":120,"step":0.5,"value":1}');
-    initSlider('{"name":"s-duration","min":20,"max":100,"step":5,"value":5, "callback":"updateNewSessionFields" }');
+    initSlider('{"name":"s-price","min":1,"max":120,"step":0.5,"value":1}');
+    initSlider('{"name":"s-duration","min":10,"max":240,"step":5,"value":5, "callback":"updateNewSessionFields" }');
 
 }
 
