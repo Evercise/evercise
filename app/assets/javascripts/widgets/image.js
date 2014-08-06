@@ -4,6 +4,9 @@ var group_ratio = 2.35;
 var ratio = 1;
 var previewHeight = 100;
 
+var cropping = false;
+var submitAfterCrop = false;
+
 function setRatio(r)
 {
     trace('setting ratio: '+window[r])
@@ -34,17 +37,34 @@ function initImage(params)
          
      }); 
 
-}        
+    $( '.create-form .btn-yellow' ).on( 'click', function(event) {
+        event.preventDefault();
+        trace('save changes clicked');
+
+        if (cropping)
+        {
+            trace('cropping first');
+            submitAfterCrop = true;
+            $( '#upload' ).submit();
+        }
+        else
+        {
+            $('#user_edit').submit();
+        }
+
+    });
+
+}
 registerInitFunction('initImage');
 
-function showRequest(formData, jqForm, options) { 
+function showRequest(formData, jqForm, options) {
    // $("#validation-errors").hide().empty();
    // $("#output").css('display','none'); 
     trace("showRequest..");  
     $('.error-msg').remove();     
     return true; 
     
-} 
+}
 function showResponse(response, statusText, xhr, form)  { 
 
     if(response.success == false)
@@ -78,20 +98,49 @@ function showResponse(response, statusText, xhr, form)  {
 
 function initCrop(ratio)
 {
-    trace('initcrop');
-    $('#img-crop img').imgAreaSelect({
-        aspectRatio: ratio + ':1',
-        fadeSpeed: 300,
-        handles: true,
-        onSelectEnd: saveCroppedImage,
-        onSelectChange: preview
-    });
+    cropping = true;
+    var defaultMargin = 30;
+
+    setTimeout(function() {
+        var height = $('#img-crop img').height();
+        var width = $('#img-crop img').width();
+        if (height < width)
+        {
+            var left = ((width - height) / 2) + defaultMargin;
+            var top = defaultMargin;
+            var right = width - left;
+            var bottom = height - top;
+        }
+        else
+        {
+            var top = ((height - width) / 2) + defaultMargin;
+            var left = defaultMargin;
+            var right = width - left;
+            var bottom = height - top;
+        }
+
+        // trace('height: '+height);
+        // trace('width: '+width);
+
+        $('#img-crop img').imgAreaSelect({
+            aspectRatio: ratio + ':1',
+            fadeSpeed: 300,
+            handles: true,
+            onSelectEnd: saveCroppedImage,
+            onSelectChange: preview,
+            onInit: function(img, selection){preview(img, selection); saveCroppedImage(img, selection);},
+            x1: left, y1: top, x2: right, y2: bottom
+        });
+
+        
+
+    }, 500);
+
 
 }
 
 function preview(img, selection) {
-
-    $('#img-crop .btn-yellow').removeClass('disabled');
+    trace($('#img-crop img') + ' : '+ selection);
     
     if (!selection.width || !selection.height)
         return;
@@ -124,6 +173,7 @@ function saveCroppedImage(img, selection)
     $('#img_url').val(img.src);
     $('#img_height').val(img.height);
     //trace($('#img_height').val());
+    $('.image-form .btn-yellow').removeClass('hidden');
 }
 
 
@@ -131,26 +181,10 @@ function saveCroppedImage(img, selection)
 function postCroppedImage()
 {
     //TODO - implement cancel button here.
-    /*$('#cancel_upload').click(function(){
-        trace("cancel");
-
-        var url = '../widgets/upload';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: '',
-            dataType: 'html'
-        })
-        .done(
-            function(data) {
-                trace(data);
-                $('#upload_wrapper').html(data);
-             }
-        );
-        return false;
-    });*/
 
    $( '#upload' ).on( 'submit', function() {
+    
+    $('.image-form .btn-yellow').addClass('hidden');
     trace('postCroppedImage: ');
     // post to sontroller
     $.post(
@@ -166,7 +200,8 @@ function postCroppedImage()
             "img_height": $(  '#img_height' ).val()
         },
         function( data ) {
-            trace("about to win.......");
+            trace("cropping image...");
+            cropping = false;
             if (data.validation_failed == 1)
             {
                 trace('loose');
@@ -183,6 +218,11 @@ function postCroppedImage()
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 //$('.preview img').attr('src', data.newImage);
                 $('#thumbFilename').val(data.thumbFilename);
+
+                if (submitAfterCrop)
+                {
+                     $( '#user_edit').submit();
+                }
                 
             }
         },
@@ -190,4 +230,5 @@ function postCroppedImage()
     );
     return false;
     }); 
+
 }
