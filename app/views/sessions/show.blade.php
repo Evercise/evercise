@@ -71,13 +71,16 @@
 		<div class="session-members-footer">
 			<aside>
 				{{ HTML::decode(HTML::linkRoute('sessions.mail_all', 'Message All Users', array('id'=>$session['id']), array('class'=>'mail_all btn btn-green session-icon')) ) }}
+
+
 				{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
 					{{ Form::hidden( 'postEverciseGroup' , $evercisegroup->name , array('id' => 'postEverciseGroup')) }}
 					{{ Form::hidden( 'postEverciseSession' , $session->date_time , array('id' => 'postEverciseSession')) }}
-					{{ Form::hidden( 'postMembers' , $session['Sessionmembers'] , array('id' => 'postMembers')) }}
+					{{ Form::hidden( 'postMembers' , $session->users , array('id' => 'postMembers')) }}
 					<button class="btn btn-blue" type="submit">Download List</button>
 					 
 				{{ Form::close() }}
+
 			</aside>
 			
 		</div>
