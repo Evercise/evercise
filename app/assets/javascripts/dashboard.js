@@ -128,7 +128,8 @@ function openPopup(data)
 }
 function openConfirmPopup(data)
 {
-    //trace(data.popup, true);
+    trace(data.popup, true);
+    $('.modal').remove();
     $('.mask').show();
     $('.container').append(data.popup);
     
