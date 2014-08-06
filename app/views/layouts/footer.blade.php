@@ -37,7 +37,8 @@
 	
 </footer>
 <div class="lower_footer">
-	<img src="/img/evercise logo for use.png" alt="evercise small logo"/>
-
-	<p><small>{{ HTML::linkRoute('static.terms_of_use', 'Terms of Use') }}</small> <small>{{ HTML::linkRoute('static.privacy', trans('footer.privacy_policy') ) }}</small>{{trans('footer.copyright')}}</p>
+	<p>
+		<small>{{ HTML::linkRoute('static.terms_of_use', 'Terms of Use') }}</small> <small>{{ HTML::linkRoute('static.privacy', trans('footer.privacy_policy') ) }}</small>
+		<small>{{trans('footer.copyright')}}</small>
+	</p>
 </div>

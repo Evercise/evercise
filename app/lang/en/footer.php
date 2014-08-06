@@ -11,5 +11,5 @@ return array(
   'follow_us' => 'Follow us',
   'terms_of_use' => 'Terms of Use',
   'privacy_policy' => 'Privacy Policy',
-  'copyright' => '©2014 Qin Technology. Inc.',
+  'copyright' => '© 2014 Qin Technology. Inc.',
 );
