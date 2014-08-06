@@ -124,13 +124,13 @@ function initLoginBox()
      $(this).closest('div').find('.error-msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
   });
 
-  $(document).on('click','#displayName', function(){
+  $(document).on('click','.nav-admin', function(){
     $('#displayName-dropdown').toggle(100,function(){
       $(document).mouseup(function (e)
       {
         //trace('displayName click');
           var container = $('#displayName-dropdown');
-          var link = $('#displayName');
+          var link = $('.nav-admin');
 
           if (!container.is(e.target) && !link.is(e.target) && container.has(e.target).length === 0) 
           {
