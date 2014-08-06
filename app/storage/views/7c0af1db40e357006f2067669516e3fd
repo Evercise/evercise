@@ -6,12 +6,18 @@
 		</a> 
 	</div>
 
-	<?php if(isset($title)): ?>
-		<div class="class-block-header block-inner">
-			<h3><?php echo Str::limit($title, 21); ?></h3>
-		</div>
+	
+	<div class="class-block-header block-inner">
+		<?php if(isset($title)): ?>
+			<?php echo Str::limit($title, 25); ?>
+		<?php endif; ?>
+		<?php if(isset($default_price)): ?>
+			<p><strong class="highlight">&pound;<?php echo $default_price; ?></strong>Per Person</p>
+		<?php endif; ?>
+	</div>
 		
-	<?php endif; ?>
+	
+	
 	<div class="block-inner class-block-body">
 		<?php if (isset($rating)): ?> 
 			<div id="block-rating" class="inner-half">

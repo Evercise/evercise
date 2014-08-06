@@ -1928,6 +1928,29 @@ body{
 /* class block  */
 
 .class-block{
+	width: 100%;
+	background: @white;
+	border-radius: 4px;
+	overflow: hidden;
+	text-align: left;
+	.block-inner{
+		width: 100%;
+		padding: 0 10px;
+		.box-sizing();
+	}
+	.class-block-img-wrap{
+		height: 125px;
+		background: @black;
+	}
+	.class-block-header{
+		height: 92px;
+		.font-size(1.5);
+		font-weight: 600;
+		padding-top: 20px;
+	}
+}
+/*
+.class-block{
 	.transition(all linear 0.3s);
 	background-color: @white;
 	display: inline-block;
@@ -2063,7 +2086,7 @@ body{
 		margin: 0 7px -2px 0;
 	}
 }
-
+*/
 .block-footer{
 	float: left;
 	width: 100%;

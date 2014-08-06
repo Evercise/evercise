@@ -6,12 +6,18 @@
 		</a> 
 	</div>
 
-	@if(isset($title))
-		<div class="class-block-header block-inner">
-			<h3>{{ Str::limit($title, 21) }}</h3>
-		</div>
+	
+	<div class="class-block-header block-inner">
+		@if(isset($title))
+			{{ Str::limit($title, 25) }}
+		@endif
+		@if(isset($default_price))
+			<p><strong class="highlight">&pound;{{ $default_price }}</strong>Per Person</p>
+		@endif
+	</div>
 		
-	@endif
+	
+	
 	<div class="block-inner class-block-body">
 		@if (isset($rating)) 
 			<div id="block-rating" class="inner-half">
