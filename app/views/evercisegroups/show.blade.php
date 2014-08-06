@@ -71,13 +71,13 @@
 
 											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 										@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">class full</button></li>
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">{{trans('evercisegroups-show.class_full')}}</button></li>
 
 										@else
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
 										@endif
 									@else
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">Join Session</button></li>
+											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
 										
 									@endif
 
@@ -89,8 +89,8 @@
 
 							@if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1) 
 								<div id="expand-sessions" class="session-list-row tc expand">
-									<h5 class="extra">-- Click to view more --</h5>
-									<h5 class="extra hidden">-- Click to hide extra --</h5>
+									<h5 class="extra">{{trans('evercisegroups-show.show_more')}}</h5>
+									<h5 class="extra hidden">{{trans('evercisegroups-show.hide_more')}}</h5>
 								</div>
 							@endif
 							
@@ -113,7 +113,7 @@
 
 		<div class="class-wrap" id="venue">
 			<div class="venue-details">
-				<h4>Venue</h4>
+				<h4>{{Lang::choice('general.venue', 1)}}</h4>
 				<br>
 				<h5>{{$venue->name}}</h5>
 				<br>
@@ -131,7 +131,7 @@
 			
 			@if(count($venue->facilities) > 0)
 				<ul class="facilities-wrap">
-					<strong>Venue Facilities</strong>
+					<strong>{{trans('evercisegroups-show.venue_facilities')}}</strong>
 					@foreach($venue->facilities as $key => $facility)
 						@if ($facility->category == 'facility') 
 							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>				
@@ -143,7 +143,7 @@
 			
 			@if(count($venue->facilities) > 0)
 				<ul class="facilities-wrap">
-					<strong>Venue Amenities</strong>
+					<strong>{{trans('evercisegroups-show.venue_amenities')}}</strong>
 					@foreach($venue->facilities as $key => $facility)
 						@if ($facility->category == 'Amenity') 
 							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>				
@@ -154,14 +154,14 @@
 			
 		</div>
 		<div class="class-wrap" id="reviews"> 
-			<h4>Reviews / Participants</h4>
+			<h4>{{trans('evercisegroups-show.reviews_participants')}}</h4>
 			<div class="tab-wrapper">
 				<div class="tab-header">
-					<button  data-view="review" id="review-btn" class="icon-btn btn selected">Reviews</button>
-					<button  data-view="participant" id="participant-btn" class="icon-btn btn">Participants</button>
+					<button  data-view="review" id="review-btn" class="icon-btn btn selected">{{trans('general.reviews')}}</button>
+					<button  data-view="participant" id="participant-btn" class="icon-btn btn">{{trans('general.participants')}}</button>
 				</div>
 				<div id="review" class="tab-view selected">
-					<strong>Overall Rating</strong>
+					<strong>{{trans('evercisegroups-show.overall_rating')}}</strong>
 					<br>
 					<br>
 					<br>

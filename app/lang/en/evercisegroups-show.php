@@ -15,5 +15,19 @@ return [
 'checkout' => 'Checkout',
 'total_sessions' => 'Total Sessions',
 'total_price' => 'Total Price',
+
+'show_more' => '-- Click to view more --',
+'hide_more' => '-- Click to hide extra --',
+
+'venue_facilities' => 'Venue Facilities',
+'venue_amenities' => 'Venue Amenities',
+'reviews_participants' => 'Reviews / Participants',
+
+'overall_rating' => 'Overall Rating',
+'overall_rating' => 'Overall Rating',
+'class_full' => 'class full',
+'' => '',
+'' => '',
+'' => '',
 '' => '',
 ];

@@ -9,6 +9,6 @@
 	{{ Form::hidden( 'img_url' , null, array('id' => 'img_url')) }}
 	{{ Form::hidden( 'img_height' , 500, array('id' => 'img_height')) }}
 
-	{{ Form::submit('Save' , array('class'=>'btn-yellow')) }}
         
 </div>
+
