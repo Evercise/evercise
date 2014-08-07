@@ -24,6 +24,11 @@ function initImage(params)
         dataType: 'json' 
         };
 
+    // enable click on preview image
+     $(document).on('click', '.preview img', function(){
+        $( '#image' ).click();
+     }); 
+
     /* reset image value to null */
      $(document).on('click', '#image', function(){
         trace('nulling input: '+$(this).val());  
@@ -107,16 +112,9 @@ function initCrop(ratio)
         var width = $('#img-crop img').width();
         if (height < (width/ratio))
         {
-/*            var left = (((width/ratio) - height) / 2) + defaultMargin;
-            var top = 0;
-            var right = width - left;
-            var bottom = height-1;*/
-
             var heightOfCrop = (height-(defaultMargin*2));
-            var widthOfCrop = heightOfCrop * ratio;
-
             var top = (height - heightOfCrop)/2;
-            var left = (width-widthOfCrop)/2;
+            var left = (width-(heightOfCrop * ratio))/2;
             var right = width - left;
             var bottom = top + heightOfCrop;
         }
@@ -235,6 +233,7 @@ function postCroppedImage()
                 if (submitAfterCrop)
                 {
                     submitAfterCrop.closest("form").submit();
+                    submitAfterCrop = 0;
                 }
                 
             }
