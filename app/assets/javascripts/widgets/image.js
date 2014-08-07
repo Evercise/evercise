@@ -1,7 +1,7 @@
 
-var user_ratio = 1;
+var user_ratio = 1.0;
 var group_ratio = 2.35;
-var ratio = 1;
+var ratio = 1.0;
 var previewHeight = 100;
 
 var cropping = false;
@@ -49,7 +49,9 @@ function initImage(params)
         }
         else
         {
-            $('#user_edit').submit();
+            $( '#user_edit').submit();
+            $( '#trainer_create').submit();
+            $( '#evercisegroup_create').submit();
         }
 
     });
@@ -104,19 +106,28 @@ function initCrop(ratio)
     setTimeout(function() {
         var height = $('#img-crop img').height();
         var width = $('#img-crop img').width();
-        if (height < width)
+        if (height < (width/ratio))
         {
-            var left = ((width - height) / 2) + defaultMargin;
-            var top = defaultMargin;
+/*            var left = (((width/ratio) - height) / 2) + defaultMargin;
+            var top = 0;
             var right = width - left;
-            var bottom = height - top;
+            var bottom = height-1;*/
+
+            var heightOfCrop = (height-(defaultMargin*2));
+            var widthOfCrop = heightOfCrop * ratio;
+
+            var top = (height - heightOfCrop)/2;
+            var left = (width-widthOfCrop)/2;
+            var right = width - left;
+            var bottom = top + heightOfCrop;
         }
         else
         {
-            var top = ((height - width) / 2) + defaultMargin;
+            var heightOfCrop = (width-(defaultMargin*2))/ratio;
+            var top = (height - heightOfCrop)/2;
             var left = defaultMargin;
             var right = width - left;
-            var bottom = height - top;
+            var bottom = top + heightOfCrop;
         }
 
         // trace('height: '+height);
@@ -221,7 +232,9 @@ function postCroppedImage()
 
                 if (submitAfterCrop)
                 {
-                     $( '#user_edit').submit();
+                    $( '#user_edit').submit();
+                    $( '#trainer_create').submit();
+                    $( '#evercisegroup_create').submit();
                 }
                 
             }
