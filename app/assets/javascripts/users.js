@@ -187,4 +187,24 @@ function login(){
 
 }
 
+function initDatePicker(){
+    $('.datepicker').each(function(){
+        $( this ).datepicker({
+          dateFormat: "yy-mm-dd" ,
+          defaultDate: "-30y",
+          yearRange: "-100:+0", 
+          minDate: '-120y', 
+          maxDate: '-16y',
+          changeMonth: true,
+          changeYear: true,
+          showOtherMonths: true,
+          selectOtherMonths: true
+        });
+    });
+}
+
+registerInitFunction('initDatePicker');
+
+
+
 

@@ -8,7 +8,6 @@
 			<div class="trainer-block">
 				<div class="trainer-block-image-wrapper">
 					<?php if(isset($id)): ?>
-					<h1><?php echo $id; ?></h1>
 						<a href="<?php echo URL::route('trainers.show', $id); ?>" ><?php echo HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image')); ?></a>
 					<?php else: ?>
 						<?php echo HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image')); ?>

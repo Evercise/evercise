@@ -502,7 +502,18 @@ class UsersController extends \BaseController {
 				&&	$this->user->image
 			) Milestone::where('user_id', $this->user->id)->first()->add('profile');
 
-			return Response::json(['callback' => 'gotoUrl', 'url' => Request::root().'/users/'.$this->user->id.'/edit/profile']);
+
+			/* find out if user is a trainer or not */
+
+			$trainerGroup = Sentry::findGroupByName('trainer');
+
+			if ($this->user->inGroup($trainerGroup)) {
+				$typeOfUser = 'trainers';
+			}else{
+				$typeOfUser = 'users';
+			}
+			
+			return Response::json(['callback' => 'gotoUrl', 'url' => Request::root().'/'.$typeOfUser.'/'.$this->user->id.'/edit/profile']);
 			//return Response::json(['callback' => 'gotoUrl', 'url' => Request::route('users.edit.tab', [$user->id ,'profile'])]);
 		}
 		//return Response::json($result);
