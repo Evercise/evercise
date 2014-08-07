@@ -227,8 +227,9 @@ function postCroppedImage()
                 
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 $('.preview img').attr('src', data.newImage);
-                checkForFrame();
                 $('#thumbFilename').val(data.thumbFilename);
+                checkForFrame();
+                
 
                 if (submitAfterCrop)
                 {   
@@ -250,6 +251,7 @@ function checkForFrame(){
     setTimeout(function() {
         if ($('#frame')) {
             $('.frame').removeClass('hidden');
+            trace('frame found');
             return true;
         }else{
             checkForFrame();
