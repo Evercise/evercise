@@ -14,9 +14,15 @@ class CategoryBoxComposer {
   		}
 
   		/*loop though pivot to get catehory */
-  		foreach ($subcats as $key => $cat) {
-  			foreach ($cat as $key => $cats) {
-  				$categories[] = $cats;
+      $categories = [];
+      $categoryIds = [];
+  		foreach ($subcats as $key => $subcat) {
+  			foreach ($subcat as $key => $cat) {
+          if (!in_array($cat->id, $categoryIds))
+          {
+            $categoryIds[] = $cat->id;
+    				$categories[] = $cat;
+          }
   			}
   		}
 
