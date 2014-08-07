@@ -47,6 +47,7 @@ class TrainersController extends \BaseController {
 		// http://image.intervention.io/methods/crop
 		// http://odyniec.net/projects/imgareaselect
 		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
+		JavaScript::put(array('initUser' => 1 )); // Initialise tooltip JS.
 		JavaScript::put(array('initPut' => json_encode(['selector' => '#trainer_create']) )); // Initialise initu put for ajax posting of trainer create form
 		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
 		return View::make('trainers.create')

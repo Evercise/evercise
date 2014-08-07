@@ -8,7 +8,6 @@
 			<div class="trainer-block">
 				<div class="trainer-block-image-wrapper">
 					@if(isset($id))
-					<h1>{{ $id}}</h1>
 						<a href="{{ URL::route('trainers.show', $id) }}" >{{ HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image'))}}</a>
 					@else
 						{{ HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image'))}}
