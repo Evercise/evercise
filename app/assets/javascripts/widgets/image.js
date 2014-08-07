@@ -54,6 +54,7 @@ function initImage(params)
         }
         else
         {
+            trace('Not cropping first');
             $(this).closest("form").submit();
         }
 
@@ -105,7 +106,7 @@ function showResponse(response, statusText, xhr, form)  {
 
 function initCrop(ratio)
 {
-    cropping = true;
+    trace('initCrop');
     var defaultMargin = 30;
 
     setTimeout(function() {
@@ -184,6 +185,8 @@ function saveCroppedImage(img, selection)
     $('#img_height').val(img.height);
     //trace($('#img_height').val());
     $('.image-form .btn-yellow').removeClass('hidden');
+    cropping = true;
+    trace('cropping = true');
 }
 
 
@@ -196,6 +199,7 @@ function postCroppedImage()
     
     $('.image-form .btn-yellow').addClass('hidden');
     trace('postCroppedImage: ');
+    cropping = false;
     // post to sontroller
     $.post(
         $( this ).prop( 'action' ),
@@ -211,7 +215,6 @@ function postCroppedImage()
         },
         function( data ) {
             trace("cropping image...");
-            cropping = false;
 
             if (data.validation_failed == 1)
             {
