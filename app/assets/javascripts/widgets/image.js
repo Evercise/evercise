@@ -84,15 +84,15 @@ function showResponse(response, statusText, xhr, form)  {
         });
     } else {
         $('#image-upload').html(response.crop);
-        $('.preview img').attr('src', response.image_url);
+        $('.frame').addClass('hidden');
         $('#img-crop img').attr('src', response.image_url);
         $('#upload').attr('action', response.postCrop);
-        $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
+       // $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
 
         trace('img_url= '+response.image_url);
         $('#img_url').val(response.image_url);
         trace("init postCroppedImage");
-        $('.frame').remove();
+        
         initCrop(ratio);
         postCroppedImage();
         
@@ -226,16 +226,16 @@ function postCroppedImage()
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });
-
-                $("#create_class").removeClass('disabled');
                 $('#upload_wrapper').html(data.uploadView);
                 
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 //$('.preview img').attr('src', data.newImage);
+                $('.frame').removeClass('hidden');
                 $('#thumbFilename').val(data.thumbFilename);
 
                 if (submitAfterCrop)
-                {
+                {   
+                    $('.frame').removeClass('hidden');
                     $( '#user_edit').submit();
                     $( '#trainer_create').submit();
                     $( '#evercisegroup_create').submit();
