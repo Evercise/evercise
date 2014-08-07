@@ -28,7 +28,7 @@
 			</div>
 			<p>{{ $fieldtext}}</p>
 			{{ Form::hidden( 'fieldtext' , $fieldtext, array('id' => 'fieldtext')) }}
-			{{ Form::submit('Crop' , array('class'=>'btn-yellow hidden')) }}
+			{{ Form::submit('Crop' , array('class'=>'btn-yellow hidden', 'id' => 'crop-save')) }}
 		</div>
 
 	</div>
