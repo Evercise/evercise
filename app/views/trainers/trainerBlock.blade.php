@@ -8,6 +8,7 @@
 			<div class="trainer-block">
 				<div class="trainer-block-image-wrapper">
 					@if(isset($id))
+					<h1>{{ $id}}</h1>
 						<a href="{{ URL::route('trainers.show', $id) }}" >{{ HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image'))}}</a>
 					@else
 						{{ HTML::image($image, 'trainers image', array('class'=> 'trainer-block-image'))}}
@@ -20,11 +21,9 @@
 					
 					<h4>
 						{{$name}}
-						@if(isset($orientation))
-						@if($orientation == 'landscape')
+						@if(isset($logout))
 							<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
 						@endif
-					@endif
 					</h4>
 					<h5>{{$speciality}}</h5>
 					@if(isset($trainerRating))

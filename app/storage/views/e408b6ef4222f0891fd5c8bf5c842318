@@ -11,10 +11,10 @@
 	</div>
 	<div class="col9">
 		<ul class="class-nav sticky-header">
-			<li><a href="#description">Description</a></li>
-			<li><a href="#sessions">Sessions</a></li>
-			<li><a href="#venue">Venues</a></li>
-			<li><a href="#reviews">Reviews/Participants</a></li>
+			<li><a href="#description"><?php echo trans('evercisegroups-show.tab_description'); ?></a></li>
+			<li><a href="#sessions"><?php echo Lang::choice('general.session', 2); ?></a></li>
+			<li><a href="#venue"><?php echo Lang::choice('general.venue', 2); ?></a></li>
+			<li><a href="#reviews"><?php echo trans('evercisegroups-show.tab_reviews'); ?></a></li>
 		</ul>
 		<div class="class-wrap" id="description">
 			<h1><?php echo $evercisegroup->name; ?></h1>
@@ -28,7 +28,7 @@
 			<p><?php echo $evercisegroup->description; ?></p>
 			<br/>
 
-			<p>Gender: 
+			<p><?php echo Lang::choice('general.gender', 2); ?>: 
 				<?php if ($evercisegroup->gender == 0): ?> All
 				<?php elseif ($evercisegroup->gender == 1): ?> Male
 				<?php elseif ($evercisegroup->gender == 2): ?> Female
@@ -41,15 +41,15 @@
 			<?php endif; ?>	
 		</div>
 		<div class="class-wrap" id="sessions">
-			<h4>Sessions</h4>
+			<h4><?php echo Lang::choice('general.session', 2); ?></h4>
 			<br>
 			<div class="session-table">
-				<li class="hd">Class Date</li>
-				<li class="hd">Start Time</li>
-				<li class="hd">End Time</li>
-				<li class="hd">Price <small>(Per Person)</small></li>
-				<li class="hd">Tickets Left</li>
-				<li class="hd">Join</li>
+				<li class="hd"><?php echo trans('evercisegroups-show.sessions_head_1'); ?></li>
+				<li class="hd"><?php echo trans('evercisegroups-show.sessions_head_2'); ?></li>
+				<li class="hd"><?php echo trans('evercisegroups-show.sessions_head_3'); ?></li>
+				<li class="hd"><?php echo trans('evercisegroups-show.sessions_head_4'); ?></li>
+				<li class="hd"><?php echo trans('evercisegroups-show.sessions_head_5'); ?></li>
+				<li class="hd"><?php echo trans('evercisegroups-show.sessions_head_6'); ?></li>
 				<ul>
 					<?php foreach ($evercisegroup->futuresessions as $key => $futuresession): ?>
 
@@ -62,7 +62,7 @@
 									<li><?php echo date('M-dS' , strtotime($futuresession->date_time)); ?></li>
 									<li><?php echo date('h:ia' , strtotime($futuresession->date_time)); ?></li>
 									<li><?php echo date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60)); ?>
-									<li>&pound;<?php echo $futuresession->price; ?></li>
+									<li><?php echo trans('general.currency_sign'); ?><?php echo $futuresession->price; ?></li>
 									<li> <strong><?php echo $evercisegroup->capacity -  $members[$futuresession->id]; ?></strong></li>
 									<?php if (isset($membersIds[$futuresession->id])): ?>
 
@@ -70,13 +70,13 @@
 
 											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 										<?php elseif ($members[$futuresession->id] >= $evercisegroup->capacity ): ?>
-											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-join-session btn-blue disabled">class full</button></li>
+											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-join-session btn-blue disabled"><?php echo trans('evercisegroups-show.class_full'); ?></button></li>
 
 										<?php else: ?>
-											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-join-session btn btn-yellow">Join Session</button></li>
+											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-join-session btn btn-yellow"><?php echo trans('evercisegroups-show.join_session'); ?></button></li>
 										<?php endif; ?>
 									<?php else: ?>
-											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-join-session btn btn-yellow">Join Session</button></li>
+											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-join-session btn btn-yellow"><?php echo trans('evercisegroups-show.join_session'); ?></button></li>
 										
 									<?php endif; ?>
 
@@ -88,8 +88,8 @@
 
 							<?php if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1): ?> 
 								<div id="expand-sessions" class="session-list-row tc expand">
-									<h5 class="extra">-- Click to view more --</h5>
-									<h5 class="extra hidden">-- Click to hide extra --</h5>
+									<h5 class="extra"><?php echo trans('evercisegroups-show.show_more'); ?></h5>
+									<h5 class="extra hidden"><?php echo trans('evercisegroups-show.hide_more'); ?></h5>
 								</div>
 							<?php endif; ?>
 							
@@ -99,8 +99,8 @@
 				</ul>
 				<div class="session-total">
 					<?php echo Form::open(array('id' => 'join-sessions', 'url' => 'sessions/join', 'method' => 'post', 'class' => '')); ?>
-						<span>Total Sessions: <span id="total-sessions">0</span></span>
-						<span>Total Price: &pound;<span id="total-price">0.00</span></span>
+						<span><?php echo trans('evercisegroups-show.total_sessions'); ?>: <span id="total-sessions">0</span></span>
+						<span><?php echo trans('evercisegroups-show.total_price'); ?>: <?php echo trans('general.currency_sign'); ?><span id="total-price">0.00</span></span>
 						<?php echo Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')); ?>
 						<?php echo Form::hidden( 'session-ids' , null, array('id' => 'session-ids')); ?>
 						<?php echo Form::submit('Checkout' , array( 'id' => 'session-checkout','class'=>'btn btn-green disabled')); ?>
@@ -112,7 +112,7 @@
 
 		<div class="class-wrap" id="venue">
 			<div class="venue-details">
-				<h4>Venue</h4>
+				<h4><?php echo Lang::choice('general.venue', 1); ?></h4>
 				<br>
 				<h5><?php echo $venue->name; ?></h5>
 				<br>
@@ -130,7 +130,7 @@
 			
 			<?php if(count($venue->facilities) > 0): ?>
 				<ul class="facilities-wrap">
-					<strong>Venue Facilities</strong>
+					<strong><?php echo trans('evercisegroups-show.venue_facilities'); ?></strong>
 					<?php foreach($venue->facilities as $key => $facility): ?>
 						<?php if ($facility->category == 'facility'): ?> 
 							<li><?php echo HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')); ?><?php echo $facility->name; ?></li>				
@@ -142,7 +142,7 @@
 			
 			<?php if(count($venue->facilities) > 0): ?>
 				<ul class="facilities-wrap">
-					<strong>Venue Amenities</strong>
+					<strong><?php echo trans('evercisegroups-show.venue_amenities'); ?></strong>
 					<?php foreach($venue->facilities as $key => $facility): ?>
 						<?php if ($facility->category == 'Amenity'): ?> 
 							<li><?php echo HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')); ?><?php echo $facility->name; ?></li>				
@@ -153,14 +153,14 @@
 			
 		</div>
 		<div class="class-wrap" id="reviews"> 
-			<h4>Reviews / Participants</h4>
+			<h4><?php echo trans('evercisegroups-show.reviews_participants'); ?></h4>
 			<div class="tab-wrapper">
 				<div class="tab-header">
-					<button  data-view="review" id="review-btn" class="icon-btn btn selected">Reviews</button>
-					<button  data-view="participant" id="participant-btn" class="icon-btn btn">Participants</button>
+					<button  data-view="review" id="review-btn" class="icon-btn btn selected"><?php echo trans('general.reviews'); ?></button>
+					<button  data-view="participant" id="participant-btn" class="icon-btn btn"><?php echo trans('general.participants'); ?></button>
 				</div>
 				<div id="review" class="tab-view selected">
-					<strong>Overall Rating</strong>
+					<strong><?php echo trans('evercisegroups-show.overall_rating'); ?></strong>
 					<br>
 					<br>
 					<br>

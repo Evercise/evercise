@@ -9,6 +9,6 @@
 	<?php echo Form::hidden( 'img_url' , null, array('id' => 'img_url')); ?>
 	<?php echo Form::hidden( 'img_height' , 500, array('id' => 'img_height')); ?>
 
-	<?php echo Form::submit('Save' , array('class'=>'btn-yellow')); ?>
         
 </div>
+

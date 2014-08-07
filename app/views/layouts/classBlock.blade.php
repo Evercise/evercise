@@ -9,54 +9,36 @@
 	
 	<div class="class-block-header block-inner">
 		@if(isset($title))
-			{{ Str::limit($title, 25) }}
+			{{ Str::limit($title, 22) }}
 		@endif
 		@if(isset($default_price))
-			<p><strong class="highlight">&pound;{{ $default_price }}</strong>Per Person</p>
+			<p><strong class="highlight">&pound;{{ $default_price }}</strong><small>per person</small></p>
 		@endif
 	</div>
 		
 	
 	
-	<div class="block-inner class-block-body">
-		@if (isset($rating)) 
-			<div id="block-rating" class="inner-half">
-				@include('ratings.stars', array('rating' => $rating))
+	<div class="class-block-body block-inner">
+		@if(isset($sessions))
+			{{ HTML::image('img/clock_icon.png', 'date image', array('class' => 'block-icon')); }}
+			<div class="inner-float">
+				<li class="bold">{{ date('d M Y - h:ia', strtotime($sessions[0]->date_time))}}</li>	
 			</div>
-		@endif
-		<div id="block-share" class="inner-half">
-			<a href="{{ Share::load(URL::to('evercisegroups/'.$evercisegroupId) , $evercisegroup->name)->facebook()  }}" target="_blank"  class="btn">{{ HTML::image('img/facebook.png','share on facebook', array('class' => 'share-btn')) }}</a>
-			<a href="{{ Share::load(URL::to('evercisegroups/'.$evercisegroupId) , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/twitter.png','tweet', array('class' => 'share-btn')) }}</a>
-
-		</div>
-		{{--
-		removed categorys
-		@if (isset($category))
-			<div id="block-category" class="inner-half">
-				{{ HTML::image('img/category/'.$category.'.png', 'category image', array('class' => 'category-icon')); }}
-				<span>{{ Str::limit($category, 9) }}</span>
-			</div> 
 			
 		@endif
-		--}}
+		
+		<div class="venue-block">
+			@if(isset($venue))
+				{{ HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon')); }}
+				<div class="inner-float">
+					<li>{{ Str::limit($venue->name, 31) }}</li>
+					<li>{{ Str::limit($venue->address, 31)  }}</li>
+					<li>{{ Str::limit($venue->town, 20)   }}, {{ Str::limit($venue->postcode, 8) }}</li>
+				</div>
+			@endif
+		</div>		
 	</div>
-	@if(isset($sessions))
-		<div class="future-session-header">
-			{{ HTML::image('img/date_icon.png', 'date image', array('class' => 'block-icon')); }}
-			<span>{{ date('d M Y - h:ia', strtotime($sessions[0]->date_time))}}</span>
-		</div>
-		<span id="more-sessions" class="btn">{{ HTML::image('img/down-arrow.png', 'show more sessions', array('class' => 'more-sessions')); }}</span>
-		
-		<ul class="future-session-list ">
-			@foreach ($sessions as $key => $session)
-				<li>{{ date('d M Y - h:ia', strtotime($session->date_time))}}</li>
-			@endforeach
-		</ul>
-	@else
-		<div class="block-spacer">
-		</div>
-		
-	@endif
+{{--
 	<div id="block-body-wrap">
 		@if(isset($venue))
 			<div class="block-inner" id="block-venue">
@@ -89,5 +71,5 @@
 		</div>
 	@endif
 	
-	
+--}}
 </div>
