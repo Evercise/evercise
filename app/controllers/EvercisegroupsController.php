@@ -173,7 +173,7 @@ class EvercisegroupsController extends \BaseController {
 			$duration = Input::get('duration');
 			$maxsize = Input::get('maxsize');
 			$price = Input::get('price');
-			$image = Input::get('thumbFilename');
+			$image = Input::get('image');
 			$gender = Input::get('gender');
 			// $address = Input::get('address');
 			// $city = Input::get('city');

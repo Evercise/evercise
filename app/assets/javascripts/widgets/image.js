@@ -230,6 +230,7 @@ function postCroppedImage()
                 
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 $('.preview img').attr('src', data.newImage);
+                trace('thumbFilename = '+data.thumbFilename);
                 $('#thumbFilename').val(data.thumbFilename);
                 checkForFrame();
                 
