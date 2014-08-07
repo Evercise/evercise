@@ -6,7 +6,7 @@
 			{{ Form::hidden( 'label' , $label, array('id' => 'label')) }}
 		</div>
 		<div class="formfield">
-			<div class="frame" >
+			<div class="frame" id="frame" >
 			  <div class="preview" >
 			  	@if( basename($uploadImage) != 'no-user-img.jpg' && $uploadImage != null)
 			  		{{ HTML::image( $uploadImage, $user->display_name.'s image', array('class'=> 'profile-pic')); }}
@@ -20,8 +20,9 @@
 				<div class="cover-up">
 					<span class="btn btn-blue">select file</span> 
 					<div class="cover-up-wrap">
-						<p>Acceptable formats : JPG, JPEG, PNG, GIF (first frame)</p>
-						<p>Max size 2MB</p>
+						<p>Acceptable formats : JPG, JPEG, PNG, GIF (first frame)
+						<br>
+						Max size 2MB</p>
 					</div>
 				</div>  	   
 			    {{ Form::file('image', array('id'=>'image')) }}

@@ -5,7 +5,7 @@ var ratio = 1.0;
 var previewHeight = 100;
 
 var cropping = false;
-var submitAfterCrop = false;
+var submitAfterCrop = 0;
 
 function setRatio(r)
 {
@@ -23,6 +23,11 @@ function initImage(params)
         success:       showResponse,
         dataType: 'json' 
         };
+
+    // enable click on preview image
+     $(document).on('click', '.preview img', function(){
+        $( '#image' ).click();
+     }); 
 
     /* reset image value to null */
      $(document).on('click', '#image', function(){
@@ -44,14 +49,12 @@ function initImage(params)
         if (cropping)
         {
             trace('cropping first');
-            submitAfterCrop = true;
+            submitAfterCrop = $(this);
             $( '#upload' ).submit();
         }
         else
         {
-            $( '#user_edit').submit();
-            $( '#trainer_create').submit();
-            $( '#evercisegroup_create').submit();
+            $(this).closest("form").submit();
         }
 
     });
@@ -83,8 +86,9 @@ function showResponse(response, statusText, xhr, form)  {
             }
         });
     } else {
+        $('#frame').addClass('hidden');
         $('#image-upload').html(response.crop);
-        $('.frame').addClass('hidden');
+        
         $('#img-crop img').attr('src', response.image_url);
         $('#upload').attr('action', response.postCrop);
        // $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
@@ -109,16 +113,9 @@ function initCrop(ratio)
         var width = $('#img-crop img').width();
         if (height < (width/ratio))
         {
-/*            var left = (((width/ratio) - height) / 2) + defaultMargin;
-            var top = 0;
-            var right = width - left;
-            var bottom = height-1;*/
-
             var heightOfCrop = (height-(defaultMargin*2));
-            var widthOfCrop = heightOfCrop * ratio;
-
             var top = (height - heightOfCrop)/2;
-            var left = (width-widthOfCrop)/2;
+            var left = (width-(heightOfCrop * ratio))/2;
             var right = width - left;
             var bottom = top + heightOfCrop;
         }
@@ -229,16 +226,15 @@ function postCroppedImage()
                 $('#upload_wrapper').html(data.uploadView);
                 
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
-                //$('.preview img').attr('src', data.newImage);
-                $('.frame').removeClass('hidden');
+                $('.preview img').attr('src', data.newImage);
+                checkForFrame();
                 $('#thumbFilename').val(data.thumbFilename);
 
                 if (submitAfterCrop)
                 {   
-                    $('.frame').removeClass('hidden');
-                    $( '#user_edit').submit();
-                    $( '#trainer_create').submit();
-                    $( '#evercisegroup_create').submit();
+                    
+                    submitAfterCrop.closest("form").submit();
+                    submitAfterCrop = 0;
                 }
                 
             }
@@ -248,4 +244,15 @@ function postCroppedImage()
     return false;
     }); 
 
+}
+
+function checkForFrame(){
+    setTimeout(function() {
+        if ($('#frame')) {
+            $('.frame').removeClass('hidden');
+            return true;
+        }else{
+            checkForFrame();
+        };
+    }, 300);
 }
