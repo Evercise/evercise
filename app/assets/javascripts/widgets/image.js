@@ -5,7 +5,7 @@ var ratio = 1.0;
 var previewHeight = 100;
 
 var cropping = false;
-var submitAfterCrop = false;
+var submitAfterCrop = 0;
 
 function setRatio(r)
 {
@@ -44,14 +44,12 @@ function initImage(params)
         if (cropping)
         {
             trace('cropping first');
-            submitAfterCrop = true;
+            submitAfterCrop = $(this);
             $( '#upload' ).submit();
         }
         else
         {
-            $( '#user_edit').submit();
-            $( '#trainer_create').submit();
-            $( '#evercisegroup_create').submit();
+            $(this).closest("form").submit();
         }
 
     });
@@ -236,9 +234,7 @@ function postCroppedImage()
 
                 if (submitAfterCrop)
                 {
-                    $( '#user_edit').submit();
-                    $( '#trainer_create').submit();
-                    $( '#evercisegroup_create').submit();
+                    submitAfterCrop.closest("form").submit();
                 }
                 
             }
