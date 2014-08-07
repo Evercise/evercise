@@ -31,8 +31,8 @@
 			@if(isset($venue))
 				{{ HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon')); }}
 				<div class="inner-float">
-					<li>{{ Str::limit($venue->name, 31) }}</li>
-					<li>{{ Str::limit($venue->address, 31)  }}</li>
+					<li>{{ Str::limit($venue->name, 28) }}</li>
+					<li>{{ Str::limit($venue->address, 28)  }}</li>
 					<li>{{ Str::limit($venue->town, 20)   }}, {{ Str::limit($venue->postcode, 8) }}</li>
 				</div>
 			@endif
