@@ -14,7 +14,7 @@
 			    	{{$default_image}}
 			    @endif
 			  </div>
-				{{ Form::submit('Save' , array('class'=>'btn-yellow hidden')) }}
+
 			</div>
 			<div id='image-upload'>		
 				<div class="cover-up">
@@ -28,6 +28,8 @@
 			</div>
 			<p>{{ $fieldtext}}</p>
 			{{ Form::hidden( 'fieldtext' , $fieldtext, array('id' => 'fieldtext')) }}
+			{{ Form::submit('Crop' , array('class'=>'btn-yellow hidden')) }}
 		</div>
+
 	</div>
 {{ Form::close() }}

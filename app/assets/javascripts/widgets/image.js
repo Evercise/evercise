@@ -92,6 +92,7 @@ function showResponse(response, statusText, xhr, form)  {
         trace('img_url= '+response.image_url);
         $('#img_url').val(response.image_url);
         trace("init postCroppedImage");
+        $('.frame').hide();
         initCrop(ratio);
         postCroppedImage();
         
@@ -132,6 +133,7 @@ function initCrop(ratio)
 
         // trace('height: '+height);
         // trace('width: '+width);
+
 
         $('#img-crop img').imgAreaSelect({
             aspectRatio: ratio + ':1',
@@ -219,6 +221,7 @@ function postCroppedImage()
                
             }else{
                 //trace(data, true);
+                $('.frame').show();
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });

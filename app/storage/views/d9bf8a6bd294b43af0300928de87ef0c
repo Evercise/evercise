@@ -14,7 +14,7 @@
 			    	<?php echo $default_image; ?>
 			    <?php endif; ?>
 			  </div>
-				<?php echo Form::submit('Save' , array('class'=>'btn-yellow hidden')); ?>
+
 			</div>
 			<div id='image-upload'>		
 				<div class="cover-up">
@@ -28,6 +28,8 @@
 			</div>
 			<p><?php echo $fieldtext; ?></p>
 			<?php echo Form::hidden( 'fieldtext' , $fieldtext, array('id' => 'fieldtext')); ?>
+			<?php echo Form::submit('Crop' , array('class'=>'btn-yellow hidden')); ?>
 		</div>
+
 	</div>
 <?php echo Form::close(); ?>
