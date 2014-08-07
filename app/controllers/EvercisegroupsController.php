@@ -142,7 +142,7 @@ class EvercisegroupsController extends \BaseController {
 				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
 				'price' => 'required|numeric|between:1,1000',
-				'thumbFilename'	=> 'required',
+				'image'	=> 'required',
 				'gender'=> 'required',
 				'venue'=> 'required',
 				// 'lat' => 'required',

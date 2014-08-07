@@ -18,7 +18,10 @@
         <?php echo Form::close(); ?>
 
     	<?php echo Form::open(array('id' => 'evercisegroup_create', 'url' => 'evercisegroups', 'method' => 'post', 'class' => 'create-form')); ?>
-
+             <?php echo $__env->make('form.blank', array('blank'=>'image'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php if ($errors->has('image')): ?>
+                <?php echo $errors->first('image', '<p class="error-msg">:message</p>'); ?>
+            <?php endif; ?>
 
             <?php if(Session::has('name')): ?>
                 <?php echo $__env->make('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 100 characters', 'maxlength'=>100, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', 'default' => Session::get('name') ), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -85,18 +88,13 @@
             <?php echo $__env->make('form.select', array('fieldname'=>'gender', 'label'=>'Target Gender', 'values'=>array(0=>'All',1=>'Male', 2=>'Female')), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
             <?php if(Session::has('image')): ?>
-                <?php echo Form::hidden( 'thumbFilename' , Session::get('image') , array('id' => 'thumbFilename')); ?>
+                <?php echo Form::hidden( 'image' , Session::get('image') , array('id' => 'thumbFilename')); ?>
             <?php else: ?>
-                <?php echo Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')); ?>
+                <?php echo Form::hidden( 'image' , null, array('id' => 'thumbFilename')); ?>
             <?php endif; ?>
             
             <div class="center-btn-wrapper" >
-                <?php if(Session::has('image')): ?>
-                <?php echo Form::submit('Create Class' , array('class'=>'btn btn-yellow', 'id' => 'create_class')); ?>
-            <?php else: ?>
-                <?php echo Form::submit('Create Class' , array('class'=>'btn btn-yellow disabled', 'id' => 'create_class')); ?>
-            <?php endif; ?>
-                 
+                <?php echo Form::submit('Create Class' , array('class'=>'btn btn-yellow', 'id' => 'create_class')); ?>                 
             </div>
 
         	<div class="success_msg">Success!</div>

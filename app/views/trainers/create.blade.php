@@ -11,7 +11,7 @@
     
         {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
 
-         @include('form.blank', array('blank'=>'image'))
+        @include('form.blank', array('blank'=>'image'))
         @if ($errors->has('image'))
             {{ $errors->first('image', '<p class="error-msg">:message</p>')}}
         @endif

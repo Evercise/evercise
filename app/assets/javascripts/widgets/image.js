@@ -92,7 +92,7 @@ function showResponse(response, statusText, xhr, form)  {
         trace('img_url= '+response.image_url);
         $('#img_url').val(response.image_url);
         trace("init postCroppedImage");
-        $('.frame').hide();
+        $('.frame').remove();
         initCrop(ratio);
         postCroppedImage();
         
@@ -141,7 +141,7 @@ function initCrop(ratio)
             handles: true,
             onSelectEnd: saveCroppedImage,
             onSelectChange: preview,
-            onInit: function(img, selection){preview(img, selection); saveCroppedImage(img, selection);},
+            onInit: saveCroppedImage,
             x1: left, y1: top, x2: right, y2: bottom
         });
 
@@ -215,20 +215,21 @@ function postCroppedImage()
         function( data ) {
             trace("cropping image...");
             cropping = false;
+
             if (data.validation_failed == 1)
             {
                 trace('loose');
                
             }else{
                 //trace(data, true);
-                $('.frame').show();
+
                 $('#img-crop img').imgAreaSelect({
                     remove: true
                 });
 
                 $("#create_class").removeClass('disabled');
                 $('#upload_wrapper').html(data.uploadView);
-
+                
                 $('.frame, .preview, .preview img').css('width', ratio*previewHeight);
                 //$('.preview img').attr('src', data.newImage);
                 $('#thumbFilename').val(data.thumbFilename);

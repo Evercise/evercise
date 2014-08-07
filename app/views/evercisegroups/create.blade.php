@@ -19,7 +19,10 @@
         {{ Form::close() }}
 
     	{{ Form::open(array('id' => 'evercisegroup_create', 'url' => 'evercisegroups', 'method' => 'post', 'class' => 'create-form')) }}
-
+             @include('form.blank', array('blank'=>'image'))
+            @if ($errors->has('image'))
+                {{ $errors->first('image', '<p class="error-msg">:message</p>')}}
+            @endif
 
             @if(Session::has('name'))
                 @include('form.textfield', array('fieldname'=>'classname', 'placeholder'=>'Between 5 and 100 characters', 'maxlength'=>100, 'label'=>'Class Name',  'tooltip'=>'One simple, specific and memorable sentence. It should clarify the nature of the service you are going to provide. Try not to be too general. <br> Example : « Bootcamps class for ladies in Regent&apos;s Park »', 'default' => Session::get('name') ))
@@ -86,18 +89,13 @@
             @include('form.select', array('fieldname'=>'gender', 'label'=>'Target Gender', 'values'=>array(0=>'All',1=>'Male', 2=>'Female')))
 
             @if(Session::has('image'))
-                {{ Form::hidden( 'thumbFilename' , Session::get('image') , array('id' => 'thumbFilename')) }}
+                {{ Form::hidden( 'image' , Session::get('image') , array('id' => 'thumbFilename')) }}
             @else
-                {{ Form::hidden( 'thumbFilename' , null, array('id' => 'thumbFilename')) }}
+                {{ Form::hidden( 'image' , null, array('id' => 'thumbFilename')) }}
             @endif
             
             <div class="center-btn-wrapper" >
-                @if(Session::has('image'))
-                {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow', 'id' => 'create_class')) }}
-            @else
-                {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow disabled', 'id' => 'create_class')) }}
-            @endif
-                 
+                {{ Form::submit('Create Class' , array('class'=>'btn btn-yellow', 'id' => 'create_class')) }}                 
             </div>
 
         	<div class="success_msg">Success!</div>
