@@ -405,6 +405,7 @@ class UsersController extends \BaseController {
 		JavaScript::put(array('initPut_user_edit' => json_encode(['selector' => '#user_edit']) ));
 		JavaScript::put(array('initPut_send_invite' => json_encode(['selector' => '#send_invite']) ));
 		JavaScript::put(array('initPut_password_change' => json_encode(['selector' => '#password_change']) ));
+		JavaScript::put(array('initPut_feedback' => json_encode(['selector' => '#feedback']) ));
 		JavaScript::put(array('initUsers' => 1 ));
 		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
