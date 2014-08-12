@@ -8,7 +8,7 @@ class TrainerHistoryComposer {
 
   		$userTrainer = $viewdata['user'];
 
-  		$historys = Trainerhistory::where('user_id', $userTrainer->id)->orderBy('created_at', 'desc')->get();
+  		$historys = Trainerhistory::where('user_id', $userTrainer->id)->orderBy('created_at', 'desc')->paginate(15);
 
   		$view->with('historys',$historys);
   	}
