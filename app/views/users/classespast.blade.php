@@ -30,7 +30,6 @@
 					<div class="list-details">
 						<h4>{{$groups[$session->evercisegroup_id]->name}}</h4>
 						<strong>{{ date('H:ia d-M-y', strtotime($session->date_time)) }}</strong>
-						<p>{{ Str::limit($groups[$session->evercisegroup_id]->description, 115) }}</p>	
 					</div>
 					<div class="list-rating">
 						@if ( isset($ratings[$session->id]) )
