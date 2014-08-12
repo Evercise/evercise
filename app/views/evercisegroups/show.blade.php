@@ -67,7 +67,7 @@
 									<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
 									@if (isset($membersIds[$futuresession->id]))
 
-										@if (in_array($user->id, $membersIds[$futuresession->id])) 
+										@if ($user ? (in_array($user->id, $membersIds[$futuresession->id]) ? true : false ) : false ) 
 
 											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 										@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
