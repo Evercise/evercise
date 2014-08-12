@@ -367,7 +367,6 @@ class EvercisegroupsController extends \BaseController {
 				$trainerDetails = $userTrainer->trainer;
 
 				$trainer=Trainer::with('user')
-						->with('speciality')
 						->where('user_id', $evercisegroup->user_id)
 						->first();
 
