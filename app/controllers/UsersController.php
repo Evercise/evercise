@@ -404,7 +404,9 @@ class UsersController extends \BaseController {
 	{
 		if (!Sentry::check()) return Redirect::route('home');
 
-		JavaScript::put(array('initPut' => json_encode(['selector' => '#user_edit']) ));
+		JavaScript::put(array('initPut_user_edit' => json_encode(['selector' => '#user_edit']) ));
+		JavaScript::put(array('initPut_send_invite' => json_encode(['selector' => '#send_invite']) ));
+		JavaScript::put(array('initPut_password_change' => json_encode(['selector' => '#password_change']) ));
 		JavaScript::put(array('initUsers' => 1 ));
 		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
 		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise title swap Trainer JS.
@@ -431,9 +433,9 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'first_name' => 'max:15|min:3',
-				'last_name' => 'max:15|min:3',
-				'dob' => 'date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
+				'first_name' => 'required|max:15|min:3',
+				'last_name' => 'required|max:15|min:3',
+				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				//'email' => 'required|email',
 				'phone' => 'numeric',
 				// 'old_password' => 'required',

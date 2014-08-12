@@ -7,6 +7,9 @@
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" /> 
     <meta name="viewport" content="width=device-width, user-scalable=no">
+    @if(isset($cache))
+    	{{ $cache }}
+    @endif
     @if(isset($og))
     	{{ $og->renderTags() }}
     @endif

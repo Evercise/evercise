@@ -7,6 +7,9 @@
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" /> 
     <meta name="viewport" content="width=device-width, user-scalable=no">
+    <?php if(isset($cache)): ?>
+    	<?php echo $cache; ?>
+    <?php endif; ?>
     <?php if(isset($og)): ?>
     	<?php echo $og->renderTags(); ?>
     <?php endif; ?>

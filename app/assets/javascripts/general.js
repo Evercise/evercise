@@ -357,6 +357,7 @@ function initPut (params) {
 
       return false;
   });
+  trace('selector: '+ selector);
 }
 
 function gotoUrl(data)
