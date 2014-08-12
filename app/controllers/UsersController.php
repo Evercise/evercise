@@ -431,9 +431,9 @@ class UsersController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'first_name' => 'required|max:15|min:3',
-				'last_name' => 'required|max:15|min:3',
-				'dob' => 'required|date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
+				'first_name' => 'max:15|min:3',
+				'last_name' => 'max:15|min:3',
+				'dob' => 'date_format:Y-m-d|after:'.$dateAfter.'|before:'.$dateBefore,
 				//'email' => 'required|email',
 				'phone' => 'numeric',
 				// 'old_password' => 'required',

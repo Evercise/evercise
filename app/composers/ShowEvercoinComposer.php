@@ -32,6 +32,8 @@ class ShowEvercoinComposer {
       $profile += $user->phone ? 10 : 0;
       $profile += $user->image ? 10 : 0;
 
+      JavaScript::put(array('initPut' => json_encode(['selector' => '#send_invite']) ));
+
       $view
         ->with('evercoinBalance', $evercoinBalance)
         ->with('priceInEvercoins', $priceInEvercoins)
