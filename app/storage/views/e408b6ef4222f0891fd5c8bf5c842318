@@ -66,7 +66,7 @@
 									<li> <strong><?php echo $evercisegroup->capacity -  $members[$futuresession->id]; ?></strong></li>
 									<?php if (isset($membersIds[$futuresession->id])): ?>
 
-										<?php if (in_array($user->id, $membersIds[$futuresession->id])): ?> 
+										<?php if ($user ? (in_array($user->id, $membersIds[$futuresession->id]) ? true : false ) : false ): ?> 
 
 											<li><button  data-price="<?php echo $futuresession->price; ?>" data-session="<?php echo $futuresession->id; ?>" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
 										<?php elseif ($members[$futuresession->id] >= $evercisegroup->capacity ): ?>

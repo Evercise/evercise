@@ -31,45 +31,12 @@
 			<?php if(isset($venue)): ?>
 				<?php echo HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon'));; ?>
 				<div class="inner-float">
-					<li><?php echo Str::limit($venue->name, 31); ?></li>
-					<li><?php echo Str::limit($venue->address, 31); ?></li>
+					<li><?php echo Str::limit($venue->name, 24); ?></li>
+					<li><?php echo Str::limit($venue->address, 24); ?></li>
 					<li><?php echo Str::limit($venue->town, 20); ?>, <?php echo Str::limit($venue->postcode, 8); ?></li>
 				</div>
 			<?php endif; ?>
 		</div>		
 	</div>
-<?php /*
-	<div id="block-body-wrap">
-		<?php if(isset($venue)): ?>
-			<div class="block-inner" id="block-venue">
-				<div class="inner-float">
-					<?php echo HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon'));; ?>
-				</div>
-				<div class="inner-float">
-					<li><?php echo Str::limit($venue->name, 31); ?></li>
-					<li><?php echo Str::limit($venue->address, 31); ?></li>
-					<li><?php echo Str::limit($venue->town, 20); ?>, <?php echo Str::limit($venue->postcode, 8); ?></li>
-				</div>
-			</div>
-		<?php endif; ?>
-		<?php if(isset($default_size)): ?>
-			<div class="block-inner" id="block-size">
-				<div class="inner-float">
-					<?php echo HTML::image('img/person_icon.png', 'date image', array('class' => 'block-icon'));; ?>
-				</div>
-				<div class="inner-float">
-					<li>Class Size: <?php echo $default_size; ?></li>
-				</div>
-			</div>
-		<?php endif; ?>
-	</div>
-	
-	<?php if(isset($default_price)): ?>
-		<div class="block-footer">
-			<span>Price</span>
-			<strong>&pound;<?php echo $default_price; ?></strong>
-		</div>
-	<?php endif; ?>
-	
-*/ ?>
+
 </div>
