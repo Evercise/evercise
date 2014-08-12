@@ -124,8 +124,6 @@ class UsersController extends \BaseController {
 			$gender = Input::get('gender');
 			//$newsletter = Input::get('userNewsletter'); // newsletter not currently captured
 
-			if ($phone == '' && $area_code != '')
-				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
 			if ($phone != '' && $area_code == '')
 				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
 
@@ -839,7 +837,7 @@ class UsersController extends \BaseController {
 		Sentry::logout();
 
 		$cookie = Cookie::forget('PHPSESSID');
-		
+
 		return Redirect::route('home')->withCookie($cookie);
 	}
 
