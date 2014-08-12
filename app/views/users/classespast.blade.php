@@ -29,7 +29,7 @@
 					</div>
 					<div class="list-details">
 						<h4>{{$groups[$session->evercisegroup_id]->name}}</h4>
-						{{ HTML::image('img/clock_icon.png', 'date image', array('class' => 'block-icon mr10 float-left')); }} 
+						{{ HTML::image('img/clock_icon.png', 'date image', array('class' => 'block-icon mr10 float-left')) }} 
 						<strong>{{ date('H:ia d-M-y', strtotime($session->date_time)) }}</strong>
 					</div>
 					<div class="list-rating">
