@@ -3,6 +3,6 @@
 return array(
   'how_it_works' => 'How it works',
   'discover_classes' => 'Discover classes',
-  'login' => 'login',
-  'register' => 'register',
+  'login' => 'Login',
+  'register' => 'Register',
 );
