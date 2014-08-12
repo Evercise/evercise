@@ -1,6 +1,6 @@
 <?php namespace auth;
 
-use Auth, BaseController, Form, Input, Redirect, Sentry, View;
+use Auth, BaseController, Form, Input, Redirect, Sentry, View, Cookie;
 
 class AuthController extends \BaseController {
 
@@ -90,6 +90,8 @@ class AuthController extends \BaseController {
 	public function getLogout()
 	{
 		Sentry::logout();
+
+		
 
 		return Redirect::route('auth.login');
 	}

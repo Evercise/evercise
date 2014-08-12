@@ -837,7 +837,10 @@ class UsersController extends \BaseController {
 	{
 		//return View::make('users.resetpassword');
 		Sentry::logout();
-		return Redirect::route('home');
+
+		$cookie = Cookie::forget('PHPSESSID');
+		
+		return Redirect::route('home')->withCookie($cookie);
 	}
 
 
