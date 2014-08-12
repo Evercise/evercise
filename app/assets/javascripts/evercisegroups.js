@@ -383,7 +383,7 @@ function initJoinEvercisegroup(params)
         $(this).find('.extra').toggleClass('hidden');
         $('.session-list-row.extra').toggleClass('hidden');
 
-        /* remove lick event so that the offsets dont stack for the page scrolling */
+        /* remove click event so that the offsets dont stack for the page scrolling */
          $('a[href*=#]').each(function() {
             $(this).unbind('click');
          });

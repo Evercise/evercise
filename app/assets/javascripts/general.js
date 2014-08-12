@@ -454,14 +454,13 @@ registerInitFunction('InitAccordian');
 
 
 function initScrollAnchor(string) {
-
   var locationPath = filterPath(location.pathname);
 
-
   var sticky_header = 0;
+  var navigation = 0;
 
-  if ($('.sticky-header')) {
-    sticky_header = $('.sticky-header').height();
+  if ($('.navigation')) {
+    navigation = $('.navigation').height();
   };
   
   $('a[href*=#]').each(function() {
@@ -473,12 +472,15 @@ function initScrollAnchor(string) {
       
       if (target) {
        
-        var targetOffset = ($target.offset().top - sticky_header) - sticky_header;
-        //targetOffset = (targetOffset - sticky_header)- sticky_header;
+        var targetOffset = $target.offset().top -  navigation ;
+
         $(this).click(function(event) {
+          
           event.preventDefault();
-          $('html, body').animate({scrollTop: targetOffset}, 400, function() {
-            location.hash = target;
+          
+          $('html').animate({scrollTop: targetOffset}, 300, function() {
+            trace(targetOffset);
+         //   location.hash = target;
           });
         });
       }
@@ -502,6 +504,7 @@ function initStickHeader(){
   var targetOffset = target.offset().top;
   var width = target.width();
   $(window).scroll(function(){
+    trace('y: '+ $(window).scrollTop());
       if ($(window).scrollTop() >= targetOffset) {
          $('.sticky-header').addClass('fixed').css({
           'width': width+'px'
