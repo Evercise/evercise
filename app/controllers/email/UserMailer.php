@@ -19,6 +19,7 @@ class UserMailer extends Mailer {
 		$events->listen('user.upgrade', 'email\UserMailer@upgrade');
 		$events->listen('user.confirm', 'email\UserMailer@trainer_confirm');
 		$events->listen('referral.invite', 'email\UserMailer@invite');
+		$events->listen('landing.ppc', 'email\UserMailer@ppc');
 	}
 
 	/**
@@ -248,4 +249,42 @@ class UserMailer extends Mailer {
 		
 		return $this->sendTo($email, $subject, $view, $data );
 	}
+
+	public function ppc($email, $category, $ppcCode)
+	{
+		$body = '
+		<p>Hi There</p>
+				
+		<p>
+		May we introduce you to Evercise? We offer the perfect solution for those wanting to keep fit with maximum flexibility. It&apos;s simple:
+		</p>
+
+		<p>
+			<li>Search a huge range of fitness classes by type or location</li>
+			<li>Purchase classes online (you can do this on a class by class basis)</li>
+			<li>Show up and shape up</li>
+			<li>Rate and review</li>
+		</p>
+		<p>
+			On Evercise.com you can search for your favourite workout at a time and location that suits	you. Fit your training around your job or studies, find trainers with the best reviews, and keep fit without having to commit a thing
+		</p>
+		<p>
+			Does this sound interesting to you? Then what are you waiting for? It&apos;s completely free to join!
+		</p>
+		';
+		
+
+		$subject = 'Your Evercise code!';
+		//$view = 'emails.auth.welcome'; // use for validation email
+		$view = 'emails.template';
+		$data['title'] = $subject;
+		$data['mainHeader'] = 'your Evercise code!';
+		$data['subHeader'] = 'Sign up with this code to recieve 300 Evercoins (£3)!';
+		$data['body'] = $body;
+		$data['link'] = HTML::linkRoute('landing.category.code', 'Click here to join Evercise', [$category, $ppcCode]);
+		$data['linkLabel'] = 'Start with evercise today:';
+		
+		return $this->sendTo($email, $subject, $view, $data );
+	}
+
 }

@@ -194,7 +194,7 @@ Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
 
 
 Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
-Route::get('ppc/{code}', array('as' => 'landing', 'uses' => 'LandingsController@submitPpc'));
+Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
 Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
 
 

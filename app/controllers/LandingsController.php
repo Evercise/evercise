@@ -34,7 +34,9 @@ class LandingsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'email' => 'required|email|unique:users,email',
+				//'email' => 'required|email|unique:users,email',
+				'email' => 'required|email',
+				'category' => 'required',
 			)
 		);
 		if($validator->fails()) {
@@ -55,16 +57,20 @@ class LandingsController extends \BaseController {
 		else {
 
 			$email = Input::get('email');
+			$categoryId = Input::get('category');
 			$ppcCode = Functions::randomPassword(20);
 
-			$ppc = Landing::create(['user_id'=>$this->user->id, 'email'=>$email, 'code'=>$ppcCode]);
+			$ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
 
-			if ($referral)
+			$category = category::find($categoryId)->pluck('name');
+
+			if ($ppc)
 			{
 				Event::fire('landing.ppc', array(
 		        	'email' => $email,
-		            'ppcCode' => $ppcCode
-		        ));
+		        	'category' => $category,
+	            'ppcCode' => $ppcCode
+	        ));
 			}
 
 			return Response::json(['callback'=>'successAndRefresh']);
@@ -119,6 +125,7 @@ class LandingsController extends \BaseController {
 	// Accept code from a pay-per-click generated email.
 	public function submitPpc($categoryId, $code)
 	{
+		Session::put('ppcCategory', $categoryId);
 		Session::put('ppcCode', $code);
 
 		return Redirect::to('users/create');
@@ -127,7 +134,7 @@ class LandingsController extends \BaseController {
 	// Accept code from a pay-per-click generated email.
 	public function landingPpc($categoryId)
 	{
-		$category = Category::find($categoryId)->pluck('name');
+		$category = Category::find($categoryId);
 		
 		JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
 		return View::make('landings.create')
