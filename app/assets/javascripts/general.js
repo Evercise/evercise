@@ -119,12 +119,14 @@ function initLoginBox()
   })
   
   // remove error message when user types in box
+  /*
   $(document).on('keyup','input, textarea', function(){
      $(this).closest('div').find('.error-msg').fadeOut(200,function(){
        $(this).removeClass('error');
        $(this).closest('div').find('.error_msg').remove();
      });
   });
+*/
 
   $(document).on('click','.nav-admin', function(){
     $('#displayName-dropdown').toggle(100,function(){
