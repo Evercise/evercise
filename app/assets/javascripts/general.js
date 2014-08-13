@@ -124,7 +124,7 @@ function initLoginBox()
     // check for which key has been pressed
     var code = e.keyCode || e.which;
      if(code == 13) { //Enter keycode
-       return;
+       return; // if enter key is pressed return 
      }
      $(this).closest('div').find('.error-msg').fadeOut(200,function(){
        $(this).removeClass('error');

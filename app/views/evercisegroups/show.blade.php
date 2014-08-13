@@ -197,16 +197,18 @@
 					
 
 					@foreach ($memberUsers as $key => $memberUser)
-						@if($memberUser->image != '')
-							{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
-							<span class="display_name">{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}{{$memberUser->display_name}}</span>
-							{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
-							<span class="display_name">{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}{{$memberUser->display_name}}</span>
+						<div class="float-left">
+							@if($memberUser->image != '')
+								{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+								<span class="display_name">{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}{{$memberUser->display_name}}</span>
+								{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+								<span class="display_name">{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}{{$memberUser->display_name}}</span>
 
-						@else
-							{{ HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
-							<p>{{$memberUser->display_name}}</p>
-						@endif
+							@else
+								{{ HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
+								<p>{{$memberUser->display_name}}</p>
+							@endif
+						</div>
 					@endforeach
 				</div>
 			</div>
