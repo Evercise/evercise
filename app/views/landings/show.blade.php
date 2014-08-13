@@ -1,0 +1,1 @@
+Y:\www\evercise\app/views/landings/show.blade.php

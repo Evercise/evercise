@@ -72,7 +72,7 @@ Subcategory::create(array('name' => '​tennis', 'description' => 'awaiting deta
 Subcategory::create(array('name' => 'badminton', 'description' => 'awaiting details'))->categories()->attach([6]);
 Subcategory::create(array('name' => 'swimming', 'description' => 'awaiting details'))->categories()->attach([6]);
 Subcategory::create(array('name' => 'squash', 'description' => 'awaiting details'))->categories()->attach([6]);
-Subcategory::create(array('name' => 'personal training', 'description' => 'awaiting details'))->categories()->attach([3]);
+Subcategory::create(array('name' => 'personal training', 'description' => 'awaiting details'))->categories()->attach([3,13]);
 Subcategory::create(array('name' => '​pilates', 'description' => 'awaiting details'))->categories()->attach([2]);
 Subcategory::create(array('name' => 'yoga', 'description' => 'awaiting details'))->categories()->attach([5]);
 Subcategory::create(array('name' => 'hot yoga', 'description' => 'awaiting details'))->categories()->attach([5]);

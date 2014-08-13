@@ -21,6 +21,7 @@ class CategoriesTableSeeder extends Seeder {
                 Category::create(array('name' => 'Aqua', 'image' => 'aqua.png'));
                 Category::create(array('name' => 'Health', 'image' => 'health.png'));
                 Category::create(array('name' => 'Injury', 'image' => 'injury.png'));
+                Category::create(array('name' => 'Personal Training', 'image' => 'injury.png'));
 	}
 
 }

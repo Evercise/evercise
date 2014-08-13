@@ -2,7 +2,7 @@
 
 @section('content')
 
-	@include('layouts.pagetitle', array('title'=> $user->display_name.'&apos;s class hub', 'subtitle'=>'You can add sessions, create new classes, clone classes and remove sessions from here'))
+	@include('layouts.pagetitle', array('title'=> trans('evercisegroups-trainer_index.title', ['name'=>$user->display_name]), 'subtitle'=>trans('evercisegroups-trainer_index.subtitle')))
 	@include('form.hidden', array('fieldname'=>'evercisegroupId', 'value'=>$evercisegroups[0]->id))
 	@include('form.hidden', array('fieldname'=>'evercisegroupName', 'value'=>$evercisegroups[0]->name))
 	@include('form.hidden', array('fieldname'=>'originalprice', 'value'=>$evercisegroups[0]->default_price))
