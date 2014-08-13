@@ -118,10 +118,11 @@ function initLoginBox()
       $('.login_wrap, .modal').remove();
   })
   
-  //$('input').keyup(function(){
+  // remove error message when user types in box
   $(document).on('keyup','input, textarea', function(){
-     $(this).removeClass('error');
-     $(this).closest('div').find('.error-msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
+     $(this).removeClass('error', function(){
+      $(this).closest('div').find('.error-msg').fadeOut(200,function(){ $(this).closest('div').find('.error_msg').remove()});
+     });
   });
 
   $(document).on('click','.nav-admin', function(){
@@ -329,7 +330,6 @@ function initPut (params) {
                       var scroll = false;
                       $.each(arr, function(index, value)
                       {
-                        trace(form, true);
                           if (scroll == false) {
                               $('html, body').animate({ scrollTop: form.find("#" + index).offset().top -85 }, 400);
                               scroll = true;
