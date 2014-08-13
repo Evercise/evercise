@@ -28,6 +28,7 @@
 
 		@include('layouts.redirectmessage')
 		@include('layouts.header')
+		@include('layouts.pageHeaders')
 		@yield('content')
 		@include('layouts.footer')
 	</div>
