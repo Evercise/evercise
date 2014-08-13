@@ -24,6 +24,7 @@
     @else
         {{ HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn btn-fb')) }}
     @endif
-    <br>
-    {{ HTML::link('auth/forgot', 'Forgot password?') }}
+    <div class="mt10">
+     {{ HTML::link('auth/forgot', 'Forgot password?') }}
+    </div>
 </div>

@@ -24,6 +24,7 @@
     <?php else: ?>
         <?php echo HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn btn-fb')); ?>
     <?php endif; ?>
-    <br>
-    <?php echo HTML::link('auth/forgot', 'Forgot password?'); ?>
+    <div class="mt10">
+     <?php echo HTML::link('auth/forgot', 'Forgot password?'); ?>
+    </div>
 </div>
