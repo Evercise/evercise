@@ -270,11 +270,13 @@ class EvercisegroupsController extends \BaseController {
 		 // return Redirect::route('home');
 
 		//$trainerGroup = Sentry::findGroupByName('trainer');
-
+		
 		if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers')
-			->with('subcategories.categories')->find($id))
-		{
+			->with('subcategories.categories')
+			->find($id))
 
+
+		{
 			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
 			{
 				$evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')->find($id);
@@ -361,15 +363,37 @@ class EvercisegroupsController extends \BaseController {
 			}
 			else
 			{
-				$userTrainer = User::with('Trainer')->find($evercisegroup->user_id);
+				/* if there is not a trainer then return to discover page */
 
-
-				$trainerDetails = $userTrainer->trainer;
-
-				$trainer=Trainer::with('user')
+				try{
+					$trainer=Trainer::with('user')
 						->where('user_id', $evercisegroup->user_id)
 						->first();
+					}catch (Exception $e) {
+						return Redirect::route('evercisegroups.search');
+					}
 
+				/* if trainer is tester and user is not redirect */
+
+				$testers = Sentry::findGroupById(5); // get the tester group
+
+				$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false; // see if user is a tester
+
+				$userTrainer = Sentry::findUserById($trainer->user_id); // create a sentry user object 
+				
+				// test to see if trainer is a tester and the user is not 
+				if ($userTrainer->inGroup($testers) && $testerLoggedIn == false)
+				{
+					return	Redirect::route('evercisegroups.search');
+				}
+
+				/* if no upcoming sessions then redirct to discover page */
+				if (	count($evercisegroup->evercisesession) == 0) {
+					return Redirect::route('evercisegroups.search');
+				}
+					
+
+				// create a array containing all members
 				$members = [];
 				$membersIds = [];
 				$memberAllIds = [];
@@ -379,8 +403,6 @@ class EvercisegroupsController extends \BaseController {
 					foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
 						$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
 						$memberAllIds[]	 = 	$sessionmember->user_id;	
-						//$memberUsers[] = $sessionmember->users;
-
 					}
 				}
 
@@ -406,7 +428,10 @@ class EvercisegroupsController extends \BaseController {
 
 				$og = new OpenGraph();
 
-			    $og->title($evercisegroup->name)
+				/* try to create og if fails redirct to discover page */
+
+				try{
+					$og->title($evercisegroup->name)
 			        ->type('article')
 			        ->image(url().'/profiles/'.$trainer->user->directory.'/'.$evercisegroup->image,
 			        	[
@@ -415,6 +440,10 @@ class EvercisegroupsController extends \BaseController {
 				        ])
 			        ->description($evercisegroup->description)
 			        ->url();
+				}catch (Exception $e) {
+					return Redirect::route('evercisegroups.search');
+				}
+			    
 
 				return View::make('evercisegroups.show')
 					->with('evercisegroup',$evercisegroup)
