@@ -4,14 +4,14 @@
 @section('content')
 
 
-	@include('layouts.pagetitle', array('title'=>'Add the information about your class', 'subtitle'=>'Make it as relevant and interesting as possible'))
+	@include('layouts.pagetitle', array('title'=>trans('evercisegroups-create.title'), 'subtitle'=>trans('evercisegroups-create.subtitle')))
 <div class="full-width">
     <div class="col10 push1">
         <div id="upload_wrapper">
             @if(Session::has('image_full'))
-                @include('widgets.upload-form', array('uploadImage' => Session::get('image_full') , 'label' => 'Upload you class image', 'fieldtext'=>'Choose a suitable image to represent your class'))
+                @include('widgets.upload-form', array('uploadImage' => Session::get('image_full') , 'label' => trans('evercisegroups-create.upload_image'), 'fieldtext'=>trans('evercisegroups-create.choose_class_image')))
             @else
-                @include('widgets.upload-form', array('uploadImage' => null, 'default_image' => HTML::image( '/img/add_eg.png', 'preview image', array('class' => 'class-block-img')) , 'label' => 'Upload you class image', 'fieldtext'=>'<span class="tooltip" data-tooltip="You must own the image or have the permission of the image owner to use it. <br>The image you choose for your profile and/or class must not contain any of the following:<li>Trademarks or company names – eg, images marked with ® or ™ signs</li> <li>mages or text protected by copyright – eg, images marked with © or other watermarks or notations</li><li>Contact information – telephone numbers, URLs or email addresses</li><li>Political statements or images relating to ethnicity or religion</li><li>Provocative, lewd or sexual images or content</li><li>Offensive material – images, signs, symbols or text relating to violence, death, injury, racism, cruelty, profanity, obscenity, weapons, firearms, ammunition or terrorism</li><li>Content where drinking, being drunk, smoking or gambling is the focus</li>">Choose a suitable image to represent your class.<br> Uploaded images must conform to the following guidelines: (* click to see guidelines)</span>'))
+                @include('widgets.upload-form', array('uploadImage' => null, 'default_image' => HTML::image( '/img/add_eg.png', 'preview image', array('class' => 'class-block-img')) , 'label' => trans('evercisegroups-create.upload_image'), 'fieldtext'=>trans('image.choose_class_image_tooltip')))
             @endif
         </div>
 

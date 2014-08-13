@@ -11,12 +11,10 @@
 |
 */
 
+/* Show home page */
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 
-Route::group(array('before' => 'auth'), function()
-{
-});
-
+/* Resource routes */
 Route::resource('users', 'UsersController');
 Route::resource('sessions', 'SessionsController');
 Route::resource('ratings', 'RatingsController');
@@ -27,6 +25,7 @@ Route::resource('payment', 'PaypalPaymentController');
 Route::resource('stripe', 'StripePaymentController');
 Route::resource('wallets', 'WalletsController');
 Route::resource('referrals', 'ReferralsController');
+Route::resource('landings', 'LandingsController');
 
 //Route::post('wallets/update', array('as'=>'wallets.update' , 'uses'=>'WalletsController@update'));
 
@@ -195,6 +194,8 @@ Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
 
 
 Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
+Route::get('ppc/{code}', array('as' => 'landing', 'uses' => 'LandingsController@submitPpc'));
+Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
 
 
 Route::get('/admin/log', array('as' => 'admin.log', 'before'=>'admin', 'uses' => 'AdminController@showLog'));

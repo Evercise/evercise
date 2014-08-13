@@ -1,6 +1,6 @@
 <?php
 
-class ReferralsController extends \BaseController {
+class LandingsController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -19,7 +19,8 @@ class ReferralsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
+		return View::make('landings.create');
 	}
 
 	/**
@@ -33,7 +34,7 @@ class ReferralsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				'referee_email' => 'required|email|unique:users,email',
+				'email' => 'required|email|unique:users,email',
 			)
 		);
 		if($validator->fails()) {
@@ -53,23 +54,20 @@ class ReferralsController extends \BaseController {
 		}
 		else {
 
-			$refereeEmail = Input::get('referee_email');
-			$referralCode = Functions::randomPassword(20);
+			$email = Input::get('email');
+			$ppcCode = Functions::randomPassword(20);
 
-			$referral = Referral::create(['user_id'=>$this->user->id, 'email'=>$refereeEmail, 'code'=>$referralCode]);
-
-			$referrerName = $this->user->first_name.' '.$this->user->last_name;
+			$ppc = Landing::create(['user_id'=>$this->user->id, 'email'=>$email, 'code'=>$ppcCode]);
 
 			if ($referral)
 			{
-				Event::fire('referral.invite', array(
-		        	'email' => $refereeEmail,
-		            'referralCode' => $referralCode,
-		            'referrerName' => $referrerName
+				Event::fire('landing.ppc', array(
+		        	'email' => $email,
+		            'ppcCode' => $ppcCode
 		        ));
 			}
 
-			return Response::json(['callback'=>'gotoUrl', 'url'=>route('users.edit.tab', [$this->user->id, 'evercoins'])]);
+			return Response::json(['callback'=>'successAndRefresh']);
 		}
 	}
 
@@ -117,12 +115,23 @@ class ReferralsController extends \BaseController {
 		//
 	}
 
-	// Accept a code from a friend referral
-	public function submitCode($code)
+
+	// Accept code from a pay-per-click generated email.
+	public function submitPpc($categoryId, $code)
 	{
-		Session::put('referralCode', $code);
+		Session::put('ppcCode', $code);
 
 		return Redirect::to('users/create');
+	}
+
+	// Accept code from a pay-per-click generated email.
+	public function landingPpc($categoryId)
+	{
+		$category = Category::find($categoryId)->pluck('name');
+		
+		JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
+		return View::make('landings.create')
+		->with('category', $category);
 	}
 
 }

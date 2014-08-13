@@ -1,0 +1,6 @@
+<?php
+
+return array(
+  '' => '',
+  'choose_class_image_tooltip' => '<span class="tooltip" data-tooltip="You must own the image or have the permission of the image owner to use it. <br>The image you choose for your profile and/or class must not contain any of the following:<li>Trademarks or company names – eg, images marked with ® or ™ signs</li> <li>mages or text protected by copyright – eg, images marked with © or other watermarks or notations</li><li>Contact information – telephone numbers, URLs or email addresses</li><li>Political statements or images relating to ethnicity or religion</li><li>Provocative, lewd or sexual images or content</li><li>Offensive material – images, signs, symbols or text relating to violence, death, injury, racism, cruelty, profanity, obscenity, weapons, firearms, ammunition or terrorism</li><li>Content where drinking, being drunk, smoking or gambling is the focus</li>">Choose a suitable image to represent your class.<br> Uploaded images must conform to the following guidelines: (* click to see guidelines)</span>',
+);

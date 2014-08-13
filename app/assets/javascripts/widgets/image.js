@@ -42,7 +42,7 @@ function initImage(params)
          
      }); 
 
-    $( '.create-form .btn-yellow :submit' ).on( 'click', function(event) {
+    $( '.create-form :submit' ).on( 'click', function(event) {
         event.preventDefault();
         trace('save changes clicked');
 
