@@ -119,14 +119,19 @@ function initLoginBox()
   })
   
   // remove error message when user types in box
-  /*
-  $(document).on('keyup','input, textarea', function(){
+  
+  $(document).on('keyup','input, textarea', function(e){
+    // check for which key has been pressed
+    var code = e.keyCode || e.which;
+     if(code == 13) { //Enter keycode
+       return;
+     }
      $(this).closest('div').find('.error-msg').fadeOut(200,function(){
        $(this).removeClass('error');
        $(this).closest('div').find('.error_msg').remove();
      });
   });
-*/
+
 
   $(document).on('click','.nav-admin', function(){
     $('#displayName-dropdown').toggle(100,function(){
