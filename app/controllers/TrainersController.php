@@ -185,10 +185,15 @@ class TrainersController extends \BaseController {
 					->where('user_id', $id)
 					->first();
 
-		$evercisegroups = Evercisegroup::has('evercisesession')
+		try{
+			$evercisegroups = Evercisegroup::has('evercisesession')
 			->with('evercisesession')
 			->with('venue')
 			->where('user_id', $trainer->user->id)->get();
+		}catch(Exception $e){
+			return Redirect::route('evercisegroups.search')->with('notification', 'this trainer does not exist');
+		}
+		
 
 		$stars = [];
 		$totalStars = 0;
