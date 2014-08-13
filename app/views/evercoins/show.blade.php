@@ -98,7 +98,7 @@
 		@if($profile < 100)
 			<div id="link-profile" class="milestone-block">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-user.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -114,7 +114,7 @@
 		@else
 			<div id="link-profile" class="milestone-block complete">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-user.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -134,7 +134,7 @@
 		@if(!$fb)
 			<div id="link-fb" class="milestone-block">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-fb.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -150,7 +150,7 @@
 		@else
 			<div id="link-fb" class="milestone-block complete">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-fb.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -170,7 +170,7 @@
 		@if(!$tw)
 			<div id="link-twitter" class="milestone-block">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-twitter.png', 'link-user', ['class' => 'milestone-img'])}}
@@ -186,7 +186,7 @@
 		@else
 			<div id="link-twitter" class="milestone-block complete">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					{{ HTML::image('img/link-twitter.png', 'link-user', ['class' => 'milestone-img'])}}

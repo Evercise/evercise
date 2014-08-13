@@ -98,7 +98,7 @@
 		<?php if($profile < 100): ?>
 			<div id="link-profile" class="milestone-block">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					<?php echo HTML::image('img/link-user.png', 'link-user', ['class' => 'milestone-img']); ?>
@@ -108,13 +108,13 @@
 				</div>
 				<div class="footer">
 					<p>Your profile is <?php echo $profile; ?>% complete </p>
-					<?php echo HTML::linkRoute('users.edit.tab', 'Compete Profile', [$id, 'profile'] , array('class' => 'milestone-btn btn-yellow')); ?>
+					<?php echo HTML::linkRoute('users.edit.tab', 'Complete Profile', [$id, 'profile'] , array('class' => 'milestone-btn btn-yellow')); ?>
 				</div>
 			</div>
 		<?php else: ?>
 			<div id="link-profile" class="milestone-block complete">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					<?php echo HTML::image('img/link-user.png', 'link-user', ['class' => 'milestone-img']); ?>
@@ -134,7 +134,7 @@
 		<?php if(!$fb): ?>
 			<div id="link-fb" class="milestone-block">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					<?php echo HTML::image('img/link-fb.png', 'link-user', ['class' => 'milestone-img']); ?>
@@ -150,7 +150,7 @@
 		<?php else: ?>
 			<div id="link-fb" class="milestone-block complete">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					<?php echo HTML::image('img/link-fb.png', 'link-user', ['class' => 'milestone-img']); ?>
@@ -170,7 +170,7 @@
 		<?php if(!$tw): ?>
 			<div id="link-twitter" class="milestone-block">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					<?php echo HTML::image('img/link-twitter.png', 'link-user', ['class' => 'milestone-img']); ?>
@@ -186,7 +186,7 @@
 		<?php else: ?>
 			<div id="link-twitter" class="milestone-block complete">
 				<div class="header">
-					100 Evercoin
+					50 Evercoins
 				</div>
 				<div class="body">
 					<?php echo HTML::image('img/link-twitter.png', 'link-user', ['class' => 'milestone-img']); ?>

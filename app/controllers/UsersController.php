@@ -44,7 +44,7 @@ class UsersController extends \BaseController {
 		$dt = new DateTime();
 		$before = $dt->sub(new DateInterval('P16Y'));
 		$dateBefore=  $before->format('Y-m-d');
-		$after = $dt->sub(new DateInterval('P104Y'));	
+		$after = $dt->sub(new DateInterval('P120Y'));	
 		$dateAfter=  $after->format('Y-m-d');
 
 		Validator::extend('has', function($attr, $value, $params) {

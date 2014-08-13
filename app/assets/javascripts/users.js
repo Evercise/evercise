@@ -29,7 +29,7 @@ function initUsers()
         $( this ).datepicker({
           dateFormat: "yy-mm-dd" ,
           defaultDate: "-30y",
-          yearRange: "-100:+0", 
+          yearRange: "-120:+0", 
           minDate: '-120y', 
           maxDate: '-16y',
           changeMonth: true,
@@ -192,7 +192,7 @@ function initDatePicker(){
         $( this ).datepicker({
           dateFormat: "yy-mm-dd" ,
           defaultDate: "-30y",
-          yearRange: "-100:+0", 
+          yearRange: "-120:+0", 
           minDate: '-120y', 
           maxDate: '-16y',
           changeMonth: true,

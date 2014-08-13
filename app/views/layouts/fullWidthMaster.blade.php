@@ -17,7 +17,9 @@
 
 		@include('layouts.redirectmessage')
 		<section id="homepage-banner" class="banner">
+			@include('layouts.pageHeaders')
 			@include('layouts.header')
+
 		
 			@yield('top')
 		</section>
