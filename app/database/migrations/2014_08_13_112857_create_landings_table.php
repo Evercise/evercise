@@ -20,6 +20,7 @@ class CreateLandingsTable extends Migration {
 				$table->string('email');
 				$table->string('code');
 				$table->integer('user_id');
+				$table->integer('category_id');
 				$table->timestamps();
 			});
 		}

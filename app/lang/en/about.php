@@ -27,7 +27,7 @@ From the moment you book a class you can talk to other members of the class <br>
 and the trainer through the <i>Community Thread.</i> Share your experiences, write reviews and club together to request more classes from the same trainer.</p>
 ',
 'section2-image_url' => '/img/WIE_2.jpg',
-'section2-image_alt' => 'potatoe fitness idea',
+'section2-image_alt' => 'potato fitness idea',
 
 
 'section3-title' => 'Evercise for the Instructor',
@@ -44,7 +44,7 @@ Setting up and getting paid for classes through Evercise couldn&apos;t be easier
 <b>To find out more, visit our &apos;'. HTML::linkRoute('trainers.create', 'Be a pro') .'&apos; page</b></p>
 ',
 'section3-image_url' => '/img/WIE_3.jpg',
-'section3-image_alt' => 'potatoe group fitness class',
+'section3-image_alt' => 'potato group fitness class',
 
 
 'section4-title' => 'Understanding the Class Panels',
