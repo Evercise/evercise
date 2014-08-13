@@ -12,7 +12,7 @@ Your fitness: your terms. After joining a class, you will receive a booking conf
 With Evercise, organising your fitness is easy, fun and flexible.</p>
 ',
 'section1-image_url' => '/img/WIE_1.jpg',
-'section1-image_alt' => 'showing of potato',
+'section1-image_alt' => 'potato',
 
 
 'section2-title' => 'Community',

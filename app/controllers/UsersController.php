@@ -26,6 +26,7 @@ class UsersController extends \BaseController {
 	public function create()
 	{
 		$referralCode = Referral::checkReferralCode(Session::get('referralCode'));
+		$ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		JavaScript::put(array('initPut' => 1 ));
