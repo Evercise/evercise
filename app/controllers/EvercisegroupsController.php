@@ -409,7 +409,6 @@ class EvercisegroupsController extends \BaseController {
 				if (!empty($memberAllIds)) {
 					$memberUsers = User::whereIn('id', $memberAllIds)->distinct()->get();
 				}
-				
 
 
 				$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
