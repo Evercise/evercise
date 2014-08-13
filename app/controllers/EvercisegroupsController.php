@@ -379,7 +379,7 @@ class EvercisegroupsController extends \BaseController {
 
 				$testerLoggedIn = $this->user ? $this->user->inGroup($testers) : false; // see if user is a tester
 
-				$userTrainer = Sentry::findUserById($trainer->user_id); // create a sentry user object 
+				$userTrainer = Sentry::findUserById($evercisegroup->user_id); // create a sentry user object 
 				
 				// test to see if trainer is a tester and the user is not 
 				if ($userTrainer->inGroup($testers) && $testerLoggedIn == false)
