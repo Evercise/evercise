@@ -185,13 +185,14 @@ class TrainersController extends \BaseController {
 					->where('user_id', $id)
 					->first();
 
+		// check if trainer has classes else redirect them home
 		try{
 			$evercisegroups = Evercisegroup::has('evercisesession')
 			->with('evercisesession')
 			->with('venue')
 			->where('user_id', $trainer->user->id)->get();
 		}catch(Exception $e){
-			return Redirect::route('evercisegroups.search')->with('notification', 'this trainer does not exist');
+			return Redirect::route('home')->with('notification', 'this trainer does not exist');
 		}
 		
 
