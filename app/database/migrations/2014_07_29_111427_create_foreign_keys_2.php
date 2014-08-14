@@ -73,10 +73,10 @@ class CreateForeignKeys2 extends Migration {
 			$table->dropForeign('evercisegroup_subcategories_subcategory_id_foreign');
 		});
 
-		Schema::table('subcategory_categories', function(Blueprint $table) {
+/*		Schema::table('subcategory_categories', function(Blueprint $table) {
 			$table->dropForeign('subcategory_categories_subcategory_id_foreign');
 			$table->dropForeign('subcategory_categories_category_id_foreign');
-		});
+		});*/
 	}
 
 }

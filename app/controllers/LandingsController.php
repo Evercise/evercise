@@ -62,7 +62,7 @@ class LandingsController extends \BaseController {
 
 			$ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
 
-			$category = category::find($categoryId)->pluck('name');
+			$category = Category::find($categoryId)->pluck('name');
 
 			if ($ppc)
 			{
