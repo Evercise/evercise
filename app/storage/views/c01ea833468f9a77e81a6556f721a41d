@@ -11,89 +11,43 @@
 	
 </div>
 
-<div class="dashboard-body">
-	<h3>Transactions</h3>
-	<br>
-	<br>
-	<div class="table">
-		<div class="table-row">
-			<div class="table-head table-field two-s align-l">
-				<li>Description</li>
-			</div>
-			<div class="table-head table-field one-s">
-				<li>Date</li>
-			</div>
-			<div class="table-head table-field one-s">
-				<li>Amount In</li>
-			</div>
-			<div class="table-head table-field one-s">
-				<li>Out</li>
-			</div>
-			<div class="table-head table-field one-s">
-				<li>Balance</li>
-			</div>
-		</div>
-		<?php foreach($evercoinHistory as $record): ?>
-			<div class="table-row">
-				<?php if($record->transaction_amount > 0): ?>
-					<div class="table-field two-s align-l">
-						<li>Deposit</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							<?php echo date('d/m/Y', strtotime($record->created_at) ); ?>
-						</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							<?php echo $record->transaction_amount; ?>e
-						</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							
-						</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							<?php echo $record->new_balance; ?>e
-						</li>
-					</div>
-				<?php else: ?>
-					<div class="table-field two-s align-l">
-						<li>Withdrawal</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							<?php echo date('d/m/Y', strtotime($record->created_at) ); ?>
-						</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							
-						</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							<?php echo $record->transaction_amount; ?>e
-						</li>
-					</div>
-					<div class="table-field one-s">
-						<li>
-							<?php echo $record->new_balance; ?>e
-						</li>
-					</div>
-				<?php endif; ?>
-			</div>
-		<?php endforeach; ?>
-	</div>
-</div>
+
 
 <div class="dashboard-title">
 	<h3>Ways to earn Evercoins</h3>
 </div>
 
 <div class="dashboard-body">
+
+	<div class="milestone-refer mb20">
+		<div class="milestone-block refer">
+			<div class="header">
+				500 Evercoins
+			</div>
+			<div class="body">
+				<br>
+				<strong>Refer Friends</strong>
+				<br>
+				<p>Refer 3 friends to claim<br> 500 Evercoins*</p>
+				<span class="highlight"><?php echo $numReferrals; ?>/3</span>
+
+				
+			</div>
+			<div class="footer">
+				<span>Friends Referred</span>
+			</div>
+		</div>
+		<div class="milestone-refer-wrap">
+			<h4>Refer a Friend</h4>
+			<p>Enter a friends email address below and they&apos;ll be sent a referral<br> code. If they then register with Evercise using the referral code,<br> they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral</p>
+			<?php echo Form::open(array('id' => 'send_invite', 'url' => 'referrals', 'method' => 'POST', 'class' => 'create-form milestone-form')); ?>
+				<?php echo Form::label( 'referee_email', 'Email'); ?>
+				<?php echo Form::text( 'referee_email' , '', array('id' => 'referee_email','placeholder' => 'Enter friends email address')); ?>
+				<?php echo Form::submit('Send Code' , array('class'=>'btn btn-yellow ')); ?>
+			<?php echo Form::close(); ?>
+		</div>
+		<small>*Friends must create a vaild account </small>
+	</div>
 	<div class="milestone-row">
 		<?php if($profile < 100): ?>
 			<div id="link-profile" class="milestone-block">
@@ -203,38 +157,88 @@
 			</div>
 		<?php endif; ?>
 
-		<div class="milestone-refer">
-			<div class="milestone-block refer">
-				<div class="header">
-					500 Evercoins
-				</div>
-				<div class="body">
-					<br>
-					<strong>Refer Friends</strong>
-					<br>
-					<p>Refer 3 friends to claim<br> 500 Evercoins*</p>
-					<span class="highlight"><?php echo $numReferrals; ?>/3</span>
-
-					
-				</div>
-				<div class="footer">
-					<span>Friends Referred</span>
-				</div>
-			</div>
-			<div class="milestone-refer-wrap">
-				<h4>Refer a Friend</h4>
-				<p>Enter a friends email address below and they&apos;ll be sent a referral<br> code. If they then register with Evercise using the referral code,<br> they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral</p>
-				<?php echo Form::open(array('id' => 'send_invite', 'url' => 'referrals', 'method' => 'POST', 'class' => 'create-form milestone-form')); ?>
-					<?php echo Form::label( 'referee_email', 'Email'); ?>
-					<?php echo Form::text( 'referee_email' , '', array('id' => 'referee_email','placeholder' => 'Enter friends email address')); ?>
-					<?php echo Form::submit('Send Code' , array('class'=>'btn btn-yellow ')); ?>
-				<?php echo Form::close(); ?>
-			</div>
-			<small>*Friends must create a vaild account </small>
-		</div>
+		
 
 	</div>
 	
+</div>
+
+<div class="dashboard-body">
+	<h3>Transactions</h3>
+	<br>
+	<br>
+	<div class="table">
+		<div class="table-row">
+			<div class="table-head table-field two-s align-l">
+				<li>Description</li>
+			</div>
+			<div class="table-head table-field one-s">
+				<li>Date</li>
+			</div>
+			<div class="table-head table-field one-s">
+				<li>Amount In</li>
+			</div>
+			<div class="table-head table-field one-s">
+				<li>Out</li>
+			</div>
+			<div class="table-head table-field one-s">
+				<li>Balance</li>
+			</div>
+		</div>
+		<?php foreach($evercoinHistory as $record): ?>
+			<div class="table-row">
+				<?php if($record->transaction_amount > 0): ?>
+					<div class="table-field two-s align-l">
+						<li>Deposit</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							<?php echo date('d/m/Y', strtotime($record->created_at) ); ?>
+						</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							<?php echo $record->transaction_amount; ?>e
+						</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							
+						</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							<?php echo $record->new_balance; ?>e
+						</li>
+					</div>
+				<?php else: ?>
+					<div class="table-field two-s align-l">
+						<li>Withdrawal</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							<?php echo date('d/m/Y', strtotime($record->created_at) ); ?>
+						</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							
+						</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							<?php echo $record->transaction_amount; ?>e
+						</li>
+					</div>
+					<div class="table-field one-s">
+						<li>
+							<?php echo $record->new_balance; ?>e
+						</li>
+					</div>
+				<?php endif; ?>
+			</div>
+		<?php endforeach; ?>
+	</div>
 </div>
 	
 
