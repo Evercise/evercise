@@ -492,7 +492,7 @@ function initScrollAnchor(string) {
           
           event.preventDefault();
           
-          $('html').animate({scrollTop: targetOffset}, 300, function() {
+          $('html, body').animate({scrollTop: targetOffset}, 300, function() {
             trace(targetOffset);
          //   location.hash = target;
           });
