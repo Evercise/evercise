@@ -4,7 +4,7 @@ return [
  [
   'name' => 'Liqiang Fan',
   'title' => 'Managing Director',
-  'image' => '/img/fan.jpg',
+  'image' => '/img/Fan.jpg',
   'food' => 'Mooncake',
   'hobby' => 'Basketball, Billiards',
   'quote' => 'Why not Evercise?',
