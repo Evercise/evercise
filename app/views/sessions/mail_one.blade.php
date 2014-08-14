@@ -13,7 +13,7 @@
 	            {{ $errors->first('mail_subject', '<p class="error-msg">:message</p>')}}
 	        @endif
 
-	    	@include('form.textfield', array('fieldname'=>'mail_body', 'placeholder'=>'Type your mail here', 'maxlength'=>1000, 'label'=>'Mail body', 'fieldtext'=>''))
+	    	@include('form.textarea', array('fieldname'=>'mail_body', 'placeholder'=>'Type your mail here', 'maxlength'=>1000, 'label'=>'Mail body', 'fieldtext'=>''))
 	        @if ($errors->has('mail_body'))
 	            {{ $errors->first('mail_body', '<p class="error-msg">:message</p>')}}
 	        @endif
