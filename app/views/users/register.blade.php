@@ -6,8 +6,8 @@
 <div class="row">
 	<div class="full-width">
 		<br>
-
-		@if(! isset($ppcCode))
+		
+		@if(! $ppcCode)
 
 		<h1 class="tc">What is your goal?</h1>
 		<div class="switch">
@@ -31,7 +31,7 @@
 		@endif
 
 	</div>
-	<div id="user" class="switch-body tab-view {{ isset($ppcCode) ? 'selected' : '' }}">
+	<div id="user" class="switch-body tab-view {{ $ppcCode ? 'selected' : '' }}">
 		@include('users.create')
 	</div>
 	<div id="trainer" class="switch-body tab-view">
