@@ -82,7 +82,7 @@ function showResponse(response, statusText, xhr, form)  {
         {
             if (value.length != 0)
             {
-                trace(value);
+                trace('value: '+value);
                 $("#image-upload").after('<span class="error-msg">'+ value +'</span>');
             }
         });
