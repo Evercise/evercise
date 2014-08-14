@@ -1,4 +1,4 @@
-@extends('layouts.landingMaster')
+@extends('layouts.master')
 
 
 @section('content')
@@ -17,6 +17,7 @@
             {{ Form::text( 'email' , '', array('id' => 'email','placeholder' => 'Enter your email address')) }}
             {{ Form::submit('Get Code' , array('class'=>'btn btn-yellow ')) }}
           {{ Form::close() }}
+          {{ HTML::link('ppc_fb/'.$category->id, 'Sign up with facebook', array('class' => 'btn btn-fb btn-large')) }}
         </div>
       </div>
 

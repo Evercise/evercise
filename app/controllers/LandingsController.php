@@ -49,7 +49,7 @@ class LandingsController extends \BaseController {
 
 				return Response::json($result);
 	        }else{
-	        	return Redirect::route('evercisegroups.create')
+	        	return Redirect::route('landing.category', ['category'=>Input::get('category')])
 					->withErrors($validator)
 					->withInput();
 	        }
@@ -58,9 +58,11 @@ class LandingsController extends \BaseController {
 
 			$email = Input::get('email');
 			$categoryId = Input::get('category');
-			$ppcCode = Functions::randomPassword(20);
 
+			$ppcCode = Functions::randomPassword(20);
 			$ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
+
+			Session::put('ppcCode', $ppcCode);
 
 			$category = Category::find($categoryId)->pluck('name');
 
@@ -73,7 +75,7 @@ class LandingsController extends \BaseController {
 	        ));
 			}
 
-			return Response::json(['callback'=>'successAndRefresh']);
+		return Redirect::to('users/create');
 		}
 	}
 
@@ -122,11 +124,24 @@ class LandingsController extends \BaseController {
 	}
 
 
+	// Facebook link on landing page clicked
+	public function facebookPpc($categoryId)
+	{
+		$ppcCode = Functions::randomPassword(20);
+		$ppc = Landing::create([ 'email'=>'facebook', 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
+
+		Session::put('ppcCategory', $categoryId);
+		Session::put('ppcCode', $ppcCode);
+
+		return Redirect::to('login/fb');
+	}
+
+
 	// Accept code from a pay-per-click generated email.
-	public function submitPpc($categoryId, $code)
+	public function submitPpc($categoryId, $ppcCode)
 	{
 		Session::put('ppcCategory', $categoryId);
-		Session::put('ppcCode', $code);
+		Session::put('ppcCode', $ppcCode);
 
 		return Redirect::to('users/create');
 	}

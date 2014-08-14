@@ -31,6 +31,7 @@ class UsersController extends \BaseController {
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		JavaScript::put(array('initPut' => 1 ));
 		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
+
 		return View::make('users.register')
 		->with('referralCode', $referralCode)
 		->with('ppcCode', $ppcCode);
@@ -271,11 +272,19 @@ class UsersController extends \BaseController {
 				Evercoin::create(['user_id'=>$user->id, 'balance'=>0]);
 				Milestone::create(['user_id'=>$user->id]);
 
+				// Check referral code from session, if it exists and is valid, mark it as used and credit the new user the specified amount of Evercoins
 				$referral = Referral::useReferralCode(Session::get('referralCode'), $user->id);
 				if( $referral )
 				{
 					Milestone::where('user_id', $referral->user_id)->first()->add('referral');
 					Milestone::where('user_id', $user->id)->first()->freeCoin('referral_signup');
+				}
+
+				// Check PPC / Landing code from session, if it exists and is valid, mark it as used and credit the new user the specified amount of Evercoins
+				$landing = Landing::useLandingCode(Session::get('ppcCode'), $user->id);
+				if( $landing )
+				{
+					Milestone::where('user_id', $user->id)->first()->freeCoin('ppc_signup');
 				}
 				
 				Token::create(['user_id'=>$user->id]);
