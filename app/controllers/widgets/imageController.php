@@ -17,6 +17,7 @@ class ImageController extends \BaseController {
         $rules = array(
             'image' => 'image'
         );
+                  
 
         
         if (!isset($file))
