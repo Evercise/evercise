@@ -29,7 +29,7 @@ class PdfController extends \BaseController
                 ->with('evercisesession', $evercisesession)
                 ->with('sessionmembers', $sessionmembers);
 
-        return PDF::load($pdfPage, 'A4', 'portrait')->download($evercisegroup->name.'-'.$timestamp.'.pdf');
+        return PDF::load($pdfPage, 'A4', 'portrait')->download($evercisegroup.'-'.$timestamp.'.pdf');
 
     }
 }
