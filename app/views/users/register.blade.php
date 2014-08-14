@@ -6,6 +6,9 @@
 <div class="row">
 	<div class="full-width">
 		<br>
+
+		@if(! isset($ppcCode))
+
 		<h1 class="tc">What is your goal?</h1>
 		<div class="switch">
 			<div class="switch-header icon-btn tc" data-view="user">
@@ -24,8 +27,11 @@
 				</div>
 			</div>
 		</div>
+
+		@endif
+
 	</div>
-	<div id="user" class="switch-body tab-view">
+	<div id="user" class="switch-body tab-view {{ isset($ppcCode) ? 'selected' : '' }}">
 		@include('users.create')
 	</div>
 	<div id="trainer" class="switch-body tab-view">

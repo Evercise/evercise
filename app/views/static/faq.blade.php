@@ -28,7 +28,7 @@
 	    </div>
 	    <div class="col9">
 	    	<div id="faq_main_column">
-                <ul name="Basics"><h3>Basics</h3>
+                <ul name="basics"><h3>Basics</h3>
                   @foreach(trans('faq-basics') as $basics)
                     <li>
                         <a name="{{$basics['title']}}"><div class="faq_gap"></div></a>
@@ -48,12 +48,12 @@
                     
                 </ul>
                 <div class="faq_gap"></div>
-                <ul name="Participant"><h3>For Participant</h3>
-                  @foreach(trans('faq-Participant') as $Participant)
+                <ul name="participant"><h3>For Participant</h3>
+                  @foreach(trans('faq-participant') as $participant)
                     <li>
-                        <a name="{{$Participant['title']}}"><div class="faq_gap"></div></a>
-                        <strong>{{$Participant['title']}}</strong><br><br>
-                        {{$Participant['body']}}
+                        <a name="{{$participant['title']}}"><div class="faq_gap"></div></a>
+                        <strong>{{$participant['title']}}</strong><br><br>
+                        {{$participant['body']}}
                     </li>
                   @endforeach
                     
