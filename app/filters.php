@@ -51,23 +51,26 @@ Route::filter('auth.basic', function()
 
 Route::filter('admin', function()
 {
-	// Find the user using the user id
-	if($user = Sentry::getUser())
+	if (! App::environment('local'))
 	{
-		// Find the Administrator group
-		$admin = Sentry::findGroupByName('Admin');
 
-		// Check if the user is in the administrator group
-		if (!$user->inGroup($admin))
+		// Find the user using the user id
+		if($user = Sentry::getUser())
 		{
-			return Redirect::route('home')->with('notification', 'you do not have the correct privilages to view this page');
+			// Find the Administrator group
+			$admin = Sentry::findGroupByName('Admin');
+
+			// Check if the user is in the administrator group
+			if (!$user->inGroup($admin))
+			{
+				return Redirect::route('home')->with('notification', 'you do not have the correct privilages to view this page');
+			}
+		}
+		else
+		{
+			return Redirect::route('home')->with('notification', 'You have been logged out');
 		}
 	}
-	else
-	{
-		return Redirect::route('home')->with('notification', 'You have been logged out');
-	}
-	
 
 });
 

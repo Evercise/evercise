@@ -75,7 +75,8 @@ class LandingsController extends \BaseController {
 	        ));
 			}
 
-		return Redirect::to('users/create');
+			//return Redirect::to('users/create');
+			return Response::json(['callback'=>'gotoUrl', 'url' => route('users.create')]);
 		}
 	}
 

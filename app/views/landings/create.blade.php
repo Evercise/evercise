@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.landingMaster')
 
 
 @section('content')
@@ -23,3 +23,5 @@
 
     </div>
 @stop
+
+@include('layouts.laracasts')

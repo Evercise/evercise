@@ -42,3 +42,5 @@
 		<small>{{trans('footer.copyright')}}</small>
 	</p>
 </div>
+
+@include('layouts.laracasts')
