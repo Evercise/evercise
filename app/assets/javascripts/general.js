@@ -345,8 +345,12 @@ function initPut (params) {
                           if (value.length != 0)
                           {
                             form.find("#" + index).addClass('error'); // add a error to input field returned by validation check
+                            // check for image
+                            if(index == 'image'){
+                              form.find("#" + index+'-upload').after('<span class="error-msg">' + value + '</span>');
+                            }
                             // check for a slider 
-                            if (form.find("#" + index+'-slider').length) {
+                            else if (form.find("#" + index+'-slider').length) {
                               form.find("#" + index+'-slider').after('<span class="error-msg">' + value + '</span>');
                             }else{
                               form.find("#" + index).after('<span class="error-msg">' + value + '</span>'); 
