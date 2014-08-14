@@ -25,7 +25,7 @@
 		@endif
 		<li class="session-list-controls">
 			{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '<img src="/img/mail_icon_green.png"></img>', array('id'=>$session['id']), array('class'=>'mail_all session-icon '.($session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''))) ) }}
-			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => '')) }}
+			{{ Form::open(array('id' => 'download_members', 'url' => 'postPdf', 'method' => 'post', 'class' => ".$session['Sessionmembers']->isEmpty() ? 'session-no-members' : ''.'")) }}
 				{{ Form::hidden( 'postEverciseGroup' , $evercisegroup->name , array('id' => 'postEverciseGroup')) }}
 				{{ Form::hidden( 'postEverciseSession' , $session->date_time , array('id' => 'postEverciseSession')) }}
 				{{ Form::hidden( 'postMembers' , $session->users , array('id' => 'postMembers')) }}
