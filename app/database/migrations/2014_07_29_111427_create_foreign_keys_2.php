@@ -13,7 +13,7 @@ class CreateForeignKeys2 extends Migration {
 	public function up()
 	{
 
-/*		Schema::table('evercoinhistory', function(Blueprint $table) {
+		Schema::table('evercoinhistory', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
 		});
 		Schema::table('milestones', function(Blueprint $table) {
@@ -36,7 +36,7 @@ class CreateForeignKeys2 extends Migration {
 		Schema::table('subcategory_categories', function(Blueprint $table) {
 			$table->foreign('subcategory_id')->references('id')->on('subcategories');
 			$table->foreign('category_id')->references('id')->on('categories');
-		});*/
+		});
 	}
 
 
