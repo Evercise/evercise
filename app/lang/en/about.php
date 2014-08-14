@@ -49,7 +49,7 @@ Setting up and getting paid for classes through Evercise couldn&apos;t be easier
 
 'section4-title' => 'Understanding the Class Panels',
 'section4-body' => '
-<p>When a trainer organises a class, it will be displayed as a panel (please see example above) on your '. HTML::linkRoute('home', 'user dashboard') .' Each panel shows the class description and basic information. You can click on the panel to view further information about the specific class.
+<p>When a trainer organises a class, it will be displayed as a panel (please see example above) on your user dashboard Each panel shows the class description and basic information. You can click on the panel to view further information about the specific class.
 <br>The yellow bar, or <i>joining percentage,</i> represents the class availability, showing how many people have joined and how many spaces are left.
 <br>The star rating represents the feedback that the trainer has received from previous classes.
 <br>Once you have joined a class we cannot offer a refund if you pull out, but you will receive a full refund if the class is cancelled.
