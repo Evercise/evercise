@@ -4,6 +4,11 @@
             <p>Your referral code is valid! If you sign up now you will receive {{ Evercoin::poundsToEvercoins(Config::get('values')['freeCoins']['referral_signup']) }} Evercoins!</p>
         </div>
      @endif
+    @if($ppcCode)
+         <div class="referral-wrapper">
+            <p>Your code is valid! If you sign up now you will receive {{ Evercoin::poundsToEvercoins(Config::get('values')['freeCoins']['ppc_signup']) }} Evercoins!</p>
+        </div>
+     @endif
 
        
    
