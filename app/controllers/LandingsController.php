@@ -134,11 +134,19 @@ class LandingsController extends \BaseController {
 	// Accept code from a pay-per-click generated email.
 	public function landingPpc($categoryId)
 	{
-		$category = Category::find($categoryId);
-		
-		JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
-		return View::make('landings.create')
-		->with('category', $category);
+		if (in_array($categoryId, Config::get('values')['ppc_categories']))
+		{
+
+			$category = Category::find($categoryId);
+			
+			JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
+			return View::make('landings.create')
+			->with('category', $category);
+		}
+		else
+		{
+			return Redirect::to('/');
+		}
 	}
 
 }

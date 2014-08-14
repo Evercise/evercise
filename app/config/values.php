@@ -22,4 +22,6 @@ return array(
 	// Value of an evercoin in pounds
 	'evercoin' => 0.01,
 
+	'ppc_categories' => [1, 4, 5, 7, 13],
+
 );
