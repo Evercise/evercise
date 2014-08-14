@@ -15,7 +15,7 @@ return [
   'image' => '/img/Jie-Sun.jpg',
   'food' => 'Dumplings',
   'hobby' => 'Football, Climbing',
-  'quote' => 'Proficient, Professional, Perfect (3P)',
+  'quote' => 'Proficient, Professional, Perfect',
   ],
   [
   'name' => 'Lewis Bayfield',
