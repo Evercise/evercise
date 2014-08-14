@@ -42,3 +42,5 @@
 		<small><?php echo trans('footer.copyright'); ?></small>
 	</p>
 </div>
+
+<?php echo $__env->make('layouts.laracasts', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
