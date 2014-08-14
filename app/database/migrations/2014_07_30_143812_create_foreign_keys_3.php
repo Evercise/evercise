@@ -20,7 +20,7 @@ class CreateForeignKeys3 extends Migration {
 
 		Schema::table('sessionpayments', function(Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('evercisesession_id')->references('id')->on('evercisesessions');
+			//$table->foreign('evercisesession_id')->references('id')->on('evercisesessions');
 		});
 	}
 
@@ -38,7 +38,7 @@ class CreateForeignKeys3 extends Migration {
 		});
 		Schema::table('sessionpayments', function(Blueprint $table) {
 			$table->dropForeign('sessionpayments_user_id_foreign');
-			$table->dropForeign('sessionpayments_evercisesession_id_foreign');
+			//$table->dropForeign('sessionpayments_evercisesession_id_foreign');
 		});
 	}
 
