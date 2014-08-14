@@ -35,9 +35,9 @@
             @endif
 
             @if(Session::has('description'))
-                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'tooltip'=>'Tell people what’s special about this class.  Use your words wisely to describe as concisely and clearly as possible what a participant can hope to gain from joining your class. <br>Contact details can not be provided (telephone numbers, URLs or email addresses) in this panel. Any information not related to your fitness class will be deleted.', 'default' => Session::get('description') ))
+                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 5000 characters', 'maxlength'=>5000, 'label'=>'Class description', 'tooltip'=>'Tell people what’s special about this class.  Use your words wisely to describe as concisely and clearly as possible what a participant can hope to gain from joining your class. <br>Contact details can not be provided (telephone numbers, URLs or email addresses) in this panel. Any information not related to your fitness class will be deleted.', 'default' => Session::get('description') ))
             @else
-                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 500 characters', 'maxlength'=>500, 'label'=>'Class description', 'tooltip'=>'Tell people what’s special about this class.  Use your words wisely to describe as concisely and clearly as possible what a participant can hope to gain from joining your class. <br>Contact details can not be provided (telephone numbers, URLs or email addresses) in this panel. Any information not related to your fitness class will be deleted.' ))
+                @include('form.textarea', array('fieldname'=>'description', 'placeholder'=>'Between 100 and 5000 characters', 'maxlength'=>5000, 'label'=>'Class description', 'tooltip'=>'Tell people what’s special about this class.  Use your words wisely to describe as concisely and clearly as possible what a participant can hope to gain from joining your class. <br>Contact details can not be provided (telephone numbers, URLs or email addresses) in this panel. Any information not related to your fitness class will be deleted.' ))
             @endif
 
             @if ($errors->has('summary'))

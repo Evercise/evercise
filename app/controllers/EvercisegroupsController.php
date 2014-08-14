@@ -137,7 +137,7 @@ class EvercisegroupsController extends \BaseController {
 			Input::all(),
 			array(
 				'classname' => 'required|max:100|min:5',
-				'description' => 'required|max:500|min:100',
+				'description' => 'required|max:5000|min:100',
 				//'category' => 'required',
 				'duration' => 'required|numeric|between:10,240',
 				'maxsize' => 'required|numeric|between:1,200',
