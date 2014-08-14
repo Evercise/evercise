@@ -1,6 +1,22 @@
 <?php
 
 return [
+ [
+  'name' => 'Liqiang Fan',
+  'title' => 'Managing Director',
+  'image' => '/img/fan.jpg',
+  'food' => 'Mooncake',
+  'hobby' => 'Basketball, Billiards',
+  'quote' => 'Why not Evercise?',
+  ],
+  [
+  'name' => 'Jie Sun',
+  'title' => 'CTO',
+  'image' => '/img/Jie-Sun.jpg',
+  'food' => 'Dumplings',
+  'hobby' => 'Football, Climbing',
+  'quote' => 'Proficient, Professional, Perfect (3P)',
+  ],
   [
   'name' => 'Lewis Bayfield',
   'title' => 'Development Manager',
@@ -33,4 +49,5 @@ return [
   'hobby' => 'Climbing and mountain biking',
   'quote' => 'Do a flip!',
   ],
+ 
 ];
