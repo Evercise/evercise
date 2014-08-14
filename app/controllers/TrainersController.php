@@ -285,7 +285,7 @@ class TrainersController extends \BaseController {
 			$result = array(
 		            //'sp' =>  $speciality,
 		            'callback' => 'gotoUrl',
-		            'url' => '/trainers/2/edit/profile'
+		            'url' => '/trainers/2/edit/trainer'
 		         );	
 
 			return Response::json($result);
