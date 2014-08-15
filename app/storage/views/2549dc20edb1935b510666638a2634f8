@@ -4,6 +4,11 @@
             <p>Your referral code is valid! If you sign up now you will receive <?php echo Evercoin::poundsToEvercoins(Config::get('values')['freeCoins']['referral_signup']); ?> Evercoins!</p>
         </div>
      <?php endif; ?>
+    <?php if($ppcCode): ?>
+         <div class="referral-wrapper">
+            <p>Your code is valid! If you sign up now you will receive <?php echo Evercoin::poundsToEvercoins(Config::get('values')['freeCoins']['ppc_signup']); ?> Evercoins!</p>
+        </div>
+     <?php endif; ?>
 
        
    
@@ -58,7 +63,7 @@
                 <?php echo $errors->first('last_name', '<p class="error-msg">:message</p>'); ?>
             <?php endif; ?>
 
-        	<?php echo $__env->make('form.textfield', array('fieldname'=>'email', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        	<?php echo $__env->make('form.textfield', array('fieldname'=>'email', 'default'=>isset($email) ? $email : '', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.'), array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <?php if ($errors->has('email')): ?>
                 <?php echo $errors->first('email', '<p class="error-msg">:message</p>'); ?>
             <?php endif; ?>

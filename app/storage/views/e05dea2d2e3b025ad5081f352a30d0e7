@@ -5,6 +5,9 @@
 <div class="row">
 	<div class="full-width">
 		<br>
+		
+		<?php if(! $ppcCode): ?>
+
 		<h1 class="tc">What is your goal?</h1>
 		<div class="switch">
 			<div class="switch-header icon-btn tc" data-view="user">
@@ -23,8 +26,11 @@
 				</div>
 			</div>
 		</div>
+
+		<?php endif; ?>
+
 	</div>
-	<div id="user" class="switch-body tab-view">
+	<div id="user" class="switch-body tab-view <?php echo $ppcCode ? 'selected' : ''; ?>">
 		<?php echo $__env->make('users.create', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	</div>
 	<div id="trainer" class="switch-body tab-view">
