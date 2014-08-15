@@ -63,7 +63,7 @@
                 {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
             @endif
 
-        	@include('form.textfield', array('fieldname'=>'email', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.'))
+        	@include('form.textfield', array('fieldname'=>'email', 'default'=>isset($email) ? $email : '', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.'))
             @if ($errors->has('email'))
                 {{ $errors->first('email', '<p class="error-msg">:message</p>')}}
             @endif

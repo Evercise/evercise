@@ -250,28 +250,32 @@ class UserMailer extends Mailer {
 		return $this->sendTo($email, $subject, $view, $data );
 	}
 
-	public function ppc($email, $category, $ppcCode)
+	public function ppc($email, $categoryId, $ppcCode)
 	{
+
 		$body = '
-		<p>Hi There</p>
+		<p>Howdy!</p>
 				
 		<p>
-		May we introduce you to Evercise? We offer the perfect solution for those wanting to keep fit with maximum flexibility. It&apos;s simple:
+			You&apos;re moments away from claiming your 300 Evercoins (£3)*! Now here are ways to gain more...
+			Not only do you have access to a wide range of fitness classes and trainers, but you can 
+			spend your Evercoins as you wish on many different classes on the platform! 
 		</p>
 
 		<p>
-			<li>Search a huge range of fitness classes by type or location</li>
-			<li>Purchase classes online (you can do this on a class by class basis)</li>
-			<li>Show up and shape up</li>
-			<li>Rate and review</li>
+			And that&apos;s not it. You can gain up to £5*, a credit of 500 Evercoins by referring your friends! All you have to do 
+			is get them to register with a valid email address on Evercise.com, or sign up through Facebook. It&apos;s really that 
+			simple.
 		</p>
 		<p>
-			On Evercise.com you can search for your favourite workout at a time and location that suits	you. Fit your training around your job or studies, find trainers with the best reviews, and keep fit without having to commit a thing
+			'.\Config::get('values.ppc_category_examples')[$categoryId].'
 		</p>
 		<p>
-			Does this sound interesting to you? Then what are you waiting for? It&apos;s completely free to join!
+			We aim to make your Evercise experience rewarding and worthwhile, so why not take the step now!
 		</p>
 		';
+
+		$category = \Category::find($categoryId)->pluck('name');
 		
 
 		$subject = 'Your Evercise code!';
@@ -281,7 +285,7 @@ class UserMailer extends Mailer {
 		$data['mainHeader'] = 'your Evercise code!';
 		$data['subHeader'] = 'Sign up with this code to recieve 300 Evercoins (£3)!';
 		$data['body'] = $body;
-		$data['link'] = HTML::linkRoute('landing.category.code', 'Click here to join Evercise', [$category, $ppcCode]);
+		$data['link'] = HTML::linkRoute('landing.category.code', 'Sign in here and retrieve your Evercoins now', [$category, $ppcCode]);
 		$data['linkLabel'] = 'Start with evercise today:';
 		
 		return $this->sendTo($email, $subject, $view, $data );

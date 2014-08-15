@@ -63,6 +63,7 @@ class LandingsController extends \BaseController {
 			$ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
 
 			Session::put('ppcCode', $ppcCode);
+			Session::put('email', $email);
 
 			$category = Category::find($categoryId)->pluck('name');
 
@@ -70,7 +71,7 @@ class LandingsController extends \BaseController {
 			{
 				Event::fire('landing.ppc', array(
 		        	'email' => $email,
-		        	'category' => $category,
+		        	'categoryId' => $categoryId,
 	            'ppcCode' => $ppcCode
 	        ));
 			}
@@ -147,11 +148,19 @@ class LandingsController extends \BaseController {
 		return Redirect::to('users/create');
 	}
 
-	// Accept code from a pay-per-click generated email.
-	public function landingPpc($categoryId)
+
+	// Category-specific landing pages
+	public function dance()	{						return $this->loadCategory('dance'); }
+	public function martialarts()	{			return $this->loadCategory('martialarts'); }
+	public function yoga()	{						return $this->loadCategory('yoga'); }
+	public function bootcamp()	{				return 	$this->loadCategory('bootcamp'); }
+	public function personaltrainer()	{	return $this->loadCategory('personaltrainer'); }
+	
+	public function loadCategory($category)
 	{
-		if (in_array($categoryId, Config::get('values')['ppc_categories']))
+		if (array_key_exists($category, Config::get('values')['ppc_categories']))
 		{
+			$categoryId = Config::get('values')['ppc_categories'][$category];
 
 			$category = Category::find($categoryId);
 			

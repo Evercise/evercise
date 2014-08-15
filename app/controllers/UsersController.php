@@ -27,6 +27,7 @@ class UsersController extends \BaseController {
 	{
 		$referralCode = Referral::checkReferralCode(Session::get('referralCode'));
 		$ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
+		$email = Session::get('email');
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		JavaScript::put(array('initPut' => 1 ));
@@ -34,7 +35,8 @@ class UsersController extends \BaseController {
 
 		return View::make('users.register')
 		->with('referralCode', $referralCode)
-		->with('ppcCode', $ppcCode);
+		->with('ppcCode', $ppcCode)
+		->with('email', $email);
 	}
 
 	/**
@@ -177,12 +179,11 @@ class UsersController extends \BaseController {
 			{
 				Milestone::where('user_id', $user->id)->first()->freeCoin('ppc_signup');
 			}
+			Session::forget('ppcCode');
+			Session::forget('email');
 			
 
 			if($user) {
-
-        		
-	            
 
 				User::find($user->id)->makeUserDir();
 
@@ -286,6 +287,8 @@ class UsersController extends \BaseController {
 				{
 					Milestone::where('user_id', $user->id)->first()->freeCoin('ppc_signup');
 				}
+			Session::forget('ppcCode');
+			Session::forget('email');
 				
 				Token::create(['user_id'=>$user->id]);
 				$token = Token::where('user_id', $user->id)->first();

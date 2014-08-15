@@ -195,8 +195,14 @@ Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
 
 Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
 Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
-Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
 Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
+
+//Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
+Route::get('dance', array('as' => 'landing.dance', 'uses' => 'LandingsController@dance'));
+Route::get('martialarts', array('as' => 'landing.martialarts', 'uses' => 'LandingsController@martialarts'));
+Route::get('yoga', array('as' => 'landing.yoga', 'uses' => 'LandingsController@yoga'));
+Route::get('bootcamp', array('as' => 'landing.bootcamp', 'uses' => 'LandingsController@bootcamp'));
+Route::get('personaltrainer', array('as' => 'landing.personaltrainer', 'uses' => 'LandingsController@personaltrainer'));
 
 
 Route::get('/admin/log', array('as' => 'admin.log', 'before'=>'admin', 'uses' => 'AdminController@showLog'));

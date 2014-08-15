@@ -22,6 +22,14 @@ return array(
 	// Value of an evercoin in pounds
 	'evercoin' => 0.01,
 
-	'ppc_categories' => [1, 4, 5, 7, 13],
+	// category strings to load landing pages.  the string is accpeted from a route, and mapped to these category id's in LandingsController::loadCategory
+	'ppc_categories' => ['dance'=>1, 'martialarts'=>4, 'yoga'=>5, 'bootcamp'=>7, 'personaltrainer'=>13],
+	'ppc_category_examples' => [
+		1=>'keen on dancing, eh?',
+		4=>'Have an interest in Martial Arts? Why not punch your way through to our new range of classes, with choices from MMA to Kick-boxing. Check it out!',
+		5=>'Keen on Yoga eh?',
+		7=>'Keen on Bootcamps eh?',
+		13=>'Keen on Personal Trainers eh?',
+	],
 
 );
