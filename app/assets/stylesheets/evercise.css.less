@@ -126,6 +126,13 @@ hr{
 
 /* end tags */
 
+/* styling template used for styling pages */
+.styling-template{
+	position: absolute;
+	top: 0;
+	opacity: 0.5;
+}
+
 /*forms and inputs*/
 input{
 	width: 100%;
@@ -3873,3 +3880,52 @@ footer{
 	margin-left: 10px;
 }
 
+/* ppc campaign */
+
+.ppc{
+	background: url(/img/ppc_bg.png);
+	height: 536px;
+	padding: 0 82px;
+	.logo{
+		padding: 19px 0;
+	}
+	.strapline{
+		margin-top: 183px;
+		text-align: center;
+		h1{
+			color: @white;
+			text-transform: uppercase;
+			.font-size(6.1);
+			.condensed-font();
+			margin: 0;
+		}
+		p{
+			.font-size(1.2);
+			color: @grey;
+		}
+
+	}
+}
+.sign-up{
+	width: 100%;
+	background: @yellow;
+	height: 90px;
+	.box-sizing();
+	padding: 26px 79px;
+	label{
+		font-weight: 600;
+		.font-size(1.6);
+		color: @darkblue;
+		float: left;
+		margin-right: 14px;
+	}
+	input{
+		width: 376px;
+		float: left;
+		height: 40px;
+		line-height: 40px;
+	}
+	.btn{
+
+	}
+}

@@ -1,5 +1,13 @@
 /* -------------- Fonts -------------- */
 
+@font-face {
+    font-family: 'UniversLTStd59UltraCondensed';
+    src: url('/fonts/universltstd-ultracn.eot');
+    src: url('/fonts/universltstd-ultracn.eot') format('embedded-opentype'),
+         url('/fonts/universltstd-ultracn.woff') format('woff'),
+         url('/fonts/universltstd-ultracn.ttf') format('truetype'),
+         url('/fonts/universltstd-ultracn.svg#UniversLTStd59UltraCondensed') format('svg');
+}
 
 .heading-font(@weight : 300, @style : normal){
 	font-family: 'Exo',serif;
@@ -13,6 +21,13 @@
 	font-family: arial, sans-serif;
 	font-weight: @weight;
 	font-style: @style;
+  text-rendering: optimizeLegibility;
+}
+
+.condensed-font(@weight : 300, @style : normal){
+  font-family: 'UniversLTStd59UltraCondensed';
+  font-weight: @weight;
+  font-style: @style;
   text-rendering: optimizeLegibility;
 }
 
@@ -45,6 +60,7 @@
 @white :#ffffff;
 @grey : #cccccc;
 @blue : #5bc0de;
+@darkblue : #3b3d48;
 @red : #d9534f;
 @green : #32b348;
 

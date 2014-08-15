@@ -19,11 +19,11 @@
 </head>
 <body>
 
-	<div class="container">
+
 		@include('layouts.redirectmessage')
 		@include('layouts.pageHeaders')
 		@yield('content')
-	</div>
+
 	<div class="mask">
 
 	</div>
