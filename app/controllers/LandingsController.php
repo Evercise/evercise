@@ -34,8 +34,7 @@ class LandingsController extends \BaseController {
 		$validator = Validator::make(
 			Input::all(),
 			array(
-				//'email' => 'required|email|unique:users,email',
-				'email' => 'required|email',
+				'email' => 'required|email|unique:users,email',
 				'category' => 'required',
 			)
 		);
@@ -151,6 +150,7 @@ class LandingsController extends \BaseController {
 
 	// Category-specific landing pages
 	public function dance()	{						return $this->loadCategory('dance'); }
+	public function pilates()	{					return $this->loadCategory('pilates'); }
 	public function martialarts()	{			return $this->loadCategory('martialarts'); }
 	public function yoga()	{						return $this->loadCategory('yoga'); }
 	public function bootcamp()	{				return 	$this->loadCategory('bootcamp'); }

@@ -199,6 +199,7 @@ Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'Land
 
 //Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
 Route::get('dance', array('as' => 'landing.dance', 'uses' => 'LandingsController@dance'));
+Route::get('pilates', array('as' => 'landing.pilates', 'uses' => 'LandingsController@pilates'));
 Route::get('martialarts', array('as' => 'landing.martialarts', 'uses' => 'LandingsController@martialarts'));
 Route::get('yoga', array('as' => 'landing.yoga', 'uses' => 'LandingsController@yoga'));
 Route::get('bootcamp', array('as' => 'landing.bootcamp', 'uses' => 'LandingsController@bootcamp'));
