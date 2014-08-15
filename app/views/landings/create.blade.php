@@ -88,3 +88,4 @@
 @stop
 
 @include('layouts.laracasts')
+@include('layouts.tracking')
