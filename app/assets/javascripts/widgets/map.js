@@ -219,7 +219,6 @@ function DiscoverMapWidgetInit() {
 
     for (i = 0; i < everciseGroups.length; i++) { 
       var venue = everciseGroups[i].venue;
-     // var category = everciseGroups[i].category;
       var sessions = everciseGroups[i].futuresessions;
 
       if (venue) {
@@ -244,28 +243,35 @@ function DiscoverMapWidgetInit() {
        rating /= everciseGroups[i].ratings.length;
         
         //trace(i, true);
-        var infowindow = new google.maps.InfoWindow({
-          maxWidth: 280
+        var infowindow = new InfoBubble({
+          maxWidth: 350
         });
+
+
         var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+everciseGroups[i].default_price+'<span></div></div>';
 
-        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+        var group = everciseGroups[i].name;
+        var venue = venue.name;
+
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow, group, venue){ 
         return function() {
         
         /* close the previous info-window */
-       closeInfos(infos);
-        
-           infowindow.setContent(content);
-           infowindow.open(map,this);
+        closeInfos(infos);
+        infowindow.open(map,this);
+        infowindow.setContent(content);
+           
            
         
         /* keep the handle, in order to close it on next click event */
        infos[0]=infowindow;
         
         };
-      })(marker,content,infowindow)); 
+      })(marker,content,infowindow, group,venue)); 
 
         marker.set('content', content);
+        marker.set('name', group);
+        marker.set('venue', venue);
         markers.push(marker);
       }
       map.fitBounds(bounds);
@@ -274,43 +280,28 @@ function DiscoverMapWidgetInit() {
       
 
 
-    }
+    };
 
-    var clusterWindow = new google.maps.InfoWindow({
-      maxWidth: 320
-    });
     var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
       google.maps.event.addListener(markerCluster, 'click', function(cluster) {
         //Get markers
           var markers = cluster.getMarkers(); 
 
-          content = '';
-          content+= '<div style="width:300px; height:140px;" class="cluster-wrap">';
+          content = ''; 
+
+          infowindow.setContent(content); 
+          
           for(var i = 0; i < markers.length; i++) {
-            content+= '<div class="cluster">';
-            
+            content = '';
             content+= markers[i].get('content');
-            content+= '</div>';
-
             position = markers[i].getPosition();
+
+            name = markers[i].get('name').substring(0,12);
+
+            
+            infowindow.addTab(name, content);
           }
-          content+= '</div>';
-
-          // close the previous info-window 
-          closeInfos(infos);
-        
-          trace(position , true);
-          trace(cluster.getCenter() , true);
-
-          map.setCenter(cluster.getCenter());
-          map.setZoom(15);
-
-          clusterWindow.setContent(content);
-          clusterWindow.open(map,this);
-
-          // keep the handle, in order to close it on next click event 
-          infos[0]=clusterWindow;
           
       })
   }
@@ -349,10 +340,17 @@ function MapWidgetloadScript(params) {
     script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=DiscoverMapWidgetInit&libraries=places';
 
     document.body.appendChild(script);
+
     var cluster = document.createElement('script');
     cluster.type = 'text/javascript';
     cluster.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer.js';
     document.body.appendChild(cluster);
+
+    var bubble = document.createElement('script');
+    bubble.type = 'text/javascript';
+    bubble.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js';
+    document.body.appendChild(bubble);
+
 
   }
   else

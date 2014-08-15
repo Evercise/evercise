@@ -746,7 +746,7 @@ class EvercisegroupsController extends \BaseController {
 
 	    $allResults = Evercisegroup::concatenateResults( $results );
 
-	    $perPage = 6;
+	    $perPage = 12;
 	    
 
 	    if ($page > count($allResults) or $page < 1) { $page = 1; }
