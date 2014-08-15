@@ -3,7 +3,7 @@
 /* ppc landing page content */
 
 return[
-	'header' => 'sign up today and receive upto <span class="highlight">&pound;8*</span>',
+	'header' => 'sign up today and receive up to <span class="highlight">&pound;8*</span>',
 	'terms' => '*&pound;8 of credit in evercoins that are not redeemable for cash and cannot be returned for a cash refund.',
 	'bodyHeader' => 'What is evercise?',
 	'whatIsEvercise' => 'Evercise is an online platform designed to give people wanting to exercise, access to a wide range of fitness classes. We help those who wish for an easy going lifestyle to a regime that works around them due to date, type and location.',
