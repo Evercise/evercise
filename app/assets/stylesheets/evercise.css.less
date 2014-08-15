@@ -76,7 +76,7 @@ h6{.font-size(1.6); .heading-font(500)}
 
 p,a{
 	.font-size(1.6);
-	.line-height(3);
+	.line-height(2.9);
 	.main-font(300);
 	color: @black;
 	word-wrap:break-word;
@@ -225,11 +225,13 @@ label{
 	padding: 10px 4px;
 	.border-radius();
 	text-decoration: none;
-	border: 1px solid darken(@bk, 8%);
+	border: 1px solid @bk;
 	color: @colour;
-	.gradient (lighten(@bk, 10%), @bk);
+	background:  @bk;
+	//.gradient (lighten(@bk, 10%), @bk);
 	width: @width;
 	display: inline-block;
+	font-weight: 600;
 	&:hover{
 		cursor: pointer;
 		.gradient (darken(@bk, 5%), @bk);
@@ -252,10 +254,17 @@ label{
 }
 .btn-yellow{.btn(@yellow, @black, 220px);}
 .btn-darkyellow{.btn(@darkYellow);}
-.btn-fb{.btn(#3b5998,@white);}
+.btn-fb{
+	.btn(#3b5998,@white); 
+	img{
+		float: left;
+		padding: 10px 17px 10px 8px;
+	}
+}
 .btn-blue{.btn(@blue);}
 .btn-red{.btn(@red);}
 .btn-green{.btn(@green);}
+.btn-black{.btn(@lightblack);}
 .disabled{ 
 	pointer-events: none;
 	opacity: 0.65;
@@ -3912,6 +3921,9 @@ footer{
 	height: 90px;
 	.box-sizing();
 	padding: 26px 79px;
+	form{
+		float: none;
+	}
 	label{
 		font-weight: 600;
 		.font-size(1.6);
@@ -3919,13 +3931,109 @@ footer{
 		float: left;
 		margin-right: 14px;
 	}
-	input{
+	input#email{
 		width: 376px;
 		float: left;
 		height: 40px;
-		line-height: 40px;
+		.box-shadow(inset 0 2px 2px rgba(0,0,0,0.2));
+		.box-sizing();
+		padding: 0 18px;
+		
 	}
 	.btn{
-
+		height: 40px;
+		width: auto;
+		padding: 0 12px;
+		line-height: 40px;
+		margin-left: 20px;
+		float: left;
+		.box-sizing();
 	}
+}
+.landing-body{
+	padding: 51px 80px 62px;
+	float: left;
+	.box-sizing();
+	width: 100%;
+	h2{
+		color: @black;
+		text-transform: uppercase;
+		.font-size(3.6);
+		.condensed-font();
+		letter-spacing: 0.5px;
+	}
+	aside{
+		width: 50%;
+		float: left;
+		color: @grey;
+		margin-top: 33px;
+		.box-sizing();
+		padding: 0 0 0 40px;
+		&:first-of-type{
+			padding: 0 40px 0 0;
+		}
+	}
+	&.grey{
+		background-color: #e3e3e3;
+	}
+}
+
+/* testmonial block */
+
+.testimonial-block{
+	padding: 14px 0 19px;
+	float: left;
+	img{
+		float: left;
+		margin-right: 31px;
+	}
+	strong{
+		.font-size(1.8);
+		display: block;
+		margin-top: 41px;
+		color: @black;
+	}
+	i{
+		.font-size(1.8);
+		display: block;
+		color: #7d7f85;
+	}
+	.content{
+		display: block;
+		float: left;
+		margin-top: 16px;
+		position: relative;
+		p{
+			color: #7d7f85;
+		}
+		&:after{
+			position: absolute;
+			top: -3px;
+			left: -40px;
+			height: 26px;
+			width: 28px;
+			display: inline-block;
+			content: '';
+			background: url('/img/icon_speach.png');
+		}
+	}
+}
+
+/* new footer block */
+
+.footer-block{
+	float: left;
+	width: 100%;
+	.box-sizing();
+	padding: 43px 81px;
+	a, span{
+		color: #a0a2a7;
+		.font-size(1.4);
+		padding-right: 37px;
+	}
+	span{
+		float: right;
+		padding: 0;
+	}
+
 }
