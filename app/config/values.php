@@ -25,12 +25,12 @@ return array(
 	// category strings to load landing pages.  the string is accpeted from a route, and mapped to these category id's in LandingsController::loadCategory
 	'ppc_categories' => ['dance'=>1, 'pilates'=>1, 'martialarts'=>4, 'yoga'=>5, 'bootcamp'=>7, 'personaltrainer'=>13],
 	'ppc_category_examples' => [
-		1=>'So you like to have a little music to your workouts? Look no further. We have Zumba, Salsa and many more class types available for those who want to move their muscles to a rhythmic beat.',
-		1=>'So you&apos;re into mind and body fitness? We have a range of classes that will get your legs stretching, from  to Vinyasa to Pilates. Pick your choice!',
-		4=>'Have an interest in Martial Arts? Why not punch your way through to our new range of classes, with choices from MMA to Kick-boxing. Check it out!',
-		5=>'So you&apos;re into mind and body fitness? We have a range of classes that will get your legs stretching, from  to Vinyasa to Pilates. Pick your choice!',
-		7=>'So you&apos;ve expressed an interest in exercising outdoors? Check out our boot camp classes all steered for those who love workouts in the fresh air!',
-		13=>'Keen on Personal Trainers eh?',
+		1=>		'So you like to have a little music to your workouts? Look no further. We have Zumba, Salsa and many more class types available for those who want to move their muscles to a rhythmic beat.',
+		2=>		'So you&apos;re into a system that focuses on improving balance by stretching? Why not check out our intense Hot Pilates sessions, or our Post-natal classes for those looking to recover',
+		4=>		'Have an interest in Martial Arts? Why not punch your way through to our new range of classes, with choices from MMA to Kick-boxing. Check it out!',
+		5=>		'So you&apos;re into mind and body fitness? We have a range of classes that will get your legs stretching, from  to Vinyasa to Pilates. Pick your choice!',
+		7=>		'So you&apos;ve expressed an interest in exercising outdoors? Check out our boot camp classes all steered for those who love workouts in the fresh air!',
+		13=>	'So you&apos;re into a fitness regimes or routine workouts? There are one-to-one and group classes catered for all levels of expertise.',
 	],
 
 );
