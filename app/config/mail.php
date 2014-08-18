@@ -51,7 +51,7 @@ return array(
     |
     */
 
-    'from'       => getenv('EMAIL_SMTP_FROM'),
+    'from'       => ['address' => getenv('EMAIL_FROM_ADDRESS'), 'name' => getenv('EMAIL_FROM_NAME')],
     /*
     |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
