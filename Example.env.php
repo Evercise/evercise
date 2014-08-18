@@ -9,19 +9,29 @@
  */
 return [
 
-    'DEBUG_APP'      => true,
-    'APP_URL'        => 'http://evercise.dev/',
-    'ENCRYPTION_KEY' => 'ozt38MwirMfb5STSJWowmnHBGUz0ziAR',
-
-    'DB_HOST'        => 'localhost',
-    'DB_NAME'        => 'evercise',
-    'DB_USER'        => 'evercise',
-    'DB_PASS'        => 'evercise',
-
-    'DB_V1_HOST'     => 'localhost',
-    'DB_V1_NAME'     => 'evercise',
-    'DB_V1_USER'     => 'evercise',
-    'DB_V1_PASS'     => 'evercise',
+    'DEBUG_APP'             => true,
+    'APP_URL'               => 'http://evercise.dev/',
+    'ENCRYPTION_KEY'        => 'ozt38MwirMfb5STSJWowmnHBGUz0ziAR',
+    //DB LIVE
+    'DB_HOST'               => 'localhost',
+    'DB_NAME'               => 'evercise',
+    'DB_USER'               => 'evercise',
+    'DB_PASS'               => 'evercise',
+    //DB MIGRATION
+    'DB_V1_HOST'            => 'localhost',
+    'DB_V1_NAME'            => 'evercise',
+    'DB_V1_USER'            => 'evercise',
+    'DB_V1_PASS'            => 'evercise',
+    //EMAIL SETUP
+    'EMAIL_DRIVER'          => 'smtp',
+    'EMAIL_SMTP_HOST'       => 'smtp.gmail.com',
+    'EMAIL_SMTP_PORT'       => 587,
+    'EMAIL_FROM'            => ['address' => 'noreply@evercise.com', 'name' => 'Evercise'],
+    'EMAIL_SMTP_ENCRYPTION' => 'tls',
+    'EMAIL_SMTP_USERNAME'   => 'contact@evercise.com',
+    'EMAIL_SMTP_PASSWORD'   => 'evercise1234',
+    'EMAIL_SENDMAIL'        => '/usr/sbin/sendmail -bs',
+    'EMAIL_PRETEND'         => true, //For Production Set to False
 
 
 ];
