@@ -419,7 +419,7 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initSwitchView' => 1 ));
 				JavaScript::put(array('initScrollAnchor' => 1 ));
 				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
-				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+				JavaScript::put(array('MapWidgetloadScript' => json_encode(['mapPointerDraggable'=>false]) )); // Initialise map JS.
 				JavaScript::put(['zero_results'=>trans('discover.zero_results')]); 
 
 				/* open graph meta tags */
