@@ -23,27 +23,30 @@ class BaseController extends Controller {
 
 	protected function setupLayout()
 	{
-		$displayName = "none";
-		$userId = 0;
-		$user = '';
-		$group = '';
-
 
 		View::share('user', $this->user);
-		/*
 
-		View::share('displayName', $this->user->displayName);
-		View::share('displayImage', $this->user->image);
-		View::share('userId', $this->user->userId);
-		View::share('title', 'Evercise');
-		*/
-		
 
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);
 		}
 	}
+
+
+    /**
+     * Check if the user is logged in and redirect if needed
+     *
+     * @param bool $redirect
+     * @return bool
+     */
+    public function checkLogin($redirect = true) {
+        if ($redirect && !Sentry::check()) return Redirect::route('home');
+
+        if (! $redirect && !Sentry::check()) return false;
+
+        return true;
+    }
 
 
 }
