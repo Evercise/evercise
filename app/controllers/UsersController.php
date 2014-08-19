@@ -12,10 +12,7 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
-		if (!Sentry::check()) return Redirect::route('home');
-
-		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		return View::make('users.index');
+		return Redirect::route('home');
 	}
 
 	/**
