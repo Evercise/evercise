@@ -102,13 +102,14 @@ function MapWidgetInit() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
    // add marker 
+   trace('and now, mapPointerDraggable IS '+mapPointerDraggable)
 
   var image = '/img/mapmark.png';
   var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
       icon: image,
-      draggable:true,
+      draggable:mapPointerDraggable,
   });
 
   	
@@ -343,6 +344,9 @@ function MapWidgetloadScript(params) {
   var func = 'MapWidgetInit';
   params = JSON.parse(params);
 
+  trace('mapPointerDraggable IS '+params.mapPointerDraggable);
+  mapPointerDraggable = typeof params.mapPointerDraggable !== 'undefined' ? params.mapPointerDraggable : true;
+
   if(typeof params.discover !== 'undefined')
   {
     func = 'DiscoverMapWidgetInit';
@@ -381,6 +385,8 @@ function MapWidgetloadScript(params) {
 // Initialised from general.js using laracast.
 
 registerInitFunction('MapWidgetloadScript');
+
+var mapPointerDraggable = false;
 
 function InitSearchForm(){
    $(".search-form").submit(function(){

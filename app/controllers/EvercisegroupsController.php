@@ -401,7 +401,7 @@ class EvercisegroupsController extends \BaseController {
 				foreach ($evercisegroup->evercisesession as $key => $evercisesession) {
 					$members[$evercisesession->id] = count($evercisesession['sessionmembers']); // Count those members
 					foreach ($evercisesession['sessionmembers'] as $k => $sessionmember) {
-						$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	
+						$membersIds[$evercisesession->id][] =  $sessionmember->user_id;	 
 						$memberAllIds[]	 = 	$sessionmember->user_id;	
 					}
 				}
@@ -419,7 +419,7 @@ class EvercisegroupsController extends \BaseController {
 				JavaScript::put(array('initSwitchView' => 1 ));
 				JavaScript::put(array('initScrollAnchor' => 1 ));
 				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
-				JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
+				JavaScript::put(array('MapWidgetloadScript' => json_encode(['mapPointerDraggable'=>false]) )); // Initialise map JS.
 				JavaScript::put(['zero_results'=>trans('discover.zero_results')]); 
 
 				/* open graph meta tags */
@@ -592,14 +592,10 @@ class EvercisegroupsController extends \BaseController {
 	public function searchEg()
 	{
 		/* check if search form posted otherwise set default for radius */
-		if (Input::get('radius')) {
-			$radius = Input::get('radius');
-		}else{
-			$radius = 10;
-		}
-		
+		$radius = Input::get('radius',10);
+	
 		$category = Input::get('category');
-		$locationString = Input::get('location') ? Input::get('location') : '';
+		$locationString = Input::get('location');
 
         
         return $this->doSearch(['address'=>$locationString], $category, $radius);
