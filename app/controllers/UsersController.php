@@ -12,7 +12,7 @@ class UsersController extends \BaseController {
 	 */
 	public function index()
 	{
-		if (!Sentry::check()) return Redirect::route('home');
+        $this->checkLogin();
 
 		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
 		return View::make('users.index');
@@ -29,9 +29,7 @@ class UsersController extends \BaseController {
 		$ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
 		$email = Session::get('email');
 
-		JavaScript::put(array('initUsers' => 1 )); // Initialise Users JS.
-		JavaScript::put(array('initPut' => 1 ));
-		JavaScript::put(array('initToolTip' => 1 )); //Initialise tooltip JS.
+		JavaScript::put(['initUsers' => 1, 'initPut' => 1, 'initToolTip' => 1 ]); //Initialise tooltip JS.
 
 		return View::make('users.register')
 		->with('referralCode', $referralCode)
@@ -54,37 +52,7 @@ class UsersController extends \BaseController {
 		$dateAfter=  $after->format('Y-m-d');
 
 		Validator::extend('has', function($attr, $value, $params) {
-		    if (!count($params)) {
-		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
-		    }
-		    
-		    foreach ($params as $param) {
-		        switch ($param) {
-		            case 'num':
-		                $regex = '/\pN/';
-		                break;
-		            case 'letter':
-		                $regex = '/\pL/';
-		                break;
-		            case 'lower':
-		                $regex = '/\p{Ll}/';
-		                break;
-		            case 'upper':
-		                $regex = '/\p{Lu}/';
-		                break;
-		            case 'special':
-		                $regex = '/[\pP\pS]/';
-		                break;
-		            default:
-		                $regex = $param;
-		        }
-		        
-		        if (! preg_match($regex, $value)) {
-		            return false;
-		        }
-		    }
-		    
-		    return true;
+		    return ValidationHelper::hasRegex($attr, $value, $params);
 		});
 		
 		// validation rules for input field on register form
@@ -631,37 +599,7 @@ class UsersController extends \BaseController {
 	{
 
 		Validator::extend('has', function($attr, $value, $params) {
-		    if (!count($params)) {
-		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
-		    }
-		    
-		    foreach ($params as $param) {
-		        switch ($param) {
-		            case 'num':
-		                $regex = '/\pN/';
-		                break;
-		            case 'letter':
-		                $regex = '/\pL/';
-		                break;
-		            case 'lower':
-		                $regex = '/\p{Ll}/';
-		                break;
-		            case 'upper':
-		                $regex = '/\p{Lu}/';
-		                break;
-		            case 'special':
-		                $regex = '/[\pP\pS]/';
-		                break;
-		            default:
-		                $regex = $param;
-		        }
-		        
-		        if (! preg_match($regex, $value)) {
-		            return false;
-		        }
-		    }
-		    
-		    return true;
+            return ValidationHelper::hasRegex($attr, $value, $params);
 		});
 
 		$validator = Validator::make(
