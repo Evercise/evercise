@@ -2616,28 +2616,30 @@ body{
 	&.selected{
 		display: block;
 	}
-	.user-icon{
-		height: 60px;
-		width: 60px;
-		.border-radius();
-		margin: 10px 0;
+	
+	.participant-block{
 		float: left;
-		border: 1px solid @grey;
-	}
-	.display_name{
-		float: left;
-		margin: 33px 20px 0 -1px;
-		border: 1px solid @grey;
-		padding: 10px;
-		position: relative;
-		.font-size(1.4);
-		.border-radius(0px 4px 4px 0);
-		.rating-arrow-icon{
-			position: absolute;
-			bottom: 0;
-			left: -11px;
+		width: 100px;
+		height: 100px;
+		text-align: center;
+		.user-icon{
+			height: 60px;
+			width: 60px;
+			.border-radius();
+			margin: 10px auto;
+			display: block;
+			border: 1px solid @grey;
+		}
+		.display_name{
+			
+			margin: auto;
+			display: block;
+			position: relative;
+			.font-size(1.4);
+			.border-radius(0px 4px 4px 0);
 		}
 	}
+	
 	.class-list{
 		.class-list();
 	}

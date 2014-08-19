@@ -197,10 +197,10 @@
 					
 
 					@foreach ($memberUsers as $key => $memberUser)
-						<div class="float-left">
+						<div class="float-left participant-block">
 							@if($memberUser->image != '')
 								{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
-								<span class="display_name">{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}{{$memberUser->display_name}}</span>
+								<span class="display_name">{{$memberUser->display_name}}</span>
 							@else
 								{{ HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
 								<span class="display_name">{{$memberUser->display_name}}</span>
