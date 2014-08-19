@@ -1,21 +1,40 @@
-## Laravel PHP Framework
+#Laravel LiveLogger
+==================================================
+## Evercise Setup
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework)
+To set up Evercise on your local machine you need to do the following:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+Duplicate Example.env.php and name it: .env.php
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+Update composer
+```bash
+   composer update --prefer-dist -vvv
+```
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Edit the contents of that file to match your setup!
 
-## Official Documentation
+Reset your DB
+```bash
+   php artisan migrate:reset
+```
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+When done open terminal and migrate Sentry
+```bash
+   php artisan migrate --package=cartalyst/sentry
+```
 
-### Contributing To Laravel
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+When Sentry is migrated you can migrate and seed the rest of the DB
+```bash
+   php artisan migrate && php artisan db:seed
+```
 
-### License
+Set the correct permissions for your app (if you are in a local enviroment just 777 on it)
+```bash
+   chmod 777 -R app/storage/*
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+If you don't want to set 777 then just allow apache (or what ever user is running it) to be the $user:$group of the folder
+```bash
+   chmod apache:apache -R app/storage/*
+```

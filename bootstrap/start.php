@@ -24,7 +24,7 @@ $app = new Illuminate\Foundation\Application;
 |
 */
 
-
+/*
 $env = $app->detectEnvironment(array(
   'local' => array('*Tris*', '*Mewis*' , '*QINTECH*', '*sunjie-530U3C-530U4C-532U3C*'),
   'staging' => array('*avi*', '*donkey*', '*Donkey*'),
@@ -32,6 +32,14 @@ $env = $app->detectEnvironment(array(
   'amazonsandbox' => array('*ip-172-31-18-83*'),
   'sunjie' => array('*sunjie*'),
 ));
+*/
+
+
+
+$env = $app->detectEnvironment(array(
+    'local' => array('homestead'),
+));
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +52,7 @@ $env = $app->detectEnvironment(array(
 |
 */
 
-$app->bindInstallPaths(require __DIR__.'/paths.php');
+$app->bindInstallPaths(require __DIR__ . '/paths.php');
 
 /*
 |--------------------------------------------------------------------------
@@ -57,9 +65,9 @@ $app->bindInstallPaths(require __DIR__.'/paths.php');
 |
 */
 
-$framework = $app['path.base'].'/vendor/laravel/framework/src';
+$framework = $app['path.base'] . '/vendor/laravel/framework/src';
 
-require $framework.'/Illuminate/Foundation/start.php';
+require $framework . '/Illuminate/Foundation/start.php';
 
 /*
 |--------------------------------------------------------------------------
