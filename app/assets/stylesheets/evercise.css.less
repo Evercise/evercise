@@ -376,6 +376,7 @@ label{
 			width: 75%;
 			.box-sizing();
 			padding: 0 20px 20px;
+			position: 	relative;	
 			input, textarea{
 				width: 92%;
 				clear: both;
@@ -387,6 +388,26 @@ label{
 						margin-right: 3%;
 					}
 				}
+			}
+			.inputted{
+				input{
+					padding-left: 	150px
+				}
+				
+			}
+			.input-insert{
+				position: 	absolute;	
+				top: 	1px;
+				left: 	21px;
+				.border-radius(4px 0 0 4px);
+				.box-sizing();
+				padding: 	0 10px;
+				background: 	#f0f0f0;
+				height: 	37px;
+				.font-size(1.4);
+				line-height: 37px;
+				border-right: 	1px solid @grey;
+				color: 	@lightblack;
 			}
 			p{
 				.line-height(2.2);
@@ -2901,7 +2922,8 @@ body{
 		}
 		.dashboard-title{
 			.box-sizing();
-			padding: 37px 0px 27px 40px;
+			//padding: 36px 0px 26px 40px;
+			padding: 31px 0px 21px 40px;
 			border-bottom: 1px solid @grey;
 			width: 100%;
 			float: left;
@@ -2915,6 +2937,7 @@ body{
 			.left{
 				float: left;
 				width: 58%;
+				margin-bottom: 10px;
 			}
 			.right{
 				float: left;
@@ -2968,7 +2991,7 @@ body{
 			
 		}
 		.create-form, .image-form{
-			margin: 0 0 0 40px;
+			margin: 20px 0 0 40px;
 			width: 100%;
 
 			
@@ -3904,7 +3927,7 @@ footer{
 		h1{
 			color: @white;
 			text-transform: uppercase;
-			.font-size(7.0);
+			.font-size();
 			.condensed-font();
 			margin: 0;
 		}

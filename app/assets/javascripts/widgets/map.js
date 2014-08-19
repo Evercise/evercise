@@ -299,6 +299,8 @@ function DiscoverMapWidgetInit() {
           }
 
           map.setCenter(cluster.getCenter());
+
+          closeInfos(infos);
           
           // set window position
 

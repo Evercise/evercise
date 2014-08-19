@@ -1,8 +1,8 @@
 
-{{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form')) }}
+{{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form mt20')) }}
 
 
-    @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'class' => 'mt20', 'fieldtext'=>'Add your profession', 'default'=>$profession ))
+    @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'class' => '', 'fieldtext'=>'Add your profession', 'default'=>$profession ))
     @if ($errors->has('profession'))
         {{ $errors->first('profession', '<p class="error-msg">:message</p>')}}
     @endif
