@@ -413,7 +413,7 @@ class EvercisegroupsController extends \BaseController {
 
 				$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
 
-				$ratings = Rating::with('rator')->where('evercisegroup_id', $evercisegroup->id)->get();
+				$ratings = Rating::with('rator')->where('evercisegroup_id', $evercisegroup->id)->orderBy('created_at')->get();
 
 				JavaScript::put(array('initJoinEvercisegroup' => 1 ));
 				JavaScript::put(array('initSwitchView' => 1 ));
