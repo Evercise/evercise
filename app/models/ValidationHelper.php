@@ -1,7 +1,5 @@
 <?php
 
-use InvalidArgumentException;
-
 
 /**
  * Class ValidationHelper
@@ -46,11 +44,11 @@ class ValidationHelper
      * @return bool
      * @throws InvalidArgumentException
      */
-    private function doRegex($attr, $value, $params, $has = true)
+    private static function doRegex($attr, $value, $params, $has = true)
     {
 
         if (!count($params)) {
-            throw new InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
+            throw new \Exception('The has validation rule expects at least one parameter, 0 given.');
         }
         foreach ($params as $param) {
             switch ($param) {
