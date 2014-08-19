@@ -129,9 +129,7 @@ class VenuesController extends \BaseController {
 			$lat = Input::get('latbox');
 			$lng = Input::get('lngbox');
 
-			$facilities = Input::get('facilities_array') ? Input::get('facilities_array') : [];
-
-			//return Response::json(['success' => $facilities]);
+			$facilities = Input::get('facilities_array', []);
 
 			$venue = Venue::create(['user_id' => $this->user->id, 'name' => $venue_name, 'address' => $address, 'town' => $town, 'postcode' => $postcode, 'lat' => $lat, 'lng' => $lng]);
 			
@@ -141,16 +139,6 @@ class VenuesController extends \BaseController {
 		return Response::json(['venue_id' => $venue->id]);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -216,17 +204,6 @@ class VenuesController extends \BaseController {
 		}
 
 		return Response::json(['venue_id' => $venue->id]);
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

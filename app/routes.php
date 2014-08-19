@@ -20,12 +20,21 @@ Route::resource('sessions', 'SessionsController');
 Route::resource('ratings', 'RatingsController');
 Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
-Route::resource('venues', 'VenuesController');
 Route::resource('payment', 'PaypalPaymentController');
 Route::resource('stripe', 'StripePaymentController');
 Route::resource('wallets', 'WalletsController');
 Route::resource('referrals', 'ReferralsController');
 Route::resource('landings', 'LandingsController');
+
+
+
+// VenuesController
+Route::get('venues', 'VenuesController@index');
+Route::get('venues/create', 'VenuesController@create');
+Route::get('venues/edit/{id}', 'VenuesController@edit');
+Route::post('venues/store', 'VenuesController@store');
+Route::post('venues/update/{id}', 'VenuesController@update');
+
 
 //Route::post('wallets/update', array('as'=>'wallets.update' , 'uses'=>'WalletsController@update'));
 
