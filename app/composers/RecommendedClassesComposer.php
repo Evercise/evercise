@@ -9,6 +9,7 @@ class RecommendedClassesComposer {
       $testerLoggedIn = $sentryUser ? $sentryUser->inGroup($testers) : false;
 
   		$evercisegroups = Evercisegroup::has('futuresessions')
+          ->whereIn('id', [191, 181, 189,  33])
           ->has('confirmed')
           ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
           ->with('user')
@@ -17,7 +18,9 @@ class RecommendedClassesComposer {
   				/*->with(['ratings' => function($query){
               $query->select('stars');
           }])*/
-  				->orderBy(DB::raw('RAND()'))->take(4)->get();		
+  				//->orderBy(DB::raw('RAND()'))
+          ->take(4)
+          ->get();		
 
   		$ratings = [];
 
