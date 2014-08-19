@@ -198,12 +198,19 @@ Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses
 Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
 
 //Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
-Route::get('dance', array('as' => 'landing.dance', 'uses' => 'LandingsController@dance'));
+/*Route::get('dance', array('as' => 'landing.dance', 'uses' => 'LandingsController@dance'));
 Route::get('pilates', array('as' => 'landing.pilates', 'uses' => 'LandingsController@pilates'));
 Route::get('martialarts', array('as' => 'landing.martialarts', 'uses' => 'LandingsController@martialarts'));
 Route::get('yoga', array('as' => 'landing.yoga', 'uses' => 'LandingsController@yoga'));
 Route::get('bootcamp', array('as' => 'landing.bootcamp', 'uses' => 'LandingsController@bootcamp'));
-Route::get('personaltrainer', array('as' => 'landing.personaltrainer', 'uses' => 'LandingsController@personaltrainer'));
+Route::get('personaltrainer', array('as' => 'landing.personaltrainer', 'uses' => 'LandingsController@personaltrainer'));*/
+
+Route::get('dance', array('as' => 'landing.dance', 'uses' => function() { return (new LandingsController)->landCategory('dance'); } ));
+Route::get('pilates', array('as' => 'landing.pilates', 'uses' => function() { return (new LandingsController)->landCategory('pilates'); } ));
+Route::get('martialarts', array('as' => 'landing.martialarts', 'uses' => function() { return (new LandingsController)->landCategory('martialarts'); } ));
+Route::get('yoga', array('as' => 'landing.yoga', 'uses' => function() { return (new LandingsController)->landCategory('yoga'); } ));
+Route::get('bootcamp', array('as' => 'landing.bootcamp', 'uses' => function() { return (new LandingsController)->landCategory('bootcamp'); } ));
+Route::get('personaltrainer', array('as' => 'landing.personaltrainer', 'uses' => function() { return (new LandingsController)->landCategory('personaltrainer'); } ));
 
 
 Route::get('/admin/log', array('as' => 'admin.log', 'before'=>'admin', 'uses' => 'AdminController@showLog'));
