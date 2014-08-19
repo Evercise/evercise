@@ -205,7 +205,7 @@ class TrainersController extends \BaseController {
 		}
 
 		if (!empty($evercisegroup_ids)) {
-	    	$ratings = Rating::with('user')->whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+	    	$ratings = Rating::with('rator')->whereIn('evercisegroup_id', $evercisegroup_ids)->get();
 
 		    foreach ($ratings as $key => $rating) {
 		    	$stars[$rating->evercisegroup_id][] = $rating->stars;

@@ -202,7 +202,7 @@
 								<span class="display_name"><?php echo HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')); ?><?php echo $memberUser->display_name; ?></span>
 							<?php else: ?>
 								<?php echo HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')); ?>
-								<p><?php echo $memberUser->display_name; ?></p>
+								<span class="display_name"><?php echo $memberUser->display_name; ?></span>
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
