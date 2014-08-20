@@ -145,15 +145,6 @@ class LandingsController extends \BaseController {
 
 		return Redirect::to('users/create');
 	}
-
-
-	// Category-specific landing pages
-	public function dance()	{						return $this->loadCategory('dance'); }
-	public function pilates()	{					return $this->loadCategory('pilates'); }
-	public function martialarts()	{			return $this->loadCategory('martialarts'); }
-	public function yoga()	{						return $this->loadCategory('yoga'); }
-	public function bootcamp()	{				return 	$this->loadCategory('bootcamp'); }
-	public function personaltrainer()	{	return $this->loadCategory('personaltrainer'); }
 	
 	public function loadCategory($category)
 	{
@@ -170,6 +161,11 @@ class LandingsController extends \BaseController {
 		{
 			return Redirect::to('/');
 		}
+	}
+
+	public function landCategory($cat)
+	{
+		return $this->loadCategory($cat);
 	}
 
 }

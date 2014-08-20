@@ -6,8 +6,8 @@ return[
 	'header' => 'sign up today and receive up to <span class="highlight">&pound;8*</span>',
 	'terms' => '*&pound;8 of credit in evercoins that are not redeemable for cash and cannot be returned for a cash refund.',
 	'bodyHeader' => 'What is evercise?',
-	'whatIsEvercise' => 'Evercise is an online platform designed to give people wanting to exercise, access to a wide range of fitness classes. We help those who wish for an easy going lifestyle to a regime that works around them due to date, type and location.',
-	'whyEvercise' => 'There are no signing up or membership fees, so you can simply sign up to a class of your choice on a class by class basis. It&apos;s based on your terms and rotates around your time. Fitness has just got a lot more fun, easier and flexible.',
+	'whatIsEvercise' => 'At Evercise, we believe fitness should be fun, flexible, convenient and social. We offer classes of all types with no long term commitment, a variety of classes at different levels, reviews and a schedule that suits you. Search for classes in your area and book in less that 2 minutes!',
+	'whyEvercise' => '<li>Huge range of classes and class types</li><li>Choose classes near your location</li><li>No long term commitments</li><li>Earn money off with Evercoin</li><li>Get fit whilst having fun!</li>',
 	'testimonialHeader' => 'Don&apos;t just take our word for it...',
 	'testimonials' => 
 	[

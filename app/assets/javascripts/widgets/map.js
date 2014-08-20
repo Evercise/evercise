@@ -1,18 +1,5 @@
 function MapWidgetInit() {
-  trace('maps go');
   $(document).on('click', '#findLocation',function(){
-    
-    //var url = '/dev/widgets/postGeo';
-    //var url = window.location.href;
-
-   // url =  url.replace(url.substr(url.lastIndexOf('/') + 2), '')
-
-    //url = url.split( '/' );
-
-   // url = url+'/widgets/postGeo';
-
-   //var host = window.location.hostname.port;
-   //var pathname = window.location.pathname.split('/evercisegroups')[0];
 
    var pathname = (window.location.pathname.split('/dev/')).length > 1 ? '/dev' : '';
 
@@ -22,7 +9,6 @@ function MapWidgetInit() {
      var url = '/widgets/postGeo';
    }
   
-   trace(url);
 
     var data = {
           street: $('#street').val(),
@@ -39,8 +25,6 @@ function MapWidgetInit() {
       })
       .done(
           function(data) { 
-            trace('data');
-            trace(data);
             $('#latbox').val(data.lat);
             $('#lngbox').val(data.lng);
             MapWidgetInit();
@@ -118,13 +102,14 @@ function MapWidgetInit() {
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
    // add marker 
+   trace('and now, mapPointerDraggable IS '+mapPointerDraggable)
 
   var image = '/img/mapmark.png';
   var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
       icon: image,
-      draggable:true,
+      draggable:mapPointerDraggable,
   });
 
   	
@@ -139,15 +124,15 @@ function MapWidgetInit() {
 function DiscoverMapWidgetInit() {
   /* style the map  */
 
-  //trace(laracasts.classes.evercisegroup);
+  markerClusterer();
+
+  infoBubble();
   check = checkUrlForDev();
   var everciseGroups = JSON.parse($('#places').val());
 
 
   everciseGroups = everciseGroups.data;
 
-  trace('DiscoverMapWidgetInit');
-  trace(laracasts, true);
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>'+laracasts.zero_results+'</h5>');
   }else{
@@ -203,7 +188,7 @@ function DiscoverMapWidgetInit() {
 
     var mcOptions = { 
       gridSize: 8,
-      maxZoom: 15,
+      maxZoom: 20,
       zoom: 5,
       styles: clusterStyles
      };
@@ -244,7 +229,8 @@ function DiscoverMapWidgetInit() {
         
         //trace(i, true);
         var infowindow = new InfoBubble({
-          maxWidth: 350
+          maxWidth: 350,
+          minHeight: 130,
         });
 
 
@@ -255,11 +241,13 @@ function DiscoverMapWidgetInit() {
 
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow, group, venue){ 
         return function() {
-        
         /* close the previous info-window */
         closeInfos(infos);
-        infowindow.open(map,this);
+
+        
         infowindow.setContent(content);
+
+        infowindow.open(map,this);
            
            
         
@@ -276,32 +264,58 @@ function DiscoverMapWidgetInit() {
       }
       map.fitBounds(bounds);
 
-
-      
-
-
     };
 
     var markerCluster = new MarkerClusterer(map, markers,mcOptions);
 
-      google.maps.event.addListener(markerCluster, 'click', function(cluster) {
+      google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+
+        var infobubble = new InfoBubble({
+          maxWidth: 350,
+          tabClassName: 'bubbleTabs',
+          minHeight: 130,
+        });
+
+
         //Get markers
           var markers = cluster.getMarkers(); 
 
           content = ''; 
 
-          infowindow.setContent(content); 
+
           
+          // create tab for each marker
+
           for(var i = 0; i < markers.length; i++) {
+
+            
             content = '';
             content+= markers[i].get('content');
             position = markers[i].getPosition();
 
-            name = markers[i].get('name').substring(0,12);
+            name = markers[i].get('name').substring(0,15);
 
-            
-            infowindow.addTab(name, content);
+            infobubble.addTab(name, content);
+
           }
+
+          map.setCenter(cluster.getCenter());
+
+          closeInfos(infos);
+          
+          // set window position
+
+          infobubble.setPosition(cluster.getCenter());
+
+          //closeInfos(infos);
+
+          infobubble.close();
+
+          // open window
+          infobubble.open(map);
+
+          // keep the handle, in order to close it on next click event 
+          infos[0]=infobubble;
           
       })
   }
@@ -325,15 +339,16 @@ function closeInfos(infos){
 }
 
 function MapWidgetloadScript(params) {
-  trace('MapWidgetloadScript');
   params = params ? params : 1;
 
   var func = 'MapWidgetInit';
   params = JSON.parse(params);
 
+  trace('mapPointerDraggable IS '+params.mapPointerDraggable);
+  mapPointerDraggable = typeof params.mapPointerDraggable !== 'undefined' ? params.mapPointerDraggable : true;
+
   if(typeof params.discover !== 'undefined')
   {
-    trace('discover');
     func = 'DiscoverMapWidgetInit';
     var script = document.createElement('script');
     script.type = 'text/javascript';
@@ -341,21 +356,21 @@ function MapWidgetloadScript(params) {
 
     document.body.appendChild(script);
 
-    var cluster = document.createElement('script');
-    cluster.type = 'text/javascript';
-    cluster.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer.js';
-    document.body.appendChild(cluster);
-
-    var bubble = document.createElement('script');
+    /*var bubble = document.createElement('script');
     bubble.type = 'text/javascript';
     bubble.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js';
     document.body.appendChild(bubble);
 
 
+    var cluster = document.createElement('script');
+    cluster.type = 'text/javascript';
+    cluster.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer.js';
+    document.body.appendChild(cluster);
+    */
+
   }
   else
   {
-    trace('plot');
     func = 'MapWidgetInit';
     var script = document.createElement('script');
     script.type = 'text/javascript';
@@ -370,6 +385,8 @@ function MapWidgetloadScript(params) {
 // Initialised from general.js using laracast.
 
 registerInitFunction('MapWidgetloadScript');
+
+var mapPointerDraggable = false;
 
 function InitSearchForm(){
    $(".search-form").submit(function(){
