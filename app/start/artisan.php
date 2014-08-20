@@ -14,3 +14,4 @@
 Artisan::add(new CheckSessions);
 Artisan::add(new CheckPayments);
 Artisan::add(new SendEmails);
+Artisan::add(new SalesForce);
