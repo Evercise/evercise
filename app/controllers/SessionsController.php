@@ -71,7 +71,7 @@ class SessionsController extends \BaseController {
 				's-date' => 'required',
 				's-time-hour' => 'required',
 				's-time-minute' => 'required',
-				's-price' => 'required|numeric|between:1,120',
+				's-price' => 'required|numeric|between:1,1000',
 				's-duration' => 'required|numeric|between:10,240',
 			)
 		);
