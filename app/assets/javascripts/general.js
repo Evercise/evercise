@@ -393,38 +393,6 @@ function fail(data, form)
 
 registerInitFunction('initPut');
 
-function initPlayVideo(){ 
-  $(".play-button").click(function(e){
-        var url = this.href;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'html'
-        })
-        .done(
-            function(data) { 
-                $('.mask').show();
-               $('.lower_footer').append(data);
-               videoControl();
-             }
-        );
-        return false;
-    });
-
-
-  /*$(document).on('click', '.play-button' , function(){
-    $(this).fadeToggle(600 ,function(){
-      $('.video').fadeToggle(600).delay(100).get(0).play();
-    })
-  })*/
-    
-}
-
-registerInitFunction('initPlayVideo');
-
-function videoControl(){
-  $('.video').get(0).play();
-}
 
 function initSwitchView(){
     $(document).on('click','.icon-btn', function(){
@@ -562,3 +530,12 @@ function loaded(){
   };
   $('.loading_circle').remove();
 }
+
+function overrideGaPageview(params){
+  params = JSON.parse(params);
+  pageview = params.pageview;
+
+  ga('send', 'pageview', pageview);
+}
+
+registerInitFunction('overrideGaPageview');

@@ -9,7 +9,7 @@
 		<h3>{{trans($view_name.'.sub_header')}}</h3>
 		<div class="video-placeholder mb20">
 			
-			{{ HTML::decode(HTML::linkRoute('video', '<img src="'.url().'/img/play-vid.png"></img>', null , array('class'=>'play-button')) ) }}
+			{{ HTML::decode(HTML::linkRoute('video', '<img src="'.url().'/img/play-vid.png"></img>', null , array('class'=>'play-button', 'id' => 'playButton')) ) }}
 
 			
 		</div>

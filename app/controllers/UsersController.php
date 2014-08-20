@@ -13,7 +13,6 @@ class UsersController extends \BaseController
     {
         $this->checkLogin();
 
-        JavaScript::put(array('initUsers' => 1)); // Initialise Users JS.
         return View::make('users.index');
     }
 
@@ -27,8 +26,6 @@ class UsersController extends \BaseController
         $referralCode = Referral::checkReferralCode(Session::get('referralCode'));
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
         $email = Session::get('email');
-
-        JavaScript::put(['initUsers' => 1, 'initPut' => 1, 'initToolTip' => 1]); //Initialise tooltip JS.
 
         return View::make('users.register')
             ->with('referralCode', $referralCode)
@@ -372,21 +369,7 @@ class UsersController extends \BaseController
     {
         $this->checkLogin();
 
-        JavaScript::put(
-            [
-                'initPut_user_edit'       => json_encode(['selector' => '#user_edit']),
-                'initPut_send_invite'     => json_encode(['selector' => '#send_invite']),
-                'initPut_password_change' => json_encode(['selector' => '#password_change']),
-                'initPut_feedback'        => json_encode(['selector' => '#feedback']),
-                'initUsers'               => 1,
-                'initToolTip'             => 1, //Initialise tooltip JS.
-                'initDashboardPanel'      => 1, // Initialise title swap Trainer JS.
-                'selectTab'               => ['tab' => $tab]
-            ]
-        );
-
-
-        return View::make('users.edit');
+        return View::make('users.edit')->with('tab', $tab);
     }
 
     /**
@@ -653,7 +636,6 @@ class UsersController extends \BaseController
      */
     public function getResetPassword($display_name, $code)
     {
-        JavaScript::put(array('initUsers' => 1)); // Initialise Users JS.
         try {
             $user = Sentry::findUserByResetPasswordCode($code);
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {

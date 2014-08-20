@@ -46,9 +46,7 @@ class TrainersController extends \BaseController {
 
 		// http://image.intervention.io/methods/crop
 		// http://odyniec.net/projects/imgareaselect
-		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
-		JavaScript::put(array('initPut' => json_encode(['selector' => '#trainer_create']) )); // Initialise initu put for ajax posting of trainer create form
-		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
+
 		return View::make('trainers.create')
 			->with('disciplines', $disciplines);
 
@@ -154,16 +152,13 @@ class TrainersController extends \BaseController {
 		$trainer = Trainer::where('user_id' , $this->user->id)
 				//->with('speciality')
 				->first();
-		//$speciality = Speciality::find($trainer->specialities_id);
+		
 
-		JavaScript::put(array('initDashboardPanel' => 1 )); // Initialise dashboard panls JS.
-		JavaScript::put(array('initPut' => 1 )); // Initialise put ajax function JS.
-		JavaScript::put(array('initDatePicker' => 1 )); // Initialise datepicker JS.
-		JavaScript::put(array('selectTab' => ['tab'=>$tab] ));
 
 		return View::make('trainers.edit')
 			->with('trainer', $trainer)
-			->with('profession', $trainer->profession);
+			->with('profession', $trainer->profession)
+			->with('tab', $tab);
 			//->with('speciality', $speciality);
 	}
 
@@ -216,17 +211,13 @@ class TrainersController extends \BaseController {
 	    {
 	    	$ratings = [];
 	    }
-		
-	    JavaScript::put(array('initClassBlock' => 1 )); // Initialise class block.
 	    
 		return View::make('trainers.show')
-				//->with('userTrainer', $userTrainer)
 				->with('trainer', $trainer)
 				->with('evercisegroups', $evercisegroups)
 				->with('stars', $stars)
 				->with('totalStars', $totalStars)
 				->with('ratings', $ratings);
-				//->with('speciality', $speciality);
 	}
 
 	/**

@@ -56,8 +56,29 @@ class UserClassesComposer {
 			}
 	  	}
 
-	  	 JavaScript::put(array('initAddRating' => 1 ));
+	  	// get current tab
+
+	  	 $viewdata = $view->getData();
+
+	  	 $tab = isset($viewdata['tab']) ? $viewdata['tab'] : 0;
+
+	  	 // initialise js functions for trainer edit
+
+	  	 JavaScript::put(
+            [
+                'initPut_user_edit'       => json_encode(['selector' => '#user_edit']),
+                'initPut_send_invite'     => json_encode(['selector' => '#send_invite']),
+                'initPut_password_change' => json_encode(['selector' => '#password_change']),
+                'initPut_feedback'        => json_encode(['selector' => '#feedback']),
+                'initUsers'               => 1,
+                'initToolTip'             => 1, //Initialise tooltip JS.
+                'initDashboardPanel'      => 1, // Initialise title swap Trainer JS.
+                'selectTab'               => ['tab' => $tab],
+                'initAddRating'           => 1
+            ]
+        );
 	  	
+
   		$view->with('groups', $groupsWithKeys)
 	  		 ->with('sessions', $sessions)
 	  		 ->with('members', $members)

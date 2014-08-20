@@ -44,7 +44,7 @@ Route::get('trainers/create', array('as'=>'trainers.create', 'uses'=>'TrainersCo
 Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
 Route::get('users/{id}/edit/{tab}', array('as'=>'users.edit.tab', 'uses'=>'UsersController@edit'));
 
-Route::get('sessions/{evercisegroup_id}/index', array('as'=>'sessions.index', 'uses'=>'SessionsController@index'));
+Route::get('sessions/{evercisegroup_id}/index', array('as'=>'evercisegroups.trainer_show', 'uses'=>'SessionsController@index'));
 Route::get('sessions/date_list', array('as'=>'sessions.date_list'));
 Route::post('sessions/join', array('as'=>'sessions.join' , 'uses'=>'SessionsController@joinSessions'));
 Route::get('sessions/join/class', array('as'=>'sessions.join.get' , 'uses'=>'SessionsController@joinSessions'));

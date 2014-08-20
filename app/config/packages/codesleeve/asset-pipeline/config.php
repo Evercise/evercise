@@ -147,7 +147,7 @@ return array(
 	| command php artisan assets:clean -f somefilename.js -f application.css ...
 	|
 	*/
-	'cache' => 	array('production', 'amazonsandbox'),
+	//'cache' => 	array('production', 'amazonsandbox'),
 
 	/*
 	|--------------------------------------------------------------------------

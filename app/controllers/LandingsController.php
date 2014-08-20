@@ -19,7 +19,6 @@ class LandingsController extends \BaseController {
 	 */
 	public function create()
 	{
-		JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
 		return View::make('landings.create');
 	}
 
@@ -164,7 +163,6 @@ class LandingsController extends \BaseController {
 
 			$category = Category::find($categoryId);
 			
-			JavaScript::put(array('initPut' => json_encode(['selector' => '#send_ppc']) ));
 			return View::make('landings.create')
 			->with('category', $category);
 		}
