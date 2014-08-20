@@ -147,7 +147,7 @@ return array(
 	| command php artisan assets:clean -f somefilename.js -f application.css ...
 	|
 	*/
-	'cache' => 	array('production', 'amazonsandbox'),
+	'cache' => 	(getenv('ASSETS_CACHE') ? ['production', 'local'] : ['fake_environment_so_cache_is_disabled']),
 
 	/*
 	|--------------------------------------------------------------------------

@@ -12,6 +12,7 @@ return [
     'DEBUG_APP'             => true,
     'APP_URL'               => 'http://evercise.dev/',
     'ENCRYPTION_KEY'        => 'ozt38MwirMfb5STSJWowmnHBGUz0ziAR',
+    'ASSETS_CACHE'          => false, //To Enable set TRUE
     //DB LIVE
     'DB_HOST'               => 'localhost',
     'DB_NAME'               => 'evercise',
