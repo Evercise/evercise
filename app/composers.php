@@ -32,6 +32,7 @@ require 'composers/CartRowsComposer.php';
 require 'composers/PhoneComposer.php';
 require 'composers/AutocompleteLocationComposer.php';
 require 'composers/AutocompleteCategoryComposer.php';
+require 'composers/ClassPurchaseComposer.php';
 
 
 View::composer('home', 'HomePageComposer');
@@ -72,5 +73,5 @@ View::composer('payments.cartrows', 'CartRowsComposer');
 View::composer('form.phone', 'PhoneComposer');
 View::composer('widgets.autocomplete-location', 'AutocompleteLocationComposer');
 View::composer('widgets.autocomplete-category', 'AutocompleteCategoryComposer');
-
+View::composer('sessions.confirmation', 'ClassPurchaseComposer');
 

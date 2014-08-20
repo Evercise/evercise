@@ -562,3 +562,12 @@ function loaded(){
   };
   $('.loading_circle').remove();
 }
+
+function overrideGaPageview(params){
+  params = JSON.parse(params);
+  pageview = params.pageview;
+
+  ga('send', 'pageview', pageview);
+}
+
+registerInitFunction('overrideGaPageview');
