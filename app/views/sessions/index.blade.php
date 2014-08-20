@@ -60,33 +60,38 @@
 			@endforeach
 		</div>
 
-		<div class="col12">
-		<br>
-		<br>
-			<h3>Past Sessions</h3>
-		</div>
-		<div class="session-table session-table-past">
-			<li class="hd">Class Date</li>
-			<li class="hd">Start Time</li>
-			<li class="hd">Price Per Person</li>
-			<li class="hd">Places Filled</li>
-			<li class="hd">Status</li>
-			<li class="hd">Commission</li>
-			<li class="hd">Total revenue</li>
-			<li class="hd">Options</li>
-			
-			@foreach ($evercisegroup['Evercisesession'] as $s_key => $session)
-				@if((new DateTime($session['date_time'])) < (new DateTime('now')))
-					@include('sessions.show')
-				@endif
-			@endforeach
-		</div>
-		
 		@else
 			<div class="col12">
 				<div class="session-table"><p>No members have signed up for this class yet</p></div>
 			</div>
 		@endif
+
+		@if(count($evercisegroup['evercisesession'] )> 0)
+
+			<div class="col12">
+			<br>
+			<br>
+				<h3>Past Sessions</h3>
+			</div>
+			<div class="session-table session-table-past">
+				<li class="hd">Class Date</li>
+				<li class="hd">Start Time</li>
+				<li class="hd">Price Per Person</li>
+				<li class="hd">Places Filled</li>
+				<li class="hd">Status</li>
+				<li class="hd">Commission</li>
+				<li class="hd">Total revenue</li>
+				<li class="hd">Options</li>
+				
+				@foreach ($evercisegroup['evercisesession'] as $s_key => $session)
+					@if((new DateTime($session['date_time'])) < (new DateTime('now')))
+						@include('sessions.show')
+					@endif
+				@endforeach
+			</div>
+		@endif
+		
+		
 
 	</div>
 

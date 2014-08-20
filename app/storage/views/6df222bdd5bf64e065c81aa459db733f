@@ -7,12 +7,27 @@
 	<?php endif; ?>
 	<div class="formfield">
 		<?php if( isset($form)): ?>
+			<?php if(isset($insert)): ?>
+				<div class="input-insert"><?php echo $insert; ?></div>
+				<div class="inputted">
+			<?php endif; ?>
 			<?php echo Form::text( $fieldname , isset($default) ? $default : '', array('data-tooltip' => isset($tooltip) ? $tooltip : null ,  'pattern' => isset($pattern) ? $pattern : null,  'placeholder' => $placeholder, 'maxlength' => $maxlength, 'form' => $form ,  'class' => isset($tooltip) ? 'tooltip' : null   )); ?>
+			<?php if(isset($insert)): ?>
+				</div>
+			<?php endif; ?>
+
 			<?php if(isset($fieldtext)): ?>
 				<p><?php echo $fieldtext; ?></p>
 			<?php endif; ?>
 		<?php else: ?>
+			<?php if(isset($insert)): ?>
+				<div class="input-insert"><?php echo $insert; ?></div>
+				<div class="inputted">
+			<?php endif; ?>
 			<?php echo Form::text( $fieldname , isset($default) ? $default : '', array( 'data-tooltip' => isset($tooltip) ? $tooltip : null , 'pattern' => isset($pattern) ? $pattern : null, 'placeholder' => $placeholder, 'maxlength' => $maxlength, 'id' => $fieldname , 'class' => isset($tooltip) ? 'tooltip' : null)); ?>
+			<?php if(isset($insert)): ?>
+				</div>
+			<?php endif; ?>
 			<?php if(isset($fieldtext)): ?>
 				<p><?php echo $fieldtext; ?></p>
 			<?php endif; ?>

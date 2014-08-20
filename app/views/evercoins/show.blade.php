@@ -11,12 +11,6 @@
 	
 </div>
 
-
-
-<div class="dashboard-title">
-	<h3>Ways to earn Evercoins</h3>
-</div>
-
 <div class="dashboard-body">
 
 	<div class="milestone-refer mb20">
@@ -43,7 +37,7 @@
 			{{ Form::open(array('id' => 'send_invite', 'url' => 'referrals', 'method' => 'POST', 'class' => 'create-form milestone-form')) }}
 				{{ Form::label( 'referee_email', 'Email') }}
 				{{ Form::text( 'referee_email' , '', array('id' => 'referee_email','placeholder' => 'Enter friends email address')) }}
-				{{ Form::submit('Send Code' , array('class'=>'btn btn-yellow ')) }}
+				{{ Form::submit('Invite' , array('class'=>'btn btn-yellow ')) }}
 			{{ Form::close() }}
 		</div>
 		<small>*Friends must create a vaild account </small>

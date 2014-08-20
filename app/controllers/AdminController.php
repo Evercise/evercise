@@ -114,5 +114,34 @@ class AdminController extends \BaseController {
 	    return View::make('admin.groups');
 	    //->with('log', $logFile);
 	}
+
+	public function showGroupRatings()
+	{
+		
+		$fakeusers = Sentry::findGroupById(6);
+		$fakeuserLoggedIn = $this->user ? $this->user->inGroup($fakeusers) : false;
+
+		if(!$fakeuserLoggedIn) return 'please log in with a fake user';
+
+/*		$groupswithratings = Evercisegroup::whereHas('ratings', function(){})->lists('id');
+		// Return groups with sessions in the future, which do not have any ratings
+		$evercisegroups = Evercisegroup::whereHas('futuresessions', function($query) use ($groupswithratings){
+			$query->whereNotIn('evercisegroup_id', $groupswithratings);
+		})->get();*/
+
+		$evercisegroups = Evercisegroup::whereHas('futuresessions', function($query){
+		})->get();
+		
+	    return View::make('admin.fakeratings')
+	    ->with('evercisegroups', $evercisegroups);
+	}
+
+	public function addRating()
+	{
+		
+
+	    return View::make('admin.fakeratings');
+	    //->with('log', $logFile);
+	}
 	
 }
