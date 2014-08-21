@@ -121,7 +121,9 @@ return array(
 		'Philo\Twitter\TwitterServiceProvider',
 		'Thujohn\Pdf\PdfServiceProvider',
 		'Abodeo\LaravelStripe\LaravelStripeServiceProvider',
-	),
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
+
+    ),
 
 	/*
 	|--------------------------------------------------------------------------
