@@ -8,15 +8,15 @@ return [
 'general_title' => 'General enquiries',
 'general_contact' => 'Naseeim Bangura (participants) or Tanaïs Gustave (trainers)',
 'general_email' => 'contact@evercise.com',
-'general_phone' => '+44(0)2072 537000',
+'general_phone' => '+44(0)2033 266216',
 // ---------------------------------------------------------------------------------------------------------
 'careers_title' => 'Careers',
 'careers_contact' => 'Jie Sun',
 'careers_email' => 'jie@evercise.com',
-'careers_phone' => '+44(0)2072 537000',
+'careers_phone' => '+44(0)2033 266216',
 // ---------------------------------------------------------------------------------------------------------
 'business_title' => 'Business collaboration',
 'business_contact' => 'Liqiang Fan',
 'business_email' => 'fan@evercise.com',
-'business_phone' => '+44(0)2072 537000',
+'business_phone' => '+44(0)2033 266216',
 ];

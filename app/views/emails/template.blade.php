@@ -784,7 +784,7 @@
 															                        <td valign="top" class="mcnTextContent" style="padding: 9px 18px; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
 
 															                        	<p>Feel free to call or email us with any questions. We&apos;re always happy to help.</p>
-															                            <p><i>phone:</i> +44(0)2072 537000</p>
+															                            <p><i>phone:</i> +44(0)2033 266216</p>
 															                            <p><i>email: </i> contact@evercise.com</p>
 																						<p>Best,</p>
 																						<p>The evercise team</p>
