@@ -28,6 +28,7 @@ require 'composers/CartRowsComposer.php';
 require 'composers/PhoneComposer.php';
 require 'composers/AutocompleteLocationComposer.php';
 require 'composers/AutocompleteCategoryComposer.php';
+<<<<<<< HEAD
 require 'composers/ClassHubComposer.php';
 require 'composers/EvercisegroupCreateComposer.php';
 require 'composers/TrainerShowComposer.php';
@@ -38,6 +39,8 @@ require 'composers/UsersResetPasswordComposer.php';
 require 'composers/TrainersCreateComposer.php';
 require 'composers/PpcLandingComposer.php';
 require 'composers/JoinSessionsComposer.php';
+=======
+>>>>>>> master
 require 'composers/ClassPurchaseComposer.php';
 
 
@@ -95,6 +98,7 @@ View::composer('widgets.time', 'TimeComposer');
 View::composer('widgets.donutChart', 'DonutChartComposer');
 View::composer('widgets.autocomplete-location', 'AutocompleteLocationComposer');
 View::composer('widgets.autocomplete-category', 'AutocompleteCategoryComposer');
+<<<<<<< HEAD
 
 // layouts
 View::composer('layouts.header', 'GroupSetComposer');
@@ -116,4 +120,7 @@ View::composer('payments.cartrows', 'CartRowsComposer');
 
 
 
+=======
+View::composer('sessions.confirmation', 'ClassPurchaseComposer');
+>>>>>>> master
 

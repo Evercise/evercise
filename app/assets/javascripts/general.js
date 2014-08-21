@@ -347,14 +347,16 @@ function initPut (params) {
                             form.find("#" + index).addClass('error'); // add a error to input field returned by validation check
                             // check for a slider 
                             if (form.find("#" + index+'-slider').length) {
-                              form.find("#" + index+'-slider').after('<span class="error-msg">' + value + '</span>');
+                              if (!form.find("#" + index+'-error').length) {
+                                form.find("#" + index+'-slider').after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+                              };
+                              
                             }else{
-                              form.find("#" + index).after('<span class="error-msg">' + value + '</span>'); 
+                              if (!form.find("#" + index+'-error').length) {
+                                form.find("#" + index).after('<span id="'+index+'-error" class="error-msg">' + value + '</span>'); 
+                              }
                             };
                             
-                             /*$("#" + index).addClass('error');
-                             $("#" + index).after('<span class="error-msg">' + value + '</span>');
-                             */
                           }
                       });
                  form.find('.btn').removeClass('disabled');                   
