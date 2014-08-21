@@ -130,6 +130,8 @@ class AdminController extends \BaseController {
 		})->get();*/
 
 		$evercisegroups = Evercisegroup::whereHas('futuresessions', function($query){
+			$query->with('ratings');
+			$query->with('fakeRatings');
 		})->get();
 		
 	    return View::make('admin.fakeratings')
@@ -138,10 +140,53 @@ class AdminController extends \BaseController {
 
 	public function addRating()
 	{
-		
+			$validator = Validator::make(
+				Input::all(),
+				array(
+					'rator' => 'required|max:5|min:1',
+					'evercisegroup_id' => 'required|max:5|min:1',
+					'stars' => 'required|max:1|min:1|between:0,5',
+					'comment' => 'required|max:255|min:4',
+				)
+			);
+			if($validator->fails()) {
+				if(Request::ajax())
+	        { 
+	        	$result = array(
+		            'validation_failed' => 1,
+		            'errors' =>  $validator->errors()->toArray()
+		         );	
+						return Response::json($result);
+	        }else
+	        {
+						$evercisegroup_id = Input::get('evercisegroup_id', 1);
+		        	return Redirect::route('evercisegroups.show', [$evercisegroup_id])
+						->withErrors($validator)
+						->withInput();
+	        }
+			}
 
-	    return View::make('admin.fakeratings');
-	    //->with('log', $logFile);
+			$stars = Input::get('stars', 1);
+			$comment = Input::get('comment', 1);
+			$evercisegroup_id = Input::get('evercisegroup_id', 1);
+			$rator = Input::get('rator', 0);
+
+			FakeRating::create([
+				'user_id'=>$rator ? $rator : $this->user->id,
+				'evercisegroup_id'=>$evercisegroup_id,
+				'stars'=>$stars,
+				'comment'=>$comment,
+			]);
+
+			return Response::json(['callback' => 'successAndRefresh']);
+	}
+
+	public function showUsers()
+	{
+		$users = Sentry::findAllUsers();
+		
+	    return View::make('admin.users')
+	    ->with('users', $users);
 	}
 	
 }
