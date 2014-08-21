@@ -196,9 +196,8 @@ Route::get('/twitter' , array('as' => 'twitter', 'uses' => function() {
 }));
 
 
-<<<<<<< HEAD
 // working on
-=======
+
 Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
 Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
 Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
@@ -231,7 +230,6 @@ Route::post('/admin/fakeratings', array('as' => 'admin.fakeratings.addrating', '
 Route::get('/admin/users', array('as' => 'admin.users', 'before'=>'admin', 'uses' => 'AdminController@showUsers'));
 
 
->>>>>>> master
 Route::get('/classes/{country}', array(
     'as' => 'classes.country',
     'uses' => 'EvercisegroupsController@search_C'
