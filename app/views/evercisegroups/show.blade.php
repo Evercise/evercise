@@ -166,27 +166,44 @@
 					<br>
 					<br>
 					<div class="rating-wrap">
+
+
+
+						@if($user ? $user->inGroup(Sentry::findGroupByName('Admin')) : false)
+					    {{ Form::open(array('id' => 'fakerating_create', 'url' => 'admin/fakeratings', 'method' => 'post', 'class' => 'create-form')) }}
+
+	        		@include('form.select', array('fieldname'=>'rator', 'label'=>'user', 'values'=>$fakeUsers))
+	            @include('form.textfield', array('fieldname'=>'stars', 'placeholder'=>'stars', 'maxlength'=>10, 'label'=>'stars', 'default' => 5 ))
+	            @include('form.textarea', array('fieldname'=>'comment', 'placeholder'=>'comment', 'maxlength'=>255, 'label'=>'comment', 'default' => '' ))
+	            @include('form.hidden', array('fieldname'=>'evercisegroup_id', 'placeholder'=>'evercisegroup_id', 'maxlength'=>10, 'label'=>'evercisegroup_id', 'value' => $evercisegroup->id ))
+	            
+	            {{ Form::submit('Leave review' , array('class'=>'btn btn-yellow', 'id' => 'create_review')) }}
+
+	            {{ Form::close() }}
+            @endif
+
+
 						
-						@foreach ($ratings as $key => $rating) 
+						@foreach ($allRatings as $rating) 
 							<div class="rating-row">
 
 								
 								<div class="rating-block">
-									{{ HTML::image('profiles/'.$rating->rator->directory.'/'.$rating->rator->image,  $rating->rator->display_name  , array('title' => $rating->rator->display_name ,'class' => 'user-icon')) }}
+									{{ HTML::image('profiles/'.$rating['rator']['directory'].'/'.$rating['rator']['image'],  $rating['rator']['display_name']  , array('title' => $rating['rator']['display_name'] ,'class' => 'user-icon')) }}
 									{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}
 
 
 									<span>
 									<div class="star_wrap">
 										@for ($i = 0; $i < 5; $i++)
-											{{ HTML::image('img/yellow_' . ($i < $rating->stars ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
+											{{ HTML::image('img/yellow_' . ($i < $rating['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
 										@endfor
 									</div>
 									
 
 
-									<strong>  {{ $rating->rator->display_name }}</strong> on {{ date('d/m/Y' , strtotime($rating->created_at))}} </span>
-									<p>{{ $rating->comment}}</p> 
+									<strong>  {{ $rating['rator']['display_name'] }}</strong> on {{ date('d/m/Y' , strtotime($rating['created_at']))}} </span>
+									<p>{{ $rating['comment']}}</p> 
 								</div>
 							</div>
 
@@ -196,14 +213,14 @@
 				<div id="participant" class="tab-view">
 					
 
-					@foreach ($memberUsers as $key => $memberUser)
+					@foreach ($memberUsers as $memberUser)
 						<div class="float-left participant-block">
-							@if($memberUser->image != '')
-								{{ HTML::image('profiles/'.$memberUser->directory.'/'. $memberUser->image, $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
-								<span class="display_name">{{$memberUser->display_name}}</span>
+							@if($memberUser['image'] != '')
+								{{ HTML::image('profiles/'.$memberUser['directory'].'/'. $memberUser['image'], $memberUser['display_name'] , array('title' => $memberUser['display_name'] ,'class' => 'user-icon')) }}
+								<span class="display_name">{{$memberUser['display_name']}}</span>
 							@else
-								{{ HTML::image('img/no-user-img.jpg', $memberUser->display_name , array('title' => $memberUser->display_name ,'class' => 'user-icon')) }}
-								<span class="display_name">{{$memberUser->display_name}}</span>
+								{{ HTML::image('img/no-user-img.jpg', $memberUser['display_name'] , array('title' => $memberUser['display_name'] ,'class' => 'user-icon')) }}
+								<span class="display_name">{{$memberUser['display_name']}}</span>
 							@endif
 						</div>
 					@endforeach

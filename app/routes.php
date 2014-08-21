@@ -222,6 +222,8 @@ Route::post('/admin/groups', array('as' => 'admin.groups.addcat', 'before'=>'adm
 Route::get('/admin/fakeratings', array('as' => 'admin.fakeratings', 'before'=>'admin', 'uses' => 'AdminController@showGroupRatings'));
 Route::post('/admin/fakeratings', array('as' => 'admin.fakeratings.addrating', 'before'=>'admin', 'uses' => 'AdminController@addRating'));
 
+Route::get('/admin/users', array('as' => 'admin.users', 'before'=>'admin', 'uses' => 'AdminController@showUsers'));
+
 
 Route::get('/classes/{country}', array(
     'as' => 'classes.country',

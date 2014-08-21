@@ -358,6 +358,7 @@ class EvercisegroupsController extends \BaseController {
 					}
 				}
 
+				Javascript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
 				return View::make('evercisegroups.show')
 					->with('evercisegroup',$evercisegroup); // change to trainer show view
 			}
@@ -414,6 +415,20 @@ class EvercisegroupsController extends \BaseController {
 				$venue = Venue::with('facilities')->find($evercisegroup->venue_id);
 
 				$ratings = Rating::with('rator')->where('evercisegroup_id', $evercisegroup->id)->orderBy('created_at')->get();
+				$fakeRatings = FakeRating::with('rator')->where('evercisegroup_id', $evercisegroup->id)->orderBy('created_at')->get();
+
+				$memberUsersArray = $memberUsers->toArray();
+
+				foreach($fakeRatings as $fakeRating)
+				{
+					if (! in_array($fakeRating->rator->id, $memberAllIds))
+					{
+						array_push($memberUsersArray, $fakeRating->rator->toArray());
+					}
+				}
+
+				// Concatinate real and fake ratings into one array
+				$allRatings = array_merge($ratings->toArray(), $fakeRatings->toArray());
 
 				JavaScript::put(array('initJoinEvercisegroup' => 1 ));
 				JavaScript::put(array('initSwitchView' => 1 ));
@@ -442,16 +457,22 @@ class EvercisegroupsController extends \BaseController {
 				}catch (Exception $e) {
 					return Redirect::route('evercisegroups.search');
 				}
+
+
+        $fakeUserGroup = Sentry::findGroupByName('Fakeuser');
+				$fakeUsers = Sentry::findAllUsersInGroup($fakeUserGroup)->lists('display_name', 'id');
 			    
 
+				Javascript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
 				return View::make('evercisegroups.show')
 					->with('evercisegroup',$evercisegroup)
 					->with('trainer',$trainer)
 					->with('members' , $members)
 					->with('membersIds' , $membersIds)
-					->with('memberUsers' , $memberUsers)
+					->with('memberUsers' , $memberUsersArray)
 					->with('venue' , $venue)
-					->with('ratings' , $ratings)
+					->with('allRatings' , $allRatings)
+					->with('fakeUsers' , $fakeUsers)
 					->with('og' , $og)
 					//->with('memberUsers' , $memberUsers)
 					//->with('trainer',$trainerDetails)

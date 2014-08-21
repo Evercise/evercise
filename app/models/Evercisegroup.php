@@ -53,6 +53,11 @@ class Evercisegroup extends \Eloquent {
         return $this->hasMany('Rating');
     }
 
+    public function fakeRatings()
+    {
+        return $this->hasMany('FakeRating');
+    }
+
     public function stars()
     {
        return $this->hasMany('Rating')->select([ 'evercisegroup_id', 'stars']);
