@@ -18,7 +18,7 @@
 				<div id="user" class="accordion-body tab-view selected">
 					<div class="btn-wrap">
 						@if(!isset($user))
-						{{HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow btn-large'))}}
+						{{HTML::linkRoute('users.create', 'Register', null ,['class' => 'btn btn-yellow btn-large'])}}
 						@endif
 					</div>
 					<div id="step_1" class="four-step one_t">
@@ -114,7 +114,7 @@
 				<div id="trainer" class="accordion-body tab-view">
 					<div class="btn-wrap">
 						@if(!isset($user) || !$user->inGroup($trainerGroup))
-							{{HTML::link('trainers/create', 'Register  as trainer', array('class' => 'btn btn-yellow btn-large'))}}
+							{{HTML::linkRoute('trainers.create', 'Register  as trainer', null,  ['class' => 'btn btn-yellow btn-large'])}}
 
 						@endif
 					</div>

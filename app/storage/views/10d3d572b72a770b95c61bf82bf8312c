@@ -62,7 +62,7 @@
 		<hr>
 		<div class="join_wrapper">
 			<h4><?php echo trans($view_name.'.register_text'); ?></h4>
-			<?php echo HTML::link('users/create', trans('general.register'), array('class' => 'btn btn-yellow btn-large')); ?>
+			<?php echo HTML::linkRoute('users.create', trans('general.register'), null ,array('class' => 'btn btn-yellow btn-large')); ?>
 			<?php echo HTML::image('img/potato men group fitness.png','join us ', array('class' => 'register-img')); ?>
 		</div>
 	<?php endif; ?>

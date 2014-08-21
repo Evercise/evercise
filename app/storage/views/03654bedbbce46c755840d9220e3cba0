@@ -20,11 +20,11 @@
         <div class="orSeperator"><span>or</span></div>
     <?php echo Form::close(); ?>
     <?php if ($redirect_after_login == 1): ?>
-       <?php echo HTML::link('login/fb/'.$redirect_after_login_url, 'Log in with facebook', array('class' => 'btn btn-fb')); ?>
+       <?php echo HTML::linkRoute('users.fb', 'Log in with facebook', $redirect_after_login_url ,  ['class' => 'btn btn-fb']); ?>
     <?php else: ?>
-        <?php echo HTML::link('login/fb', 'Log in with facebook', array('class' => 'btn btn-fb')); ?>
+        <?php echo HTML::linkRoute('users.fb', 'Log in with facebook', null , ['class' => 'btn btn-fb']); ?>
     <?php endif; ?>
     <div class="mt10">
-     <?php echo HTML::link('auth/forgot', 'Forgot password?'); ?>
+     <?php echo HTML::linkRoute('auth.forgot', 'Forgot password?' , null); ?>
     </div>
 </div>

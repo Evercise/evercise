@@ -25,7 +25,7 @@
           <div class="nav-end">
              
              @if(isset($redirect_after_login))
-              {{ HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , trans('header.login'),  array('id'=>'login', 'class' => 'login '))}}
+              {{ HTML::linkRoute('auth.login.redirect_after_login', trans('header.login'),  array('id'=>'login', Route::getCurrentRoute()->getName() , 'class' => 'login '))}}
               
             @else
               {{HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login'))}}

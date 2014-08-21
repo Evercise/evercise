@@ -118,7 +118,7 @@ class UserMailer extends Mailer {
 		$data['mainHeader'] = 'Password escaped you?';
 		$data['subHeader'] = 'No worries, it happens! Here&apos;s how to reset it.';
 		$data['body'] = $body;
-		$data['link'] = HTML::link('users/'.$displayName.'/resetpassword/'.urlencode($resetCode), 'Reset');
+		$data['link'] = HTML::linkRoute('users.resetpassword' , 'Reset', [$displayName,urlencode($resetCode) ]);
 		$data['linkLabel'] = 'click to reset password:';
 
 		return $this->sendTo($email, $subject, $view, $data );

@@ -21,7 +21,7 @@
 					<h4>
 						<?php echo $name; ?>
 						<?php if(isset($logout)): ?>
-							<span><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></span>
+							<span><?php echo HTML::linkRoute('users.logout', 'Log Out', $name); ?></span>
 						<?php endif; ?>
 					</h4>
 					<h5><?php echo $speciality; ?></h5>
@@ -37,11 +37,6 @@
 							<p><?php echo Str::limit($bio, 120); ?></p>
 					<?php else: ?>
 						<div id="trainer-block-info-about">	
-						<?php /*				
-								<p class="expand expand-short"><?php echo Str::limit($bio, 70); ?> <span>(read more)</span></p>
-								<p class="expand expand-full"><?php echo $bio; ?>
-								 <span>(read less)</span></p>
-						*/ ?>
 						<p> <?php echo $bio; ?></p>
 						</div>
 					<?php endif; ?>
