@@ -17,7 +17,7 @@
 				<div id="user" class="accordion-body tab-view selected">
 					<div class="btn-wrap">
 						<?php if(!isset($user)): ?>
-						<?php echo HTML::link('users/create', 'Register', array('class' => 'btn btn-yellow btn-large')); ?>
+						<?php echo HTML::linkRoute('users.create', 'Register', null ,['class' => 'btn btn-yellow btn-large']); ?>
 						<?php endif; ?>
 					</div>
 					<div id="step_1" class="four-step one_t">
@@ -113,7 +113,7 @@
 				<div id="trainer" class="accordion-body tab-view">
 					<div class="btn-wrap">
 						<?php if(!isset($user) || !$user->inGroup($trainerGroup)): ?>
-							<?php echo HTML::link('trainers/create', 'Register  as trainer', array('class' => 'btn btn-yellow btn-large')); ?>
+							<?php echo HTML::linkRoute('trainers.create', 'Register  as trainer', null,  ['class' => 'btn btn-yellow btn-large']); ?>
 
 						<?php endif; ?>
 					</div>

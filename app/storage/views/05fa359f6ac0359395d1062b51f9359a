@@ -25,7 +25,7 @@
           <div class="nav-end">
              
              <?php if(isset($redirect_after_login)): ?>
-              <?php echo HTML::link('/auth/login/'.Route::getCurrentRoute()->getName() , trans('header.login'),  array('id'=>'login', 'class' => 'login ')); ?>
+              <?php echo HTML::linkRoute('auth.login.redirect_after_login', trans('header.login'),  array('id'=>'login', Route::getCurrentRoute()->getName() , 'class' => 'login ')); ?>
               
             <?php else: ?>
               <?php echo HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login')); ?>

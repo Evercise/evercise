@@ -61,7 +61,7 @@
 						@if ( !isset($ratings[$session->id]) )
 							<h6>Leave Feedback</h6>
 							@if( (new DateTime($session->date_time)) > (new DateTime())->sub(new DateInterval('P5D')) && (new DateTime($session->date_time)) <= (new DateTime()))
-								{{ HTML::link("/sessions/".$session->id."/refund", 'Problem with this class?', array('data-href' => "/sessions/".$session->id."/refund", 'class'=>'refund')) }}
+								{{ HTML::linkRoute("sessions.refund", 'Problem with this class?', $session->id,  ['data-href' => "/sessions/".$session->id."/refund", 'class'=>'refund']) }}
 							@endif
 							{{ Form::open(array('id' => 'feedback', 'url' => 'ratings', 'method' => 'POST', 'class' => 'update-form')) }}
 								{{ Form::hidden( 'session_id' , $session->id ) }}

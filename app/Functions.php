@@ -7,7 +7,7 @@ class Functions {
         if (is_null($address)) {
             $query = Request::getClientIp();
 
-            if ($query = '127.0.0.1' || $query = null) {
+            if ($query == '127.0.0.1' || $query == null) {
                 $query = '151.237.238.126'; /* london office? */
             }
         }else{

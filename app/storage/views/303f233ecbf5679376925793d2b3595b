@@ -14,7 +14,7 @@
 				<div  class="user-block-wrap">
 				<div class="dashboard-user-wrap">
 					<?php echo $__env->make('users.user_block', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-					<small><?php echo HTML::linkRoute('users.logout', 'Log Out'); ?></small>
+					<small><?php echo HTML::linkRoute('users.logout', 'Log Out', $user->display_name); ?></small>
 				</div>
 					
 					<?php echo $__env->make('users.dashboardTabs', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

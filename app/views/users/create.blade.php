@@ -14,9 +14,9 @@
    
     <div class="center-btn-wrapper">
          @if(isset($typeId))
-            {{ HTML::link('login/fb/'.$typeId.'', 'Sign up with facebook', array('class' => 'btn btn-fb btn-large')) }}
+            {{ HTML::linkRoute('users.fb', 'Sign up with facebook', $typeId, ['class' => 'btn btn-fb btn-large']) }}
         @else
-            {{ HTML::link('login/fb', 'Sign up with facebook', array('class' => 'btn btn-fb btn-large')) }}
+            {{ HTML::linkRoute('users.fb', 'Sign up with facebook', null, ['class' => 'btn btn-fb btn-large']) }}
         @endif
         
          <br>

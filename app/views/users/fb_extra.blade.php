@@ -5,7 +5,7 @@
 
 	@include('layouts.pagetitle', array('title'=>'Step 1: Create your user account', 'subtitle'=>'You can either fill in your details below, or sign up in one click using your Facebook account.'))
     <div class="fb-wrapper">
-        {{ HTML::link('login/fb', 'Sign up with facebook', array('class' => 'btn-fb')) }}
+        {{ HTML::linkRoute('users.fb', 'Sign up with facebook', null,  ['class' => 'btn-fb']) }}
     </div>
 
     

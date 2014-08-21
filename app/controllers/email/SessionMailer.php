@@ -47,7 +47,7 @@ class SessionMailer extends Mailer {
 		$data['mainHeader'] = 'Feeling prepared?';
 		$data['subHeader'] = 'Your arranged class will take place in less than 24 hours.';
 		$data['body'] = $body;
-		$data['link'] = HTML::link('evercisegroups/'.$classId, 'Class hub');
+		$data['link'] = HTML::linkRoute('evercisegroups.show', 'Class page' , $classId);
 		$data['linkLabel'] = 'Go to your class hub: ';
 
 		$this->sendTo($trainerEmail, $subject, $view, $data );
@@ -81,7 +81,7 @@ class SessionMailer extends Mailer {
 			$data['mainHeader'] = 'Feeling prepared?';
 			$data['subHeader'] = 'Your class is tomorrow. Please find all the useful details below.';
 			$data['body'] = $body;
-			$data['link'] = HTML::link('evercisegroups/'.$classId, 'Class page');
+			$data['link'] = HTML::linkRoute('evercisegroups.show', 'Class page' , $classId);
 			$data['linkLabel'] = 'Visit your class page: ';
 
 

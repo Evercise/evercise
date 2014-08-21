@@ -65,12 +65,7 @@ class EvercisegroupsController extends \BaseController {
 				$month = date("m");
 				$year = date("Y");
 
-				//JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>0, 'max'=>99, 'step'=>0.50, 'value'=>1))));
-				//JavaScript::put(array('initSessions' => 1 )); // Initialise session JS.
-				JavaScript::put(array('initPut' => json_encode(['selector' => '#newsession']) ));
-				JavaScript::put(array('calendarSlide' => 1 )); // Initialise calendarSlide JS. priority 1 (0 is first)
-				JavaScript::put(array('initEvercisegroups' => 1 )); // Initialise EverciseGroups JS.
-				return View::make('evercisegroups.trainer_index')
+				return View::make('evercisegroups.class_hub')
 						->with('evercisegroups' , $evercisegroups)
 						->with('sessionDates' , $sessionDates )
 						->with('totalMembers' , $totalMembers )
@@ -114,15 +109,6 @@ class EvercisegroupsController extends \BaseController {
 		$subcategories = Subcategory::lists('name');
 		natsort($subcategories);
 
-		JavaScript::put(array('initSlider_price' =>  json_encode(array('name'=>'price', 'min'=>1, 'max'=>20, 'step'=>0.50, 'value'=>1, 'format'=>'dec'))));
-		JavaScript::put(array('initSlider_duration' =>  json_encode(array('name'=>'duration', 'min'=>10, 'max'=>240, 'step'=>5, 'value'=>1))));
-		JavaScript::put(array('initSlider_maxsize' =>  json_encode(array('name'=>'maxsize', 'min'=>1, 'max'=>200, 'step'=>1, 'value'=>1))));
-
-        JavaScript::put(array('initImage' => json_encode(['ratio' => 'group_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
-		JavaScript::put(array('initPut' => 1 )); // Initialise EverciseGroups JS.
-		JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
-		//JavaScript::put(array('MapWidgetloadScript' => 1 )); // Initialise map JS.
-		//JavaScript::put(array('categoryDescriptions' => json_encode($categoryDescriptions) ));
 		return View::make('evercisegroups.create')->with('subcategories', $subcategories);
 	}
 
@@ -298,7 +284,7 @@ class EvercisegroupsController extends \BaseController {
 						{
 							//return Redirect::route('evercisegroups.index');
 
-							return View::make('sessions.index')
+							return View::make('evercisegroups.trainer_show')
 								->with('evercisegroup' , $evercisegroup )
 								->with('directory' , $directory)
 								->with('members' , 0 );
@@ -330,15 +316,9 @@ class EvercisegroupsController extends \BaseController {
 							$averageCapacity = round($totalCapacity/$i, 1);
 							$averageRevenue = round($revenue/$i, 1);
 							$averageTotalRevenue = round($totalRevenue/$i, 1);
-
-							//return '<h1>'. $averageCapacity . '</h1>';
-
-							JavaScript::put(array('mailAll' => 1 ));
-							JavaScript::put(array('initSessionListDropdown' => 1 )); // Initialise session list dropdown JS.
-							JavaScript::put(array('initEvercisegroupsShow' => 1 )); // Initialise buttons
 							
 							
-							return View::make('sessions.index')
+							return View::make('evercisegroups.trainer_show')
 								->with('evercisegroup' , $evercisegroup )
 								->with('directory' , $directory)
 								->with('totalSessionMembers' , $totalSessionMembers)
@@ -432,13 +412,6 @@ class EvercisegroupsController extends \BaseController {
 
 				// Concatinate real and fake ratings into one array
 				$allRatings = array_merge($ratings->toArray(), $fakeRatings->toArray());
-
-				JavaScript::put(array('initJoinEvercisegroup' => 1 ));
-				JavaScript::put(array('initSwitchView' => 1 ));
-				JavaScript::put(array('initScrollAnchor' => 1 ));
-				JavaScript::put(array('initToolTip' => 1 )); // Initialise tooltip JS.
-				JavaScript::put(array('MapWidgetloadScript' => json_encode(['mapPointerDraggable'=>false]) )); // Initialise map JS.
-				JavaScript::put(['zero_results'=>trans('discover.zero_results')]); 
 
 				/* open graph meta tags */
 				/* git site https://github.com/chriskonnertz/open-graph */
@@ -773,27 +746,11 @@ class EvercisegroupsController extends \BaseController {
 	    $offset = ($page * $perPage) - $perPage;
 	    $articles = array_slice($allResults,$offset,$perPage);
 	    $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
-
-	    //return var_dump($data);
-
-	   // return $paginatedResults->toJson();
-
-	   // JavaScript::put(array('classes' => json_encode($places) ));
-	    JavaScript::put([
-	    	'MapWidgetloadScript' =>  json_encode(array('discover'=> true)),
-	    	'initSwitchView' => 1 ,
-	    	'InitSearchForm' => 1 ,
-	    	'initClassBlock' => 1 ,
-	    	'zero_results'=>trans('discover.zero_results')
-	    ]);
 	     
 
 	    return View::make('evercisegroups.search')
 	    		->with('places' , $paginatedResults->toJson())
-	    		//->with('places' , json_encode($paginatedResults))
-	    		//->with('stars' , $stars)
 	    		->with('evercisegroups' , $paginatedResults);
-	    		//->with('members' , $members);
 	}
 
 	public function search_C($country)

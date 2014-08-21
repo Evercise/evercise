@@ -21,7 +21,7 @@
 					<h4>
 						{{$name}}
 						@if(isset($logout))
-							<span>{{ HTML::linkRoute('users.logout', 'Log Out') }}</span>
+							<span>{{ HTML::linkRoute('users.logout', 'Log Out', $name) }}</span>
 						@endif
 					</h4>
 					<h5>{{$speciality}}</h5>
@@ -37,11 +37,6 @@
 							<p>{{ Str::limit($bio, 120) }}</p>
 					@else
 						<div id="trainer-block-info-about">	
-						{{--				
-								<p class="expand expand-short">{{  Str::limit($bio, 70)  }} <span>(read more)</span></p>
-								<p class="expand expand-full">{{ $bio }}
-								 <span>(read less)</span></p>
-						--}}
 						<p> {{ $bio}}</p>
 						</div>
 					@endif

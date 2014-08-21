@@ -14,61 +14,6 @@ function initEvercisegroups()
     }
 
     // create a new evercisegroup
- 
-   /* $( '#evercisegroup_create' ).on( 'submit', function() {
-        $('.error-msg').remove();
-        $('input').removeClass('error');
-        // post to controller
-        $.post(
-            $( this ).prop( 'action' ),
-            {
-                "classname": $( '#classname' ).val(),
-                "description": $( '#description' ).val(),
-                "category": $( '#category' ).val(),
-                "duration": $( '#duration' ).val(),
-                "maxsize": $( '#maxsize' ).val(),
-                "price": $( '#price' ).val(),
-                "image": $( '#thumbFilename' ).val(),
-                "gender": $( '#gender' ).val(),
-                // "address": $( '#street' ).val() + ' '+ $( '#street' ).val(),
-                // "city": $( '#city' ).val(),
-                // "postcode": $( '#postcode' ).val(),
-                // "lat": $( '#latbox' ).val(),
-                // "long": $( '#lngbox' ).val()
-                "venue": $( '#venue' ).val()
-            },
-            function( data ) {
-                if (data.validation_failed == 1)
-                {
-                    // show validation errors
-                    var arr = data.errors;
-                    var scroll = false;
-                    $.each(arr, function(index, value)
-                    {
-                        trace(value);
-                        if (scroll == false) {
-                            $('html, body').animate({ scrollTop: $("#" + index).offset().top }, 400);
-                            scroll = true;
-                        };
-                        if (value.length != 0)
-                        {
-                           $("#" + index).addClass('error');
-                           $("#" + index).after('<span class="error-msg">' + value + '</span>');
-                        }
-                    });
-                    $('#ajax-loading').hide();
-                }else{
-                    // redirect to login page
-                    $('.success_msg').show();
-                    setTimeout(function() {
-                        window.location.href = data;
-                    }, 1000);
-                }
-            },
-            'json'
-        );
-        return false;
-    });*/
 
     $('.hub-block #delete_group').click(function(){
         var url = $(this).attr('href');

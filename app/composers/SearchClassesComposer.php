@@ -7,6 +7,5 @@ class SearchClassesComposer {
 
   	JavaScript::put(array('InitSearchForm' => 1 )); 
 
-  	$view;
   }
 }
