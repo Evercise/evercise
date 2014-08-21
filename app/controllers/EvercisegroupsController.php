@@ -417,7 +417,10 @@ class EvercisegroupsController extends \BaseController {
 				$ratings = Rating::with('rator')->where('evercisegroup_id', $evercisegroup->id)->orderBy('created_at')->get();
 				$fakeRatings = FakeRating::with('rator')->where('evercisegroup_id', $evercisegroup->id)->orderBy('created_at')->get();
 
-				$memberUsersArray = $memberUsers->toArray();
+				if($memberUsers)
+					$memberUsersArray = $memberUsers->toArray();
+				else
+					$memberUsersArray = [];
 
 				foreach($fakeRatings as $fakeRating)
 				{
