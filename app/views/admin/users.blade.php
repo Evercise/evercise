@@ -4,13 +4,17 @@
 @section('title', 'View Classes')
 @section('content')
 
-	@include('layouts.pagetitle', array('title'=>'View Classes', 'subtitle'=>'and stuff'))
+	@include('layouts.pagetitle', array('title'=>'View Users', 'subtitle'=>'and groups'))
 
-	@foreach($users as $user)
+	@foreach($users as $key => $theUser)
                 
-                <p{{ $user->inGroup(Sentry::findGroupByName('Trainer')) ? ' style="color:red"' : '' }}>
-                {{  $user->id . ' : ' . $user->display_name . ' : ' . $user->email }}</p>
-                
+                <p{{ $sentryUsers[$key]->inGroup(Sentry::findGroupByName('Trainer')) ? ' style="color:red"' : '' }}>
+                {{  $theUser->id . ' : ' . $theUser->display_name . ' : ' . $theUser->email }}</p>
+                @foreach($theUser->evercisegroups as $evercisegroup)
+                <ul>
+                        <li class="indent" style="color:green"> {{$evercisegroup->name}}</li>
+                </ul>
+                @endforeach
 
 		
 	@endforeach
