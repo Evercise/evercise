@@ -5,7 +5,7 @@
 @section('content')
 
 <div  class="full-width">
-	<div class="full-bk" style="background-image: url({{url()}}/profiles/{{$trainer->user->directory}}/{{$evercisegroup->image}})">
+	<div class="full-bk" style="background-image: url('{{url()}}/profiles/{{$trainer->user->directory}}/{{$evercisegroup->image}}')">
 	</div>
 	<div id="class-trainer-wrapper" class="col3">
 		@include('trainers.trainerBlock', array('speciality' => $trainer->profession, 'id' =>  $trainer->user->id ,'orientation' => 'portrait', 'image' => '/profiles/'.  $trainer->user->directory.'/'. $trainer->user->image , 'name' => $trainer->user->display_name , 'member_since' => date('dS M-Y', strtotime( $trainer->user->created_at))))
