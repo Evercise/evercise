@@ -1,19 +1,34 @@
 <?php
 
-class Category extends Eloquent {
+/**
+ * Class Category
+ */
+class Category extends Eloquent
+{
 
-	protected $fillable = array('id', 'name','image');
+    /**
+     * @var array
+     */
+    protected $fillable = array('id', 'name', 'image');
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'categories';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'categories';
 
-	public function subcategories()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function subcategories()
     {
-        return $this->belongsToMany('Subcategory', 'subcategory_categories', 'category_id', 'subcategory_id')->withTimestamps();
+        return $this->belongsToMany(
+            'Subcategory',
+            'subcategory_categories',
+            'category_id',
+            'subcategory_id'
+        )->withTimestamps();
     }
 
 }

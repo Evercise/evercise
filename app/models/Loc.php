@@ -1,21 +1,29 @@
 <?php
 
-class Loc {
+/**
+ * Class Loc
+ */
+class Loc
+{
 
 
-	public static function text($page, $section, $uc=false)
-	{
-    try
+    /**
+     * @param $page
+     * @param $section
+     * @param bool $uc
+     * @return string
+     */
+    public static function text($page, $section, $uc = false)
     {
-      $text = Config::get('localisations/'.$page)[$section];
-      if ($uc)
-        $text = ucfirst($text);
-    }
-    catch(Exception $e)
-    {
-      return 'ERROR: '.$section;
-    }
+        try {
+            $text = Config::get('localisations/' . $page)[$section];
+            if ($uc) {
+                $text = ucfirst($text);
+            }
+        } catch (Exception $e) {
+            return 'ERROR: ' . $section;
+        }
 
-		return $text;
-	}
+        return $text;
+    }
 }
