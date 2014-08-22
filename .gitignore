@@ -2,6 +2,8 @@
 .env.*.php
 .env.php
 .idea
+.idea/workspace.xml
+.idea/*
 .env.local.php
 /vendor
 composer.phar
@@ -18,3 +20,4 @@ app/config/facebook.php
 /app/storage/meta/*
 /app/storage/views/*
 _ide_helper.php
+.idea/workspace.xml
