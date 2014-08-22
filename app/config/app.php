@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => true,
+	'debug' => (getenv('DEBUG_APP') ?: false),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://evercise.com',
+	'url' => (getenv('APP_URL') ?: 'http://evercise.com'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'ozt38MwirMfb5STSJWowmnHBGUz0ziAR',
+	'key' => (getenv('ENCRYPTION_KEY') ?: 'ozt38MwirMfb5STSJWowmnHBGUz0ziAR'),
 
 	/*
 	|--------------------------------------------------------------------------

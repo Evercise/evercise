@@ -25,7 +25,7 @@
 
           <a href="URL()">
 
-          {{ HTML::decode(HTML::link('ppc_fb/'.$category->id, '<img src="'.url().'/img/facebook_logo.png" /> Log in with Facebook', ['alt'=>"facebook icon", 'class' => 'btn btn-fb'] ) )}}
+          {{ HTML::decode(HTML::linkRoute('ppc_fb.category', '<img src="'.url().'/img/facebook_logo.png" /> Log in with Facebook', $category->id , ['alt'=>"facebook icon", 'class' => 'btn btn-fb'] ) )}}
   </div>
   <div class="landing-body">
     <h2>{{trans('landing.bodyHeader')}}</h2>
@@ -63,28 +63,6 @@
  
 </div>
 
-{{--
-    <div id="about" class="center_col">
-      <p>PPC</p>
-      <br>
-      <p>{{ $category->name }}</p>
-
-      <div class="milestone-refer">
-        <div class="milestone-refer-wrap">
-          <h4>Get Code</h4>
-          <p>Bang in your email and we'll send you a lovely code n stuff</p>
-          {{ Form::open(array('id' => 'send_ppc', 'url' => 'landings', 'method' => 'POST', 'class' => 'create-form milestone-form')) }}
-            {{ Form::label( 'email', 'Email') }}
-            {{ Form::text( 'category' , $category->id , array('id' => 'category')) }}
-            {{ Form::text( 'email' , '', array('id' => 'email','placeholder' => 'Enter your email address')) }}
-            {{ Form::submit('Get Code' , array('class'=>'btn btn-yellow ')) }}
-          {{ Form::close() }}
-          {{ HTML::link('ppc_fb/'.$category->id, 'Sign up with facebook', array('class' => 'btn btn-fb btn-large')) }}
-        </div>
-      </div>
-
-    </div>
-    --}}
 @stop
 
 @include('layouts.laracasts')

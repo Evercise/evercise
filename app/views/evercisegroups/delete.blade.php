@@ -8,11 +8,11 @@
 		@if($deleteable == 1)
 			<p>Would you really like to delete this class?</p>
 			<br/>
-			{{ HTML::link('evercisegroups/'.$id, 'Delete Class!',array('class' => 'btn btn-red', 'id'=>'delete_evercisegroup')) }}
+			{{ HTML::linkRoute('evercisegroups.show', 'Delete Class!', $id, array('class' => 'btn btn-red', 'id'=>'delete_evercisegroup')) }}
 		@elseif ($deleteable == 2)
 			<p>This Class has sessions. If you delete it, all sessions will also be deleted</p>
 			<br/>
-			{{ HTML::link('evercisegroups/'.$id, 'Delete Class!',array('class' => 'btn btn-red', 'id'=>'delete_evercisegroup')) }}
+			{{ HTML::linkRoute('evercisegroups.show', 'Delete Class!', $id, array('class' => 'btn btn-red', 'id'=>'delete_evercisegroup')) }}
 		@elseif ($deleteable == 3)
 			<p>You can not delete a class that has members that have joined upcoming sessions</p>
 			<br>

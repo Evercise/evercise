@@ -1,2 +1,0 @@
-
-		<?php echo Calendar::generate($year, $month, $calendarData);; ?>

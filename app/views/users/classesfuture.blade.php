@@ -51,7 +51,7 @@
 							</div>
 							<div class="list-row-section">
 								@if( (new DateTime($session->date_time)) > (new DateTime())->add(new DateInterval('P2D')))
-									<div>{{ HTML::link("/sessions/".$session->id."/leave", 'Leave Session', array('data-href' => "/sessions/".$session->id."/leave", 'class'=>'btn-leave-session')) }}
+									<div>{{ HTML::linkRoute("sessions.leave", 'Leave Session', $session->id,  ['data-href' => "/sessions/".$session->id."/leave", 'class'=>'btn-leave-session']) }}
 									</div>
 								@else
 									<p>You cannot leave this session as it takes place in less than two days</p>

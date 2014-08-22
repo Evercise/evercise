@@ -1,3 +1,0 @@
-	<canvas  data-total='<?php echo $total; ?>' data-filled="<?php echo $fill; ?>"  height="<?php echo $width; ?>" width="<?php echo $width; ?>" id="<?php echo $id; ?>" ></canvas>
-	<div class="canvas-overlay"><strong><?php echo $fill; ?></strong>/<?php echo $total; ?></div>
-	<div class="donut-label"><?php echo $label; ?></div>

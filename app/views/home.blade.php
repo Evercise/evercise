@@ -9,7 +9,7 @@
 		<h3>{{trans($view_name.'.sub_header')}}</h3>
 		<div class="video-placeholder mb20">
 			
-			{{ HTML::decode(HTML::linkRoute('video', '<img src="'.url().'/img/play-vid.png"></img>', null , array('class'=>'play-button')) ) }}
+			{{ HTML::decode(HTML::linkRoute('video', '<img src="'.url().'/img/play-vid.png"></img>', null , array('class'=>'play-button', 'id' => 'playButton')) ) }}
 
 			
 		</div>
@@ -63,7 +63,7 @@
 		<hr>
 		<div class="join_wrapper">
 			<h4>{{trans($view_name.'.register_text')}}</h4>
-			{{HTML::link('users/create', trans('general.register'), array('class' => 'btn btn-yellow btn-large'))}}
+			{{HTML::linkRoute('users.create', trans('general.register'), null ,array('class' => 'btn btn-yellow btn-large'))}}
 			{{ HTML::image('img/potato men group fitness.png','join us ', array('class' => 'register-img')) }}
 		</div>
 	@endif

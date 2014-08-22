@@ -7,12 +7,8 @@ require 'composers/CalendarComposer.php';
 require 'composers/MapComposer.php';
 require 'composers/TimeComposer.php';
 require 'composers/PasswordComposer.php';
-//require 'composers/DistanceComposer.php';
-//require 'composers/UpcomingPastSessions.php';
-require 'composers/ProgressBarComposer.php';
 require 'composers/TrainerBlockComposer.php';
 require 'composers/UserEditComposer.php';
-//require 'composers/TrainerEditFormComposer.php';
 require 'composers/DonutChartComposer.php';
 require 'composers/ChangePasswordComposer.php';
 require 'composers/RefineComposer.php';
@@ -32,46 +28,89 @@ require 'composers/CartRowsComposer.php';
 require 'composers/PhoneComposer.php';
 require 'composers/AutocompleteLocationComposer.php';
 require 'composers/AutocompleteCategoryComposer.php';
+
+require 'composers/ClassHubComposer.php';
+require 'composers/EvercisegroupCreateComposer.php';
+require 'composers/TrainerShowComposer.php';
+require 'composers/EvercisegroupsShowComposer.php';
+require 'composers/EvercisegroupsSearchComposer.php';
+require 'composers/UsersCreateComposer.php';
+require 'composers/UsersResetPasswordComposer.php';
+require 'composers/TrainersCreateComposer.php';
+require 'composers/PpcLandingComposer.php';
+require 'composers/JoinSessionsComposer.php';
+
 require 'composers/ClassPurchaseComposer.php';
 
 
+// home
 View::composer('home', 'HomePageComposer');
-View::composer('evercisegroups.refine', 'SearchClassesComposer');
-View::composer('layouts.header', 'GroupSetComposer');
-View::composer('static.how_it_works', 'GroupSetComposer');
-View::composer('widgets.calendar', 'CalendarComposer');
-View::composer('widgets.mapForm', 'MapComposer');
-View::composer('widgets.time', 'TimeComposer');
-View::composer('form.password', 'PasswordComposer');
-//View::composer('evercisegroups.trainer_index', 'DistanceComposer');
-//View::composer('layouts.classBlock', 'DistanceComposer');
-//View::composer('evercisegroups.discover_classes_list', 'DistanceComposer');
-View::composer('layouts.progressbar', 'ProgressBarComposer');
-View::composer('trainers.trainerBlock', 'TrainerBlockComposer');
-//View::composer('sessions.date_list', 'UpcomingPastSessions');
+View::composer('home', 'RecommendedClassesComposer');
+
+// users
 View::composer('users.edit_form', 'UserEditComposer');
-//View::composer('trainers.editForm', 'TrainerEditFormComposer');
-View::composer('widgets.donutChart', 'DonutChartComposer');
 View::composer('users.changepassword', 'ChangePasswordComposer');
-View::composer('evercisegroups.refine', 'RefineComposer');
-View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
-View::composer('venues.select', 'VenueComposer');
-View::composer('venues.edit_form', 'VenueComposer');
 View::composer('users.edit', 'UserClassesComposer');
+View::composer('users.register', 'AccordionComposer');
+View::composer('users.register', 'UsersCreateComposer');
+View::composer('users.resetpassword', 'UsersResetPasswordComposer');
+View::composer('evercoins.show', 'ShowEvercoinComposer');
+
+//trainers
+View::composer('trainers.create', 'TrainersCreateComposer');
 View::composer('trainers.edit', 'UserClassesComposer');
 View::composer('trainers.trainerHistory', 'TrainerHistoryComposer');
 View::composer('trainers.upcoming', 'UpcomingTrainerSessionsComposer');
+View::composer('trainers.trainerBlock', 'TrainerBlockComposer');
 View::composer('wallets.show', 'ShowWalletComposer');
+
+// evercisegroups
+View::composer('evercisegroups.class_hub', 'ClassHubComposer');
+View::composer('evercisegroups.create', 'EvercisegroupCreateComposer');
+View::composer('evercisegroups.refine', 'SearchClassesComposer');
+View::composer('evercisegroups.refine', 'RefineComposer');
+View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
-View::composer('home', 'RecommendedClassesComposer');
-View::composer('evercoins.show', 'ShowEvercoinComposer');
+View::composer('evercisegroups.trainer_show', 'TrainerShowComposer');
+View::composer('evercisegroups.show', 'EvercisegroupsShowComposer');
+
+
+// landing pages
+View::composer('layouts.create', 'PpcLandingComposer');
+
+// sessions
+View::composer('sessions.join', 'JoinSessionsComposer');
+View::composer('sessions.confirmation', 'ClassPurchaseComposer');
+
+// venues
+View::composer('venues.select', 'VenueComposer');
+View::composer('venues.edit_form', 'VenueComposer');
+
+// statis pages
+View::composer('static.how_it_works', 'GroupSetComposer');
 View::composer('static.how_it_works', 'AccordionComposer');
-View::composer('users.register', 'AccordionComposer');
-View::composer('payments.paywithevercoins', 'PayWithEvercoinsComposer');
-View::composer('form.phone', 'AreacodeComposer');
-View::composer('payments.cartrows', 'CartRowsComposer');
-View::composer('form.phone', 'PhoneComposer');
+
+// widgets
+View::composer('widgets.calendar', 'CalendarComposer');
+View::composer('widgets.mapForm', 'MapComposer');
+View::composer('widgets.time', 'TimeComposer');
+View::composer('widgets.donutChart', 'DonutChartComposer');
 View::composer('widgets.autocomplete-location', 'AutocompleteLocationComposer');
 View::composer('widgets.autocomplete-category', 'AutocompleteCategoryComposer');
-View::composer('sessions.confirmation', 'ClassPurchaseComposer');
+
+// layouts
+View::composer('layouts.header', 'GroupSetComposer');
+View::composer('form.password', 'PasswordComposer');
+View::composer('form.phone', 'AreacodeComposer');
+View::composer('form.phone', 'PhoneComposer');
+
+// payments
+View::composer('payments.paywithevercoins', 'PayWithEvercoinsComposer');
+View::composer('payments.cartrows', 'CartRowsComposer');
+
+
+
+
+
+
 

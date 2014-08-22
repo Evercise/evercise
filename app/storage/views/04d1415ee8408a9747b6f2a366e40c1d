@@ -1,9 +1,0 @@
-<div class="formitem clearfix">
-	<div class="formlabel">
-		<?php echo Form::label( $fieldname, $label); ?>
-	</div>
-	<div class="formfield">
-		<?php echo Form::select( $fieldname.'-hour' , $hours, $hourDefault, array('class' => 'time-box', 'id'=> $fieldname.'-hour')); ?>
-		<?php echo Form::select( $fieldname.'-minute' , $minutes, $minuteDefault, array('class' => 'time-box', 'id'=>$fieldname.'-minute')); ?>
-	</div>
-</div>

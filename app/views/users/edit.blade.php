@@ -15,7 +15,7 @@
 				<div  class="user-block-wrap">
 				<div class="dashboard-user-wrap">
 					@include('users.user_block')
-					<small>{{ HTML::linkRoute('users.logout', 'Log Out') }}</small>
+					<small>{{ HTML::linkRoute('users.logout', 'Log Out', $user->display_name) }}</small>
 				</div>
 					
 					@include('users.dashboardTabs')

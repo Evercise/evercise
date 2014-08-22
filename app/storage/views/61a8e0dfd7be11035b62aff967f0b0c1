@@ -1,6 +1,0 @@
-
-<div class="formitem clearfix">
-	<div class="formfield">
-		<?php echo Form::hidden( $fieldname , $value, array('id' => $fieldname)); ?>
-	</div>
-</div>

@@ -34,71 +34,11 @@ class VenuesController extends \BaseController {
 	{
 
 		Validator::extend('has_not', function($attr, $value, $params) {
-		    if (!count($params)) {
-		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
-		    }
-		    
-		    foreach ($params as $param) {
-		        switch ($param) {
-		            case 'num':
-		                $regex = '/\pN/';
-		                break;
-		            case 'letter':
-		                $regex = '/\pL/';
-		                break;
-		            case 'lower':
-		                $regex = '/\p{Ll}/';
-		                break;
-		            case 'upper':
-		                $regex = '/\p{Lu}/';
-		                break;
-		            case 'special':
-		                $regex = '/[\pP\pS]/';
-		                break;
-		            default:
-		                $regex = $param;
-		        }
-		        
-		        if (preg_match($regex, $value)) {
-		            return false;
-		        }
-		    }
-		    
-		    return true;
+		    return ValidationHelper::hasNotRegex($attr, $value, $params);
 		});
 
 		Validator::extend('has', function($attr, $value, $params) {
-		    if (!count($params)) {
-		        throw new \InvalidArgumentException('The has validation rule expects at least one parameter, 0 given.');
-		    }
-		    
-		    foreach ($params as $param) {
-		        switch ($param) {
-		            case 'num':
-		                $regex = '/\pN/';
-		                break;
-		            case 'letter':
-		                $regex = '/\pL/';
-		                break;
-		            case 'lower':
-		                $regex = '/\p{Ll}/';
-		                break;
-		            case 'upper':
-		                $regex = '/\p{Lu}/';
-		                break;
-		            case 'special':
-		                $regex = '/[\pP\pS]/';
-		                break;
-		            default:
-		                $regex = $param;
-		        }
-		        
-		        if ( ! preg_match($regex, $value)) {
-		            return false;
-		        }
-		    }
-		    
-		    return true;
+            return ValidationHelper::hasRegex($attr, $value, $params);
 		});
 
 		// todo validation extends needs its own class
@@ -129,9 +69,7 @@ class VenuesController extends \BaseController {
 			$lat = Input::get('latbox');
 			$lng = Input::get('lngbox');
 
-			$facilities = Input::get('facilities_array') ? Input::get('facilities_array') : [];
-
-			//return Response::json(['success' => $facilities]);
+			$facilities = Input::get('facilities_array', []);
 
 			$venue = Venue::create(['user_id' => $this->user->id, 'name' => $venue_name, 'address' => $address, 'town' => $town, 'postcode' => $postcode, 'lat' => $lat, 'lng' => $lng]);
 			
@@ -141,16 +79,6 @@ class VenuesController extends \BaseController {
 		return Response::json(['venue_id' => $venue->id]);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
 
 	/**
 	 * Show the form for editing the specified resource.
@@ -216,17 +144,6 @@ class VenuesController extends \BaseController {
 		}
 
 		return Response::json(['venue_id' => $venue->id]);
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 }

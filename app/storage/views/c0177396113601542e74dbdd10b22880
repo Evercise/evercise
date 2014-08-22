@@ -1,6 +1,0 @@
-<?php foreach ($historys as $key => $history): ?> 
-	<div class="activity-list activity_<?php echo $history->historytype_id; ?>">
-		<p><?php echo $history->message; ?></p>
-		<span><?php echo date('dS M', strtotime($history->created_at)); ?></span>
-	</div>	
-<?php endforeach; ?>

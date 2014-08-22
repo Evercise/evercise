@@ -500,8 +500,6 @@ class SessionsController extends \BaseController {
 	    Session::put('sessionIds', $sessionIds);
 	    Session::put('amountToPay', $price);
 
-	    JavaScript::put(array('initJoinEvercisegroup' => json_encode(array('sessions'=> $sessionIds,'total' => $total,'price' => $price)) ));
-
 		return View::make('sessions.join')
 					->with('evercisegroup' , $evercisegroup)
 					->with('members' , $members)
