@@ -96,6 +96,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
 				->withPivot('token','transaction_id', 'payer_id', 'payment_method')->withTimestamps();
 	}
+
+  public function evercisegroups()
+  {
+    return $this->hasMany('Evercisegroup');
+  }
 	
 
 	public function wallet()

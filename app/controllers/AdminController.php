@@ -183,10 +183,13 @@ class AdminController extends \BaseController {
 
 	public function showUsers()
 	{
-		$users = Sentry::findAllUsers();
+			$sentryUsers = Sentry::findAllUsers();
+
+			$users = User::with('evercisegroups')->get();
 		
 	    return View::make('admin.users')
-	    ->with('users', $users);
+	    ->with('users', $users)
+	    ->with('sentryUsers', $sentryUsers);
 	}
 	
 }
