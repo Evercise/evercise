@@ -32,8 +32,7 @@ before_script:
   - mysql -e 'create database evertest;'
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
-  - wget evertest.evercise.com/testing_helpers/evercise.sql
-  - mysql evertest < evercise.sql
+  - mysql evertest < public/testing_helpers/evercise.sql
   - composer install --prefer-source --no-interaction --dev
 script:
   - php artisan db:seed --env=testing
