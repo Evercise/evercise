@@ -1,4 +1,6 @@
-<?php
+<?php namespace app\tests;
+
+use app\tests\TestCase;
 
 class UsersControllerTest extends TestCase {
 
