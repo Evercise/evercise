@@ -8,10 +8,11 @@ services:
 
 env:
   global:
+    - ENVIROMENT=testing
     - DEBUG_APP=true
     - APP_URL=http://localhost/
     - ENCRYPTION_KEY=ozt38MwirMfb5STSJWowmnHBGUz0ziAR
-    - DB_HOST=localhost
+    - DB_HOST=127.0.0.1
     - DB_NAME=evertest
     - DB_USER=shippable
     - DB_PASS=
