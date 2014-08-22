@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 5.5
+
+services:
+  - mysql
+before_script:
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+  - composer install --prefer-source --no-interaction --dev
+script:
+  - php artisan db:seed --env=testing
+  - phpunit  --log-junit shippable/testresults/junit.xml
+
+notifications:
+   email: false
