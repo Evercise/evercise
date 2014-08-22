@@ -5,9 +5,35 @@ php:
 
 services:
   - mysql
+
+env:
+  - DEBUG_APP=true
+  - APP_URL=http://localhost/
+  - ENCRYPTION_KEY=ozt38MwirMfb5STSJWowmnHBGUz0ziAR
+  - DB_HOST=localhost
+  - DB_NAME=evertest
+  - DB_USER=shippable
+  - DB_PASS=
+  - DB_V1_HOST=localhost
+  - DB_V1_NAME=evercise
+  - DB_V1_USER=evercise
+  - DB_V1_PASS=evercise
+  - EMAIL_DRIVER=log
+  - EMAIL_SMTP_HOST=
+  - EMAIL_FROM_ADDRESS=noreply@evercise.com
+  - EMAIL_FROM_NAME=Evercise
+  - EMAIL_SMTP_ENCRYPTION=tls
+  - EMAIL_SMTP_USERNAME=
+  - EMAIL_SMTP_PASSWORD=
+  - EMAIL_PRETEND=false
+  - FACEBOOK_ID=306418789525126
+  - FACEBOOK_SECRET=d599aae625444706f9335ca10ae5f71d
 before_script:
+  - mysql -e 'create database evertest;'
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
+  - wget evertest.evercise.com/testing_helpers/evercise.sql
+  - mysql evertest < evercise.sql
   - composer install --prefer-source --no-interaction --dev
 script:
   - php artisan db:seed --env=testing
@@ -15,3 +41,5 @@ script:
 
 notifications:
    email: false
+
+
