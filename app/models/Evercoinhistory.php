@@ -1,7 +1,17 @@
 <?php
 
-class Evercoinhistory extends \Eloquent {
-	protected $fillable = ['user_id', 'transaction_amount', 'new_balance'];
+/**
+ * Class Evercoinhistory
+ */
+class Evercoinhistory extends \Eloquent
+{
+    /**
+     * @var array
+     */
+    protected $fillable = ['user_id', 'transaction_amount', 'new_balance'];
 
-	protected $table = 'evercoinhistory';
+    /**
+     * @var string
+     */
+    protected $table = 'evercoinhistory';
 }
