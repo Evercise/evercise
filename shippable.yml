@@ -15,7 +15,6 @@ env:
     - DB_HOST=127.0.0.1
     - DB_NAME=evertest
     - DB_USER=shippable
-    - DB_PASS=
     - DB_V1_HOST=localhost
     - DB_V1_NAME=evercise
     - DB_V1_USER=evercise
