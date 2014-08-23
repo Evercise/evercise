@@ -20,4 +20,3 @@ app/config/facebook.php
 /app/storage/meta/*
 /app/storage/views/*
 _ide_helper.php
-.idea/workspace.xml
