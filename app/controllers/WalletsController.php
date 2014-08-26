@@ -12,13 +12,7 @@ class WalletsController extends \BaseController
      */
     public function show($id)
     {
-        // Not actually used in dashboard - check ShowWalletComposer
-        $wallet = Wallet::find($id);
-
-        $balance = number_format((float) $wallet->balance, 2, '.', '');
-
-        return View::make('wallets.show')
-            ->with('balance', $balance);
+        return View::make('wallets.show');
     }
 
     /**
@@ -30,60 +24,20 @@ class WalletsController extends \BaseController
     public function edit($id)
     {
 
-        $validator = Validator::make(
-            Input::all(),
-            [
-                'withdrawal' => 'required|max:1000|min:1|numeric',
-                'paypal'     => 'required|max:255|min:5',
-            ]
-        );
-        if ($validator->fails()) {
+        $result = Wallet::validWithdrawelRequest(Input::all(), $id);
 
-            $result = array(
-                'validation_failed' => 1,
-                'errors'            => $validator->errors()->toArray()
-            );
-        } else {
-
-            $wallet = Wallet::where('user_id', $this->user->id)->first();
-
-            $withdrawal = Input::get('withdrawal');
-            $paypal = Input::get('paypal');
-
-            if ($withdrawal <= $wallet->balance) {
-
-                return Response::json(
-                    [
-                        'callback' => 'openPopup',
-                        'popup'    => (string) (View::make('wallets.create')->with('withdrawal', $withdrawal)->with(
-                            'paypal',
-                            $paypal
-                        ))
-                    ]
-                );
-            } else {
-
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => ['withdrawal' => 'You don`t have that much in your wallet. ']
-                );
-            }
-        }
-
-        if (!Input::get('paypal')) {
-            $result = array(
-                'validation_failed' => 1,
-                'errors'            => ['updatepaypal' => 'No Paypal account set. ']
+        if ($result['validation_failed'] == 0) {
+            return Response::json(
+                [
+                    'callback' => 'openPopup',
+                    'popup' => (string)(View::make('wallets.create')->with('withdrawal', $result['withdrawal'])->with(
+                        'paypal', $result['paypal']
+                    ))
+                ]
             );
         }
-        if (Request::ajax()) {
 
-            return Response::json($result);
-        } else {
-            return Redirect::route('trainers.edit')
-                ->withErrors($validator)
-                ->withInput();
-        }
+        return Response::json($result);
     }
 
     /**
@@ -98,14 +52,14 @@ class WalletsController extends \BaseController
             Input::all(),
             [
                 'withdrawal' => 'required|max:1000|min:1|numeric',
-                'paypal'     => 'required|max:255|min:5',
+                'paypal' => 'required|max:255|min:5',
             ]
         );
         if ($validator->fails()) {
 
             $result = array(
                 'validation_failed' => 1,
-                'errors'            => $validator->errors()->toArray()
+                'errors' => $validator->errors()->toArray()
             );
         } else {
             $withdrawalAmount = Input::get('withdrawal');
@@ -126,11 +80,11 @@ class WalletsController extends \BaseController
             }
             $withdrawal = Withdrawalrequest::create(
                 [
-                    'user_id'            => $this->user->id,
+                    'user_id' => $this->user->id,
                     'transaction_amount' => $withdrawalAmount,
-                    'account'            => $paypal,
-                    'acc_type'           => 'paypal',
-                    'processed'          => 0
+                    'account' => $paypal,
+                    'acc_type' => 'paypal',
+                    'processed' => 0
                 ]
             );
 
@@ -141,8 +95,8 @@ class WalletsController extends \BaseController
                 return Response::json(
                     [
                         'callback' => 'openConfirmPopup',
-                        'url'      => route('trainers.edit.tab', [$this->user->display_name, 'wallet']),
-                        'popup'    => (string) (View::make('wallets.confirm')->with(
+                        'url' => route('trainers.edit.tab', [$this->user->display_name, 'wallet']),
+                        'popup' => (string)(View::make('wallets.confirm')->with(
                             'withdrawal',
                             $withdrawalAmount
                         )->with('paypal', $paypal))
@@ -172,7 +126,7 @@ class WalletsController extends \BaseController
 
             $result = array(
                 'validation_failed' => 1,
-                'errors'            => $validator->errors()->toArray()
+                'errors' => $validator->errors()->toArray()
             );
         } else {
             $paypal = Input::get('updatepaypal');
@@ -182,7 +136,7 @@ class WalletsController extends \BaseController
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url'      => route('trainers.edit.tab', [$this->user->display_name, 'wallet']),
+                    'url' => route('trainers.edit.tab', [$this->user->display_name, 'wallet']),
                 ]
             );
         }
@@ -195,5 +149,6 @@ class WalletsController extends \BaseController
                 ->withInput();
         }
     }
+
 
 }

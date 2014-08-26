@@ -362,9 +362,9 @@ function initPut (params) {
                  form.find('.btn').removeClass('disabled');                   
               }else{
                   // call back
+                  trace('classback: '+data.popup , true);
                   form.find('.btn').removeClass('disabled');
                   var callback = data.callback;
-
                   window[callback](data, form);
 
               }

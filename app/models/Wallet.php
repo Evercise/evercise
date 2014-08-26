@@ -7,6 +7,52 @@ class Wallet extends \Eloquent
 
     protected $table = 'wallets';
 
+    /**
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public static function validWithdrawelRequest($inputs, $id)
+    {
+        $validator = Validator::make(
+            $inputs,
+            [
+                'withdrawal' => 'required|max:1000|min:1|numeric',
+                'paypal' => 'required|max:255|min:5',
+            ]
+        );
+        if ($validator->fails()) {
+            $result = [
+                'validation_failed' => 1,
+                'errors' => $validator->errors()->toArray()
+            ];
+        } else {
+
+            $wallet = static::where('user_id', $id)->first();
+
+            $withdrawal = $inputs['withdrawal'];
+            $paypal = $inputs['paypal'];
+
+            if ($withdrawal <= $wallet->balance) {
+
+                $result = [
+                    'validation_failed' => 0,
+                    'withdrawal' => $withdrawal,
+                    'paypal' => $paypal
+                ];
+
+            } else {
+
+                $result = [
+                    'validation_failed' => 1,
+                    'errors' => ['withdrawal' => 'You don`t have that much in your wallet. ']
+                ];
+
+            }
+
+        }
+
+        return $result;
+    }
+
     public function deposit($amount, $sessionpayment_id = 0)
     {
         $this->transaction($amount, $sessionpayment_id);
