@@ -13,10 +13,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # config.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box"
     config.vm.box_url = "http://files.evercise.com/Cod3.box"
     config.vm.provider "virtualbox" do |vb|
-      vb.customize ["modifyvm", :id, "--memory", "2048"]
-      vb.customize ["modifyvm", :id, "--cpus", "1"]
-      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "90"]
+      vb.customize ["modifyvm", :id, "--memory", "4096"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
     end
 
     # Create a forwarded port mapping which allows access to a specific port
