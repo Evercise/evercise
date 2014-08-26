@@ -36,7 +36,7 @@ $env = $app->detectEnvironment(array(
 
 $env = $app->detectEnvironment(
     function () {
-        return (getenv('ENVIRONMENT') ?: 'local');
+        return (getenv('ENVIRONMENT') ?: 'production');
     }
 );
 

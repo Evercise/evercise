@@ -17,7 +17,7 @@ class EvercisegroupsController extends \BaseController {
 		if ($this->user->inGroup($trainerGroup))
 		{
 			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
-			->with('futuresessions.sessionmembers'!)
+			->with('futuresessions.sessionmembers')
 			->with('pastsessions')
 			->with('venue')
 			->where('user_id', $this->user->id)->get();
