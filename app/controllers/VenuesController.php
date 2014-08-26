@@ -19,7 +19,6 @@ class VenuesController extends \BaseController
      */
     public function create()
     {
-
         return Venue::createNewVenue();
     }
 
@@ -30,7 +29,7 @@ class VenuesController extends \BaseController
     public function store()
     {
 
-        $result = Venue::storeNewVenue(Input::all(),$this->user->id);
+        $result = Venue::storeNewVenue(Input::all(), $this->user->id);
 
         return Response::json($result);
     }
@@ -52,7 +51,7 @@ class VenuesController extends \BaseController
     public function update($id)
     {
 
-        $result = Venue::storeNewVenue(Input::all(),$this->user->id);
+        $result = Venue::storeNewVenue(Input::all(), $this->user->id);
 
         return Response::json($result);
     }

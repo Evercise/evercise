@@ -33,4 +33,8 @@ return array(
 		13=>	'So you&apos;re into a fitness regimes or routine workouts? There are one-to-one and group classes catered for all levels of expertise.',
 	],
 
+    // dates
+    'min_age' => 16,
+    'max_age' => 120,
+
 );

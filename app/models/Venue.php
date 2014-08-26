@@ -17,6 +17,7 @@ class Venue extends \Eloquent
      */
     public static function usersVenues($id)
     {
+        // list all venues belonging to this user
         $venues = static::where('user_id', $id)->lists('name', 'id');
         return View::make('venues.index')->with('venues', $venues);
     }
@@ -26,6 +27,7 @@ class Venue extends \Eloquent
      */
     public static function createNewVenue()
     {
+        // create new vuewnue view with facilities
         $facilities = Facility::get();
         return View::make('venues.create')->with('facilities', $facilities);
     }

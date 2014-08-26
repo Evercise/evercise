@@ -38,6 +38,123 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     protected $hidden = array('password');
 
     /**
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validUser($inputs)
+    {
+        // dates for validation
+        $dt = new DateTime();
+        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
+        $dateBefore = $before->format('Y-m-d');
+        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
+        $dateAfter = $after->format('Y-m-d');
+
+        Validator::extend(
+            'has',
+            function ($attr, $value, $params) {
+                return ValidationHelper::hasRegex($attr, $value, $params);
+            }
+        );
+
+        // validation rules for input field on register form
+        $validator = Validator::make(
+            $inputs,
+            [
+                'display_name' => 'required|max:20|min:5|unique:users',
+                'first_name' => 'required|max:15|min:3',
+                'last_name' => 'required|max:15|min:3',
+                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'email' => 'required|email|unique:users',
+                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'phone' => 'numeric',
+            ],
+            ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+
+
+        );
+
+        // if fails add errors to results
+        if ($validator->fails()) {
+            $result =
+                [
+                    'validation_failed' => 1,
+                    'errors' => $validator->errors()->toArray()
+                ];
+            // log errors
+            Log::notice($validator->errors()->toArray());
+
+        } elseif ($inputs['phone'] != '' && $inputs['areacode'] == '') {
+            // is user has filled in the area code but no number fail validation
+            $result =
+                [
+                    'validation_failed' => 1,
+                    'errors' => ['areacode' => 'Please select a country']
+                ];
+            Log::notice('Please select a country');
+        } else {
+            // if validation passes return validation_failed false
+            $result = [
+                'validation_failed' => 0
+            ];
+        }
+        return $result;
+    }
+
+    /**
+     * @return \Cartalyst\Sentry\Users\UserInterface
+     */
+    public static function registerUser($inputs)
+    {
+        $display_name = str_replace(' ', '_', $inputs['display_name']);
+        $first_name = $inputs['first_name'];
+        $last_name = $inputs['last_name'];
+        $dob = $inputs['dob'];
+        $email = $inputs['email'];
+        $password = $inputs['password'];
+        $area_code = $inputs['areacode'];
+        $phone = $inputs['phone'];
+        $gender = $inputs['gender'];
+
+        $user = Sentry::register(
+            [
+                'display_name' => $display_name,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'dob' => $dob,
+                'email' => $email,
+                'area_code' => $area_code,
+                'phone' => $phone,
+                'password' => $password,
+                'gender' => $gender,
+                'activated' => true,
+            ]
+        );
+
+        // find the user group
+        $userGroup = Sentry::findGroupById(1);
+        // add the user to this group
+        $user->addGroup($userGroup);
+
+        Log::info('new user created called '. $display_name);
+
+        return $user;
+    }
+
+    /**
+     * @param $user
+     */
+    public static function sendWelcomeEmail($user)
+    {
+        Event::fire(
+            'user.signup',
+            array(
+                'email' => $user->email,
+                'display_name' => $user->display_name
+            )
+        );
+    }
+
+    /**
      * Get the unique identifier for the user.
      *
      * @return mixed

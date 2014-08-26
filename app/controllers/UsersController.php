@@ -1,37 +1,38 @@
 <?php
 
+
+
 class UsersController extends \BaseController
 {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return View
-   */
-  public function index()
-  {
-		return Redirect::route('home');
-  }
 
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return View
-   */
-  public function create()
-  {
-      $referralCode = Referral::checkReferralCode(Session::get('referralCode'));
-      $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
-      $email = Session::get('email');
+    /**
+     * Display a listing of the resource.
+     *
+     * @return View
+     */
+    public function index()
+    {
+        return Redirect::route('home');
+    }
 
-      JavaScript::put(['initUsers' => 1, 'initPut' => 1, 'initToolTip' => 1]); //Initialise tooltip JS.
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View
+     */
+    public function create()
+    {
+        $referralCode = Referral::checkReferralCode(Session::get('referralCode'));
+        $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
+        $email = Session::get('email');
 
-      return View::make('users.register')
-          ->with('referralCode', $referralCode)
-          ->with('ppcCode', $ppcCode)
-          ->with('email', $email);
+        return View::make('users.register')
+            ->with('referralCode', $referralCode)
+            ->with('ppcCode', $ppcCode)
+            ->with('email', $email);
 
-	}
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,97 +41,14 @@ class UsersController extends \BaseController
      */
     public function store()
     {
+        // check user passes validation
+        $valid_user = User::validUser(Input::all());
 
-        $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P16Y'));
-        $dateBefore = $before->format('Y-m-d');
-        $after = $dt->sub(new DateInterval('P120Y'));
-        $dateAfter = $after->format('Y-m-d');
+        if ($valid_user['validation_failed'] == 0) {
 
-        Validator::extend(
-            'has',
-            function ($attr, $value, $params) {
-                return ValidationHelper::hasRegex($attr, $value, $params);
-            }
-        );
+            // register user and add to user group
+            $user = User::registerUser(Input::all());
 
-        // validation rules for input field on register form
-        $validator = Validator::make(
-            Input::all(),
-            [
-                'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name'   => 'required|max:15|min:3',
-                'last_name'    => 'required|max:15|min:3',
-                'dob'          => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email'        => 'required|email|unique:users',
-                'password'     => 'required|confirmed|min:6|max:32|has:letter,num',
-                'phone'        => 'numeric',
-            ],
-            ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
-
-
-        );
-        if ($validator->fails()) {
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('users.edit')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        } else {
-            $display_name = Input::get('display_name');
-            $first_name = Input::get('first_name');
-            $last_name = Input::get('last_name');
-            $dob = Input::get('dob');
-            $email = Input::get('email');
-            $password = Input::get('password');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-            $gender = Input::get('gender');
-            //$newsletter = Input::get('userNewsletter'); // newsletter not currently captured
-
-            if ($phone != '' && $area_code == '') {
-                return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['areacode' => 'Please select a country']]
-                );
-            }
-
-
-            $user = Sentry::register(
-                array(
-                    'display_name' => str_replace(' ', '_', $display_name),
-                    'first_name'   => $first_name,
-                    'last_name'    => $last_name,
-                    'dob'          => $dob,
-                    'email'        => $email,
-                    'area_code'    => $area_code,
-                    'phone'        => $phone,
-                    'password'     => $password,
-                    'gender'       => $gender,
-                    'activated'    => true,
-                )
-            );
-
-            $userGroup = Sentry::findGroupById(1);
-            $user->addGroup($userGroup);
-
-            /*
-                $marketingpreferences = Marketingpreference::where('name', '=', 'newsletter')->get();
-                $chosenPreference = 1;
-                foreach ($marketingpreferences as $pref)
-                {
-                    if ($pref->option == $newsletter) $chosenPreference = $pref->id;
-                }
-
-
-                $user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreference_id'=>$chosenPreference));
-            */
 
             UserHelper::generateUserDefaults($user->id);
 
@@ -141,7 +59,7 @@ class UsersController extends \BaseController
             Session::forget('email');
 
 
-            if ($user && Request::ajax()) {
+            if ($user) {
 
                 User::find($user->id)->makeUserDir();
 
@@ -150,25 +68,29 @@ class UsersController extends \BaseController
                 Sentry::login($user, true);
 
                 if (Input::has('redirect')) {
-                    return Response::json(['callback' => 'gotoUrl', 'url' => Input::get('redirect')]);
-                } else {
-                    $activation_code = $user->getActivationCode();
-
-                    Event::fire(
-                        'user.signup',
-                        array(
-                            'email'          => $user->email,
-                            'display_name'   => $user->display_name,
-                            'activationCode' => $activation_code
-                        )
-                    );
                     return Response::json(
-                        ['callback' => 'gotoUrl', 'url' => route('users.edit.tab', [$user->id, 'profile'])]
+                        [
+                            'callback' => 'gotoUrl',
+                            'url' => Input::get('redirect')
+                        ]
+                    );
+                } else {
+
+                    User::sendWelcomeEmail($user);
+
+                    return Response::json(
+                        [
+                            'callback' => 'gotoUrl',
+                            'url' => route('users.edit.tab', [$user->id, 'profile'])
+                        ]
                     );
 
                 }
             }
+        } else {
+            return Response::json($valid_user);
         }
+
 
     }
 
@@ -202,13 +124,13 @@ class UsersController extends \BaseController
             $user = Sentry::createUser(
                 array(
                     'display_name' => str_replace(' ', '_', $me['name']),
-                    'first_name'   => $me['first_name'],
-                    'last_name'    => $me['last_name'],
-                    'dob'          => $dob,
-                    'email'        => $me['email'],
-                    'password'     => $password,
-                    'gender'       => isset($me['gender']) ? $me['gender'] : '',
-                    'activated'    => true,
+                    'first_name' => $me['first_name'],
+                    'last_name' => $me['last_name'],
+                    'dob' => $dob,
+                    'email' => $me['email'],
+                    'password' => $password,
+                    'gender' => isset($me['gender']) ? $me['gender'] : '',
+                    'activated' => true,
                 )
             );
 
@@ -238,9 +160,9 @@ class UsersController extends \BaseController
                 Event::fire(
                     'user.fb_signup',
                     array(
-                        'email'        => $user->email,
+                        'email' => $user->email,
                         'display_name' => $user->display_name,
-                        'password'     => $password
+                        'password' => $password
                     )
                 );
 
@@ -391,10 +313,10 @@ class UsersController extends \BaseController
             Input::all(),
             array(
                 'first_name' => 'required|max:15|min:3',
-                'last_name'  => 'required|max:15|min:3',
-                'dob'        => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'last_name' => 'required|max:15|min:3',
+                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 //'email' => 'required|email',
-                'phone'      => 'numeric',
+                'phone' => 'numeric',
                 // 'old_password' => 'required',
                 // 'new_password' => 'confirmed',
                 //'thumbFilename' => 'required',
@@ -404,7 +326,7 @@ class UsersController extends \BaseController
             if (Request::ajax()) {
                 $result = array(
                     'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
+                    'errors' => $validator->errors()->toArray()
                 );
 
                 return Response::json($result);
@@ -442,13 +364,13 @@ class UsersController extends \BaseController
             $this->user->update(
                 array(
                     'first_name' => $first_name,
-                    'last_name'  => $last_name,
-                    'dob'        => $dob,
+                    'last_name' => $last_name,
+                    'dob' => $dob,
                     //'email' => $email,
-                    'gender'     => $gender,
-                    'image'      => $image,
-                    'area_code'  => $area_code,
-                    'phone'      => $phone,
+                    'gender' => $gender,
+                    'image' => $image,
+                    'area_code' => $area_code,
+                    'phone' => $phone,
                 )
             );
             /*
@@ -483,7 +405,7 @@ class UsersController extends \BaseController
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url'      => Request::root() . '/' . $typeOfUser . '/' . $this->user->id . '/edit/profile'
+                    'url' => Request::root() . '/' . $typeOfUser . '/' . $this->user->id . '/edit/profile'
                 ]
             );
             //return Response::json(['callback' => 'gotoUrl', 'url' => Request::route('users.edit.tab', [$user->id ,'profile'])]);
@@ -612,7 +534,7 @@ class UsersController extends \BaseController
                 return Response::json(
                     [
                         'validation_failed' => 1,
-                        'errors'            => ['new_password' => 'your new password matches your old password']
+                        'errors' => ['new_password' => 'your new password matches your old password']
                     ]
                 );
             }
@@ -663,7 +585,7 @@ class UsersController extends \BaseController
         $validator = Validator::make(
             Input::all(),
             array(
-                'email'    => 'required|email',
+                'email' => 'required|email',
                 'password' => 'required|confirmed|min:6|max:32|has:letter,num',
             ),
             ['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
@@ -678,7 +600,7 @@ class UsersController extends \BaseController
             if (Request::ajax()) {
                 $result = array(
                     'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
+                    'errors' => $validator->errors()->toArray()
                 );
 
                 return Response::json($result);
@@ -721,7 +643,7 @@ class UsersController extends \BaseController
             } else {
                 $result = array(
                     'validation_failed' => 1,
-                    'errors'            => array('email' => array(0 => 'Wrong email'))
+                    'errors' => array('email' => array(0 => 'Wrong email'))
                 );
 
                 return Response::json($result);
