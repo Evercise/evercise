@@ -63,7 +63,7 @@ return array(
     |
     */
 
-    'encryption' => (getenv('EMAIL_SMTP_ENCRYPTION') ?: 'tls'),
+    'encryption' => (getenv('EMAIL_SMTP_ENCRYPTION') ?: ''),
     /*
     |--------------------------------------------------------------------------
     | SMTP Server Username
