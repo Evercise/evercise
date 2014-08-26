@@ -9,7 +9,7 @@ echo "CREATE DATABASE evercise;" | mysql -u root
 echo "CREATE DATABASE evercise_v1;" | mysql -u root
 
 mysql -u root evercise_v1 < /var/www/html/server/evercisedb_v1.sql
-mysql -u root evercise < /var/www/html/server/evercisedb.sql
+mysql -u root evercise < /var/www/html/server/evercise.sql
 
 
 mkdir /var/www/hosts/
@@ -21,7 +21,7 @@ VHOST=$(cat <<EOF
 <VirtualHost *:80>
   DocumentRoot "/var/www/html/public"
   ServerName dev.evercise.com
-  SetEnv ENVIRONMENT vagrant
+  SetEnv ENVIRONMENT production
   <Directory "/var/www/html/public">
     AllowOverride All
   </Directory>
