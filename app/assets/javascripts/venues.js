@@ -48,8 +48,9 @@ function initVenues()
 			$('#edit_venue_button').removeClass('btn-blue').addClass('btn-red').html('Cancel');
 
             venueId = $('#venue').val();
-            trace(venueId);
+            trace('edit: '+venueId);
 	        getView('../venues/'+venueId+'/edit', function(data){
+                trace('data: '+data, true);
 	        	MapWidgetloadScript();
 	        	$('#venue_create_form').html(data);
                 $('#venue_create_form').slideToggle(600/*, function(){initCheckboxes();}*/);
