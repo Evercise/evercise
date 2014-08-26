@@ -1,5 +1,12 @@
 <?php
 
-class Historytype extends \Eloquent {
-	protected $fillable = [];
+/**
+ * Class Historytype
+ */
+class Historytype extends \Eloquent
+{
+    /**
+     * @var array
+     */
+    protected $fillable = [];
 }

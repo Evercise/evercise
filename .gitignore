@@ -2,6 +2,7 @@
 .env.*.php
 .env.php
 .idea
+.idea/workspace.xml
 .idea/*
 .env.local.php
 /vendor
