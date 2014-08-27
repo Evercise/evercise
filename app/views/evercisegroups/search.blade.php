@@ -2,9 +2,17 @@
 
 @section('content' )
 
+@if(!isset($user))
+    <div class="add-block">
+            <h3>Register today and receive up to <span class="highlight">£8</span> of evercoins to use against any class bookings</h3>
+        </div>
+        <div class="mb40"></div>
+@endif
+
 <div class="full-width">
+
 	<div class="col3" id="discover-left">
-		<h4>Refine Search</h4>
+		<h3>Refine Search</h3>
 		@include('evercisegroups.refine')
 		<br>
 		<br>
