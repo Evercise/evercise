@@ -1,38 +1,54 @@
 <?php
 
-class Evercisesession extends \Eloquent {
+/**
+ * Class Evercisesession
+ */
+class Evercisesession extends \Eloquent
+{
 
-	protected $fillable = array('evercisegroup_id', 'date_time', 'members', 'price', 'duration' ,'members_emailed');
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'evercisesessions';
+    /**
+     * @var array
+     */
+    protected $fillable = array('evercisegroup_id', 'date_time', 'members', 'price', 'duration', 'members_emailed');
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'evercisesessions';
 
-	public function sessionmembers()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sessionmembers()
     {
         return $this->hasMany('Sessionmember');
     }
 
-	public function evercisegroup()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function evercisegroup()
     {
         return $this->belongsTo('Evercisegroup');
     }
-    
 
-	public function users()
-	{
-		return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
-	}
 
-	public function sessionpayment()
-	{
-		return $this->hasOne('Sessionpayment');
-	}
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
+    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sessionpayment()
+    {
+        return $this->hasOne('Sessionpayment');
+    }
 
 
 }
-
- //select `users`.*, `sessionmembers`.`user_id` from `users` inner join `sessionmembers` on `sessionmembers`.`id` = `users`.`id` where `sessionmembers`.`user_id` in (?, ?, ?, ?, ?)

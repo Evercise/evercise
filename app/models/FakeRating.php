@@ -1,9 +1,16 @@
 <?php
 
+
+/**
+ * Class FakeRating
+ */
 class FakeRating extends \Eloquent
 {
 
-    protected $fillable = array('id', 'user_id', 'evercisegroup_id', 'stars', 'comment');
+    /**
+     * @var array
+     */
+    protected $fillable = ['id', 'user_id', 'evercisegroup_id', 'stars', 'comment'];
 
     /**
      * The database table used by the model.
@@ -13,11 +20,17 @@ class FakeRating extends \Eloquent
     protected $table = 'fakeratings';
 
     /* the user that rated this class */
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function rator()
     {
         return $this->belongsTo('User', 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function evercisegroup()
     {
         return $this->belongsTo('evercisegroup', 'evercisegroup_id');

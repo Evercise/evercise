@@ -1,28 +1,38 @@
 <?php
 
-class Speciality extends Eloquent {
+/**
+ * Class Speciality
+ */
+class Speciality extends Eloquent
+{
 
-	protected $fillable = array('id', 'name','titles');
+    /**
+     * @var array
+     */
+    protected $fillable = array('id', 'name', 'titles');
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'specialities';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'specialities';
 
-	/**
-	 * Concatenate name and title
-	 *
-	 * 
-	*/
 
-	public function pluckSpecialityName()
+    /**
+     * Concatenate name and title
+     *
+     * @return string
+     */
+    public function pluckSpecialityName()
     {
         return $this->attributes['name'] . ' ' . $this->attributes['titles'];
     }
 
-	public function Trainers()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Trainers()
     {
         return $this->belongsTo('Trainer');
     }

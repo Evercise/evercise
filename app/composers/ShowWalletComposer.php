@@ -36,6 +36,13 @@ class ShowWalletComposer {
         
       }
 
+        // initialise init put for withdrawel
+        JavaScript::put(
+            [
+                'initPut'   => 	json_encode(['selector' => '.update-form'])
+            ]
+        );
+
 
       $view ->with('balance', $balance)
             ->with('wallet', $wallet)

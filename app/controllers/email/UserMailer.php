@@ -31,7 +31,7 @@ class UserMailer extends Mailer {
 	 */
 
 
-	public function welcome($email, $display_name, $activation_code)
+	public function welcome($email, $display_name)
 	{
 
 		$body = '
