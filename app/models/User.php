@@ -155,6 +155,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     }
 
     /**
+     * @param $newsletter
+     * @param $list_id
+     * @param $email_address
+     */
+    public static function subscribeMailchimpNewsletter( $list_id, $email_address,$first_name,$last_name)
+    {
+
+            MailchimpWrapper::lists()->subscribe($list_id, ['email' => $email_address], ['FNAME' => $first_name, 'LNAME' => $last_name]);
+
+    }
+
+    /**
      * Get the unique identifier for the user.
      *
      * @return mixed

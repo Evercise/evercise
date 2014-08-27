@@ -78,6 +78,16 @@ class UsersController extends \BaseController
 
                     User::sendWelcomeEmail($user);
 
+                    // check for newsletter and if so add to mailchimp
+
+                    $newsletter = Input::get('userNewsletter');
+                    $list_id = '4d9569d994';
+                    $email_address = Input::get('email');
+                    $first_name = Input::get('first_name');
+                    $last_name = Input::get('last_name');
+                    if (!empty($newsletter)) {
+                        User::subscribeMailchimpNewsletter($list_id, $email_address, $first_name, $last_name);
+                    }
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',

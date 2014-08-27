@@ -18,6 +18,7 @@
 
 </head>
 <body>
+        @include('layouts.tracking')
 
 
 		@include('layouts.redirectmessage')

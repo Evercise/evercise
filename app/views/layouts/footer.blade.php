@@ -44,4 +44,3 @@
 </div>
 
 @include('layouts.laracasts')
-@include('layouts.tracking')
