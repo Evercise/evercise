@@ -89,8 +89,9 @@ function initUsers()
     });
 
 
-    $('.checkbox').on('change', function () {
-      this.value = this.checked ? 'yes' : 'no';
+    $(document).on('change', '.checkbox', function (e) {
+        e.preventDefault();
+        this.value = this.checked ? 'yes' : 'no';
     }).change();
 }
 registerInitFunction('initUsers');

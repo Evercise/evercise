@@ -35,7 +35,7 @@
 		@include('users.create')
 	</div>
 	<div id="trainer" class="switch-body tab-view">
-		@include('users.create' , ['type' => route('trainers.create') , 'typeId' => 'trainer'])
+		@include('users.create' , ['type' => route('trainers.create') , 'typeId' => 'trainer', 'checkboxId' => 'trainerNewsletter'  ])
 	</div>
 		
 </div>

@@ -19,6 +19,7 @@
 
 </head>
 <body>
+    @include('layouts.tracking')
 	@yield('banner')
 	@if(isset($class))
 		<div class="container no-bk">

@@ -7,4 +7,18 @@
   ga('create', 'UA-53879710-1', 'auto');
   ga('send', 'pageview');
 
+
+  function removeEvents() {
+  	document.body.removeEventListener('click', sendInteractionEvent);
+  	window.removeEventListener('scroll', sendInteractionEvent);
+  }
+
+  function sendInteractionEvent() {
+  	ga('send', 'event', 'Page Interaction');
+  	removeEvents();
+  }
+
+  document.body.addEventListener('click', sendInteractionEvent);
+  window.addEventListener('scroll', sendInteractionEvent);
+
 </script>

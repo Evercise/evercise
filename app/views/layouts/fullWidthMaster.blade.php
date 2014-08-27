@@ -14,7 +14,8 @@
 	<script src="/assets/application.js?version=2.7"></script>
 
 </head>
-<body class="full-width-body">	
+<body class="full-width-body">
+        @include('layouts.tracking')
 
 		@include('layouts.redirectmessage')
 		<section id="homepage-banner" class="banner">

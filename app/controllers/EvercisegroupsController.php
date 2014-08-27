@@ -145,7 +145,7 @@ class EvercisegroupsController extends \BaseController {
         return $deletableStatus ? View::make('evercisegroups.delete')->with('id', $id)->with('name', $evercisegroup->name)->with('evercisegroup', $evercisegroup)->with('deleteable', $deletableStatus) : Redirect::route('home');
 	}
 
-    /**
+    /*
 	 * query eg's based on location
 	 *
 	 * @return Response

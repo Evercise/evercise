@@ -76,7 +76,7 @@
                 {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
             @endif
         	@include('form.select', array('fieldname'=>'gender', 'label'=>'Gender', 'values'=>array(1=>'Male', 2=>'Female')))
-        	@include('form.checkbox', array('id' => 'userNewsletter', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.'))
+        	@include('form.checkbox', array('id' => isset($checkboxId) ? $checkboxId : 'userNewsletter', 'fieldname'=>'userNewsletter', 'label'=>'Check this box if you wish receive our newsletter and discover exciting new classes.'))
         </div>
 
 
