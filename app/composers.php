@@ -73,6 +73,7 @@ View::composer('evercisegroups.category_box', 'CategoryBoxComposer');
 View::composer('evercisegroups.recommended', 'RecommendedClassesComposer');
 View::composer('evercisegroups.trainer_show', 'TrainerShowComposer');
 View::composer('evercisegroups.show', 'EvercisegroupsShowComposer');
+View::composer('evercisegroups.search', 'EvercisegroupsSearchComposer');
 
 
 // landing pages
