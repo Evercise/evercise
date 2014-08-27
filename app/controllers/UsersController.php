@@ -91,7 +91,7 @@ class UsersController extends \BaseController
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url' => route('users.edit.tab', [$user->id, 'profile'])
+                            'url' => route('users.edit.tab', [$user->id, 'evercoins'])
                         ]
                     );
 
