@@ -27,17 +27,9 @@ class EvercisegroupsController extends \BaseController {
 
 		if ( ! Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
 
-		$trainerGroup = Sentry::findGroupByName('trainer');
-
-		if ($this->user->inGroup($trainerGroup))
-		{
-			$trainer = Trainer::where('user_id', $this->user->id)->get()->first();
-		}
-
-		else
-		{
+        // Kick out if not a trainer
+		if ( ! $this->user->inGroup(Sentry::findGroupByName('trainer')))
 			return View::make('trainers.about');
-		} 
 
 
 
