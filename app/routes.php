@@ -25,6 +25,7 @@ Route::resource('stripe', 'StripePaymentController');
 Route::resource('wallets', 'WalletsController');
 Route::resource('referrals', 'ReferralsController');
 Route::resource('landings', 'LandingsController');
+Route::resource('venues', 'VenuesController');
 
 // auth / login
 
@@ -69,7 +70,7 @@ Route::get('/evercisegroups/search/classes', array('as' => 'evercisegroups.searc
 Route::get('venues', 'VenuesController@index');
 Route::get('venues/create', 'VenuesController@create');
 Route::get('venues/edit/{id}', 'VenuesController@edit');
-Route::post('venues/store', 'VenuesController@store');
+Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'VenuesController@store']);
 Route::post('venues/update/{id}', 'VenuesController@update');
 
 
