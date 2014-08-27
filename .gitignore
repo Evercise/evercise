@@ -13,10 +13,10 @@ composer.lock
 .DS_Store
 Thumbs.db
 public/profiles/
-app/config/facebook.php
 /app/storage/logs/*
 /app/storage/cache/*
 /app/storage/sessions/*
 /app/storage/meta/*
 /app/storage/views/*
 _ide_helper.php
+.vagrant

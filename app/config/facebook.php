@@ -7,3 +7,4 @@ return array(
     'appId'  => getenv('FACEBOOK_ID'),
     'secret' => getenv('FACEBOOK_SECRET')
 );
+

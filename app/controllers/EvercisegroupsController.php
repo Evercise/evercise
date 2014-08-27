@@ -1,5 +1,6 @@
 <?php
 
+
 class EvercisegroupsController extends \BaseController {
 
 	/**
@@ -9,77 +10,11 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function index()
 	{
-		if ( ! Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
+        if (! Trainer::isTrainerLoggedIn())
+            return Redirect::route('home')->with('notification', 'You need to be a Trainer to view this page');
 
-		$directory = $this->user->directory;
-		$trainerGroup = Sentry::findGroupByName('trainer');
+        return Evercisegroup::getHub($this->user);
 
-		if ($this->user->inGroup($trainerGroup))
-		{
-			$evercisegroups = Evercisegroup::with('evercisesession.sessionmembers')
-			->with('futuresessions.sessionmembers')
-			->with('pastsessions')
-			->with('venue')
-			->where('user_id', $this->user->id)->get();
-
-			if ($evercisegroups->isEmpty()) {
-				return View::make('evercisegroups.first_class');
-			}else{
-				$sessionDates = array();
-				$totalMembers = array();
-				$totalCapacity = array();
-	    		$currentDate = new DateTime();
-
-	    		$evercisegroup_ids = [];  
-			    $stars = [];
-
-				foreach ($evercisegroups as $key => $group) {
-
-					$sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
-					//$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
-					$capacity = 0;
-					$evercisegroup_ids[] = $group->id;
-					foreach ($group['Evercisesession'] as $k => $session) {
-						if ( new DateTime($session->date_time) > $currentDate )
-						{
-							$totalMembers[$key][] = count($session->sessionmembers);
-							$capacity += $group->capacity;
-						}
-					}
-					$totalCapacity[] = $capacity;
-
-				}
-
-
-
-			    if (!empty($evercisegroup_ids)) {
-			    	$ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
-
-				    foreach ($ratings as $key => $rating) {
-				    	$stars[$rating->evercisegroup_id][] = $rating->stars;
-				    }
-
-			    }
-
-
-				$month = date("m");
-				$year = date("Y");
-
-				return View::make('evercisegroups.class_hub')
-						->with('evercisegroups' , $evercisegroups)
-						->with('sessionDates' , $sessionDates )
-						->with('totalMembers' , $totalMembers )
-						->with('stars' , $stars)
-						->with('totalCapacity' , $totalCapacity )
-						->with('year', $year)->with('month', $month)
-						->with('directory', $directory);	
-			}
-
-		}
-		else
-		{
-			return View::make('evercisegroups.index');
-		}
 	}
 
 	/**
@@ -92,17 +27,9 @@ class EvercisegroupsController extends \BaseController {
 
 		if ( ! Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
 
-		$trainerGroup = Sentry::findGroupByName('trainer');
-
-		if ($this->user->inGroup($trainerGroup))
-		{
-			$trainer = Trainer::where('user_id', $this->user->id)->get()->first();
-		}
-
-		else
-		{
+        // Kick out if not a trainer
+		if ( ! $this->user->inGroup(Sentry::findGroupByName('trainer')))
 			return View::make('trainers.about');
-		} 
 
 
 
@@ -338,7 +265,7 @@ class EvercisegroupsController extends \BaseController {
 					}
 				}
 
-				Javascript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
+				JavaScript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
 				return View::make('evercisegroups.show')
 					->with('evercisegroup',$evercisegroup); // change to trainer show view
 			}
@@ -439,7 +366,7 @@ class EvercisegroupsController extends \BaseController {
 				$fakeUsers = Sentry::findAllUsersInGroup($fakeUserGroup)->lists('display_name', 'id');
 			    
 
-				Javascript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
+				JavaScript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
 				return View::make('evercisegroups.show')
 					->with('evercisegroup',$evercisegroup)
 					->with('trainer',$trainer)
@@ -777,4 +704,6 @@ class EvercisegroupsController extends \BaseController {
 		$radius = 25;
 		return $this->doSearch(['address'=>$location], $category, $radius);
 	}
+
+
 }
