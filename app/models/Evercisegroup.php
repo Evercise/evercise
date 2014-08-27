@@ -213,14 +213,11 @@ class Evercisegroup extends \Eloquent
         }
 
         // SEARCH LEVEL 6
-        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) + count($results[4]) < 9) {
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) + count($results[4]) < 9)
+        {
             $results[5] = Evercisegroup::has('futuresessions')
                 ->has('confirmed')
-                ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-                ->whereHas('venue', function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
-                            ->having('distance', '<', 200);
-                    })
+                ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
@@ -233,11 +230,9 @@ class Evercisegroup extends \Eloquent
         $perPage = 12;
 
 
-        if ($page > count($allResults) or $page < 1) {
-            $page = 1;
-        }
+        if ($page > count($allResults) or $page < 1) { $page = 1; }
         $offset = ($page * $perPage) - $perPage;
-        $articles = array_slice($allResults, $offset, $perPage);
+        $articles = array_slice($allResults,$offset,$perPage);
         $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
 
 
