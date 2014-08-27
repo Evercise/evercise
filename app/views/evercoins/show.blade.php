@@ -1,7 +1,7 @@
 <div class="dashboard-title">
 	{{ HTML::image('img/evercoin.png', 'evercoin', ['class' => 'evercoin-icon'])}}
 	<div class="evercoin-title-wrap">
-		<h4>Your current Evercoinbalance is:</h4>
+		<h4>Your current Evercoin balance is:</h4>
 	</div>
 	<div class="evercoin-balance-wrap">
 		<div class="evercoin-balance-circle pounds">&pound;{{ $priceInEvercoins}}</div>
