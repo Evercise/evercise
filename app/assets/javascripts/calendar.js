@@ -21,7 +21,6 @@ function calendarSlide () {
         class_duration.push($(this).data('duration'));
 
     })
-    trace(class_height);
     // set i
     var i = 0;
     var p = -1;
@@ -36,8 +35,10 @@ function calendarSlide () {
         
     	var y = $(this).scrollTop();
 
+        var calandar = $('#calendar');
+
     	if( y == 0 ){
-    		$('#calendar').css({
+            calandar.css({
         		marginTop: topmt+ 'px',
         		'-webkit-transition': 'all 0.5s ease',
         		'-moz-transition': 'all 0.5s ease',
@@ -49,30 +50,11 @@ function calendarSlide () {
             $('#evercisegroupDuration').val(class_duration[0]);
             $('.hub-row').removeClass('selected');
     		$('div[data-id="'+class_id[0]+'"]').addClass('selected');
-    	} 
-        else if( y > class_top[class_top.length - 1] ){
-            trace('bottom');
-            /*
-            $('#calendar').css({
-                marginTop: bottom+ 'px',
-                '-webkit-transition': 'all 0.5s ease',
-                '-moz-transition': 'all 0.5s ease',
-                '-o-transition': 'all 0.5s ease',
-                'transition': 'all 0.5s ease'
-            });
-            
-            $('#evercisegroupId').val(class_id.length-1);
-            $('#evercisegroupName').val(class_name.length-1);
-            $('#evercisegroupDuration').val(class_duration.length-1);
-            $('.hub-row').removeClass('selected');
-            $('div[data-id="'+class_id[class_id.length-1]+'"]').addClass('selected');
-            */
-        }
+    	}
     	else if (y >= class_top[i] && y < class_top[class_top.length - 1] ) {
-            trace('norm');
     		mt = parseInt(mt + class_height[i]);
-    		
-    		$('#calendar').css({
+
+            calandar.css({
         		marginTop: mt+'px',
         		'-webkit-transition': 'all 0.5s ease',
         		'-moz-transition': 'all 0.5s ease',
@@ -88,7 +70,6 @@ function calendarSlide () {
     		$('div[data-id="'+class_id[i]+'"]').addClass('selected');
     	}
     	else if( y < class_top[p] && p >= 0){
-
     		$('.hub-row').removeClass('selected');
     		$('div[data-id="'+class_id[p]+'"]').addClass('selected');
             $('#evercisegroupId').val(class_id[p]);
@@ -96,7 +77,7 @@ function calendarSlide () {
             $('#evercisegroupDuration').val(class_duration[p]);
     		i--;
     		mt = parseInt(mt - class_height[i]);
-    		$(''/'').css({
+            calandar.css({
         		marginTop: mt+'px',
         		'-webkit-transition': 'all 0.5s ease',
         		'-moz-transition': 'all 0.5s ease',
