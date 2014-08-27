@@ -1,6 +1,5 @@
-#Laravel LiveLogger
+# Evercise Setup
 ==================================================
-## Evercise Setup
 
 To set up Evercise on your local machine you need to do the following:
 
