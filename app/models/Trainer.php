@@ -10,7 +10,39 @@ class Trainer extends \Eloquent {
 	 */
 	protected $table = 'trainers';
 
-	public function User()
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function getConfirmedTrainers()
+    {
+        $trainers = Static::with('user')->where('confirmed', 0)->get();
+        return $trainers;
+    }
+
+    /**
+     * @param $user
+     */
+    public static function approve($user)
+    {
+
+        try
+        {
+            Event::fire('user.upgrade', array(
+                'email' => $user->email,
+                'display_name' => $user->display_name
+            ));
+        }
+        catch(Exception $e)
+        {
+            return 'Cannot send email. Trainer NOT approved' . $e;
+        }
+
+        Static::where('user_id', $user->id)->update(['confirmed' => 1]);
+
+    }
+
+
+    public function User()
     {
         return $this->belongsTo('User');
     }
@@ -34,6 +66,14 @@ class Trainer extends \Eloquent {
 		{
 			return false;
 		}
+    }
+
+    public Static function isTrainerLoggedIn()
+    {
+        if ( Sentry::check() ? (Sentry::getUser()->inGroup(Sentry::findGroupByName('trainer'))) : false )
+            return true;
+        else
+            return false;
     }
 
 }

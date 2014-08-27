@@ -3,9 +3,15 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
+/**
+ * Class User
+ */
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	protected $fillable = array('display_name', 'password','first_name', 'last_name', 'email','gender', 'activation_code', 'dob');
+    /**
+     * @var array
+     */
+    protected $fillable = array('display_name', 'password','first_name', 'last_name', 'email','gender', 'activation_code', 'dob');
 
 	/**
 	 * The database table used by the model.
@@ -21,7 +27,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
-	/**
+    /**
+     * @param $trainer_id
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    public static function getUserByTrainerId($trainer_id)
+    {
+        $user = Static::whereHas('trainer', function ($query) use (&$trainer_id) {
+            $query->where('id', $trainer_id);
+        })->first();
+        return $user;
+    }
+
+
+    /**
 	 * Get the unique identifier for the user.
 	 *
 	 * @return mixed

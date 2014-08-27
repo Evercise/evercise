@@ -10,7 +10,73 @@ class Evercisegroup extends \Eloquent {
 	 */
     protected $table = 'evercisegroups';
 
-	public function Evercisesession()
+    /**
+     * @param $user
+     * @return \Illuminate\View\View
+     */
+    public static function getHub($user)
+    {
+        $directory = $user->directory;
+
+        $evercisegroups = static::with('evercisesession.sessionmembers')
+            ->with('futuresessions.sessionmembers')
+            ->with('pastsessions')
+            ->with('venue')
+            ->where('user_id', $user->id)->get();
+
+        if ($evercisegroups->isEmpty()) {
+            return View::make('evercisegroups.first_class');
+        } else {
+            $sessionDates = array();
+            $totalMembers = array();
+            $totalCapacity = array();
+            $currentDate = new DateTime();
+
+            $evercisegroup_ids = [];
+            $stars = [];
+
+            foreach ($evercisegroups as $key => $group) {
+
+                $sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
+                //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
+                $capacity = 0;
+                $evercisegroup_ids[] = $group->id;
+                foreach ($group['Evercisesession'] as $k => $session) {
+                    if (new DateTime($session->date_time) > $currentDate) {
+                        $totalMembers[$key][] = count($session->sessionmembers);
+                        $capacity += $group->capacity;
+                    }
+                }
+                $totalCapacity[] = $capacity;
+
+            }
+
+
+            if (!empty($evercisegroup_ids)) {
+                $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+
+                foreach ($ratings as $key => $rating) {
+                    $stars[$rating->evercisegroup_id][] = $rating->stars;
+                }
+
+            }
+
+
+            $month = date("m");
+            $year = date("Y");
+
+            return View::make('evercisegroups.class_hub')
+                ->with('evercisegroups', $evercisegroups)
+                ->with('sessionDates', $sessionDates)
+                ->with('totalMembers', $totalMembers)
+                ->with('stars', $stars)
+                ->with('totalCapacity', $totalCapacity)
+                ->with('year', $year)->with('month', $month)
+                ->with('directory', $directory);
+        }
+    }
+
+    public function Evercisesession()
     {
         return $this->hasMany('Evercisesession')->orderBy('date_time', 'asc');
     }
