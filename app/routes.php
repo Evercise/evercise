@@ -18,7 +18,7 @@ Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 Route::resource('users', 'UsersController');
 Route::resource('sessions', 'SessionsController');
 Route::resource('ratings', 'RatingsController');
-Route::resource('evercisegroups', 'EvercisegroupsController');
+//Route::resource('evercisegroups', 'EvercisegroupsController');
 Route::resource('trainers', 'TrainersController');
 Route::resource('payment', 'PaypalPaymentController');
 Route::resource('stripe', 'StripePaymentController');
@@ -61,8 +61,13 @@ Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>
 
 
 // evercisegroups (classes)
-Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
+Route::get('evercisegroups', ['as' => 'evercisegroups.index', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@index']);
+Route::get('evercisegroups/create', ['as' => 'evercisegroups.create', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@create']);
+Route::post('evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@store']);
 Route::get('/evercisegroups/{id}', array('as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show'));
+Route::delete('/evercisegroups/{id}', array('as' => 'evercisegroups.destroy', 'uses' => 'EvercisegroupsController@destroy'));
+
+Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
 Route::post('/evercisegroups/delete/{id}', array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG'));
 Route::get('/evercisegroups/search/classes', array('as' => 'evercisegroups.search', 'uses' => 'EvercisegroupsController@searchEg'));
 

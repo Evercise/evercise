@@ -74,6 +74,20 @@ Route::filter('admin', function()
 
 });
 
+Route::filter('user', function()
+{
+    // Kick out if not logged in
+    if ( ! Sentry::check())
+        return Redirect::route('home')->with('notification', 'You have been logged out');
+});
+
+Route::filter('trainer', function()
+{
+    // Kick out if not a trainer - send to trainer sign up page
+    if (! Trainer::isTrainerLoggedIn())
+        return Redirect::route('trainers.create');
+});
+
 
 /*
 |--------------------------------------------------------------------------
