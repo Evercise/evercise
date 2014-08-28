@@ -49,18 +49,17 @@ class EvercisegroupsController extends \BaseController {
 		if (! $evercisegroup->checkIfUserOwnsClass($this->user))
 			return  Redirect::route('evercisegroups.index')->with('errorNotification', 'You do not own this class');
 
-		
 		return Redirect::route('evercisegroups.create')
-				->with('name', $evercisegroup->name)
-				->with('description', $evercisegroup->description)
-				->with('duration', $evercisegroup->default_duration)
-				->with('maxsize', $evercisegroup->capacity)
-				->with('price', $evercisegroup->default_price)
-				->with('lat', $evercisegroup->lat)
-				->with('lng', $evercisegroup->lng)
-				->with('location', array('address' => $evercisegroup->address , 'city' => $evercisegroup->town , 'postCode' => $evercisegroup->postcode ) )
-				->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroup->image)
-				->with( 'image' , $evercisegroup->image );
+            ->with('name', $evercisegroup->name)
+            ->with('description', $evercisegroup->description)
+            ->with('duration', $evercisegroup->default_duration)
+            ->with('maxsize', $evercisegroup->capacity)
+            ->with('price', $evercisegroup->default_price)
+            ->with('lat', $evercisegroup->lat)
+            ->with('lng', $evercisegroup->lng)
+            ->with('location', array('address' => $evercisegroup->address , 'city' => $evercisegroup->town , 'postCode' => $evercisegroup->postcode ) )
+            ->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroup->image)
+            ->with( 'image' , $evercisegroup->image );
 	}
 
 	/**
