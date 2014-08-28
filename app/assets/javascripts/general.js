@@ -330,7 +330,14 @@ function initPut (params) {
                       $.each(arr, function(index, value)
                       {
                           if (scroll == false) {
-                              $('html, body').animate({ scrollTop: form.find("#" + index).offset().top -85 }, 400);
+                              if (form.find("#" + index).length) {
+                                  $('html, body').animate({ scrollTop: form.find("#" + index).offset().top -85 }, 400);
+                                  form.find("#" + index).focus();
+                              }else{
+                                  $('html, body').animate({ scrollTop: form.find('input[name="'+index+'"]').offset().top -85 }, 400);
+                                  form.find('input[name="'+index+'"]').focus();
+                              }
+
                               scroll = true;
                           };
                           if (value.length != 0)
