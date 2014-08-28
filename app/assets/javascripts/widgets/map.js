@@ -127,7 +127,6 @@ function DiscoverMapWidgetInit() {
   markerClusterer();
 
   infoBubble();
-  check = checkUrlForDev();
   var everciseGroups = JSON.parse($('#places').val());
 
 
@@ -234,7 +233,7 @@ function DiscoverMapWidgetInit() {
         });
 
 
-        var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="'+check+'/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+everciseGroups[i].default_price+'<span></div></div>';
+        var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+everciseGroups[i].default_price+'<span></div></div>';
 
         var group = everciseGroups[i].name;
         var venue = venue.name;

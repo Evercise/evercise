@@ -241,8 +241,6 @@ function initJoinEvercisegroup(params)
         sessions.push(sessionId);
         var session = JSON.stringify(sessions);
 
-        check = checkUrlForDev();
-
         // add session id's to hidden  field in form
         $('#session-ids').val(session);
         // change button to undo button depending on existing button
@@ -250,7 +248,7 @@ function initJoinEvercisegroup(params)
         if($(this).attr('class') == 'undo-btn-reverse'){
            $(this).replaceWith('<button data-price="'+sessionPrice+'" data-session="'+sessionId+'" class="btn-cancel-session btn btn-red">Cancel</button>');
         }else{
-          $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="'+check+'/img/undo.png" alt="undo"><span>Undo</span></button>');  
+          $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
         }
         
         ++total;
