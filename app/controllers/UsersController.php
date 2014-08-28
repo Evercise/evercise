@@ -42,7 +42,7 @@ class UsersController extends \BaseController
     public function store()
     {
         // check user passes validation
-        $valid_user = User::validUser(Input::all());
+        $valid_user = User::validUserSignup(Input::all());
 
         if ($valid_user['validation_failed'] == 0) {
 
@@ -312,24 +312,23 @@ class UsersController extends \BaseController
      */
     public function update($id)
     {
+        // dates for validation
         $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P16Y'));
+        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
         $dateBefore = $before->format('Y-m-d');
-        $after = $dt->sub(new DateInterval('P104Y'));
+
+        $dt = new DateTime();
+        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
         $dateAfter = $after->format('Y-m-d');
 
 
         $validator = Validator::make(
             Input::all(),
             array(
-                'first_name' => 'required|max:15|min:3',
-                'last_name' => 'required|max:15|min:3',
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
                 'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                //'email' => 'required|email',
                 'phone' => 'numeric',
-                // 'old_password' => 'required',
-                // 'new_password' => 'confirmed',
-                //'thumbFilename' => 'required',
             )
         );
         if ($validator->fails()) {
