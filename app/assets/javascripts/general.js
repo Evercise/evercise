@@ -69,15 +69,6 @@ jQuery( document ).ready( function( $ )
 */  
 });
 
-function checkUrlForDev(){
-  if(window.location.href.indexOf("dev") > -1) {
-      // alert("your url contains the name dev");
-      var check = '/dev';
-  }else{
-      var check = '';
-  }
-  return check;
-}
 
 
 function getView(url, callback)
@@ -353,7 +344,13 @@ function initPut (params) {
                               
                             }else{
                               if (!form.find("#" + index+'-error').length) {
-                                form.find("#" + index).after('<span id="'+index+'-error" class="error-msg">' + value + '</span>'); 
+                                  if (form.find("#" + index).length) {
+                                      form.find("#" + index).after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+
+                                  }else{
+                                      form.find('input[name="'+index+'"]').after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+                                  }
+
                               }
                             };
                             
@@ -521,8 +518,7 @@ function openPopup(data)
 
 function loading(){
   $('.mask').show();
-  check = checkUrlForDev();
-  $('html').append('<img src="'+check+'/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
+  $('html').append('<img src="/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
 }
 
 

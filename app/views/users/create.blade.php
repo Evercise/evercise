@@ -59,8 +59,8 @@
             @endif
 
             @include('form.datepicker', array('fieldname'=>'dob', 'id' => isset($typeId)? $typeId : null ,'placeholder'=>'Date of birth', 'maxlength'=>20, 'label'=>'Date of birth' ))
-            @if ($errors->has('last_name'))
-                {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
+            @if ($errors->has('dob'))
+                {{ $errors->first('dob', '<p class="error-msg">:message</p>')}}
             @endif
 
         	@include('form.textfield', array('fieldname'=>'email', 'default'=>isset($email) ? $email : '', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.'))
