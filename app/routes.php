@@ -11,6 +11,12 @@
 |
 */
 
+
+/* Freking wrong url on page */
+Route::get('what_is_evercise', function() {
+    return Redirect::to('about');
+});
+
 /* Show home page */
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
 
