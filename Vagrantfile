@@ -35,8 +35,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   	# config.vm.network :private_network, ip: "10.0.0.100", :netmask => "255.255.0.0"
   	config.vm.hostname = "dev.evercise.com"
 
+    config.vm.network :private_network, ip: '192.168.50.50'
+
 	# Synced folders are configured below
-	config.vm.synced_folder ".", "/var/www/html/", :owner => "apache", :group => "apache"
+	config.vm.synced_folder ".", "/var/www/html/", nfs: true
 
 	#https://github.com/mitchellh/vagrant/issues/713#issuecomment-4416384
 	config.vm.provider :virtualbox do |vb|
