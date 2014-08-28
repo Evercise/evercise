@@ -136,6 +136,62 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $result;
     }
 
+    /**
+     * @param $inputs
+     * @param $dateAfter
+     * @param $dateBefore
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validateUserEdit($inputs, $dateAfter, $dateBefore)
+    {
+        $validator = Validator::make(
+            $inputs,
+            array(
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
+                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'phone' => 'numeric',
+            )
+        );
+        return $validator;
+    }
+
+    /**
+     * @param $first_name
+     * @param $last_name
+     * @param $dob
+     * @param $gender
+     * @param $image
+     * @param $area_code
+     * @param $phone
+     */
+    public static function updateUser($user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone)
+    {
+        $user->update(
+            array(
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'dob' => $dob,
+                'gender' => $gender,
+                'image' => $image,
+                'area_code' => $area_code,
+                'phone' => $phone,
+            )
+        );
+    }
+
+    public static function checkProfileMilestones($user)
+    {
+        if (
+            $user->gender
+            && $user->dob
+            && $user->phone
+            && $user->image
+        ) {
+            Milestone::where('user_id', $user->id)->first()->add('profile');
+        }
+    }
+
 
     /**
 	 * Get the unique identifier for the user.
@@ -197,6 +253,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
     /**
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validUserEdit($inputs)
+    {
+        list($dateBefore, $dateAfter) = self::validDatesUserDob();
+
+        $validator = self::validateUserEdit($inputs, $dateAfter, $dateBefore);
+
+        return self::handleUserValidation($inputs, $validator);
+    }
+
+    /**
      * @return \Cartalyst\Sentry\Users\UserInterface
      */
     public static function registerUser($inputs)
@@ -223,6 +291,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 'password' => $password,
                 'gender' => $gender,
                 'activated' => true,
+                'directory' => '',
+                'image' => '',
+                'categories' => ''
             ]
         );
 

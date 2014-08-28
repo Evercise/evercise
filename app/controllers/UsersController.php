@@ -1,7 +1,6 @@
 <?php
 
 
-
 class UsersController extends \BaseController
 {
 
@@ -312,115 +311,34 @@ class UsersController extends \BaseController
      */
     public function update($id)
     {
-        // dates for validation
-        $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
-        $dateBefore = $before->format('Y-m-d');
+        $valid_user = User::validUserEdit(Input::all());
 
-        $dt = new DateTime();
-        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
-        $dateAfter = $after->format('Y-m-d');
-
-
-        $validator = Validator::make(
-            Input::all(),
-            array(
-                'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:15|min:2',
-                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'phone' => 'numeric',
-            )
-        );
-        if ($validator->fails()) {
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors' => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('users.edit')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        } else {
+        if ($valid_user['validation_failed'] == 0) {
             // Actually update the user record
-
-            //$old_password = Input::get('old_password');
-            //$new_password = Input::get('new_password');
             $first_name = Input::get('first_name');
             $last_name = Input::get('last_name');
             $dob = Input::get('dob');
-            //$email = Input::get('email');
             $gender = Input::get('gender');
-            $newsletter = Input::get('userNewsletter');
             $image = Input::get('thumbFilename');
             $area_code = Input::get('areacode');
             $phone = Input::get('phone');
 
-            if ($phone == '' && $area_code != '') {
-                return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['areacode' => 'Please enter you phone number']]
-                );
-            }
-            if ($phone != '' && $area_code == '') {
-                return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['areacode' => 'Please select a country']]
-                );
-            }
 
-            $this->user->update(
-                array(
-                    'first_name' => $first_name,
-                    'last_name' => $last_name,
-                    'dob' => $dob,
-                    //'email' => $email,
-                    'gender' => $gender,
-                    'image' => $image,
-                    'area_code' => $area_code,
-                    'phone' => $phone,
-                )
-            );
-            /*
-            $savedNewsletter = User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
-            if ($newsletter != $savedNewsletter)
-            {
-                User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->detach();
-                User::find($this->user->id)->marketingpreferences()->attach($newsletter == 'yes' ? true : false);
-            }
-            */
+            User::updateUser($this->user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
 
-            if (
-                $this->user->gender
-                && $this->user->dob
-                && $this->user->phone
-                && $this->user->image
-            ) {
-                Milestone::where('user_id', $this->user->id)->first()->add('profile');
-            }
-
-
-            /* find out if user is a trainer or not */
-
-            $trainerGroup = Sentry::findGroupByName('trainer');
-
-            if ($this->user->inGroup($trainerGroup)) {
-                $typeOfUser = 'trainers';
-            } else {
-                $typeOfUser = 'users';
-            }
+            User::checkProfileMilestones($this->user);
 
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url' => Request::root() . '/' . $typeOfUser . '/' . $this->user->id . '/edit/profile'
+                    'url' => Request::root() . '/' . Trainer::isTrainerLoggedIn()? 'trainer' : 'user' . '/' . $this->user->id . '/edit/profile'
                 ]
             );
-            //return Response::json(['callback' => 'gotoUrl', 'url' => Request::route('users.edit.tab', [$user->id ,'profile'])]);
+        }else{
+            return Response::json($valid_user);
         }
-        //return Response::json($result);
-        //return View::make('users.edit');
+
+
     }
 
     /**
