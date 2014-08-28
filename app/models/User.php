@@ -106,6 +106,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         $dt = new DateTime();
         $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
         $dateBefore = $before->format('Y-m-d');
+
+        $dt = new DateTime();
         $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
         $dateAfter = $after->format('Y-m-d');
 
