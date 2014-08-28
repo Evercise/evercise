@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" /> 
-  <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
+    <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
 	<link href='http://fonts.googleapis.com/css?family=Exo:300,400,500,600,300italic,400italic,500italic,600italic' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 

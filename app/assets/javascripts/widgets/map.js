@@ -315,6 +315,7 @@ function DiscoverMapWidgetInit() {
 
           // keep the handle, in order to close it on next click event 
           infos[0]=infobubble;
+
           
       })
   }

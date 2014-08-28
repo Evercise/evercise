@@ -5,8 +5,7 @@
 	<meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
-    <meta name="language" content="en-UK" /> 
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="language" content="en-UK" />
     @if(isset($og))
     	{{ $og->renderTags() }}
     @endif
