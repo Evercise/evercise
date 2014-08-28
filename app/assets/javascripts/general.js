@@ -90,15 +90,12 @@ function getView(url, callback)
 
 function trace(message, debug)
 {
-  if (debug == true)
-  {
-    console.log(arguments.callee.caller.name + ' => ');
-    console.debug(message);
-  }
-  else
-  {
-    console.log(arguments.callee.caller.name + ' => ' + message);
-  }
+    if (DEBUG_APP)
+    {
+        console.log(arguments.callee.caller.name + ' => ' + message);
+        window.console && console.log(message);
+    }
+
 }
 
 function initLoginBox()

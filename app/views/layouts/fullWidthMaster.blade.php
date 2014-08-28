@@ -10,6 +10,10 @@
 	<link href='http://fonts.googleapis.com/css?family=Exo:300,400,500,600,300italic,400italic,500italic,600italic' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
+    <script>
+        var DEBUG_APP = <?=getenv('DEBUG_APP') ? 'true' : 'false'?>;
+        var BASE_URL = '<?=getenv('APP_URL')?>';
+    </script>
 	<link href="/assets/application.css?version=2.9" rel="stylesheet" type="text/css">
 	<script src="/assets/application.js?version=2.9"></script>
 
