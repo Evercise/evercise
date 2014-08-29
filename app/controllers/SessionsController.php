@@ -1,8 +1,10 @@
 <?php
 
+
 class SessionsController extends \BaseController {
 
-	/**
+
+    /**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -22,34 +24,7 @@ class SessionsController extends \BaseController {
 	{
 		// The slider is initialised in JS from the view, as the document.ready has already run
 
-
-        $year = Input::get('year');
-        $month = Input::get('month');
-        $date = sprintf("%02s", Input::get('date'));
-        $displayMonth = date('M', strtotime($year.'-'.$month.'-'.$date));
-        $id = Input::get('evercisegroupId');
-
-		$evercisegroup = Evercisegroup::where('id', $id)->first();
-
-		$duration = $evercisegroup->default_duration;
-		$price = $evercisegroup->default_price;
-		$name = $evercisegroup->name;
-
-		$hour = 12;
-		$minute = 00;
-
-		return View::make('sessions.create')
-			->with('year',$year)
-			->with('month',$month)
-			->with('displayMonth',$displayMonth)
-			->with('date',$date)
-			->with('date',$date)
-			->with('id',$id)
-			->with('duration',$duration)
-			->with('price',$price)
-			->with('name',$name)
-			->with('hour',$hour)
-			->with('minute',$minute);
+        return Evercisesession::getCreateForm();
 	}
 
 	/**
@@ -59,77 +34,7 @@ class SessionsController extends \BaseController {
 	 */
 	public function store()
 	{
-		// echo 'Sessions store';
-		// exit;
-
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				's-evercisegroupId' => 'required',
-				's-year' => 'required',
-				's-month' => 'required',
-				's-date' => 'required',
-				's-time-hour' => 'required',
-				's-time-minute' => 'required',
-				's-price' => 'required|numeric|between:1,1000',
-				's-duration' => 'required|numeric|between:10,240',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
-
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else {
-
-			$evercisegroupId = Input::get('s-evercisegroupId');
-			$year = Input::get('s-year');
-			$month = Input::get('s-month');
-			$date = Input::get('s-date');
-			$hour = Input::get('s-time-hour');
-			$minute = Input::get('s-time-minute');
-			$price = Input::get('s-price');
-			$duration = Input::get('s-duration');
-			//$customurl = Input::get('customurl');
-
-			$time = $hour.':'.$minute.':00';
-
-			$date_time = $year.'-'.$month.'-'.$date.' '.$time;
-
-			if ( ! Sentry::check()) return 'Not logged in';
-
-			
-			if (Trainer::where('user_id', $this->user->id)->count())
-				$trainer = Trainer::where('user_id', $this->user->id)->get()->first();
-
-			$session = Evercisesession::create(array(
-				'evercisegroup_id'=>$evercisegroupId,
-				'date_time'=>$date_time,
-				'price'=>$price,
-				'duration'=>$duration
-			));
-
-			$evercisegroup = Evercisegroup::where('id', $evercisegroupId)->firstOrFail();
-
-			$timestamp = strtotime($date_time);
-			$niceTime = date('h:ia', $timestamp);
-			$niceDate = date('dS F Y', $timestamp);
-			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
-
-            Event::queue('session.create', [$this->user,$evercisegroup, $session ]);
-			/* refresh callback */
-			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
-		}
+        return Evercisesession::validateAndStore($this->user);
 	}
 
 	/**
@@ -173,100 +78,25 @@ class SessionsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$evercisesession = Evercisesession::find($id);
-		if ( !is_null($evercisesession) )
-		{
-			$evercisegroupId = $evercisesession->evercisegroup_id;
-			$dateTime = $evercisesession->date_time;
-			$price = $evercisesession->price;
-			$duration = $evercisesession->duration;
-			$user_id = Evercisegroup::where('id' , $evercisegroupId)->pluck('user_id');
-			$undoDetails = ['mode'=>'delete', 'evercisegroup_id'=>$evercisegroupId, 'date_time'=>$dateTime, 'price'=>$price, 'duration'=>$duration, 'user_id' => $user_id];
 
-			if ($user_id != $this->user->id) {
-				return Response::json(['mode' => 'hack']);
-			}
-            Evercisesession::destroy($id);
-
-            Event::queue('session.delete', [$this->user, $evercisesession ]);
-
-			return Response::json($undoDetails);
-		}
-		else
-		{
-			$undoDetails = json_decode(Input::get('undo'));
-
-			$session = Evercisesession::create(array(
-				'evercisegroup_id' => $undoDetails->evercisegroup_id,
-				'date_time' => $undoDetails->date_time,
-				'price' => $undoDetails->price,
-				'duration' => $undoDetails->duration
-			));
-
-			return Response::json(['mode' => 'undo', 'session_id' => $session->id]);
-		}
+        return Evercisesession::deleteById($id, $this->user);
 
 	}
 
 	public function getMailAll($id)
 	{
-
 		return View::make('sessions.mail_all')->with('sessionId', $id);
 	}
 
-	public function postMailAll($id)
+	public function postMailAll($sessionId)
 	{
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'mail_subject' => 'required',
-				'mail_body' => 'required',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
+        $users = Evercisesession::find($sessionId)->users()->get();
+        $userList = [];
+        foreach ($users as $user) {
+            $userList[$user->first_name . ' ' . $user->last_name] = $user->email;
+        }
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else
-		{
-			$subject = Input::get('mail_subject');
-			$body = Input::get('mail_body');
-
-			$groupId = Evercisesession::where('id', $id)->pluck('evercisegroup_id');
-			$group = Evercisegroup::where('id', $groupId)->first();
-			$groupName = $group->name;
-			$trainerName = $group->user->first_name.' '.$group->user->last_name;
-
-			$users = Evercisesession::find($id)->users()->get();
-
-			$userList = [];
-			foreach ($users as $value)
-			{
-				$userList[$value->first_name . ' ' . $value->last_name] = $value->email;
-			}
-
-
-			Event::fire('session.mail_all', array(
-	        	'trainer' => $trainerName, 
-	        	'email' => $userList, 
-	        	'name' => $groupName, 
-	        	'subject' => $subject, 
-	            'body' => $body
-			));
-		}
-
-		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$id]);
+        return Evercisesession::mailMembers($sessionId, $userList);
 	}
 
 	public function getMailOne($sessionId, $userId)
@@ -279,63 +109,19 @@ class SessionsController extends \BaseController {
 
 	public function postMailOne($sessionId, $userId)
 	{
+        $userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
+        $name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
+        $userList = [$name => $userDetails['email']];
 
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'mail_subject' => 'required',
-				'mail_body' => 'required',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
-
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else
-		{
-			$subject = Input::get('mail_subject');
-			$body = Input::get('mail_body');
-
-			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-			$group = Evercisegroup::where('id', $groupId)->first();
-			$groupName = $group->name;
-			$trainerName = $group->user->first_name.' '.$group->user->last_name;
-			$userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
-
-			$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
-			$email = $userDetails['email'];
-			$userList = [$name => $email];
-
-			Event::fire('session.mail_all', array(
-	        	'trainer' => $trainerName, 
-	        	'email' => $userList, 
-	        	'groupName' => $groupName, 
-	        	'subject' => $subject, 
-	            'body' => $body
-			));
-		}
-
-		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId]);
+        return Evercisesession::mailMembers($sessionId, $userList);
 	}
 	public function getMailTrainer($sessionId, $trainerId)
 	{
 		$session = Evercisesession::with('evercisegroup')->find($sessionId);
-		//return Response::json($session->evercisegroup->name);
 		$dateTime = $session->date_time;
 		$groupName = $session->evercisegroup->name;
 
-		$trainer = User::find($trainerId);
+		$trainer = User::select('first_name', 'last_name')->where('id', $trainerId)->firstOrFail();
 		$name = $trainer->first_name . ' ' . $trainer->last_name;
 
 		return View::make('sessions.mail_trainer')
@@ -449,7 +235,6 @@ class SessionsController extends \BaseController {
 
 		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
 		{
-
 			$query->whereIn('id', $sessionIds);
 
 		}), 'evercisesession')->find($evercisegroupId);
@@ -840,5 +625,6 @@ class SessionsController extends \BaseController {
 
 		return Response::json(['callback' => 'successAndRefresh']);
 	}
+
 
 }

@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder {
                 $this->call('EvercoinsTableSeeder');
                 $this->command->info('evercoins seeded!');
 
- /*               $this->call('UsersTableSeeder');
+ /*             $this->call('UsersTableSeeder');
                 $this->command->info('Users seeded!');
 
                 $this->call('TrainersTableSeeder');

@@ -81,17 +81,13 @@ class Evercisegroup extends \Eloquent
 
             }
 
-
-            $month = date("m");
-            $year = date("Y");
-
             return View::make('evercisegroups.class_hub')
                 ->with('evercisegroups', $evercisegroups)
                 ->with('sessionDates', $sessionDates)
                 ->with('totalMembers', $totalMembers)
                 ->with('stars', $stars)
                 ->with('totalCapacity', $totalCapacity)
-                ->with('year', $year)->with('month', $month)
+                ->with('year', date("Y"))->with('month', date("m"))
                 ->with('directory', $directory);
         }
     }
