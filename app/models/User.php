@@ -6,7 +6,8 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 /**
  * Class User
  */
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends Eloquent implements UserInterface, RemindableInterface
+{
 
 
     /**
@@ -33,12 +34,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password');
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = array('password');
 
     /**
      * @param $trainer_id
@@ -192,51 +193,166 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         }
     }
 
+    /**
+     * @param $user
+     */
+    public static function addToUserGroup($user)
+    {
+        try {
+            // find the user group
+            $userGroup = Sentry::findGroupById(1);
+            // add the user to this group
+            $user->addGroup($userGroup);
+        } catch (Exception $e) {
+            Log::error('cannot add to user group: ' . $e);
+        }
+    }
 
     /**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return mixed
-	 */
-	public function getAuthIdentifier()
-	{
-		return $this->getKey();
-	}
+     * @param $user
+     */
+    public static function addToFbGroup($user)
+    {
+        try {
+            $userGroup = Sentry::findGroupById(2);
+            $user->addGroup($userGroup);
+        } catch (Exception $e) {
+            Log::error('cannot add to facebook group: ' . $e);
+        }
 
-	/**
-	 * Get the password for the user.
-	 *
-	 * @return string
-	 */
-	public function getAuthPassword()
-	{
-		return $this->password;
-	}
+    }
 
-	/**
-	 * Get the e-mail address where password reminders are sent.
-	 *
-	 * @return string
-	 */
-	public function getReminderEmail()
-	{
-		return $this->email;
-	}
+    public static function getFacebookUser()
+    {
+        try {
+            // Use a single object of a class throughout the lifetime of an application.
+            $application = Config::get('facebook');
+            $permissions = 'publish_stream,email,user_birthday,read_stream';
+            $url_app = Request::root() . '/login/fb';
 
-	public function getRememberToken()
-	{
-	    return $this->remember_token;
-	}
+            // getInstance
+            FacebookConnect::getFacebook($application);
+            $getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
-	public function setRememberToken($value)
-	{
-	    $this->remember_token = $value;
-	}
+            return $getUser;
+        } catch (Exception $e) {
+            Log::error('There was an error communicating with Facebook' . $e);
+        }
 
-	public function getRememberTokenName()
-	{
-	    return 'remember_token';
-	}
+    }
+
+    /**
+     * @param $user
+     * @param $inputs
+     */
+    public static function sendFacebookWelcomEmail($user, $inputs)
+    {
+        Event::fire(
+            'user.fb_signup',
+            array(
+                'email' => $user->email,
+                'display_name' => $user->display_name,
+                'password' => $inputs['password']
+            )
+        );
+    }
+
+    /**
+     * @param $user
+     * @param $me
+     */
+    public static function grabFacebookImage($user, $me)
+    {
+        $path = public_path() . '/profiles/' . date('Y-m');
+        $img_filename = 'facebook-image-' . $user->display_name . '-' . date('d-m') . '.jpg';
+        $url = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=200&height=200';
+
+        try {
+            $img = file_get_contents($url);
+            file_put_contents($path . '/' . $user->id . '_' . $user->display_name . '/' . $img_filename, $img);
+        } catch (Exception $e) {
+            // This exception will happen from localhost, as pulling the file from facebook will not work
+            Log::error('no facebook image :' . $e);
+            $img_filename = '';
+        }
+
+        $user->image = $img_filename;
+
+        $user->save();
+    }
+
+    /**
+     * @param $redirect
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public static function facebookRedirectHandler($redirect, $user , $message = null)
+    {
+        if (isset($redirect) && $redirect != null) {
+            if ($redirect == 'trainer') // Used when the 'i want to list classes' button is clicked in the register page
+            {
+                $result = Redirect::route('trainers.create')->with(
+                    'notification', $message
+                );
+
+            } else // Used when logging in before hitting the checkout
+            {
+                $result = Redirect::route($redirect);
+            }
+        } else {
+            $result = Redirect::route(Trainer::isTrainerLoggedIn() ? 'trainers' : 'users' . '.edit.tab', [$user->id, 'evercoins'])->with(
+                'notification',$message
+            );
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Get the unique identifier for the user.
+     *
+     * @return mixed
+     */
+    public function getAuthIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Get the e-mail address where password reminders are sent.
+     *
+     * @return string
+     */
+    public function getReminderEmail()
+    {
+        return $this->email;
+    }
+
+    public function getRememberToken()
+    {
+        return $this->remember_token;
+    }
+
+    public function setRememberToken($value)
+    {
+        $this->remember_token = $value;
+    }
+
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
+    }
 
 
     /**
@@ -269,15 +385,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     public static function registerUser($inputs)
     {
-        $display_name = str_replace(' ', '_', $inputs['display_name']);
+        $display_name = $inputs['display_name'];
         $first_name = $inputs['first_name'];
         $last_name = $inputs['last_name'];
         $dob = $inputs['dob'];
         $email = $inputs['email'];
         $password = $inputs['password'];
-        $area_code = $inputs['areacode'];
-        $phone = $inputs['phone'];
-        $gender = $inputs['gender'];
+        $area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
+        $phone = isset($inputs['phone']) ?  $inputs['phone'] : null;
+        $gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
 
         $user = Sentry::register(
             [
@@ -296,13 +412,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 'categories' => ''
             ]
         );
+        self::addToUserGroup($user);
 
-        // find the user group
-        $userGroup = Sentry::findGroupById(1);
-        // add the user to this group
-        $user->addGroup($userGroup);
 
-        Log::info('new user created called '. $display_name);
+        Log::info('new user created called ' . $display_name);
 
         return $user;
     }
@@ -326,14 +439,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      * @param $list_id
      * @param $email_address
      */
-    public static function subscribeMailchimpNewsletter( $list_id, $email_address,$first_name,$last_name)
+    public static function subscribeMailchimpNewsletter($list_id, $email_address, $first_name, $last_name)
     {
-        try{
+        try {
             MailchimpWrapper::lists()->subscribe($list_id, ['email' => $email_address], ['FNAME' => $first_name, 'LNAME' => $last_name]);
             Log::info('user added to mailchimp');
-        }catch (Mailchimp_Error $e) {
+        } catch (Mailchimp_Error $e) {
             if ($e->getMessage()) {
-                $error = 'Code:'.$e->getCode().': '.$e->getMessage();
+                $error = 'Code:' . $e->getCode() . ': ' . $e->getMessage();
                 Log::error($error);
             }
         }
@@ -438,10 +551,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     /**
      *
      */
-    public function makeUserDir()
+    public static function makeUserDir($user)
     {
         $path = public_path() . '/profiles/' . date('Y-m');
-        $userFolder = $path . '/' . $this->id . '_' . $this->display_name;
+        $userFolder = $path . '/' . $user->id . '_' . $user->display_name;
         try {
 
 
@@ -452,12 +565,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 File::makeDirectory($userFolder);
             }
 
-            $this->directory = date('Y-m') . '/' . $this->id . '_' . $this->display_name;
-            $this->save();
+            $user->directory = date('Y-m') . '/' . $user->id . '_' . $user->display_name;
+            $user->save();
         } catch (Exception $e) {
-            echo 'Cannot make user folder : ' . $userFolder . '<br>';
-            echo 'public_path() : ' . public_path() . '<br>';
-            echo $e;
+            Log::error('Cannot make user folder : ' . $userFolder . 'error: ' . $e);
         }
 
         return;

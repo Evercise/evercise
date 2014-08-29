@@ -1,6 +1,8 @@
 <?php
 
 
+
+
 class UsersController extends \BaseController
 {
 
@@ -60,9 +62,19 @@ class UsersController extends \BaseController
 
             if ($user) {
 
-                User::find($user->id)->makeUserDir();
+                User::makeUserDir($user);
 
                 $user->save();
+
+                // check for newsletter and if so add to mailchimp
+
+                $newsletter = Input::get('userNewsletter');
+                $email_address = Input::get('email');
+                $first_name = Input::get('first_name');
+                $last_name = Input::get('last_name');
+                if (!empty($newsletter)) {
+                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'], $email_address, $first_name, $last_name);
+                }
 
                 Sentry::login($user, true);
 
@@ -77,16 +89,6 @@ class UsersController extends \BaseController
 
                     User::sendWelcomeEmail($user);
 
-                    // check for newsletter and if so add to mailchimp
-
-                    $newsletter = Input::get('userNewsletter');
-                    $list_id = '4d9569d994';
-                    $email_address = Input::get('email');
-                    $first_name = Input::get('first_name');
-                    $last_name = Input::get('last_name');
-                    if (!empty($newsletter)) {
-                        User::subscribeMailchimpNewsletter($list_id, $email_address, $first_name, $last_name);
-                    }
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
@@ -105,53 +107,40 @@ class UsersController extends \BaseController
 
     public function fb_login($redirect = null)
     {
-        // Use a single object of a class throughout the lifetime of an application.
-        $application = Config::get('facebook');
-        $permissions = 'publish_stream,email,user_birthday,read_stream';
-        $url_app = Request::root() . '/login/fb';
-        //echo $url_app;exit;
-
-        // getInstance
-        FacebookConnect::getFacebook($application);
-        $getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
-
-        //return View::make('users.tokens')->with('fb', $getUser);
-
-
-        if (!$getUser) {
-            return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
-        }
+        $getUser = User::getFacebookUser();
 
         $me = $getUser['user_profile'];
 
 
-        $password = Functions::randomPassword(8);
+        if(empty($me)){
+            return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
+        }
 
-        $dob = isset($me['birthday']) ? new DateTime($me['birthday']) : '';
+
+        $inputs = [];
+        $inputs['display_name'] = str_replace(' ', '_', $me['name']);
+        $inputs['first_name'] = $me['first_name'];
+        $inputs['last_name'] = $me['first_name'];
+        $inputs['dob'] = isset($me['birthday']) ? new DateTime($me['birthday']) : null;
+        $inputs['email'] = $me['email'];
+        $inputs['password'] = Functions::randomPassword(8);
+
+        $inputs['activated'] = true;
+
+        $inputs['gender'] = (isset($me['gender'])) ? (($me['gender'] == 'male') ? 1 : 2)  : null;
+
 
         try {
-            $user = Sentry::createUser(
-                array(
-                    'display_name' => str_replace(' ', '_', $me['name']),
-                    'first_name' => $me['first_name'],
-                    'last_name' => $me['last_name'],
-                    'dob' => $dob,
-                    'email' => $me['email'],
-                    'password' => $password,
-                    'gender' => isset($me['gender']) ? $me['gender'] : '',
-                    'activated' => true,
-                )
-            );
+
+            // register user and add to user group
+            $user = User::registerUser($inputs);
+
 
             if ($user) {
 
+                User::addToUserGroup($user);
 
-                $userGroup = Sentry::findGroupById(1);
-                $user->addGroup($userGroup);
-
-                $userGroup = Sentry::findGroupById(2);
-                $user->addGroup($userGroup);
-
+                User::addToFbGroup($user);
 
                 UserHelper::generateUserDefaults($user->id);
 
@@ -164,90 +153,35 @@ class UsersController extends \BaseController
                 $token = Token::where('user_id', $user->id)->first();
                 $token->addToken('facebook', Token::makeFacebookToken($getUser));
 
-                User::find($user->id)->marketingpreferences()->attach(1);
+                User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'], $user->email, $user->first_name, $user->last_name);
 
-                Event::fire(
-                    'user.fb_signup',
-                    array(
-                        'email' => $user->email,
-                        'display_name' => $user->display_name,
-                        'password' => $password
-                    )
-                );
+                User::sendFacebookWelcomEmail($user, $inputs);
 
-                User::find($user->id)->makeUserDir();
+                User::makeUserDir($user);
 
-                $path = public_path() . '/profiles/' . date('Y-m');
-                $img_filename = 'facebook-image-' . $user->display_name . '-' . date('d-m') . '.jpg';
-                $url = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=200&height=200';
-
-                try {
-                    $img = file_get_contents($url);
-                    file_put_contents($path . '/' . $user->id . '_' . $user->display_name . '/' . $img_filename, $img);
-                } catch (Exception $e) {
-                    // This exception will happen from localhost, as pulling the file from facebook will not work
-                    $img_filename = '';
-                }
-
-                $user->image = $img_filename;
-
-                $user->save();
+                User::grabFacebookImage($user, $me);
 
                 Sentry::login($user, false);
 
-                if (isset($redirect) && $redirect != null) {
-                    if ($redirect == 'trainer') // Used when the 'i want to list classes' button is clicked in the register page
-                    {
-                        return Redirect::route('trainers.create')->with(
-                            'notification',
-                            'you have successfully signed up with facebook, Your password has been emailed to you'
-                        );
-                    } else // Used when logging in before hitting the checkout
-                    {
-                        return Redirect::route($redirect);
-                    }
-                } else {
-                    return Redirect::route('users.edit.tab', [$user->id, 'profile'])->with(
-                        'notification',
-                        'you have successfully signed up with facebook, Your password has been emailed to you'
-                    );
-                }
+                $result = User::facebookRedirectHandler($redirect, $user, trans('redirect-messages.facebook_signup'));
 
-                //return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
-                //return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);
-                //return View::make('users.show');
+                return $result;
             }
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
             try {
                 $user = Sentry::findUserByLogin($me['email']);
+
                 Sentry::login($user, false);
-                $trainerGroup = Sentry::findGroupByName('trainer');
 
-                if ($redirect && $redirect != null) {
-                    return Redirect::route($redirect);
-                } elseif ($user->inGroup($trainerGroup)) {
-                    return Redirect::route('trainers.edit', $user->display_name);
-                } else {
-                    return Redirect::route('users.edit', $user->display_name);
-                }
+                $result = User::facebookRedirectHandler($redirect, $user);
+
+                return $result;
+
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-                $user = Sentry::findUserByLogin($me['email']);
-
-
-                if (isset($redirect) && $redirect != null) {
-
-                    return Response::json(route('trainers.create'));
-                } else {
-                    return View::make('users.edit')->with(
-                        'notification',
-                        'you have successfully signed up with facebook. Your password has been emailed to you'
-                    )->with('display_name', $user->display_name);
-                }
+                Log::error($e);
             }
         }
 
-
-        //return View::make('users.activate')->with('activation', 3)->with('display_name', $user->display_name);
 
     }
 
@@ -331,10 +265,10 @@ class UsersController extends \BaseController
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url' => Request::root() . '/' . Trainer::isTrainerLoggedIn()? 'trainer' : 'user' . '/' . $this->user->id . '/edit/profile'
+                    'url' => Request::root() . '/' . Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '/' . $this->user->id . '/edit/profile'
                 ]
             );
-        }else{
+        } else {
             return Response::json($valid_user);
         }
 
