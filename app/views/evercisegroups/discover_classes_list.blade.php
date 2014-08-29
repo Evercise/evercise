@@ -37,19 +37,17 @@
 					<div class="list-row">
 						<div class="half">
 							<strong>
-								@if(isset($members[$key]))
-									{{ $evercisegroup->capacity -  count($members[$key])}}
-								@else
-								 	{{ $evercisegroup->capacity }}
-								@endif
+							<?php $numUsers=0; foreach($evercisegroup->futuresessions as $fs){$numUsers += count($fs->users); $numSessions=count($evercisegroup->futuresessions);} ?>
+
+							    {{ $evercisegroup->capacity - count($evercisegroup->futuresessions[0]->users) }}
 							</strong>
 							<br>
-							<span>Tickets Left</span>
+							<span class="detail-description">Tickets<br>Left</span>
 						</div>
 						<div class="half">
 							<strong>&pound;{{ $evercisegroup->default_price }}</strong>
 							<br>
-							<span>Per person</span>
+							<span>Per<br>person</span>
 						</div>
 					</div>
 
