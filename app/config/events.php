@@ -8,20 +8,12 @@
  * [
  *      'PRIORITY' => [EVENT NAME => EVENT FUNCTION UNDER THE events Namespace]
  * ]
- *
-return [
+ */
 
-    '0'  => [
-        ['user.signup' => 'whenUserSignsUp']
-    ],
-    '5'  => [
-        ['user.signup.something' => 'whenUserSignsUp']
-    ],
-    '10' => [
-        ['user.signup.somethingOLSE' => 'whenUserSignsUp']
-    ]
-];
-
+/** AVAILABLE EVENT NAMES */
+/*
+ * user.registered  =>  After the User has Registered
+ * ... etc
  */
 
 
@@ -32,3 +24,4 @@ return [
         ['user.registered' => 'Tracking@userRegistered'],
     ]
 ];
+
