@@ -125,6 +125,8 @@ class EvercisegroupsController extends \BaseController {
 	{
 		$evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
+        Event::queue('evecisegroup.delete', [$this->user, $evercisegroup]);
+
         return $evercisegroup->deleteGroup($this->user);
 	}
 

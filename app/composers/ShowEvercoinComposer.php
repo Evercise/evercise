@@ -4,6 +4,7 @@ use Config;
 use Evercoin;
 use Sentry;
 use Evercoinhistory;
+use User;
 
 class ShowEvercoinComposer
 {

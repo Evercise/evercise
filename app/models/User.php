@@ -189,6 +189,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
             && $user->phone
             && $user->image
         ) {
+            Event::queue('user.fullProfile', [$user]);
             Milestone::where('user_id', $user->id)->first()->add('profile');
         }
     }
@@ -427,10 +428,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     {
         Event::fire(
             'user.signup',
-            array(
+            [
                 'email' => $user->email,
                 'display_name' => $user->display_name
-            )
+            ]
         );
     }
 

@@ -126,10 +126,9 @@ class SessionsController extends \BaseController {
 			$niceDate = date('dS F Y', $timestamp);
 			Trainerhistory::create(array('user_id'=> $this->user->id, 'type'=>'created_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
 
+            Event::queue('session.create', [$this->user,$evercisegroup, $session ]);
 			/* refresh callback */
 			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
-			//return Response::json(route('evercisegroups.index'));
-			//return Response::json($evercisegroup); // for testing
 		}
 	}
 
@@ -187,7 +186,10 @@ class SessionsController extends \BaseController {
 			if ($user_id != $this->user->id) {
 				return Response::json(['mode' => 'hack']);
 			}
-			Evercisesession::destroy($id);
+            Evercisesession::destroy($id);
+
+            Event::queue('session.delete', [$this->user, $evercisesession ]);
+
 			return Response::json($undoDetails);
 		}
 		else
@@ -204,30 +206,6 @@ class SessionsController extends \BaseController {
 			return Response::json(['mode' => 'undo', 'session_id' => $session->id]);
 		}
 
-		// TODO - refresh the session date_list on page load - to update id's
-		// ( to fix bug caused by cached page after back button)
-
-/*
-		$evercisegroups = Evercisegroup::with('Evercisesession')->where('user_id', $this->user->id)->get();
-		$sessionDates = array();
-		$totalMembers = array();
-		$totalCapacity = array();
-		foreach ($evercisegroups as $key => $value) {
-
-			$sessionDates[$key] = $Functions::arrayDate($value->Evercisesession->lists('date_time', 'id'));
-			$totalCapacity[] =  $value->capacity;
-			foreach ($value['Evercisesession'] as $k => $val) {
-				$totalMembers[]= $val->members;
-			}
-		}
-
-		$EGindex = Input::get('EGindex');
-		return View::make('sessions.date_list')
-				->with('key', $id)->with('sessionDates' , $sessionDates )
-				->with('totalMembers' , $totalMembers )
-				->with('totalCapacity' , $totalCapacity )
-				->with('EGindex' , $EGindex );
-*/
 	}
 
 	public function getMailAll($id)
@@ -436,13 +414,11 @@ class SessionsController extends \BaseController {
 		$evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
 		Session::put('sessionIds', $sessionIds);
 		Session::put('evercisegroupId', $evercisegroupId);
-		//return Response::json(['status' => Input::get('session-ids')]);
 
 		$redirect_after_login_url = 'sessions.join.get';
 
 		if (!$this->user)
 		{
-			//return View::make('auth.login')->with('redirect_after_login', false)->with('redirect_after_login_url', false);
 			return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
 		}
 		else
@@ -592,6 +568,8 @@ class SessionsController extends \BaseController {
 	        	'transactionId' => $transactionId, 
 			));
 
+        Event::queue('session.payed', [$user,$evercisegroup ]);
+
 		Session::forget('amountToPay');
 		Session::forget('sessionIds');
 		Session::forget('evercisegroupId');
@@ -696,6 +674,7 @@ class SessionsController extends \BaseController {
 	        	'everciseSession' => date('dS M y', strtotime($session->date_time)), 
 			));
 
+            Event::queue('session.left', [$user , $evercisegroup, $session]);
 			return Response::json(['message' => ' session: '.$id, 'callback' => 'leftSession']);
 		}
 		else
@@ -705,29 +684,6 @@ class SessionsController extends \BaseController {
 
 
 	}
-	/*public function getPayWithEvercoins($evercisegroupId)
-	{
-		//$session = Evercisesession::find($id);
-		$sessionIds = Session::get('sessionIds');
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
-		{
-			$query->whereIn('id', $sessionIds);
-
-		}))->find($evercisegroupId);
-
-		$price = 0;
-	    foreach ($evercisegroup->evercisesession as $key => $value)
-			$price = $price + $value->price;
-
-	    $priceInEvercoins = Evercoin::poundsToEvercoins($price);
-
-		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
-
-		return View::make('sessions.paywithevercoins')
-			->with('evercisegroupId' , $evercisegroupId)
-			->with('priceInEvercoins' , $priceInEvercoins)
-			->with('evercoinBalance', $evercoin->balance);
-	}*/
 
 
 	public function redeemEvercoins($evercisegroupId)

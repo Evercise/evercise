@@ -132,9 +132,8 @@ class TrainersController extends \BaseController {
             	'display_name' => $user->display_name
             ));
 
-			//respond
-			//return Response::json(route('trainers.edit', array('id'=> $user->id)));
-			//return Response::json(route('evercisegroups.index'));
+            Event::queue('trainer.registered', [$user]);
+
 			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
 		}
 
@@ -170,11 +169,6 @@ class TrainersController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//$userTrainer = User::has('Trainer')->find($id);
-		//$trainer = Trainer::where('user_id' ,$userTrainer->id)->first();
-
-		//$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
-
 		$trainer=Trainer::with('user')
 					//->with('speciality')
 					->where('user_id', $id)
@@ -254,8 +248,6 @@ class TrainersController extends \BaseController {
 		else{
 			// Actually update the trainer record 
 
-			//$discipline = Input::get('discipline');
-			//$title = Input::get('title');
 			$bio = Input::get('bio');
 			$website = Input::get('website');
 			$profession = Input::get('profession');
@@ -263,8 +255,6 @@ class TrainersController extends \BaseController {
 			$trainer = Trainer::find($id);
 
 			if ($this->user->id != $trainer->user_id) return Response::json(['callback' => 'fail']);
-
-			//$speciality = Speciality::where('name', $discipline)->where('titles', $title)->first();
 
 			$trainer->update(array(
 				'bio' => $bio,
@@ -274,16 +264,15 @@ class TrainersController extends \BaseController {
 			));
 
 			$result = array(
-		            //'sp' =>  $speciality,
 		            'callback' => 'gotoUrl',
 		            'url' => '/trainers/2/edit/trainer'
-		         );	
+		         );
+
+            Event::queue('trainer.editTrainerDetails', [$this->user]);
 
 			return Response::json($result);
 
 		}
-		//return Response::json($result);
-		//return View::make('users.edit');
 	}
 
 	public function trainerSignup()

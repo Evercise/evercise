@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 class UsersController extends \BaseController
 {
 
@@ -90,7 +88,7 @@ class UsersController extends \BaseController
                     User::sendWelcomeEmail($user);
 
                     Event::queue('user.registered', [$user]);
-                    
+
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
@@ -114,7 +112,7 @@ class UsersController extends \BaseController
         $me = $getUser['user_profile'];
 
 
-        if(empty($me)){
+        if (empty($me)) {
             return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
         }
 
@@ -129,7 +127,7 @@ class UsersController extends \BaseController
 
         $inputs['activated'] = true;
 
-        $inputs['gender'] = (isset($me['gender'])) ? (($me['gender'] == 'male') ? 1 : 2)  : null;
+        $inputs['gender'] = (isset($me['gender'])) ? (($me['gender'] == 'male') ? 1 : 2) : null;
 
 
         try {
@@ -167,6 +165,8 @@ class UsersController extends \BaseController
 
                 $result = User::facebookRedirectHandler($redirect, $user, trans('redirect-messages.facebook_signup'));
 
+                Event::queue('user.registeredFacebook', [$user]);
+
                 return $result;
             }
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
@@ -187,30 +187,6 @@ class UsersController extends \BaseController
 
     }
 
-    public function makeUserDir($user)
-    {
-        $path = public_path() . '/profiles/' . date('Y-m');
-        $userFolder = $path . '/' . $user->id . '_' . $user->display_name;
-        try {
-
-
-            if (!file_exists($path)) {
-                File::makeDirectory($path);
-            }
-            if (!file_exists($userFolder)) {
-                File::makeDirectory($userFolder);
-            }
-
-            $user->directory = date('Y-m') . '/' . $user->id . '_' . $user->display_name;
-        } catch (Exception $e) {
-            return Redirect::route('home')->with(
-                'errorNotification',
-                'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com'
-            );
-        }
-
-
-    }
 
     /**
      * Display the specified resource.
@@ -264,10 +240,12 @@ class UsersController extends \BaseController
 
             User::checkProfileMilestones($this->user);
 
+            Event::queue(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user'.'.edit', [$this->user]);
+
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url' => Request::root() . '/' . Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '/' . $this->user->id . '/edit/profile'
+                    'url' => Request::root() . '/' . (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
                 ]
             );
         } else {
@@ -277,57 +255,6 @@ class UsersController extends \BaseController
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    /**
-     * Activate the user using the emailed hash
-     *
-     * @param  int $id
-     * @return Response
-     */
-    /*
-    removed from current site but may return
-    public function activate($display_name, $code)
-    {
-        $user = 0;
-        if ($code)
-        {
-            try
-            {
-                $user = Sentry::findUserByActivationCode($code);
-            }
-            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-            {
-                // User activation failed
-            }
-        }
-        if ($user)
-        {
-            if ($user->attemptActivation($code))
-            {
-                // User activation passed
-                $display_name = $user->display_name;
-                //return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
-                return View::make('home')->with('notification', 'Your account has been successfuly activated');
-            }
-        }
-        if (!$user)
-        {
-            // User activation failed
-            return View::make('users.activate')->with('activation', 0)->with('display_name', $display_name);
-        }
-
-    }
-    */
 
     /**
      * Activate the user using the emailed hash
@@ -337,9 +264,7 @@ class UsersController extends \BaseController
      */
     public function pleaseActivate($display_name)
     {
-
         return View::make('users.activate')->with('display_name', $display_name);
-
 
     }
 
@@ -405,6 +330,8 @@ class UsersController extends \BaseController
                 $this->user->password = $newPassword;
                 $this->user->save();
 
+                Event::queue('user.changedPassword', [$user]);
+
                 return Response::json(['result' => 'changed', 'callback' => 'successAndRefresh']);
             }
             return Response::json(
@@ -433,7 +360,7 @@ class UsersController extends \BaseController
     /**
      * Reset the user's password using the emailed hash
      *
-     * @param  int $id
+     * @internal param int $id
      * @return Response
      */
     public function postResetPassword()
@@ -492,17 +419,20 @@ class UsersController extends \BaseController
             if ($success) {
                 Event::fire(
                     'user.newpassword',
-                    array(
+                    [
                         'email' => $email
-                    )
+                    ]
+                );
+                Event::queue('user.changedPassword', [$user]);
+
+                Session::flash('notification', 'Password reset successful');
+                return Response::json(
+                    [
+                        'callback' => 'gotoUrl',
+                        'url' => route('home')
+                    ]
                 );
 
-                if (Request::ajax()) {
-                    Session::flash('notification', 'Password reset successful');
-                    return Response::json(route('home'));
-                } else {
-                    return View::make('home')->with('notification', 'Password Reset Successful');
-                }
             } else {
                 $result = array(
                     'validation_failed' => 1,
@@ -528,7 +458,6 @@ class UsersController extends \BaseController
      */
     public function logout()
     {
-        //return View::make('users.resetpassword');
         Sentry::logout();
 
         $cookie = Cookie::forget('PHPSESSID');
