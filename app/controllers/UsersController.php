@@ -87,6 +87,10 @@ class UsersController extends \BaseController
                     if (!empty($newsletter)) {
                         User::subscribeMailchimpNewsletter($list_id, $email_address, $first_name, $last_name);
                     }
+
+                    //Trigger User Registered Event!
+                    Event::queue('user.registered', [$user]);
+
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',

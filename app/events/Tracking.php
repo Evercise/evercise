@@ -7,7 +7,6 @@ class Tracking
 
     public function userRegistered($user)
     {
-
-        dd($user);
+        Log::info('To do. Create a MixCloud Integration Here!');
     }
 }
