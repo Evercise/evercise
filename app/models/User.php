@@ -21,7 +21,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         'email',
         'gender',
         'activation_code',
-        'dob'
+        'dob',
+        'directory',
+        'image'
     );
 
     /**
@@ -48,6 +50,146 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             $query->where('id', $trainer_id);
         })->first();
         return $user;
+    }
+
+    /**
+     * @return array
+     */
+    public static function validDatesUserDob()
+    {
+// dates for validation
+        $dt = new DateTime();
+        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
+        $dateBefore = $before->format('Y-m-d');
+
+        $dt = new DateTime();
+        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
+        $dateAfter = $after->format('Y-m-d');
+        return array($dateBefore, $dateAfter);
+    }
+
+    /**
+     * @param $inputs
+     * @param $dateAfter
+     * @param $dateBefore
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validateUserSignup($inputs, $dateAfter, $dateBefore)
+    {
+        Validator::extend(
+            'has',
+            function ($attr, $value, $params) {
+                return ValidationHelper::hasRegex($attr, $value, $params);
+            }
+        );
+
+        // validation rules for input field on register form
+        $validator = Validator::make(
+            $inputs,
+            [
+                'display_name' => 'required|max:20|min:5|unique:users',
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
+                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'email' => 'required|email|unique:users',
+                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'phone' => 'numeric',
+            ],
+            ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+
+
+        );
+        return $validator;
+    }
+
+    /**
+     * @param $inputs
+     * @param $validator
+     * @return array
+     */
+    public static function handleUserValidation($inputs, $validator)
+    {
+// if fails add errors to results
+        if ($validator->fails()) {
+            $result =
+                [
+                    'validation_failed' => 1,
+                    'errors' => $validator->errors()->toArray()
+                ];
+            // log errors
+            Log::notice($validator->errors()->toArray());
+
+        } elseif ($inputs['phone'] != '' && $inputs['areacode'] == '') {
+            // is user has filled in the area code but no number fail validation
+            $result =
+                [
+                    'validation_failed' => 1,
+                    'errors' => ['areacode' => 'Please select a country']
+                ];
+            Log::notice('Please select a country');
+        } else {
+            // if validation passes return validation_failed false
+            $result = [
+                'validation_failed' => 0
+            ];
+        }
+        return $result;
+    }
+
+    /**
+     * @param $inputs
+     * @param $dateAfter
+     * @param $dateBefore
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validateUserEdit($inputs, $dateAfter, $dateBefore)
+    {
+        $validator = Validator::make(
+            $inputs,
+            array(
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
+                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'phone' => 'numeric',
+            )
+        );
+        return $validator;
+    }
+
+    /**
+     * @param $first_name
+     * @param $last_name
+     * @param $dob
+     * @param $gender
+     * @param $image
+     * @param $area_code
+     * @param $phone
+     */
+    public static function updateUser($user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone)
+    {
+        $user->update(
+            array(
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'dob' => $dob,
+                'gender' => $gender,
+                'image' => $image,
+                'area_code' => $area_code,
+                'phone' => $phone,
+            )
+        );
+    }
+
+    public static function checkProfileMilestones($user)
+    {
+        if (
+            $user->gender
+            && $user->dob
+            && $user->phone
+            && $user->image
+        ) {
+            Milestone::where('user_id', $user->id)->first()->add('profile');
+        }
     }
 
 
@@ -100,66 +242,26 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     /**
      * @return \Illuminate\Validation\Validator
      */
-    public static function validUser($inputs)
+    public static function validUserSignup($inputs)
     {
-        // dates for validation
-        $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
-        $dateBefore = $before->format('Y-m-d');
+        list($dateBefore, $dateAfter) = self::validDatesUserDob();
 
-        $dt = new DateTime();
-        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
-        $dateAfter = $after->format('Y-m-d');
+        $validator = self::validateUserSignup($inputs, $dateAfter, $dateBefore);
 
-        Validator::extend(
-            'has',
-            function ($attr, $value, $params) {
-                return ValidationHelper::hasRegex($attr, $value, $params);
-            }
-        );
+        return self::handleUserValidation($inputs, $validator);
 
-        // validation rules for input field on register form
-        $validator = Validator::make(
-            $inputs,
-            [
-                'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:15|min:2',
-                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
-                'phone' => 'numeric',
-            ],
-            ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+    }
 
+    /**
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validUserEdit($inputs)
+    {
+        list($dateBefore, $dateAfter) = self::validDatesUserDob();
 
-        );
+        $validator = self::validateUserEdit($inputs, $dateAfter, $dateBefore);
 
-        // if fails add errors to results
-        if ($validator->fails()) {
-            $result =
-                [
-                    'validation_failed' => 1,
-                    'errors' => $validator->errors()->toArray()
-                ];
-            // log errors
-            Log::notice($validator->errors()->toArray());
-
-        } elseif ($inputs['phone'] != '' && $inputs['areacode'] == '') {
-            // is user has filled in the area code but no number fail validation
-            $result =
-                [
-                    'validation_failed' => 1,
-                    'errors' => ['areacode' => 'Please select a country']
-                ];
-            Log::notice('Please select a country');
-        } else {
-            // if validation passes return validation_failed false
-            $result = [
-                'validation_failed' => 0
-            ];
-        }
-        return $result;
+        return self::handleUserValidation($inputs, $validator);
     }
 
     /**
@@ -189,6 +291,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 'password' => $password,
                 'gender' => $gender,
                 'activated' => true,
+                'directory' => '',
+                'image' => '',
+                'categories' => ''
             ]
         );
 

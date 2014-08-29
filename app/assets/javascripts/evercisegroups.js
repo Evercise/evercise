@@ -17,7 +17,6 @@ function initEvercisegroups()
 
     $('.hub-block #delete_group').click(function(){
         var url = $(this).attr('href');
-        console.log('delete '+url);
 
         $.ajax({
             url: url,

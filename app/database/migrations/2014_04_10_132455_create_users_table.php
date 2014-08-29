@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration {
 				$table->date('dob');
 				$table->string('area_code', 20);
 				$table->string('phone', 20);
-				$table->string('directory', 45);
+				$table->string('directory', 45)->default('');
 				$table->string('image', 45);
 				$table->string('categories', 45);
 				$table->string('remember_token', 100)->nullable();
