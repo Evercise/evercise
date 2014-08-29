@@ -45,9 +45,9 @@
             @endif
 
 
-            @include('widgets.autocomplete-category', ['fieldname'=>'category1', 'label'=>'category 1', 'force'=>1])
-            @include('widgets.autocomplete-category', ['fieldname'=>'category2', 'label'=>'category 2', 'force'=>1])
-            @include('widgets.autocomplete-category', ['fieldname'=>'category3', 'label'=>'category 3', 'force'=>1])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category1', 'label'=>'category 1', 'force'=>1 , 'placeholder' => trans('evercisegroups-create.categories') , 'tooltip' => trans('evercisegroups-create.first_cat_tooltip')])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category2', 'label'=>'category 2', 'force'=>1, 'placeholder' => trans('evercisegroups-create.categories')])
+            @include('widgets.autocomplete-category', ['fieldname'=>'category3', 'label'=>'category 3', 'force'=>1 , 'placeholder' => trans('evercisegroups-create.categories')])
 
             @if ($errors->has('category'))
                 {{ $errors->first('category', '<p class="error-msg">:message</p>')}}
