@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+
 class UsersResetPasswordComposer {
  
   public function compose($view)

@@ -1,5 +1,9 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+use Evercoin;
+use Sentry;
+
 class PayWithEvercoinsComposer {
 
 	 public function compose($view)

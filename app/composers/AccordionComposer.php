@@ -1,11 +1,11 @@
-<?php
+<?php namespace composers;
  
+use JavaScript;
 
 class AccordionComposer {
  
   public function compose($view)
   {
-  	JavaScript::put(array('InitAccordian' => 1 ));
-  	JavaScript::put(array('initSwitchView' => 1 ));
+  	JavaScript::put(['InitAccordian' => 1, 'initSwitchView' => 1 ]);
   }
 }

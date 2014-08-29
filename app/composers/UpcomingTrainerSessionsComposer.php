@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use Evercisegroup;
+
 class UpcomingTrainerSessionsComposer {
 
 	public function compose($view)

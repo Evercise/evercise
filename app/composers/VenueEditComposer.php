@@ -1,5 +1,11 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+use Venue;
+use Facility;
+use Sentry;
+
+
 class VenueComposer {
 
 	 public function compose($view)
@@ -22,7 +28,7 @@ class VenueComposer {
       }
 
       JavaScript::put(array('initVenues' => 1 ));
-      //JavaScript::put(array('MapWidgetloadScript ' => 1 ));
+
       $view->with('venue', $venue)->with('facilities', $facilities)->with('selectedFacilities', $selectedFacilities);
   	}
 }

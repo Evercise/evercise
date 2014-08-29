@@ -1,49 +1,55 @@
-<?php
- 
-class ShowEvercoinComposer {
+<?php namespace composers;
 
-	 public function compose($view)
-  	{
+use Config;
+use Evercoin;
+use Sentry;
+use Evercoinhistory;
 
-      $user = User::where('id', Sentry::getUser()->id)->with('referrals')->with('milestone')->first();
-  		
-      $evercoin = Evercoin::where('user_id', $user->id)->first();
+class ShowEvercoinComposer
+{
 
-      $evercoinHistory = Evercoinhistory::where('user_id', $user->id)->get();
+    public function compose($view)
+    {
 
-      $evercoinBalance = $evercoin->balance;
+        $user = User::where('id', Sentry::getUser()->id)->with('referrals')->with('milestone')->first();
 
-      $priceInEvercoins = Evercoin::evercoinsToPounds($evercoinBalance);
+        $evercoin = Evercoin::where('user_id', $user->id)->first();
 
-      $fb = $user->token->facebook ? true : false;
-      $tw = $user->token->twitter ? true : false;
+        $evercoinHistory = Evercoinhistory::where('user_id', $user->id)->get();
 
-      $referrals = $user->referrals;
+        $evercoinBalance = $evercoin->balance;
 
-      $profile = $user->milestone->profile;
+        $priceInEvercoins = Evercoin::evercoinsToPounds($evercoinBalance);
 
-      $referralConfig = Config::get('values')['milestones']['referral'];
-      $numReferrals = $user->milestone->referrals;
-      $totalReferrals = ceil($numReferrals / $referralConfig['count']) * $referralConfig['count'];
+        $fb = $user->token->facebook ? true : false;
+        $tw = $user->token->twitter ? true : false;
 
-      $profile = 60; // 60 + the 4 tests below = 100%
-      $profile += $user->gender ? 10 : 0;
-      $profile += $user->dob ? 10 : 0;
-      $profile += $user->phone ? 10 : 0;
-      $profile += $user->image ? 10 : 0;
+        $referrals = $user->referrals;
 
-     // JavaScript::put(array('initPut' => json_encode(['selector' => '#send_invite']) ));
+        $profile = $user->milestone->profile;
 
-      $view
-        ->with('evercoinBalance', $evercoinBalance)
-        ->with('priceInEvercoins', $priceInEvercoins)
-	      ->with('evercoinHistory', $evercoinHistory)
-	      ->with('fb', $fb)
-        ->with('tw', $tw)
-        ->with('referrals', $referrals)
-        ->with('numReferrals', $numReferrals)
-        ->with('totalReferrals', $totalReferrals)
-        ->with('profile', $profile)
-	      ->with('id', $user->id);
-  	}
+        $referralConfig = Config::get('values')['milestones']['referral'];
+        $numReferrals = $user->milestone->referrals;
+        $totalReferrals = ceil($numReferrals / $referralConfig['count']) * $referralConfig['count'];
+
+        $profile = 60; // 60 + the 4 tests below = 100%
+        $profile += $user->gender ? 10 : 0;
+        $profile += $user->dob ? 10 : 0;
+        $profile += $user->phone ? 10 : 0;
+        $profile += $user->image ? 10 : 0;
+
+        // JavaScript::put(array('initPut' => json_encode(['selector' => '#send_invite']) ));
+
+        $view
+            ->with('evercoinBalance', $evercoinBalance)
+            ->with('priceInEvercoins', $priceInEvercoins)
+            ->with('evercoinHistory', $evercoinHistory)
+            ->with('fb', $fb)
+            ->with('tw', $tw)
+            ->with('referrals', $referrals)
+            ->with('numReferrals', $numReferrals)
+            ->with('totalReferrals', $totalReferrals)
+            ->with('profile', $profile)
+            ->with('id', $user->id);
+    }
 }

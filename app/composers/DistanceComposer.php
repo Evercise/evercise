@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use Functions;
+
 class DistanceComposer {
  
   public function compose($view)

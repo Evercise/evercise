@@ -89,6 +89,8 @@ class UsersController extends \BaseController
 
                     User::sendWelcomeEmail($user);
 
+                    Event::queue('user.registered', [$user]);
+                    
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',

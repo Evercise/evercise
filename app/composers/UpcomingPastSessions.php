@@ -1,5 +1,6 @@
-<?php
- 
+<?php namespace composers;
+
+
 class UpcomingPastSessions {
 
 	 public function compose($view)
