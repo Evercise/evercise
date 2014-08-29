@@ -27,7 +27,7 @@ class ImageController extends \BaseController {
             return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
 
         if ($file->getMimeType() == 'image/x-ms-bmp')
-            return Response::json(['success' => false, 'errors' => ['image'=>'This file type is not supported']]);
+            return Response::json(['success' => false, 'errors' => ['image'=>'The image format is not supported.']]);
 
         $validator = Validator::make($input, $rules);
         if ( $validator->fails() )
