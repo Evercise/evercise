@@ -1,4 +1,6 @@
-<?php
+<?php namespace composers;
+
+use JavaScript;
 
 class ClassPurchaseComposer {
 

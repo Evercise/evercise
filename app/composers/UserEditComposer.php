@@ -1,5 +1,9 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+use User;
+
+
 class UserEditComposer {
 
 	 public function compose($view)

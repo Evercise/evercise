@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+
 class HomePageComposer {
  
   public function compose($view)
@@ -11,7 +13,5 @@ class HomePageComposer {
         ]
     );
 
-
-  	$view;
   }
 }

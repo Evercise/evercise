@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use Javascript;
+
 class ChangePasswordComposer {
  
   public function compose($view)

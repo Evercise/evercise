@@ -1,4 +1,10 @@
-<?php
+<?php namespace composers;
+
+use JavaScript;
+use Venue;
+use Facility;
+use Sentry;
+
 
 class VenueComposer
 {
@@ -20,7 +26,7 @@ class VenueComposer
                 'MapWidgetloadScript' => 1
             ]
         );
-        //JavaScript::put(array('MapWidgetloadScript ' => 1 ));
+
         $view->with('venues', $venues)->with('facilities', $facilities);
     }
 }

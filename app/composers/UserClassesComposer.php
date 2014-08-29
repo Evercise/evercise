@@ -1,70 +1,79 @@
-<?php
- 
-class UserClassesComposer {
+<?php namespace composers;
 
-	 public function compose($view)
-  	{
-  		$user = Sentry::getUser();
-  		$userId = $user->id;
+use DateTime;
+use Evercisesession;
+use Sentry;
+use Rating;
+use Evercisegroup;
+use Javascript;
 
-		$sessions = Evercisesession::whereHas('users', function($query) use (&$userId)
-		{
-		    $query->where('user_id', $userId);
+class UserClassesComposer
+{
 
-		})->orderBy('date_time', 'asc')->get();
+    public function compose($view)
+    {
+        $user = Sentry::getUser();
+        $userId = $user->id;
 
-		$pastFutureCount = [];
-		$groupsWithKeys = [];
-	    $members = [];
-	    $sessionmember_ids = []; // For rating
-		$ratingsWithKeys = [];
-	    $pastSessionCount = 0;
-	    $currentDate = new DateTime();
-		if($sessions->count())
-		{
-			$group_ids = [];
-			foreach ($sessions as $session_id => $session)
-			{
-				if (!in_array($session->evercisegroup_id, $group_ids))
-				{
-					$group_ids[] = $session->evercisegroup_id;
-				}
-				$members[$session->id] = count($session->sessionmembers); // Count those members
-				foreach ($session->sessionmembers as $sessionmember) {
-					if($sessionmember->user_id == $user->id)
-						$sessionmember_ids[$session->id] = $sessionmember->id;
-				}
-				if ( new DateTime($session->date_time) < $currentDate )
-				{
-					$pastSessionCount++;
-				}
-			}
+        $sessions = Evercisesession::whereHas(
+            'users',
+            function ($query) use (&$userId) {
+                $query->where('user_id', $userId);
 
-			$pastFutureCount = ['past' => $pastSessionCount, 'future' => ($sessions->count() - $pastSessionCount), 'total' => $sessions->count()];
+            }
+        )->orderBy('date_time', 'asc')->get();
 
-			$ratings = Rating::whereIn('sessionmember_id', $sessionmember_ids)->get();
+        $pastFutureCount = [];
+        $groupsWithKeys = [];
+        $members = [];
+        $sessionmember_ids = []; // For rating
+        $ratingsWithKeys = [];
+        $pastSessionCount = 0;
+        $currentDate = new DateTime();
+        if ($sessions->count()) {
+            $group_ids = [];
+            foreach ($sessions as $session_id => $session) {
+                if (!in_array($session->evercisegroup_id, $group_ids)) {
+                    $group_ids[] = $session->evercisegroup_id;
+                }
+                $members[$session->id] = count($session->sessionmembers); // Count those members
+                foreach ($session->sessionmembers as $sessionmember) {
+                    if ($sessionmember->user_id == $user->id) {
+                        $sessionmember_ids[$session->id] = $sessionmember->id;
+                    }
+                }
+                if (new DateTime($session->date_time) < $currentDate) {
+                    $pastSessionCount ++;
+                }
+            }
 
-			foreach ($ratings as $rating) {
-				$ratingsWithKeys[$rating->session_id] = ['comment' => $rating->comment, 'stars' => $rating->stars];
-			}
+            $pastFutureCount = ['past'   => $pastSessionCount,
+                                'future' => ($sessions->count() - $pastSessionCount),
+                                'total'  => $sessions->count()
+            ];
 
-	        $groups = Evercisegroup::whereIn('id', $group_ids)->get();
+            $ratings = Rating::whereIn('sessionmember_id', $sessionmember_ids)->get();
 
-			foreach ($groups as $key => $group)
-			{
-				$groupsWithKeys[$group->id] = $group;
-			}
-	  	}
+            foreach ($ratings as $rating) {
+                $ratingsWithKeys[$rating->session_id] = ['comment' => $rating->comment, 'stars' => $rating->stars];
+            }
 
-	  	// get current tab
+            $groups = Evercisegroup::whereIn('id', $group_ids)->get();
 
-	  	 $viewdata = $view->getData();
+            foreach ($groups as $key => $group) {
+                $groupsWithKeys[$group->id] = $group;
+            }
+        }
 
-	  	 $tab = isset($viewdata['tab']) ? $viewdata['tab'] : 0;
+        // get current tab
 
-	  	 // initialise js functions for trainer edit
+        $viewdata = $view->getData();
 
-	  	 JavaScript::put(
+        $tab = isset($viewdata['tab']) ? $viewdata['tab'] : 0;
+
+        // initialise js functions for trainer edit
+
+        JavaScript::put(
             [
                 'initPut_user_edit'       => json_encode(['selector' => '#user_edit']),
                 'initPut_send_invite'     => json_encode(['selector' => '#send_invite']),
@@ -77,13 +86,13 @@ class UserClassesComposer {
                 'initAddRating'           => 1
             ]
         );
-	  	
 
-  		$view->with('groups', $groupsWithKeys)
-	  		 ->with('sessions', $sessions)
-	  		 ->with('members', $members)
-	  		 ->with('sessionmember_ids', $sessionmember_ids)
-	  		 ->with('ratings', $ratingsWithKeys)
-	  		 ->with('pastFutureCount', $pastFutureCount);
-	}
+
+        $view->with('groups', $groupsWithKeys)
+            ->with('sessions', $sessions)
+            ->with('members', $members)
+            ->with('sessionmember_ids', $sessionmember_ids)
+            ->with('ratings', $ratingsWithKeys)
+            ->with('pastFutureCount', $pastFutureCount);
+    }
 }

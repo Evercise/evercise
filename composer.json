@@ -39,8 +39,13 @@
             "app/models",
             "app/database/migrations",
             "app/database/seeds",
-            "app/tests/TestCase.php"
-        ]
+            "app/tests/TestCase.php",
+            "app/Functions.php"
+        ],
+        "psr-4": {
+            "events\\": "app/events/",
+            "composers\\": "app/composers/"
+        }
     },
     "scripts": {
         "post-install-cmd": [

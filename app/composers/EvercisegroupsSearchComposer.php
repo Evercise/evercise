@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+
 class EvercisegroupsSearchComposer {
  
   public function compose($view)

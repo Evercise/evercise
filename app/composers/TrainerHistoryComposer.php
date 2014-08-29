@@ -1,15 +1,18 @@
-<?php
- 
-class TrainerHistoryComposer {
+<?php namespace composers;
 
-	public function compose($view)
-  	{
-  		$viewdata = $view->getData();
+use Trainerhistory;
 
-  		$userTrainer = $viewdata['user'];
+class TrainerHistoryComposer
+{
 
-  		$historys = Trainerhistory::where('user_id', $userTrainer->id)->orderBy('created_at', 'desc')->paginate(15);
+    public function compose($view)
+    {
+        $viewdata = $view->getData();
 
-  		$view->with('historys',$historys);
-  	}
- }
+        $userTrainer = $viewdata['user'];
+
+        $historys = Trainerhistory::where('user_id', $userTrainer->id)->orderBy('created_at', 'desc')->paginate(15);
+
+        $view->with('historys', $historys);
+    }
+}

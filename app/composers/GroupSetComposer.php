@@ -1,5 +1,8 @@
-<?php
- 
+<?php namespace composers;
+
+use Sentry;
+
+
 class GroupSetComposer {
  
   public function compose($view)
