@@ -1,5 +1,6 @@
-<?php
- 
+<?php namespace composers;
+
+
 class PasswordComposer {
  
   public function compose($view)

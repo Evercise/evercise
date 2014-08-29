@@ -1,5 +1,9 @@
-<?php
- 
+<?php namespace composers;
+
+
+use JavaScript;
+use Functions;
+
 class MapComposer {
  
   public function compose($view)

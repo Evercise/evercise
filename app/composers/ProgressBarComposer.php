@@ -1,15 +1,17 @@
-<?php
+<?php namespace composers;
 
-class ProgressBarComposer {
-	public function compose($view)
-  	{
-  		$viewdata= $view->getData();
 
-  		$members = $viewdata['mem'] ? $viewdata['mem'] : 0;
-  		$capacity = $viewdata['cap'];
+class ProgressBarComposer
+{
+    public function compose($view)
+    {
+        $viewdata = $view->getData();
 
-  		$progress = ($members /$capacity) * 100;
-  		
-  		$view->with('progress' , $progress);
-  	}
+        $members = $viewdata['mem'] ? $viewdata['mem'] : 0;
+        $capacity = $viewdata['cap'];
+
+        $progress = ($members / $capacity) * 100;
+
+        $view->with('progress', $progress);
+    }
 }

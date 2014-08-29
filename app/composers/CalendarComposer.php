@@ -1,6 +1,9 @@
-<?php
- 
- // http://packalyst.com/packages/package/gloudemans/calendar
+<?php namespace composers;
+
+
+use JavaScript;
+use Calendar;
+use Functions;
 
 class CalendarComposer {
  

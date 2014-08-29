@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use Javascript;
+
 class DonutChartComposer {
 
 	 public function compose($view)
