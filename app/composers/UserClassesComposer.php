@@ -5,7 +5,7 @@ use Evercisesession;
 use Sentry;
 use Rating;
 use Evercisegroup;
-use Javascript;
+use JavaScript;
 
 class UserClassesComposer
 {
