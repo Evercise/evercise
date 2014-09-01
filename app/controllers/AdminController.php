@@ -1,6 +1,10 @@
 <?php
 
 
+
+/**
+ * Class AdminController
+ */
 class AdminController extends \BaseController {
 
 
@@ -88,7 +92,7 @@ class AdminController extends \BaseController {
      */
     public function showGroups()
 	{
-		$evercisegroups = Evercisegroup::with('subcategories')->get();
+		$evercisegroups = Evercisegroup::with('subcategories')->with('featuredClasses')->get();
 		
 	    return View::make('admin.groups')
             ->with('evercisegroups', $evercisegroups);
@@ -104,7 +108,10 @@ class AdminController extends \BaseController {
 	    return View::make('admin.groups');
 	}
 
-	public function showGroupRatings()
+    /**
+     * @return \Illuminate\View\View|string
+     */
+    public function showGroupRatings()
 	{
 		
 		$fakeusers = Sentry::findGroupById(6);
@@ -121,7 +128,10 @@ class AdminController extends \BaseController {
 	    ->with('evercisegroups', $evercisegroups);
 	}
 
-	public function addRating()
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addRating()
 	{
         $result = FakeRating::validateAndCreateRating();
 
@@ -134,7 +144,10 @@ class AdminController extends \BaseController {
 
 	}
 
-	public function showUsers()
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function showUsers()
 	{
 			$sentryUsers = Sentry::findAllUsers();
 
@@ -145,5 +158,20 @@ class AdminController extends \BaseController {
 	    ->with('sentryUsers', $sentryUsers);
 	}
 
+    public function editClasses($id)
+    {
+        $evercisegroup = Evercisegroup::find($id);
+        $categories = [];
+        if (Input::get('category1') != '') array_push($categories, Input::get('category1'));
+        if (Input::get('category2') != '') array_push($categories, Input::get('category2'));
+        if (Input::get('category3') != '') array_push($categories, Input::get('category3'));
 
+        Evercisegroup::adminAddSubcategories($categories, $evercisegroup);
+
+
+        Evercisegroup::adminMakeClassFeatured($id);
+
+        return Redirect::route('admin.groups');
+
+    }
 }

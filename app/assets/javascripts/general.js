@@ -541,3 +541,17 @@ function overrideGaPageview(params){
 }
 
 registerInitFunction('overrideGaPageview');
+
+function initSearchByName()
+{
+    $('input[name="findByName"]').keyup( function(e){
+        if(this.value.length >= 3 || e.keyCode == 13) {
+            $('.selectors').addClass('hidden');
+            $("[id*="+this.value.toLowerCase()+"]").removeClass('hidden');
+        }else{
+            $('.selectors').removeClass('hidden');
+        }
+    })
+}
+
+registerInitFunction('initSearchByName');

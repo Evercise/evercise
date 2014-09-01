@@ -162,7 +162,7 @@ Route::post('/admin/log', array('as' => 'admin.log.delete', 'before'=>'admin', '
 Route::get('/admin/groups', array('as' => 'admin.groups', 'before'=>'admin', 'uses' => 'AdminController@showGroups'));
 Route::post('/admin/groups', array('as' => 'admin.groups.addcat', 'before'=>'admin', 'uses' => 'AdminController@addCategory'));
 Route::get('/admin/fakeratings', array('as' => 'admin.fakeratings', 'before'=>'admin', 'uses' => 'AdminController@showGroupRatings'));
-Route::post('/admin/fakeratings', array('as' => 'admin.fakeratings.addrating', 'before'=>'admin', 'uses' => 'AdminController@addRating'));
+Route::post('/admin/edit_classes/{id}', array('as' => 'admin.edit_classes', 'before'=>'admin', 'uses' => 'AdminController@editClasses'));
 
 
 /*

@@ -92,6 +92,13 @@ class Evercisegroup extends \Eloquent
         }
     }
 
+    /**
+     * @param $location
+     * @param $category
+     * @param $radius
+     * @param $user
+     * @return \Illuminate\View\View
+     */
     public static function doSearch($location, $category, $radius, $user)
     {
         //return $location['address'];
@@ -238,6 +245,36 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
+     * @param $categories
+     * @param $evercisegroup
+     */
+    public static function adminAddSubcategories($categories, $evercisegroup)
+    {
+        foreach ($categories as $key => $category) {
+            $categories[$key] = Subcategory::where('name', $category)->pluck('id');
+        }
+        $evercisegroup->subcategories()->detach();
+        if (!empty($categories)) $evercisegroup->subcategories()->attach($categories);
+    }
+
+    /**
+     * @param $id
+     */
+    public static function adminMakeClassFeatured($id)
+    {
+        if (Input::get('featured')) {
+            $featured = FeaturedClasses::firstOrCreate(['evercisegroup_id' => $id]);
+
+            $featured->evercisegroup_id = $id;
+
+            $featured->save();
+
+        } else {
+            FeaturedClasses::where('evercisegroup_id', $id)->delete();
+        }
+    }
+
+    /**
      * @return mixed
      */
     public function Evercisesession()
@@ -345,6 +382,14 @@ class Evercisegroup extends \Eloquent
     public function categories()
     {
         return $this->hasManyThrough('Category', 'Subcategory');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function featuredClasses()
+    {
+        return $this->hasOne('FeaturedClasses');
     }
 
     /**
@@ -710,5 +755,6 @@ class Evercisegroup extends \Eloquent
         }
         return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
     }
+
 
 }

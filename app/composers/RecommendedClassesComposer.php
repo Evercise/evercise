@@ -14,7 +14,7 @@ class RecommendedClassesComposer
         $testerLoggedIn = $sentryUser ? $sentryUser->inGroup($testers) : false;
 
         $evercisegroups = Evercisegroup::has('futuresessions')
-            ->whereIn('id', [191, 181, 189, 33])
+            ->has('featuredClasses')
             ->has('confirmed')
             ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
             ->with('user')
