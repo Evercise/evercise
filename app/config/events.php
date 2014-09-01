@@ -18,6 +18,8 @@
  * user.registeredFacebook => After User Signs up with facebook
  * user.edit => User edited there profile
  * user.changedPassword => User has changed there password
+ * user.login => User has changed there password
+ * user.loginFacebook => User has changed there password
  * user.fullProfile => User has completed there profile
  * trainer.registered => trainer has registered
  * trainer.edit => trainer has edited there user details
@@ -40,6 +42,9 @@ return [
         ['user.registered' => 'Tracking@userRegistered'],
         ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'],
         ['trainer.registered' => 'Tracking@trainerRegistered'],
+        ['user.login' => 'Tracking@userLogin'],
+        ['user.login' => 'Tracking@userFacebookLogin'],
+
 
     ]
 ];
