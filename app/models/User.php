@@ -454,6 +454,49 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     }
 
+    /**
+     * Get full name from either User object or a user id
+     *
+     * @param $id
+     * @return string
+     */
+    public static function getName($userOrId)
+    {
+        if (! is_a($userOrId, 'Eloquent') ) // parameter passed in is id
+            $user = static::select('first_name', 'last_name')->where('id', $userOrId)->firstOrFail();
+        else                                // parameter passed in is User
+            $user = $userOrId;
+
+        return static::getFullName($user);
+    }
+
+    /**
+     * Get full name and email from either User object or a user id
+     *
+     * @param $id
+     * @return string
+     */
+    public static function getNameAndEmail($userOrId)
+    {
+        if (! is_a($userOrId, 'Eloquent') )
+            $user = User::select('first_name', 'last_name', 'email')->where('id', $userOrId)->firstOrFail();
+        else
+            $user = $userOrId;
+
+        return ['name' => static::getFullName($user), 'email' => $user->email];
+    }
+
+    /**
+     * Concatenate first and last names from User object
+     *
+     * @param $user
+     * @return string
+     */
+    public static function getFullName($user)
+    {
+        return $user->first_name . ' ' . $user->last_name;
+    }
+
     /* foreign keys */
 
     /**

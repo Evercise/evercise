@@ -147,6 +147,40 @@ class Evercisesession extends \Eloquent
      */
     public static function mailMembers($sessionId, $userList)
     {
+        if ( $response = static::validateMail() )
+            return $response;
+
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
+        $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+        //$group = Evercisegroup::where('id', $groupId)->first();
+        $group = Evercisegroup::where('id', $groupId)->with(['User' => function($query)
+        {
+            $query->select('first_name', 'last_name');
+        }
+        ])->first();
+        $groupName = $group->name;
+        $trainerName = $group->user->first_name . ' ' . $group->user->last_name;
+
+        Event::fire('session.mail_all', array(
+            'trainer' => $trainerName,
+            'email' => $userList,
+            'name' => $groupName,
+            'subject' => $subject,
+            'body' => $body
+        ));
+
+        return Response::json(['message' => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId]);
+    }
+
+    /**
+     * Return false if validation passes, otherwise return the error response
+     *
+     * @return bool|\Illuminate\Http\JsonResponse
+     */
+    public static function validateMail()
+    {
         $validator = Validator::make(
             Input::all(),
             array(
@@ -162,29 +196,67 @@ class Evercisesession extends \Eloquent
             return Response::json($result);
         }
         else {
-            $subject = Input::get('mail_subject');
-            $body = Input::get('mail_body');
-
-            $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-            //$group = Evercisegroup::where('id', $groupId)->first();
-            $group = Evercisegroup::where('id', $groupId)->with(['User' => function($query)
-            {
-                $query->select('first_name', 'last_name');
-            }
-            ])->first();
-            $groupName = $group->name;
-            $trainerName = $group->user->first_name . ' ' . $group->user->last_name;
-
-            Event::fire('session.mail_all', array(
-                'trainer' => $trainerName,
-                'email' => $userList,
-                'name' => $groupName,
-                'subject' => $subject,
-                'body' => $body
-            ));
+            return false;
         }
+    }
 
-        return Response::json(['message' => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId]);
+    /**
+     * Return details of all the members signed up to a particular session
+     *
+     * @param $sessionId
+     * @return \Illuminate\Database\Eloquent\Model|mixed|null|static
+     */
+    public static function getMembers($sessionId)
+    {
+        $session = Evercisesession::where('id', $sessionId)->select('id')->with(['users' => function ($query) {
+            $query->select('first_name', 'last_name', 'email');
+        }
+        ])->first();
+        return $session->users;
+    }
+
+    /**
+     * @param $sessionId
+     * @param $trainerId
+     * @return array
+     */
+    public static function mailTrainer($sessionId, $trainerId, $user)
+    {
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
+        $dateTime = Evercisesession::where('id', $sessionId)->pluck('date_time');
+        $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+        $groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+        $trainerDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
+
+        $name = $trainerDetails['first_name'] . ' ' . $trainerDetails['last_name'];
+        $email = $trainerDetails['email'];
+        $userList = [$name => $email];
+
+        $userName = User::getName($user);
+
+        Event::fire('session.mail_trainer', array(
+            'email' => $userList,
+            'user' => $userName,
+            'groupName' => $groupName,
+            'dateTime' => $dateTime,
+            'subject' => $subject,
+            'body' => $body
+        ));
+        return [$groupId, $groupName];
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public static function setCheckoutSessionData()
+    {
+        $sessionIds = json_decode(Input::get('session-ids'), true);
+        $evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
+        Session::put('sessionIds', $sessionIds);
+        Session::put('evercisegroupId', $evercisegroupId);
+
     }
 
     /**

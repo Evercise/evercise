@@ -1,8 +1,9 @@
 <?php
 
 
-class SessionsController extends \BaseController {
+use Evercisesession;
 
+class SessionsController extends \BaseController {
 
     /**
 	 * Display a listing of the resource.
@@ -83,23 +84,41 @@ class SessionsController extends \BaseController {
 
 	}
 
-	public function getMailAll($id)
+    /**
+     * Show the popup form for mailing all users signed up to a session
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function getMailAll($id)
 	{
 		return View::make('sessions.mail_all')->with('sessionId', $id);
 	}
 
-	public function postMailAll($sessionId)
+    /**
+     * Send the mail to all users signed up to a session
+     *
+     * @param $sessionId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postMailAll($sessionId)
 	{
-        $users = Evercisesession::find($sessionId)->users()->get();
         $userList = [];
-        foreach ($users as $user) {
+        foreach (Evercisesession::getMembers($sessionId) as $user) {
             $userList[$user->first_name . ' ' . $user->last_name] = $user->email;
         }
 
         return Evercisesession::mailMembers($sessionId, $userList);
 	}
 
-	public function getMailOne($sessionId, $userId)
+    /**
+     * Show the form to send a mail to a single user
+     *
+     * @param $sessionId
+     * @param $userId
+     * @return \Illuminate\View\View
+     */
+    public function getMailOne($sessionId, $userId)
 	{
 		$userDetails = User::where('id', $userId)->select('first_name', 'last_name')->first();
 		$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
@@ -107,22 +126,35 @@ class SessionsController extends \BaseController {
 		return View::make('sessions.mail_one')->with('sessionId', $sessionId)->with('userId', $userId)->with('firstName', $name);
 	}
 
-	public function postMailOne($sessionId, $userId)
+    /**
+     * Send the mail to a single user
+     *
+     * @param $sessionId
+     * @param $userId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postMailOne($sessionId, $userId)
 	{
-        $userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
-        $name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
-        $userList = [$name => $userDetails['email']];
+        $userDetails = User::getNameAndEmail($userId);
+        $userList = [$userDetails['name'] => $userDetails['email']];
 
         return Evercisesession::mailMembers($sessionId, $userList);
 	}
-	public function getMailTrainer($sessionId, $trainerId)
+
+    /**
+     * Get for to send an email to the trainer of a group
+     *
+     * @param $sessionId
+     * @param $trainerId
+     * @return \Illuminate\View\View
+     */
+    public function getMailTrainer($sessionId, $trainerId)
 	{
 		$session = Evercisesession::with('evercisegroup')->find($sessionId);
 		$dateTime = $session->date_time;
 		$groupName = $session->evercisegroup->name;
 
-		$trainer = User::select('first_name', 'last_name')->where('id', $trainerId)->firstOrFail();
-		$name = $trainer->first_name . ' ' . $trainer->last_name;
+        $name = User::getName($trainerId);
 
 		return View::make('sessions.mail_trainer')
 			->with('sessionId', $sessionId)
@@ -133,87 +165,37 @@ class SessionsController extends \BaseController {
 			->with('name', $name);
 	}
 
-	public function postMailTrainer($sessionId, $trainerId)
+    /**
+     * @param $sessionId
+     * @param $trainerId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function postMailTrainer($sessionId, $trainerId)
 	{
-
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'mail_subject' => 'required',
-				'mail_body' => 'required',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
-
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else
-		{
-			$subject = Input::get('mail_subject');
-			$body = Input::get('mail_body');
-
-			$dateTime = Evercisesession::where('id', $sessionId)->pluck('date_time');
-			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
-			$trainerDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
-
-			$name = $trainerDetails['first_name'] . ' ' . $trainerDetails['last_name'];
-			$email = $trainerDetails['email'];
-			$userList = [$name => $email];
-
-			$userName = $this->user->first_name . ' ' . $this->user->last_name;
-
-			Event::fire('session.mail_trainer', array(
-	        	'email' => $userList, 
-	        	'user' => $userName, 
-	        	'groupName' => $groupName, 
-	        	'dateTime' => $dateTime, 
-	        	'subject' => $subject, 
-	            'body' => $body
-			));
-		}
-
-
+        list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId, $this->user);
 
 		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId, 'callback' => 'mailSent']);
 	}
 
-	/*
-	*
-	*
-	* check login status and either direct to checkout, or open login box
-	*/
-	public function checkout()
+    /**
+     * check login status and either direct to checkout, or open login box
+     *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function checkout()
 	{
-		$sessionIds = json_decode(Input::get('session-ids'), true);
-		$evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
-		Session::put('sessionIds', $sessionIds);
-		Session::put('evercisegroupId', $evercisegroupId);
+        Evercisesession::setCheckoutSessionData();
 
-		$redirect_after_login_url = 'sessions.join.get';
+        $redirect_after_login_url = 'sessions.join.get';
 
-		if (!$this->user)
-		{
-			return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
-		}
-		else
-		{
-			return Response::json(['status' => 'logged_in']);
-		}
+        if (!$this->user) {
+            return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url);
+        } else {
+            return Response::json(['status' => 'logged_in']);
+        }
 	}
 
-	/*
+	/**
 	*
 	*
 	* confirmation for join sessions
