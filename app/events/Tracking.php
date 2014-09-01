@@ -3,6 +3,7 @@
 use Mixpanel;
 use Illuminate\Config\Repository;
 use Illuminate\Log\Writer;
+use Illuminate\Http\Request;
 
 
 /**
@@ -29,10 +30,11 @@ class Tracking
      * @param Writer $log
      * @param Repository $config
      */
-    public function __construct(Writer $log, Repository $config)
+    public function __construct(Writer $log, Repository $config, Request $request)
     {
         $this->config = $config;
         $this->log = $log;
+        $this->request = $request;
         $this->mixpanel = Mixpanel::getInstance($this->config->get('mixpanel.token'));
 
     }
@@ -162,14 +164,15 @@ class Tracking
         }
 
 
-        $user_arr['type'] = $type;
-        $user_arr['evercoins'] = (is_null($user->evecoin) ? '0' : $user->evecoin->balance);
+        $user_arr['$type'] = $type;
+        $user_arr['$evercoins'] = (is_null($user->evecoin) ? '0' : $user->evecoin->balance);
+        $user_arr['$ip'] = $this->request->getClientIp();
 
 
         $this->mixpanel->people->set($user->id, $user_arr);
         $this->mixpanel->identify($user->id);
         $this->mixpanel->track($func, ['type' => $type]);
 
-        $this->log->info($type . ' ' . $user->id . ' '.$func.' in MixPanel');
+        $this->log->info($type . ' ' . $user->id . ' ' . $func . ' in MixPanel');
     }
 }
