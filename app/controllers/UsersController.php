@@ -12,12 +12,7 @@ class UsersController extends \BaseController
      */
     public function index()
     {
-        $user = Sentry::findUserById(rand(1,20));
-
-        Event::fire('user.registered', array($user));
-
-
-        //return Redirect::route('home');
+        return Redirect::route('home');
     }
 
     /**
