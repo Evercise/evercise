@@ -123,6 +123,7 @@ return array(
         'Abodeo\LaravelStripe\LaravelStripeServiceProvider',
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Hugofirth\Mailchimp\MailchimpServiceProvider',
+        'TagPlanet\UniversalAnalytics\UniversalAnalyticsServiceProvider',
     ),
 
     /*
@@ -200,6 +201,7 @@ return array(
         'PDF' => 'Thujohn\Pdf\PdfFacade',
         'OpenGraph' => 'ChrisKonnertz\\OpenGraph\\OpenGraph',
         'MailchimpWrapper' => 'Hugofirth\Mailchimp\Facades\MailchimpWrapper',
+        'UniversalAnalytics' => 'TagPlanet\UniversalAnalytics\UniversalAnalyticsFacade'
     ),
 
 );

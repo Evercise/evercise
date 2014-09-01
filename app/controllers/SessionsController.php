@@ -1,95 +1,96 @@
 <?php
 
 
-class SessionsController extends \BaseController {
+class SessionsController extends \BaseController
+{
 
 
     /**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index($evercisegroup_id = '')
-	{
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index($evercisegroup_id = '')
+    {
 
 
-	}
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		// The slider is initialised in JS from the view, as the document.ready has already run
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        // The slider is initialised in JS from the view, as the document.ready has already run
 
         return Evercisesession::getCreateForm();
-	}
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
         return Evercisesession::validateAndStore($this->user);
-	}
+    }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		return 'Show';
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        return 'Show';
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		return 'Edit';
-	}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        return 'Edit';
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		return 'Update';
-	}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        return 'Update';
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
 
         return Evercisesession::deleteById($id, $this->user);
 
-	}
+    }
 
-	public function getMailAll($id)
-	{
-		return View::make('sessions.mail_all')->with('sessionId', $id);
-	}
+    public function getMailAll($id)
+    {
+        return View::make('sessions.mail_all')->with('sessionId', $id);
+    }
 
-	public function postMailAll($sessionId)
-	{
+    public function postMailAll($sessionId)
+    {
         $users = Evercisesession::find($sessionId)->users()->get();
         $userList = [];
         foreach ($users as $user) {
@@ -97,534 +98,533 @@ class SessionsController extends \BaseController {
         }
 
         return Evercisesession::mailMembers($sessionId, $userList);
-	}
+    }
 
-	public function getMailOne($sessionId, $userId)
-	{
-		$userDetails = User::where('id', $userId)->select('first_name', 'last_name')->first();
-		$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
+    public function getMailOne($sessionId, $userId)
+    {
+        $userDetails = User::where('id', $userId)->select('first_name', 'last_name')->first();
+        $name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
 
-		return View::make('sessions.mail_one')->with('sessionId', $sessionId)->with('userId', $userId)->with('firstName', $name);
-	}
+        return View::make('sessions.mail_one')->with('sessionId', $sessionId)->with('userId', $userId)->with('firstName', $name);
+    }
 
-	public function postMailOne($sessionId, $userId)
-	{
+    public function postMailOne($sessionId, $userId)
+    {
         $userDetails = User::where('id', $userId)->select('first_name', 'last_name', 'email')->first();
         $name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
         $userList = [$name => $userDetails['email']];
 
         return Evercisesession::mailMembers($sessionId, $userList);
-	}
-	public function getMailTrainer($sessionId, $trainerId)
-	{
-		$session = Evercisesession::with('evercisegroup')->find($sessionId);
-		$dateTime = $session->date_time;
-		$groupName = $session->evercisegroup->name;
+    }
 
-		$trainer = User::select('first_name', 'last_name')->where('id', $trainerId)->firstOrFail();
-		$name = $trainer->first_name . ' ' . $trainer->last_name;
+    public function getMailTrainer($sessionId, $trainerId)
+    {
+        $session = Evercisesession::with('evercisegroup')->find($sessionId);
+        $dateTime = $session->date_time;
+        $groupName = $session->evercisegroup->name;
 
-		return View::make('sessions.mail_trainer')
-			->with('sessionId', $sessionId)
-			->with('trainerId', $trainerId)
-			->with('userId', $this->user->id)
-			->with('dateTime', $dateTime)
-			->with('groupName', $groupName)
-			->with('name', $name);
-	}
+        $trainer = User::select('first_name', 'last_name')->where('id', $trainerId)->firstOrFail();
+        $name = $trainer->first_name . ' ' . $trainer->last_name;
 
-	public function postMailTrainer($sessionId, $trainerId)
-	{
+        return View::make('sessions.mail_trainer')
+            ->with('sessionId', $sessionId)
+            ->with('trainerId', $trainerId)
+            ->with('userId', $this->user->id)
+            ->with('dateTime', $dateTime)
+            ->with('groupName', $groupName)
+            ->with('name', $name);
+    }
 
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'mail_subject' => 'required',
-				'mail_body' => 'required',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
+    public function postMailTrainer($sessionId, $trainerId)
+    {
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else
-		{
-			$subject = Input::get('mail_subject');
-			$body = Input::get('mail_body');
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'mail_subject' => 'required',
+                'mail_body' => 'required',
+            )
+        );
+        if ($validator->fails()) {
+            if (Request::ajax()) {
+                $result = array(
+                    'validation_failed' => 1,
+                    'errors' => $validator->errors()->toArray()
+                );
 
-			$dateTime = Evercisesession::where('id', $sessionId)->pluck('date_time');
-			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
-			$trainerDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
+                return Response::json($result);
+            } else {
+                return Redirect::route('evercisegroups.create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        } else {
+            $subject = Input::get('mail_subject');
+            $body = Input::get('mail_body');
 
-			$name = $trainerDetails['first_name'] . ' ' . $trainerDetails['last_name'];
-			$email = $trainerDetails['email'];
-			$userList = [$name => $email];
+            $dateTime = Evercisesession::where('id', $sessionId)->pluck('date_time');
+            $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+            $groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+            $trainerDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
 
-			$userName = $this->user->first_name . ' ' . $this->user->last_name;
+            $name = $trainerDetails['first_name'] . ' ' . $trainerDetails['last_name'];
+            $email = $trainerDetails['email'];
+            $userList = [$name => $email];
 
-			Event::fire('session.mail_trainer', array(
-	        	'email' => $userList, 
-	        	'user' => $userName, 
-	        	'groupName' => $groupName, 
-	        	'dateTime' => $dateTime, 
-	        	'subject' => $subject, 
-	            'body' => $body
-			));
-		}
+            $userName = $this->user->first_name . ' ' . $this->user->last_name;
+
+            Event::fire('session.mail_trainer', array(
+                'email' => $userList,
+                'user' => $userName,
+                'groupName' => $groupName,
+                'dateTime' => $dateTime,
+                'subject' => $subject,
+                'body' => $body
+            ));
+        }
 
 
+        return Response::json(['message' => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId, 'callback' => 'mailSent']);
+    }
 
-		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId, 'callback' => 'mailSent']);
-	}
+    /*
+    *
+    *
+    * check login status and either direct to checkout, or open login box
+    */
+    public function checkout()
+    {
+        $sessionIds = json_decode(Input::get('session-ids'), true);
+        $evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
+        Session::put('sessionIds', $sessionIds);
+        Session::put('evercisegroupId', $evercisegroupId);
 
-	/*
-	*
-	*
-	* check login status and either direct to checkout, or open login box
-	*/
-	public function checkout()
-	{
-		$sessionIds = json_decode(Input::get('session-ids'), true);
-		$evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
-		Session::put('sessionIds', $sessionIds);
-		Session::put('evercisegroupId', $evercisegroupId);
+        $redirect_after_login_url = 'sessions.join.get';
 
-		$redirect_after_login_url = 'sessions.join.get';
+        if (!$this->user) {
+            return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url);
+        } else {
+            return Response::json(['status' => 'logged_in']);
+        }
+    }
 
-		if (!$this->user)
-		{
-			return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url );
-		}
-		else
-		{
-			return Response::json(['status' => 'logged_in']);
-		}
-	}
+    /*
+    *
+    *
+    * confirmation for join sessions
+    */
 
-	/*
-	*
-	*
-	* confirmation for join sessions
-	*/
+    public function joinSessions()
+    {
+        //return 'nope';
 
-	public function joinSessions()
-	{
-		//return 'nope';
+        $sessionIds = Session::get('sessionIds', false);
+        $evercisegroupId = Session::get('evercisegroupId', false);
+        if (!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
+        if (!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
 
-		$sessionIds = Session::get('sessionIds', false);
-		$evercisegroupId = Session::get('evercisegroupId', false);
-		if(!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
-		if(!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
-
-		if (empty($sessionIds)) {
-			return Redirect::route('evercisegroups.show' , [$evercisegroupId]);
-		}
+        if (empty($sessionIds)) {
+            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
+        }
 
 
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
-		{
-			$query->whereIn('id', $sessionIds);
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
+            $query->whereIn('id', $sessionIds);
 
-		}), 'evercisesession')->find($evercisegroupId);
+        }), 'evercisesession')->find($evercisegroupId);
 
-		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
-		{
-			return Response::json('USER HAS ALREADY JOINED SESSION');
-		}
+        if (Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
+            return Response::json('USER HAS ALREADY JOINED SESSION');
+        }
 
-		$userTrainer = User::find($evercisegroup->user_id);
+        $userTrainer = User::find($evercisegroup->user_id);
 
-		$members = [];
-		$total = 0;
-		$price = 0;
-	    foreach ($evercisegroup->evercisesession as $key => $value)
-	    {
-			$members[] = count($value->sessionmembers); // Count those members
-			++$total;
-			$price = $price + $value->price;
-	    }
+        $members = [];
+        $total = 0;
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value) {
+            $members[] = count($value->sessionmembers); // Count those members
+            ++$total;
+            $price = $price + $value->price;
+        }
 
-	    $pricePence = SessionPayment::poundsToPennies($price);
+        $pricePence = SessionPayment::poundsToPennies($price);
 
-	    Session::put('sessionIds', $sessionIds);
-	    Session::put('amountToPay', $price);
+        Session::put('sessionIds', $sessionIds);
+        Session::put('amountToPay', $price);
 
-		return View::make('sessions.join')
-					->with('evercisegroup' , $evercisegroup)
-					->with('members' , $members)
-					->with('userTrainer' , $userTrainer)
-					->with('totalPrice' , $price)
-					->with('totalPricePence' , $pricePence)
-					->with('totalSessions' , $total)
-					->with('sessionIds' , $sessionIds);
-		//return var_dump($sessionId);
-	}
+        return View::make('sessions.join')
+            ->with('evercisegroup', $evercisegroup)
+            ->with('members', $members)
+            ->with('userTrainer', $userTrainer)
+            ->with('totalPrice', $price)
+            ->with('totalPricePence', $pricePence)
+            ->with('totalSessions', $total)
+            ->with('sessionIds', $sessionIds);
+        //return var_dump($sessionId);
+    }
 
-	function payForSessions($id){
+    function payForSessions($id)
+    {
+        /* get session ids */
+        $sessionIds = Session::get('sessionIds');
+        /* get currnet user */
+        $user = User::find($this->user->id);
 
-		/* get session ids */
-		$sessionIds = Session::get('sessionIds'); 
-		/* get currnet user */
-		$user = User::find($this->user->id);
+        $evercisegroupId = $id;
 
-		$evercisegroupId = $id;
+        /* get token */
+        $token = Session::get('token');
 
-		/* get token */
-		$token = Session::get('token');
+        /* get transaction id */
+        $transactionId = Session::get('transactionId');
 
-		/* get transaction id */
-		$transactionId = Session::get('transactionId');
+        /* get Payer id */
+        $payerId = Session::get('payerId');
 
-		/* get Payer id */
-		$payerId = Session::get('payerId');
-
-		/* get payment method */
-		$paymentMethod = Session::get('paymentMethod');
+        /* get payment method */
+        $paymentMethod = Session::get('paymentMethod');
 
 
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
-		{
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
 
-			$query->whereIn('id', $sessionIds);
+            $query->whereIn('id', $sessionIds);
 
-		}), 'evercisesession')
-		->find($evercisegroupId);
+        }), 'evercisesession')
+            ->find($evercisegroupId);
 
-		//Make sure there is not already a matching entry in sessionmember
-		if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
-		{
-			return Response::json('error: USER HAS ALREADY JOINED SESSION');
-		}
+        //Make sure there is not already a matching entry in sessionmember
+        if (Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
+            return Response::json('error: USER HAS ALREADY JOINED SESSION');
+        }
 
-		$userTrainer = User::find($evercisegroup->user_id);
+        $userTrainer = User::find($evercisegroup->user_id);
 
 
-		$members = [];
-		$total = 0;
-		$price = 0;
-	    foreach ($evercisegroup->evercisesession as $key => $value)
-	    {
-			$members[] = count($value->sessionmembers); // Count those members
-			++$total;
-			$price = $price + $value->price;
+        $members = [];
+        $total = 0;
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value) {
+            $members[] = count($value->sessionmembers); // Count those members
+            ++$total;
+            $price = $price + $value->price;
 
-			$timestamp = strtotime($value->date_time);
-			$niceTime = date('h:ia', $timestamp);
-			$niceDate = date('dS F Y', $timestamp);
+            $timestamp = strtotime($value->date_time);
+            $niceTime = date('h:ia', $timestamp);
+            $niceDate = date('dS F Y', $timestamp);
 
-		    Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'joined_session', 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+            Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'joined_session', 'display_name' => $this->user->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
 
-	    }
+        }
 
-	    $amountToPay = ( null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
+        $amountToPay = (null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
 
-		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
-		if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
-		{
-			return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
-		}
+        if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price) {
+            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :' . $amountToPay]);
+        }
 
-		$deductEverciseCoins = Evercoin::poundsToEvercoins( $price - $amountToPay );
+        $deductEverciseCoins = Evercoin::poundsToEvercoins($price - $amountToPay);
 
-		$evercoin->withdraw($deductEverciseCoins);
+        $evercoin->withdraw($deductEverciseCoins);
 
 
-		/*pivot current user with session via session members */
-		$user->sessions()->attach($sessionIds, ['token' => $token , 'transaction_id' => $transactionId, 'payer_id' => $payerId, 'payment_method' => $paymentMethod ]);
-		
-		Event::fire('session.joined', array(
-	        	'email' => $user->email, 
-	        	'display_name' => $user->display_name, 
-	        	'evercisegroup' => $evercisegroup, 
-	        	'userTrainer' => $userTrainer, 
-	        	'transactionId' => $transactionId, 
-			));
+        /*pivot current user with session via session members */
+        $user->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' => $transactionId, 'payer_id' => $payerId, 'payment_method' => $paymentMethod]);
 
-        Event::fire('session.payed', [$user,$evercisegroup ]);
+        Event::fire('session.joined', array(
+            'email' => $user->email,
+            'display_name' => $user->display_name,
+            'evercisegroup' => $evercisegroup,
+            'userTrainer' => $userTrainer,
+            'transactionId' => $transactionId,
+        ));
 
-		Session::forget('amountToPay');
-		Session::forget('sessionIds');
-		Session::forget('evercisegroupId');
+        Event::fire('session.payed', [$user, $evercisegroup]);
+
+        // Grab the "foo" instance
+        $gaTracker = UniversalAnalytics::get('trackerName');
+
+        // Require the ecommerce JS file:
+        $gaTracker->ga('require', 'ecommerce', 'ecommerce.js');
+
+        // Setup a transaction:
+        $gaTracker->ga('ecommerce:addTransaction', [
+            'id' => $transactionId,
+            'affiliation' => 'evercise',
+            'revenue'     => $amountToPay,
+        ]);
+        // Setup a item for the class:
+        $gaTracker->ga('ecommerce:addItem', [
+            'id' => $evercisegroup->id,
+            'name' => $evercisegroup->name,
+            'quantity'     => count($sessionIds),
+        ]);
+
+
+        Session::forget('amountToPay');
+        Session::forget('sessionIds');
+        Session::forget('evercisegroupId');
+
+
+
 
 		return View::make('sessions.confirmation')
-					->with('evercisegroup' , $evercisegroup)
-					->with('members' , $members)
-					->with('userTrainer' , $userTrainer)
-					->with('totalPrice' , $price)
-					->with('totalSessions' , $total)
-					->with('sessionIds' , $sessionIds)
-					->with('amountPaid' , $amountToPay)
-					->with('transactionId' , $transactionId)
-					->with('evercoins' , $evercoin->balance)
-					->with('deductEverciseCoins' , $deductEverciseCoins);
+            ->with('evercisegroup', $evercisegroup)
+            ->with('members', $members)
+            ->with('userTrainer', $userTrainer)
+            ->with('totalPrice', $price)
+            ->with('totalSessions', $total)
+            ->with('sessionIds', $sessionIds)
+            ->with('amountPaid', $amountToPay)
+            ->with('transactionId', $transactionId)
+            ->with('evercoins', $evercoin->balance)
+            ->with('deductEverciseCoins', $deductEverciseCoins);
 	}
 
-	function getLeaveSession($id)
-	{
-		$session = Evercisesession::with('evercisegroup')
-				->find($id);
+    function getLeaveSession($id)
+    {
+        $session = Evercisesession::with('evercisegroup')
+            ->find($id);
 
-		$sessionDate = new DateTime($session->date_time);
-		$now = new DateTime();
-		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
-		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+        $sessionDate = new DateTime($session->date_time);
+        $now = new DateTime();
+        $twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+        $fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
 
-		$evercoin = Evercoin::where('user_id',  $this->user->id)->first();
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
-		//$everpound = $this->
-		if ($sessionDate > $fivedaystime ){
-			$status = 2;
-			$refund = $session->price;
+        //$everpound = $this->
+        if ($sessionDate > $fivedaystime) {
+            $status = 2;
+            $refund = $session->price;
 
-		} 
-		elseif ($sessionDate > $twodaystime ){
-			$status = 1;
-			$refund = $session->price / 2;
-		} 
-		else {
-			$status = 0;
-			$refund = 0;
-		} 
+        } elseif ($sessionDate > $twodaystime) {
+            $status = 1;
+            $refund = $session->price / 2;
+        } else {
+            $status = 0;
+            $refund = 0;
+        }
 
-		$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
-		$evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
+        $refundInEvercoins = Evercoin::poundsToEvercoins($refund);
+        $evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
 
-		return View::make('sessions.leave')
-		->with('session', $session)
-		->with('refund', $refund)
-		->with('refundInEvercoins', $refundInEvercoins)
-		->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
-		->with('evercoin', $evercoin)
-		->with('status', $status);
-	}
-	public function postLeaveSession($id)
-	{
-		$session = Evercisesession::find($id);
+        return View::make('sessions.leave')
+            ->with('session', $session)
+            ->with('refund', $refund)
+            ->with('refundInEvercoins', $refundInEvercoins)
+            ->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
+            ->with('evercoin', $evercoin)
+            ->with('status', $status);
+    }
 
-		$sessionDate = new DateTime($session->date_time);
-		$now = new DateTime();
-		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
-		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+    public function postLeaveSession($id)
+    {
+        $session = Evercisesession::find($id);
 
-		if ($sessionDate > $fivedaystime ) $status = 2;
-		else if ($sessionDate > $twodaystime ) $status = 1;
-		else $status = 0;
+        $sessionDate = new DateTime($session->date_time);
+        $now = new DateTime();
+        $twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+        $fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
 
-		if ($status > 0)
-		{
-			$user = User::find($this->user->id);
-			$user->sessions()->detach($session->id);
+        if ($sessionDate > $fivedaystime) $status = 2;
+        else if ($sessionDate > $twodaystime) $status = 1;
+        else $status = 0;
 
-			$refund = ($status == 1 ? ($session->price / 2) : $session->price);
+        if ($status > 0) {
+            $user = User::find($this->user->id);
+            $user->sessions()->detach($session->id);
 
-			$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
+            $refund = ($status == 1 ? ($session->price / 2) : $session->price);
 
-			$evercoin = Evercoin::where('user_id', $user->id)->first();
-			$evercoin->deposit($refundInEvercoins);
+            $refundInEvercoins = Evercoin::poundsToEvercoins($refund);
 
-			$evercisegroup = Evercisegroup::find($session->evercisegroup_id);
-			$niceTime = date('h:ia', strtotime($session->date_time));
-			$niceDate = date('dS F Y', strtotime($session->date_time));
+            $evercoin = Evercoin::where('user_id', $user->id)->first();
+            $evercoin->deposit($refundInEvercoins);
+
+            $evercisegroup = Evercisegroup::find($session->evercisegroup_id);
+            $niceTime = date('h:ia', strtotime($session->date_time));
+            $niceDate = date('dS F Y', strtotime($session->date_time));
 
 
-			Trainerhistory::create(array('user_id'=> $evercisegroup->user_id, 'type'=>'left_session_'.($status == 1 ? 'half' : 'full'), 'display_name'=>$this->user->display_name, 'name'=>$evercisegroup->name, 'time'=>$niceTime, 'date'=>$niceDate));
+            Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'left_session_' . ($status == 1 ? 'half' : 'full'), 'display_name' => $this->user->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
 
-			Event::fire('session.userLeft', array(
-	        	'email' => $user->email, 
-	        	'display_name' => $user->display_name, 
-	        	'everciseGroup' => $evercisegroup->name, 
-	        	'everciseSession' => date('dS M y', strtotime($session->date_time)), 
-			));
+            Event::fire('session.userLeft', array(
+                'email' => $user->email,
+                'display_name' => $user->display_name,
+                'everciseGroup' => $evercisegroup->name,
+                'everciseSession' => date('dS M y', strtotime($session->date_time)),
+            ));
 
-			$trainer = User::find($evercisegroup->user_id);
+            $trainer = User::find($evercisegroup->user_id);
 
-			Event::fire('session.trainerLeft', array(
-	        	'email' => $trainer->email, 
-	        	'display_name' => $trainer->display_name, 
-	        	'user_name' => $user->display_name, 
-	        	'everciseGroup' => $evercisegroup->name, 
-	        	'everciseSession' => date('dS M y', strtotime($session->date_time)), 
-			));
+            Event::fire('session.trainerLeft', array(
+                'email' => $trainer->email,
+                'display_name' => $trainer->display_name,
+                'user_name' => $user->display_name,
+                'everciseGroup' => $evercisegroup->name,
+                'everciseSession' => date('dS M y', strtotime($session->date_time)),
+            ));
 
-            Event::fire('session.left', [$user , $evercisegroup, $session]);
-			return Response::json(['message' => ' session: '.$id, 'callback' => 'leftSession']);
-		}
-		else
-		{
-			return Response::json(['message' => ' Cannot leave session ']);
-		}
+            Event::fire('session.left', [$user, $evercisegroup, $session]);
+            return Response::json(['message' => ' session: ' . $id, 'callback' => 'leftSession']);
+        } else {
+            return Response::json(['message' => ' Cannot leave session ']);
+        }
 
 
-	}
+    }
 
 
-	public function redeemEvercoins($evercisegroupId)
-	{
-		$usecoins = Input::get('redeem');
-		$sessionIds = Session::get('sessionIds');
-		//$sessionIds = json_decode(Input::get('session-ids')) ;
+    public function redeemEvercoins($evercisegroupId)
+    {
+        $usecoins = Input::get('redeem');
+        $sessionIds = Session::get('sessionIds');
+        //$sessionIds = json_decode(Input::get('session-ids')) ;
 
-		$evercisegroup = Evercisegroup::with(array('evercisesession' => function($query) use (&$sessionIds)
-		{
-			$query->whereIn('id', $sessionIds);
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
+            $query->whereIn('id', $sessionIds);
 
-		}))->find($evercisegroupId);
+        }))->find($evercisegroupId);
 
-		$price = 0;
-	    foreach ($evercisegroup->evercisesession as $key => $value)
-			$price = $price + $value->price;
-		$priceInEvercoins = Evercoin::poundsToEvercoins($price);
-
-
-		// Check if more coins are selected than are needed.
-		if ($usecoins > $priceInEvercoins)
-			$usecoins = $priceInEvercoins;
-
-		//Check user has tried to use more evercoins than they have. if so, use every last one.
-		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
-		if ($usecoins > $evercoin->balance)
-			$usecoins = $evercoin->balance;
-
-		$usecoinsInPounds = Evercoin::evercoinsToPounds($usecoins);
-		$amountRemaining = $price - $usecoinsInPounds;
-
-		Session::put('amountToPay', $amountRemaining);
-
-		$evercoin = Evercoin::where('user_id', $this->user->id)->first();
-
-		if($priceInEvercoins == $usecoins)
-		{
-
-			return Response::json([
-				'callback' => 'openPopup',
-				'popup' => (string)View::make('sessions.checkoutwithevercoins')
-				->with('evercisegroupId' , $evercisegroupId)
-				->with('priceInEvercoins' , $priceInEvercoins)
-				->with('evercoinBalance', $evercoin->balance)
-				->with('usecoinsInPounds', $usecoinsInPounds)
-			]);
-			
-
-		}
-		else
-		{
-
-			return Response::json([
-				'usecoins' => $usecoins,
-				'amountRemaining' => $amountRemaining,
-				'usecoinsInPounds' => $usecoinsInPounds,
-				'callback' => 'paidWithEvercoins'
-			]);
-		}
-	}
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value)
+            $price = $price + $value->price;
+        $priceInEvercoins = Evercoin::poundsToEvercoins($price);
 
 
-	public function postPayWithEvercoins($evercisegroupId)
-	{
-		$transactionId = Functions::randomPassword(16);
-		Session::put('payerId', $this->user->id);
-		Session::put('paymentMethod', 'evercoins');
-		Session::put('token', 'ever'.$transactionId);
-		Session::put('transactionId', $transactionId);
+        // Check if more coins are selected than are needed.
+        if ($usecoins > $priceInEvercoins)
+            $usecoins = $priceInEvercoins;
 
-		return $this->payForSessions($evercisegroupId);
+        //Check user has tried to use more evercoins than they have. if so, use every last one.
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
+        if ($usecoins > $evercoin->balance)
+            $usecoins = $evercoin->balance;
 
-	}
+        $usecoinsInPounds = Evercoin::evercoinsToPounds($usecoins);
+        $amountRemaining = $price - $usecoinsInPounds;
 
-	public function getRefund($id){
-		$session = Evercisesession::with('evercisegroup')
-				->find($id);
+        Session::put('amountToPay', $amountRemaining);
 
-		$sessionDate = new DateTime($session->date_time);
-		$now = new DateTime();
-		$twodaystime = (new DateTime())->add(new DateInterval('P2D'));
-		$fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
 
-		$evercoin = Evercoin::where('user_id',  $session->evercisegroup->user_id)->first();
+        if ($priceInEvercoins == $usecoins) {
 
-		//$everpound = $this->
-		if ($sessionDate > $fivedaystime ){
-			$status = 2;
-			$refund = $session->price;
-
-		} 
-		elseif ($sessionDate > $twodaystime ){
-			$status = 1;
-			$refund = $session->price / 2;
-		} 
-		else {
-			$status = 0;
-			$refund = 0;
-		} 
-
-		$refundInEvercoins = Evercoin::poundsToEvercoins($refund);
-		$evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
-
-		return View::make('sessions.refund_request')
-		->with('session', $session)
-		->with('refund', $refund)
-		->with('refundInEvercoins', $refundInEvercoins)
-		->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
-		->with('evercoin', $evercoin)
-		->with('status', $status);
-	}
+            return Response::json([
+                'callback' => 'openPopup',
+                'popup' => (string)View::make('sessions.checkoutwithevercoins')
+                    ->with('evercisegroupId', $evercisegroupId)
+                    ->with('priceInEvercoins', $priceInEvercoins)
+                    ->with('evercoinBalance', $evercoin->balance)
+                    ->with('usecoinsInPounds', $usecoinsInPounds)
+            ]);
 
 
-	public function postRefund($sessionId)
-	{
+        } else {
 
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'mail_subject' => 'required',
-				'mail_body' => 'required',
-			)
-		);
-		if($validator->fails()) {
+            return Response::json([
+                'usecoins' => $usecoins,
+                'amountRemaining' => $amountRemaining,
+                'usecoinsInPounds' => $usecoinsInPounds,
+                'callback' => 'paidWithEvercoins'
+            ]);
+        }
+    }
 
-        	$result = array(
-	            'validation_failed' => 1,
-	            'errors' =>  $validator->errors()->toArray()
-	         );	
 
-			return Response::json($result);
-	       
-		}
-		else
-		{
-			$subject = Input::get('mail_subject');
-			$body = Input::get('mail_body');
-			$contact = 'contact@evercise.com';
+    public function postPayWithEvercoins($evercisegroupId)
+    {
+        $transactionId = Functions::randomPassword(16);
+        Session::put('payerId', $this->user->id);
+        Session::put('paymentMethod', 'evercoins');
+        Session::put('token', 'ever' . $transactionId);
+        Session::put('transactionId', $transactionId);
 
-			$groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-			$groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+        return $this->payForSessions($evercisegroupId);
 
-			Event::fire('session.refund', array(
+    }
 
-	        	'email' => $contact, 
-	        	'userName' => $this->user->display_name, 
-	        	'userEmail' => $this->user->email, 
-	        	'groupName' => $groupName, 
-	        	'subject' => $subject, 
-	            'body' => $body
-			));
-		}
+    public function getRefund($id)
+    {
+        $session = Evercisesession::with('evercisegroup')
+            ->find($id);
 
-		return Response::json(['callback' => 'successAndRefresh']);
-	}
+        $sessionDate = new DateTime($session->date_time);
+        $now = new DateTime();
+        $twodaystime = (new DateTime())->add(new DateInterval('P2D'));
+        $fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
+
+        $evercoin = Evercoin::where('user_id', $session->evercisegroup->user_id)->first();
+
+        //$everpound = $this->
+        if ($sessionDate > $fivedaystime) {
+            $status = 2;
+            $refund = $session->price;
+
+        } elseif ($sessionDate > $twodaystime) {
+            $status = 1;
+            $refund = $session->price / 2;
+        } else {
+            $status = 0;
+            $refund = 0;
+        }
+
+        $refundInEvercoins = Evercoin::poundsToEvercoins($refund);
+        $evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
+
+        return View::make('sessions.refund_request')
+            ->with('session', $session)
+            ->with('refund', $refund)
+            ->with('refundInEvercoins', $refundInEvercoins)
+            ->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
+            ->with('evercoin', $evercoin)
+            ->with('status', $status);
+    }
+
+
+    public function postRefund($sessionId)
+    {
+
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'mail_subject' => 'required',
+                'mail_body' => 'required',
+            )
+        );
+        if ($validator->fails()) {
+
+            $result = array(
+                'validation_failed' => 1,
+                'errors' => $validator->errors()->toArray()
+            );
+
+            return Response::json($result);
+
+        } else {
+            $subject = Input::get('mail_subject');
+            $body = Input::get('mail_body');
+            $contact = 'contact@evercise.com';
+
+            $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
+            $groupName = Evercisegroup::where('id', $groupId)->pluck('name');
+
+            Event::fire('session.refund', array(
+
+                'email' => $contact,
+                'userName' => $this->user->display_name,
+                'userEmail' => $this->user->email,
+                'groupName' => $groupName,
+                'subject' => $subject,
+                'body' => $body
+            ));
+        }
+
+        return Response::json(['callback' => 'successAndRefresh']);
+    }
 
 
 }

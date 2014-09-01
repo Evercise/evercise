@@ -22,3 +22,5 @@
   window.addEventListener('scroll', sendInteractionEvent);
 
 </script>
+
+{{ UniversalAnalytics::render() }}

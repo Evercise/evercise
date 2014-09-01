@@ -15,7 +15,7 @@
 			<p>Available Evercoins: {{ $evercoinBalance }}</p>
 			<p>Basket Price in Evercoins: {{ $priceInEvercoins }}</p>
 		</div>
-		{{ Form::open(array('id' => 'paywithevercoins', 'url' => 'sessions/'.$evercisegroupId.'/paywithevercoins', 'method' => 'POST', 'class' => 'create-form')) }}
+		{{ Form::open(array('id' => 'paywithevercoinsfullamount', 'url' => 'sessions/'.$evercisegroupId.'/paywithevercoins', 'method' => 'POST', 'class' => 'create-form')) }}
 
 			{{ Form::hidden('usecoins', $priceInEvercoins, array('maxlength' => 10)) }}
 			<div class="tc">
