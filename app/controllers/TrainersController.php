@@ -132,7 +132,7 @@ class TrainersController extends \BaseController {
             	'display_name' => $user->display_name
             ));
 
-            Event::queue('trainer.registered', [$user]);
+            Event::fire('trainer.registered', [$user]);
 
 			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
 		}
@@ -268,7 +268,7 @@ class TrainersController extends \BaseController {
 		            'url' => '/trainers/2/edit/trainer'
 		         );
 
-            Event::queue('trainer.editTrainerDetails', [$this->user]);
+            Event::fire('trainer.editTrainerDetails', [$this->user]);
 
 			return Response::json($result);
 

@@ -56,7 +56,7 @@ class WalletsController extends \BaseController
 
             if ($result) {
                 Log::info('successful withdrawal request');
-                Event::queue('wallet.request', [$this->user, Input::all()]);
+                Event::fire('wallet.request', [$this->user, Input::all()]);
                 return Response::json($result);
             }
         } else {
@@ -73,7 +73,7 @@ class WalletsController extends \BaseController
      */
     public function updatePaypal($userId)
     {
-        Event::queue('wallet.updatePaypal', [$this->user, Input::all()]);
+        Event::fire('wallet.updatePaypal', [$this->user, Input::all()]);
         return Response::json(Wallet::validPaypalUpdateRequest(Input::all(), $userId));
     }
 

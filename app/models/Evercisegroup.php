@@ -481,7 +481,7 @@ class Evercisegroup extends \Eloquent
 
             Trainerhistory::create(['user_id' => $user->id, 'type' => 'created_evercisegroup', 'display_name' => $user->display_name, 'name' => $evercisegroup->name]);
 
-            Event::queue('evecisegroup.created', [$user,$evercisegroup]);
+            Event::fire('evecisegroup.created', [$user,$evercisegroup]);
 
             return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
         }
