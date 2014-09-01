@@ -16,7 +16,6 @@ class Tracking
     {
         $this->config = $config;
         $this->log = $log;
-        $this->log->info('aaa');
         $this->mixpanel = Mixpanel::getInstance($this->config->get('mixpanel.token'));
 
     }
