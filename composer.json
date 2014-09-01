@@ -25,7 +25,9 @@
         "chriskonnertz/open-graph": "dev-master",
         "barryvdh/laravel-ide-helper": "1.*",
         "mailchimp/mailchimp": "dev-master as 2.0.5",
-        "hugofirth/mailchimp": "2.0.*"
+        "hugofirth/mailchimp": "2.0.*",
+        "mixpanel/mixpanel-php" : "2.*",
+        "tag-planet/universal-analytics": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",

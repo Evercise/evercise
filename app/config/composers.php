@@ -65,6 +65,9 @@ return [
 
     // payments
     ['payments.paywithevercoins' => 'PayWithEvercoinsComposer'],
-    ['payments.cartrows' => 'CartRowsComposer']
+    ['payments.cartrows' => 'CartRowsComposer'],
+
+    // admin
+    ['admin.groups' => 'AdminGroupComposer']
 
 ];

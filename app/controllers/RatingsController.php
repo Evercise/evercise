@@ -92,7 +92,7 @@ class RatingsController extends \BaseController {
 		    Trainerhistory::create(array('user_id'=> $user_id, 'type'=>'rated_session', 'display_name'=>$this->user->display_name, 'name'=>$group->name, 'time'=>$niceTime, 'date'=>$niceDate));
 		    Milestone::where('user_id', $this->user->id)->first()->add('review');
 
-            Event::queue('rating.create', [$this->user,$group, $session ]);
+            Event::fire('rating.create', [$this->user,$group, $session ]);
 
 		}
 

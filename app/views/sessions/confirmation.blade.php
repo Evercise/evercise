@@ -2,6 +2,7 @@
 
 
 @section('content')
+
 	<div  class="full-width">
 		<div id="cart-list" class="col8">
 			<div class="header-block">

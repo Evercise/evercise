@@ -2,11 +2,12 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use Cartalyst\Sentry\Users\Eloquent\User as SentryUserModel;
 
 /**
  * Class User
  */
-class User extends Eloquent implements UserInterface, RemindableInterface
+class User extends SentryUserModel implements UserInterface, RemindableInterface
 {
 
 
@@ -189,7 +190,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
             && $user->phone
             && $user->image
         ) {
-            Event::queue('user.fullProfile', [$user]);
+            Event::fire('user.fullProfile', [$user]);
             Milestone::where('user_id', $user->id)->first()->add('profile');
         }
     }

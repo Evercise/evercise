@@ -12,12 +12,15 @@
 
 /** AVAILABLE EVENT NAMES */
 /*
- * Event::queue('user.registeredFacebook', [$user]);
+ * Event::fire('user.registeredFacebook', [$user]);
  *
  * user.registered  =>  After the User has Registered
  * user.registeredFacebook => After User Signs up with facebook
  * user.edit => User edited there profile
  * user.changedPassword => User has changed there password
+ * user.login => User has changed there password
+ * user.logout => User has changed there password
+ * user.loginFacebook => User has changed there password
  * user.fullProfile => User has completed there profile
  * trainer.registered => trainer has registered
  * trainer.edit => trainer has edited there user details
@@ -37,8 +40,21 @@
 return [
 
     '0'  => [
-        ['user.registered' => 'User@hasRegistered'],
-        ['trainer.registered' => 'Tracking@userRegistered'],
+
+
+    ],
+    '10' => [
+        //All Tracking is Low Priority
+        ['user.registered' => 'Tracking@userRegistered'],
+        ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'],
+        ['trainer.registered' => 'Tracking@trainerRegistered'],
+        ['user.login' => 'Tracking@userLogin'],
+        ['user.loginFacebook' => 'Tracking@userFacebookLogin'],
+        ['user.edit' => 'Tracking@userEdit'],
+        ['trainer.edit' => 'Tracking@trainerEdit'],
+        ['user.changedPassword' => 'Tracking@userChangePassword']
+
+
     ]
 ];
 
