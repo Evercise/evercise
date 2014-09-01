@@ -19,6 +19,7 @@
  * user.edit => User edited there profile
  * user.changedPassword => User has changed there password
  * user.login => User has changed there password
+ * user.logout => User has changed there password
  * user.loginFacebook => User has changed there password
  * user.fullProfile => User has completed there profile
  * trainer.registered => trainer has registered
@@ -39,11 +40,19 @@
 return [
 
     '0'  => [
+
+
+    ],
+    '10' => [
+        //All Tracking is Low Priority
         ['user.registered' => 'Tracking@userRegistered'],
         ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'],
         ['trainer.registered' => 'Tracking@trainerRegistered'],
         ['user.login' => 'Tracking@userLogin'],
-        ['user.login' => 'Tracking@userFacebookLogin'],
+        ['user.loginFacebook' => 'Tracking@userFacebookLogin'],
+        ['user.edit' => 'Tracking@userEdit'],
+        ['trainer.edit' => 'Tracking@trainerEdit'],
+        ['user.changedPassword' => 'Tracking@userChangePassword']
 
 
     ]

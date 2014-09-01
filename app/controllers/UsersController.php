@@ -71,28 +71,34 @@ class UsersController extends \BaseController
                 $first_name = Input::get('first_name');
                 $last_name = Input::get('last_name');
                 if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'], $email_address, $first_name, $last_name);
+                    User::subscribeMailchimpNewsletter(
+                        Config::get('mailchimp')['newsletter'],
+                        $email_address,
+                        $first_name,
+                        $last_name
+                    );
                 }
 
                 Sentry::login($user, true);
+
+                Event::fire('user.registered', [$user]);
 
                 if (Input::has('redirect')) {
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url' => Input::get('redirect')
+                            'url'      => Input::get('redirect')
                         ]
                     );
                 } else {
 
                     User::sendWelcomeEmail($user);
 
-                    Event::fire('user.registered', [$user]);
 
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url' => route('users.edit.tab', [$user->id, 'evercoins'])
+                            'url'      => route('users.edit.tab', [$user->id, 'evercoins'])
                         ]
                     );
 
@@ -153,7 +159,12 @@ class UsersController extends \BaseController
                 $token = Token::where('user_id', $user->id)->first();
                 $token->addToken('facebook', Token::makeFacebookToken($getUser));
 
-                User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'], $user->email, $user->first_name, $user->last_name);
+                User::subscribeMailchimpNewsletter(
+                    Config::get('mailchimp')['newsletter'],
+                    $user->email,
+                    $user->first_name,
+                    $user->last_name
+                );
 
                 User::sendFacebookWelcomEmail($user, $inputs);
 
@@ -174,6 +185,10 @@ class UsersController extends \BaseController
                 $user = Sentry::findUserByLogin($me['email']);
 
                 Sentry::login($user, false);
+
+                if (Sentry::check()) {
+                    Event::fire('user.loginFacebook', [$user]);
+                }
 
                 $result = User::facebookRedirectHandler($redirect, $user);
 
@@ -240,12 +255,13 @@ class UsersController extends \BaseController
 
             User::checkProfileMilestones($this->user);
 
-            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user'.'.edit', [$this->user]);
+            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
 
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url' => Request::root() . '/' . (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
+                    'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn(
+                        ) ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
                 ]
             );
         } else {
@@ -322,7 +338,7 @@ class UsersController extends \BaseController
                 return Response::json(
                     [
                         'validation_failed' => 1,
-                        'errors' => ['new_password' => 'your new password matches your old password']
+                        'errors'            => ['new_password' => 'your new password matches your old password']
                     ]
                 );
             }
@@ -390,7 +406,7 @@ class UsersController extends \BaseController
             if (Request::ajax()) {
                 $result = array(
                     'validation_failed' => 1,
-                    'errors' => $validator->errors()->toArray()
+                    'errors'            => $validator->errors()->toArray()
                 );
 
                 return Response::json($result);
@@ -429,14 +445,14 @@ class UsersController extends \BaseController
                 return Response::json(
                     [
                         'callback' => 'gotoUrl',
-                        'url' => route('home')
+                        'url'      => route('home')
                     ]
                 );
 
             } else {
                 $result = array(
                     'validation_failed' => 1,
-                    'errors' => array('email' => array(0 => 'Wrong email'))
+                    'errors'            => array('email' => array(0 => 'Wrong email'))
                 );
 
                 return Response::json($result);
@@ -458,6 +474,11 @@ class UsersController extends \BaseController
      */
     public function logout()
     {
+        $user = Sentry::getUser();
+
+        if (!empty($user->id)) {
+            Event::fire('user.logout', [$user]);
+        }
         Sentry::logout();
 
         $cookie = Cookie::forget('PHPSESSID');
