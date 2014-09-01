@@ -353,7 +353,7 @@ class SessionsController extends \BaseController {
 	        	'transactionId' => $transactionId, 
 			));
 
-        Event::queue('session.payed', [$user,$evercisegroup ]);
+        Event::fire('session.payed', [$user,$evercisegroup ]);
 
 		Session::forget('amountToPay');
 		Session::forget('sessionIds');
@@ -459,7 +459,7 @@ class SessionsController extends \BaseController {
 	        	'everciseSession' => date('dS M y', strtotime($session->date_time)), 
 			));
 
-            Event::queue('session.left', [$user , $evercisegroup, $session]);
+            Event::fire('session.left', [$user , $evercisegroup, $session]);
 			return Response::json(['message' => ' session: '.$id, 'callback' => 'leftSession']);
 		}
 		else

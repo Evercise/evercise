@@ -100,7 +100,7 @@ class Evercisesession extends \Eloquent
             Trainerhistory::create(array('user_id' => $user->id, 'type' => 'created_session', 'display_name' => $user->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));
 
             /* callback */
-            Event::queue('session.create', [$user ]);
+            Event::fire('session.create', [$user ]);
             return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
         }
     }
@@ -135,7 +135,7 @@ class Evercisesession extends \Eloquent
                 'duration' => $undoDetails->duration
             ));
 
-            Event::queue('session.delete', [$user, $evercisesession ]);
+            Event::fire('session.delete', [$user, $evercisesession ]);
             return Response::json(['mode' => 'undo', 'session_id' => $session->id]);
         }
 

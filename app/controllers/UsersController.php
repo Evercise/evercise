@@ -87,7 +87,7 @@ class UsersController extends \BaseController
 
                     User::sendWelcomeEmail($user);
 
-                    Event::queue('user.registered', [$user]);
+                    Event::fire('user.registered', [$user]);
 
                     return Response::json(
                         [
@@ -165,7 +165,7 @@ class UsersController extends \BaseController
 
                 $result = User::facebookRedirectHandler($redirect, $user, trans('redirect-messages.facebook_signup'));
 
-                Event::queue('user.registeredFacebook', [$user]);
+                Event::fire('user.registeredFacebook', [$user]);
 
                 return $result;
             }
@@ -240,7 +240,7 @@ class UsersController extends \BaseController
 
             User::checkProfileMilestones($this->user);
 
-            Event::queue(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user'.'.edit', [$this->user]);
+            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user'.'.edit', [$this->user]);
 
             return Response::json(
                 [
@@ -330,7 +330,7 @@ class UsersController extends \BaseController
                 $this->user->password = $newPassword;
                 $this->user->save();
 
-                Event::queue('user.changedPassword', [$user]);
+                Event::fire('user.changedPassword', [$user]);
 
                 return Response::json(['result' => 'changed', 'callback' => 'successAndRefresh']);
             }
@@ -423,7 +423,7 @@ class UsersController extends \BaseController
                         'email' => $email
                     ]
                 );
-                Event::queue('user.changedPassword', [$user]);
+                Event::fire('user.changedPassword', [$user]);
 
                 Session::flash('notification', 'Password reset successful');
                 return Response::json(

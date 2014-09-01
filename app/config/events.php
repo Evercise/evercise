@@ -12,7 +12,7 @@
 
 /** AVAILABLE EVENT NAMES */
 /*
- * Event::queue('user.registeredFacebook', [$user]);
+ * Event::fire('user.registeredFacebook', [$user]);
  *
  * user.registered  =>  After the User has Registered
  * user.registeredFacebook => After User Signs up with facebook
@@ -37,8 +37,10 @@
 return [
 
     '0'  => [
-        ['user.registered' => 'User@hasRegistered'],
-        ['trainer.registered' => 'Tracking@userRegistered'],
+        ['user.registered' => 'Tracking@userRegistered'],
+        ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'],
+        ['trainer.registered' => 'Tracking@trainerRegistered'],
+
     ]
 ];
 
