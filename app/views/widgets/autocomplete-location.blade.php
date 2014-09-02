@@ -6,3 +6,4 @@
 <div id="locationField">
   <input id="location" placeholder="{{trans('discover.location_box')}}" type="text" name="location" value="{{ isset($selectedLocation) ? $selectedLocation : '' }}"/>
 </div>
+ 
