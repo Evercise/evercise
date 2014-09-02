@@ -356,17 +356,6 @@ function MapWidgetloadScript(params) {
 
     document.body.appendChild(script);
 
-    /*var bubble = document.createElement('script');
-    bubble.type = 'text/javascript';
-    bubble.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble.js';
-    document.body.appendChild(bubble);
-
-
-    var cluster = document.createElement('script');
-    cluster.type = 'text/javascript';
-    cluster.src = 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/src/markerclusterer.js';
-    document.body.appendChild(cluster);
-    */
 
   }
   else
