@@ -270,7 +270,7 @@ class Evercisesession extends \Eloquent
     /**
      * @return \Illuminate\View\View
      */
-    public static function confirmJoinSessions($user)
+    public static function confirmJoinSessions()
     {
         $sessionIds = Session::get('sessionIds', false);
         $evercisegroupId = Session::get('evercisegroupId', false);
@@ -287,7 +287,7 @@ class Evercisesession extends \Eloquent
 
         }), 'evercisesession')->find($evercisegroupId);
 
-        if (Sessionmember::where('user_id', $user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
+        if (Sessionmember::where('user_id', Sentry::getUser()->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
             return Response::json('USER HAS ALREADY JOINED SESSION');
         }
 
