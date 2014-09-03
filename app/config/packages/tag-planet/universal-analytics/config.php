@@ -19,7 +19,7 @@ return array(
      * 
      * UniversalAnalytics::get('UA-123456-1')->autoPageview = false;
      */
-    'autoPageview' => true,
+    'autoPageview' => getenv('DEBUG_APP') ? false : true,
     
     /*
      * Account IDs
