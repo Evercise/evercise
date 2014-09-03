@@ -32,7 +32,7 @@ class SessionsController extends \BaseController
      */
     public function store()
     {
-        return Evercisesession::validateAndStore($this->user);
+        return Evercisesession::validateAndStore();
     }
 
     /**
@@ -77,7 +77,7 @@ class SessionsController extends \BaseController
     public function destroy($id)
     {
 
-        return Evercisesession::deleteById($id, $this->user);
+        return Evercisesession::deleteById($id);
 
     }
 
@@ -199,52 +199,8 @@ class SessionsController extends \BaseController
 	*/
     public function joinSessions()
     {
-        //return 'nope';
+        return Evercisesession::confirmJoinSessions($this->user);
 
-        $sessionIds = Session::get('sessionIds', false);
-        $evercisegroupId = Session::get('evercisegroupId', false);
-        if (!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
-        if (!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
-
-        if (empty($sessionIds)) {
-            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
-        }
-
-
-        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
-            $query->whereIn('id', $sessionIds);
-
-        }), 'evercisesession')->find($evercisegroupId);
-
-        if (Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
-            return Response::json('USER HAS ALREADY JOINED SESSION');
-        }
-
-        $userTrainer = User::find($evercisegroup->user_id);
-
-        $members = [];
-        $total = 0;
-        $price = 0;
-        foreach ($evercisegroup->evercisesession as $key => $value) {
-            $members[] = count($value->sessionmembers); // Count those members
-            ++$total;
-            $price = $price + $value->price;
-        }
-
-        $pricePence = SessionPayment::poundsToPennies($price);
-
-        Session::put('sessionIds', $sessionIds);
-        Session::put('amountToPay', $price);
-
-        return View::make('sessions.join')
-            ->with('evercisegroup', $evercisegroup)
-            ->with('members', $members)
-            ->with('userTrainer', $userTrainer)
-            ->with('totalPrice', $price)
-            ->with('totalPricePence', $pricePence)
-            ->with('totalSessions', $total)
-            ->with('sessionIds', $sessionIds);
-        //return var_dump($sessionId);
     }
 
     function payForSessions($id)
