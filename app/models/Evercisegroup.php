@@ -238,9 +238,24 @@ class Evercisegroup extends \Eloquent
         $articles = array_slice($allResults,$offset,$perPage);
         $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
 
+        foreach($allResults as $result){
+            unset($result['description']);
+            unset($result['default_duration']);
+            unset($result['published']);
+            unset($result['created_at']);
+            unset($result['updated_at']);
+            unset($result['user']);
+            unset($result['venue_id']);
+            unset($result['title']);
+            unset($result['gender']);
+            $mapResult[] = $result->toJson();
+        }
+
+        //return json_encode($mapResult);
+
 
         return View::make('evercisegroups.search')
-            ->with('places', $paginatedResults->toJson())
+            ->with('places', json_encode($mapResult))
             ->with('evercisegroups', $paginatedResults);
     }
 

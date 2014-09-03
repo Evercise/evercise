@@ -129,9 +129,6 @@ function DiscoverMapWidgetInit() {
   infoBubble();
   var everciseGroups = JSON.parse($('#places').val());
 
-
-  everciseGroups = everciseGroups.data;
-
   if(!everciseGroups.length){
     $('#map-canvas').html('<h5>'+laracasts.zero_results+'</h5>');
   }else{
@@ -201,9 +198,10 @@ function DiscoverMapWidgetInit() {
 
     
 
-    for (i = 0; i < everciseGroups.length; i++) { 
-      var venue = everciseGroups[i].venue;
-      var sessions = everciseGroups[i].futuresessions;
+    for (i = 0; i < everciseGroups.length; i++) {
+        var evercisegroup = JSON.parse(everciseGroups[i]);
+      var venue = evercisegroup.venue;
+      var sessions = evercisegroup.futuresessions;
 
       if (venue) {
 
@@ -221,10 +219,10 @@ function DiscoverMapWidgetInit() {
         bounds.extend(latlng);
        
        var rating = 0;
-       for (j = 0; j < everciseGroups[i].ratings.length; j++) {
-          rating += everciseGroups[i].ratings[j].stars;
+       for (j = 0; j < evercisegroup.ratings.length; j++) {
+          rating += evercisegroup.ratings[j].stars;
        }
-       rating /= everciseGroups[i].ratings.length;
+       rating /= evercisegroup.ratings.length;
         
         //trace(i, true);
         var infowindow = new InfoBubble({
@@ -233,7 +231,7 @@ function DiscoverMapWidgetInit() {
         });
 
 
-        var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+everciseGroups[i].id+'">'+everciseGroups[i].name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+everciseGroups[i].default_price+'<span></div></div>';
+        var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+evercisegroup.id+'">'+evercisegroup.name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+evercisegroup.default_price+'<span></div></div>';
 
         var group = everciseGroups[i].name;
         var venue = venue.name;
