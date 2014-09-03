@@ -12,7 +12,7 @@ class EvercisegroupsShowComposer {
             'initJoinEvercisegroup'         =>  1,            
             'initSwitchView'                =>  1,          
             'initScrollAnchor'              =>  1,            
-            'MapWidgetloadScript'           =>  1,           
+            'MapWidgetloadScript'           =>  json_encode(['mapPointerDraggable' => false]),
             'initToolTip'                   =>  1,           
             'zero_results'       	  	      => 	trans('discover.zero_results')             
         ]
