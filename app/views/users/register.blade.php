@@ -35,7 +35,7 @@
 		@include('users.create', ['type' => isset($redirect) ? $redirect : null])
 	</div>
 	<div id="trainer" class="switch-body tab-view">
-		@include('users.create' , ['type' => isset($redirect) ? $redirect : route('trainers.create') , 'typeId' => 'trainer', 'checkboxId' => 'trainerNewsletter'  ])
+		@include('users.create' , ['type' => isset($redirect) ? $redirect : 'trainers.create' , 'typeId' => 'trainer', 'checkboxId' => 'trainerNewsletter'  ])
 	</div>
 		
 </div>
