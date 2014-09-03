@@ -129,6 +129,23 @@ Route::filter('csrf', function()
 
 App::missing(function($exception)
 {
+    //Since we have a fuckup here.. we need to do this one manually
+    if (Request::is('trainer/*'))
+    {
+        return Redirect::to(str_replace('trainer/', 'trainers/', Request::url()), 301);
+    }
+
+    $redirects = Config::get('evercise.301_REDIRECTS');
+
+    $current_url= ltrim($_SERVER['REQUEST_URI'],'/');
+
+    foreach($redirects as $url => $route) {
+        if($url == $current_url) {
+            return Redirect::route($route, [], 301);
+        }
+    }
+
+
     return Response::view('errors.missing', array(), 404);
 });
 

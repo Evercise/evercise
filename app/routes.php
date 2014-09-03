@@ -12,6 +12,8 @@
 */
 
 
+/**** KEEP IN MIND THAT trainer/* is being 301 redirect to trainers/* in the filters.php FILE!!! ***/
+
 /* Freking wrong url on page */
 Route::get('what_is_evercise', function() {
     return Redirect::to('about');
