@@ -9,7 +9,7 @@
             @include('widgets.upload-form', array('uploadImage' => $userImage, 'default_image' => HTML::image( '/img/add_users.png', 'preview image', array('class' => 'class-block-img')) , 'label' => trans('trainers-create.upload_image'), 'fieldtext'=>trans('image.choose_class_image_tooltip')))
         </div>
     
-        {{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers', 'method' => 'post', 'class' => 'create-form')) }}
+        {{ Form::open(array('id' => 'trainer_create', 'route' => 'trainers.store', 'method' => 'post', 'class' => 'create-form')) }}
 
         @include('form.blank', array('blank'=>'image'))
         @if ($errors->has('image'))

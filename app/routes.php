@@ -25,7 +25,7 @@ Route::resource('users', 'UsersController');
 Route::resource('sessions', 'SessionsController');
 Route::resource('ratings', 'RatingsController');
 //Route::resource('evercisegroups', 'EvercisegroupsController');
-Route::resource('trainers', 'TrainersController');
+//Route::resource('trainers', 'TrainersController');
 Route::resource('payment', 'PaypalPaymentController');
 Route::resource('stripe', 'StripePaymentController');
 Route::resource('wallets', 'WalletsController');
@@ -63,8 +63,10 @@ Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' 
 // trainers
 Route::get('trainers/trainer/signup', array('as'=>'trainers.trainerSignup', 'uses'=>'TrainersController@trainerSignup'));
 Route::get('trainers/create', array('as'=>'trainers.create', 'uses'=>'TrainersController@create'));
+Route::get('trainers/{id}/edit', array('as'=>'trainers.edit', 'uses'=>'TrainersController@edit'));
 Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
-
+Route::post('trainers/store', array('as' => 'trainers.store', 'uses' => 'TrainersController@store'));
+Route::put('trainers/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
 
 // evercisegroups (classes)
 Route::get('evercisegroups', ['as' => 'evercisegroups.index', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@index']);

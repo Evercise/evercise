@@ -20,6 +20,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'password',
         'first_name',
         'last_name',
+        'activated',
         'email',
         'gender',
         'activation_code',
