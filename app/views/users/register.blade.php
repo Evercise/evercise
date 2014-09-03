@@ -32,10 +32,10 @@
 
 	</div>
 	<div id="user" class="switch-body tab-view {{ $ppcCode ? 'selected' : '' }}">
-		@include('users.create')
+		@include('users.create', ['type' => isset($redirect) ? $redirect : null])
 	</div>
 	<div id="trainer" class="switch-body tab-view">
-		@include('users.create' , ['type' => route('trainers.create') , 'typeId' => 'trainer', 'checkboxId' => 'trainerNewsletter'  ])
+		@include('users.create' , ['type' => isset($redirect) ? $redirect : route('trainers.create') , 'typeId' => 'trainer', 'checkboxId' => 'trainerNewsletter'  ])
 	</div>
 		
 </div>

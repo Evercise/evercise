@@ -52,7 +52,7 @@ Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthContr
 Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot'));
 
 //  Users
-Route::get('users/create', array('as'=>'users.create', 'uses'=>'UsersController@create'));
+Route::get('users/create/{redirect?}', array('as'=>'users.create', 'uses'=>'UsersController@create'));
 Route::get('users/{id}/edit/{tab}', array('as'=>'users.edit.tab', 'uses'=>'UsersController@edit'));
 Route::get('/users/{display_name}/activate/{code}', array('as' => 'users.activate', 'uses' => 'UsersController@activate'));
 Route::get('/users/{display_name}/activate', array('as' => 'users.activatecodeless', 'uses' => 'UsersController@pleaseActivate'));
