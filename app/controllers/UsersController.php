@@ -346,7 +346,7 @@ class UsersController extends \BaseController
                 $this->user->password = $newPassword;
                 $this->user->save();
 
-                Event::fire('user.changedPassword', [$user]);
+                Event::fire('user.changedPassword', [ $this->user ]);
 
                 return Response::json(['result' => 'changed', 'callback' => 'successAndRefresh']);
             }
