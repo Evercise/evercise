@@ -149,6 +149,7 @@ class Evercisesession extends \Eloquent
 
     /**
      * @param $sessionId
+     * @param $userList
      * @return \Illuminate\Http\JsonResponse
      */
     public static function mailMembers($sessionId, $userList)
@@ -177,6 +178,7 @@ class Evercisesession extends \Eloquent
             'body' => $body
         ));
 
+        Log::info('Members of Session '. $sessionId .' mailed by trainer');
         return Response::json(['message' => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId]);
     }
 
