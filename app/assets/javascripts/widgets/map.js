@@ -155,7 +155,7 @@ function DiscoverMapWidgetInit() {
 
     var mapOptions = {
       styles: styles,
-      zoom: 10,
+      zoom: 11,
       maxZoom: 16,
       center: new google.maps.LatLng( 51.5143825, -0.11134839999999713),
       zoomControl: true,
@@ -185,7 +185,7 @@ function DiscoverMapWidgetInit() {
     var mcOptions = { 
       gridSize: 8,
       maxZoom: 20,
-      zoom: 5,
+      zoom: 15,
       styles: clusterStyles
      };
 
@@ -216,7 +216,7 @@ function DiscoverMapWidgetInit() {
                   parseFloat(venue.lat),
                   parseFloat(venue.lng));
 
-        bounds.extend(latlng);
+        //bounds.extend(latlng);
        
        var rating = 0;
        for (j = 0; j < evercisegroup.ratings.length; j++) {
@@ -259,7 +259,7 @@ function DiscoverMapWidgetInit() {
         marker.set('venue', venue);
         markers.push(marker);
       }
-      map.fitBounds(bounds);
+     // map.fitBounds(bounds);
 
     };
 
