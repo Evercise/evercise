@@ -113,6 +113,8 @@ class UsersController extends \BaseController
 
     public function fb_login($redirect = null)
     {
+
+
         $getUser = User::getFacebookUser();
 
         $me = $getUser['user_profile'];
@@ -181,14 +183,18 @@ class UsersController extends \BaseController
                 return $result;
             }
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
+
             try {
                 $user = Sentry::findUserByLogin($me['email']);
 
                 Sentry::login($user, false);
 
+
+
                 if (Sentry::check()) {
                     Event::fire('user.loginFacebook', [$user]);
                 }
+
 
                 $result = User::facebookRedirectHandler($redirect, $user);
 

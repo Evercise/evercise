@@ -108,7 +108,7 @@ class TrainersController extends \BaseController {
 			$trainer = Trainer::createOrFail(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
 
 			// Duck out if record already exists
-			if (!$trainer) return Response::json(route('trainers.edit', array('id'=> $user->id)));
+			if (!$trainer) return Response::json(['callback' => 'gotoUrl', 'url' =>  route('trainers.edit.tab', ['id'=> $user->id, 'evercoins'])]);
 
 			// Use firstOrCreate just incase to make sure no duplicates are made
 			$wallet = Wallet::firstOrCreate(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
