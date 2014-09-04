@@ -156,7 +156,7 @@ class SessionsController extends \BaseController
 		return View::make('sessions.mail_trainer')
 			->with('sessionId', $sessionId)
 			->with('trainerId', $trainerId)
-			->with('userId', $this->user->id)
+			->with('userId', Sentry::getUser()->id)
 			->with('dateTime', $dateTime)
 			->with('groupName', $groupName)
 			->with('name', $name);
@@ -185,7 +185,7 @@ class SessionsController extends \BaseController
 
         $redirect_after_login_url = 'sessions.join.get';
 
-        if (!$this->user) {
+        if (!Sentry::getUser()) {
             return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url);
         } else {
             return Response::json(['status' => 'logged_in']);
@@ -199,7 +199,7 @@ class SessionsController extends \BaseController
 	*/
     public function joinSessions()
     {
-        return Evercisesession::confirmJoinSessions($this->user);
+        return Evercisesession::confirmJoinSessions();
 
     }
 
@@ -207,8 +207,8 @@ class SessionsController extends \BaseController
     {
         /* get session ids */
         $sessionIds = Session::get('sessionIds');
-        /* get currnet user */
-        $user = User::find($this->user->id);
+        /* get current user */
+        $user = User::find(Sentry::getUser()->id);
 
         $evercisegroupId = $id;
 
