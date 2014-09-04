@@ -77,7 +77,26 @@ Route::delete('/evercisegroups/{id}', array('as' => 'evercisegroups.destroy', 'u
 
 Route::get('/evercisegroups/clone_evercisegroups/{id}', array('as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG'));
 Route::post('/evercisegroups/delete/{id}', array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG'));
-Route::get('/evercisegroups/search/classes', array('as' => 'evercisegroups.search', 'uses' => 'EvercisegroupsController@searchEg'));
+
+
+
+//NEW STATIC PAGES
+
+// layouts and static pages
+Route::get('uk/about', array('as' => 'static.about', 'uses' => 'StaticController@show'));
+Route::get('uk/terms_of_use', array('as' => 'static.terms_of_use', 'uses' => 'StaticController@show'));
+Route::get('uk/privacy', array('as' => 'static.privacy', 'uses' => 'StaticController@show'));
+Route::get('uk/the_team', array('as' => 'static.the_team', 'uses' => 'StaticController@show'));
+Route::get('uk/faq', array('as' => 'static.faq', 'uses' => 'StaticController@show'));
+Route::get('uk/class_guidelines', array('as' => 'static.class_guidelines', 'uses' => 'StaticController@show'));
+Route::get('uk/contact_us', array('as' => 'static.contact_us', 'uses' => 'StaticController@show'));
+Route::get('uk/how_it_works', array('as' => 'static.how_it_works', 'uses' => 'StaticController@show'));
+
+//Redirect All UK segments to the same function and we will go from there
+Route::any('/uk/{allsegments}', array('as' => 'evercisegroups.parse', 'uses' => 'EvercisegroupsController@parseUrl'))->where('allsegments','(.*)?');
+
+
+
 
 // VenuesController
 Route::get('venues', 'VenuesController@index');
