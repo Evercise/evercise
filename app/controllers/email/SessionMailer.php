@@ -22,7 +22,7 @@ class SessionMailer extends Mailer
     }
 
 
-    public function remind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    public function remind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId )
     {
 
         $data['userList'] = $userList;
@@ -31,12 +31,46 @@ class SessionMailer extends Mailer
         // ------ SEND EMAIL TO TRAINER ------
         $body = '
 			<p>Hi ' . $trainerName . ',</p>
-			<br>
+
 			<p>You have arranged the class ' . $group . ' to take place tomorrow ' . date('d-M-Y', strtotime($dateTime)) . ' at ' . date('h:m', strtotime($dateTime)) . '.</p>
-			<br>
-			<p>Please note that more participants can join up until one hour before the class is due to commence.</p>
-			<p>We hope it goes well!</p>
-			<br>
+
+			<p>Please note that more participants can join up until one hour before the class is due to commence.</p>';
+
+        $body .= '
+            <table align = "left" width = "600" cellpadding = "0" cellspacing = "0" bgcolor = "#ffffff" style = "font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; padding: 0px 0px 20px 0px " >
+                <tr align = "left" height = "20" bgcolor = "#180B16" style = "font-style:italic;color:#ffffff; font-size:12px; " >
+                    <th colspan = "2" style = "border:1px solid #ffffff; padding: 0px 5px 0px 5px;" >
+                        Your Participant list
+                    </th >
+                </tr >
+                <col width = "200" style = "background-color: #FFD21E; color: #000000 ;" />
+                <col span = "2" style = "background-color: #FFF6D0; color: #000000;" />
+        ';
+
+
+        foreach ($userList as $name => $userEmail)
+        {
+            $body .= '
+                 <tr height = "20" >
+                    <td style = "border:1px solid #ffffff; font-weight:bold; font-size:12px; font-style:italic;padding: 0px 5px 0px 5px;" >
+                        Name
+                    </td >
+                    <td style = "border:1px solid #ffffff; font-size:12px; padding: 0px 5px 0px 5px;" >
+                       ' . $name . '
+                    </td >
+                </tr >
+
+            ';
+        }
+
+        $body .= '</table>';
+
+
+		$body .= '
+            <br>
+            <br>
+			<p style="margin-top: 40px">We hope it goes well!</p>
+
 			<p>If you have any problems, please get in contact. We’re always happy to help.</p>
 		';
 
@@ -50,6 +84,7 @@ class SessionMailer extends Mailer
         $data['body'] = $body;
         $data['link'] = HTML::linkRoute('evercisegroups.show', 'Class page', $classId);
         $data['linkLabel'] = 'Go to your class hub: ';
+
 
         $this->sendTo($trainerEmail, $subject, $view, $data);
 
@@ -242,6 +277,18 @@ class SessionMailer extends Mailer
             </table >
         ';
 
+        $trainer_body = '
+        <p> Hi '.$userTrainer->display_name.'</p>
+        <p>'.$display_name.' has joined the following class:</p>
+        ';
+        $trainer_body .= '<p>'.$evercisegroup->name.'</p>';
+        foreach ($evercisegroup->evercisesession as $key => $session) {
+            $trainer_body .= '<p>'. date("dS F Y", strtotime($session->date_time)).' at '.date("H:i a", strtotime($session->date_time)).'</p>';
+        }
+
+        $trainer_body .= '<p>We hope it goes well!</p>';
+
+
 
         $subject = 'You have joined a class.';
         $trainer_subject = 'Someone has joined you class';
@@ -253,9 +300,9 @@ class SessionMailer extends Mailer
         $user_data['body'] = $body;
 
         $trainer_data['title'] = $trainer_subject;
-        $trainer_data['mainHeader'] = 'Someone has joined your class';
-        $trainer_data['subHeader'] = 'Please find all the useful details below.';
-        $trainer_data['body'] = $body;
+        $trainer_data['mainHeader'] = 'Congratulations!';
+        $trainer_data['subHeader'] = 'Someone just bought one of your classes.';
+        $trainer_data['body'] = $trainer_body;
 
         $this->sendTo($email, $subject, $view, $user_data);
         $this->sendTo( $userTrainer->email, $trainer_subject, $view, $trainer_data);
