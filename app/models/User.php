@@ -30,6 +30,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'gender',
         'activation_code',
         'dob',
+        'area_code',
+        'phone',
         'directory',
         'image'
     );

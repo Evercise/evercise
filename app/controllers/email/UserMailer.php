@@ -189,6 +189,8 @@ class UserMailer extends Mailer {
 
 	public function trainer_confirm($email, $display_name)
 	{
+        $this->trainer_admin_notification($email, $display_name);
+
 		$body = '
 			<p>Hi '.$display_name.'</p>
 			<p>We are delighted you have decided to become an Evercise trainer! You can start creating classes straight away, but these will only become visible to the public once your application has been processed. This should take no longer than 48 hours.
@@ -210,6 +212,34 @@ class UserMailer extends Mailer {
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
+
+    /**
+     * Send a notification email to the admin email address set in config.
+     *
+     * @param $email
+     * @param $display_name
+     */
+    public function trainer_admin_notification($email, $display_name)
+    {
+        $body = '
+			<p>Hi</p>
+			<p>A new trainer has signed up, please verify the account</p>
+			<p>Email: '.$email.'</p>
+			<p>Display Name: '.$display_name.'</p>
+		';
+
+
+        $subject = 'Evercise trainer verification';
+        $view = 'emails.template';
+        $data['title'] = 'Evercise trainer verification';
+        $data['mainHeader'] = 'A new trainer is awaiting verification';
+        $data['subHeader'] = 'You will need to be logged in with an admin account';
+        $data['body'] = $body;
+        $data['link'] = HTML::linkRoute('admin.pending', 'Pending Trainers');
+        $data['linkLabel'] = 'Verify the new trainer here:';
+
+        return $this->sendTo(getenv('EMAIL_ADMIN'), $subject, $view, $data );
+    }
 
 
 
@@ -252,6 +282,7 @@ class UserMailer extends Mailer {
 
 	public function ppc($email, $categoryId, $ppcCode)
 	{
+
 
 		$body = '
 		<h5>You can also get an extra 500 Evercoins (&pound;5) by referring three of your friends!</h5>
