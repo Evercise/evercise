@@ -74,7 +74,7 @@ function initEvercisegroups()
                 {
                    trace('Did your mother never tell you not to touch over peoples stuff');
                 }
-                initChart('total-members-bookings-'+EGindex);
+                //initChart('total-members-bookings-'+EGindex); // This was causing an error
              }
         );
 

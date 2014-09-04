@@ -60,10 +60,10 @@ class PaypalPaymentController extends BaseController {
 
 
      $gateway = Omnipay::create('PayPal_Express');
-     $gateway->setUsername('evercise.info_api1.gmail.com');
-     $gateway->setPassword('H2HGKAYP5A38P7TJ');
-     $gateway->setSignature('AiPC9BjkCyDFQXbSkoZcgqH3hpacArhVam-NDXjgAOd7UFYdySpW9nkW');
-     $gateway->setTestMode(false);
+     $gateway->setUsername(getenv('PAYPAL_USER'));
+     $gateway->setPassword(getenv('PAYPAL_PASS'));
+     $gateway->setSignature(getenv('PAYPAL_SIGNATURE'));
+     $gateway->setTestMode(getenv('PAYPAL_TESTMODE'));
 
      $response = $gateway->purchase(
                 array(

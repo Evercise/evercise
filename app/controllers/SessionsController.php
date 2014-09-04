@@ -32,7 +32,7 @@ class SessionsController extends \BaseController
      */
     public function store()
     {
-        return Evercisesession::validateAndStore($this->user);
+        return Evercisesession::validateAndStore();
     }
 
     /**
@@ -77,7 +77,7 @@ class SessionsController extends \BaseController
     public function destroy($id)
     {
 
-        return Evercisesession::deleteById($id, $this->user);
+        return Evercisesession::deleteById($id);
 
     }
 
@@ -156,7 +156,7 @@ class SessionsController extends \BaseController
 		return View::make('sessions.mail_trainer')
 			->with('sessionId', $sessionId)
 			->with('trainerId', $trainerId)
-			->with('userId', $this->user->id)
+			->with('userId', Sentry::getUser()->id)
 			->with('dateTime', $dateTime)
 			->with('groupName', $groupName)
 			->with('name', $name);
@@ -185,7 +185,7 @@ class SessionsController extends \BaseController
 
         $redirect_after_login_url = 'sessions.join.get';
 
-        if (!$this->user) {
+        if (!Sentry::getUser()) {
             return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url);
         } else {
             return Response::json(['status' => 'logged_in']);
@@ -199,60 +199,16 @@ class SessionsController extends \BaseController
 	*/
     public function joinSessions()
     {
-        //return 'nope';
+        return Evercisesession::confirmJoinSessions();
 
-        $sessionIds = Session::get('sessionIds', false);
-        $evercisegroupId = Session::get('evercisegroupId', false);
-        if (!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
-        if (!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
-
-        if (empty($sessionIds)) {
-            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
-        }
-
-
-        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
-            $query->whereIn('id', $sessionIds);
-
-        }), 'evercisesession')->find($evercisegroupId);
-
-        if (Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
-            return Response::json('USER HAS ALREADY JOINED SESSION');
-        }
-
-        $userTrainer = User::find($evercisegroup->user_id);
-
-        $members = [];
-        $total = 0;
-        $price = 0;
-        foreach ($evercisegroup->evercisesession as $key => $value) {
-            $members[] = count($value->sessionmembers); // Count those members
-            ++$total;
-            $price = $price + $value->price;
-        }
-
-        $pricePence = SessionPayment::poundsToPennies($price);
-
-        Session::put('sessionIds', $sessionIds);
-        Session::put('amountToPay', $price);
-
-        return View::make('sessions.join')
-            ->with('evercisegroup', $evercisegroup)
-            ->with('members', $members)
-            ->with('userTrainer', $userTrainer)
-            ->with('totalPrice', $price)
-            ->with('totalPricePence', $pricePence)
-            ->with('totalSessions', $total)
-            ->with('sessionIds', $sessionIds);
-        //return var_dump($sessionId);
     }
 
     function payForSessions($id)
     {
         /* get session ids */
         $sessionIds = Session::get('sessionIds');
-        /* get currnet user */
-        $user = User::find($this->user->id);
+        /* get current user */
+        $user = User::find(Sentry::getUser()->id);
 
         $evercisegroupId = $id;
 

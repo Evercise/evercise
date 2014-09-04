@@ -57,7 +57,7 @@ class Evercisesession extends \Eloquent
      * @param $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function validateAndStore($user)
+    public static function validateAndStore()
     {
         $validator = Validator::make(
             Input::all(),
@@ -97,10 +97,10 @@ class Evercisesession extends \Eloquent
             $timestamp = strtotime($date_time);
             $niceTime = date('h:ia', $timestamp);
             $niceDate = date('dS F Y', $timestamp);
-            Trainerhistory::create(array('user_id' => $user->id, 'type' => 'created_session', 'display_name' => $user->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));
+            Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'created_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));
 
             /* callback */
-            Event::fire('session.create', [$user ]);
+            Event::fire('session.create', [Sentry::getUser() ]);
             return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
         }
     }
@@ -109,40 +109,47 @@ class Evercisesession extends \Eloquent
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function deleteById($id, $user)
+    public static function deleteById($id)
     {
-        $evercisesession = Evercisesession::select('evercisegroup_id', 'date_time', 'price', 'duration')->where('id', $id)->firstOrFail();
-        if (!is_null($evercisesession)) {
+        try
+        {
+            $evercisesession = Evercisesession::findOrFail($id);
+
             $evercisegroupId = $evercisesession->evercisegroup_id;
+            $user_id = Evercisegroup::where('id', $evercisegroupId)->pluck('user_id');
+            if ($user_id != Sentry::getUser()->id) {
+                Log::error('Attempted deletion of session by unauthorised user');
+                return Response::json(['mode' => 'hack']);
+            }
             $dateTime = $evercisesession->date_time;
             $price = $evercisesession->price;
             $duration = $evercisesession->duration;
-            $user_id = Evercisegroup::where('id', $evercisegroupId)->firstOrFail()->pluck('user_id');
             $undoDetails = ['mode' => 'delete', 'evercisegroup_id' => $evercisegroupId, 'date_time' => $dateTime, 'price' => $price, 'duration' => $duration, 'user_id' => $user_id];
 
-            if ($user_id != $user->id) {
-                return Response::json(['mode' => 'hack']);
-            }
             Evercisesession::destroy($id);
+            Event::fire('session.delete', [Sentry::getUser(), $evercisesession ]);
             return Response::json($undoDetails);
-        } else {
+        }
+        catch (Exception $e)
+        {
             $undoDetails = json_decode(Input::get('undo'));
 
-            $session = Evercisesession::create(array(
+            $evercisesession = Evercisesession::create(array(
                 'evercisegroup_id' => $undoDetails->evercisegroup_id,
                 'date_time' => $undoDetails->date_time,
                 'price' => $undoDetails->price,
                 'duration' => $undoDetails->duration
             ));
 
-            Event::fire('session.delete', [$user, $evercisesession ]);
-            return Response::json(['mode' => 'undo', 'session_id' => $session->id]);
+            Event::fire('session.create', [Sentry::getUser(), $evercisesession ]);
+            return Response::json(['mode' => 'undo', 'session_id' => $evercisesession->id]);
         }
 
     }
 
     /**
      * @param $sessionId
+     * @param $userList
      * @return \Illuminate\Http\JsonResponse
      */
     public static function mailMembers($sessionId, $userList)
@@ -171,6 +178,7 @@ class Evercisesession extends \Eloquent
             'body' => $body
         ));
 
+        Log::info('Members of Session '. $sessionId .' mailed by trainer');
         return Response::json(['message' => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId]);
     }
 
@@ -257,6 +265,56 @@ class Evercisesession extends \Eloquent
         Session::put('sessionIds', $sessionIds);
         Session::put('evercisegroupId', $evercisegroupId);
 
+    }
+
+    /**
+     * @return \Illuminate\View\View
+     */
+    public static function confirmJoinSessions()
+    {
+        $sessionIds = Session::get('sessionIds', false);
+        $evercisegroupId = Session::get('evercisegroupId', false);
+        if (!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
+        if (!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
+
+        if (empty($sessionIds)) {
+            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
+        }
+
+
+        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
+            $query->whereIn('id', $sessionIds);
+
+        }), 'evercisesession')->find($evercisegroupId);
+
+        if (Sessionmember::where('user_id', Sentry::getUser()->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
+            return Response::json('USER HAS ALREADY JOINED SESSION');
+        }
+
+        $userTrainer = User::find($evercisegroup->user_id);
+
+        $members = [];
+        $total = 0;
+        $price = 0;
+        foreach ($evercisegroup->evercisesession as $key => $value) {
+            $members[] = count($value->sessionmembers); // Count those members
+            ++$total;
+            $price = $price + $value->price;
+        }
+
+        $pricePence = SessionPayment::poundsToPennies($price);
+
+        Session::put('sessionIds', $sessionIds);
+        Session::put('amountToPay', $price);
+
+        return View::make('sessions.join')
+            ->with('evercisegroup', $evercisegroup)
+            ->with('members', $members)
+            ->with('userTrainer', $userTrainer)
+            ->with('totalPrice', $price)
+            ->with('totalPricePence', $pricePence)
+            ->with('totalSessions', $total)
+            ->with('sessionIds', $sessionIds);
     }
 
     /**

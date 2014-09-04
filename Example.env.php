@@ -36,6 +36,14 @@ return [
     'EMAIL_PRETEND'         => true, //For Production Set to False
     //Facebook Data
     'FACEBOOK_ID'           => '306418789525126',
-    'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d'
+    'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d',
+    //Paypal
+    'PAYPAL_USER'           => 'evercise.info_api1.gmail.com',
+    'PAYPAL_PASS'           => 'H2HGKAYP5A38P7TJ',
+    'PAYPAL_SIGNATURE'      => 'AiPC9BjkCyDFQXbSkoZcgqH3hpacArhVam-NDXjgAOd7UFYdySpW9nkW',
+    'PAYPAL_TESTMODE'       => false,
+    //Stripe
+    'STRIPE_API_KEY'        => 'sk_live_uVDeMzMgfoDJ5pCUStKXLxgX',
+    'STRIPE_PUB_KEY'        => 'pk_live_6Gp6i32byjL7XYaAaqKKs48d'
 
 ];
