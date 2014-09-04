@@ -48,7 +48,7 @@ class ShowWalletComposer
         // initialise init put for withdrawel
         JavaScript::put(
             [
-                'initPut' => json_encode(['selector' => '.update-form'])
+                'initPut_wallet' => json_encode(['selector' => '#withdrawalform, #paypalform, #withdrawal-confirmation'])
             ]
         );
 
