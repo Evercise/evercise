@@ -116,11 +116,10 @@ class UsersController extends \BaseController
 
     }
 
-    public function fb_login($redirect = null)
+    public function fb_login($redirect_url = null)
     {
 
-
-        $getUser = User::getFacebookUser();
+        $getUser = User::getFacebookUser($redirect_url);
 
         $me = $getUser['user_profile'];
 
@@ -181,11 +180,10 @@ class UsersController extends \BaseController
 
                 Sentry::login($user, false);
 
-                $result = User::facebookRedirectHandler($redirect, $user, trans('redirect-messages.facebook_signup'));
+                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'));
 
                 Event::fire('user.registeredFacebook', [$user]);
 
-                return $result;
             }
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
 
@@ -201,14 +199,15 @@ class UsersController extends \BaseController
                 }
 
 
-                $result = User::facebookRedirectHandler($redirect, $user);
+               $result = User::facebookRedirectHandler($redirect_url, $user);
 
-                return $result;
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
                 Log::error($e);
             }
         }
+
+        return $result;
 
 
     }
