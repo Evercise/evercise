@@ -1,6 +1,5 @@
 <?php
 
-use PdfHelper;
 
 class PdfController extends \BaseController
 {
