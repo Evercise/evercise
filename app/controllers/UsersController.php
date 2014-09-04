@@ -20,14 +20,17 @@ class UsersController extends \BaseController
      *
      * @return View
      */
-    public function create()
+    public function create($redirect = null)
     {
+
+
         $referralCode = Referral::checkReferralCode(Session::get('referralCode'));
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
         $email = Session::get('email');
 
         return View::make('users.register')
             ->with('referralCode', $referralCode)
+            ->with('redirect', $redirect)
             ->with('ppcCode', $ppcCode)
             ->with('email', $email);
 
@@ -83,11 +86,13 @@ class UsersController extends \BaseController
 
                 Event::fire('user.registered', [$user]);
 
+
+
                 if (Input::has('redirect')) {
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => Input::get('redirect')
+                            'url'      => route(Input::get('redirect'))
                         ]
                     );
                 } else {

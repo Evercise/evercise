@@ -52,7 +52,7 @@ Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthContr
 Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot'));
 
 //  Users
-Route::get('users/create', array('as'=>'users.create', 'uses'=>'UsersController@create'));
+Route::get('users/create/{redirect?}', array('as'=>'users.create', 'uses'=>'UsersController@create'));
 Route::get('users/{id}/edit/{tab}', array('as'=>'users.edit.tab', 'uses'=>'UsersController@edit'));
 Route::get('/users/{display_name}/activate/{code}', array('as' => 'users.activate', 'uses' => 'UsersController@activate'));
 Route::get('/users/{display_name}/activate', array('as' => 'users.activatecodeless', 'uses' => 'UsersController@pleaseActivate'));
@@ -65,7 +65,7 @@ Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' 
 // trainers
 Route::get('trainers/trainer/signup', array('as'=>'trainers.trainerSignup', 'uses'=>'TrainersController@trainerSignup'));
 Route::get('trainers/create', array('as'=>'trainers.create', 'uses'=>'TrainersController@create'));
-Route::get('trainers/show', array('as'=>'trainers.show', 'uses'=>'TrainersController@show'));
+Route::get('trainers/{id}', array('as'=>'trainers.show', 'uses'=>'TrainersController@show'));
 Route::get('trainers/{id}/edit', array('as'=>'trainers.edit', 'uses'=>'TrainersController@edit'));
 Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
 Route::post('trainers/store', array('as' => 'trainers.store', 'uses' => 'TrainersController@store'));
