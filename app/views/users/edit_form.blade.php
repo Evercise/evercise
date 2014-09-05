@@ -3,12 +3,12 @@
 </div>
 	{{ Form::open(array('id' => 'user_edit', 'url' => 'users/'.$user->id, 'method' => 'PUT', 'class' => 'create-form')) }}
 
-        @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>15, 'label'=>'first name', 'tooltip'=>'This is your first name.', 'default'=>$firstName ))
+        @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>15, 'label'=>'first name', 'tooltip'=>trans('tooltips.user_first_name'), 'default'=>$firstName ))
         @if ($errors->has('first_name'))
             {{ $errors->first('first_name', '<p class="error-msg">:message</p>')}}
         @endif
 
-        @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>15, 'label'=>'last name', 'tooltip'=>'your last name.', 'default'=>$lastName ))
+        @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 3 and 15 characters', 'maxlength'=>15, 'label'=>'last name', 'tooltip'=>trans('tooltips.user_last_name'), 'default'=>$lastName ))
         @if ($errors->has('last_name'))
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif
@@ -17,7 +17,7 @@
         @if ($errors->has('last_name'))
             {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
         @endif
-        @include('form.phone', array('fieldname'=>'phone', 'placeholder'=>'Add you phone number', 'maxlength'=>32,  'label'=>'Add you phone number', 'tooltip'=>'(Optional) - Your phone number will only be used in case of emergency (cancellations, etc.)', 'default_area'=>$area_code, 'default'=>$phone))
+        @include('form.phone', array('fieldname'=>'phone', 'placeholder'=>'Add you phone number', 'maxlength'=>32,  'label'=>'Add you phone number', 'tooltip'=>trans('tooltips.user_phone'), 'default_area'=>$area_code, 'default'=>$phone))
         @if ($errors->has('password'))
             {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
         @endif
