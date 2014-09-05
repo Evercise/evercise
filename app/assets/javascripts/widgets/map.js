@@ -190,7 +190,6 @@ function DiscoverMapWidgetInit() {
      };
 
     var markers = [];
-    var bounds = new google.maps.LatLngBounds();
     var icon = '/img/mapmark.png';
     var infos = [];
 
@@ -211,12 +210,7 @@ function DiscoverMapWidgetInit() {
           icon: icon,
           map: map
         });
-        
-        var latlng = new google.maps.LatLng(
-                  parseFloat(venue.lat),
-                  parseFloat(venue.lng));
 
-        //bounds.extend(latlng);
        
        var rating = 0;
        for (j = 0; j < evercisegroup.ratings.length; j++) {
@@ -233,7 +227,7 @@ function DiscoverMapWidgetInit() {
 
         var content = '<div class="info-window recommended-block"><div class="block-header"><a href="/evercisegroups/'+evercisegroup.id+'">'+evercisegroup.name+'</a></div><div class="recommended-info"><div class="recommended-aside"><p>'+getStars(rating)+'</p></div><div class="recommended-aside"><img class="date-icon" src="/img/date_icon.png"><span>'+moment(sessions[0].date_time).format('DD MMM YYYY - hh:mma')+'</span></div></div><div class="block-footer"><span>price: &pound;'+evercisegroup.default_price+'<span></div></div>';
 
-        var group = everciseGroups[i].name;
+        var group = evercisegroup.name;
         var venue = venue.name;
 
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow, group, venue){ 
