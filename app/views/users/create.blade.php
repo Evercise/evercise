@@ -43,17 +43,17 @@
 
         <div class="col9 push2">
 
-        	@include('form.textfield', array('fieldname'=>'display_name', 'placeholder'=>'Between 5 and 20 characters', 'maxlength'=>20, 'label'=>'Display Name', 'tooltip'=>'This will be your display name visible to the entire community.' , 'insert' => 'evercise.com/users/' ))
+        	@include('form.textfield', array('fieldname'=>'display_name', 'placeholder'=>'Between 5 and 20 characters', 'maxlength'=>20, 'label'=>'Display Name', 'tooltip'=> trans('tooltips.user_display_name') , 'insert' => 'evercise.com/users/' ))
             @if ($errors->has('display_name'))
                 {{ $errors->first('display_name', '<p class="error-msg">:message</p>')}}
             @endif
 
-            @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 2 and 15 characters', 'maxlength'=>15, 'label'=>'First name', 'tooltip'=>'Please add your first name. It may only contain letters.' ))
+            @include('form.textfield', array('fieldname'=>'first_name', 'placeholder'=>'Between 2 and 15 characters', 'maxlength'=>15, 'label'=>'First name', 'tooltip'=> trans('tooltips.user_first_name') ))
             @if ($errors->has('first_name'))
                 {{ $errors->first('first_name', '<p class="error-msg">:message</p>')}}
             @endif
 
-            @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 2 and 15 characters', 'maxlength'=>15, 'label'=>'Last name', 'tooltip'=>'Please add your last name. It may only contain letters.' ))
+            @include('form.textfield', array('fieldname'=>'last_name', 'placeholder'=>'Between 2 and 15 characters', 'maxlength'=>15, 'label'=>'Last name', 'tooltip'=> trans('tooltips.user_last_name') ))
             @if ($errors->has('last_name'))
                 {{ $errors->first('last_name', '<p class="error-msg">:message</p>')}}
             @endif
@@ -63,15 +63,15 @@
                 {{ $errors->first('dob', '<p class="error-msg">:message</p>')}}
             @endif
 
-        	@include('form.textfield', array('fieldname'=>'email', 'default'=>isset($email) ? $email : '', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=>'We will use your e-mail address to confirm your identity and send you information relating to your classes.<br/>Your e-mail address is safe with us: we will not distribute it to any third parties.'))
+        	@include('form.textfield', array('fieldname'=>'email', 'default'=>isset($email) ? $email : '', 'placeholder'=>'Type your current email address here', 'maxlength'=>50, 'label'=>'Email address', 'tooltip'=> trans('tooltips.user_email')))
             @if ($errors->has('email'))
                 {{ $errors->first('email', '<p class="error-msg">:message</p>')}}
             @endif
-        	@include('form.password', array('fieldname'=>'password', 'placeholder'=>'Password', 'maxlength'=>32, 'confirmation'=> 'Please re-enter your password', 'label'=>'Create your password', 'tooltip'=>'For increased security, please choose a password with a combination of lowercase and numbers'))
+        	@include('form.password', array('fieldname'=>'password', 'placeholder'=>'Password', 'maxlength'=>32, 'confirmation'=> 'Please re-enter your password', 'label'=>'Create your password', 'tooltip'=> trans('tooltips.user_password')))
             @if ($errors->has('password'))
                 {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
             @endif
-            @include('form.phone', array('fieldname'=>'phone', 'placeholder'=>'Phone number', 'maxlength'=>32,  'label'=>'Add you phone number', 'tooltip'=>'(Optional) - Your phone number will only be used in case of emergency (cancellations, etc.)'))
+            @include('form.phone', array('fieldname'=>'phone', 'placeholder'=>'Phone number', 'maxlength'=>32,  'label'=>'Add you phone number', 'tooltip'=> trans('tooltips.user_phone')))
             @if ($errors->has('password'))
                 {{ $errors->first('password', '<p class="error-msg">:message</p>')}}
             @endif
