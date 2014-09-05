@@ -77,9 +77,9 @@
             @endif
 
             @if(Session::has('price'))
-                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'tooltip'=>'Use the slider to input the price you want to charge each participant for your class. There is no minimum.' , 'default' => Session::get('price') ))
+                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'tooltip'=>'Use the slider to input the price you want to charge each participant for your class.' , 'default' => Session::get('price') ))
             @else
-                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'tooltip'=>'Use the slider to input the price you want to charge each participant for your class. There is no minimum.', 'default'=>5 ))
+                @include('form.slider', array('fieldname'=>'price', 'placeholder'=>'Between 1 and 120 pounds', 'maxlength'=>6, 'label'=>'Class Price', 'tooltip'=>'Use the slider to input the price you want to charge each participant for your class.', 'default'=>5 ))
             @endif
 
             @if ($errors->has('price'))
