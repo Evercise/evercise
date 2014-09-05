@@ -130,30 +130,41 @@ class PaypalPaymentController extends BaseController {
 
 
         $gateway = Omnipay::create('PayPal_Express');
-        $gateway->setUsername('evercise.info_api1.gmail.com');
-         $gateway->setPassword('H2HGKAYP5A38P7TJ');
-         $gateway->setSignature('AiPC9BjkCyDFQXbSkoZcgqH3hpacArhVam-NDXjgAOd7UFYdySpW9nkW');
-         $gateway->setTestMode(false);
-
-        $response = $gateway->completePurchase(
-                        array(
-                            'amount' => $amountToPay,
-                            'currency' => 'GBP',
-                            'Description' => $evercisegroup->name
-                        )
-                )->send();
+        $gateway->setUsername(getenv('PAYPAL_USER'));
+        $gateway->setPassword(getenv('PAYPAL_PASS'));
+        $gateway->setSignature(getenv('PAYPAL_SIGNATURE'));
+        $gateway->setTestMode(getenv('PAYPAL_TESTMODE'));
+        try {
+            $response = $gateway->completePurchase(
+                array(
+                    'amount' => $amountToPay,
+                    'currency' => 'GBP',
+                    'Description' => $evercisegroup->name
+                )
+            )->send();
+        }
+        catch(Exception $e)
+        {
+            return $e;
+        }
+        //return var_dump($response);
 
         if ($response->isSuccessful()) {
-             $data = $response->getData(); // this is the raw response object
+            $data = $response->getData(); // this is the raw response object
 
             //return var_dump($data);
-            return Redirect::to('sessions/'.$evercisegroupId.'/pay')
-                    ->with('token',$data['TOKEN'] )
-                    ->with('transactionId',$data['PAYMENTINFO_0_TRANSACTIONID'] )
-                    ->with('payerId',$data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'] )
-                    ->with('paymentMethod', 'PayPal_Express' );
+            return Redirect::to('sessions/' . $evercisegroupId . '/pay')
+                ->with('token', $data['TOKEN'])
+                ->with('transactionId', $data['PAYMENTINFO_0_TRANSACTIONID'])
+                ->with('payerId', $data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID'])
+                ->with('paymentMethod', 'PayPal_Express');
             //return Redirect::action('SessionsController@payForSessions');
         }
+        else
+        {
+            return var_dump($response);
+        }
+
 
        
 
