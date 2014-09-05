@@ -291,16 +291,17 @@ function initPut (params) {
 
   $( document ).on( 'submit', selector , function() {
 
+      var form = $(this);
+      form.find('.btn').addClass('disabled');
+
       loading();
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
       var url = $(this).attr('action');
-      trace('submitting via initPut. Method: '+ method+', url: '+url);
 
       $('.error-msg').remove();
       $('input').removeClass('error');
       // post to controller
-      var form = $(this);
-      form.find('.btn').addClass('disabled');
+
       $.ajax({
           url: url,
           type: method,
@@ -309,7 +310,6 @@ function initPut (params) {
       })
       .done(
           function(data) {
-              trace("initPut >> Sending data.....");
               loaded();
               
               if (data.validation_failed == 1)
@@ -318,11 +318,9 @@ function initPut (params) {
                     $('.mask').hide();
                   };
 
-                  console.debug("failed: "+data);
-                      console.debug(data, true);
+                  form.find('.btn').removeClass('disabled');
                       // show validation errors
                       var arr = data.errors;
-                      trace(arr, true);
                       var scroll = false;
                       $.each(arr, function(index, value)
                       {
@@ -363,8 +361,6 @@ function initPut (params) {
                  form.find('.btn').removeClass('disabled');                   
               }else{
                   // call back
-                  trace('classback: '+data.popup , true);
-                  form.find('.btn').removeClass('disabled');
                   var callback = data.callback;
                   window[callback](data, form);
 
