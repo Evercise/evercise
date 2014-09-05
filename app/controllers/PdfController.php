@@ -1,7 +1,10 @@
 <?php
 
+
 class PdfController extends \BaseController
 {
+
+
     public function postPdf()
     {
         $sessionmembers = json_decode(Input::get('postMembers'), true);
@@ -10,26 +13,11 @@ class PdfController extends \BaseController
 
         $timestamp = date("d-m-Y");
 
-       /*$pdf = App::make('dompdf');
-        $pdfPage = View::make('pdf.session_members')
-                ->with('evercisegroup', $evercisegroup)
-                ->with('evercisesession', $evercisesession)
-                ->with('sessionmembers', $sessionmembers);
 
-        $pdf->loadHTML($pdfPage);
-
-        //return var_dump($pdf);
-
-        return  $pdf->stream($timestamp.'.pdf'); /* for testing */
-        //return  $pdf->download($timestamp.'.pdf');
-
-
-        $pdfPage = View::make('pdf.session_members')
-                ->with('evercisegroup', $evercisegroup)
-                ->with('evercisesession', $evercisesession)
-                ->with('sessionmembers', $sessionmembers);
+        $pdfPage = PdfHelper::pdfView($evercisegroup, $evercisesession, $sessionmembers);
 
         return PDF::load($pdfPage, 'A4', 'portrait')->download($evercisegroup.'-'.$timestamp);
 
     }
+
 }
