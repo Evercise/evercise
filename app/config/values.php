@@ -37,4 +37,8 @@ return array(
     'min_age' => 16,
     'max_age' => 120,
 
+    // Refunds cut off dates (in number of days into the future)
+    'half_refund_cut_off' => 2,
+    'full_refund_cut_off' => 5,
+
 );

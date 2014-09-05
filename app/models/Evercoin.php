@@ -26,12 +26,16 @@ class Evercoin extends \Eloquent
         $this->transaction($amount);
     }
 
+
     /**
      * @param $amount
+     * @return mixed
      */
     public function withdraw($amount)
     {
         $this->transaction(- $amount);
+
+        return $this->balance;
     }
 
     /**

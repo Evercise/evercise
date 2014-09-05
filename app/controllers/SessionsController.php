@@ -1,7 +1,11 @@
 <?php
 
+use Evercisesession;
+
 class SessionsController extends \BaseController
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -203,286 +207,51 @@ class SessionsController extends \BaseController
 
     }
 
-    function payForSessions($id)
+    /**
+     * Actually add the user to the class.  The details of which are all pulled from session data
+     *
+     * @param $evercisegroupId
+     * @return \Illuminate\View\View
+     */
+    function payForSessions($evercisegroupId)
     {
-        /* get session ids */
-        $sessionIds = Session::get('sessionIds');
-        /* get current user */
-        $user = User::find(Sentry::getUser()->id);
+        return Evercisesession::addSessionMember($evercisegroupId);
+    }
 
-        $evercisegroupId = $id;
-
-        /* get token */
-        $token = Session::get('token');
-
-        /* get transaction id */
-        $transactionId = Session::get('transactionId');
-
-        /* get Payer id */
-        $payerId = Session::get('payerId');
-
-        /* get payment method */
-        $paymentMethod = Session::get('paymentMethod');
-
-
-        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
-
-            $query->whereIn('id', $sessionIds);
-
-        }), 'evercisesession')
-            ->find($evercisegroupId);
-
-        //Make sure there is not already a matching entry in sessionmember
-        if (Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
-            return Response::json('error: USER HAS ALREADY JOINED SESSION');
-        }
-
-        $userTrainer = User::find($evercisegroup->user_id);
-
-
-        $members = [];
-        $total = 0;
-        $price = 0;
-        foreach ($evercisegroup->evercisesession as $key => $value) {
-            $members[] = count($value->sessionmembers); // Count those members
-            ++$total;
-            $price = $price + $value->price;
-
-            $timestamp = strtotime($value->date_time);
-            $niceTime = date('h:ia', $timestamp);
-            $niceDate = date('dS F Y', $timestamp);
-
-            Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'joined_session', 'display_name' => $this->user->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
-
-        }
-
-        $amountToPay = (null !== Session::get('amountToPay')) ? Session::get('amountToPay') : $price;
-
-        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
-
-        if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price) {
-            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :' . $amountToPay]);
-        }
-
-        $deductEverciseCoins = Evercoin::poundsToEvercoins($price - $amountToPay);
-
-        $evercoin->withdraw($deductEverciseCoins);
-
-
-        /*pivot current user with session via session members */
-        $user->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' => $transactionId, 'payer_id' => $payerId, 'payment_method' => $paymentMethod]);
-
-        Event::fire('session.joined', array(
-            'email' => $user->email,
-            'display_name' => $user->display_name,
-            'evercisegroup' => $evercisegroup,
-            'userTrainer' => $userTrainer,
-            'transactionId' => $transactionId,
-        ));
-
-        Event::fire('session.payed', [$user, $evercisegroup]);
-
-        // Grab the "foo" instance
-        $gaTracker = UniversalAnalytics::get('trackerName');
-
-        // Require the ecommerce JS file:
-        $gaTracker->ga('require', 'ecommerce', 'ecommerce.js');
-
-        // Setup a transaction:
-        $gaTracker->ga('ecommerce:addTransaction', [
-            'id' => $transactionId,
-            'affiliation' => 'evercise',
-            'revenue'     => $amountToPay,
-        ]);
-        // Setup a item for the class:
-        $gaTracker->ga('ecommerce:addItem', [
-            'id' => $evercisegroup->id,
-            'name' => $evercisegroup->name,
-            'quantity'     => count($sessionIds),
-        ]);
-
-
-        Session::forget('amountToPay');
-        Session::forget('sessionIds');
-        Session::forget('evercisegroupId');
-
-
-
-
-		return View::make('sessions.confirmation')
-            ->with('evercisegroup', $evercisegroup)
-            ->with('members', $members)
-            ->with('userTrainer', $userTrainer)
-            ->with('totalPrice', $price)
-            ->with('totalSessions', $total)
-            ->with('sessionIds', $sessionIds)
-            ->with('amountPaid', $amountToPay)
-            ->with('transactionId', $transactionId)
-            ->with('evercoins', $evercoin->balance)
-            ->with('deductEverciseCoins', $deductEverciseCoins);
-	}
-
-    function getLeaveSession($id)
+    /**
+     * Get the form for leaving a session
+     *
+     * @param $evercisesessionId
+     * @return \Illuminate\View\View
+     */
+    function getLeaveSession($evercisesessionId)
     {
-        $session = Evercisesession::with('evercisegroup')
-            ->find($id);
-
-        $sessionDate = new DateTime($session->date_time);
-        $now = new DateTime();
-        $twodaystime = (new DateTime())->add(new DateInterval('P2D'));
-        $fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
-
-        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
-
-        //$everpound = $this->
-        if ($sessionDate > $fivedaystime) {
-            $status = 2;
-            $refund = $session->price;
-
-        } elseif ($sessionDate > $twodaystime) {
-            $status = 1;
-            $refund = $session->price / 2;
-        } else {
-            $status = 0;
-            $refund = 0;
-        }
-
-        $refundInEvercoins = Evercoin::poundsToEvercoins($refund);
-        $evercoinBalanceAfterRefund = $evercoin->balance + $refundInEvercoins;
-
-        return View::make('sessions.leave')
-            ->with('session', $session)
-            ->with('refund', $refund)
-            ->with('refundInEvercoins', $refundInEvercoins)
-            ->with('evercoinBalanceAfterRefund', $evercoinBalanceAfterRefund)
-            ->with('evercoin', $evercoin)
-            ->with('status', $status);
+        return Evercisesession::getLeaveSessionForm($evercisesessionId);
     }
 
     public function postLeaveSession($id)
     {
-        $session = Evercisesession::find($id);
-
-        $sessionDate = new DateTime($session->date_time);
-        $now = new DateTime();
-        $twodaystime = (new DateTime())->add(new DateInterval('P2D'));
-        $fivedaystime = (new DateTime())->add(new DateInterval('P5D'));
-
-        if ($sessionDate > $fivedaystime) $status = 2;
-        else if ($sessionDate > $twodaystime) $status = 1;
-        else $status = 0;
-
-        if ($status > 0) {
-            $user = User::find($this->user->id);
-            $user->sessions()->detach($session->id);
-
-            $refund = ($status == 1 ? ($session->price / 2) : $session->price);
-
-            $refundInEvercoins = Evercoin::poundsToEvercoins($refund);
-
-            $evercoin = Evercoin::where('user_id', $user->id)->first();
-            $evercoin->deposit($refundInEvercoins);
-
-            $evercisegroup = Evercisegroup::find($session->evercisegroup_id);
-            $niceTime = date('h:ia', strtotime($session->date_time));
-            $niceDate = date('dS F Y', strtotime($session->date_time));
-
-
-            Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'left_session_' . ($status == 1 ? 'half' : 'full'), 'display_name' => $this->user->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
-
-            Event::fire('session.userLeft', array(
-                'email' => $user->email,
-                'display_name' => $user->display_name,
-                'everciseGroup' => $evercisegroup->name,
-                'everciseSession' => date('dS M y', strtotime($session->date_time)),
-            ));
-
-            $trainer = User::find($evercisegroup->user_id);
-
-            Event::fire('session.trainerLeft', array(
-                'email' => $trainer->email,
-                'display_name' => $trainer->display_name,
-                'user_name' => $user->display_name,
-                'everciseGroup' => $evercisegroup->name,
-                'everciseSession' => date('dS M y', strtotime($session->date_time)),
-            ));
-
-            Event::fire('session.left', [$user, $evercisegroup, $session]);
-            return Response::json(['message' => ' session: ' . $id, 'callback' => 'leftSession']);
-        } else {
-            return Response::json(['message' => ' Cannot leave session ']);
-        }
-
-
+        return Evercisesession::processLeaveSession($id);
     }
 
 
     public function redeemEvercoins($evercisegroupId)
     {
-        $usecoins = Input::get('redeem');
-        $sessionIds = Session::get('sessionIds');
-        //$sessionIds = json_decode(Input::get('session-ids')) ;
-
-        $evercisegroup = Evercisegroup::with(array('evercisesession' => function ($query) use (&$sessionIds) {
-            $query->whereIn('id', $sessionIds);
-
-        }))->find($evercisegroupId);
-
-        $price = 0;
-        foreach ($evercisegroup->evercisesession as $key => $value)
-            $price = $price + $value->price;
-        $priceInEvercoins = Evercoin::poundsToEvercoins($price);
-
-
-        // Check if more coins are selected than are needed.
-        if ($usecoins > $priceInEvercoins)
-            $usecoins = $priceInEvercoins;
-
-        //Check user has tried to use more evercoins than they have. if so, use every last one.
-        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
-        if ($usecoins > $evercoin->balance)
-            $usecoins = $evercoin->balance;
-
-        $usecoinsInPounds = Evercoin::evercoinsToPounds($usecoins);
-        $amountRemaining = $price - $usecoinsInPounds;
-
-        Session::put('amountToPay', $amountRemaining);
-
-        $evercoin = Evercoin::where('user_id', $this->user->id)->first();
-
-        if ($priceInEvercoins == $usecoins) {
-
-            return Response::json([
-                'callback' => 'openPopup',
-                'popup' => (string)View::make('sessions.checkoutwithevercoins')
-                    ->with('evercisegroupId', $evercisegroupId)
-                    ->with('priceInEvercoins', $priceInEvercoins)
-                    ->with('evercoinBalance', $evercoin->balance)
-                    ->with('usecoinsInPounds', $usecoinsInPounds)
-            ]);
-
-
-        } else {
-
-            return Response::json([
-                'usecoins' => $usecoins,
-                'amountRemaining' => $amountRemaining,
-                'usecoinsInPounds' => $usecoinsInPounds,
-                'callback' => 'paidWithEvercoins'
-            ]);
-        }
+        return Evercisesession::getRedeemEvercoinsView($evercisegroupId);
     }
 
 
+    /**
+     * Put evercoin payment details into the session and then add member to class
+     *
+     * @param $evercisegroupId
+     * @return \Illuminate\View\View
+     */
     public function postPayWithEvercoins($evercisegroupId)
     {
-        $transactionId = Functions::randomPassword(16);
-        Session::put('payerId', $this->user->id);
-        Session::put('paymentMethod', 'evercoins');
-        Session::put('token', 'ever' . $transactionId);
-        Session::put('transactionId', $transactionId);
+        Evercisesession::generateEvercoinPaymentDetails();
 
-        return $this->payForSessions($evercisegroupId);
+        return Evercisesession::addSessionMember($evercisegroupId);
 
     }
 
@@ -498,7 +267,7 @@ class SessionsController extends \BaseController
 
         $evercoin = Evercoin::where('user_id', $session->evercisegroup->user_id)->first();
 
-        //$everpound = $this->
+
         if ($sessionDate > $fivedaystime) {
             $status = 2;
             $refund = $session->price;
@@ -554,8 +323,8 @@ class SessionsController extends \BaseController
             Event::fire('session.refund', array(
 
                 'email' => $contact,
-                'userName' => $this->user->display_name,
-                'userEmail' => $this->user->email,
+                'userName' => Sentry::getUser()->display_name,
+                'userEmail' => Sentry::getUser()->email,
                 'groupName' => $groupName,
                 'subject' => $subject,
                 'body' => $body

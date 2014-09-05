@@ -771,5 +771,16 @@ class Evercisegroup extends \Eloquent
         return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
     }
 
+    public static function getGroupWithSpecificSessions($evercisegroupId, $sessionIds)
+    {
+        return Static::with(array('evercisesession' => function ($query) use (&$sessionIds) {
+
+            $query->whereIn('id', $sessionIds);
+
+        }), 'evercisesession')
+            ->find($evercisegroupId);
+
+    }
+
 
 }
