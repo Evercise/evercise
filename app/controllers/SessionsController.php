@@ -272,13 +272,13 @@ class SessionsController extends \BaseController
         /*pivot current user with session via session members */
         $user->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' => $transactionId, 'payer_id' => $payerId, 'payment_method' => $paymentMethod]);
 
-        Event::fire('session.joined', array(
+        Event::fire('session.joined', [
             'email' => $user->email,
             'display_name' => $user->display_name,
             'evercisegroup' => $evercisegroup,
             'userTrainer' => $userTrainer,
             'transactionId' => $transactionId,
-        ));
+        ]);
 
         Event::fire('session.payed', [$user, $evercisegroup]);
 

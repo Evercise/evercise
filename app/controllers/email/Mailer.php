@@ -13,4 +13,14 @@ abstract class Mailer {
 		});
 	}
 
+    public function sendToAttachment($email, $subject, $view, $data = array(),$attachment)
+    {
+        Mail::queue($view, $data, function($message) use($email, $subject, $attachment)
+        {
+            $message->to($email)
+                ->subject($subject);
+            $message->attach($attachment);
+        });
+    }
+
 }

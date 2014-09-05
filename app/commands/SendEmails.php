@@ -89,6 +89,7 @@ class SendEmails extends Command {
 					$this->info(' -- '.$name.' : '.$userEmail);
 
 				}
+
 				// Pang out an email with a list of users
 				Event::fire('session.upcoming_session', array(
 	            	'userList' => $email['userList'], 
@@ -99,7 +100,9 @@ class SendEmails extends Command {
 	                'trainerEmail' => $email['trainer']->email,
 	                'classId' => $email['classId'],
 	            ));
+
 			}
+
 			Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
 		}
 		else
