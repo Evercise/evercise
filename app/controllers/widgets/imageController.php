@@ -1,6 +1,6 @@
 <?php namespace widgets;
 
-use Auth, BaseController, Form, Input, Redirect, Sentry, View, Request, Response, Validator, Image, Config;
+use Auth, BaseController, Input,  Sentry, View, Request, Response, Validator, Image, Config, Trainer;
  
 class ImageController extends \BaseController {
 
@@ -29,6 +29,7 @@ class ImageController extends \BaseController {
         if ($file->getMimeType() == 'image/x-ms-bmp')
             return Response::json(['success' => false, 'errors' => ['image'=>'The image format is not supported.']]);
 
+
         $validator = Validator::make($input, $rules);
         if ( $validator->fails() )
         {
@@ -39,19 +40,24 @@ class ImageController extends \BaseController {
         }
         else {
 
-            $user = Sentry::getUser();
-            $destinationPath = 'profiles/'.$user->directory;
+            $destinationPath = 'profiles/'.Sentry::getUser()->directory;
 
 
             // INTERMITTENT BUG - $file is sometimes null, so the following line fails. No idea why. Please fix
             // for some reason adding a trace funcion to the javascript has seemed to solve this
-            $filename = $file->getClientOriginalName();
-            $filename = str_replace(' ', '_', $filename);
-            $ext = '';
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+            // change file name
+            $filename = Sentry::getUser()->display_name;
+            $ext = $file->getClientOriginalExtension();
             $filename = pathinfo($filename, PATHINFO_FILENAME);
-            $filename = substr($filename, 0, 20); // Truncate file name to 20 characters
-            $filename = $filename.'.'.$ext;
+
+            $increment = 0;
+
+            while(file_exists($destinationPath.'/'.$filename . $increment . '.' . $ext)) {
+                $increment++;
+            }
+
+            $filename = $filename.'-'.$increment.'.'.$ext;
 
             $file->move($destinationPath, $filename);
             
@@ -60,7 +66,6 @@ class ImageController extends \BaseController {
             { 
                 $viewString = View::make('widgets/crop')->__toString();
                 $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
-               // $postCrop = Response::json(route('image.crop.post'));
                 $postCrop = url('/').'/widgets/crop';
                 return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
             }
@@ -97,33 +102,25 @@ class ImageController extends \BaseController {
         $img_path = public_path() . '/profiles/' . $save_location . '/' .$img_name;
         
         $img = Image::make($img_path);
+
         $true_height = $img->height();
 
         $factor = $true_height / $img_height;
         $scaledCoords = $this->scale($factor, array('width'=>$width, 'height'=>$height, 'pos_x'=>$pos_x, 'pos_y'=>$pos_y));
 
-        //return Response::json(array('uploadView'=>$scaledCoords['pos_x']));
-
         // crop image
         $img->crop($scaledCoords['width'], $scaledCoords['height'], $scaledCoords['pos_x'], $scaledCoords['pos_y']);
-        //$img->crop(200, 200, 600, 600);
 
-        $timestamp = date_create();
-
-        $thumbFilename = date_timestamp_get($timestamp).'_'.$img_name;
+        $thumbFilename = (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.$img_name;
         $fileNameWithPath = '/profiles/' . $save_location . '/'.$thumbFilename;
         $img->save(public_path() . $fileNameWithPath);
 
         if(Request::ajax())
-        { 
-
-            //return Response::json(array('imgName' => $thumbFilename ));
+        {
             $viewString = View::make('widgets/upload-form')->with('uploadImage',$fileNameWithPath )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
-           // return Response::json(array('uploadView'=>$viewString));
             $newImage = url('/') . $fileNameWithPath;
             return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
         }
-        //return View::make('widgets/crop');
     }
 
     public function scale($factor, $params)
