@@ -477,6 +477,7 @@ class Evercisegroup extends \Eloquent
      */
     public static function validateAndStore($user)
     {
+        $max_price = Config::get('values')['max_price'];
         $validator = Validator::make(
             Input::all(),
             [
@@ -484,7 +485,7 @@ class Evercisegroup extends \Eloquent
                 'description' => 'required|max:5000|min:100',
                 'duration' => 'required|numeric|between:10,240',
                 'maxsize' => 'required|numeric|between:1,200',
-                'price' => 'required|numeric|between:1,1000',
+                'price' => 'required|numeric|between:1,'.$max_price,
                 'image' => 'required',
                 'gender' => 'required',
                 'venue' => 'required',
