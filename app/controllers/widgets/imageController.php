@@ -1,6 +1,6 @@
 <?php namespace widgets;
 
-use Auth, BaseController, Input,  Sentry, View, Request, Response, Validator, Image, Config, Trainer;
+use Auth, BaseController, Input,  Sentry, View, Response, Validator, Image, Config, Trainer;
  
 class ImageController extends \BaseController {
 
@@ -17,8 +17,6 @@ class ImageController extends \BaseController {
         $rules = array(
             'image' => 'image'
         );
-                  
-
         
         if (!isset($file))
             return Response::json(['success' => false, 'errors' => ['image'=>'Image exceeds the limit of 2Mb']]);
@@ -33,18 +31,11 @@ class ImageController extends \BaseController {
         $validator = Validator::make($input, $rules);
         if ( $validator->fails() )
         {
-            if(Request::ajax())
-            { 
                 return Response::json(['success' => false, 'errors' => $validator->getMessageBag()->toArray()]);
-            }
         }
         else {
 
             $destinationPath = 'profiles/'.Sentry::getUser()->directory;
-
-
-            // INTERMITTENT BUG - $file is sometimes null, so the following line fails. No idea why. Please fix
-            // for some reason adding a trace funcion to the javascript has seemed to solve this
 
             // change file name
             $filename = Sentry::getUser()->display_name;
@@ -60,19 +51,13 @@ class ImageController extends \BaseController {
             $filename = $filename.'-'.$increment.'.'.$ext;
 
             $file->move($destinationPath, $filename);
-            
-            
-            if(Request::ajax())
-            { 
-                $viewString = View::make('widgets/crop')->__toString();
-                $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
-                $postCrop = url('/').'/widgets/crop';
-                return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
-            }
-            else
-            {
-                return Response::json($file);
-            }
+
+            $viewString = View::make('widgets/crop')->__toString();
+            $imgSrc = url('/') .'/'. $destinationPath . '/' . $filename;
+            $postCrop = url('/').'/widgets/crop';
+
+            return Response::json(array('crop'=>$viewString, 'image_url' => $imgSrc , 'postCrop' => $postCrop));
+
         }
     }
     public function getCrop() {
@@ -115,12 +100,9 @@ class ImageController extends \BaseController {
         $fileNameWithPath = '/profiles/' . $save_location . '/'.$thumbFilename;
         $img->save(public_path() . $fileNameWithPath);
 
-        if(Request::ajax())
-        {
-            $viewString = View::make('widgets/upload-form')->with('uploadImage',$fileNameWithPath )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
-            $newImage = url('/') . $fileNameWithPath;
-            return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
-        }
+        $viewString = View::make('widgets/upload-form')->with('uploadImage',$fileNameWithPath )->with('label',$label )->with('fieldtext',$fieldtext )->__toString();
+        $newImage = url('/') . $fileNameWithPath;
+        return Response::json(array('uploadView'=>$viewString,'newImage' => $newImage, 'thumbFilename' => $thumbFilename ));
     }
 
     public function scale($factor, $params)
