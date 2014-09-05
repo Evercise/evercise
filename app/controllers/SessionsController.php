@@ -218,6 +218,7 @@ class SessionsController extends \BaseController
         return Evercisesession::addSessionMember($evercisegroupId);
     }
 
+
     /**
      * Get the form for leaving a session
      *

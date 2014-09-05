@@ -30,6 +30,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'gender',
         'activation_code',
         'dob',
+        'area_code',
+        'phone',
         'directory',
         'image'
     );
@@ -304,11 +306,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function facebookRedirectHandler($redirect = null, $user ,$message = null)
     {
-        Log::info($redirect);
         if ($redirect != null) {
             if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
             {
-                Log::info('trainer fb');
                 $result = Redirect::route($redirect)->with(
                     'notification', $message
                 );
@@ -316,12 +316,10 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             }
             else // Used when logging in before hitting the checkout
             {
-                Log::info('redirect fb');
                 $result = Redirect::route($redirect);
 
             }
         } else {
-            Log::info('no redirect fb');
             $result = Redirect::route((Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '.edit.tab', [$user->id, 'evercoins'])
                     ->with('notification',$message );
 

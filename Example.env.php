@@ -34,6 +34,7 @@ return [
     'EMAIL_SMTP_PASSWORD'   => 'evercise1234',
     'EMAIL_SENDMAIL'        => '/usr/sbin/sendmail -bs',
     'EMAIL_PRETEND'         => true, //For Production Set to False
+    'EMAIL_ADMIN'           => 'tanais@evercise.com', //Who receives notifications
     //Facebook Data
     'FACEBOOK_ID'           => '306418789525126',
     'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d',

@@ -41,4 +41,7 @@ return array(
     'half_refund_cut_off' => 2,
     'full_refund_cut_off' => 5,
 
+    // price
+    'max_price' => 120
+
 );
