@@ -59,6 +59,8 @@ class Evercisesession extends \Eloquent
      */
     public static function validateAndStore()
     {
+        $max_price = Config::get('values')['max_price'];
+
         $validator = Validator::make(
             Input::all(),
             array(
@@ -68,7 +70,7 @@ class Evercisesession extends \Eloquent
                 's-date' => 'required',
                 's-time-hour' => 'required',
                 's-time-minute' => 'required',
-                's-price' => 'required|numeric|between:1,1000',
+                's-price' => 'required|numeric|between:1,'.$max_price,
                 's-duration' => 'required|numeric|between:10,240',
             )
         );

@@ -37,4 +37,7 @@ return array(
     'min_age' => 16,
     'max_age' => 120,
 
+    // price
+    'max_price' => 120
+
 );
