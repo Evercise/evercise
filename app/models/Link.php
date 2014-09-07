@@ -37,4 +37,22 @@ class Link extends \Eloquent
     }
 
 
+    public static function getUniqueUrl($url)
+    {
+        do {
+            $check = Link::where('permalink', $url)->count() > 0;
+
+            if ($check) {
+                if (strpos($url, '_') === false) {
+                    $url .= '_0';
+                }
+                $url = ++ $url;
+            }
+        } while ($check);
+
+        return $url;
+
+    }
+
+
 }
