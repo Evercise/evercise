@@ -43,6 +43,8 @@ class UsersController extends \BaseController
      */
     public function store()
     {
+        $user = User::registerUser(Input::all());
+        return $user;
         // check user passes validation
         $valid_user = User::validUserSignup(Input::all());
 

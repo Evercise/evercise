@@ -11,7 +11,7 @@ class UsersCreateComposer {
   	JavaScript::put(
   		[
   			'initUsers' 	 => 1, 
-  			'initPut'		 => 1, 
+  		//	'initPut'		 => 1,
   			'initToolTip' 	 => 1
   		]
   	); //Initialise tooltip JS.

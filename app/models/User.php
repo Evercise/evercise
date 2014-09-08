@@ -56,6 +56,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     protected $rulesets  =[];
 
+    /**
+     *
+     */
     function __construct()
     {
        Validator::extend(
@@ -67,7 +70,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
 
         $this->rulesets  = [
-            'created' => [
+            'store' => [
                 'display_name' => 'required|max:20|min:5|unique:users',
                 'first_name' => 'required|max:15|min:2',
                 'last_name' => 'required|max:15|min:2',
@@ -98,6 +101,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $dateBefore = $before->format('Y-m-d');
     }
 
+    /**
+     * @return string
+     */
     public static function validDatesUserDobAfter()
     {
         $dt = new DateTime();
@@ -241,6 +247,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $result;
     }
 
+    /**
+     * @param $user
+     */
     public static function checkProfileMilestones($user)
     {
         if (
@@ -283,6 +292,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     }
 
+    /**
+     * @param $redirect_url
+     */
     public static function getFacebookUser($redirect_url)
     {
         try {
@@ -410,16 +422,25 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->email;
     }
 
+    /**
+     * @return mixed
+     */
     public function getRememberToken()
     {
         return $this->remember_token;
     }
 
+    /**
+     * @param string $value
+     */
     public function setRememberToken($value)
     {
         $this->remember_token = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getRememberTokenName()
     {
         return 'remember_token';
@@ -456,7 +477,22 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function registerUser($inputs)
     {
-        $display_name = $inputs['display_name'];
+        $user = new User;
+
+        $user->display_name = $inputs['display_name'];
+        $user->first_name = $inputs['first_name'];
+        $user->last_name = $inputs['last_name'];
+        $user->dob = $inputs['dob'];
+        $user->email = $inputs['email'];
+        $user->password = $inputs['password'];
+        $user->area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
+        $user->phone = isset($inputs['phone']) ?  $inputs['phone'] : null;
+        $user->gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
+
+        echo  $user->password;
+
+
+  /*      $display_name = $inputs['display_name'];
         $first_name = $inputs['first_name'];
         $last_name = $inputs['last_name'];
         $dob = $inputs['dob'];
@@ -465,6 +501,17 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
         $phone = isset($inputs['phone']) ?  $inputs['phone'] : null;
         $gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
+
+  */
+        if($user->isValid('store')){
+            return 'valid';
+
+        }
+        else
+        {
+            echo  $user->password;
+            return $user->getErrors();
+        }
 
         $user = Sentry::register(
             [
@@ -577,17 +624,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->hasOne('Trainer');
     }
 
-
-    /* public function user_has_marketingpreference()
-     {
-         return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');
-     }
-
-
-     public function Marketingpreferences()
-     {
-         return $this->belongsToMany('MarketingPreference', 'user_has_marketingpreferences', 'marketingpreferences_id', 'user_id');
-     }*/
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
