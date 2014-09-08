@@ -3,6 +3,7 @@
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Cartalyst\Sentry\Users\Eloquent\User as SentryUserModel;
+use Watson\Validating\ValidatingTrait;
 
 /**
  * Class User
@@ -50,6 +51,62 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     protected $hidden = array('password');
 
+
+    use ValidatingTrait;
+
+    protected $rulesets  =[];
+
+    function __construct()
+    {
+       Validator::extend(
+            'has',
+            function ($attr, $value, $params) {
+                return ValidationHelper::hasRegex($attr, $value, $params);
+            }
+        );
+
+
+        $this->rulesets  = [
+            'created' => [
+                'display_name' => 'required|max:20|min:5|unique:users',
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
+                'dob' => 'required|date_format:Y-m-d|after:' . self::validDatesUserDobAfter() . '|before:' . self::validDatesUserDobBefore(),
+                'email' => 'required|email|unique:users',
+                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'phone' => 'numeric',
+            ],
+            'updating'=> [
+                'display_name' => 'required|max:20|min:5',
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
+                'dob' => 'required|date_format:Y-m-d|after:' . self::validDatesUserDobAfter() . '|before:' . self::validDatesUserDobBefore(),
+                'email' => 'required|email|unique:users',
+                'phone' => 'numeric',
+            ]
+
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function validDatesUserDobBefore()
+    {
+        $dt = new DateTime();
+        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
+        return $dateBefore = $before->format('Y-m-d');
+    }
+
+    public static function validDatesUserDobAfter()
+    {
+        $dt = new DateTime();
+        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
+        return $dateAfter = $after->format('Y-m-d');
+    }
+
+
+
     /**
      * @param $trainer_id
      * @return \Illuminate\Database\Eloquent\Model|null|static
@@ -62,21 +119,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $user;
     }
 
-    /**
-     * @return array
-     */
-    public static function validDatesUserDob()
-    {
-// dates for validation
-        $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
-        $dateBefore = $before->format('Y-m-d');
-
-        $dt = new DateTime();
-        $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
-        $dateAfter = $after->format('Y-m-d');
-        return array($dateBefore, $dateAfter);
-    }
 
     /**
      * @param $inputs
@@ -175,19 +217,28 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $area_code
      * @param $phone
      */
-    public static function updateUser($user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone)
+    public static function updateUser($user, $inputs)
     {
-        $user->update(
-            array(
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'dob' => $dob,
-                'gender' => $gender,
-                'image' => $image,
-                'area_code' => $area_code,
-                'phone' => $phone,
-            )
-        );
+        $user->first_name = $inputs['first_name'];
+        $user->last_name = $inputs['last_name'];
+        $user->dob = $inputs['dob'];
+        $user->gender = $inputs['gender'];
+        $user->image = $inputs['thumbFilename'];
+        $user->area_code = $inputs['areacode'];
+        $user->phone = $inputs['phone'];
+
+        if($user->isValid('updating')){
+            $user->save();
+
+            self::checkProfileMilestones($user);
+
+            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$user]);
+
+            $result = 'saved';
+        }else{
+            $result = $user->getErrors();
+        }
+        return $result;
     }
 
     public static function checkProfileMilestones($user)

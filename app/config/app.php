@@ -204,4 +204,6 @@ return array(
         'UniversalAnalytics' => 'TagPlanet\UniversalAnalytics\UniversalAnalyticsFacade'
     ),
 
+    'cipher' => MCRYPT_RIJNDAEL_256,
+
 );

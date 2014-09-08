@@ -61,6 +61,7 @@ Route::post('/users/resetpassword', array('as' => 'users.resetpassword.post', 'u
 Route::get('/users/{display_name}/changepassword', array('as' => 'users.changepassword', 'uses' => 'UsersController@getChangePassword'));
 Route::post('/users/changepassword', array('as' => 'users.changepassword.post', 'uses' => 'UsersController@postChangePassword'));
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
+Route::put('users/update/{id}', array('as' => 'users.update', 'uses' => 'UsersController@update'));
 
 // trainers
 Route::get('trainers/trainer/signup', array('as'=>'trainers.trainerSignup', 'uses'=>'TrainersController@trainerSignup'));

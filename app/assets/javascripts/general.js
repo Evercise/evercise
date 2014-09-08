@@ -53,20 +53,6 @@ jQuery( document ).ready( function( $ )
   });
   trace(initLog, true);
 
-
-/*	$('select').each(function(){
-      var title = $(this).attr('title');
-    	if( $('option:selected', this).val() != ''  ) title = $('option:selected',this).text();
-      w = $(this).width();
-      $(this)
-      .css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
-      .after('<span class="drop_down" style="width:'+w+'px;">' + title + '</span>')
-      .change(function(){
-       val = $('option:selected',this).text();
-      	$(this).next().text(val);
-  	})
-  });
-*/  
 });
 
 
@@ -125,7 +111,6 @@ function initLoginBox()
     $('#displayName-dropdown').toggle(100,function(){
       $(document).mouseup(function (e)
       {
-        //trace('displayName click');
           var container = $('#displayName-dropdown');
           var link = $('.nav-admin');
 
@@ -179,7 +164,6 @@ function initSlider(params)
 {
   sliderParams = JSON.parse(params);
   var sliderName = sliderParams.name;
-  //trace("initSlider("+sliderName+") - callback:"+sliderParams.callback);
   $( "#"+sliderName+"-slider" ).slider({
     range: "min",
     min: sliderParams.min,
@@ -212,7 +196,6 @@ registerInitFunction('initSlider');
 
 function updateSlider(sliderName)
 {
-  //trace("sliderName: "+sliderName +', value: '+ $("#"+sliderName).val());
   $( "#"+sliderName+"-slider" ).slider({ value: $("#"+sliderName).val() });
 }
 
@@ -235,7 +218,6 @@ function initChart(params)
   try {
      params = JSON.parse(params);
      id = params.id;
-     trace(params.id);
   } catch(error) {
      id = params;
   }
@@ -294,7 +276,6 @@ function initPut (params) {
       loading();
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
       var url = $(this).attr('action');
-      trace('submitting via initPut. Method: '+ method+', url: '+url);
 
       $('.error-msg').remove();
       $('input').removeClass('error');
@@ -309,7 +290,6 @@ function initPut (params) {
       })
       .done(
           function(data) {
-              trace("initPut >> Sending data.....");
               loaded();
               
               if (data.validation_failed == 1)
@@ -322,7 +302,6 @@ function initPut (params) {
                       console.debug(data, true);
                       // show validation errors
                       var arr = data.errors;
-                      trace(arr, true);
                       var scroll = false;
                       $.each(arr, function(index, value)
                       {
@@ -363,7 +342,6 @@ function initPut (params) {
                  form.find('.btn').removeClass('disabled');                   
               }else{
                   // call back
-                  trace('classback: '+data.popup , true);
                   form.find('.btn').removeClass('disabled');
                   var callback = data.callback;
                   window[callback](data, form);
@@ -374,12 +352,10 @@ function initPut (params) {
 
       return false;
   });
-  trace('selector: '+ selector);
 }
 
 function gotoUrl(data)
 {
-  trace('gotourl');
   window.location.href = data.url;
 
 }
@@ -465,7 +441,6 @@ function initScrollAnchor(string) {
           
           $('html, body').animate({scrollTop: targetOffset}, 300, function() {
             trace(targetOffset);
-         //   location.hash = target;
           });
         });
       }
@@ -518,6 +493,54 @@ function openPopup(data)
     trace('openPopup', true);
     $('body').append(data.popup);
    // initPut();
+}
+
+function validationFailed(data, form)
+{
+    if (!$('.modal').length) {
+        $('.mask').hide();
+    };
+
+    // show validation errors
+    var arr = data.errors;
+    var scroll = false;
+    $.each(arr, function(index, value)
+    {
+        if (scroll == false) {
+            if (form.find("#" + index).length) {
+                $('html, body').animate({ scrollTop: form.find("#" + index).offset().top -85 }, 400);
+                form.find("#" + index).focus();
+            }else{
+                $('html, body').animate({ scrollTop: form.find('input[name="'+index+'"]').offset().top -85 }, 400);
+                form.find('input[name="'+index+'"]').focus();
+            }
+
+            scroll = true;
+        };
+        if (value.length != 0)
+        {
+            form.find("#" + index).addClass('error'); // add a error to input field returned by validation check
+            // check for a slider
+            if (form.find("#" + index+'-slider').length) {
+                if (!form.find("#" + index+'-error').length) {
+                    form.find("#" + index+'-slider').after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+                };
+
+            }else{
+                if (!form.find("#" + index+'-error').length) {
+                    if (form.find("#" + index).length) {
+                        form.find("#" + index).after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+
+                    }else{
+                        form.find('input[name="'+index+'"]').after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+                    }
+
+                }
+            };
+
+        }
+    });
+    form.find('.btn').removeClass('disabled');
 }
 
 function loading(){

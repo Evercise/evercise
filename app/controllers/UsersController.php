@@ -46,6 +46,7 @@ class UsersController extends \BaseController
         // check user passes validation
         $valid_user = User::validUserSignup(Input::all());
 
+
         if ($valid_user['validation_failed'] == 0) {
 
             // register user and add to user group
@@ -248,25 +249,10 @@ class UsersController extends \BaseController
      */
     public function update($id)
     {
-        $valid_user = User::validUserEdit(Input::all());
+        $result = User::updateUser($this->user, Input::all());
 
-        if ($valid_user['validation_failed'] == 0) {
-            // Actually update the user record
-            $first_name = Input::get('first_name');
-            $last_name = Input::get('last_name');
-            $dob = Input::get('dob');
-            $gender = Input::get('gender');
-            $image = Input::get('thumbFilename');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-
-
-            User::updateUser($this->user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
-
-            User::checkProfileMilestones($this->user);
-
-            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
-
+        if( $result  == 'saved' )
+        {
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
@@ -274,11 +260,16 @@ class UsersController extends \BaseController
                         ) ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
                 ]
             );
-        } else {
-            return Response::json($valid_user);
         }
-
-
+        else
+        {
+            return Response::json(
+                [
+                    'callback' => 'validationFailed',
+                    'errors' => $result
+                ]
+            );
+        }
     }
 
 
