@@ -245,21 +245,3 @@ Route::get('/admin/fakeratings', array('as' => 'admin.fakeratings', 'before'=>'a
 Route::post('/admin/fakeratings', array('as' => 'admin.fakeratings.addrating', 'before'=>'admin', 'uses' => 'AdminController@addRating'));
 
 Route::get('/admin/users', array('as' => 'admin.users', 'before'=>'admin', 'uses' => 'AdminController@showUsers'));
-
-
-Route::get('/classes/{country}', array(
-    'as' => 'classes.country',
-    'uses' => 'EvercisegroupsController@search_C'
-));
-Route::get('/classes/{country}/{city}', array(
-    'as' => 'classes.country.city',
-    'uses' => 'EvercisegroupsController@search_C_C'
-));
-Route::get('/classes/{country}/{city}/{area}', array(
-    'as' => 'classes.country.city.area',
-    'uses' => 'EvercisegroupsController@search_C_C_A'
-));
-Route::get('/classes/{country}/{city}/{area}/{category}', array(
-    'as' => 'classes.country.city.area.category',
-    'uses' => 'EvercisegroupsController@search_C_C_A_C'
-));

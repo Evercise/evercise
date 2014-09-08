@@ -31,22 +31,22 @@ class Evercisegroup extends \Eloquent
     protected $table = 'evercisegroups';
 
     /**
-     * @param $user
      * @return \Illuminate\View\View
      */
-    public static function getHub($user)
+    public static function getHub()
     {
-        $directory = $user->directory;
-
         $evercisegroups = static::with('evercisesession.sessionmembers')
             ->with('futuresessions.sessionmembers')
             ->with('pastsessions')
             ->with('venue')
-            ->where('user_id', $user->id)->get();
+            ->where('user_id', Sentry::getUser()->id)->get();
 
-        if ($evercisegroups->isEmpty()) {
-            return View::make('evercisegroups.first_class');
-        } else {
+        if ($evercisegroups->isEmpty())
+        {
+            return 0;
+        }
+        else
+        {
             $sessionDates = array();
             $totalMembers = array();
             $totalCapacity = array();
@@ -71,24 +71,21 @@ class Evercisegroup extends \Eloquent
 
             }
 
-
             if (!empty($evercisegroup_ids)) {
                 $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
 
                 foreach ($ratings as $key => $rating) {
                     $stars[$rating->evercisegroup_id][] = $rating->stars;
                 }
-
             }
 
-            return View::make('evercisegroups.class_hub')
-                ->with('evercisegroups', $evercisegroups)
-                ->with('sessionDates', $sessionDates)
-                ->with('totalMembers', $totalMembers)
-                ->with('stars', $stars)
-                ->with('totalCapacity', $totalCapacity)
-                ->with('year', date("Y"))->with('month', date("m"))
-                ->with('directory', $directory);
+            return [
+                'evercisegroups', $evercisegroups,
+                'sessionDates' => $sessionDates,
+                'totalMembers' => $totalMembers,
+                'stars' => $stars,
+                'totalCapacity' => $totalCapacity
+            ];
         }
     }
 
@@ -96,10 +93,10 @@ class Evercisegroup extends \Eloquent
      * @param $location
      * @param $category
      * @param $radius
-     * @param $user
+     * @param $page
      * @return \Illuminate\View\View
      */
-    public static function doSearch($location, $category, $radius, $user, $page)
+    public static function doSearch($location, $category, $radius, $page)
     {
         //return $location['address'];
         if (isset($location['lat']) && isset($location['lng'])) {
@@ -114,7 +111,7 @@ class Evercisegroup extends \Eloquent
 
 
         $testers = Sentry::findGroupById(5);
-        $testerLoggedIn = $user ? $user->inGroup($testers) : false;
+        $testerLoggedIn = Sentry::getUser() ? Sentry::getUser()->inGroup($testers) : false;
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
 
@@ -161,8 +158,6 @@ class Evercisegroup extends \Eloquent
                 ->with('futuresessions')
                 ->get();
         }
-
-        //return var_dump($level2results);
 
         // SEARCH LEVEL 3 ( if level 1 and level 2 return less than 9 results)
         if (count($results[0]) + count($results[1]) < 9) {
@@ -236,6 +231,7 @@ class Evercisegroup extends \Eloquent
         $offset = ($page * $perPage) - $perPage;
         $articles = array_slice($allResults,$offset,$perPage);
         $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
+        $mapResult = [];
 
         foreach($allResults as $result){
             unset($result['description']);
@@ -253,9 +249,10 @@ class Evercisegroup extends \Eloquent
         //return json_encode($mapResult);
 
 
-        return View::make('evercisegroups.search')
-            ->with('places', json_encode($mapResult))
-            ->with('evercisegroups', $paginatedResults);
+        return [
+            '$mapResult' => $mapResult,
+            '$paginatedResults', $paginatedResults
+        ];
     }
 
     /**
@@ -431,7 +428,7 @@ class Evercisegroup extends \Eloquent
             foreach ($results as $result) {
                 //Remove duplicates
                 if (!in_array($result, $allResults)) {
-                    $date = $result->futuresessions[0]->date_time;
+                    //$date = $result->futuresessions[0]->date_time;
                     array_push($theseResults, $result);
                 }
             }
@@ -472,11 +469,10 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
-     * @param $user
      * @param $inputs
      * @return array
      */
-    public static function validateAndStore($user, $inputs)
+    public static function validateAndStore($inputs)
     {
         $max_price = Config::get('values')['max_price'];
         $validator = Validator::make(
@@ -534,7 +530,7 @@ class Evercisegroup extends \Eloquent
 
             $evercisegroup = Evercisegroup::create([
                 'name' => $classname,
-                'user_id' => $user->id,
+                'user_id' => Sentry::getUser()->id,
                 'venue_id' => $venue,
                 'description' => $description,
                 'default_duration' => $duration,
@@ -547,9 +543,9 @@ class Evercisegroup extends \Eloquent
 
             $evercisegroup->subcategories()->attach($categories);
 
-            Trainerhistory::create(['user_id' => $user->id, 'type' => 'created_evercisegroup', 'display_name' => $user->display_name, 'name' => $evercisegroup->name]);
+            Trainerhistory::create(['user_id' => Sentry::getUser()->id, 'type' => 'created_evercisegroup', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroup->name]);
 
-            Event::fire('evecisegroup.created', [$user,$evercisegroup]);
+            Event::fire('evecisegroup.created', [Sentry::getUser(),$evercisegroup]);
 
             return [
                 'callback' => 'gotoUrl',
@@ -558,9 +554,9 @@ class Evercisegroup extends \Eloquent
         }
     }
 
-    public function checkIfUserOwnsClass($user)
+    public function checkIfUserOwnsClass()
     {
-        if ($this->user_id != $user->id)
+        if ($this->user_id != Sentry::getUser()->id)
             return false;
         else
             return true;
@@ -626,7 +622,6 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
-     * @param $user
      * @return \Illuminate\View\View
      */
     public function showAsNonOwner()
@@ -735,17 +730,16 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
-     * @param $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function deleteGroup($user)
+    public function deleteGroup()
     {
-        if ($this->user_id != $user->id) {
+        if ($this->user_id != Sentry::getUser()->id) {
             return Response::json(['mode' => 'hack']);
         }
 
         // Check user id against group
-        if ($user->id == $this->user_id) {
+        if (Sentry::getUser()->id == $this->user_id) {
             // Only delete if there's no members joined
             if (count($this->sessionmember) == 0) {
                 // If Evercisegroup contains Evercisesessions, delete them all.
@@ -759,7 +753,7 @@ class Evercisegroup extends \Eloquent
                 $evercisegroupForDeletion = Evercisegroup::find($this->id);
                 $evercisegroupForDeletion->delete();
 
-                Trainerhistory::create(array('user_id' => $user->id, 'type' => 'deleted_evercisegroup', 'display_name' => $user->display_name, 'name' => $this->name));
+                Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'deleted_evercisegroup', 'display_name' => Sentry::getUser()->display_name, 'name' => $this->name));
             }
         }
         return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
