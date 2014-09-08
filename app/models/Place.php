@@ -18,6 +18,7 @@ class Place extends \Eloquent
 
     public static function getByLocation($location = '')
     {
+
         /** First Check the Location if it exists  */
         if (!empty($location)) {
 
@@ -104,26 +105,28 @@ class Place extends \Eloquent
             $return[] = $location;
 
 
-            return self::checkLocation(implode('/', $return), $name, $type, $is_london);
+            return self::checkLocation(implode('/', $return), $name, $type, $is_london, $zip_code);
 
         }
     }
 
 
-    public static function checkLocation($url, $name, $type)
+    public static function checkLocation($url, $name, $type, $is_london=false, $is_zip = false)
     {
+
+        $url = rtrim((string)$url,'/');
         $link = Link::where('permalink', $url)->first();
 
         if (count($link) == 0) {
             /** This crap is new.. so lets add it and figure out where the f* is it */
 
 
-            $geo = self::getGeo($name);
+            $geo = self::getGeo($name, $is_london, $is_zip);
 
             $link = new Link(['permalink' => $url, 'type' => $type]);
 
             $data = [
-                'name'             => (string) $name,
+                'name'             => (string)$name,
                 'place_type'       => 1,
                 'lng'              => $geo['lng'],
                 'lat'              => $geo['lat'],
@@ -142,7 +145,7 @@ class Place extends \Eloquent
     }
 
 
-    public static function getGeo($location)
+    public static function getGeo($location, $is_london, $is_zip)
     {
 
         $geocoder = new \Geocoder\Geocoder();
@@ -160,7 +163,7 @@ class Place extends \Eloquent
 
         try {
 
-            $geocode = $geocoder->geocode($location);
+            $geocode = $geocoder->geocode(($is_zip ? 'UK ' : ' ').$location);
 
             return ['lat' => $geocode->getLatitude(), 'lng' => $geocode->getLongitude()];
 

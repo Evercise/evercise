@@ -99,10 +99,6 @@ class Evercisegroup extends \Eloquent
     {
 
 
-
-
-
-
         /** Is this a permalink or something  */
         if (!empty($segments[2])) {
 
@@ -162,7 +158,7 @@ class Evercisegroup extends \Eloquent
         $results[0] = Evercisegroup::has('futuresessions')
             ->has('confirmed')
             ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-            ->whereHas(
+            ->where(
                 'venue',
                 function ($query) use (&$haversine, &$radius) {
                     $query->select(array(DB::raw($haversine . ' as distance')))
@@ -286,7 +282,7 @@ class Evercisegroup extends \Eloquent
                     'tester',
                     '<',
                     $testerLoggedIn ? 5 : 1
-                ) // testing to make sure class does not belong to the tester
+                )// testing to make sure class does not belong to the tester
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
@@ -486,7 +482,7 @@ class Evercisegroup extends \Eloquent
                     'tester',
                     '<',
                     $testerLoggedIn ? 5 : 1
-                ) // testing to make sure class does not belong to the tester
+                )// testing to make sure class does not belong to the tester
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
@@ -667,6 +663,21 @@ class Evercisegroup extends \Eloquent
     public function categories()
     {
         return $this->hasManyThrough('Category', 'Subcategory');
+    }
+
+    public function scopeLocation($query, $latitude, $longitude, $radius = 1)
+    {
+        $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
+
+        return $query->whereIn(
+            'venue_id',
+            function ($query) use ($haversine, $radius) {
+                $query->select('id')
+                    ->from(with(new Venue)->getTable())
+                    ->where(DB::raw($haversine), '<=', $radius);
+            }
+        );
+
     }
 
     /**

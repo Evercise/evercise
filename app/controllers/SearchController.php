@@ -39,7 +39,9 @@ class SearchController extends \BaseController
     {
         $link = Link::checkLink($all_segments);
 
+
         if ($link) {
+
             switch ($link->type) {
                 case 'AREA':
                 case 'STATION':
@@ -57,10 +59,10 @@ class SearchController extends \BaseController
 
 
     /**
-    * query eg's based on location
-    *
-    * @return Response
-    */
+     * query eg's based on location
+     *
+     * @return Response
+     */
     public function search($area = false)
     {
 
@@ -69,31 +71,34 @@ class SearchController extends \BaseController
         /** If Area is not a object lets add it to the database so we have it for later use  */
         if (!$area instanceof Place) {
 
-            if (!empty($input['location'])) {
-                $location = Place::getByLocation($input['location']);
-
-                unset($input['location']);
-                //We have save the location to the DB so we can redirect the user to the new URL now
-                
-                Redirect::route('search.parse', $location . '/' . http_build_query($input), 301);
-
+            Log::info('NoT Place');
+            if (!isset($input['location'])) {
+                $input['location'] = 'London';
             }
+            $location = Place::getByLocation($input['location']);
+
+            unset($input['location']);
+            //We have save the location to the DB so we can redirect the user to the new URL now
+
+            Log::info('Redirect TO: ' . $location->link->permalink . '?' . http_build_query($input));
+            $input['allsegments'] = $location->link->permalink;
+
+            return Redirect::route(
+                'search.parse',
+                $input,
+                301
+            );
+
 
         }
+        $params = [
+            'page'     => Input::get('page', 1),
+            'radius'   => Input::get('radius', 1),
+            'category' => Input::get('category')
+        ];
 
 
-        dd($input);
-
-        dd($area);
-
-        /* check if search form posted otherwise set default for radius */
-        $radius = Input::get('radius', 10);
-
-        $category = Input::get('category');
-        $locationString = Input::get('location');
-
-
-        return Evercisegroup::doSearch(['address' => $locationString], $category, $radius, $this->user);
+        return Search::newSearch($area, $params, $this->user);
     }
 
 
