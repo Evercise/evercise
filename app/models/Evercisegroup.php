@@ -80,7 +80,7 @@ class Evercisegroup extends \Eloquent
             }
 
             return [
-                'evercisegroups', $evercisegroups,
+                'evercisegroups' => $evercisegroups,
                 'sessionDates' => $sessionDates,
                 'totalMembers' => $totalMembers,
                 'stars' => $stars,
