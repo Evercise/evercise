@@ -19,6 +19,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     protected $fillable = array(
         'display_name',
         'password',
+        'password_confirmation',
         'first_name',
         'last_name',
         'activated',
@@ -76,7 +77,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'last_name' => 'required|max:15|min:2',
                 'dob' => 'required|date_format:Y-m-d|after:' . self::validDatesUserDobAfter() . '|before:' . self::validDatesUserDobBefore(),
                 'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
                 'phone' => 'numeric',
             ],
             'updating'=> [
@@ -132,7 +132,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $dateBefore
      * @return \Illuminate\Validation\Validator
      */
-    public static function validateUserSignup($inputs, $dateAfter, $dateBefore)
+    public static function validatePassword($inputs)
     {
         Validator::extend(
             'has',
@@ -140,18 +140,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 return ValidationHelper::hasRegex($attr, $value, $params);
             }
         );
-
         // validation rules for input field on register form
         $validator = Validator::make(
             $inputs,
             [
-                'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:15|min:2',
-                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
-                'phone' => 'numeric',
+                'password' => 'required|confirmed|min:6|max:32|has:letter,num'
             ],
             ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
 
@@ -263,34 +256,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         }
     }
 
-    /**
-     * @param $user
-     */
-    public static function addToUserGroup($user)
-    {
-        try {
-            // find the user group
-            $userGroup = Sentry::findGroupById(1);
-            // add the user to this group
-            $user->addGroup($userGroup);
-        } catch (Exception $e) {
-            Log::error('cannot add to user group: ' . $e);
-        }
-    }
-
-    /**
-     * @param $user
-     */
-    public static function addToFbGroup($user)
-    {
-        try {
-            $userGroup = Sentry::findGroupById(2);
-            $user->addGroup($userGroup);
-        } catch (Exception $e) {
-            Log::error('cannot add to facebook group: ' . $e);
-        }
-
-    }
 
     /**
      * @param $redirect_url
@@ -452,12 +417,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function validUserSignup($inputs)
     {
-        list($dateBefore, $dateAfter) = self::validDatesUserDob();
-
-        $validator = self::validateUserSignup($inputs, $dateAfter, $dateBefore);
+        $validator = self::validatePassword($inputs);
 
         return self::handleUserValidation($inputs, $validator);
-
     }
 
     /**
@@ -488,54 +450,39 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $user->area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
         $user->phone = isset($inputs['phone']) ?  $inputs['phone'] : null;
         $user->gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
+        // sentry fields
+        $user->activated = true;
 
-        echo  $user->password;
-
-
-  /*      $display_name = $inputs['display_name'];
-        $first_name = $inputs['first_name'];
-        $last_name = $inputs['last_name'];
-        $dob = $inputs['dob'];
-        $email = $inputs['email'];
-        $password = $inputs['password'];
-        $area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
-        $phone = isset($inputs['phone']) ?  $inputs['phone'] : null;
-        $gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
-
-  */
         if($user->isValid('store')){
-            return 'valid';
+            $user->save();
+            /*$user = Sentry::register(
+                [
+                    'display_name' => $user->display_name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'dob' => $user->dob,
+                    'email' => $user->email,
+                    'area_code' => $user->area_code,
+                    'phone' => $user->phone,
+                    'password' => $user->password,
+                    'gender' => $user->gender,
+                    'activated' => true,
+                    'directory' => '',
+                    'image' => '',
+                    'categories' => ''
+                ]
+            );
+            */
 
+
+            Log::info('new user created called ' . $user->display_name);
+
+            $result = $user;
+
+        }else{
+            $result = $user;
         }
-        else
-        {
-            echo  $user->password;
-            return $user->getErrors();
-        }
-
-        $user = Sentry::register(
-            [
-                'display_name' => $display_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'dob' => $dob,
-                'email' => $email,
-                'area_code' => $area_code,
-                'phone' => $phone,
-                'password' => $password,
-                'gender' => $gender,
-                'activated' => true,
-                'directory' => '',
-                'image' => '',
-                'categories' => ''
-            ]
-        );
-        self::addToUserGroup($user);
-
-
-        Log::info('new user created called ' . $display_name);
-
-        return $user;
+        return $result;
     }
 
     /**

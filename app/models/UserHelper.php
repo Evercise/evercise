@@ -52,4 +52,33 @@ class UserHelper
 
         Session::forget('ppcCode');
     }
+
+    /**
+     * @param $user
+     */
+    public static function addToUserGroup($user)
+    {
+        try {
+            // find the user group
+            $userGroup = Sentry::findGroupById(1);
+            // add the user to this group
+            $user->addGroup($userGroup);
+        } catch (Exception $e) {
+            Log::error('cannot add to user group: ' . $e);
+        }
+    }
+
+    /**
+     * @param $user
+     */
+    public static function addToFbGroup($user)
+    {
+        try {
+            $userGroup = Sentry::findGroupById(2);
+            $user->addGroup($userGroup);
+        } catch (Exception $e) {
+            Log::error('cannot add to facebook group: ' . $e);
+        }
+
+    }
 } 

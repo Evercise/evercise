@@ -43,77 +43,81 @@ class UsersController extends \BaseController
      */
     public function store()
     {
+        $password_validation = User::validUserSignup(Input::all());
+
+        if ($password_validation['validation_failed'] != 0) {
+            return Response::json(
+                [
+                    'callback' => 'validationFailed',
+                    'errors' => $password_validation['errors']
+                ]
+            );
+        }
+        // register user and add to user group
         $user = User::registerUser(Input::all());
-        return $user;
-        // check user passes validation
-        $valid_user = User::validUserSignup(Input::all());
 
+        if( ! $user->id)
+        {
+            return Response::json(
+                [
+                    'callback' => 'validationFailed',
+                    'errors' => $user->getErrors()
+                ]
+            );
+        }
+        else
+        {
+            // add user to the user group
+            UserHelper::addToUserGroup($user);
 
-        if ($valid_user['validation_failed'] == 0) {
-
-            // register user and add to user group
-            $user = User::registerUser(Input::all());
-
-
+            // create user defualts
             UserHelper::generateUserDefaults($user->id);
 
+            // check for a referral code
             UserHelper::checkReferalCode(Session::get('referralCode'), $user->id);
 
+            // check if user signed up from a landing page
             UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
 
             Session::forget('email');
 
+            User::makeUserDir($user);
 
-            if ($user) {
+            // check for newsletter and if so add to mailchimp
 
-                User::makeUserDir($user);
-
-                $user->save();
-
-                // check for newsletter and if so add to mailchimp
-
-                $newsletter = Input::get('userNewsletter');
-                $email_address = Input::get('email');
-                $first_name = Input::get('first_name');
-                $last_name = Input::get('last_name');
-                if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(
-                        Config::get('mailchimp')['newsletter'],
-                        $email_address,
-                        $first_name,
-                        $last_name
-                    );
-                }
-
-                Sentry::login($user, true);
-
-                Event::fire('user.registered', [$user]);
-
-
-
-                if (Input::has('redirect')) {
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route(Input::get('redirect'))
-                        ]
-                    );
-                } else {
-
-                    User::sendWelcomeEmail($user);
-
-
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route('users.edit.tab', [$user->id, 'evercoins'])
-                        ]
-                    );
-
-                }
+            $newsletter = Input::get('userNewsletter');
+            if (!empty($newsletter)) {
+                User::subscribeMailchimpNewsletter(
+                    Config::get('mailchimp')['newsletter'],
+                    $user->email,
+                    $user->first_name,
+                    $user->last_name
+                );
             }
-        } else {
-            return Response::json($valid_user);
+
+            Sentry::login($user, true);
+
+            Event::fire('user.registered', [$user]);
+
+            if (Input::has('redirect')) {
+                return Response::json(
+                    [
+                        'callback' => 'gotoUrl',
+                        'url'      => route(Input::get('redirect'))
+                    ]
+                );
+            } else {
+
+                User::sendWelcomeEmail($user);
+
+                return Response::json(
+                    [
+                        'callback' => 'gotoUrl',
+                        'url'      => route('users.edit.tab', [$user->id, 'evercoins'])
+                    ]
+                );
+
+            }
         }
 
 
@@ -153,9 +157,9 @@ class UsersController extends \BaseController
 
             if ($user) {
 
-                User::addToUserGroup($user);
+                UserHelper::addToUserGroup($user);
 
-                User::addToFbGroup($user);
+                UserHelper::addToFbGroup($user);
 
                 UserHelper::generateUserDefaults($user->id);
 
