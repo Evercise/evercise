@@ -1,6 +1,5 @@
 <?php
 
-use Evercisesession;
 
 class SessionsController extends \BaseController
 {

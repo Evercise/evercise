@@ -15,7 +15,7 @@ class UserHelper
         }
 
         Evercoin::create(['user_id' => $user_id, 'balance' => 0]);
-        Milestone::create(['user_id' => $user_id]);
+        Milestone::create(['user_id' => $user_id])->freeCoin('general_signup');
         Token::create(['user_id' => $user_id]);
     }
 
@@ -80,5 +80,41 @@ class UserHelper
             Log::error('cannot add to facebook group: ' . $e);
         }
 
+    }
+
+    /**
+     * @param $inputs
+     * @return string
+     */
+    public static function fbCheckForUserNameAndIncrement($inputs)
+    {
+        $check_display_name = $inputs['check_display_name'];
+        if ($user_check = User::where('display_name', 'like', $check_display_name . '-%')->orderBy('created_at', 'desc')->first() ) {
+            list($original_display_name, $int) = explode('-', $user_check->display_name);
+            $number = (int)$int;
+            $number++;
+            $display_name = $original_display_name . '-' . $number;
+        }
+        elseif($display_name = User::where('display_name', $check_display_name)->pluck('display_name')){
+            $display_name = $display_name.'-1';
+        }
+        else{
+            $display_name = $check_display_name;
+        }
+        return $display_name;
+    }
+
+    /**
+     * @param $user
+     */
+    public static function getResetPasswordAndEmailIt($user)
+    {
+        $reset_code = $user->getResetPasswordCode();
+
+        Event::fire('user.forgot', array(
+            'email' => $user->email,
+            'displayName' => $user->display_name,
+            'resetCode' => $reset_code
+        ));
     }
 } 

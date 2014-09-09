@@ -1,6 +1,7 @@
 <?php
 
 
+
 class UsersController extends \BaseController
 {
 
@@ -137,10 +138,12 @@ class UsersController extends \BaseController
 
 
         $inputs = [];
-        $inputs['display_name'] = str_replace(' ', '_', $me['name']);
+        $inputs['check_display_name'] = str_replace(' ', '_', $me['name']);
+        $inputs['display_name'] = UserHelper::fbCheckForUserNameAndIncrement($inputs);
         $inputs['first_name'] = $me['first_name'];
         $inputs['last_name'] = $me['first_name'];
         $inputs['dob'] = isset($me['birthday']) ? new DateTime($me['birthday']) : null;
+        $inputs['dob'] = $inputs['dob']->format('Y-m-d');
         $inputs['email'] = $me['email'];
         $inputs['password'] = Functions::randomPassword(8);
 
@@ -154,8 +157,11 @@ class UsersController extends \BaseController
             // register user and add to user group
             $user = User::registerUser($inputs);
 
-
-            if ($user) {
+            if( ! $user->id) {
+                throw new Exception('UserExists');
+            }
+            else
+            {
 
                 UserHelper::addToUserGroup($user);
 
@@ -187,30 +193,28 @@ class UsersController extends \BaseController
 
                 Sentry::login($user, false);
 
-                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'));
-
                 Event::fire('user.registeredFacebook', [$user]);
 
+                $result = self::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'));
+
             }
-        } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
+        } catch (Exception $e) {
 
             try {
                 $user = Sentry::findUserByLogin($me['email']);
 
                 Sentry::login($user, false);
 
-
-
                 if (Sentry::check()) {
                     Event::fire('user.loginFacebook', [$user]);
                 }
 
-
-               $result = User::facebookRedirectHandler($redirect_url, $user);
+               $result = self::facebookRedirectHandler($redirect_url, $user);
 
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
                 Log::error($e);
+                $result = $e;
             }
         }
 
@@ -280,26 +284,13 @@ class UsersController extends \BaseController
 
 
     /**
-     * Activate the user using the emailed hash
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function pleaseActivate($display_name)
-    {
-        return View::make('users.activate')->with('display_name', $display_name);
-
-    }
-
-    /**
-     * Reset the user's password using the emailed hash
+     * reset password view
      *
      * @param  int $id
      * @return View
      */
-    public function getChangePassword($display_name)
+    public function getChangePassword()
     {
-        // Init JS from composer as used for trainers as well as users
         return View::make('users.changepassword');
     }
 
@@ -364,7 +355,7 @@ class UsersController extends \BaseController
     }
 
     /**
-     * Reset the user's password using the emailed hash
+     * Reset the user's password using the emailed hashed reset code
      *
      * @param  int $id
      * @return View
@@ -372,12 +363,13 @@ class UsersController extends \BaseController
     public function getResetPassword($display_name, $code)
     {
         try {
-            $user = Sentry::findUserByResetPasswordCode($code);
+            Sentry::findUserByResetPasswordCode($code);
+            $result = View::make('users.resetpassword')->with('code', $code);
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return View::make('users.resetpassword')->with('message', 'Cannot find user');
+            $result = View::make('users.resetpassword')->with('message', 'Cannot find user');
         }
 
-        return View::make('users.resetpassword')->with('code', $code);
+        return $result;
     }
 
     /**
@@ -432,7 +424,6 @@ class UsersController extends \BaseController
 
                 }
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                //return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
                 Session::flash(
                     'errorNotification',
                     'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com'
@@ -491,6 +482,34 @@ class UsersController extends \BaseController
         $cookie = Cookie::forget('PHPSESSID');
 
         return Redirect::route('home')->withCookie($cookie);
+    }
+
+    /**
+     * @param $redirect
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public static function facebookRedirectHandler($redirect = null, $user, $message = null)
+    {
+        if ($redirect != null) {
+            if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
+            {
+                $result = Redirect::route($redirect)->with(
+                    'notification', $message
+                );
+
+            } else // Used when logging in before hitting the checkout
+            {
+                $result = Redirect::route($redirect);
+
+            }
+        } else {
+            $result = Redirect::route((Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '.edit.tab', [$user->id, 'evercoins'])
+                ->with('notification', $message);
+
+        }
+
+        return $result;
     }
 
 

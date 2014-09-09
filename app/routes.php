@@ -58,7 +58,7 @@ Route::get('/users/{display_name}/activate/{code}', array('as' => 'users.activat
 Route::get('/users/{display_name}/activate', array('as' => 'users.activatecodeless', 'uses' => 'UsersController@pleaseActivate'));
 Route::get('/users/{display_name}/resetpassword/{code}', array('as' => 'users.resetpassword', 'uses' => 'UsersController@getResetPassword'));
 Route::post('/users/resetpassword', array('as' => 'users.resetpassword.post', 'uses' => 'UsersController@postResetPassword'));
-Route::get('/users/{display_name}/changepassword', array('as' => 'users.changepassword', 'uses' => 'UsersController@getChangePassword'));
+Route::get('/users/changepassword', array('as' => 'users.changepassword', 'uses' => 'UsersController@getChangePassword'));
 Route::post('/users/changepassword', array('as' => 'users.changepassword.post', 'uses' => 'UsersController@postChangePassword'));
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 Route::put('users/update/{id}', array('as' => 'users.update', 'uses' => 'UsersController@update'));

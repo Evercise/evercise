@@ -327,35 +327,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $user->save();
     }
 
-    /**
-     * @param $redirect
-     * @param $user
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public static function facebookRedirectHandler($redirect = null, $user ,$message = null)
-    {
-        if ($redirect != null) {
-            if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
-            {
-                $result = Redirect::route($redirect)->with(
-                    'notification', $message
-                );
-
-            }
-            else // Used when logging in before hitting the checkout
-            {
-                $result = Redirect::route($redirect);
-
-            }
-        } else {
-            $result = Redirect::route((Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '.edit.tab', [$user->id, 'evercoins'])
-                    ->with('notification',$message );
-
-        }
-
-        return $result;
-    }
-
 
     /**
      * Get the unique identifier for the user.
@@ -441,6 +412,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         $user = new User;
 
+
         $user->display_name = $inputs['display_name'];
         $user->first_name = $inputs['first_name'];
         $user->last_name = $inputs['last_name'];
@@ -455,25 +427,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
         if($user->isValid('store')){
             $user->save();
-            /*$user = Sentry::register(
-                [
-                    'display_name' => $user->display_name,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'dob' => $user->dob,
-                    'email' => $user->email,
-                    'area_code' => $user->area_code,
-                    'phone' => $user->phone,
-                    'password' => $user->password,
-                    'gender' => $user->gender,
-                    'activated' => true,
-                    'directory' => '',
-                    'image' => '',
-                    'categories' => ''
-                ]
-            );
-            */
-
 
             Log::info('new user created called ' . $user->display_name);
 
