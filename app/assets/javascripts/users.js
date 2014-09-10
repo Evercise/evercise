@@ -3,7 +3,8 @@
 function initLogin()
 {
     // login pop up
-    $(".login").click(function(e){
+    $(document).on('click', '.login', function(e){
+   // $(".login").click(function(e){
         var url = this.href;
         $.ajax({
             url: url,

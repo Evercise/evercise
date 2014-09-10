@@ -9,7 +9,9 @@
 	
 	<div class="class-block-header block-inner">
 		@if(isset($title))
-			{{ Str::limit($title, 22) }}
+		    <a href="{{ URL::to('evercisegroups/'.$evercisegroupId) }}">
+			    {{ Str::limit($title, 22) }}
+			</a>
 		@endif
 		@if(isset($default_price))
 			<p><strong class="highlight">&pound;{{ $default_price }}</strong><small>per person</small></p>
