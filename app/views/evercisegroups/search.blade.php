@@ -4,7 +4,7 @@
 
 @if(!isset($user))
     <div class="add-block">
-            <h3>{{ HTML::linkRoute('auth.login.redirect_after_login', 'Register today and receive up to £8 of evercoins to use against any class bookings', null,   array('id'=>'login', 'class' => 'login ')) }} </h3>
+            <h3>{{ HTML::linkRoute('auth.login', 'Register today and receive up to £8 of evercoins to use against any class bookings', null,   array('id'=>'login', 'class' => 'login ')) }} </h3>
         </div>
         <div class="mb40"></div>
 @endif
