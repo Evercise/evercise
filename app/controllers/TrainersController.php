@@ -1,8 +1,71 @@
 <?php
 
 class TrainersController extends \BaseController {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function createTrainerRecord()
+    {
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                //'title' => 'required',
+                'bio' => 'required|max:500|min:50',
+                'image' => 'required',
+                'phone' => 'required|numeric',
+                'website' => 'sometimes',
+                'profession' => 'required|max:50|min:2',
+            )
+        );
+        if ($validator->fails()) {
+            $result = array(
+                'validation_failed' => 1,
+                'errors' => $validator->errors()->toArray()
+            );
 
-	/**
+            return Response::json($result);
+        } else {
+            $user = Sentry::getUser();
+
+            $bio = Input::get('bio');
+            $image = Input::get('image');
+            $website = Input::get('website');
+            $area_code = Input::get('areacode');
+            $phone = Input::get('phone');
+            $profession = Input::get('profession');
+
+
+            $trainer = Trainer::createOrFail(['user_id' => $user->id, 'bio' => $bio, 'website' => $website, 'profession' => $profession]);
+
+            // Use firstOrCreate just incase to make sure no duplicates are made
+            $wallet = Wallet::firstOrCreate(['user_id' => $user->id, 'balance' => 0, 'previous_balance' => 0]);
+
+            // update user image
+
+            $user->image = $image;
+            $user->area_code = $area_code;
+            $user->phone = $phone;
+            $user->save();
+
+            // add to trainer group
+
+            $userGroup = Sentry::findGroupById(3);
+            $user->addGroup($userGroup);
+
+            // welcome email
+
+            Event::fire('user.confirm', array(
+                'email' => $user->email,
+                'display_name' => $user->display_name
+            ));
+
+            Event::fire('trainer.registered', [$user]);
+
+            return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
+        }
+    }
+
+    /**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
@@ -19,38 +82,7 @@ class TrainersController extends \BaseController {
 	 */
 	public function create()
 	{
-		if ( ! Sentry::check())
-		{
-		   return View::make('trainers.about')->with('status','logged-out')->with('redirect_after_login', true); 
-		}
-
-		//$user = Sentry::getUser();
-		$trainerGroup = Sentry::findGroupByName('trainer');
-		if ($this->user->inGroup($trainerGroup))
-		{
-			return Redirect::route('trainers.edit', $this->user->id);
-		}
-
-		$specialities = Speciality::all();
-		$disciplines = array();
-		$titles = array();
-		foreach ($specialities as $sp)
-		{
-		    if (!isset($titles[$sp->name]))
-		    {
-		    	$disciplines[$sp->name] = $sp->name;
-		    	$titles[$sp->name] = array($sp->titles);
-		    }
-		   	else array_push($titles[$sp->name], $sp->titles);
-		}
-
-		// http://image.intervention.io/methods/crop
-		// http://odyniec.net/projects/imgareaselect
-
-		return View::make('trainers.create')
-			->with('disciplines', $disciplines);
-
-
+		return    View::make('trainers.create');
 	}
 
 	/**
@@ -60,82 +92,7 @@ class TrainersController extends \BaseController {
 	 */
 	public function store()
 	{
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				//'title' => 'required',
-				'bio' => 'required|max:500|min:50',
-				'image' => 'required',
-				'phone' => 'required|numeric',
-				'website' => 'sometimes',
-				'profession' => 'required|max:50|min:2',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
-
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('trainers.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else {
-			$user = Sentry::getUser();
-
-			$bio = Input::get('bio');
-			$image = Input::get('image');
-			$website = Input::get('website');
-			$area_code = Input::get('areacode');
-			$phone = Input::get('phone');
-			//$discipline = Input::get('discipline');
-			//$title = Input::get('title');
-			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
-			$profession = Input::get('profession');
-
-			if ($phone == '' && $area_code != '')
-				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
-			if ($phone != '' && $area_code == '')
-				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
-
-
-			$trainer = Trainer::createOrFail(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
-
-			// Duck out if record already exists
-			if (!$trainer) return Response::json(['callback' => 'gotoUrl', 'url' =>  route('trainers.edit.tab', ['id'=> $user->id, 'evercoins'])]);
-
-			// Use firstOrCreate just incase to make sure no duplicates are made
-			$wallet = Wallet::firstOrCreate(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
-
-			// update user image
-
-			$user->image = $image;
-			$user->area_code = $area_code;
-			$user->phone = $phone;
-			$user->save();
-
-			// add to trainer group
-
-			$userGroup = Sentry::findGroupById(3);
-			$user->addGroup($userGroup);
-
-			// welcome email
-
-			Event::fire('user.confirm', array(
-            	'email' => $user->email, 
-            	'display_name' => $user->display_name
-            ));
-
-            Event::fire('trainer.registered', [$user]);
-
-			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
-		}
+        return self::createTrainerRecord();
 
 	}
 
