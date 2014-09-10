@@ -84,17 +84,18 @@ class Trainer extends \Eloquent
         $trainer->website = $inputs['website'];
         $trainer->profession = $inputs['profession'];
 
+
         if($trainer->isValid('store'))
         {
             $user_result = User::updateUser($user, Input::all() , 'trainer');
 
             if( $user_result  == 'saved' )
             {
-                /*$trainer->save();
+                $trainer->save();
 
                 $userGroup = Sentry::findGroupById(3);
                 $user->addGroup($userGroup);
-                */
+
                 Event::fire('user.confirm', array(
                     'email' => $user->email,
                     'display_name' => $user->display_name
