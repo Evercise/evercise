@@ -11,20 +11,13 @@
 |
 */
 
-App::before(/**
- * @param $request
- */
-    function($request)
+App::before(function($request)
 {
 	//
 });
 
 
-App::after(/**
- * @param $request
- * @param $response
- */
-    function($request, $response)
+App::after(function($request, $response)
 {
 	//
 });
@@ -40,10 +33,7 @@ App::after(/**
 |
 */
 
-Route::filter('auth', /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    function()
+Route::filter('auth', function()
 {
     if ( ! Sentry::check())
     {
@@ -52,20 +42,14 @@ Route::filter('auth', /**
 });
 
 
-Route::filter('auth.basic', /**
-     * @return null|\Symfony\Component\HttpFoundation\Response
-     */
-    function()
+Route::filter('auth.basic', function()
 {
 	return Auth::basic();
 });
 
 
 
-Route::filter('admin', /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    function()
+Route::filter('admin', function()
 {
 	if (! App::environment('local'))
 	{
@@ -90,36 +74,30 @@ Route::filter('admin', /**
 
 });
 
-Route::filter('user', /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    function()
+Route::filter('user', function()
 {
     // Kick out if not logged in
     if ( ! Sentry::check())
         return Redirect::route('home')->with('notification', 'You have been logged out');
 });
 
-Route::filter('trainer', /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    function()
+Route::filter('trainer', function()
 {
     // Kick out if not a trainer - send to trainer sign up page
     if (! Trainer::isTrainerLoggedIn())
         return Redirect::route('trainers.create');
 });
 
-Route::filter('notTrainer', /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    function()
-{
-    // Kick out if not a trainer - send to trainer sign up page
-    if ( Trainer::isTrainerLoggedIn())
-        $user = Sentry::getUser();
-        return Redirect::route('trainers.edit', $user->id);
-});
+Route::filter('notTrainer',  function()
+    {
+        // Kick out if not a trainer - send to trainer sign up page
+        if ( Trainer::isTrainerLoggedIn())
+        {
+            $user = Sentry::getUser();
+            return Redirect::route('trainers.edit', $user->id);
+        }
+
+    });
 
 
 /*
@@ -133,10 +111,7 @@ Route::filter('notTrainer', /**
 |
 */
 
-Route::filter('guest', /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    function()
+Route::filter('guest', function()
 {
 	if (Auth::check()) return Redirect::to('/');
 });
@@ -152,10 +127,7 @@ Route::filter('guest', /**
 |
 */
 
-Route::filter('csrf', /**
-     * @throws \Illuminate\Session\TokenMismatchException
-     */
-    function()
+Route::filter('csrf', function()
 {
 	if (Session::token() != Input::get('_token'))
 	{
@@ -166,11 +138,7 @@ Route::filter('csrf', /**
 
 /* 404 handler */
 
-App::missing(/**
- * @param $exception
- * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
- */
-    function($exception)
+App::missing(function($exception)
 {
     //Since we have a fuckup here.. we need to do this one manually
     if (Request::is('trainer/*'))
@@ -192,10 +160,7 @@ App::missing(/**
     return Response::view('errors.missing', array(), 404);
 });
 
-View::composer('*', /**
-     * @param $view
-     */
-    function($view)
+View::composer('*', function($view)
 {
 		// Share the name of the view, to be passed to the locatlisations (it's used to load the correct localisation file)
     View::share('view_name', $view->getName());

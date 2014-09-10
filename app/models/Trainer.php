@@ -1,5 +1,6 @@
 <?php
 
+use Watson\Validating\ValidatingTrait;
 /**
  * Class Trainer
  */
@@ -16,6 +17,25 @@ class Trainer extends \Eloquent
      * @var string
      */
     protected $table = 'trainers';
+
+    use ValidatingTrait;
+
+    protected $rulesets  =[];
+
+    function __construct()
+    {
+        $this->rulesets  = [
+            'store' => [
+                'bio' => 'required|max:500|min:50',
+                'website' => 'sometimes',
+                'profession' => 'required|max:50|min:2',
+            ],
+            'updating'=> [
+
+            ]
+
+        ];
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
@@ -45,6 +65,58 @@ class Trainer extends \Eloquent
         }
 
         Static::where('user_id', $user->id)->update(['confirmed' => 1]);
+
+    }
+
+
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function createTrainerRecord($inputs)
+    {
+        $user = Sentry::getUser();
+
+        $trainer = new Trainer;
+
+        $trainer->user_id = $user->id;
+        $trainer->bio = $inputs['bio'];
+        $trainer->website = $inputs['website'];
+        $trainer->profession = $inputs['profession'];
+
+        if($trainer->isValid('store'))
+        {
+            $user_result = User::updateUser($user, Input::all() , 'trainer');
+
+            if( $user_result  == 'saved' )
+            {
+                /*$trainer->save();
+
+                $userGroup = Sentry::findGroupById(3);
+                $user->addGroup($userGroup);
+                */
+                Event::fire('user.confirm', array(
+                    'email' => $user->email,
+                    'display_name' => $user->display_name
+                ));
+
+                Event::fire('trainer.registered', [$user]);
+
+                $result =  'saved';
+            }
+            else
+            {
+                $result =  $user_result;
+            }
+
+        }
+        else
+        {
+            $result = $trainer->getErrors();
+        }
+
+
+        return $result;
 
     }
 

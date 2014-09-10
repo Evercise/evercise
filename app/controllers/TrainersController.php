@@ -1,69 +1,8 @@
 <?php
 
+
 class TrainersController extends \BaseController {
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public static function createTrainerRecord()
-    {
-        $validator = Validator::make(
-            Input::all(),
-            array(
-                //'title' => 'required',
-                'bio' => 'required|max:500|min:50',
-                'image' => 'required',
-                'phone' => 'required|numeric',
-                'website' => 'sometimes',
-                'profession' => 'required|max:50|min:2',
-            )
-        );
-        if ($validator->fails()) {
-            $result = array(
-                'validation_failed' => 1,
-                'errors' => $validator->errors()->toArray()
-            );
 
-            return Response::json($result);
-        } else {
-            $user = Sentry::getUser();
-
-            $bio = Input::get('bio');
-            $image = Input::get('image');
-            $website = Input::get('website');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-            $profession = Input::get('profession');
-
-
-            $trainer = Trainer::createOrFail(['user_id' => $user->id, 'bio' => $bio, 'website' => $website, 'profession' => $profession]);
-
-            // Use firstOrCreate just incase to make sure no duplicates are made
-            $wallet = Wallet::firstOrCreate(['user_id' => $user->id, 'balance' => 0, 'previous_balance' => 0]);
-
-            // update user image
-
-            $user->image = $image;
-            $user->area_code = $area_code;
-            $user->phone = $phone;
-            $user->save();
-
-            // add to trainer group
-
-            $userGroup = Sentry::findGroupById(3);
-            $user->addGroup($userGroup);
-
-            // welcome email
-
-            Event::fire('user.confirm', array(
-                'email' => $user->email,
-                'display_name' => $user->display_name
-            ));
-
-            Event::fire('trainer.registered', [$user]);
-
-            return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
-        }
-    }
 
     /**
 	 * Display a listing of the resource.
@@ -92,7 +31,26 @@ class TrainersController extends \BaseController {
 	 */
 	public function store()
 	{
-        return self::createTrainerRecord();
+        $result = Trainer::createTrainerRecord(Input::all());
+
+        if($result == 'saved')
+        {
+            return Response::json(
+                [
+                    'callback' => 'gotoUrl',
+                    'url' => route('evercisegroups.index')
+                ]
+            );
+        }
+        else
+        {
+            return Response::json(
+                [
+                    'callback' => 'validationFailed',
+                    'errors' => $result
+                ]
+            );
+        }
 
 	}
 

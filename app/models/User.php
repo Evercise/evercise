@@ -86,6 +86,10 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'dob' => 'required|date_format:Y-m-d|after:' . self::validDatesUserDobAfter() . '|before:' . self::validDatesUserDobBefore(),
                 'email' => 'required|email|unique:users',
                 'phone' => 'numeric',
+            ],
+            'trainer'=> [
+                'image' => 'required',
+                'phone' => 'required'
             ]
 
         ];
@@ -216,17 +220,17 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $area_code
      * @param $phone
      */
-    public static function updateUser($user, $inputs)
+    public static function updateUser($user, $inputs, $validation_type = 'updating')
     {
-        $user->first_name = $inputs['first_name'];
-        $user->last_name = $inputs['last_name'];
-        $user->dob = $inputs['dob'];
-        $user->gender = $inputs['gender'];
-        $user->image = $inputs['thumbFilename'];
-        $user->area_code = $inputs['areacode'];
-        $user->phone = $inputs['phone'];
+        $user->first_name = isset($inputs['first_name']) ? $inputs['first_name'] : $user->first_name;
+        $user->last_name = isset($inputs['last_name']) ? $inputs['last_name'] : $user->last_name;
+        $user->dob = isset($inputs['dob']) ? $inputs['dob'] : $user->dob;
+        $user->gender = isset($inputs['gender']) ? $inputs['gender'] : $user->gender;
+        $user->image = isset($inputs['thumbFilename']) ? $inputs['thumbFilename'] : $user->image;
+        $user->area_code = isset($inputs['areacode']) ? $inputs['areacode'] : $user->area_code;
+        $user->phone = isset($inputs['phone']) ? $inputs['phone'] : $user->phone;
 
-        if($user->isValid('updating')){
+        if($user->isValid($validation_type)){
             $user->save();
 
             self::checkProfileMilestones($user);
