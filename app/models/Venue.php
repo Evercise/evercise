@@ -1,5 +1,7 @@
 <?php
 
+use Watson\Validating\ValidatingTrait;
+
 class Venue extends \Eloquent
 {
 
@@ -113,7 +115,6 @@ class Venue extends \Eloquent
 
         return View::make('venues.edit_form')->with('venue', $venue)->with('selectedFacilities', $facilities);
     }
-
 
 
     public function evercisegroup()
