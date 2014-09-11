@@ -250,8 +250,8 @@ class Evercisegroup extends \Eloquent
 
 
         return [
-            '$mapResult' => $mapResult,
-            '$paginatedResults', $paginatedResults
+            'mapResult' => $mapResult,
+            'paginatedResults' => $paginatedResults
         ];
     }
 

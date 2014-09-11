@@ -215,7 +215,7 @@ class EvercisegroupsController extends \BaseController {
 
         return View::make('evercisegroups.search')
             ->with('places', json_encode($searchResults['mapResult']))
-            ->with('evercisegroups', $searchResults['$paginatedResults']);
+            ->with('evercisegroups', $searchResults['paginatedResults']);
     }
 
 
