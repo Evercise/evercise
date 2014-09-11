@@ -31,7 +31,8 @@ class Trainer extends \Eloquent
                 'profession' => 'required|max:50|min:2',
             ],
             'updating'=> [
-
+                'bio' => 'required|max:500|min:50',
+                'profession' => 'required|max:50|min:5',
             ]
 
         ];
@@ -101,6 +102,8 @@ class Trainer extends \Eloquent
                     'display_name' => $user->display_name
                 ));
 
+                Wallet::firstOrCreate(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
+
                 Event::fire('trainer.registered', [$user]);
 
                 $result =  'saved';
@@ -122,6 +125,47 @@ class Trainer extends \Eloquent
     }
 
     /**
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public static function updateTrainerDetails($user, $inputs, $validation_type = 'updating')
+    {
+        $trainer = Static::where('user_id', $user->id)->first();
+
+        $trainer->bio = isset($inputs['bio']) ? $inputs['bio'] : $trainer->bio;
+        $trainer->website = isset($inputs['website']) ? $inputs['website'] : $trainer->website;
+        $trainer->profession = isset($inputs['profession']) ? $inputs['profession'] : $trainer->profession;
+
+        if($trainer->isValid($validation_type))
+        {
+            $trainer->save();
+            Event::fire('trainer.editTrainerDetails', [$user]);
+            $result = 'saved';
+
+        }
+        else
+        {
+            $result = $trainer->getErrors();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public static function fullTrainerAsUser($id)
+    {
+        $user = User::where('id', $id)
+            ->has('hasUpcomingSessions')
+            ->with('trainer')
+            ->with('ratings')
+            ->firstOrFail();
+        return $user;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function User()
@@ -137,6 +181,7 @@ class Trainer extends \Eloquent
     {
         return $this->hasOne('Speciality', 'id', 'specialities_id');
     }
+
 
     /**
      *

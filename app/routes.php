@@ -67,8 +67,8 @@ Route::put('users/update/{id}', array('as' => 'users.update', 'uses' => 'UsersCo
 Route::get('trainers/trainer/signup', array('as'=>'trainers.trainerSignup', 'uses'=>'TrainersController@trainerSignup'));
 Route::get('trainers/create', array('as'=>'trainers.create', 'before' => 'auth|notTrainer', 'uses'=>'TrainersController@create'));
 Route::get('trainers/{id}', array('as'=>'trainers.show', 'uses'=>'TrainersController@show'));
-Route::get('trainers/{id}/edit', array('as'=>'trainers.edit', 'uses'=>'TrainersController@edit'));
-Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab', 'uses'=>'TrainersController@edit'));
+Route::get('trainers/{id}/edit', array('as'=>'trainers.edit', 'before' => 'auth|trainer' , 'uses'=>'TrainersController@edit'));
+Route::get('trainers/{id}/edit/{tab}', array('as'=>'trainers.edit.tab','before' => 'auth|trainer', 'uses'=>'TrainersController@edit'));
 Route::post('trainers/store', array('as' => 'trainers.store', 'uses' => 'TrainersController@store'));
 Route::put('trainers/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
 

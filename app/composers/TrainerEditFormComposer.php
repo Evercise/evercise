@@ -12,7 +12,6 @@ class TrainerEditFormComposer
         JavaScript::put(
             [
                 'initPut'		 => json_encode(['selector' => '#trainer_edit']),
-
             ]
         );
 

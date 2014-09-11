@@ -10,9 +10,9 @@ class TrainerBlockComposer
     {
         $viewdata = $view->getData();
 
-        $userTrainer = $viewdata['trainer']->user;
+        $userTrainer = $viewdata['user_trainer'];
 
-        $trainerDetails = $viewdata['trainer'];
+        $trainerDetails = $userTrainer->trainer;
 
         $orientation = $viewdata['orientation'];
 
@@ -31,7 +31,6 @@ class TrainerBlockComposer
         $to = new DateTime('today');
         $age = $from->diff($to)->y;
 
-        $trainerDetails = $viewdata['trainer'];
         $bio = $trainerDetails->bio;
         $profession = $trainerDetails->profession;
         if ($orientation == 'landscape') {

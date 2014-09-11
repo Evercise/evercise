@@ -523,9 +523,42 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function Trainer()
+    public function trainer()
     {
         return $this->hasOne('Trainer');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function hasUpcomingSessions()
+    {
+        return $this->hasManyThrough('Evercisesession', 'Evercisegroup', 'user_id', 'evercisegroup_id')->where('date_time', '>=', DB::raw('NOW()'))->orderBy(
+            'date_time',
+            'asc'
+        );
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ratings()
+    {
+        return $this->hasMany('Rating');
+    }
+
+    public function rators()
+    {
+        return $this->hasManyThrough('User', 'Rating', 'user_id', 'id');
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function totalRating()
+    {
+        return $this->hasMany('Rating')->sum('stars');
     }
 
 
