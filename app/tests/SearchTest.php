@@ -1,8 +1,25 @@
 <?php namespace app\tests;
 
+use Mockery as m;
+
+use Event;
+use Trainer;
+use Milestone;
+use User;
+
+use Geo;
+
 class SearchTest extends TestCase
 {
+    public function tearDown()
+    {
+        m::close();
+    }
 
+
+    public function __construct() {
+        m::mock('Request')->shouldDeferMissing();
+    }
     public function setUp()
     {
         parent::setUp();
@@ -20,23 +37,32 @@ class SearchTest extends TestCase
 
     }
 
-    /** @test */
-    public function url_will_return_a_search()
-    {
-        foreach ($this->search_pages as $page) {
-            $parsed = \Evercisegroup::parseSegments($page);
-
-            $this->assertTrue($parsed['type'] == 'search');
-
-        }
-    }
 
     /** @test */
-    public function url_will_return_a_class()
-    {
-        $parsed = \Evercisegroup::parseSegments($this->class_page);
+    public function it_returns_london_if_the_ip_is_missing() {
 
-        $this->assertTrue($parsed['type'] == 'class');
+        $response = Geo::getLatLng('127.0.0.1');
+
+        $expecting = [
+            'lat'   => 51.5307,
+            'lng'   => -0.12308
+        ];
+
+        $this->assertEquals($expecting, $response);
+
     }
+
+
+    /**
+     * @test
+     * @throws Exception
+     */
+    public function it_returns_exception() {
+
+        $response = Geo::getLatLng('gani*AUEI)igu38ghw0rgjo');
+
+    }
+
+
 
 }
