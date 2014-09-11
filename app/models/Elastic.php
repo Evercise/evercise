@@ -138,12 +138,16 @@ class Elastic
     public function indexEvercisegroups()
     {
 
+        $total_indexed = 0;
+
+        $this->log->info('Indexing Evercise Groups started '.date('d H:i:s'));
         $all = $this->evercisegroup->with('venue')
             ->with('user')
             ->with('ratings')
             ->with('futuresessions')
             ->get();
 
+        $this->log->info('Get all Indexing data '.date('d H:i:s'));
         foreach ($all as $a) {
             if (!empty($a->venue->lat) && !empty($a->venue->lng)) {
                 $geohash = $this->geotools->coordinate($a->venue->lat . ',' . $a->venue->lng);
@@ -216,10 +220,17 @@ class Elastic
             $params['type'] = $this->elastic_type;
             $params['id'] = $a->id;
 
-            $this->elasticsearch->index($params);
+            try {
+                $this->elasticsearch->index($params);
+                $total_indexed++;
+            } catch(Exception $e) {
+                $this->log->error('Cant Index Elasticgroup::id('.$a->id.') row. Got error: '.$e->getMessage());
+            }
         }
 
-        return true;
+        $this->log->info('Indexing Completed '.date('d H:i:s'));
+
+        return $total_indexed;
 
 
     }
@@ -234,8 +245,9 @@ class Elastic
 
         $mapping = [];
 
-        $params['index'] = ($index ?:  $this->elastic_index);
-        $params['type'] =($type ?:  $this->elastic_type);
+        $params['index'] = ($index ?: $this->elastic_index);
+        $params['type'] = ($type ?: $this->elastic_type);
+
 
         switch ($type) {
             case 'evercise':
@@ -317,6 +329,7 @@ class Elastic
                 break;
         }
 
+
         if (count($mapping) > 0) {
 
             $params['body'] = $mapping;
@@ -324,6 +337,32 @@ class Elastic
         } else {
             return false;
         }
+    }
+
+
+    public function deleteIndex($index = false)
+    {
+        $params['index'] = ($index ?: $this->elastic_index);
+        try {
+            $this->elasticsearch->indices()->delete($params);
+        } catch (Exception $e) {
+            // There is no Index.. so we dont really care!
+        }
+        return true;
+    }
+
+
+    public function createIndex($index = false)
+    {
+
+        $params['index'] = ($index ?: $this->elastic_index);
+
+        try {
+            $this->elasticsearch->indices()->create($params);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+        return true;
     }
 }
 
