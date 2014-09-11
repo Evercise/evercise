@@ -70,7 +70,7 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-        if($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
+        if($evercisegroup = Evercisegroup::with('evercisesession.sessionmembers.users')
             ->with('evercisesession.sessionpayment')
             ->with('subcategories.categories')
             ->find($id))

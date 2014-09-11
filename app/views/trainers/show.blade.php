@@ -2,14 +2,16 @@
 
 @section('content')
 
-	
-	@if(count($user_trainer->ratings) == 0 )
-		@include('trainers.trainerBlock', array('speciality' => $user_trainer->trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $user_trainer->directory.'/'. $user_trainer->image , 'name' => $user_trainer->display_name , 'trainerRating' => 0 ,'member_since' => date('dS M-Y', strtotime( $user_trainer->trainer->created_at))))
 
-	@else
-		@include('trainers.trainerBlock', array('speciality' => $user_trainer->trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $user_trainer->directory.'/'. $user_trainer->image , 'name' => $user_trainer->display_name , 'trainerRating' => $totalStars / count($user_trainer->ratings) ,'member_since' => date('dS M-Y', strtotime( $user_trainer->trainer->created_at))))
-
-	@endif
+		@include('trainers.trainerBlock', array(
+            'speciality' => $user_trainer->trainer->profession ,
+            'orientation' => 'landscape',
+            'image' => '/profiles/'.  $user_trainer->directory.'/'. $user_trainer->image ,
+            'name' => $user_trainer->display_name ,
+            'trainerRating' => (count($user_trainer->ratings) != 0 ? $totalStars / count($user_trainer->ratings) : 0 ),
+            'member_since' => date('dS M-Y', strtotime( $user_trainer->trainer->created_at))
+            )
+		)
 
 		<div class="col10 push2">
 		<br>
@@ -22,7 +24,7 @@
 
 			<div class="col3">
 				@include('layouts.classBlock',[
-				'rating' => isset($evercisegroup->ratings)?  array_sum((array)$evercisegroup->ratings)/ count($evercisegroup->ratings) : 0 ,
+				'rating' => (count($evercisegroup->ratings) != 0 )?  array_sum((array)$evercisegroup->ratings)/ count($evercisegroup->ratings) : 0 ,
 				  'evercisegroupId' => $evercisegroup->id,
 				  'title' => $evercisegroup->name ,
 				  'description' =>$evercisegroup->description ,

@@ -10,9 +10,19 @@ class TrainerBlockComposer
     {
         $viewdata = $view->getData();
 
-        $userTrainer = $viewdata['user_trainer'];
+        if(isset($viewdata['user_trainer']))
+        {
+            $userTrainer = $viewdata['user_trainer'];
 
-        $trainerDetails = $userTrainer->trainer;
+            $trainerDetails = $userTrainer->trainer;
+        }
+        else
+        {
+            $userTrainer = $viewdata['trainer']->user;
+
+            $trainerDetails = $viewdata['trainer'];
+        }
+
 
         $orientation = $viewdata['orientation'];
 
