@@ -36,6 +36,11 @@ return [
     'EMAIL_PRETEND'         => true, //For Production Set to False
     //Facebook Data
     'FACEBOOK_ID'           => '306418789525126',
-    'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d'
+    'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d',
+
+    //ELASTIC SEARCH
+    'ELASTIC_HOST'          => 'ec2-54-72-203-163.eu-west-1.compute.amazonaws.com:9200',
+    'ELASTIC_INDEX'         => 'evercise_CHANGE_ME_TO_SOMETHING_UNIQUE',
+    'ELASTIC_TYPE'          => 'evercise'
 
 ];
