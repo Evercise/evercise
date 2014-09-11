@@ -19,12 +19,13 @@ class CreateEvercisePermalinksTable extends Migration {
                     $table->increments('link_id');
                     $table->integer('parent_id')->unsigned();
                     $table->string ('permalink', 50);
-                    $table->enum('type', array('AREA', 'STATION', 'CLASS'))->default('CLASS');
+                    $table->enum('type', array('AREA', 'STATION', 'CLASS', 'ZIP'))->default('CLASS');
                     $table->timestamps();
 
                     //Indexes
                     $table->unique('permalink');
                     $table->index('type');
+                    $table->index('parent_id');
             });
         }
 	}
