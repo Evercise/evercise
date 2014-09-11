@@ -91,7 +91,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'image' => 'required',
                 'phone' => 'required'
             ]
-
         ];
     }
 
@@ -174,7 +173,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             // log errors
             Log::notice($validator->errors()->toArray());
 
-        } elseif ($inputs['phone'] != '' && $inputs['areacode'] == '') {
+        } elseif (isset($inputs['phone']) != '' && isset( $inputs['areacode'] )== '') {
             // is user has filled in the area code but no number fail validation
             $result =
                 [
@@ -329,6 +328,19 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $user->image = $img_filename;
 
         $user->save();
+    }
+
+    /**
+     * @param $newPassword
+     * @param $user
+     */
+    public static function saveNewPassword($newPassword, $user)
+    {
+        $user->password = $newPassword;
+
+        $user->save();
+
+        UserHelper::changePasswordEvents($user);
     }
 
 

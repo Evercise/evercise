@@ -26,7 +26,12 @@
 	@if(isset($class))
 		<div class="container no-bk">
 	@else
-		<div class="container">
+	    @if(isset($notification ) || isset($errorNotification) || Session::has('notification') || Session::has('errorNotification') )
+	        <div class="container mt40">
+	    @else
+	        <div class="container">
+	    @endif
+
 	@endif
 	
 

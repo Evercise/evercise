@@ -117,4 +117,21 @@ class UserHelper
             'resetCode' => $reset_code
         ));
     }
+
+    /**
+     * @param $user
+     */
+    public static function changePasswordEvents($user)
+    {
+        Event::fire('user.changedPassword', [$user]);
+
+        Event::fire(
+            'user.newpassword',
+            [
+                'email' => $user->email
+            ]
+        );
+
+        Session::flash('notification', 'Password reset successful');
+    }
 } 

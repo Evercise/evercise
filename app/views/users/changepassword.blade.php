@@ -18,9 +18,9 @@
                     {{ $errors->first('old_password', '<p class="error_msg">:message</p>')}}
                 @endif
 
-                @include('form.password', array('fieldname'=>'new_password', 'placeholder'=>'Choose a password', 'maxlength'=>20, 'confirmation'=> 'Please re-enter your password', 'label'=>'Your new password', 'tooltip'=>'For increased security, please choose a password with a combination of lowercase and numbers'))
-                @if ($errors->has('new_password'))
-                    {{ $errors->first('new_password', '<p class="error_msg">:message</p>')}}
+                @include('form.password', array('fieldname'=>'password', 'placeholder'=>'Choose a password', 'maxlength'=>20, 'confirmation'=> 'Please re-enter your password', 'label'=>'Your new password', 'tooltip'=>'For increased security, please choose a password with a combination of lowercase and numbers'))
+                @if ($errors->has('password'))
+                    {{ $errors->first('password', '<p class="error_msg">:message</p>')}}
                 @endif
 
             </div>

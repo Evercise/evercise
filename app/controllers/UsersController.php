@@ -1,7 +1,6 @@
 <?php
 
 
-
 class UsersController extends \BaseController
 {
 
@@ -302,56 +301,52 @@ class UsersController extends \BaseController
      */
     public function postChangePassword()
     {
-
-        Validator::extend(
-            'has',
-            function ($attr, $value, $params) {
-                return ValidationHelper::hasRegex($attr, $value, $params);
-            }
-        );
-
-        $validator = Validator::make(
-            Input::all(),
-            [
-                'old_password' => 'required',
-                'new_password' => 'required|confirmed|min:6|max:32|has:letter,num',
-            ],
-            ['new_password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
-        );
-
+        $user = Sentry::getUser();
         $oldPassword = Input::get('old_password');
-        $newPassword = Input::get('new_password');
+        $newPassword = Input::get('password');
 
-        if ($validator->fails()) {
+        if ($oldPassword == $newPassword && $oldPassword != null) {
+            $result = Response::json(
+                [
+                    'validation_failed' => 1,
+                    'errors'            => ['password' => 'your new password matches your old password']
+                ]
+            );
+        }
+        elseif($user->checkPassword($oldPassword)){
 
-            if (Request::ajax()) {
-                return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
-            } else {
-                return Redirect::route('users.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        } else {
-            if ($oldPassword == $newPassword) {
-                return Response::json(
+            $password_validation = User::validUserSignup(Input::all());
+
+            if ($password_validation['validation_failed'] != 0) {
+                $result = Response::json(
                     [
-                        'validation_failed' => 1,
-                        'errors'            => ['new_password' => 'your new password matches your old password']
+                        'callback' => 'validationFailed',
+                        'errors' => $password_validation['errors']
+                    ]
+                );
+            }else{
+                User::saveNewPassword($newPassword, $user);
+
+                $result = Response::json(
+                    [
+                        'callback' => 'gotoUrl',
+                        'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn(
+                            ) ? 'trainers' : 'users') . '/' . $user->id . '/edit/password'
                     ]
                 );
             }
-            if ($this->user->checkPassword($oldPassword)) {
-                $this->user->password = $newPassword;
-                $this->user->save();
-
-                Event::fire('user.changedPassword', [ $this->user ]);
-
-                return Response::json(['result' => 'changed', 'callback' => 'successAndRefresh']);
-            }
-            return Response::json(
-                ['validation_failed' => 1, 'errors' => ['old_password' => 'Current password incorrect']]
+        }
+        else
+        {
+            $result = Response::json(
+                [
+                    'validation_failed' => 1,
+                    'errors' => ['old_password' => 'Current password incorrect']
+                ]
             );
         }
+
+        return $result;
     }
 
     /**
@@ -380,67 +375,45 @@ class UsersController extends \BaseController
      */
     public function postResetPassword()
     {
-        Validator::extend(
-            'has',
-            function ($attr, $value, $params) {
-                return ValidationHelper::hasRegex($attr, $value, $params);
-            }
-        );
+        $password_validation = User::validUserSignup(Input::all());
 
-        $validator = Validator::make(
-            Input::all(),
-            array(
-                'email' => 'required|email',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
-            ),
-            ['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
-        );
-
-        $email = Input::get('email');
-        $password = Input::get('password');
-        $code = Input::get('code');
-
-        if ($validator->fails()) {
-
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('users.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+        if ($password_validation['validation_failed'] != 0) {
+            $result = Response::json(
+                [
+                    'callback' => 'validationFailed',
+                    'errors' => $password_validation['errors']
+                ]
+            );
         } else {
             $success = false;
+            $email = Input::get('email');
+            $password = Input::get('password');
+            $code = Input::get('code');
             try {
                 $user = Sentry::findUserByLogin($email);
 
                 if ($user->checkResetPasswordCode($code)) {
                     $success = $user->attemptResetPassword($code, $password);
-
                 }
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
                 Session::flash(
                     'errorNotification',
                     'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com'
                 );
-                return Response::json(route('home'));
-            }
-            if ($success) {
-                Event::fire(
-                    'user.newpassword',
+                $result = Response::json(
                     [
-                        'email' => $email
+                        'callback' => 'gotoUrl',
+                        'url'      => route('home')
                     ]
                 );
-                Event::fire('user.changedPassword', [$user]);
+                return $result;
+            }
+            if ($success) {
 
-                Session::flash('notification', 'Password reset successful');
-                return Response::json(
+                UserHelper::changePasswordEvents($user);
+
+
+                $result = Response::json(
                     [
                         'callback' => 'gotoUrl',
                         'url'      => route('home')
@@ -448,16 +421,15 @@ class UsersController extends \BaseController
                 );
 
             } else {
-                $result = array(
+                $result = Response::json(
+                    [
                     'validation_failed' => 1,
                     'errors'            => array('email' => array(0 => 'Wrong email'))
+                    ]
                 );
-
-                return Response::json($result);
             }
-
         }
-
+        return $result;
     }
 
     public function getLoginStatus()
