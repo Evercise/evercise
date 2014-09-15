@@ -66,8 +66,7 @@ class SearchController extends \BaseController
             ->with('subcategories.categories')
             ->find($id)
         ) {
-            if ($sentry->check() && $evercisegroup->user_id == $this->user->id
-            ) // This Group belongs to this User/Trainer
+            if ($this->sentry->check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
             {
                 return $evercisegroup->showAsOwner($this->user);
             } else // This group does not belong to this user
@@ -88,7 +87,6 @@ class SearchController extends \BaseController
     {
         $link = $this->link->checkLink($all_segments, $this->input->get('area_id', false));
 
-
         if ($link) {
 
             switch ($link->type) {
@@ -101,6 +99,15 @@ class SearchController extends \BaseController
                     return $this->show($link->getClass);
                     break;
             }
+        } elseif( !$link && !$this->input->get('location', false) && $all_segments != '') {
+
+            $this->log->info('Somebody tried to access a missing URL '.$this->input->url());
+
+            $input['allsegments'] = '';
+            return $this->redirect->route(
+                'search.parse',
+                $input
+            );
         }
 
         return $this->search();
