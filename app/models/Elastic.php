@@ -43,6 +43,7 @@ class Elastic
 
         $this->elastic_index = (getenv('ELASTIC_INDEX') ?: 'evercise');
         $this->elastic_type = (getenv('ELASTIC_TYPE') ?: 'evercise');
+        $this->elastic_polygon = getenv('ELASTIC_POLYGON');
     }
 
 
@@ -78,8 +79,9 @@ class Elastic
             $searchParams['body']['query']['filtered']['query']['match_all'] = [];
         }
 
+
         /** What Are we Searching For */
-        if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && ($params['radius'] == 'area')) {
+        if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
             $location_points = [];
 
@@ -102,6 +104,7 @@ class Elastic
             }
 
         } else {
+
             if (!empty($area->lat) && !empty($area->lng)) {
                 $searchParams['body']['query']['filtered']['filter']['geo_distance'] = [
                     'distance'       => $params['radius'],
@@ -110,12 +113,19 @@ class Elastic
             }
         }
 
-        return $this->elasticsearch->search($searchParams);
+        $result = $this->elasticsearch->search($searchParams)['hits'];
+
+        $result_object = json_decode(json_encode($result), false);
+
+
+        return $result_object;
 
     }
 
 
     /**
+     * Encode Latitude and Longtitude into GEOHASH
+     *
      * @param bool $lat
      * @param bool $lon
      * @throws Exception
@@ -133,22 +143,46 @@ class Elastic
 
 
     /**
+     * Decode Location GEOHASH
+     *
+     * @param bool $geohash
+     * @throws Exception
+     */
+    public function decodeLocationHash($geohash = false)
+    {
+        try {
+            $decoded = $this->geotools->geohash()->decode($geohash);
+            return [
+                'latitude'   => $decoded->getCoordinate()->getLatitude(),
+                'longtitude' => $decoded->getCoordinate()->getLongitude()
+            ];
+        } catch (Exception $e) {
+            throw new Exception('Cant decode GEOHASH ' . $geohash);
+        }
+    }
+
+
+    /**
      * @return bool
      */
     public function indexEvercisegroups()
     {
 
         $total_indexed = 0;
+        $with_session = 0;
 
-        $this->log->info('Indexing Evercise Groups started '.date('d H:i:s'));
-        $all = $this->evercisegroup->with('venue')
+        $this->log->info('Indexing Evercise Groups started ' . date('d H:i:s'));
+        $all = $this->evercisegroup->has('futuresessions')
+            ->has('confirmed')
+            ->with('venue')
             ->with('user')
             ->with('ratings')
             ->with('futuresessions')
             ->get();
 
-        $this->log->info('Get all Indexing data '.date('d H:i:s'));
+        $this->log->info('Get all Indexing data ' . date('d H:i:s'));
         foreach ($all as $a) {
+
             if (!empty($a->venue->lat) && !empty($a->venue->lng)) {
                 $geohash = $this->geotools->coordinate($a->venue->lat . ',' . $a->venue->lng);
                 $encoded = $this->geotools->geohash()->encode($geohash);
@@ -177,6 +211,7 @@ class Elastic
                     'last_name'    => $a->user->last_name,
                     'display_name' => $a->user->display_name,
                     'image'        => $a->user->directory . '/' . $a->user->image,
+                    'directory'    => $a->user->directory,
                     'phone'        => $a->user->phone,
                 ],
                 'venue'            => [
@@ -184,6 +219,7 @@ class Elastic
                     'name'     => $a->venue->name,
                     'address'  => $a->venue->address,
                     'postcode' => $a->venue->postcode,
+                    'town'     => $a->venue->town,
                     'location' => [
                         'geohash' => $hash
                     ],
@@ -202,7 +238,9 @@ class Elastic
                 ];
 
             }
+
             foreach ($a->futuresessions as $s) {
+
                 $index['futuresessions'][] = [
                     'members'         => (int) $s->members,
                     'date_time'       => $s->date_time,
@@ -210,7 +248,7 @@ class Elastic
                     'duration'        => (int) $s->duration,
                     'members_emailed' => (int) $s->members_emailed
                 ];
-
+                $with_session++;
             }
 
             $params = array();
@@ -222,15 +260,15 @@ class Elastic
 
             try {
                 $this->elasticsearch->index($params);
-                $total_indexed++;
-            } catch(Exception $e) {
-                $this->log->error('Cant Index Elasticgroup::id('.$a->id.') row. Got error: '.$e->getMessage());
+                $total_indexed ++;
+            } catch (Exception $e) {
+                $this->log->error('Cant Index Elasticgroup::id(' . $a->id . ') row. Got error: ' . $e->getMessage());
             }
         }
 
-        $this->log->info('Indexing Completed '.date('d H:i:s'));
+        $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return $total_indexed;
+        return $total_indexed.' '.$with_session;
 
 
     }
@@ -280,6 +318,7 @@ class Elastic
                                 'name'     => ['type' => 'string', 'include_in_all' => true],
                                 'address'  => ['type' => 'string', 'include_in_all' => true],
                                 'postcode' => ['type' => 'string', 'include_in_all' => true],
+                                'town'     => ['type' => 'string', 'include_in_all' => true],
                                 'location' => [
                                     'type'      => 'geo_point',
                                     'geohash'   => true,
@@ -300,6 +339,7 @@ class Elastic
                                 'display_name' => ['type' => 'string', 'include_in_all' => true],
                                 'phone'        => ['type' => 'string'],
                                 'image'        => ['type' => 'string'],
+                                'directory'    => ['type' => 'string'],
                             ]
                         ],
                         'ratings'          => [
