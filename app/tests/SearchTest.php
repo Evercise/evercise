@@ -2,12 +2,7 @@
 
 use Mockery as m;
 
-use Event;
-use Trainer;
-use Milestone;
-use User;
-
-use Geo;
+use Link;
 
 class SearchTest extends TestCase
 {
@@ -16,53 +11,33 @@ class SearchTest extends TestCase
         m::close();
     }
 
-
-    public function __construct() {
-        m::mock('Request')->shouldDeferMissing();
-    }
     public function setUp()
     {
         parent::setUp();
 
         $this->search_pages = [
-            '/uk',
-            '/uk/london',
-            '/uk/london/areas/kings-cross',
-            '/uk/london/stations/kings-cross',
-            '/uk/london?page=2',
-            '/uk/kings-cross'
+            'london',
+            'london/area/kings-cross',
+            'london/station/kings-cross',
+            'london?page=2'
         ];
 
-        $this->class_page = '/uk/class/some_class_from_database';
-
     }
-
 
     /** @test */
-    public function it_returns_london_if_the_ip_is_missing() {
+    public function checklink_is_finding_the_places_and_returning_LINK_Class()
+    {
+        foreach ($this->search_pages as $page) {
 
-        $response = Geo::getLatLng('127.0.0.1');
+            /** Remove all optional values */
+            $link = explode('?', $page);
 
-        $expecting = [
-            'lat'   => 51.5307,
-            'lng'   => -0.12308
-        ];
 
-        $this->assertEquals($expecting, $response);
+            $LinkClass = Link::checkLink($link[0]);
 
+            $this->assertTrue(is_a($LinkClass, 'Link'));
+        }
     }
-
-
-    /**
-     * @test
-     * @throws Exception
-     */
-    public function it_returns_exception() {
-
-        $response = Geo::getLatLng('gani*AUEI)igu38ghw0rgjo');
-
-    }
-
 
 
 }
