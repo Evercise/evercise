@@ -6,7 +6,7 @@
 class Place extends \Eloquent
 {
 
-    protected $fillable = array('name', 'place_type', 'lng', 'lat', 'zone', 'poly_coordinates', 'coordinate_type');
+    protected $fillable = array('name', 'place_type', 'lng', 'lat', 'min_radius', 'zone', 'poly_coordinates', 'coordinate_type');
 
     protected $table = 'places';
 
@@ -24,7 +24,7 @@ class Place extends \Eloquent
 
             /** We now have to create a lot of shit to get this working */
 
-            $is_london = false;
+            $is_london = true;
             $is_area = true;
             $zip_code = false;
 
@@ -33,6 +33,7 @@ class Place extends \Eloquent
             } else {
                 $location = [$location];
             }
+
 
             /** Remove London and united kingdom from Googles Crap */
             foreach ($location as $i => $val) {
@@ -77,9 +78,14 @@ class Place extends \Eloquent
             }
 
 
+
+
             $name = implode(' ', $location);
 
             $location = Str::slug($name);
+
+            $name .= ($is_london && strpos($name, 'london') === false ? ' London':'');
+            $name .= (!$is_area && strpos($name, 'station') === false ? ' Station':'');
 
             $return = [];
 
@@ -104,8 +110,15 @@ class Place extends \Eloquent
 
             $return[] = $location;
 
+            /** @var  $return  REMOVE EMPTY Array fields*/
+            $return = array_filter($return);
 
-            return self::checkLocation(implode('/', $return), $name, $type, $is_london, $zip_code);
+            $location_url = implode('/', $return);
+            if(substr($location_url, -4) == 'area') {
+                $location_url = str_replace('/area', '', $location_url);
+            }
+
+            return self::checkLocation($location_url, $name, $type, $is_london, $zip_code);
 
         }
     }
@@ -113,9 +126,9 @@ class Place extends \Eloquent
 
     public static function checkLocation($url, $name, $type, $is_london=false, $is_zip = false)
     {
-
         $url = rtrim((string)$url,'/');
         $link = Link::where('permalink', $url)->first();
+
 
         if (count($link) == 0) {
             /** This crap is new.. so lets add it and figure out where the f* is it */
