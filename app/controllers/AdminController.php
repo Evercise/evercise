@@ -169,7 +169,7 @@ class AdminController extends \BaseController {
         Evercisegroup::adminAddSubcategories($categories, $evercisegroup);
 
 
-        Evercisegroup::adminMakeClassFeatured($id);
+        Evercisegroup::adminMakeClassFeatured($id, Input::get('featured'));
 
         return Redirect::route('admin.groups');
 

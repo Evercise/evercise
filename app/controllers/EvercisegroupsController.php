@@ -11,7 +11,21 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function index()
 	{
-        return Evercisegroup::getHub($this->user);
+        if (! $hub = Evercisegroup::getHub()) // Trainer has not yet created any classes, so show the 'Create you first Class' page
+        {
+            return View::make('evercisegroups.first_class');
+        }
+        else
+        {
+            return View::make('evercisegroups.class_hub')
+                ->with('evercisegroups', $hub['evercisegroups'])
+                ->with('sessionDates', $hub['sessionDates'])
+                ->with('totalMembers', $hub['totalMembers'])
+                ->with('stars', $hub['stars'])
+                ->with('totalCapacity', $hub['totalCapacity'])
+                ->with('year', date("Y"))->with('month', date("m"))
+                ->with('directory', Sentry::getUser()->directory);
+        }
 	}
 
 	/**
@@ -35,7 +49,8 @@ class EvercisegroupsController extends \BaseController {
 	 */
 	public function store()
 	{
-        return Evercisegroup::validateAndStore($this->user);
+        $response = Evercisegroup::validateAndStore(Input::all());
+        return Response::json($response);
 	}
 
     /**
@@ -46,7 +61,7 @@ class EvercisegroupsController extends \BaseController {
 	{
 		$evercisegroup = Evercisegroup::getById($id);
 
-		if (! $evercisegroup->checkIfUserOwnsClass($this->user))
+		if (! $evercisegroup->checkIfUserOwnsClass())
 			return  Redirect::route('evercisegroups.index')->with('errorNotification', 'You do not own this class');
 
 		return Redirect::route('evercisegroups.create')
@@ -58,7 +73,7 @@ class EvercisegroupsController extends \BaseController {
             ->with('lat', $evercisegroup->lat)
             ->with('lng', $evercisegroup->lng)
             ->with('location', array('address' => $evercisegroup->address , 'city' => $evercisegroup->town , 'postCode' => $evercisegroup->postcode ) )
-            ->with('image_full', 'profiles/'.$this->user->directory.'/'. $evercisegroup->image)
+            ->with('image_full', 'profiles/'.Sentry::getUser()->directory.'/'. $evercisegroup->image)
             ->with( 'image' , $evercisegroup->image );
 	}
 
@@ -75,13 +90,50 @@ class EvercisegroupsController extends \BaseController {
             ->with('subcategories.categories')
             ->find($id))
 		{
-			if (Sentry::check() && $evercisegroup->user_id == $this->user->id) // This Group belongs to this User/Trainer
+			if (Sentry::check() && $evercisegroup->user_id == Sentry::getUser()->id) // This Group belongs to this User/Trainer
 			{
-                return $evercisegroup->showAsOwner($this->user);
+                if (! $viewParams = $evercisegroup->showAsOwner()) // Id's do not match
+                {
+                    return View::make('evercisegroups.trainer_show')
+                        ->with('evercisegroup', $evercisegroup)
+                        ->with('directory', Sentry::getUser()->directory)
+                        ->with('members', 0);
+                }
+                else
+                {
+                    return View::make('evercisegroups.trainer_show')
+                        ->with('evercisegroup', $evercisegroup)
+                        ->with('directory', Sentry::getUser()->directory)
+                        ->with('totalSessionMembers', $viewParams['totalSessionMembers'])
+                        ->with('totalCapacity', $viewParams['totalCapacity'])
+                        ->with('averageSessionMembers', $viewParams['averageSessionMembers'])
+                        ->with('averageCapacity', $viewParams['averageCapacity'])
+                        ->with('revenue', $viewParams['revenue'])
+                        ->with('totalRevenue', $viewParams['totalRevenue'])
+                        ->with('averageTotalRevenue', $viewParams['averageTotalRevenue'])
+                        ->with('averageRevenue', $viewParams['averageRevenue'])
+                        ->with('members', $viewParams['members']);
+                }
 			}
 			else // This group does not belong to this user
 			{
-                return $evercisegroup->showAsNonOwner($this->user);
+                if(! $viewParams = $evercisegroup->showAsNonOwner()) // User is not allowed to view this class
+                {
+                    return Redirect::route('evercisegroups.search');
+                }
+                else
+                {
+                    return View::make('evercisegroups.show')
+                        ->with('evercisegroup', $evercisegroup)
+                        ->with('trainer', $viewParams['trainer'])
+                        ->with('members', $viewParams['members'])
+                        ->with('membersIds', $viewParams['membersIds'])
+                        ->with('memberUsers', $viewParams['memberUsers'])
+                        ->with('venue', $viewParams['venue'])
+                        ->with('allRatings', $viewParams['allRatings'])
+                        ->with('fakeUsers', $viewParams['fakeUsers'])
+                        ->with('og', $viewParams['og']);
+                }
 			}
 		}
 		else
@@ -125,9 +177,9 @@ class EvercisegroupsController extends \BaseController {
 	{
 		$evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
-        Event::fire('evecisegroup.delete', [$this->user, $evercisegroup]);
+        Event::fire('evecisegroup.delete', [Sentry::getUser(), $evercisegroup]);
 
-        return $evercisegroup->deleteGroup($this->user);
+        return $evercisegroup->deleteGroup();
 	}
 
 
@@ -159,37 +211,13 @@ class EvercisegroupsController extends \BaseController {
 		$category = Input::get('category');
 		$locationString = Input::get('location');
 
-        
-        return Evercisegroup::doSearch(['address' => $locationString], $category, $radius, $this->user);
+        $searchResults = Evercisegroup::doSearch(['address' => $locationString], $category, $radius, Input::get('page', 1));
+
+        return View::make('evercisegroups.search')
+            ->with('places', json_encode($searchResults['mapResult']))
+            ->with('evercisegroups', $searchResults['paginatedResults']);
     }
 
-    public function search_C($country)
-	{
-		$location = $country;
-		$radius = 25;
-		$category = '';
-		return Evercisegroup::doSearch(['address' => $location], $category, $radius);
-	}
-	public function search_C_C($country, $city)
-	{
-		$location = $country.', '.$city;
-		$radius = 25;
-		$category = '';
-		return Evercisegroup::doSearch(['address' => $location], $category, $radius);
-	}
-	public function search_C_C_A($country, $city, $area)
-	{
-		$location = $country.', '.$city.', '.$area;
-		$category = '';
-		$radius = 25;
-		return Evercisegroup::doSearch(['address' => $location], $category, $radius);
-	}
-	public function search_C_C_A_C($country, $city, $area, $category)
-	{
-		$location = $country.', '.$city.', '.$area;
-		$radius = 25;
-		return Evercisegroup::doSearch(['address' => $location], $category, $radius);
-	}
 
 
 }
