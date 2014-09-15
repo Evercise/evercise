@@ -116,6 +116,10 @@ class SearchController extends \BaseController
     {
         $input = array_filter($this->input->all());
 
+        /** Clean up empty Arrays  */
+        foreach($input as $key => $val) {
+            if(empty($val)) unset($input[$key]);
+        }
 
         unset($input['area_id']);
 
@@ -134,6 +138,9 @@ class SearchController extends \BaseController
             $location = $this->place->getByLocation($input['location']);
 
             unset($input['location']);
+
+
+
 
             /** We have save the location to the DB so we can redirect the user to the new URL now */
 

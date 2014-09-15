@@ -7,18 +7,19 @@ $(function () {
     });
     $('#search-by-location').submit(function (e) {
 
-        $(this).children(':input[value=""]').attr("disabled", "disabled");
+        $(this).find(":input").filter(function(){ return !this.value; }).attr("disabled", "disabled");
 
         if (!form_changed) {
             $(this.location).prop('disabled', true);
             $(this.area_id).remove();
         }
 
-        $(this).children(':input[value=""]').remove();
 
         return true;
     });
 });
+
+
 function MapWidgetInit() {
     $(document).on('click', '#findLocation', function () {
 
