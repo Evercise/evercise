@@ -11,7 +11,7 @@ class RefineComposer
     {
 
         $radiuses = array(
-            '200' => trans('discover.radius_box'),
+            '1'   => '1 mile',
             '5'   => '5 miles',
             '10'  => '10 miles',
             '15'  => '15 miles',

@@ -1,15 +1,16 @@
-{{ Form::open(array('id' => 'search-by-location', 'url' => 'evercisegroups/search/classes', 'method' => 'get', 'class' => 'search-form')) }}
+
+{{ Form::open(array('id' => 'search-by-location', 'url' => (!empty($area->link->permalink) ? 'uk/'.$area->link->permalink : 'uk'), 'method' => 'get', 'class' => 'search-form')) }}
 	
 	
 
-    @include('widgets.autocomplete-category', ['fieldname'=>'category'])
-	@include('widgets.autocomplete-location')
+    @include('widgets.autocomplete-category', ['fieldname'=>'search', 'placeholder' => 'Find classes'])
+	@include('widgets.autocomplete-location', ['area'=>(!empty($area) ? $area : false)])
 
-	{{ Form::select( 'radius' , $radiuses , isset($selectedRadius) ? $selectedRadius : 3958 ) }}
+	{{ Form::select( 'radius' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')) ) }}
 	{{ Form::submit('Find a Class' , array('class'=>'btn btn-yellow ')) }}
 {{ Form::close() }}
 @if(isset($places))
-	{{ Form::hidden( 'places' ,$places , array('id' => 'places')) }}
+	{{ Form::hidden( 'places' ,null , array('id' => 'places')) }}
 
 @else
 	{{ Form::hidden( 'places' ,null , array('id' => 'places')) }}

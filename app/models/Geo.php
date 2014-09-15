@@ -16,9 +16,10 @@ class Geo
         /* check for searched location, otherwise use the ip address */
         if ($location == '') {
             $location = Request::getClientIp();
-            if ($location == '127.0.0.1' || $location == null) {
-                $location = '188.39.12.12';
-            }
+        }
+
+        if ($location == '127.0.0.1' || $location == null) {
+            $location = '188.39.12.12';
         }
 
         try {

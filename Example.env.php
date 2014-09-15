@@ -34,17 +34,13 @@ return [
     'EMAIL_SMTP_PASSWORD'   => 'evercise1234',
     'EMAIL_SENDMAIL'        => '/usr/sbin/sendmail -bs',
     'EMAIL_PRETEND'         => true, //For Production Set to False
-    'EMAIL_ADMIN'           => 'tanais@evercise.com', //Who receives notifications
     //Facebook Data
     'FACEBOOK_ID'           => '306418789525126',
     'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d',
-    //Paypal
-    'PAYPAL_USER'           => 'evercise.info_api1.gmail.com',
-    'PAYPAL_PASS'           => 'H2HGKAYP5A38P7TJ',
-    'PAYPAL_SIGNATURE'      => 'AiPC9BjkCyDFQXbSkoZcgqH3hpacArhVam-NDXjgAOd7UFYdySpW9nkW',
-    'PAYPAL_TESTMODE'       => false,
-    //Stripe
-    'STRIPE_API_KEY'        => 'sk_live_uVDeMzMgfoDJ5pCUStKXLxgX',
-    'STRIPE_PUB_KEY'        => 'pk_live_6Gp6i32byjL7XYaAaqKKs48d'
+
+    //ELASTIC SEARCH
+    'ELASTIC_HOST'          => 'ec2-54-72-203-163.eu-west-1.compute.amazonaws.com:9200',
+    'ELASTIC_INDEX'         => 'evercise_CHANGE_ME_TO_SOMETHING_UNIQUE',
+    'ELASTIC_TYPE'          => 'evercise'
 
 ];

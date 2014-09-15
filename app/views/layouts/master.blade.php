@@ -12,6 +12,8 @@
     <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
 	@include('layouts.googlefonts')
 
+	@yield('header')
+
     <script>
         var DEBUG_APP = <?=getenv('DEBUG_APP') ? 'true' : 'false'?>;
         var BASE_URL = '<?=getenv('APP_URL')?>';
@@ -39,6 +41,7 @@
 	<div class="mask">
 
 	</div>
+
 
 	<script type="text/javascript">
 	   var _mfq = _mfq || [];
@@ -68,6 +71,8 @@
 	/* custom configuration goes here (www.olark.com/documentation) */
 	olark.identify('4020-649-10-3648');/*]]>*/</script><noscript><a href="https://www.olark.com/site/4020-649-10-3648/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
 	<!-- end olark code -->
+
+
 		
 </body>
 </html>
