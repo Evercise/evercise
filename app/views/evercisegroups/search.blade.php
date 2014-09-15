@@ -1,5 +1,20 @@
 @extends('layouts.master')
 
+
+
+@section('header' )
+
+@if(isset($places))
+    <script type="text/javascript">
+        var EVERCISE_GROUPS = '<?=str_replace("'", "\'", $places)?>';
+        var EVERCISE_POLYGON = '<?=str_replace("'", "\'", (!empty($area->poly_coordinates) && $radius == 'area' ? $area->poly_coordinates : '[]'))?>';
+        var EVERCISE_RADIUS = '<?=$radius?>';
+    </script>
+@endif
+
+@stop
+
+
 @section('content' )
 
 @if(!isset($user))
@@ -13,7 +28,9 @@
 
 	<div class="col3" id="discover-left">
 		<h3>Refine Search</h3>
-		@include('evercisegroups.refine')
+
+
+		@include('evercisegroups.refine', ['area' => $area, 'places' => $places, 'radius' => $radius, 'allowed_radius' => $allowed_radius])
 		<br>
 		<br>
 		@include('evercisegroups.recommended', ['loadAutocompleteScript'=>1])
@@ -53,7 +70,7 @@
 			<div class="row9 mb20">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
-						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
+						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->ratings, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
 					@endforeach
 				@endif
 				
@@ -69,7 +86,7 @@
 			<div class="row9 mb20">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
-						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
+						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->ratings, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
 					@endforeach
 				@endif
 				
