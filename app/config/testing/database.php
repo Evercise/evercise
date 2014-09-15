@@ -18,8 +18,8 @@ return array(
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => (getenv('DB_HOST') ?: '127.0.0.1'),
-            'database'  => (getenv('DB_NAME') ?: 'evertest'),
-            'username'  => (getenv('DB_USER') ?: 'shippable'),
+            'database'  => (getenv('DB_NAME') ?: 'evercise'),
+            'username'  => (getenv('DB_USER') ?: 'root'),
             'password'  => (getenv('DB_PASS') ?: ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',

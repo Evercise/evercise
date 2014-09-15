@@ -1,7 +1,7 @@
 <?php
 
 return array(
-	'api_key' => 'sk_live_uVDeMzMgfoDJ5pCUStKXLxgX',
+	'api_key' => getenv('STRIPE_API_KEY'),
 
-	'publishable_key' => 'pk_live_6Gp6i32byjL7XYaAaqKKs48d'
+	'publishable_key' => getenv('STRIPE_PUB_KEY')
 );

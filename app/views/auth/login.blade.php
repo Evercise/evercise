@@ -25,6 +25,13 @@
         {{ HTML::linkRoute('users.fb', 'Log in with facebook', null , ['class' => 'btn btn-fb']) }}
     @endif
     <div class="mt10">
-     {{ HTML::linkRoute('auth.forgot', 'Forgot password?' , null) }}
+    <div class="orSeperator"><span>Not registered yet?</span></div>
+
+    @if ($redirect_after_login == 1)
+         {{  HTML::linkRoute('users.create', trans('header.register') , $redirect_after_login_url , [ 'class' => 'btn btn-blue mb10' ])}}
+    @else
+        {{  HTML::linkRoute('users.create', trans('header.register') , null , [ 'class' => 'btn btn-blue mb10' ])}}
+    @endif
+    {{ HTML::linkRoute('auth.forgot', 'Forgot password?' , null) }}
     </div>
 </div>

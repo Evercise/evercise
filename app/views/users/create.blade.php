@@ -13,8 +13,8 @@
        
    
     <div class="center-btn-wrapper">
-         @if(isset($typeId))
-            {{ HTML::linkRoute('users.fb', 'Sign up with facebook', $typeId, ['class' => 'btn btn-fb btn-large']) }}
+         @if(isset($type))
+            {{ HTML::linkRoute('users.fb', 'Sign up with facebook', $type, ['class' => 'btn btn-fb btn-large']) }}
         @else
             {{ HTML::linkRoute('users.fb', 'Sign up with facebook', null, ['class' => 'btn btn-fb btn-large']) }}
         @endif

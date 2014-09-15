@@ -21,10 +21,17 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'first_name',
         'last_name',
         'activated',
+        'reset_password_code',
+        'remember_token',
+        'persist_code',
+        'activated_at',
+        'permissions',
         'email',
         'gender',
         'activation_code',
         'dob',
+        'area_code',
+        'phone',
         'directory',
         'image'
     );
@@ -225,13 +232,21 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     }
 
-    public static function getFacebookUser()
+    public static function getFacebookUser($redirect_url)
     {
         try {
             // Use a single object of a class throughout the lifetime of an application.
             $application = Config::get('facebook');
             $permissions = 'publish_stream,email,user_birthday,read_stream';
-            $url_app = Request::root() . '/login/fb';
+            if($redirect_url != null)
+            {
+                $url_app = Request::root() . '/login/fb/'.$redirect_url;
+            }
+            else
+            {
+                $url_app = Request::root() . '/login/fb';
+            }
+
 
             // getInstance
             FacebookConnect::getFacebook($application);
@@ -289,24 +304,24 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public static function facebookRedirectHandler($redirect, $user , $message = null)
+    public static function facebookRedirectHandler($redirect = null, $user ,$message = null)
     {
         if ($redirect != null) {
-            if ($redirect == 'trainer') // Used when the 'i want to list classes' button is clicked in the register page
+            if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
             {
-                $result = Redirect::route('trainers.create')->with(
+                $result = Redirect::route($redirect)->with(
                     'notification', $message
                 );
 
-            } else // Used when logging in before hitting the checkout
+            }
+            else // Used when logging in before hitting the checkout
             {
                 $result = Redirect::route($redirect);
 
             }
         } else {
-            $result = Redirect::route((Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '.edit.tab', [$user->id, 'evercoins'])->with(
-                'notification',$message
-            );
+            $result = Redirect::route((Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '.edit.tab', [$user->id, 'evercoins'])
+                    ->with('notification',$message );
 
         }
 
