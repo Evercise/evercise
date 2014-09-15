@@ -9,6 +9,9 @@ class SearchController extends \BaseController
     protected $link;
     protected $input;
     protected $log;
+    protected $session;
+    protected $redirect;
+    protected $paginator;
     protected $place;
     protected $elastic;
     protected $search;
@@ -19,6 +22,10 @@ class SearchController extends \BaseController
         Link $link,
         Illuminate\Http\Request $input,
         Illuminate\Log\Writer $log,
+        Illuminate\Session\Store $session,
+        Illuminate\Routing\Redirector $redirect,
+        Illuminate\Pagination\Environment $paginator,
+        Illuminate\Config\Repository $config,
         Es $elasticsearch,
         Geotools $geotools,
         Place $place
@@ -30,9 +37,19 @@ class SearchController extends \BaseController
         $this->input = $input;
         $this->log = $log;
         $this->place = $place;
+        $this->session = $session;
+        $this->redirect = $redirect;
+        $this->paginator = $paginator;
+        $this->config = $config;
 
-        $this->elastic = new Elastic($geotools::getFacadeRoot(), $this->evercisegroup, $elasticsearch::getFacadeRoot(), $this->log);
+        $this->elastic = new Elastic(
+            $geotools::getFacadeRoot(),
+            $this->evercisegroup,
+            $elasticsearch::getFacadeRoot(),
+            $this->log
+        );
         $this->search = new Search($this->elastic, $this->evercisegroup, $this->log);
+
 
     }
 
@@ -69,7 +86,7 @@ class SearchController extends \BaseController
      */
     public function parseUrl($all_segments = '')
     {
-        $link = $this->link->checkLink($all_segments);
+        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', false));
 
 
         if ($link) {
@@ -97,25 +114,33 @@ class SearchController extends \BaseController
      */
     public function search($area = false)
     {
+        $input = array_filter($this->input->all());
 
-        $input = $this->input->all();
+
+        unset($input['area_id']);
+
+        if (!empty($input['per_page']) && in_array($this->config->get('evercise.per_page'), $input['per_page'])) {
+            $this->session->put('PER_PAGE', $input['per_page']);
+            unset($input['per_page']);
+        }
 
         /** If Area is not a object lets add it to the database so we have it for later use  */
         if (!$area instanceof Place) {
 
-            $this->log->info('NoT Place');
-            if (!isset($input['location'])) {
+            $this->log->info('Not a Place');
+            if (!isset($input['location']) || empty($input['location'])) {
                 $input['location'] = 'London';
             }
             $location = $this->place->getByLocation($input['location']);
 
             unset($input['location']);
+
             /** We have save the location to the DB so we can redirect the user to the new URL now */
 
             $this->log->info('Redirect TO: ' . $location->link->permalink . '?' . http_build_query($input));
             $input['allsegments'] = $location->link->permalink;
 
-            return Redirect::route(
+            return $this->redirect->route(
                 'search.parse',
                 $input,
                 301
@@ -123,54 +148,58 @@ class SearchController extends \BaseController
 
 
         }
+
+
+        $radius = $this->input->get('radius', $this->config->get('evercise.default_radius'));
+        $size = $this->session->get('PER_PAGE', $this->config->get('evercise.default_per_page'));
+
+
+        if (!empty($area->min_radius) && $area->min_radius !== $radius) {
+            $radius = $area->min_radius;
+        }
+
+        $page = $this->input->get('page', 1);
+        $search = $this->input->get('search');
+
         $params = [
-            'page'   => $this->input->get('page', 1),
-            'radius' => $this->input->get('radius', '1mi'),
-            'search' => $this->input->get('search')
+            'size'   => $size,
+            'from'   => (($page - 1) * $size),
+            'radius' => (in_array(
+                $radius,
+                array_values($this->config->get('evercise.radius'))
+            ) ? $radius : $this->config->get(
+                'evercise.default_radius'
+            )),
+            'search' => $search
         ];
 
 
         $searchResults = $this->search->getResults($area, $params);
 
 
-        echo "<pre>";
-        print_r($searchResults);
-        die();
+        /* Overide $params arr so it will show the map results only */
+        $params['size'] = $this->config->get('evercise.max_display_map_results');
+        $params['from'] = 0;
+        $mapResults = $this->search->cleanMapResults($this->search->getResults($area, $params));
 
-        $perPage = 12;
+
+        $paginatedResults = $this->paginator->make($searchResults->hits, $searchResults->total, $size);
 
 
-        if ($page > count($allResults) or $page < 1) {
-            $page = 1;
-        }
-        $offset = ($page * $perPage) - $perPage;
-        $articles = array_slice($allResults, $offset, $perPage);
-        $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
-
-        foreach ($allResults as $result) {
-            unset($result['description']);
-            unset($result['default_duration']);
-            unset($result['published']);
-            unset($result['created_at']);
-            unset($result['updated_at']);
-            unset($result['user']);
-            unset($result['venue_id']);
-            unset($result['title']);
-            unset($result['gender']);
-            $mapResult[] = $result->toJson();
-        }
-
-        //return json_encode($mapResult);
+        $data = [
+            'area'           => $area,
+            'places'         => json_encode($mapResults),
+            'evercisegroups' => $paginatedResults,
+            'radius'         => $radius,
+            'allowed_radius' => array_flip($this->config->get('evercise.radius')),
+            'page'           => $page,
+            'search'         => $search
+        ];
 
 
         return View::make('evercisegroups.search')
-            ->with('places', json_encode($mapResult))
-            ->with('evercisegroups', $paginatedResults);
+            ->with($data);
 
-        echo "<pre>";
-        print_r($res);
-        die();
-        dd($res);
     }
 
 
