@@ -114,9 +114,9 @@ class SessionsController extends \BaseController
      * @return \Illuminate\View\View
      */
     public function getMailAll($id)
-	{
-		return View::make('sessions.mail_all')->with('sessionId', $id);
-	}
+    {
+        return View::make('sessions.mail_all')->with('sessionId', $id);
+    }
 
     /**
      * Send the mail to all users signed up to a session
@@ -125,7 +125,7 @@ class SessionsController extends \BaseController
      * @return \Illuminate\Http\JsonResponse
      */
     public function postMailAll($sessionId)
-	{
+    {
         $userList = [];
         foreach (Evercisesession::getMembers($sessionId) as $user) {
             $userList[$user->first_name . ' ' . $user->last_name] = $user->email;
@@ -142,11 +142,14 @@ class SessionsController extends \BaseController
      * @return \Illuminate\View\View
      */
     public function getMailOne($sessionId, $userId)
-	{
-		$userDetails = User::where('id', $userId)->select('first_name', 'last_name')->first();
-		$name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
+    {
+        $userDetails = User::where('id', $userId)->select('first_name', 'last_name')->first();
+        $name = $userDetails['first_name'] . ' ' . $userDetails['last_name'];
 
-        return View::make('sessions.mail_one')->with('sessionId', $sessionId)->with('userId', $userId)->with('firstName', $name);
+        return View::make('sessions.mail_one')->with('sessionId', $sessionId)->with('userId', $userId)->with(
+            'firstName',
+            $name
+        );
     }
 
     /**
@@ -157,12 +160,12 @@ class SessionsController extends \BaseController
      * @return \Illuminate\Http\JsonResponse
      */
     public function postMailOne($sessionId, $userId)
-	{
+    {
         $userDetails = User::getNameAndEmail($userId);
         $userList = [$userDetails['name'] => $userDetails['email']];
 
         return Evercisesession::mailMembers($sessionId, $userList);
-	}
+    }
 
     /**
      * Get for to send an email to the trainer of a group
@@ -172,21 +175,21 @@ class SessionsController extends \BaseController
      * @return \Illuminate\View\View
      */
     public function getMailTrainer($sessionId, $trainerId)
-	{
-		$session = Evercisesession::with('evercisegroup')->find($sessionId);
-		$dateTime = $session->date_time;
-		$groupName = $session->evercisegroup->name;
+    {
+        $session = Evercisesession::with('evercisegroup')->find($sessionId);
+        $dateTime = $session->date_time;
+        $groupName = $session->evercisegroup->name;
 
         $name = User::getName($trainerId);
 
-		return View::make('sessions.mail_trainer')
-			->with('sessionId', $sessionId)
-			->with('trainerId', $trainerId)
-			->with('userId', Sentry::getUser()->id)
-			->with('dateTime', $dateTime)
-			->with('groupName', $groupName)
-			->with('name', $name);
-	}
+        return View::make('sessions.mail_trainer')
+            ->with('sessionId', $sessionId)
+            ->with('trainerId', $trainerId)
+            ->with('userId', Sentry::getUser()->id)
+            ->with('dateTime', $dateTime)
+            ->with('groupName', $groupName)
+            ->with('name', $name);
+    }
 
     /**
      * @param $sessionId
@@ -194,11 +197,16 @@ class SessionsController extends \BaseController
      * @return \Illuminate\Http\JsonResponse
      */
     public function postMailTrainer($sessionId, $trainerId)
-	{
+    {
         list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId);
 
-		return Response::json(['message' => 'group: '.$groupId.': '.$groupName.', session: '.$sessionId, 'callback' => 'mailSent']);
-	}
+        return Response::json(
+            [
+                'message'  => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId,
+                'callback' => 'mailSent'
+            ]
+        );
+    }
 
     /**
      * check login status and either direct to checkout, or open login box
@@ -206,35 +214,42 @@ class SessionsController extends \BaseController
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
     public function checkout()
-	{
+    {
         $this->setCheckoutSessionData();
 
         $redirect_after_login_url = 'sessions.join.get';
 
         if (!Sentry::getUser()) {
-            return View::make('auth.login')->with('redirect_after_login', true)->with('redirect_after_login_url', $redirect_after_login_url);
+            return View::make('auth.login')->with('redirect_after_login', true)->with(
+                'redirect_after_login_url',
+                $redirect_after_login_url
+            );
         } else {
             return Response::json(['status' => 'logged_in']);
         }
-	}
+    }
 
-	/**
-	*
-	*
-	* confirmation for join sessions
-	*/
+    /**
+     *
+     *
+     * confirmation for join sessions
+     */
     public function joinSessions()
     {
         $sessionIds = Session::get('sessionIds', false);
         $evercisegroupId = Session::get('evercisegroupId', false);
-        if (!$sessionIds) $sessionIds = json_decode(Input::get('session-ids'), true);
-        if (!$evercisegroupId) $evercisegroupId = Input::get('evercisegroup-id');
+        if (!$sessionIds) {
+            $sessionIds = json_decode(Input::get('session-ids'), true);
+        }
+        if (!$evercisegroupId) {
+            $evercisegroupId = Input::get('evercisegroup-id');
+        }
 
-        if (empty($sessionIds))
+        if (empty($sessionIds)) {
             return Redirect::route('evercisegroups.show', [$evercisegroupId]);
+        }
 
-        if ( $joinParams = Evercisesession::confirmJoinSessions($evercisegroupId, $sessionIds) )
-        {
+        if ($joinParams = Evercisesession::confirmJoinSessions($evercisegroupId, $sessionIds)) {
             Session::put('sessionIds', $sessionIds);
             Session::put('amountToPay', $joinParams['totalPrice']);
 
@@ -246,9 +261,7 @@ class SessionsController extends \BaseController
                 ->with('totalPricePence', $joinParams['totalPricePence'])
                 ->with('totalSessions', $joinParams['totalSessions'])
                 ->with('sessionIds', $joinParams['sessionIds']);
-        }
-        else
-        {
+        } else {
             return Response::json('USER HAS ALREADY JOINED SESSION');
         }
     }
@@ -261,31 +274,38 @@ class SessionsController extends \BaseController
      */
     function payForSessions($evercisegroupId)
     {
+        $evercoinPaymentDetails = Evercisesession::generateEvercoinPaymentDetails();
+
         /* Get evercisesession payment stuff from session, and delete it so it wont be used again. */
         $sessionData = [
             'amountToPay' => Session::pull('amountToPay'),
             'sessionIds' => Session::pull('sessionIds'),
-            'token' => Session::pull('token'),
-            'transactionId' => Session::pull('transactionId'),
-            'payerId' => Session::pull('payerId'),
-            'paymentMethod' => Session::pull('paymentMethod'),
+            'token' => $evercoinPaymentDetails['token'],
+            'transactionId' => $evercoinPaymentDetails['transactionId'],
+            'payerId' => Sentry::getUser()->id,
+            'paymentMethod' => $evercoinPaymentDetails['paymentMethod'],
         ];
         Session::forget('evercisegroupId');
 
         $payParams = Evercisesession::addSessionMember($evercisegroupId, $sessionData);
 
-        return View::make('sessions.confirmation')
-            ->with('sessionIds', $sessionData['sessionIds'])
-            ->with('transactionId', $sessionData['transactionId'])
+        if (!empty($payParams['error'])) {
+            die('THERE HAS BEEN A ERROR');
 
-            ->with('evercisegroup', $payParams['evercisegroup'])
-            ->with('members', $payParams['members'])
-            ->with('userTrainer', $payParams['userTrainer'])
-            ->with('totalPrice', $payParams['price'])
-            ->with('totalSessions', $payParams['total'])
-            ->with('amountPaid', $payParams['amountToPay'])
-            ->with('evercoins', $payParams['newEvercoinBalance'])
-            ->with('deductEverciseCoins', $payParams['deductEverciseCoins']);
+        } else {
+
+            return View::make('sessions.confirmation')
+                ->with('sessionIds', $sessionData['sessionIds'])
+                ->with('transactionId', $sessionData['transactionId'])
+                ->with('evercisegroup', $payParams['evercisegroup'])
+                ->with('members', $payParams['members'])
+                ->with('userTrainer', $payParams['userTrainer'])
+                ->with('totalPrice', $payParams['totalPrice'])
+                ->with('totalSessions', $payParams['totalSessions'])
+                ->with('amountPaid', $payParams['amountPaid'])
+                ->with('evercoins', $payParams['evercoins'])
+                ->with('deductEverciseCoins', $payParams['deductEverciseCoins']);
+        }
     }
 
 
@@ -325,24 +345,28 @@ class SessionsController extends \BaseController
 
         if ($evercoinParams['priceInEvercoins'] == $evercoinParams['usecoins']) {
 
-            return Response::json([
-                'callback' => 'openPopup',
-                'popup' => (string)View::make('sessions.checkoutwithevercoins')
-                    ->with('evercisegroupId', $evercisegroupId)
-                    ->with('priceInEvercoins', $evercoinParams['priceInEvercoins'])
-                    ->with('evercoinBalance', $evercoinParams['evercoinBalance'])
-                    ->with('usecoinsInPounds', $evercoinParams['usecoinsInPounds'])
-            ]);
+            return Response::json(
+                [
+                    'callback' => 'openPopup',
+                    'popup'    => (string) View::make('sessions.checkoutwithevercoins')
+                        ->with('evercisegroupId', $evercisegroupId)
+                        ->with('priceInEvercoins', $evercoinParams['priceInEvercoins'])
+                        ->with('evercoinBalance', $evercoinParams['evercoinBalance'])
+                        ->with('usecoinsInPounds', $evercoinParams['usecoinsInPounds'])
+                ]
+            );
 
 
         } else {
 
-            return Response::json([
-                'usecoins' => $usecoins,
-                'amountRemaining' => $evercoinParams['amountRemaining'],
-                'usecoinsInPounds' => $evercoinParams['usecoinsInPounds'],
-                'callback' => 'paidWithEvercoins'
-            ]);
+            return Response::json(
+                [
+                    'usecoins'         => $usecoins,
+                    'amountRemaining'  => $evercoinParams['amountRemaining'],
+                    'usecoinsInPounds' => $evercoinParams['usecoinsInPounds'],
+                    'callback'         => 'paidWithEvercoins'
+                ]
+            );
         }
     }
 
@@ -355,20 +379,19 @@ class SessionsController extends \BaseController
      */
     public function postPayWithEvercoins($evercisegroupId)
     {
-        $evercoinPaymentDetails = Evercisesession::generateEvercoinPaymentDetails();
+        Session::put('paymentMethod', 'evercoins');
+        Session::put(
+            'transactionId',
+            substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, 1) . substr(
+                str_shuffle('aBcEeFgHiJkLmNoPqRstUvWxYz0123456789'),
+                0,
+                10
+            )
+        );
 
-        /* Get evercisesession payment stuff from session, and delete it so it wont be used again. */
-        $sessionData = [
-            'amountToPay' => Session::pull('amountToPay'),
-            'sessionIds' => Session::pull('sessionIds'),
-            'token' => $evercoinPaymentDetails['token'],
-            'transactionId' => $evercoinPaymentDetails['transactionId'],
-            'payerId' => Sentry::getUser()->id,
-            'paymentMethod' => $evercoinPaymentDetails['paymentMethod'],
-        ];
-        Session::forget('evercisegroupId');
 
-        return Evercisesession::addSessionMember($evercisegroupId, $sessionData);
+        return $this->payForSessions($evercisegroupId);
+
     }
 
     public function getRefund($id)
@@ -415,14 +438,14 @@ class SessionsController extends \BaseController
             Input::all(),
             array(
                 'mail_subject' => 'required',
-                'mail_body' => 'required',
+                'mail_body'    => 'required',
             )
         );
         if ($validator->fails()) {
 
             $result = array(
                 'validation_failed' => 1,
-                'errors' => $validator->errors()->toArray()
+                'errors'            => $validator->errors()->toArray()
             );
 
             return Response::json($result);
@@ -435,15 +458,18 @@ class SessionsController extends \BaseController
             $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
             $groupName = Evercisegroup::where('id', $groupId)->pluck('name');
 
-            Event::fire('session.refund', array(
+            Event::fire(
+                'session.refund',
+                array(
 
-                'email' => $contact,
-                'userName' => Sentry::getUser()->display_name,
-                'userEmail' => Sentry::getUser()->email,
-                'groupName' => $groupName,
-                'subject' => $subject,
-                'body' => $body
-            ));
+                    'email'     => $contact,
+                    'userName'  => Sentry::getUser()->display_name,
+                    'userEmail' => Sentry::getUser()->email,
+                    'groupName' => $groupName,
+                    'subject'   => $subject,
+                    'body'      => $body
+                )
+            );
         }
 
         return Response::json(['callback' => 'successAndRefresh']);

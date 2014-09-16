@@ -344,7 +344,7 @@ class Evercisesession extends \Eloquent
         }
 
         /* Pivot current user with session via session members */
-        Sentry::getUser()->sessions()->attach($sessionData['sessionIds'], ['token' => $sessionData['token'], 'transaction_id' =>  $sessionData['transactionId'], 'payer_id' => $sessionData['payerId'], 'payment_method' => $sessionData['paymentMethod']]);
+        Sentry::getUser()->sessions()->attach($sessionData['sessionIds'], ['token' => $sessionData['token'], 'transaction_id' =>  $sessionData['transactionId'], 'payer_id' => (is_null($sessionData['payerId']) ? Sentry::getUser()->id :$sessionData['payerId']), 'payment_method' => $sessionData['paymentMethod']]);
 
         self::sendSessionJoinedEmail($evercisegroup, $userTrainer,  $sessionData['transactionId']);
 
