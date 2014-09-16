@@ -4,7 +4,8 @@
 if(is_array($rating)) {
     $stars = 0;
     foreach ($rating as $r) {
-        $stars += $r['stars'];
+
+        $stars += (is_object($r) ? $r->stars : $r['stars']);
     }
     $rating = count($rating) ? $stars / count($rating) : 0;
 }
