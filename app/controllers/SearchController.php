@@ -31,6 +31,8 @@ class SearchController extends \BaseController
         Place $place
     ) {
 
+        parent::__construct();
+
         $this->evercisegroup = $evercisegroup;
         $this->sentry = $sentry;
         $this->link = $link;
