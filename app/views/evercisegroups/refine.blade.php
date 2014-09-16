@@ -3,7 +3,7 @@
 	
 	
 
-    @include('widgets.autocomplete-category', ['fieldname'=>'search', 'placeholder' => 'Find classes'])
+    @include('widgets.autocomplete-category', ['fieldname'=>'search', 'placeholder' => 'Find classes', 'search' => $search])
 	@include('widgets.autocomplete-location', ['area'=>(!empty($area) ? $area : false)])
 
 	{{ Form::select( 'radius' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')) ) }}

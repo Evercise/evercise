@@ -30,19 +30,19 @@
 		<h3>Refine Search</h3>
 
 
-		@include('evercisegroups.refine', ['area' => $area, 'places' => $places, 'radius' => $radius, 'allowed_radius' => $allowed_radius])
+		@include('evercisegroups.refine', compact('area','places','radius','allowed_radius','search'))
 		<br>
 		<br>
 		@include('evercisegroups.recommended', ['loadAutocompleteScript'=>1])
 	</div>
 
 	<div class="col9" id="discover-right">
-		@include('evercisegroups.discover_map', array('places' => $evercisegroups))
+		@include('evercisegroups.discover_map', ['places' => $evercisegroups])
 		<div class="heading-block">
 			@if(Input::get('location'))
-				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_near').' ') . Str::limit( Input::get('location'),52)}}</h4>
+				<h4>{{ ucfirst( (Input::get('search')?Input::get('search').' ':'') . trans('discover.classes_near').' ') . Str::limit( Input::get('location'),52)}}</h4>
 			@else
-				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_in_your_area') ) }}</h4>
+				<h4>{{ ucfirst( (Input::get('search')?Input::get('search').' ':'') . trans('discover.classes_in_your_area') ) }}</h4>
 			@endif
 			@if(Input::get('view'))
 				@if(Input::get('view') == 'grid')
