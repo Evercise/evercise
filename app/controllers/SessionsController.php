@@ -265,10 +265,10 @@ class SessionsController extends \BaseController
         $sessionData = [
             'amountToPay' => Session::pull('amountToPay'),
             'sessionIds' => Session::pull('sessionIds'),
-            '$token' => Session::pull('$token'),
-            '$transactionId' => Session::pull('$transactionId'),
+            'token' => Session::pull('token'),
+            'transactionId' => Session::pull('transactionId'),
             'payerId' => Session::pull('payerId'),
-            '$paymentMethod' => Session::pull('$paymentMethod'),
+            'paymentMethod' => Session::pull('paymentMethod'),
         ];
         Session::forget('evercisegroupId');
 
@@ -361,10 +361,10 @@ class SessionsController extends \BaseController
         $sessionData = [
             'amountToPay' => Session::pull('amountToPay'),
             'sessionIds' => Session::pull('sessionIds'),
-            '$token' => $evercoinPaymentDetails['$token'],
-            '$transactionId' => $evercoinPaymentDetails['transactionId'],
+            'token' => $evercoinPaymentDetails['token'],
+            'transactionId' => $evercoinPaymentDetails['transactionId'],
             'payerId' => Sentry::getUser()->id,
-            '$paymentMethod' => $evercoinPaymentDetails['paymentMethod'],
+            'paymentMethod' => $evercoinPaymentDetails['paymentMethod'],
         ];
         Session::forget('evercisegroupId');
 
@@ -373,8 +373,7 @@ class SessionsController extends \BaseController
 
     public function getRefund($id)
     {
-        $session = Evercisesession::with('evercisegroup')
-            ->find($id);
+        $session = Evercisesession::with('evercisegroup')->find($id);
 
         $sessionDate = new DateTime($session->date_time);
         $now = new DateTime();

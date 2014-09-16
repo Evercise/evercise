@@ -24,7 +24,7 @@ class SearchController extends \BaseController
         Illuminate\Log\Writer $log,
         Illuminate\Session\Store $session,
         Illuminate\Routing\Redirector $redirect,
-        Illuminate\Pagination\Environment $paginator,
+        Illuminate\Pagination\Factory $paginator,
         Illuminate\Config\Repository $config,
         Es $elasticsearch,
         Geotools $geotools,

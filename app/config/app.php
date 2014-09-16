@@ -72,6 +72,7 @@ return array(
     | this array to grant expanded functionality to your applications.
     |
     */
+    'cipher' => MCRYPT_RIJNDAEL_256,
 
     'providers' => array(
 

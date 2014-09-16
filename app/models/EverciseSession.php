@@ -303,6 +303,12 @@ class Evercisesession extends \Eloquent
      */
     public static function addSessionMember($evercisegroupId, $sessionData)
     {
+        if(is_null($sessionData['sessionIds'])) {
+            //THE FUCK NOW?
+
+            return Redirect::route('sessions.join');
+        }
+
         $evercisegroup = Evercisegroup::getGroupWithSpecificSessions($evercisegroupId, $sessionData['sessionIds']);
 
         //Make sure there is not already a matching entry in sessionmember
@@ -329,7 +335,8 @@ class Evercisesession extends \Eloquent
 
         $amountToPay = (null !== $sessionData['amountToPay']) ? $sessionData['amountToPay'] : $price;
         $deductEverciseCoins = Evercoin::poundsToEvercoins($price - $amountToPay);
-        $newEvercoinBalance = Evercoin::where('user_id', Sentry::getUser()->id)->withdraw($deductEverciseCoins);
+        $getUser = Evercoin::where('user_id', Sentry::getUser()->id)->first();
+        $newEvercoinBalance = $getUser->withdraw($deductEverciseCoins);
 
         if ($amountToPay + Evercoin::evercoinsToPounds($newEvercoinBalance) < $price) {
             Log::info('User attempted to buy a class with insufficient Evercoins');

@@ -1091,4 +1091,21 @@ class Evercisegroup extends \Eloquent
     }
 
 
+    public static function getGroupWithSpecificSessions($evercisegroupId, $sessionIds)
+    {
+        return Static::with(
+            array(
+                'evercisesession' => function ($query) use (&$sessionIds) {
+
+                    $query->whereIn('id', $sessionIds);
+
+                }
+            ),
+            'evercisesession'
+        )
+            ->find($evercisegroupId);
+
+    }
+
+
 }

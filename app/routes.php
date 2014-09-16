@@ -12,7 +12,6 @@
 */
 //
 
-
 /* Freking wrong url on page */
 Route::get(
     'what_is_evercise',
