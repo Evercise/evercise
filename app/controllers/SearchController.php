@@ -168,8 +168,8 @@ class SearchController extends \BaseController
         $size = $this->session->get('PER_PAGE', $this->config->get('evercise.default_per_page'));
 
 
-        if (!empty($area->min_radius) && $area->min_radius !== $radius) {
-            $radius = $area->min_radius;
+        if (!empty($area->min_radius) && str_replace('mi','',$area->min_radius) > str_replace('mi','',$radius)) {
+            $radius = $area->min_radius; 
         }
 
         $page = $this->input->get('page', 1);
