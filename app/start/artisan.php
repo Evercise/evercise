@@ -18,4 +18,7 @@ Artisan::add(new SalesForce);
 Artisan::add(new IndexerCreate);
 Artisan::add(new IndexerIndex);
 Artisan::add(new IndexerImport);
+Artisan::add(new IndexerGeo);
+
+
 

@@ -176,7 +176,9 @@ class Place extends \Eloquent
 
         try {
 
-            $geocode = $geocoder->geocode(($is_zip ? 'UK ' : ' ').$location);
+            $addition = $location.($is_zip ? ' UK':'').($is_london ? ' London':'');
+
+            $geocode = $geocoder->geocode($addition);
 
             return ['lat' => $geocode->getLatitude(), 'lng' => $geocode->getLongitude()];
 
