@@ -139,12 +139,13 @@ App::missing(function($exception)
 
     $current_url= ltrim($_SERVER['REQUEST_URI'],'/');
 
-    foreach($redirects as $url => $route) {
-        if($url == $current_url) {
-            return Redirect::route($route, [], 301);
+    if($redirects) {
+        foreach ($redirects as $url => $route) {
+            if ($url == $current_url) {
+                return Redirect::route($route, [], 301);
+            }
         }
     }
-
 
     return Response::view('errors.missing', array(), 404);
 });

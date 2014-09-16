@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Class Evercisegroup
  */
@@ -23,6 +24,8 @@ class Evercisegroup extends \Eloquent
         'default_price',
         'published'
     );
+
+
     /**
      * The database table used by the model.
      *
@@ -92,6 +95,235 @@ class Evercisegroup extends \Eloquent
         }
     }
 
+    public static function parseSegments($segments)
+    {
+
+
+        /** Is this a permalink or something  */
+        if (!empty($segments[2])) {
+
+            /**
+             * If we get more Users.. this entire thing should be cached as one array just used like that
+             * For now i wont do that
+             */
+
+
+            $default['type'] = 'search';
+            $default['sub_type'] = 'station';
+
+            if (!empty($segments[3])) {
+                $default['location'] = $segments[3];
+            } else {
+                throw new \Exception('No Location Defined');
+            }
+
+            return $default;
+        }
+
+
+        return $default;
+    }
+
+    /**
+     * @param $location
+     * @param $category
+     * @param $radius
+     * @param $user
+     * @return \Illuminate\View\View
+     */
+    public static function newSearch($options, $user)
+    {
+        //return $location['address'];
+        if (isset($location['lat']) && isset($location['lng'])) {
+            $latitude = $location['lat'];
+            $longitude = $location['lng'];
+        } else {
+            $latlng = Geo::getLatLng($location['address']);
+            $latitude = $latlng['lat'];
+            $longitude = $latlng['lng'];
+        }
+
+
+        $page = Input::get('page', 1);
+
+        $testers = Sentry::findGroupById(5);
+        $testerLoggedIn = $user ? $user->inGroup($testers) : false;
+
+        $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
+
+        /* set the number of arrays needed per level */
+        $results = [[], [], [], [], []];
+
+        // SEARCH LEVEL 1
+        $results[0] = Evercisegroup::has('futuresessions')
+            ->has('confirmed')
+            ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
+            ->where(
+                'venue',
+                function ($query) use (&$haversine, &$radius) {
+                    $query->select(array(DB::raw($haversine . ' as distance')))
+                        ->having('distance', '<', $radius);
+                }
+            )
+            ->whereHas(
+                'subcategories',
+                function ($query) use ($category) {
+                    $query->where('name', 'LIKE', '%' . $category . '%');
+                }
+            )
+            ->with('venue')
+            ->with('user')
+            ->with('ratings')
+            ->with('futuresessions')
+            ->get();
+
+
+        // SEARCH LEVEL 2 ( if level 1 returns less than 9 results)
+        if (count($results[0]) < 9) {
+            $results[1] = Evercisegroup::has('futuresessions')
+                ->has('confirmed')
+                ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
+                        $query->select(array(DB::raw($haversine . ' as distance')))
+                            ->having('distance', '<', $radius);
+                    }
+                )
+                ->whereHas(
+                    'subcategories',
+                    function ($query) use ($category) {
+
+                        $query->whereHas(
+                            'categories',
+                            function ($subquery) use ($category) {
+                                $subquery->where('name', 'LIKE', '%' . $category . '%');
+                            }
+                        );
+                    }
+                )
+                //->with('categories')
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->get();
+        }
+
+        //return var_dump($level2results);
+
+        // SEARCH LEVEL 3 ( if level 1 and level 2 return less than 9 results)
+        if (count($results[0]) + count($results[1]) < 9) {
+            $results[2] = Evercisegroup::has('futuresessions')
+                ->has('confirmed')
+                ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
+                        $query->select(array(DB::raw($haversine . ' as distance')))
+                            ->having('distance', '<', $radius);
+                    }
+                )
+                ->where('name', 'LIKE', '%' . $category . '%')
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->get();
+        }
+
+        // SEARCH LEVEL 4 ( if level 1, 2 and 3 return less than 9 results)
+        if (count($results[0]) + count($results[1]) + count($results[2]) < 9) {
+            $results[3] = Evercisegroup::has('futuresessions')
+                ->has('confirmed')
+                ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
+                        $query->select(array(DB::raw($haversine . ' as distance')))
+                            ->having('distance', '<', $radius);
+                    }
+                )
+                ->where('description', 'LIKE', '%' . $category . '%')
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->get();
+        }
+
+        // SEARCH LEVEL 5
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) < 9) {
+            $results[4] = Evercisegroup::has('futuresessions')
+                ->has('confirmed')
+                ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
+                        $query->select(array(DB::raw($haversine . ' as distance')))
+                            ->having('distance', '<', $radius);
+                    }
+                )
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->get();
+        }
+
+        // SEARCH LEVEL 6
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) + count(
+                $results[4]
+            ) < 9
+        ) {
+            $results[5] = Evercisegroup::has('futuresessions')
+                ->has('confirmed')
+                ->has(
+                    'tester',
+                    '<',
+                    $testerLoggedIn ? 5 : 1
+                )// testing to make sure class does not belong to the tester
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->get();
+        }
+
+        $allResults = Evercisegroup::concatenateResults($results);
+
+        $perPage = 12;
+
+
+        if ($page > count($allResults) or $page < 1) {
+            $page = 1;
+        }
+        $offset = ($page * $perPage) - $perPage;
+        $articles = array_slice($allResults, $offset, $perPage);
+        $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
+
+        foreach ($allResults as $result) {
+            unset($result['description']);
+            unset($result['default_duration']);
+            unset($result['published']);
+            unset($result['created_at']);
+            unset($result['updated_at']);
+            unset($result['user']);
+            unset($result['venue_id']);
+            unset($result['title']);
+            unset($result['gender']);
+            $mapResult[] = $result->toJson();
+        }
+
+        //return json_encode($mapResult);
+
+
+        return View::make('evercisegroups.search')
+            ->with('places', json_encode($mapResult))
+            ->with('evercisegroups', $paginatedResults);
+    }
+
+
     /**
      * @param $location
      * @param $category
@@ -126,13 +358,19 @@ class Evercisegroup extends \Eloquent
         $results[0] = Evercisegroup::has('futuresessions')
             ->has('confirmed')
             ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-            ->whereHas('venue', function ($query) use (&$haversine, &$radius) {
+            ->whereHas(
+                'venue',
+                function ($query) use (&$haversine, &$radius) {
                     $query->select(array(DB::raw($haversine . ' as distance')))
                         ->having('distance', '<', $radius);
-                })
-            ->whereHas('subcategories', function ($query) use ($category) {
-                $query->where('name', 'LIKE', '%' . $category . '%');
-            })
+                }
+            )
+            ->whereHas(
+                'subcategories',
+                function ($query) use ($category) {
+                    $query->where('name', 'LIKE', '%' . $category . '%');
+                }
+            )
             ->with('venue')
             ->with('user')
             ->with('ratings')
@@ -145,16 +383,25 @@ class Evercisegroup extends \Eloquent
             $results[1] = Evercisegroup::has('futuresessions')
                 ->has('confirmed')
                 ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-                ->whereHas('venue', function ($query) use (&$haversine, &$radius) {
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
                         $query->select(array(DB::raw($haversine . ' as distance')))
                             ->having('distance', '<', $radius);
-                    })
-                ->whereHas('subcategories', function ($query) use ($category) {
+                    }
+                )
+                ->whereHas(
+                    'subcategories',
+                    function ($query) use ($category) {
 
-                    $query->whereHas('categories', function ($subquery) use ($category) {
-                        $subquery->where('name', 'LIKE', '%' . $category . '%');
-                    });
-                })
+                        $query->whereHas(
+                            'categories',
+                            function ($subquery) use ($category) {
+                                $subquery->where('name', 'LIKE', '%' . $category . '%');
+                            }
+                        );
+                    }
+                )
                 //->with('categories')
                 ->with('venue')
                 ->with('user')
@@ -170,10 +417,13 @@ class Evercisegroup extends \Eloquent
             $results[2] = Evercisegroup::has('futuresessions')
                 ->has('confirmed')
                 ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-                ->whereHas('venue', function ($query) use (&$haversine, &$radius) {
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
                         $query->select(array(DB::raw($haversine . ' as distance')))
                             ->having('distance', '<', $radius);
-                    })
+                    }
+                )
                 ->where('name', 'LIKE', '%' . $category . '%')
                 ->with('venue')
                 ->with('user')
@@ -187,10 +437,13 @@ class Evercisegroup extends \Eloquent
             $results[3] = Evercisegroup::has('futuresessions')
                 ->has('confirmed')
                 ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-                ->whereHas('venue', function ($query) use (&$haversine, &$radius) {
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
                         $query->select(array(DB::raw($haversine . ' as distance')))
                             ->having('distance', '<', $radius);
-                    })
+                    }
+                )
                 ->where('description', 'LIKE', '%' . $category . '%')
                 ->with('venue')
                 ->with('user')
@@ -204,10 +457,13 @@ class Evercisegroup extends \Eloquent
             $results[4] = Evercisegroup::has('futuresessions')
                 ->has('confirmed')
                 ->has('tester', '<', $testerLoggedIn ? 5 : 1)// testing to make sure class does not belong to the tester
-                ->whereHas('venue', function ($query) use (&$haversine, &$radius) {
+                ->whereHas(
+                    'venue',
+                    function ($query) use (&$haversine, &$radius) {
                         $query->select(array(DB::raw($haversine . ' as distance')))
                             ->having('distance', '<', $radius);
-                    })
+                    }
+                )
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
@@ -216,11 +472,17 @@ class Evercisegroup extends \Eloquent
         }
 
         // SEARCH LEVEL 6
-        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) + count($results[4]) < 9)
-        {
+        if (count($results[0]) + count($results[1]) + count($results[2]) + count($results[3]) + count(
+                $results[4]
+            ) < 9
+        ) {
             $results[5] = Evercisegroup::has('futuresessions')
                 ->has('confirmed')
-                ->has('tester', '<', $testerLoggedIn ? 5 : 1) // testing to make sure class does not belong to the tester
+                ->has(
+                    'tester',
+                    '<',
+                    $testerLoggedIn ? 5 : 1
+                )// testing to make sure class does not belong to the tester
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
@@ -233,12 +495,14 @@ class Evercisegroup extends \Eloquent
         $perPage = 12;
 
 
-        if ($page > count($allResults) or $page < 1) { $page = 1; }
+        if ($page > count($allResults) or $page < 1) {
+            $page = 1;
+        }
         $offset = ($page * $perPage) - $perPage;
-        $articles = array_slice($allResults,$offset,$perPage);
+        $articles = array_slice($allResults, $offset, $perPage);
         $paginatedResults = Paginator::make($articles, count($allResults), $perPage);
 
-        foreach($allResults as $result){
+        foreach ($allResults as $result) {
             unset($result['description']);
             unset($result['default_duration']);
             unset($result['published']);
@@ -269,7 +533,9 @@ class Evercisegroup extends \Eloquent
             $categories[$key] = Subcategory::where('name', $category)->pluck('id');
         }
         $evercisegroup->subcategories()->detach();
-        if (!empty($categories)) $evercisegroup->subcategories()->attach($categories);
+        if (!empty($categories)) {
+            $evercisegroup->subcategories()->attach($categories);
+        }
     }
 
     /**
@@ -399,6 +665,21 @@ class Evercisegroup extends \Eloquent
         return $this->hasManyThrough('Category', 'Subcategory');
     }
 
+    public function scopeLocation($query, $latitude, $longitude, $radius = 1)
+    {
+        $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
+
+        return $query->whereIn(
+            'venue_id',
+            function ($query) use ($haversine, $radius) {
+                $query->select('id')
+                    ->from(with(new Venue)->getTable())
+                    ->where(DB::raw($haversine), '<=', $radius);
+            }
+        );
+
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
@@ -477,24 +758,23 @@ class Evercisegroup extends \Eloquent
      */
     public static function validateAndStore($user)
     {
-        $max_price = Config::get('values')['max_price'];
         $validator = Validator::make(
             Input::all(),
             [
-                'classname' => 'required|max:100|min:5',
+                'classname'   => 'required|max:100|min:5',
                 'description' => 'required|max:5000|min:100',
-                'duration' => 'required|numeric|between:10,240',
-                'maxsize' => 'required|numeric|between:1,200',
-                'price' => 'required|numeric|between:1,'.$max_price,
-                'image' => 'required',
-                'gender' => 'required',
-                'venue' => 'required',
+                'duration'    => 'required|numeric|between:10,240',
+                'maxsize'     => 'required|numeric|between:1,200',
+                'price'       => 'required|numeric|between:1,1000',
+                'image'       => 'required',
+                'gender'      => 'required',
+                'venue'       => 'required',
             ]
         );
         if ($validator->fails()) {
             $result = array(
                 'validation_failed' => 1,
-                'errors' => $validator->errors()->toArray()
+                'errors'            => $validator->errors()->toArray()
             );
             return Response::json($result);
         } else {
@@ -514,35 +794,60 @@ class Evercisegroup extends \Eloquent
 
             // Push categories into an array, and fail if there are none.
             $categories = [];
-            if ($category1 != '') array_push($categories, $category1);
-            if ($category2 != '') array_push($categories, $category2);
-            if ($category3 != '') array_push($categories, $category3);
-            if (empty($categories)) return Response::json(['validation_failed' => 1, 'errors' => ['category1' => 'you must choose at least one category']]);
+            if ($category1 != '') {
+                array_push($categories, $category1);
+            }
+            if ($category2 != '') {
+                array_push($categories, $category2);
+            }
+            if ($category3 != '') {
+                array_push($categories, $category3);
+            }
+            if (empty($categories)) {
+                return Response::json(
+                    ['validation_failed' => 1, 'errors' => ['category1' => 'you must choose at least one category']]
+                );
+            }
 
             // convert array of category names into id's
             foreach ($categories as $key => $category) {
-                if (!$categories[$key] = Subcategory::where('name', $category)->pluck('id'))
-                    return Response::json(['validation_failed' => 1, 'errors' => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']]);
+                if (!$categories[$key] = Subcategory::where('name', $category)->pluck('id')) {
+                    return Response::json(
+                        [
+                            'validation_failed' => 1,
+                            'errors'            => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
+                        ]
+                    );
+                }
             }
 
-            $evercisegroup = Evercisegroup::create([
-                'name' => $classname,
-                'user_id' => $user->id,
-                'venue_id' => $venue,
-                'description' => $description,
-                'default_duration' => $duration,
-                'capacity' => $maxsize,
-                'default_price' => $price,
-                'image' => $image,
-                'gender' => $gender,
-                'venue_id' => $venue,
-            ]);
+            $evercisegroup = Evercisegroup::create(
+                [
+                    'name'             => $classname,
+                    'user_id'          => $user->id,
+                    'venue_id'         => $venue,
+                    'description'      => $description,
+                    'default_duration' => $duration,
+                    'capacity'         => $maxsize,
+                    'default_price'    => $price,
+                    'image'            => $image,
+                    'gender'           => $gender,
+                    'venue_id'         => $venue,
+                ]
+            );
 
             $evercisegroup->subcategories()->attach($categories);
 
-            Trainerhistory::create(['user_id' => $user->id, 'type' => 'created_evercisegroup', 'display_name' => $user->display_name, 'name' => $evercisegroup->name]);
+            Trainerhistory::create(
+                [
+                    'user_id'      => $user->id,
+                    'type'         => 'created_evercisegroup',
+                    'display_name' => $user->display_name,
+                    'name'         => $evercisegroup->name
+                ]
+            );
 
-            Event::fire('evecisegroup.created', [$user,$evercisegroup]);
+            Event::fire('evecisegroup.created', [$user, $evercisegroup]);
 
             return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
         }
@@ -550,10 +855,11 @@ class Evercisegroup extends \Eloquent
 
     public function checkIfUserOwnsClass($user)
     {
-        if ($this->user_id != $user->id)
+        if ($this->user_id != $user->id) {
             return false;
-        else
+        } else {
             return true;
+        }
     }
 
     /**
@@ -574,7 +880,9 @@ class Evercisegroup extends \Eloquent
 
         if ($this->user_id == $user->id) {
             //$evercisegroup_id;
-            if (!Sentry::check()) return 'Not logged in';
+            if (!Sentry::check()) {
+                return 'Not logged in';
+            }
 
             $directory = $user->directory;
 
@@ -600,7 +908,7 @@ class Evercisegroup extends \Eloquent
                     $totalSessionMembers = $totalSessionMembers + $members[$key];
                     $revenue = $revenue + ($members[$key] * $evercisesession->price);
                     $totalRevenue = $totalRevenue + ($evercisesession->price * $this->capacity);
-                    ++$totalSessions;
+                    ++ $totalSessions;
                 }
 
                 $averageSessionMembers = round($totalSessionMembers / $totalSessions, 1);
@@ -688,10 +996,11 @@ class Evercisegroup extends \Eloquent
         $ratings = Rating::with('rator')->where('evercisegroup_id', $this->id)->orderBy('created_at')->get();
         $fakeRatings = FakeRating::with('rator')->where('evercisegroup_id', $this->id)->orderBy('created_at')->get();
 
-        if ($memberUsers)
+        if ($memberUsers) {
             $memberUsersArray = $memberUsers->toArray();
-        else
+        } else {
             $memberUsersArray = [];
+        }
 
         foreach ($fakeRatings as $fakeRating) {
             if (!in_array($fakeRating->rator->id, $memberAllIds)) {
@@ -712,11 +1021,13 @@ class Evercisegroup extends \Eloquent
         try {
             $og->title($this->name)
                 ->type('article')
-                ->image(url() . '/profiles/' . $trainer->user->directory . '/' . $this->image,
+                ->image(
+                    url() . '/profiles/' . $trainer->user->directory . '/' . $this->image,
                     [
-                        'width' => 400,
+                        'width'  => 400,
                         'height' => 200
-                    ])
+                    ]
+                )
                 ->description($this->description)
                 ->url();
         } catch (Exception $e) {
@@ -766,10 +1077,34 @@ class Evercisegroup extends \Eloquent
                 $evercisegroupForDeletion = Evercisegroup::find($this->id);
                 $evercisegroupForDeletion->delete();
 
-                Trainerhistory::create(array('user_id' => $user->id, 'type' => 'deleted_evercisegroup', 'display_name' => $user->display_name, 'name' => $this->name));
+                Trainerhistory::create(
+                    array(
+                        'user_id'      => $user->id,
+                        'type'         => 'deleted_evercisegroup',
+                        'display_name' => $user->display_name,
+                        'name'         => $this->name
+                    )
+                );
             }
         }
         return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
+    }
+
+
+    public static function getGroupWithSpecificSessions($evercisegroupId, $sessionIds)
+    {
+        return Static::with(
+            array(
+                'evercisesession' => function ($query) use (&$sessionIds) {
+
+                    $query->whereIn('id', $sessionIds);
+
+                }
+            ),
+            'evercisesession'
+        )
+            ->find($evercisegroupId);
+
     }
 
 

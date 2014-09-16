@@ -1,5 +1,20 @@
 @extends('layouts.master')
 
+
+
+@section('header' )
+
+@if(isset($places))
+    <script type="text/javascript">
+        var EVERCISE_GROUPS = '<?=str_replace("'", "\'", $places)?>';
+        var EVERCISE_POLYGON = '<?=str_replace("'", "\'", (!empty($area->poly_coordinates) && $radius == 'area' ? $area->poly_coordinates : '[]'))?>';
+        var EVERCISE_RADIUS = '<?=$radius?>';
+    </script>
+@endif
+
+@stop
+
+
 @section('content' )
 
 @if(!isset($user))
@@ -13,19 +28,21 @@
 
 	<div class="col3" id="discover-left">
 		<h3>Refine Search</h3>
-		@include('evercisegroups.refine')
+
+
+		@include('evercisegroups.refine', compact('area','places','radius','allowed_radius','search'))
 		<br>
 		<br>
 		@include('evercisegroups.recommended', ['loadAutocompleteScript'=>1])
 	</div>
 
 	<div class="col9" id="discover-right">
-		@include('evercisegroups.discover_map', array('places' => $evercisegroups))
+		@include('evercisegroups.discover_map', ['places' => $evercisegroups])
 		<div class="heading-block">
 			@if(Input::get('location'))
-				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_near').' ') . Str::limit( Input::get('location'),52)}}</h4>
+				<h4>{{ ucfirst( (Input::get('search')?Input::get('search').' ':'') . trans('discover.classes_near').' ') . Str::limit( Input::get('location'),52)}}</h4>
 			@else
-				<h4>{{ ucfirst( (Input::get('category')?Input::get('category').' ':'') . trans('discover.classes_in_your_area') ) }}</h4>
+				<h4>{{ ucfirst( (Input::get('search')?Input::get('search').' ':'') . trans('discover.classes_in_your_area') ) }}</h4>
 			@endif
 			@if(Input::get('view'))
 				@if(Input::get('view') == 'grid')
@@ -53,7 +70,7 @@
 			<div class="row9 mb20">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
-						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
+						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->ratings, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
 					@endforeach
 				@endif
 				
@@ -69,7 +86,7 @@
 			<div class="row9 mb20">
 				@if (isset($evercisegroups)) 
 					@foreach ($evercisegroups as $key => $evercisegroup) 
-						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->getStars(), 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
+						@include('evercisegroups.discover_classes_list', array('rating' => $evercisegroup->ratings, 'lat'=> $evercisegroup->venue->lat, 'lng' => $evercisegroup->venue->lng ))
 					@endforeach
 				@endif
 				
