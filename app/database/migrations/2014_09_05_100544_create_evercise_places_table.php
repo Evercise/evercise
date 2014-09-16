@@ -23,6 +23,7 @@ class CreateEvercisePlacesTable extends Migration {
                     $table->tinyInteger('zone', FALSE, TRUE)->default(1);
                     $table->double('lat');
                     $table->double('lng');
+                    $table->string('min_radius', 10);
                     $table->text('poly_coordinates');
                     $table->enum('coordinate_type', array('radius', 'polygon'))->default('radius');
                     $table->timestamps();
