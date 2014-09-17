@@ -43,6 +43,8 @@ class UsersController extends \BaseController
      */
     public function store()
     {
+
+
         // check user passes validation
         $valid_user = User::validUserSignup(Input::all());
 
@@ -222,7 +224,10 @@ class UsersController extends \BaseController
     public function show($id)
     {
 
-        $this->checkLogin();
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
 
         return View::make('users.show');
     }
@@ -235,7 +240,10 @@ class UsersController extends \BaseController
      */
     public function edit($id, $tab = 0)
     {
-        $this->checkLogin();
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
 
         return View::make('users.edit')->with('tab', $tab);
     }
@@ -248,6 +256,11 @@ class UsersController extends \BaseController
      */
     public function update($id)
     {
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
+
         $valid_user = User::validUserEdit(Input::all());
 
         if ($valid_user['validation_failed'] == 0) {
@@ -484,6 +497,12 @@ class UsersController extends \BaseController
      */
     public function logout()
     {
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
+
+
         $user = Sentry::getUser();
 
         if (!empty($user->id)) {

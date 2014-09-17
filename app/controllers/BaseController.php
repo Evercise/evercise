@@ -40,12 +40,8 @@ class BaseController extends Controller {
      * @param bool $redirect
      * @return bool
      */
-    public function checkLogin($redirect = true) {
-        if ($redirect && !Sentry::check()) return Redirect::route('home');
-
-        if (! $redirect && !Sentry::check()) return false;
-
-        return true;
+    public function checkLogin() {
+        return Sentry::check();
     }
 
 
