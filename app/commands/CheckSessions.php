@@ -47,7 +47,7 @@ class CheckSessions extends Command {
 
 		$sessions = Evercisesession::where('date_time', '<',  $today)
 		->where('date_time', '>',  $yesterday )
-		->has('sessionpayment', '==', 0)
+		->has('sessionpayment', 0)
 		->with('evercisegroup')
 		->with('sessionmembers')
 		->with('sessionpayment')
@@ -65,6 +65,7 @@ class CheckSessions extends Command {
 
             $commission = 10.00; // In %
 
+
             $user = User::find($session->evercisegroup->user_id);
             if($user->custom_commission > 0) {
                 $commission = $user->custom_commission;
@@ -73,6 +74,9 @@ class CheckSessions extends Command {
             //Adjust code for hte old percentage
             $commission = $commission/100;
 
+
+            $total = count($session->sessionmembers) * $session->price;
+            $totalAfterFees = $total * (1.00 - $commission);
 
 
             // If the session has members, and a sessionpayment has not already been created, create a sessionpayment
