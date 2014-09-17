@@ -63,7 +63,17 @@ class CheckSessions extends Command {
 		foreach ($sessions as $s_key => $session) {
 			$this->info('session: group['.$session->evercisegroup_id.'] --> '. $session->id.' : ');
 			
-			$commission = 0.10;
+			$commission = 10.00; // In %
+
+            $user = User::find($session->evercisegroup->user_id);
+            if($user->custom_commission > 0) {
+                $commission = $user->custom_commission;
+            }
+
+            //Adjust code for hte old percentage
+            $commission = $commission/100;
+
+
 			$total = count($session->sessionmembers) * $session->price;
 			$totalAfterFees = $total * (1.00 - $commission);
 
