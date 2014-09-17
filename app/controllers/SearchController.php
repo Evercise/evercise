@@ -146,10 +146,22 @@ class SearchController extends \BaseController
             }
             $location = $this->place->getByLocation($input['location']);
 
-            unset($input['location']);
 
+            if(is_null($location)) {
 
+                $this->log->info('Address ERROR: ' . $input['location'] . '?' . http_build_query($input));
 
+                $input['allsegments'] = '';
+                unset($input['location']);
+
+                return $this->redirect->route(
+                    'search.parse',
+                    $input,
+                    301
+                );
+            } else {
+                unset($input['location']);
+            }
 
             /** We have save the location to the DB so we can redirect the user to the new URL now */
 
@@ -161,8 +173,6 @@ class SearchController extends \BaseController
                 $input,
                 301
             );
-
-
         }
 
 
@@ -171,7 +181,7 @@ class SearchController extends \BaseController
 
 
         if (!empty($area->min_radius) && str_replace('mi','',$area->min_radius) > str_replace('mi','',$radius)) {
-            $radius = $area->min_radius; 
+            $radius = $area->min_radius;
         }
 
         $page = $this->input->get('page', 1);
