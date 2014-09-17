@@ -33,7 +33,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'area_code',
         'phone',
         'directory',
-        'image'
+        'image',
+        'custom_commission'
     );
 
     /**
