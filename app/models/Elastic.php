@@ -46,7 +46,6 @@ class Elastic
         $this->elastic_polygon = getenv('ELASTIC_POLYGON');
     }
 
-
     /**
      * Search Evercisegroups Index
      *
@@ -165,20 +164,32 @@ class Elastic
     /**
      * @return bool
      */
-    public function indexEvercisegroups()
+    public function indexEvercisegroups($id = 0)
     {
 
         $total_indexed = 0;
         $with_session = 0;
 
         $this->log->info('Indexing Evercise Groups started ' . date('d H:i:s'));
-        $all = $this->evercisegroup->has('futuresessions')
-            ->has('confirmed')
-            ->with('venue')
-            ->with('user')
-            ->with('ratings')
-            ->with('futuresessions')
-            ->get();
+
+        if ($id == 0) {
+            $all = $this->evercisegroup->has('futuresessions')
+                ->has('confirmed')
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->get();
+        } else {
+            $all = $this->evercisegroup->has('futuresessions')
+                ->has('confirmed')
+                ->with('venue')
+                ->with('user')
+                ->with('ratings')
+                ->with('futuresessions')
+                ->where('id', $id)
+                ->get();
+        }
 
         $this->log->info('Get all Indexing data ' . date('d H:i:s'));
         foreach ($all as $a) {
@@ -248,7 +259,7 @@ class Elastic
                     'duration'        => (int) $s->duration,
                     'members_emailed' => (int) $s->members_emailed
                 ];
-                $with_session++;
+                $with_session ++;
             }
 
             $params = array();
@@ -268,9 +279,20 @@ class Elastic
 
         $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return $total_indexed.' '.$with_session;
+        return $total_indexed . ' ' . $with_session;
 
 
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function deleteSingle($id)
+    {
+        return $this->elasticsearch->delete(
+            ['id' => $id, 'type' => $this->elastic_type, 'index' => $this->elastic_index]
+        );
     }
 
     /**
@@ -380,6 +402,10 @@ class Elastic
     }
 
 
+    /**
+     * @param bool $index
+     * @return bool
+     */
     public function deleteIndex($index = false)
     {
         $params['index'] = ($index ?: $this->elastic_index);
@@ -392,6 +418,10 @@ class Elastic
     }
 
 
+    /**
+     * @param bool $index
+     * @return bool
+     */
     public function createIndex($index = false)
     {
 
