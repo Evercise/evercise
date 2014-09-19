@@ -1,171 +1,198 @@
 <?php
 
-class LandingsController extends \BaseController {
+class LandingsController extends \BaseController
+{
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        //
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return View::make('landings.create');
-	}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return View::make('landings.create');
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'email' => 'required|email|unique:users,email',
-				'category' => 'required',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('landing.category', ['category'=>Input::get('category')])
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else {
+        $validator = Validator::make(
+            Input::all(),
+            array(
+                'email'    => 'required|email|unique:users,email',
+                'category' => 'required',
+            )
+        );
+        if ($validator->fails()) {
+            if (Request::ajax()) {
+                $result = array(
+                    'validation_failed' => 1,
+                    'errors'            => $validator->errors()->toArray()
+                );
 
-			$email = Input::get('email');
-			$categoryId = Input::get('category');
+                return Response::json($result);
+            } else {
+                return Redirect::route('landing.category', ['category' => Input::get('category')])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        } else {
 
-			$ppcCode = Functions::randomPassword(20);
-			$ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
+            $email = Input::get('email');
+            $categoryId = Input::get('category');
 
-			Session::put('ppcCode', $ppcCode);
-			Session::put('email', $email);
+            $ppcCode = Functions::randomPassword(20);
+            $ppc = Landing::create(['email' => $email, 'code' => $ppcCode, 'category_id' => $categoryId]);
 
-			$category = Category::find($categoryId)->pluck('name');
+            Session::put('ppcCode', $ppcCode);
+            Session::put('email', $email);
 
-			if ($ppc)
-			{
-				Event::fire('landing.ppc', array(
-		        	'email' => $email,
-		        	'categoryId' => $categoryId,
-	            'ppcCode' => $ppcCode
-	        ));
-			}
+            $category = Category::find($categoryId)->pluck('name');
 
-			//return Redirect::to('users/create');
-			return Response::json(['callback'=>'gotoUrl', 'url' => route('users.create')]);
-		}
-	}
+            if ($ppc) {
+                Event::fire(
+                    'landing.ppc',
+                    array(
+                        'email'      => $email,
+                        'categoryId' => $categoryId,
+                        'ppcCode'    => $ppcCode
+                    )
+                );
+            }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+            //return Redirect::to('users/create');
+            return Response::json(['callback' => 'gotoUrl', 'url' => route('users.create')]);
+        }
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        //
+    }
 
-
-	// Facebook link on landing page clicked
-	public function facebookPpc($categoryId)
-	{
-		$ppcCode = Functions::randomPassword(20);
-		$ppc = Landing::create([ 'email'=>'facebook', 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
-
-		Session::put('ppcCategory', $categoryId);
-		Session::put('ppcCode', $ppcCode);
-
-		return Redirect::to('login/fb');
-	}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
 
-	// Accept code from a pay-per-click generated email.
-	public function submitPpc($categoryId, $ppcCode)
-	{
-		Session::put('ppcCategory', $categoryId);
-		Session::put('ppcCode', $ppcCode);
+    // Facebook link on landing page clicked
+    public function facebookPpc($categoryId)
+    {
+        $ppcCode = Functions::randomPassword(20);
+        $ppc = Landing::create(['email' => 'facebook', 'code' => $ppcCode, 'category_id' => $categoryId]);
 
-		return Redirect::to('users/create');
-	}
-	
-	public function loadCategory($category)
-	{
-		if (array_key_exists($category, Config::get('values')['ppc_categories']))
-		{
-			$categoryId = Config::get('values')['ppc_categories'][$category];
+        Session::put('ppcCategory', $categoryId);
+        Session::put('ppcCode', $ppcCode);
 
-			$category = Category::find($categoryId);
-			
-			return View::make('landings.create')
-			->with('category', $category);
-		}
-		else
-		{
-			return Redirect::to('/');
-		}
-	}
+        return Redirect::to('login/fb');
+    }
 
-	public function landCategory($cat)
-	{
-		return $this->loadCategory($cat);
-	}
+
+    // Accept code from a pay-per-click generated email.
+    public function submitPpc($categoryId, $ppcCode)
+    {
+        Session::put('ppcCategory', $categoryId);
+        Session::put('ppcCode', $ppcCode);
+
+        return Redirect::to('users/create');
+    }
+
+    public function loadCategory($category)
+    {
+        if (array_key_exists($category, Config::get('values')['ppc_categories'])) {
+            $categoryId = Config::get('values')['ppc_categories'][$category];
+
+            $category = Category::find($categoryId);
+
+            return View::make('landings.create')
+                ->with('category', $category);
+        } else {
+            return Redirect::to('/');
+        }
+    }
+
+    public function landCategory($cat)
+    {
+        return $this->loadCategory($cat);
+    }
+
+
+    public function getTrainerLanding()
+    {
+
+        return View::make('landings.trainerinquiry');
+
+    }
+
+
+    public function postTrainerLanding()
+    {
+
+        $input = Input::all();
+
+        $email_to = Config::get('evercise.trainer_inquiry');
+        $subject = 'New trainer Inquiry';
+
+        Mail::queue(
+            'emails.trainer.inquiry',
+            $input,
+            function ($message) use ($email_to, $subject) {
+                $message->to($email_to)->subject($subject);
+            }
+        );
+
+        return Redirect::route('home')->with('message', 'Inquiry submitted. We will contact you in the next 24hours');
+
+    }
 
 }
