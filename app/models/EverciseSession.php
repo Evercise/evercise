@@ -94,12 +94,12 @@ class Evercisesession extends \Eloquent
                 'duration' => $inputs['s-duration']
             ));
 
-            $evercisegroupName = Evercisegroup::where('id', $inputs['s-evercisegroupId'])->firstOrFail()->pluck('name');
+            $evercisegroupName = Evercisegroup::find($inputs['s-evercisegroupId']);
 
             $timestamp = strtotime($date_time);
             $niceTime = date('h:ia', $timestamp);
             $niceDate = date('dS F Y', $timestamp);
-            Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'created_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));
+            Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'created_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroupName->name, 'time' => $niceTime, 'date' => $niceDate));
 
             /* callback */
             Event::fire('session.create', [Sentry::getUser() ]);
