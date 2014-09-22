@@ -41,7 +41,7 @@
 		<div class="modal-body">
 			{{ Form::open(array('id' => 'leave', 'url' => 'sessions/'.$session->id.'/leave', 'method' => 'POST', 'class' => 'create-form')) }}
 
-				{{ Form::submit('Leave Session' , array('class'=>'btn-yellow ')) }}
+				{{ Form::submit('Leave Session' , array('class'=>'btn-yellow detach_session')) }}
 
 	        	<div class="success_msg">Left Successfully</div>
 
@@ -49,3 +49,10 @@
 	    </div>
 	@endif
 </div>
+
+<script>
+$(document).on('submit','#leave' ,function(){
+        console.log('ajde');
+        $(this).children('input[type=submit]').prop('disabled', true);
+    } );
+</script>

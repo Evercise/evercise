@@ -361,6 +361,7 @@ class SessionsController extends \BaseController
 
     public function postLeaveSession($id)
     {
+
         $session = Evercisesession::find($id);
 
         $sessionDate = new DateTime($session->date_time);
@@ -374,6 +375,19 @@ class SessionsController extends \BaseController
 
         if ($status > 0) {
             $user = User::find($this->user->id);
+
+            /** CHeck if the user has the session */
+            $detached = true;
+            foreach($user->sessions as $s) {
+                if($s->id == $session->id) {
+                    $detached = false;
+                }
+            }
+
+            if($detached) {
+                return Response::json(['message' => ' session: ' . $id, 'callback' => 'leftSession']);
+            }
+
             $user->sessions()->detach($session->id);
 
             $refund = ($status == 1 ? ($session->price / 2) : $session->price);

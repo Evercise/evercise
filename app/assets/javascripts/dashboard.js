@@ -54,6 +54,14 @@ function initDashboardPanel()
 
         return false;
     });
+    $(document).on('submit','#leave' ,function(){
+        console.log('ajde');
+        $(this).children('input[type=submit]').prop('disabled', true);
+    } );
+    $('#leave').on('submit', function(){
+        console.log('ajde');
+        $(this).children('input[type=submit]').prop('disabled', true);
+    });
 
     $('.btn-leave-session , .refund').click(function(){
 
@@ -66,13 +74,13 @@ function initDashboardPanel()
             type: 'GET',
             dataType: 'html'
         })
-        .done(
+            .done(
             function(data) {
                 trace(data);
                 $('.mask').show();
                 $('.container').append(data);
                 initPut();
-             }
+            }
         );
 
         return false;
