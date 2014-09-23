@@ -124,7 +124,7 @@ $(function() {
 				<div class="logo"><a border="0" href="http://www.evercise.com"><img src="/img/trainerlanding/logo.png" width="298" height="28"/></a></div>
 				<h1 class="messaging">
 					{{ getenv('EVERCISE_TRAINER_MESSAGE') ?: 'REVOLUTIONARY MARKETING TOOL FOR FITNESS INDUSTRY' }} <br/>
-			    <a href="http://www.evercise.com" class="site_button">Go to Evercise.com</a>
+			    <a href="http://www.evercise.com" class="site_button" target="_blank">Go to Evercise.com</a>
 				</h1>
 			</div>
 			<div class="cta_container">
