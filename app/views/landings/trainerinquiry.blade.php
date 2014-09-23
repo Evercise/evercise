@@ -41,8 +41,8 @@ p { font-family: arial, helvetica, sans-serif; font-size: 16px; line-height: 28p
 
 
 
-.myButton {margin-top:30px;-moz-box-shadow:inset 0px 1px 0px 0px #000000;-webkit-box-shadow:inset 0px 1px 0px 0px #000000;box-shadow:inset 0px 1px 0px 0px #000000;
-background-color:#313232;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;border:1px solid #01090f;display:inline-block;cursor:pointer;color:#ffffff;font-family:arial;font-size:13px;padding:9px 26px;text-decoration:none;text-shadow:0px 1px 0px #000000;
+.myButton {margin-top:20px;-moz-box-shadow:inset 0px 1px 0px 0px #000000;-webkit-box-shadow:inset 0px 1px 0px 0px #000000;box-shadow:inset 0px 1px 0px 0px #000000;
+background-color:#313232;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;border:1px solid #01090f;display:inline-block;cursor:pointer;color:#ffffff;font-family:arial;font-size:17px;padding:16px 30px;text-decoration:none;text-shadow:0px 1px 0px #000000;
 }
 .myButton:hover {background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #000305), color-stop(1, #02070a));background:-moz-linear-gradient(top, #000305 5%, #02070a 100%);background:-webkit-linear-gradient(top, #000305 5%, #02070a 100%);background:-o-linear-gradient(top, #000305 5%, #02070a 100%);background:-ms-linear-gradient(top, #000305 5%, #02070a 100%);background:linear-gradient(to bottom, #000305 5%, #02070a 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#000305', endColorstr='#02070a',GradientType=0);background-color:#000305;
 }
@@ -120,7 +120,8 @@ $(function() {
 					SOME HEADING WILL GO HERE ONE DAY
 				</h1>
 			</div>
-			<div class="cta_container"> <a href="#inline" class="various myButton">Make a inquiry</a>
+			<div class="cta_container">
+			    <a href="#inline" class="various myButton">Find out more</a>
 			</div>
 			<div class="col1">
 				<h1>WHAT IS EVERCISE?</h1>

@@ -11,7 +11,7 @@
 
 return [
 
-    'trainer_inquiry'   => 'mlatko@gmail.com',
+    'trainer_inquiry'   => 'contact@evercise.com',
     '301_REDIRECTS' => [
         'a'                                   => 'home',
         'discover'                            => 'evercisegroups.search',
