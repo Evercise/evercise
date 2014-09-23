@@ -29,7 +29,7 @@ class Venue extends \Eloquent
      */
     public static function createNewVenue()
     {
-        // create new vuewnue view with facilities
+        // create new vuenue view with facilities
         $facilities = Facility::get();
         return View::make('venues.create')->with('facilities', $facilities);
     }
