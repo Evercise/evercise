@@ -191,7 +191,7 @@ class LandingsController extends \BaseController
             }
         );
 
-        return Redirect::route('home')->with('message', 'Inquiry submitted. We will contact you in the next 24hours');
+        return Redirect::route('home')->with('notification', 'Inquiry submitted. We will contact you in the next 24hours');
 
     }
 
