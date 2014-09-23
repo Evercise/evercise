@@ -8,7 +8,7 @@
         "way/generators": "2.6",
         "codesleeve/asset-pipeline": "dev-master",
         "cartalyst/sentry": "2.1.*",
-        "laracasts/utilities":"dev-master",
+        "laracasts/utilities":"1.*",
         "intervention/image": "2.0",
         "toin0u/geocoder-laravel": "0.4.0",
         "toin0u/geotools-laravel": "~0.2",
