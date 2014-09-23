@@ -128,7 +128,7 @@ $(function() {
 				</h1>
 			</div>
 			<div class="cta_container">
-			    <a href="#inline" class="various myButton center">Make an Inquiry</a>
+			    <a href="#inline" class="various myButton center">Make an Enquiry</a>
 			</div>
 			<div class="col1">
 				<h1>WHAT IS EVERCISE?</h1>
