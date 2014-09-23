@@ -156,8 +156,8 @@ Route::get('martialarts', array('as' => 'landing.martialarts', 'uses' => functio
 Route::get('yoga', array('as' => 'landing.yoga', 'uses' => function() { return (new LandingsController)->landCategory('yoga'); } ));
 Route::get('bootcamp', array('as' => 'landing.bootcamp', 'uses' => function() { return (new LandingsController)->landCategory('bootcamp'); } ));
 Route::get('personaltrainer', array('as' => 'landing.personaltrainer', 'uses' => function() { return (new LandingsController)->landCategory('personaltrainer'); } ));
-Route::get('trainerlanding', array('as' => 'landing.trainerinquery.get', 'uses' => "LandingsController@getTrainerLanding"));
-Route::post('trainerlanding', array('as' => 'landing.trainerinquery.post', 'uses' => "LandingsController@postTrainerLanding"));
+Route::get('joinus', array('as' => 'landing.trainerinquery.get', 'uses' => "LandingsController@getTrainerLanding"));
+Route::post('joinus', array('as' => 'landing.trainerinquery.post', 'uses' => "LandingsController@postTrainerLanding"));
 
 
 // admin tools

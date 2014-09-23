@@ -30,6 +30,7 @@ h1.messaging { width:1040px; font-family:'UniversLTStd59UltraCondensed'; font-si
 .col2 { width: 400px; height: auto; float: left; margin: 70px 0px 0px 80px; }
 h1 { width:100%; font-family:'UniversLTStd59UltraCondensed', arial, helvetica, sans-serif; font-size:36px; text-align: center; color: #3B3D48; float: left; padding: 0px 0 0 0; }
 h1.popup{text-align: left}
+a {font-family: arial, helvetica, sans-serif; font-size: 16px; text-align: left; }
 p { font-family: arial, helvetica, sans-serif; font-size: 16px; line-height: 28px; text-align: left; color: #768690;  }
 
 .col3 { width: 439px; height: auto; float: left; margin: 50px 0px 0px 80px; border-right: 1px solid #EAEAEB; border-bottom: 1px solid #EAEAEB; padding: 30px 0 50px 0; }
@@ -39,6 +40,10 @@ p { font-family: arial, helvetica, sans-serif; font-size: 16px; line-height: 28p
 
 .footer { width: 1040px; height: 90px; border-top: 1px solid #EAEAEB; float: left; margin-top: 50px; }
 
+.cta_container{position: relative}
+/*.cta_container .site_button{position:absolute; left:50%; padding-left:200px; color:#4288CE; top:40%; text-decoration: none; color:#000}*/
+.site_button{font-size:16px; text-decoration: none; color:#a7a7a9;font-weight: normal}
+.site_button:hover{text-decoration: underline}
 
 
 .myButton {margin-top:20px;-moz-box-shadow:inset 0px 1px 0px 0px #000000;-webkit-box-shadow:inset 0px 1px 0px 0px #000000;box-shadow:inset 0px 1px 0px 0px #000000;
@@ -48,6 +53,7 @@ background-color:#313232;-moz-border-radius:3px;-webkit-border-radius:3px;border
 }
 .myButton:active {position:relative;top:1px;
 }
+.clear{clear:both}
 #inline p {margin:0}
 #inline label{width:100%; font-weight: bold; font-size:12px}
 #inline input{width:100%;padding:5px}
@@ -117,11 +123,12 @@ $(function() {
 			<div class="hero">
 				<div class="logo"><a border="0" href="http://www.evercise.com"><img src="/img/trainerlanding/logo.png" width="298" height="28"/></a></div>
 				<h1 class="messaging">
-					SOME HEADING WILL GO HERE ONE DAY
+					{{ getenv('EVERCISE_TRAINER_MESSAGE') ?: 'REVOLUTIONARY MARKETING TOOL FOR FITNESS INDUSTRY' }} <br/>
+			    <a href="http://www.evercise.com" class="site_button">Go to Evercise.com</a>
 				</h1>
 			</div>
 			<div class="cta_container">
-			    <a href="#inline" class="various myButton">Find out more</a>
+			    <a href="#inline" class="various myButton center">Make an Inquiry</a>
 			</div>
 			<div class="col1">
 				<h1>WHAT IS EVERCISE?</h1>
@@ -136,6 +143,7 @@ $(function() {
 				<p>Evercise can help you to realise your potential as a professional trainer by improving your promotional reach and simplifying your booking process.</p>
 				<p>Signing up as an Evercise trainer is quick and free. Simply leave your details below and we’ll get in touch as soon as possible.</p>
 			</div>
+			<br class="clear"/>
 
 			<div class="col3">
 				<img style="display:block; margin:auto auto;" src="/img/trainerlanding/empty.png"  width="300" height="300" alt="empty classes"/>
