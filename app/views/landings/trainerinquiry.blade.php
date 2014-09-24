@@ -54,10 +54,12 @@ background-color:#313232;-moz-border-radius:3px;-webkit-border-radius:3px;border
 .myButton:active {position:relative;top:1px;
 }
 .clear{clear:both}
-#inline p {margin:0}
+#inline p {margin:0;clear:both}
 #inline label{width:140px; font-weight: bold; font-size:12px; display:block;float:left}
 #inline input{width:540px;padding:5px;float:left}
-label.error{color:#cc581e}
+
+
+span.error{color:#cc581e;clear:both; float:right;font-size:12px; margin-right:5px}
 </style>
 
 
@@ -90,6 +92,7 @@ $(function() {
             // Specify the validation rules
             rules: {
                 name: "required",
+                phone: "required",
                 email: {
                     required: true,
                     email: true
@@ -97,16 +100,19 @@ $(function() {
                 profession: "required",
                 location: "required"
             },
-
+errorElement: "span",
             // Specify the validation error messages
             messages: {
                 name: "Please enter your name",
                 email: "Please enter a valid email address",
+                phone: "Please enter a phone number",
                 profession: "Please enter your profession",
                 location: "Please enter a valid location"
             },
 
             submitHandler: function(form) {
+
+                window._fbq.push(['track', '6015475418008', {'value':'0.01','currency':'GBP'}]);
                 form.submit();
             }
         });
@@ -221,7 +227,6 @@ _fbq.loaded = true;
 }
 })();
 window._fbq = window._fbq || [];
-window._fbq.push(['track', '6015475418008', {'value':'0.01','currency':'GBP'}]);
 </script>
 <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6015475418008&amp;cd[value]=0.01&amp;cd[currency]=GBP&amp;noscript=1" /></noscript>
 </body>
