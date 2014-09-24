@@ -597,9 +597,31 @@ class Evercisegroup extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function Sessionmember()
+    public function sessionmember()
     {
         return $this->hasManyThrough('Sessionmember', 'Evercisesession');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function futureSessionmember()
+    {
+        return $this->hasManyThrough('Sessionmember', 'Evercisesession')->where('date_time', '>=', DB::raw('NOW()'))->orderBy(
+            'date_time',
+            'asc'
+        );
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function pastSessionmember()
+    {
+        return $this->hasManyThrough('Sessionmember', 'Evercisesession')->where('date_time', '<', DB::raw('NOW()'))->orderBy(
+            'date_time',
+            'asc'
+        );
     }
 
     /**

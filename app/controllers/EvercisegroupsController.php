@@ -132,7 +132,7 @@ class EvercisegroupsController extends \BaseController
     {
         $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
-        Event::fire('evecisegroup.delete', [$this->user, $evercisegroup]);
+        Event::fire('evercisegroup.delete', [$this->user, $evercisegroup]);
 
         return $evercisegroup->deleteGroup($this->user);
     }
@@ -149,8 +149,8 @@ class EvercisegroupsController extends \BaseController
         $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
         $deletableStatus = 0;
-        $deletableStatus = count($evercisegroup->sessionmember) ? 3 : ($evercisegroup->evercisesession->isEmpty(
-        ) ? 1 : 2);
+        $deletableStatus = count($evercisegroup->pastSessionmember) ? 4 : (count($evercisegroup->futureSessionmember) ? 3 : ($evercisegroup->evercisesession->isEmpty(
+        ) ? 1 : 2));
         return $deletableStatus ? View::make('evercisegroups.delete')->with('id', $id)->with(
             'name',
             $evercisegroup->name
