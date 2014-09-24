@@ -519,3 +519,11 @@ Route::get(
         'uses' => 'EvercisegroupsController@search_C_C_A_C'
     )
 );
+
+// layout page
+
+Route::get('/layouts', function()
+{
+    return View::make('layouts.layouts');
+});
+
