@@ -29,7 +29,7 @@ h1.messaging { width:1040px; font-family:'UniversLTStd59UltraCondensed'; font-si
 .col1 { width: 400px; height: auto; float: left; margin: 70px 0px 0px 80px; }
 .col2 { width: 400px; height: auto; float: left; margin: 70px 0px 0px 80px; }
 h1 { width:100%; font-family:'UniversLTStd59UltraCondensed', arial, helvetica, sans-serif; font-size:36px; text-align: center; color: #3B3D48; float: left; padding: 0px 0 0 0; }
-h1.popup{text-align: left}
+h1.popup{text-align: left; line-height:1px}
 a {font-family: arial, helvetica, sans-serif; font-size: 16px; text-align: left; }
 p { font-family: arial, helvetica, sans-serif; font-size: 16px; line-height: 28px; text-align: left; color: #768690;  }
 
@@ -55,8 +55,8 @@ background-color:#313232;-moz-border-radius:3px;-webkit-border-radius:3px;border
 }
 .clear{clear:both}
 #inline p {margin:0}
-#inline label{width:100%; font-weight: bold; font-size:12px}
-#inline input{width:100%;padding:5px}
+#inline label{width:140px; font-weight: bold; font-size:12px; display:block;float:left}
+#inline input{width:540px;padding:5px;float:left}
 label.error{color:#cc581e}
 </style>
 
@@ -73,10 +73,10 @@ label.error{color:#cc581e}
 $(function() {
 	$(".various").fancybox({
 		maxWidth	: 720,
-		maxHeight	: 600,
+		maxHeight	: 400,
 		fitToView	: true,
 		width		: '720px',
-		height		: '80%',
+		height		: '350px',
 		autoSize	: false,
 		closeClick	: false,
 		openEffect	: 'none',
@@ -175,7 +175,7 @@ $(function() {
 
 
 
-<div id="inline" style="display:none;width:700px;">
+<div id="inline" style="display:none;width:700px; max-height: 400px">
 			<h1 class="popup">Instructors / Gym or Studio managers</h1>
             <p>Contact us today and one of Evercise team will be in touch with you shortly.</p>
             <form method="post" id="contact" action="{{ URL::route('landing.trainerinquery.post') }}">
@@ -208,7 +208,22 @@ $(function() {
 			</p></form>
 </div>
 
-
+<!-- Facebook Conversion Code for Trainer Enquiries -->
+<script>(function() {
+var _fbq = window._fbq || (window._fbq = []);
+if (!_fbq.loaded) {
+var fbds = document.createElement('script');
+fbds.async = true;
+fbds.src = '//connect.facebook.net/en_US/fbds.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(fbds, s);
+_fbq.loaded = true;
+}
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6015475418008', {'value':'0.01','currency':'GBP'}]);
+</script>
+<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6015475418008&amp;cd[value]=0.01&amp;cd[currency]=GBP&amp;noscript=1" /></noscript>
 </body>
 
 </html>
