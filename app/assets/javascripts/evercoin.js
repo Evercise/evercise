@@ -53,9 +53,6 @@ function initRedeemEvercoin(params)
 
 registerInitFunction('initRedeemEvercoin');
 
-function isInteger(n) {
-    return /^[0-9]+$/.test(n);
-}
 
 function paidWithEvercoins(data)
 {
