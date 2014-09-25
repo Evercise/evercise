@@ -10,7 +10,7 @@ class VenuesController extends \BaseController
      */
     public function index()
     {
-        return Venue::usersVenues($this->user->id);
+        return Venue::usersVenues(Sentry::getUser()->id);
     }
 
 
@@ -29,7 +29,7 @@ class VenuesController extends \BaseController
     public function store()
     {
 
-        $result = Venue::storeNewVenue(Input::all(), $this->user->id);
+        $result = Venue::storeNewVenue(Input::all(), Sentry::getUser()->id);
 
         return Response::json($result);
     }
@@ -51,7 +51,7 @@ class VenuesController extends \BaseController
     public function update($id)
     {
 
-        $result = Venue::storeNewVenue(Input::all(), $this->user->id);
+        $result = Venue::storeNewVenue(Input::all(), Sentry::getUser()->id);
 
         return Response::json($result);
     }

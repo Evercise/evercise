@@ -11,6 +11,7 @@
 		{
 			$address = $location['address'];
 			$city = $location['city'];
+			$postCode = $location['postCode'];
 			$lat = $location['lat'];
 			$lng = $location['lng'];
 		}
