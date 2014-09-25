@@ -15,6 +15,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+var concat = require('gulp-concat');
 
 gulp.task('minifycss', function() {
     gulp.src('./public/assets/css/main.css')
@@ -48,7 +49,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('version', function () {
-    var file = '<?php return ["version" => "'+makeid()+'"]; ';
+    var file = '<?php return "'+makeid()+'"; ';
 
     require('fs').writeFile('.version.php', file);
 })
