@@ -32,10 +32,7 @@ class Venue extends \Eloquent
         return View::make('venues.create')->with('facilities', $facilities);
     }
 
-    /**
-     * @return array
-     */
-    public static function storeNewVenue($inputs, $id)
+    public static function validateVenue($inputs)
     {
 
         Validator::extend('has_not', function ($attr, $value, $params) {
@@ -67,34 +64,67 @@ class Venue extends \Eloquent
                 'validation_failed' => 1,
                 'errors' => $validator->errors()->toArray()
             ];
-
-        } else {
-            $venue_name = $inputs['venue_name'];
-            $address = $inputs['street'];
-            $town = $inputs['city'];
-            $postcode = $inputs['postcode'];
-            $lat = $inputs['latbox'];
-            $lng = $inputs['lngbox'];
-
-            $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
-
-            $venue = static::create([
-                'user_id' => $id,
-                'name' => $venue_name,
-                'address' => $address,
-                'town' => $town,
-                'postcode' => $postcode,
-                'lat' => $lat,
-                'lng' => $lng
-            ]);
-
-            $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
-
-            $result = [
-                'venue_id' => $venue->id
-            ];
-
+            return $result;
         }
+        return false;
+    }
+
+    /**
+     * @return array
+     */
+    public static function storeNewVenue($inputs, $userId)
+    {
+
+        if ( $response = static::validateVenue($inputs) )
+            return $response;
+
+        $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
+
+        $venue = static::create([
+            'user_id' => $userId,
+            'name' => $inputs['venue_name'],
+            'address' => $inputs['street'],
+            'town' => $inputs['city'],
+            'postcode' => $inputs['postcode'],
+            'lat' => $inputs['latbox'],
+            'lng' => $inputs['lngbox']
+        ]);
+
+        $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+
+        $result = [
+            'venue_id' => $venue->id
+        ];
+
+
+        return $result;
+    }
+
+    public function editVenue($inputs, $userId)
+    {
+
+        if ( $response = static::validateVenue($inputs) )
+            return $response;
+
+        $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
+
+        $this->update([
+            'user_id' => $userId,
+            'name' => $inputs['venue_name'],
+            'address' => $inputs['street'],
+            'town' => $inputs['city'],
+            'postcode' => $inputs['postcode'],
+            'lat' => $inputs['latbox'],
+            'lng' => $inputs['lngbox']
+        ]);
+
+        $this->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+
+        $result = [
+            'venue_id' => $this->id
+        ];
+
+
         return $result;
     }
 
