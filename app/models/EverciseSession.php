@@ -149,11 +149,12 @@ class Evercisesession extends \Eloquent
     /**
      * @param $sessionId
      * @param $userList
+     * @param $inputs
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function mailMembers($sessionId, $userList)
+    public static function mailMembers($sessionId, $userList, $inputs)
     {
-        if ( $response = static::validateMail() )
+        if ( $response = static::validateMail($inputs) )
             return $response;
 
         $subject = Input::get('mail_subject');
@@ -186,10 +187,10 @@ class Evercisesession extends \Eloquent
      *
      * @return bool|\Illuminate\Http\JsonResponse
      */
-    public static function validateMail()
+    public static function validateMail($inputs)
     {
         $validator = Validator::make(
-            Input::all(),
+            $inputs,
             array(
                 'mail_subject' => 'required',
                 'mail_body' => 'required',
@@ -227,8 +228,11 @@ class Evercisesession extends \Eloquent
      * @param $trainerId
      * @return array
      */
-    public static function mailTrainer($sessionId, $trainerId)
+    public static function mailTrainer($sessionId, $trainerId, $inputs)
     {
+        if ( $response = static::validateMail($inputs) )
+            return $response;
+
         $subject = Input::get('mail_subject');
         $body = Input::get('mail_body');
 

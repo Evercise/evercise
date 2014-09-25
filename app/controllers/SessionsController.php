@@ -131,7 +131,7 @@ class SessionsController extends \BaseController
             $userList[$user->first_name . ' ' . $user->last_name] = $user->email;
         }
 
-        return Evercisesession::mailMembers($sessionId, $userList);
+        return Evercisesession::mailMembers($sessionId, $userList, Input::all());
     }
 
     /**
@@ -164,7 +164,7 @@ class SessionsController extends \BaseController
         $userDetails = User::getNameAndEmail($userId);
         $userList = [$userDetails['name'] => $userDetails['email']];
 
-        return Evercisesession::mailMembers($sessionId, $userList);
+        return Evercisesession::mailMembers($sessionId, $userList, Input::all());
     }
 
     /**
@@ -198,7 +198,11 @@ class SessionsController extends \BaseController
      */
     public function postMailTrainer($sessionId, $trainerId)
     {
-        list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId);
+        $response = Evercisesession::mailTrainer($sessionId, $trainerId, Input::all());
+        if ( is_array($response) )
+            list($groupId, $groupName) = $response;
+        else
+            return $response;
 
         return Response::json(
             [
