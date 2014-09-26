@@ -42,7 +42,7 @@ registerInitFunction('initAutocompleteLocation');
 var autoCompletesOnPage = 0;
 function initAutocompleteCategory()
 {
-    var max_results = 6;
+    var max_results = 8;
 
     trace('autocomplete-category');
     var categories = laracasts['initAutocompleteCategory']['list'];
