@@ -17,6 +17,10 @@ class UserHelper
         Evercoin::create(['user_id' => $user_id, 'balance' => 0]);
         Milestone::create(['user_id' => $user_id]);
         Token::create(['user_id' => $user_id]);
+
+
+
+        Milestone::where('user_id', $user_id)->first()->freeCoin('signup');
     }
 
     /**
@@ -30,7 +34,9 @@ class UserHelper
 
         if ($referral = Referral::useReferralCode($referral_code, $user_id)) {
             Milestone::where('user_id', $referral->user_id)->first()->add('referral');
-            Milestone::where('user_id', $user_id)->first()->freeCoin('referral_signup');
+
+            /** Disable registered user getting a referal because of the initial 3pounds he gets when signing up */
+            // Milestone::where('user_id', $user_id)->first()->freeCoin('referral_signup');
 
             Session::forget('referralCode');
         }

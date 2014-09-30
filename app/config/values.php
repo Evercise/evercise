@@ -16,7 +16,8 @@ return array(
 	// Amount rewarded for signing up from a referral link in pounds
 	'freeCoins' => [
 		'referral_signup' => 1,
-		'ppc_signup' => 3,
+        'ppc_signup' => 3,
+        'signup' => 3
 	],
 	
 	// Value of an evercoin in pounds
