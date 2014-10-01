@@ -13,6 +13,9 @@ var path = require('path');
 var minifycss = require('gulp-minify-css');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
+var concat = require('gulp-concat');
 
 gulp.task('minifycss', function() {
     gulp.src('./public/assets/css/main.css')
@@ -31,13 +34,39 @@ gulp.task('less', function () {
 });
 
 
-gulp.task('watch', function () {
-
-    gulp.watch('public/assets/less/**/*.less', ['less']);
-
-
+gulp.task('compress', function() {
+    gulp.src('./public/assets/jsdev/**/*.js')
+        .pipe(uglify())
+        .pipe(concat('main.min.js'))
+        .pipe(gulp.dest('./public/assets/js'))
 });
 
 
+gulp.task('watch', function () {
+
+    gulp.watch('public/assets/less/**/*.less', ['less']);
+    gulp.watch('public/assets/jsdev/**/*.js', ['compress']);
+
+});
+
+gulp.task('version', function () {
+    var file = '<?php return "'+makeid()+'"; ';
+
+    require('fs').writeFile('.version.php', file);
+})
+
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 10; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+
 /* Default Task */
-gulp.task('default', ['less', 'watch', 'minifycss']);
+gulp.task('default', ['less', 'watch', 'minifycss', 'version', 'compress']);

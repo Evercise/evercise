@@ -1,0 +1,12 @@
+.hero{
+  background: @hero-bg;
+  height: @hero-height;
+  padding-top: @hero-top-padding;
+  @media screen and (min-width: @screen-sm-min) {
+    height: ceil(@hero-height * 1.6);
+    padding-top: ceil(@hero-top-padding * 2.5);
+  }
+}
+.jumbotron{
+  margin-bottom: 0;
+}

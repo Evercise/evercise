@@ -6,3 +6,46 @@
   url('/fonts/universltstd-ultracn.ttf') format('truetype'),
   url('/fonts/universltstd-ultracn.svg#UniversLTStd59UltraCondensed') format('svg');
 }
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  text-transform: @headings-case;
+}
+
+// Links
+
+a {
+  color: @link-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: @link-hover-color;
+    text-decoration: none;
+  }
+
+  &:focus {
+    .tab-focus();
+  }
+}
+
+.text-white {
+  .text-emphasis-variant(@white);
+}
+
+.bg-grey {
+  .bg-variant(@state-grey-bg);
+}
+
+.bg-dark-grey {
+  .bg-variant(@state-dark-grey-bg);
+}
+
+.bg-light-grey{
+  .bg-variant(@state-light-grey-bg);
+}
+.underline{
+  border-bottom: 1px solid @gray-dark;
+  margin: 20px auto 30px;
+  width: 80px;
+}

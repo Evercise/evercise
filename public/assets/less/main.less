@@ -9,11 +9,22 @@
 // 1. variables, mixins
  @import "variables_mixins";
 
-// 2. custom fonts
+// 2. bootstrap custom styles and extend
+@import "bootstrap/less/bootstrap";
+@import "extend_bootstrap_gutter_margins";
+
+// 3. custom varable styles
+@import "variables";
+
+// 4. custom fonts
 @import "typography";
 
-// 3. bootstrap custom styles
-@import "bootstrap/less/bootstrap";
-
-// 4. custom varable styles
-@import "variables";
+// 5. custom styles
+@import "nav-bars";
+@import "icons";
+@import "custom_buttons";
+@import "class_blocks";
+@import "form_and_inputs";
+@import "cart";
+@import "hero";
+@import "margins";

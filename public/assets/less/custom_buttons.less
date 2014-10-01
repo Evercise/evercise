@@ -1,0 +1,19 @@
+
+
+.btn-white {
+  .button-variant(@btn-white-color; @btn-grey-bg; @btn-white-border);
+}
+
+.btn-grey {
+  .button-variant(@btn-grey-color; @btn-grey-bg; @btn-grey-border);
+  &:hover{
+    color: @white;
+  }
+}
+
+.btn-transparent{ background: transparent;}
+
+.btn-aside{
+  padding-left: 9px;
+  padding-right: 9px;
+}

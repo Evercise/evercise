@@ -1,0 +1,35 @@
+// modular class box
+.class-module{
+  .class-box(auto, 250px, 12.5px);
+  max-width: 311px;
+}
+
+// list style class box
+.class-list{
+  .class-box(150px, 150px, 0 ,0 );
+  .class-info-wrapper{
+    padding-top: 31px;
+    strong{
+      margin-bottom: 9px;
+    }
+  }
+}
+
+.class-panel {
+  .class-box(auto, 130px);
+}
+
+.class-snippet {
+  .class-box(120px,120px);
+}
+
+.class-unactive{
+  opacity: 0.7;
+  h1,h2,h3,h4,h5,h6,p,li,span,strong,small,i{
+    color: @gray-darker;
+  }
+}
+
+.class-active{
+  border-right: 4px solid @brand-primary;
+}
