@@ -20,7 +20,7 @@
         <div class="orSeperator"><span>or</span></div>
     {{ Form::close() }}
     @if ($redirect_after_login == 1)
-       {{ HTML::linkRoute('users.fb', 'Log in with facebook', $redirect_after_login_url ,  ['class' => 'btn btn-fb']) }}
+       {{ HTML::linkRoute('users.fb', 'Log in with facebook', ($redirect_after_login_url == 'trainers/create' ? null : $redirect_after_login_url),  ['class' => 'btn btn-fb']) }}
     @else
         {{ HTML::linkRoute('users.fb', 'Log in with facebook', null , ['class' => 'btn btn-fb']) }}
     @endif
