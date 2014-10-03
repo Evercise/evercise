@@ -10,7 +10,7 @@
         <div>
             @include('form.password', array('fieldname'=>'password', 'placeholder'=>'password', 'maxlength'=>20, 'label'=>'Please enter your password', 'fieldtext'=>null ))
             @include('form.hidden', array('fieldname'=>'redirect_after_login',  'value' =>$redirect_after_login ))
-            @include('form.hidden', array('fieldname'=>'redirect_after_login_url',  'value' =>$redirect_after_login_url))
+            @include('form.hidden', array('fieldname'=>'redirect_after_login_url',  'value' => ($redirect_after_login_url == 'trainers/create' ? null : $redirect_after_login_url)))
              
         </div>
         <br>
@@ -28,7 +28,7 @@
     <div class="orSeperator"><span>Not registered yet?</span></div>
 
     @if ($redirect_after_login == 1)
-         {{  HTML::linkRoute('users.create', trans('header.register') , $redirect_after_login_url , [ 'class' => 'btn btn-blue mb10' ])}}
+         {{  HTML::linkRoute('users.create', trans('header.register') , ($redirect_after_login_url == 'trainers/create' ? null : $redirect_after_login_url) , [ 'class' => 'btn btn-blue mb10' ])}}
     @else
         {{  HTML::linkRoute('users.create', trans('header.register') , null , [ 'class' => 'btn btn-blue mb10' ])}}
     @endif
