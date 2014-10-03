@@ -62,8 +62,10 @@
         <div class="row mt10">
             <div class="col-sm-4 text-center">
                 <div class="thumbnail">
-                    <h2>What is evercise</h2>
-                    <div class="underline"></div>
+                    <div class="underline">
+                        <h2>What is evercise</h2>
+                    </div>
+
                     <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
                     <div class="caption">
                       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</p>
@@ -72,8 +74,10 @@
             </div>
             <div class="col-sm-4 text-center">
                 <div class="thumbnail">
-                    <h2>Why join evercise</h2>
-                    <div class="underline"></div>
+                    <div class="underline">
+                        <h2>Why join evercise</h2>
+                    </div>
+
                     <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
                     <div class="caption">
                       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</p>
@@ -82,8 +86,10 @@
             </div>
             <div class="col-sm-4 text-center">
                 <div class="thumbnail">
-                    <h2>How does it work</h2>
-                    <div class="underline"></div>
+                    <div class="underline">
+                        <h2>How does it work</h2>
+                    </div>
+
                     <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
                     <div class="caption">
                       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</p>
@@ -94,8 +100,9 @@
     </div>
     <div class="container-fluid bg-grey">
         <div class="container">
-            <h1 class="text-center">Featured classes</h1>
-            <div class="underline"></div>
+            <div class="underline">
+                 <h1 class="text-center">Featured classes</h1>
+            </div>
             <div class="row">
                 @include('v3.classes.class_module')
                 @include('v3.classes.class_module')

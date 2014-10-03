@@ -1,17 +1,19 @@
 .navbar-default{
+  transition: all 0.4s;
+
   .navbar-brand{
     width:96px;
     .logo-sprite();
   }
   .navbar-nav{
     li{
-      a{
+      .dropdown-menu{
+        border-radius: 4px;
+      }
+      a.nav-list{
         font-weight: 700;
         padding-left: 40px;
         padding-right: 40px;
-      }
-      .nav-cart{
-        padding: 20px 10px 12px;
       }
       .nav-profile{
         padding: 10px 20px;
@@ -20,6 +22,9 @@
           margin-left: 15px;
         }
       }
+    }
+    .nav-cart{
+      padding: 20px 10px 12px;
     }
   }
 }
@@ -32,25 +37,18 @@
   }
   .navbar-nav{
     li{
-      a{
-        font-weight: 700;
-        padding-left: 40px;
-        padding-right: 40px;
+      a.nav-list{
         color: @white;
-      }
-      .nav-cart{
-        padding: 20px 10px 12px;
-        .icon-cart{
-          .sprite(-890px, -330px);
+        &:hover,&.active{
+          color: @brand-primary;
         }
       }
-      .nav-profile{
-        padding: 10px 20px;
-        img{
-          height: 40px;
-          margin-left: 15px;
-        }
-      }
+
+    }
+  }
+  .nav-cart {
+    .icon-cart {
+      .sprite(-890px, -330px);
     }
   }
 }
@@ -67,7 +65,8 @@
 // footer
 
 .footer{
-  padding-bottom: 60px;
+  padding: 40px 0;
+  border-top: 1px solid @gray-dark;
   .list-inline{
     margin-top : 20px ;
   }

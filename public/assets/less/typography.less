@@ -45,7 +45,16 @@ a {
   .bg-variant(@state-light-grey-bg);
 }
 .underline{
-  border-bottom: 1px solid @gray-dark;
-  margin: 20px auto 30px;
-  width: 80px;
+  position: relative;
+  margin-bottom: 42px;
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    width: 80px;
+    height: 1px;
+    margin-left: -40px;
+    border-bottom: 1px solid @gray-dark;
+  }
 }

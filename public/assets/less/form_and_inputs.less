@@ -1,15 +1,74 @@
-.form-group label {
-  display: inline-block;
-  max-width: 100%; // Force IE8 to wrap long content (see https://github.com/twbs/bootstrap/issues/13141)
-  margin-bottom: 15px;
-  margin-top: 35px;
-  font-weight: bold;
+label{
   color: @gray-darker;
+
 }
+
+.form-group{
+  padding: 0 10px;
+  &.required{
+    label{
+      &:after{
+        content:"*";
+        color:red;
+      }
+    }
+  }
+}
+
 
 .help-block{
   color: @gray;
   margin-bottom: -31px;
+}
+
+.custom-checkbox{
+  position: relative;
+  cursor: pointer;
+  margin-right: 15px;
+  input{
+    float: left;
+    width: 22px;
+    margin-right: 5px;
+    margin-top: 7px;
+    &:before{
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      .sprite(-970px, -250px);
+    }
+    &:checked{
+      &:before{
+        .sprite(-970px, -290px);
+      }
+    }
+  }
+}
+
+.custom-select {
+  position: relative;
+  &:after{
+    position: absolute;
+    content: '';
+    height: 40px;
+    width: 20px;
+    top: 0;
+    right: 3px;
+    .sprite(-50px, -240px);
+  }
+  &:hover{
+    &:after{
+      .sprite(-50px, -280px);
+    }
+  }
+
+  select {
+    background: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+  }
 }
 
 
@@ -49,5 +108,13 @@
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
+  }
+}
+
+.input-group-addon{
+  padding: 0;
+  .select-addon{
+    padding: 10px 15px;
+    border: 0;
   }
 }

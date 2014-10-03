@@ -12,6 +12,24 @@
 */
 //
 
+// register
+Route::get('/register', ['as' => 'register',  function()
+    {
+        return View::make('v3.users.create');
+    }]
+);
+Route::get('/popular', ['as' => 'popular',  function()
+    {
+        return View::make('v3.home');
+    }]
+);
+
+// popular classes
+
+
+/* tempary routes for new styles */
+
+
 /* Freking wrong url on page */
 Route::get(
     'what_is_evercise',
