@@ -25,12 +25,12 @@
           <div class="nav-end">
              
              @if(isset($redirect_after_login))
-              {{ HTML::linkRoute('auth.login.redirect_after_login', trans('header.login'),  array('id'=>'login', Route::getCurrentRoute()->getName() , 'class' => 'login '))}}
+              {{ HTML::linkRoute('auth.login.redirect_after_login', trans('header.login'), urlencode(Request::path()),  array('id'=>'login', 'class' => 'login '))}}
               
             @else
               {{HTML::linkRoute('auth.login', 'Login', null, array('id'=>'login', 'class' => 'login'))}}
             @endif
-            {{  HTML::linkRoute('users.create', trans('header.register') , null , [ 'class' =>  Route::currentRouteName() == 'users.create' ? 'active' : ''])}}
+            {{  HTML::linkRoute('users.create', trans('header.register') , null , [ 'class' => (Route::currentRouteName() == 'users.create' ? 'active' : '') ])}}
           </div>
 
         @endif

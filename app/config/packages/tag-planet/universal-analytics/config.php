@@ -9,7 +9,7 @@ return array(
      *
      * @bool
      */
-    'debug' => true,
+    'debug' => getenv('DEBUG_APP'),
     
     /*
      * Auto Pageview
@@ -19,7 +19,7 @@ return array(
      * 
      * UniversalAnalytics::get('UA-123456-1')->autoPageview = false;
      */
-    'autoPageview' => getenv('DEBUG_APP') ? false : true,
+    'autoPageview' => true,
     
     /*
      * Account IDs

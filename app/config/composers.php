@@ -16,6 +16,7 @@ return [
 
     //trainers
     ['trainers.create' => 'TrainersCreateComposer'],
+    ['trainers.about' => 'TrainersCreateComposer'],
     ['trainers.edit' => 'UserClassesComposer'],
     ['trainers.editForm' => 'TrainerEditFormComposer'],
     ['trainers.trainerHistory' => 'TrainerHistoryComposer'],

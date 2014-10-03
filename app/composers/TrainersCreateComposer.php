@@ -12,7 +12,8 @@ class TrainersCreateComposer
             [
                 'initPut'     => json_encode(['selector' => '#trainer_create']),
                 'initImage'   => json_encode(['ratio' => 'user_ratio']),
-                'initToolTip' => 1
+                'initToolTip' => 1,
+                'initUsers' 	 => 1,
             ]
         ); //Initialise tooltip JS.
 
