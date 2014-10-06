@@ -313,10 +313,10 @@ Route::get(
 );
 
 // admin tools
-Route::get(
+/*Route::get(
     'admin/pending_trainers',
     array('as' => 'admin.pending', 'before' => 'admin', 'uses' => 'AdminController@pendingTrainers')
-);
+);*/
 Route::post(
     'admin/approve_trainer',
     array('as' => 'admin.approve_trainer.post', 'before' => 'admin', 'uses' => 'AdminController@approveTrainer')
@@ -329,7 +329,6 @@ Route::post(
     'admin/process_withdrawal',
     array('as' => 'admin.process_withdrawal.post', 'before' => 'admin', 'uses' => 'AdminController@processWithdrawal')
 );
-Route::get('/admin/log', array('as' => 'admin.log', 'before' => 'admin', 'uses' => 'AdminController@showLog'));
 Route::post(
     '/admin/log',
     array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
@@ -467,11 +466,6 @@ Route::get(
 );
 
 
-Route::get('/admin/log', array('as' => 'admin.log', 'before' => 'admin', 'uses' => 'AdminController@showLog'));
-Route::post(
-    '/admin/log',
-    array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
-);
 
 Route::get('/admin/groups', array('as' => 'admin.groups', 'before' => 'admin', 'uses' => 'AdminController@showGroups'));
 Route::post(
@@ -488,7 +482,6 @@ Route::post(
     array('as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'AdminController@addRating')
 );
 
-Route::get('/admin/users', array('as' => 'admin.users', 'before' => 'admin', 'uses' => 'AdminController@showUsers'));
 
 
 Route::get(
@@ -527,3 +520,16 @@ Route::get('/layouts', function()
     return View::make('layouts.layouts');
 });
 
+Route::group(
+    array('prefix' => 'admin', 'before' => 'admin'),
+    function () {
+
+        Route::get('/{page}', ['as' => 'admin.yukon.page', 'uses' => 'AdminController@yukon']);
+
+        Route::post('/log_in_as', ['as' => 'admin.log_in_as', 'uses' => 'AdminController@logInAs']);
+        Route::post('/reset_password', ['as' => 'admin.reset_password', 'uses' => 'AdminController@resetPassword']);
+        Route::post('/edit_subcategories', ['as' => 'admin.edit_subcategories', 'uses' => 'AdminController@editSubcategories']);
+
+
+    }
+);

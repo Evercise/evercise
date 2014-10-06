@@ -30,7 +30,7 @@ class AdminController extends \BaseController {
 
         Trainer::approve($user);
 
-        return Redirect::route('admin.pending');
+        return Redirect::route('admin.yukon.page', ['pendingtrainers']);
 	}
 
     /**
@@ -56,7 +56,7 @@ class AdminController extends \BaseController {
 
 		Withdrawalrequest::find($withdrawal_id)->markProcessed();
 
-		return Redirect::route('admin.pending_withdrawal');
+		return Redirect::route('admin.yukon.page', ['pendingwithdrawals']);
 
 	}
 
@@ -84,7 +84,7 @@ class AdminController extends \BaseController {
 		if($del == 'delete_all')
 			file_put_contents('../app/storage/logs/laravel.log', '');
 
-	    return Redirect::route('admin.log');
+	    return Redirect::to('admin/log');
 	}
 
     /**
@@ -144,19 +144,6 @@ class AdminController extends \BaseController {
 
 	}
 
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function showUsers()
-	{
-			$sentryUsers = Sentry::findAllUsers();
-
-			$users = User::with('evercisegroups')->get();
-		
-	    return View::make('admin.users')
-	    ->with('users', $users)
-	    ->with('sentryUsers', $sentryUsers);
-	}
 
     public function editClasses($id)
     {
@@ -174,4 +161,74 @@ class AdminController extends \BaseController {
         return Redirect::route('admin.groups');
 
     }
+
+    public function yukon($page)
+    {
+		//$users = User::with('evercisegroups')->where('display_name', 'LIKE', 'Peter_ATP')->get();
+
+		//return $users;
+
+        return View::make('admin.yukonhtml.index')
+            ->with('admin_version', '1.0')
+            ->with('sPage', '1')
+            ->with('includePage', View::make('admin.'.$page));
+
+    }
+
+	public function logInAs()
+	{
+		$user = Sentry::findUserById(Input::get('user_id'));
+		Sentry::login($user);
+
+		return Redirect::route('users.edit');
+	}
+
+	public function resetPassword()
+	{
+		$user = Sentry::findUserById(Input::get('user_id'));
+
+		$reset_code = $user->getResetPasswordCode();
+		$user->sendForgotPasswordEmail($reset_code);
+		//$newPassword = $user->resetPassword();
+
+		return Response::json(['callback' => 'adminPopupMessage', 'message' => 'Password reset.  Email:'.$user->email]);
+	}
+
+	public function searchUsers()
+	{
+		$searchTerm = Input::get('search');
+		$sentryUsers = Sentry::findAllUsers();
+
+		$users = User::with('evercisegroups')->where('display_name', 'like', $searchTerm);
+
+		return View::make('admin.users')
+			->with('users', $users)
+			->with('sentryUsers', $sentryUsers);
+	}
+
+	public function editSubcategories()
+	{
+		$categoryChanges = Input::get('update_categories');
+
+		foreach(explode('-', $categoryChanges) as $change)
+		{
+			$ch = explode('=', $change);
+			if (count($ch) > 1) {
+				$subcat = $ch[0];
+
+				$subcategory = Subcategory::find($subcat);
+				$subcategory->categories()->detach();
+
+				$catArray = [];
+				foreach (explode('_', $ch[1]) as $cat) {
+					if ( ! in_array($cat, $catArray))
+						array_push($catArray, $cat);
+				}
+				$subcategory->categories()->attach($catArray);
+			}
+		}
+
+		return Redirect::route('admin.yukon.page', ['subcategories']);
+
+	}
 }

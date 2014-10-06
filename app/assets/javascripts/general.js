@@ -93,7 +93,7 @@ function trace(message, debug)
     if (DEBUG_APP)
     {
         console.log(arguments.callee.caller.name + ' => ' + message);
-        window.console && console.log(message);
+        //window.console && console.log(message);
     }
 
 }
@@ -551,3 +551,9 @@ function initSearchByName()
 }
 
 registerInitFunction('initSearchByName');
+
+function adminPopupMessage(data)
+{
+    trace(data.message);
+    alert(data.message);
+}

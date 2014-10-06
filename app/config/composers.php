@@ -69,6 +69,13 @@ return [
     ['payments.cartrows' => 'CartRowsComposer'],
 
     // admin
-    ['admin.groups' => 'AdminGroupComposer']
+    ['admin.groups' => 'AdminGroupComposer'],
+    ['admin.pendingwithdrawals' => 'AdminPendingWithdrawalComposer'],
+    ['admin.users' => 'AdminShowUsersComposer'],
+    ['admin.trainers' => 'AdminShowUsersComposer'],
+    ['admin.pendingtrainers' => 'AdminPendingTrainersComposer'],
+    ['admin.log' => 'AdminLogComposer'],
+    ['admin.categories' => 'AdminCategoriesComposer'],
+    ['admin.subcategories' => 'AdminSubcategoriesComposer'],
 
 ];

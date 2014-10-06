@@ -115,13 +115,9 @@ class AuthController extends \BaseController {
 		{
 			$email = Input::get('email');
 			$user = Sentry::findUserByLogin($email);
-			$reset_code = $user->getResetPasswordCode();
 
-			\Event::fire('user.forgot', array(
-	        	'email' => $user->email, 
-	        	'displayName' => $user->display_name, 
-	            'resetCode' => $reset_code
-	        ));
+			$reset_code = $user->getResetPasswordCode();
+			$user->sendForgotPasswordEmail($reset_code);
 
 	        return View::make('auth.forgot')->with('success','Now check your e-mails!')->with('message','You should have received an e-mail from us with a link to reset your password.' )->with('action', 'If you can&apos;t see the e-mail, please check your junk folder.<br>If it&apos;s not there either, contact us for further assistance.');
 		}
