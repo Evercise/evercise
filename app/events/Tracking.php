@@ -130,6 +130,13 @@ class Tracking
         $user_object = $this->formatUser($user, $type);
 
 
+        if($func != 'REGISTER') {
+            if(empty($user->salesforce_id)) {
+                $func = 'REGISTER';
+            }
+        }
+
+
         switch ($func) {
             case "REGISTER":
                 $res = Salesforce::create([$user_object], 'Contact');
@@ -148,6 +155,8 @@ class Tracking
         }
 
         $this->log->info($type . ' ' . $user->id . ' ' . $func . ' in SalesForce');
+
+        return $user;
     }
 
 
@@ -160,6 +169,16 @@ class Tracking
     {
 
         $relation = new \stdClass();
+
+        /** Check if we dont have them in the DB and create them */
+        if(empty($session->salesforce_id)) {
+            $session = $this->registerSessionTracking($session);
+        }
+
+        if(empty($user->salesforce_id)) {
+            $user = $this->registerUserTracking($user, 'USER', 'REGISTER');
+        }
+
         $relation->Class__c = $session->salesforce_id;
         $relation->Registrant__c = $user->salesforce_id;
 
@@ -183,6 +202,8 @@ class Tracking
         $session->save();
 
         $this->log->info('New Session ' . $session->id . '  in SalesForce');
+
+        return $session;
     }
 
 
