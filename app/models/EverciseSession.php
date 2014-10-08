@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Class Evercisesession
  */
@@ -51,11 +52,13 @@ class Evercisesession extends \Eloquent
         ];
     }
 
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
     public static function validateAndStore()
     {
+
         $max_price = Config::get('values')['max_price'];
 
         $validator = Validator::make(
@@ -84,7 +87,7 @@ class Evercisesession extends \Eloquent
             $time = $inputs['s-time-hour'] . ':' . $inputs['s-time-minute'] . ':00';
             $date_time = $inputs['s-year'] . '-' . $inputs['s-month'] . '-' . $inputs['s-date'] . ' ' . $time;
 
-            Evercisesession::create(array(
+            $session = Evercisesession::create(array(
                 'evercisegroup_id' => $inputs['s-evercisegroupId'],
                 'date_time' => $date_time,
                 'price' => $inputs['s-price'],
@@ -99,7 +102,7 @@ class Evercisesession extends \Eloquent
             Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'created_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));
 
             /* callback */
-            Event::fire('session.create', [Sentry::getUser() ]);
+            Event::fire('session.create', [$session]);
             return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
         }
     }
@@ -348,7 +351,10 @@ class Evercisesession extends \Eloquent
 
         self::sendSessionJoinedEmail($evercisegroup, $userTrainer,  $sessionData['transactionId']);
 
-        Event::fire('session.payed', [Sentry::getUser(), $evercisegroup]);
+        foreach( $sessionData['sessionIds'] as $sessId) {
+            Event::fire('session.payed', [Sentry::getUser(), Evercisesession::find($sessId)]);
+        }
+
         Log::info('User '.Sentry::getUser()->display_name.' has paid for sessions '.implode(',', $sessionData['sessionIds']).' of group '.$evercisegroupId);
 
         self::newMemberAnalytics($sessionData['transactionId'], $amountToPay, $evercisegroup, $sessionData['sessionIds']);
