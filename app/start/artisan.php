@@ -19,6 +19,9 @@ Artisan::add(new IndexerCreate);
 Artisan::add(new IndexerIndex);
 Artisan::add(new IndexerImport);
 Artisan::add(new IndexerGeo);
+Artisan::add(new SalesforceImport);
+
+
 
 
 
