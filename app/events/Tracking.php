@@ -145,16 +145,17 @@ class Tracking
             case "EDIT":
                 $user_object->id = $user->salesforce_id;
                 $res = Salesforce::update([$user_object], 'Contact');
+                $this->log->info($res);
                 break;
             case "LOGIN":
                 $obj = new \stdClass();
                 $obj->id = $user->salesforce_id;
                 $obj->Last_Login__c = gmdate("Y-m-d\TH:i:s\Z", time());
-                $res = Salesforce::update([$user_object], 'Contact');
+                $res = Salesforce::update([$obj], 'Contact');
                 break;
         }
 
-        $this->log->info($type . ' ' . $user->id . ' ' . $func . ' in SalesForce');
+        $this->log->info($type . ' ' . $user->id . ' ' . $user->salesforce_id.' '.$func . ' in SalesForce');
 
         return $user;
     }
