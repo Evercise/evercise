@@ -12,7 +12,7 @@
         {{ $errors->first('bio', '<p class="error-msg">:message</p>')}}
     @endif
 
-    @include('form.textfield', array('fieldname'=>'website', 'placeholder'=>'website address', 'maxlength'=>100, 'label'=>'Add your website', 'fieldtext'=>'(Optional) - If you want users to learn more about you and what you do, you can include your web address, which will be visible on your profile.' ))
+    @include('form.textfield', array('fieldname'=>'website', 'placeholder'=>'website address', 'maxlength'=>100, 'label'=>'Add your website', 'fieldtext'=>'(Optional) - If you want users to learn more about you and what you do, you can include your web address, which will be visible on your profile.', 'default'=>$website ))
     @if ($errors->has('website'))
         {{ $errors->first('website', '<p class="error-msg">:message</p>')}}
     @endif

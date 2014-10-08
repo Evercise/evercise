@@ -156,7 +156,8 @@ class TrainersController extends \BaseController {
 
 		return View::make('trainers.edit')
 			->with('trainer', $trainer)
-			->with('profession', $trainer->profession)
+            ->with('profession', $trainer->profession)
+            ->with('website', $trainer->website)
 			->with('tab', $tab);
 			//->with('speciality', $speciality);
 	}
@@ -268,7 +269,7 @@ class TrainersController extends \BaseController {
 		            'url' => '/trainers/2/edit/trainer'
 		         );
 
-            Event::fire('trainer.editTrainerDetails', [$this->user]);
+            Event::fire('trainer.edit', [$this->user]);
 
 			return Response::json($result);
 
