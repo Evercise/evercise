@@ -21,8 +21,8 @@ class SessionsController extends \BaseController
     public function create()
     {
         // The slider is initialised in JS from the view, as the document.ready has already run
-        $data =    Evercisesession::getCreateForm();
-        return View::make('sessions.create', $data);
+
+        return Evercisesession::getCreateForm();
     }
 
     /**
@@ -280,7 +280,9 @@ class SessionsController extends \BaseController
             'transactionId' => $transactionId,
         ]);
 
-        Event::fire('session.payed', [$user, $evercisegroup]);
+        foreach( $sessionIds as $sessId) {
+            Event::fire('session.payed', [$user, Evercisesession::find($sessId)]);
+        }
 
         // Grab the "foo" instance
         $gaTracker = UniversalAnalytics::get('trackerName');
