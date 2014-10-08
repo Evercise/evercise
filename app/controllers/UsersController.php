@@ -261,7 +261,7 @@ class UsersController extends \BaseController
             $phone = Input::get('phone');
 
 
-            User::updateUser($this->user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
+            $this->user= User::updateUser($this->user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
 
             User::checkProfileMilestones($this->user);
 

@@ -189,6 +189,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'phone' => $phone,
             )
         );
+
+        return $user;
     }
 
     public static function checkProfileMilestones($user)
