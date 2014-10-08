@@ -189,6 +189,7 @@ class UserMailer extends Mailer {
 
 	public function trainer_confirm($email, $display_name)
 	{
+
         $this->trainer_admin_notification($email, $display_name);
 
 		$body = '
@@ -209,6 +210,7 @@ class UserMailer extends Mailer {
 		$data['body'] = $body;
 		$data['link'] = HTML::linkRoute('home', 'evercise');
 		$data['linkLabel'] = 'Start creating classes:';
+
 
 		return $this->sendTo($email, $subject, $view, $data );
 	}
@@ -238,7 +240,7 @@ class UserMailer extends Mailer {
         $data['link'] = HTML::linkRoute('admin.pending', 'Pending Trainers');
         $data['linkLabel'] = 'Verify the new trainer here:';
 
-        return $this->sendTo(getenv('EMAIL_ADMIN'), $subject, $view, $data );
+        return $this->sendTo((getenv('EMAIL_ADMIN') ?: 'contact@evercise.com'), $subject, $view, $data );
     }
 
 
