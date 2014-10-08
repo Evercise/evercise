@@ -124,6 +124,7 @@ return array(
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'Hugofirth\Mailchimp\MailchimpServiceProvider',
         'TagPlanet\UniversalAnalytics\UniversalAnalyticsServiceProvider',
+        'Davispeixoto\LaravelSalesforce\LaravelSalesforceServiceProvider'
     ),
 
     /*

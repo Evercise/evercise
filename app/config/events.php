@@ -27,7 +27,7 @@
  * trainer.editTrainerDetails => trainer has edited there user details
  * evecisegroup.created => trainer created a new class
  * evecisegroup.delete => trainer deleted a class
- * session.create => Trainer added a nnew session to a class
+ * session.create => Trainer added a nnew session to a class ( $user, $session)
  * session.delete => Trainer removed a session
  * session.payed => User joined a class
  * session.left => User left a class
@@ -52,7 +52,9 @@ return [
         ['user.loginFacebook' => 'Tracking@userFacebookLogin'],
         ['user.edit' => 'Tracking@userEdit'],
         ['trainer.edit' => 'Tracking@trainerEdit'],
-        ['user.changedPassword' => 'Tracking@userChangePassword']
+        ['user.changedPassword' => 'Tracking@userChangePassword'],
+        ['session.create' => 'Tracking@registerSessionTracking'],
+        ['session.payed' => 'Tracking@registerUserSessionTracking']
 
 
     ]
