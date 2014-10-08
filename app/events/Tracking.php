@@ -266,22 +266,15 @@ class Tracking
         $user_arr = $user->toArray();
         $user_data = [];
 
-        switch ($type) {
-            case "USER":
-            case "FACEBOOK":
-                $user_data['RecordTypeId'] = '01220000000As0T';
-                break;
-            case "TRAINER":
-                $user_data['RecordTypeId'] = '01220000000As0O';
-                $trainer = $user->trainer;
-                if (!is_null($trainer)) {
-                    $user_data['Profession__c'] = $trainer->profession;
-                    $user_data['Bio__c'] = substr($trainer->bio, 0, 499);
-                    $user_data['Website__c'] = $trainer->website;
-                }
-                break;
-        }
+        $user_data['RecordTypeId'] = '01220000000As0T';
 
+        $trainer = $user->trainer;
+        if (!is_null($trainer)) {
+            $user_data['RecordTypeId'] = '01220000000As0O';
+            $user_data['Profession__c'] = $trainer->profession;
+            $user_data['Bio__c'] = substr($trainer->bio, 0, 499);
+            $user_data['Website__c'] = $trainer->website;
+        }
 
         $user_data['Gender__c'] = ($user_arr['gender'] == 1 ? 'Male' : 'Female');
 

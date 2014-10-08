@@ -265,7 +265,7 @@ class UsersController extends \BaseController
 
             User::checkProfileMilestones($this->user);
 
-            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
+            Event::fire('user.edit', [$this->user]);
 
             return Response::json(
                 [
