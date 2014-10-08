@@ -122,6 +122,8 @@ return array(
         'TagPlanet\UniversalAnalytics\UniversalAnalyticsServiceProvider',
         'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
         'Toin0u\Geotools\GeotoolsServiceProvider',
+        'Davispeixoto\LaravelSalesforce\LaravelSalesforceServiceProvider'
+
     ),
     /*
     |--------------------------------------------------------------------------
