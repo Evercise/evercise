@@ -21,8 +21,8 @@ class SessionsController extends \BaseController
     public function create()
     {
         // The slider is initialised in JS from the view, as the document.ready has already run
-
-        return Evercisesession::getCreateForm();
+        $data =    Evercisesession::getCreateForm();
+        return View::make('sessions.create', $data);
     }
 
     /**
