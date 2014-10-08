@@ -22,8 +22,11 @@ class Evercisesession extends \Eloquent
      * @param $inputs
      * @return \Illuminate\View\View
      */
-    public static function getCreateForm($inputs)
+    public static function getCreateForm($inputs = [])
     {
+        if(count($inputs) == 0) {
+            $inputs = Input::all();
+        }
         $date = sprintf("%02s", Input::get('date'));
 
         $displayMonth = date('M', strtotime($inputs['year'] . '-' . $inputs['month'] . '-' . $date));
