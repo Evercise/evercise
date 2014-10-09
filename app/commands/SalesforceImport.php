@@ -44,32 +44,47 @@ class SalesforceImport extends Command
 
         $users = Sentry::findAllUsers();
 
+
+        $this->line('Moving '.count($users).' users');
+
+        $moved = 0;
         foreach ($users as $u) {
             $user[$u->id] = $u;
             if (!empty($u->salesforce_id)) {
                 /** This one exits */
             } else {
+                $moved++;
                 if (!empty($u->trainer->id)) {
-                    Event::fire('trainer.registered', [$user]);
+                    Event::fire('trainer.registered', [$u]);
                 } else {
-                    Event::fire('trainer.registered', [$user]);
+                    Event::fire('user.registered', [$u]);
                 }
             }
         }
 
+        $this->line('Moved total of '.$moved.' others were allready mvoed');
+
 
         $sessions = Evercisesession::all();
+        $this->line('Moving '.count($sessions).' sessions');
+        $moved = 0;
+
         foreach ($sessions as $s) {
             $class[$s->id] = $s;
             if (!empty($s->salesforce_id)) {
                 /** This one exits */
             } else {
+                $moved++;
                 Event::fire('session.create', [$s]);
             }
         }
 
+        $this->line('Moved total of '.$moved.' others were all ready moved');
+
 
         $session_users = Sessionmember::all();
+        $this->line('Moving '.count($session_users).' Session Members');
+        $moved = 0;
 
         foreach ($session_users as $su) {
             if (!isset($class[$su->evercisesession_id])) {
@@ -83,9 +98,13 @@ class SalesforceImport extends Command
                 /** This one exits */
             } else {
 
+                $moved++;
                 Event::fire('session.payed', [$user[$su->user_id], $class[$su->evercisesession_id]]);
             }
         }
+
+        $this->line('Moved total of '.$moved.' others were all ready moved');
+
 
 
     }

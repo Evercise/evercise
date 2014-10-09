@@ -39,8 +39,6 @@ class Tracking
      */
     public function userRegistered($user)
     {
-        $this->log->info('AAAAA registered');
-        \Log::info('BBBBB registered');
         $this->registerUserTracking($user, 'USER');
     }
 
@@ -145,7 +143,6 @@ class Tracking
             case "EDIT":
                 $user_object->id = $user->salesforce_id;
                 $res = Salesforce::update([$user_object], 'Contact');
-                $this->log->info($res);
                 break;
             case "LOGIN":
                 $obj = new \stdClass();
