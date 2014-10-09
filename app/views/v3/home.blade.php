@@ -1,13 +1,13 @@
 @extends('v3.layouts.master')
 @section('body')
-    <div class="hero">
+    <div class="hero hero-nav-change">
         <div class="jumbotron">
           <div class="container text-center">
             <h1 class="text-white">spin class in king&apos;s cross</h1>
             <h1 class="text-primary">only &pound;5</h1>
             <div class="row mt50">
                 <div class="col-md-2 col-md-offset-4">
-                    <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-clock"></span></button>
+                    <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-white-clock"></span></button>
                 </div>
                 <div class="col-md-2">
                     <div class="btn-group">

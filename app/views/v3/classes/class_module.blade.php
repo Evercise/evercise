@@ -2,7 +2,7 @@
     <div class="class-module center-block">
         <div class="class-image-wrapper">
             <a href="#">
-                <img src="img/example-class-img.jpg">
+                <img src="/img/example-class-img.jpg">
             </a>
         </div>
         <div class="class-title-wrapper text-center">

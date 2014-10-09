@@ -23,6 +23,21 @@ Route::get('/popular', ['as' => 'popular',  function()
         return View::make('v3.home');
     }]
 );
+Route::get('/profile', ['as' => 'profile',  function()
+    {
+        return View::make('v3.users.profile.master');
+    }]
+);
+Route::get('/class', ['as' => 'class',  function()
+    {
+        return View::make('v3.classes.class_page');
+    }]
+);
+Route::get('/discover', ['as' => 'discover',  function()
+    {
+        return View::make('v3.classes.discover.master');
+    }]
+);
 
 // popular classes
 

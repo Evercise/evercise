@@ -29,9 +29,18 @@ a {
   }
 }
 
-.text-white {
-  .text-emphasis-variant(@white);
+
+.custom-list {
+  .branded-list();
 }
+
+
+.text-white {
+   .text-emphasis-variant(@white);
+ }
+.text-dark {
+   .text-emphasis-variant(@gray-darker);
+ }
 
 .bg-grey {
   .bg-variant(@state-grey-bg);
@@ -58,3 +67,5 @@ a {
     border-bottom: 1px solid @gray-dark;
   }
 }
+
+.condensed{ line-height: @line-height-condensed};

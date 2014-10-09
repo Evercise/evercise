@@ -1,15 +1,6 @@
 @extends('v3.layouts.master')
 @section('body')
-    <div class="hero">
-        <div class="jumbotron">
-          <div class="container text-center">
-            <h1 class="text-white">Sign up today & recieve</h1>
-            <h1 class="text-white"><span class="text-primary">&pound;8 </span>in evercoins*</h1>
-
-          </div>
-        </div>
-    </div>
-    <div class="container">
+    <div class="container first-container">
         <div class="row text-center">
             <div class="underline">
                 <h1>Register</h1>

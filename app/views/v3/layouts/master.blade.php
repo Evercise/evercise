@@ -25,12 +25,17 @@
         var bootstrap3_enabled = (typeof $().emulateTransitionEnd == 'function');
         window.bootstrap3_enabled || document.write('<script src="/assets/js/bootstrap.min.js">\x3C/script>')
     </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
+    <script>
+        var masonry_enabled = (typeof $().masonry == 'function');
+        window.masonry_enabled || document.write('<script src="/assets/js/masonry.min.js">\x3C/script>')
+    </script>
     {{ HTML::script('/assets/js/main.min.js') }}
 
 </head>
 <body>
     <!-- include app navigation  -->
-    @include('v3.layouts.navigation')
+    @include('v3.layouts.navigation-user')
     <!-- include page body -->
     @yield('body')
     <!-- include footer -->

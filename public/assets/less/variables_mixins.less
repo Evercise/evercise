@@ -21,6 +21,7 @@
   overflow: hidden;
   &.hover{
     &:hover{
+      cursor: pointer;
       background-position: @x ceil(@y - @int);
     }
   }
@@ -78,4 +79,26 @@ strong.text-primary{
   height: @height;
   width: @width;
   display: inline-block;
+  vertical-align: middle;
+}
+
+// branded list styleing
+
+.branded-list() {
+  list-style-type: none;
+  position: relative;
+  margin-left: 2px;
+  padding-left: 0;
+  li{
+    line-height: 30px;
+    &:before {
+      content: "\2022";
+      font-size: 18px;
+      position: absolute;
+      left: -2px;
+      top:0;
+      color: @brand-primary;
+      margin-right: 5px;
+    }
+  }
 }

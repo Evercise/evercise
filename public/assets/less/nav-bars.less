@@ -16,7 +16,7 @@
         padding-right: 40px;
       }
       .nav-profile{
-        padding: 10px 20px;
+        padding: 11px 20px;
         img{
           height: 40px;
           margin-left: 15px;
@@ -49,6 +49,41 @@
   .nav-cart {
     .icon-cart {
       .sprite(-890px, -330px);
+    }
+  }
+}
+
+.sticky-fixed-nav{
+  padding-top: 11px;
+  z-index: 100;
+  transition: 0;
+}
+
+.nav-pills{
+  li{
+    text-align: center;
+    a{
+      padding: 5px 15px;
+      display: inline-block;
+    }
+  }
+}
+
+.navbar-inverse{
+  border: 0;
+}
+
+.nav-bar-bottom{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+
+@media (min-width: @grid-float-breakpoint){
+  .nav-no-float{
+    li{
+      float: none;
     }
   }
 }

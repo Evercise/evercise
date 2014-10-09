@@ -7,12 +7,13 @@
 @gray-lightest:          #f9f9fa;
 
 @brand-primary:         #ff1b7e;
-@brand-success:         #5cb85c;
-@brand-info:            @gray;
+@brand-success:         #87cf39;
+@brand-info:            #1c557e;
 @brand-warning:         #ffd21e;
 
 @white:                 #ffffff;
 @fb:                    #395284;
+@twitter:               #50c3e2;
 
 @transparent:           transparant;
 
@@ -28,12 +29,17 @@
 
 @line-height-base:        1.8571428; // 26/14
 @line-height-computed:    floor((@font-size-base * @line-height-base)); // ~26px
+@line-height-condensed:   floor((@font-size-base * 1));
 
 @headings-font-family:    @font-family-condensed;
 @headings-color:          @gray-darker;
 @headings-case:           uppercase;
 
+@headings-small-color:        @gray;
+
 @input-color-placeholder:        @gray-light;
+
+@page-header-border-color:    transparent;
 
 //## Dropdown menu container and contents.
 
@@ -86,7 +92,7 @@
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-@state-success-text:             #3c763d;
+@state-success-text:             @brand-success;
 @state-success-bg:               #dff0d8;
 @state-success-border:           darken(spin(@state-success-bg, -10), 5%);
 
@@ -127,11 +133,16 @@
 
 @image-aspect-ratio:        2.35;
 
+@padding-small-vertical:         6px;
+@padding-small-horizontal:       10px;
+
 
 // Navs
 
 // Basics of a navbar
 @navbar-height:                  60px;
+
+@navbar-margin-bottom:            0;
 
 @navbar-default-color:             @gray-dark;
 @navbar-default-bg:                @white;
@@ -145,6 +156,23 @@
 @navbar-default-link-active-bg:            transparent;
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
+
+@navbar-inverse-color:                      @white;
+@navbar-inverse-bg:                         fade(#000, 75%);
+@navbar-inverse-border:                     0;
+
+// Inverted navbar links
+@navbar-inverse-link-color:                 @white;
+@navbar-inverse-link-hover-color:           @white;
+@navbar-inverse-link-hover-bg:              fade(@brand-primary, 60%);
+@navbar-inverse-link-active-color:          @white;
+@navbar-inverse-link-active-bg:             fade(@brand-primary, 85%);;
+@navbar-inverse-link-disabled-color:        #444;
+@navbar-inverse-link-disabled-bg:           transparent;
+
+// tabs
+
+
 
 // Buttons
 // -------------------------
@@ -183,9 +211,17 @@
 @btn-grey-bg:                    @gray;
 @btn-grey-border:                @gray;
 
+@btn-grey-light-color:           @gray-light;
+@btn-grey-light-bg:              @gray-light;
+@btn-grey--light-border:         @gray-light;
+
 @btn-fb-color:                   @white;
 @btn-fb-bg:                      @fb;
 @btn-fb-border:                  @fb;
+
+@btn-twitter-color:              @white;
+@btn-twitter-bg:                 @twitter;
+@btn-twitter-border:             @twitter;
 
 
 
@@ -198,6 +234,8 @@
 
 @input-group-addon-bg:          @white;
 
+@input-height-small:            34px;
+
 
 // hero
 
@@ -208,5 +246,10 @@
 // wrappers
 
 @thumbnail-border:              0;
+
+// tables
+
+@table-cell-padding:            18px 8px;
+@table-condensed-cell-padding:  8px 5px;
 
 
