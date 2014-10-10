@@ -141,12 +141,20 @@
 
 // Basics of a navbar
 @navbar-height:                  60px;
+@navbar-height-outer:            ceil(@navbar-height + 2);
+@discover-navbar-height:         70px;
+@discover-navbar-padding:        15px 0;
+
 
 @navbar-margin-bottom:            0;
+
+@discover-both-navbars-height:    @navbar-height-outer + @discover-navbar-height;
 
 @navbar-default-color:             @gray-dark;
 @navbar-default-bg:                @white;
 @navbar-default-border:            @gray-light;
+
+@side-navbar-width:               410px;
 
 // Navbar links
 @navbar-default-link-color:                @gray;

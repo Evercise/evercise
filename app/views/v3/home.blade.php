@@ -28,12 +28,12 @@
             <div class="row no-gutter">
                 <form class="form-inline form-no-gap" role="form">
                     <div class="col-sm-12">
-                        <div class="input-group">
+                        <div class="input-group with-addon">
                             <div class="input-group-addon first"><span class="icon icon-search"></span></div>
-                            <input class="form-control" type="email" placeholder="Search for Classes...">
+                            <input class="form-control" type="text" placeholder="Search for Classes...">
 
                             <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
-                            <input class="form-control" type="email" placeholder="Location">
+                            <input class="form-control" type="text" placeholder="Location">
 
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
                             <select class="form-control mr50">
@@ -104,9 +104,15 @@
                  <h1 class="text-center">Featured classes</h1>
             </div>
             <div class="row">
-                @include('v3.classes.class_module')
-                @include('v3.classes.class_module')
-                @include('v3.classes.class_module')
+                <div class="col-sm-4">
+                    @include('v3.classes.class_module')
+                </div>
+                <div class="col-sm-4">
+                    @include('v3.classes.class_module')
+                </div>
+                <div class="col-sm-4">
+                    @include('v3.classes.class_module')
+                </div>
             </div>
         </div>
     </div>

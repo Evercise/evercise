@@ -30,6 +30,8 @@
         var masonry_enabled = (typeof $().masonry == 'function');
         window.masonry_enabled || document.write('<script src="/assets/js/masonry.min.js">\x3C/script>')
     </script>
+
+    {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
 
 </head>
@@ -39,5 +41,7 @@
     <!-- include page body -->
     @yield('body')
     <!-- include footer -->
-    @include('v3.layouts.footer')
+    @if(isset($footer) && $footer != 'no' || !isset($footer))
+        @include('v3.layouts.footer')
+    @endif
 </body>

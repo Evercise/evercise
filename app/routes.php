@@ -38,6 +38,16 @@ Route::get('/discover', ['as' => 'discover',  function()
         return View::make('v3.classes.discover.master');
     }]
 );
+Route::get('/discover-list', ['as' => 'discover_list',  function()
+    {
+        return View::make('v3.classes.discover.master-list');
+    }]
+);
+Route::get('/discover-grid', ['as' => 'discover_grid',  function()
+    {
+        return View::make('v3.classes.discover.master-grid');
+    }]
+);
 
 // popular classes
 

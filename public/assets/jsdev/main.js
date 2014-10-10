@@ -11,7 +11,7 @@ $(function(){
     });
 
     // initialise masonry if masonry container exists
-    $('#masonry').exists(function() {
+    $('.masonry').exists(function() {
        new Masonry( this );
     })
 
@@ -24,8 +24,13 @@ $(function(){
         new ToggleSwitch(this);
     });
 
+    $('#map_canvas').exists(function() {
+        map = new Map();
+    });
 
-
+    $('.mb-scroll').exists(function(){
+        $(this).mCustomScrollbar();
+    })
 
 })
 

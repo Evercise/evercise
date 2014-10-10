@@ -50,8 +50,8 @@
                             <div class="col-sm-4 no-gutter">
                                 <div class="form-group">
                                     <span class="icon icon-grid mr10 hover"></span>
-                                    <span class="icon icon-list mr10 hover"></span>
-                                    <span class="icon icon-map active"></span>
+                                    <span class="icon icon-list mr10 active"></span>
+                                    <span class="icon icon-map hover"></span>
                                 </div>
 
                             </div>
@@ -66,35 +66,29 @@
 
         </div>
 
-        <div class="class-snippet-wrapper side-bar">
-            <div class="snippet-header">
-                <strong>Your search returned <span class="text-primary">0</span> results</strong>
-            </div>
-            <div class="snippet-body mb-scroll">
-                @include('v3.classes.class_snippet', ['active' => 'yes'])
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-                @include('v3.classes.class_snippet')
-            </div>
 
 
-        </div>
-        @include('v3.classes.class_preview')
-
-        <div class="map-wrapper">
-            <div id="map_canvas" class="map-canvas"></div>
-        </div>
 
 
     </div>
+     <div class="container-fluid bg-light-grey">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 mt10 mb20">
+                    <strong>Your search return <span class="text-primary">0</span> results</strong>
+                </div>
+                <div class="col-sm-12">
+                    @include('v3.classes.class_list')
+                    @include('v3.classes.class_list')
+                    @include('v3.classes.class_list')
+                    @include('v3.classes.class_list')
+                    @include('v3.classes.class_list')
+                    @include('v3.classes.class_list')
+                    @include('v3.classes.class_list')
+                </div>
+            </div>
+        </div>
+     </div>
 
 
 

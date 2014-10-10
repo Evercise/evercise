@@ -1,8 +1,9 @@
 label{
   color: @gray-darker;
-
 }
-
+.form-control{
+  box-shadow: none;
+}
 .form-group{
   &.required{
     label{
@@ -11,6 +12,16 @@ label{
         color:red;
       }
     }
+  }
+}
+
+.with-addon{
+  .form-control{
+    border-left: 0;
+  }
+  .input-group-addon{
+    padding: 5px 10px;
+    border-right: none;
   }
 }
 
@@ -97,9 +108,7 @@ label{
         display: inline-table;
         margin: 0;
         .input-group-addon {
-
-          border: 0;
-          padding: 5px 10px;
+          border-color: @white;
           border-radius: 0;
           width: 1%;
           &.first {

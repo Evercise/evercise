@@ -19,6 +19,9 @@
   background-image: url(@img);
   background-position: @x @y;
   overflow: hidden;
+  &.active{
+    background-position: @x ceil(@y - @int);
+  }
   &.hover{
     &:hover{
       cursor: pointer;
