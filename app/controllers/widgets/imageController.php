@@ -1,6 +1,6 @@
 <?php namespace widgets;
 
-use Auth, BaseController, Input,  Sentry, View, Response, Validator, Image, Config, Trainer;
+use Auth, BaseController, Input,  Sentry, View, Response, Validator, Image, Config, Trainer, Str;
 
 class ImageController extends \BaseController {
 
@@ -39,7 +39,7 @@ class ImageController extends \BaseController {
 
             // change file name
             $filename = $file->getClientOriginalName();
-            $filename = str_replace(' ', '_', $filename);
+            $filename = Str::slug(' ', '_', $filename);
             $ext = $file->getClientOriginalExtension();
             $filename = pathinfo($filename, PATHINFO_FILENAME);
             $filename = substr($filename, 0, 20); // Truncate file name to 20 characters
@@ -95,11 +95,11 @@ class ImageController extends \BaseController {
 
         $increment = 0;
 
-        while(file_exists($img_path.'/'.(Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.$user->display_name .'-'. $increment . '.' . $ext)) {
+        while(file_exists($img_path.'/'.(Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.Str::slug($user->display_name) .'-'. $increment . '.' . $ext)) {
             $increment++;
         }
 
-        $thumbFilename = (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.$user->display_name .'-'. $increment . '.' . $ext;
+        $thumbFilename = (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.Str::slug($user->display_name) .'-'. $increment . '.' . $ext;
         $fileNameWithPath = '/profiles/' . $save_location . '/'.$thumbFilename;
         $img->save(public_path() . $fileNameWithPath);
 

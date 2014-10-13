@@ -619,8 +619,10 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function makeUserDir($user)
     {
+        $user_dir = Str::slug($user->id . '_' . $user->display_name,'-');
+
         $path = public_path() . '/profiles/' . date('Y-m');
-        $userFolder = $path . '/' . $user->id . '_' . $user->display_name;
+        $userFolder = $path . '/' . $user_dir;
         try {
 
 
@@ -631,7 +633,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 File::makeDirectory($userFolder);
             }
 
-            $user->directory = date('Y-m') . '/' . $user->id . '_' . $user->display_name;
+            $user->directory = date('Y-m') . '/' . $user_dir;
             $user->save();
         } catch (Exception $e) {
             Log::error('Cannot make user folder : ' . $userFolder . 'error: ' . $e);
