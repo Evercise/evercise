@@ -31,6 +31,12 @@
         window.masonry_enabled || document.write('<script src="/assets/js/masonry.min.js">\x3C/script>')
     </script>
 
+    <script>
+        var BASE_URL = '{{ URL::to('/') }}';
+        var AJAX_URL = '{{ URL::to('/ajax/') }}';
+        var TOKEN = '{{ csrf_token() }}';
+    </script>
+
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
