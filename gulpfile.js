@@ -35,6 +35,7 @@ gulp.task('less', function () {
 
 
 gulp.task('compress', function() {
+
     gulp.src('./public/assets/jsdev/**/*.js')
         .pipe(uglify())
         .pipe(concat('main.min.js'))
@@ -51,7 +52,6 @@ gulp.task('watch', function () {
 
 gulp.task('version', function () {
     var file = '<?php return "'+makeid()+'"; ';
-
     require('fs').writeFile('.version.php', file);
 })
 
@@ -69,4 +69,6 @@ function makeid()
 
 
 /* Default Task */
+
 gulp.task('default', ['less', 'watch', 'minifycss', 'version', 'compress']);
+
