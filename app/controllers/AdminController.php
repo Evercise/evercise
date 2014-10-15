@@ -256,7 +256,8 @@ class AdminController extends \BaseController {
 		foreach($groupIds as $groupId)
 		{
 			array_push($groupSubcats, [$groupId => Input::get('categories_' . $groupId)]);
-			Evercisegroup::adminMakeClassFeatured($groupId, Input::get('featured'));
+			if($eg = Evercisegroup::find($groupId))
+				$eg->adminMakeClassFeatured( Input::get('featured_'.$groupId) );
 		}
 		Evercisegroup::editSubcats($groupSubcats);
 

@@ -539,11 +539,16 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
-     * @param $id
+     * @param $featured
      */
-    public function adminMakeClassFeatured($id)
+    public function adminMakeClassFeatured( $featured )
     {
-        FeaturedClasses::firstOrCreate(['evercisegroup_id' => $id]);
+        if ($featured)
+            FeaturedClasses::firstOrCreate(['evercisegroup_id' => $this->id]);
+        else {
+            $id = FeaturedClasses::where('evercisegroup_id', $this->id)->pluck('id');
+            if($id) FeaturedClasses::destroy($id);
+        }
     }
 
     /**
