@@ -23,7 +23,7 @@
                                </label>
                            </div>
                         </div>
-                        <div class="form-group text-center">
+                        <div class="mb20 text-center">
                             {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb"></span>Log in with facebook', null , ['class' => 'btn btn-lg btn-fb']) )}}
 
                         </div>
