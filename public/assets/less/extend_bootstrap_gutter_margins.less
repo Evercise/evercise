@@ -1,0 +1,14 @@
+// removes all padding from all child parents
+.no-gutter [class*="col-"] {
+  padding-left:0;
+  padding-right:0;
+}
+
+.sm-inline-gutter [class*="col-"] {
+  &:not(:first-of-type){
+    padding-left:5px;
+  }
+  &:not(:last-of-type){
+    padding-right:5px;
+  }
+}

@@ -1,0 +1,50 @@
+.btn-fb {
+  .button-variant(@btn-fb-color; @btn-fb-bg; @btn-fb-border);
+}
+.btn-twitter {
+  .button-variant(@btn-twitter-color; @btn-twitter-bg; @btn-twitter-border);
+}
+
+.btn-white {
+  .button-variant(@btn-white-color; @btn-grey-bg; @btn-white-border);
+}
+
+.btn-grey {
+  .button-variant(@btn-grey-color; @btn-grey-bg; @btn-grey-border);
+  &:hover{
+    color: @white;
+  }
+}
+
+.btn-light-grey {
+  .button-variant(@btn-grey-light-color; @btn-grey-light-bg; @btn-grey--light-border);
+  &:hover{
+    color: @white;
+  }
+}
+
+.btn-blank{
+  .button-variant(@btn-grey-color; @white; @white);
+}
+
+.btn-transparent{
+  background: transparent;
+}
+
+.btn-aside{
+  padding-left: 9px;
+  padding-right: 9px;
+}
+
+.btn-group{
+  &.btn-block{
+    .btn{
+      width: 80%;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    .btn.btn-aside{
+      width: 20%;
+    }
+  }
+}

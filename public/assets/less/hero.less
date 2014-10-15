@@ -1,0 +1,26 @@
+.hero{
+  background: @hero-bg;
+  background-size: cover ;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: @hero-height;
+  padding-top: @hero-top-padding;
+  position: relative;
+  @media screen and (min-width: @screen-sm-min) {
+    height: ceil(@hero-height * 1.6);
+    padding-top: ceil(@hero-top-padding * 2.5);
+  }
+}
+.hero-sm{
+  @media screen and (min-width: @screen-sm-min) {
+    height: ceil(@hero-height * 0.9);
+    padding-top: ceil(@hero-top-padding * 2.5);
+  }
+}
+
+.jumbotron{
+  margin-bottom: 0;
+}
+.no-nav-change{
+  margin-top: @navbar-height;
+}

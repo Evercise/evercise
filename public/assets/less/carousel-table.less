@@ -1,0 +1,46 @@
+.carousel-table{
+  .carousel-table-control{
+    width: 4%;
+    float: left;
+    height: 65px;
+    background: @gray-light;
+    border-bottom: 1px solid @gray-light;
+    &:hover{
+      cursor: pointer;
+      background: @brand-primary;
+    }
+    &.left-control{
+      .sprite(-1042px, -225px);
+      border-right: 2px solid @white;
+    }
+    &.right-control{
+      .sprite(-1082px, -225px);
+      border-left: 2px solid @white;
+    }
+  }
+  .carousel-table-inner{
+    width: 92%;
+    float: left;
+  }
+  .nav-carousel{
+    li{
+      background: @gray;
+
+      a{
+        color: @white;
+        padding-top: 13px;
+        padding-bottom: 13px;
+        &:hover{
+          background-color: fade(@brand-primary, 60%);
+        }
+      }
+      &.active{
+        background: @brand-primary;
+        a{
+          color: @white;
+        }
+      }
+    }
+  }
+}
+

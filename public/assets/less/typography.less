@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'UniversLTStd59UltraCondensed';
+  src: url('/fonts/universltstd-ultracn.eot');
+  src: url('/fonts/universltstd-ultracn.eot') format('embedded-opentype'),
+  url('/fonts/universltstd-ultracn.woff') format('woff'),
+  url('/fonts/universltstd-ultracn.ttf') format('truetype'),
+  url('/fonts/universltstd-ultracn.svg#UniversLTStd59UltraCondensed') format('svg');
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  text-transform: @headings-case;
+}
+
+// Links
+
+a {
+  color: @link-color;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: @link-hover-color;
+    text-decoration: none;
+  }
+
+  &:focus {
+    .tab-focus();
+  }
+}
+
+strong{ color: @gray-darker}
+
+.custom-list {
+  .branded-list();
+}
+
+
+.text-white {
+   .text-emphasis-variant(@white);
+ }
+.text-dark {
+   .text-emphasis-variant(@gray-darker);
+ }
+.text-grey {
+   .text-emphasis-variant(@gray);
+ }
+
+.bg-grey {
+  .bg-variant(@state-grey-bg);
+}
+
+.bg-dark-grey {
+  .bg-variant(@state-dark-grey-bg);
+}
+
+.bg-light-grey{
+  .bg-variant(@state-light-grey-bg);
+}
+.underline{
+  position: relative;
+  margin-bottom: 42px;
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    width: 80px;
+    height: 1px;
+    margin-left: -40px;
+    border-bottom: 1px solid @gray-dark;
+  }
+}
+
+.condensed{ line-height: @line-height-condensed};

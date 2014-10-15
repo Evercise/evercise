@@ -12,6 +12,73 @@
 */
 //
 
+// temporary routes for new layouts
+
+Route::get('/register', ['as' => 'register',  function()
+    {
+        return View::make('v3.users.create');
+    }]
+);
+Route::get('/popular', ['as' => 'popular',  function()
+    {
+        return View::make('v3.home');
+    }]
+);
+Route::get('/profile', ['as' => 'profile',  function()
+    {
+        return View::make('v3.users.profile.master');
+    }]
+);
+Route::get('/class', ['as' => 'class',  function()
+    {
+        return View::make('v3.classes.class_page');
+    }]
+);
+Route::get('/discover', ['as' => 'discover',  function()
+    {
+        return View::make('v3.classes.discover.master');
+    }]
+);
+Route::get('/discover-list', ['as' => 'discover_list',  function()
+    {
+        return View::make('v3.classes.discover.master-list');
+    }]
+);
+Route::get('/discover-grid', ['as' => 'discover_grid',  function()
+    {
+        return View::make('v3.classes.discover.master-grid');
+    }]
+);
+Route::get('/register-trainer', ['as' => 'register_trainer',  function()
+    {
+        return View::make('v3.trainers.create');
+    }]
+);
+Route::get('/finished-trainer', ['as' => 'finished_trainer',  function()
+    {
+        return View::make('v3.trainers.complete');
+    }]
+);
+Route::get('/finished-user', ['as' => 'finished_user',  function()
+    {
+        return View::make('v3.users.complete');
+    }]
+);
+Route::get('/create-class', ['as' => 'create-class',  function()
+    {
+        return View::make('v3.classes.create');
+    }]
+);
+Route::get('/class-add-sessions', ['as' => 'class-add-sessions',  function()
+    {
+        return View::make('v3.classes.add_sessions');
+    }]
+);
+
+
+/* end tempary routes for new styles */
+
+
 /* Freking wrong url on page */
 Route::get(
     'what_is_evercise',
