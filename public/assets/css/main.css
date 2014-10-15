@@ -944,10 +944,10 @@ img {
   border-radius: 6px;
 }
 .img-thumbnail {
-  padding: 4px;
+  padding: 10px;
   line-height: 1.8571428;
   background-color: #ffffff;
-  border: 1px solid 0;
+  border: 1px solid #d8d8d8;
   border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
@@ -4578,11 +4578,11 @@ a.list-group-item.active > .badge,
 }
 .thumbnail {
   display: block;
-  padding: 4px;
+  padding: 10px;
   margin-bottom: 25px;
   line-height: 1.8571428;
   background-color: #ffffff;
-  border: 1px solid 0;
+  border: 1px solid #d8d8d8;
   border-radius: 3px;
   -webkit-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
@@ -5434,10 +5434,10 @@ button.close {
 }
 .modal-body {
   position: relative;
-  padding: 15px;
+  padding: 15px 30px;
 }
 .modal-footer {
-  padding: 15px;
+  padding: 15px 30px;
   text-align: right;
   border-top: 1px solid #e5e5e5;
 }
@@ -6662,6 +6662,9 @@ a:focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
+strong {
+  color: #383d48;
+}
 .custom-list {
   list-style-type: none;
   position: relative;
@@ -6691,6 +6694,12 @@ a.text-white:hover {
 }
 a.text-dark:hover {
   color: #22252b;
+}
+.text-grey {
+  color: #768690;
+}
+a.text-grey:hover {
+  color: #5e6c75;
 }
 .bg-grey {
   background-color: #f1f2f3;
@@ -6757,6 +6766,11 @@ a.bg-light-grey:hover {
 .list-group-item strong,
 .list-group-item th {
   color: #383d48;
+}
+@media (max-width: 768px) {
+  .sm-text-center {
+    text-align: center;
+  }
 }
 .navbar-default {
   transition: all 0.4s;
@@ -6852,6 +6866,7 @@ a.bg-light-grey:hover {
   }
 }
 .footer {
+  background: #ffffff;
   padding: 40px 0;
   border-top: 1px solid #d8d8d8;
 }
@@ -7091,6 +7106,30 @@ a.bg-light-grey:hover {
 .icon-grey-down-arrow.hover:hover {
   cursor: pointer;
   background-position: -410px -290px;
+}
+.icon-grey-left-arrow {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -210px -250px;
+  overflow: hidden;
+}
+.icon-grey-left-arrow.active {
+  background-position: -210px -290px;
+}
+.icon-grey-left-arrow.hover:hover {
+  cursor: pointer;
+  background-position: -210px -290px;
+}
+.icon-grey-right-arrow {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -250px -250px;
+  overflow: hidden;
+}
+.icon-grey-right-arrow.active {
+  background-position: -250px -290px;
+}
+.icon-grey-right-arrow.hover:hover {
+  cursor: pointer;
+  background-position: -250px -290px;
 }
 .icon-grid {
   background-image: url("../img/ev_site_icons.png");
@@ -7491,6 +7530,36 @@ fieldset[disabled] .btn-blank.active {
 .btn-group.btn-block .btn.btn-aside {
   width: 20%;
 }
+.image-placeholder {
+  position: relative;
+  float: left;
+}
+.image-placeholder:before {
+  content: '';
+  position: absolute;
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -120px -615px;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  margin-top: -11px;
+  margin-left: -13px;
+  height: 22px;
+  width: 26px;
+}
+.image-placeholder:before.active {
+  background-position: -120px -655px;
+}
+.image-placeholder:before.hover:hover {
+  cursor: pointer;
+  background-position: -120px -655px;
+}
+.close {
+  float: left;
+}
+.modal-body {
+  background-color: #f2f2f2;
+}
 .class-module {
   width: 100%;
   background-color: #ffffff;
@@ -7869,6 +7938,9 @@ label {
   cursor: pointer;
   background-position: -50px -320px;
 }
+.custom-select select::-ms-expand {
+  display: none;
+}
 .custom-select select {
   background: transparent;
   background-image: none;
@@ -7876,6 +7948,14 @@ label {
 }
 .custom-select .input-sm {
   line-height: 20px;
+}
+@-moz-document url-prefix() {
+  .custom-select {
+    position: relative;
+  }
+  .custom-select:after {
+    position: relative;
+  }
 }
 .btn-select {
   -webkit-appearance: none;
@@ -8175,6 +8255,14 @@ label {
   padding: 0 10px;
   background: rgba(255, 255, 255, 0.85);
 }
+.table > thead > tr > th .custom-select select,
+.table > tbody > tr > th .custom-select select,
+.table > tfoot > tr > th .custom-select select,
+.table > thead > tr > td .custom-select select,
+.table > tbody > tr > td .custom-select select,
+.table > tfoot > tr > td .custom-select select {
+  background-color: rgba(255, 255, 255, 0.8);
+}
 .carousel-table .carousel-table-control {
   width: 4%;
   float: left;
@@ -8188,29 +8276,29 @@ label {
 }
 .carousel-table .carousel-table-control.left-control {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -362px -226px;
+  background-position: -1042px -225px;
   overflow: hidden;
   border-right: 2px solid #ffffff;
 }
 .carousel-table .carousel-table-control.left-control.active {
-  background-position: -362px -266px;
+  background-position: -1042px -265px;
 }
 .carousel-table .carousel-table-control.left-control.hover:hover {
   cursor: pointer;
-  background-position: -362px -266px;
+  background-position: -1042px -265px;
 }
 .carousel-table .carousel-table-control.right-control {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -402px -226px;
+  background-position: -1082px -225px;
   overflow: hidden;
   border-left: 2px solid #ffffff;
 }
 .carousel-table .carousel-table-control.right-control.active {
-  background-position: -402px -266px;
+  background-position: -1082px -265px;
 }
 .carousel-table .carousel-table-control.right-control.hover:hover {
   cursor: pointer;
-  background-position: -402px -266px;
+  background-position: -1082px -265px;
 }
 .carousel-table .carousel-table-inner {
   width: 92%;
@@ -8244,4 +8332,45 @@ label {
 .map-wrapper .map-canvas {
   height: 100%;
   width: 100%;
+}
+@media (min-width: 768px) {
+  .calendar-wrapper {
+    margin-right: -70px;
+  }
+  .calendar {
+    margin-left: -35px;
+  }
+}
+.calendar {
+  width: 100%;
+}
+.calendar th,
+.calendar td {
+  text-align: center;
+  padding: 7px;
+}
+.calendar a {
+  height: 38px;
+  width: 38px;
+  display: inline-block;
+  line-height: 32px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+}
+.calendar .active {
+  background-color: #87cf39;
+  border: 3px solid #87cf39;
+  color: #ffffff;
+}
+.calendar th {
+  padding-bottom: 20px;
+  color: #383d48;
+}
+.calendar .calendar-days a {
+  color: #383d48;
+  font-weight: 700;
+}
+.calendar .calendar-days a.active {
+  background-color: #ffffff;
 }

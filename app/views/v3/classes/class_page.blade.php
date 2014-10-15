@@ -94,7 +94,7 @@
                     </ul>
 
                     <div class="table-responsive center-block">
-                        <table class="table table-hover">
+                        <table class="table table-hover pull-left">
                             <tbody>
                                 <tr>
                                     <td class="text-left"><span class="icon icon-clock mr5"></span><span>10am - 11am</span></td>

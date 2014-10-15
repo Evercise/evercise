@@ -8,7 +8,7 @@
             <button class="btn btn-primary">Add Review</button>
         </div>
     </div>
-    <div id="rate-it" class="row panel-body bg-grey class-info-wrapper text-center {{ (isset($show) && $show == 'rate-it') ? '' : 'hidden' }}">
+    <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center {{ (isset($show) && $show == 'rate-it') ? '' : 'hidden' }}">
         Rate it
         <br>
         <strong><i class="fa fa-star-o"></i></strong>
@@ -26,7 +26,7 @@
             </div>
         </form>
     </div>
-    <div id="user-rating" class="row panel-body bg-grey class-info-wrapper {{ (isset($show)  && $show == 'user-rating') ? '' : 'hidden' }} ">
+    <div id="user-rating" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show)  && $show == 'user-rating') ? '' : 'hidden' }} ">
         <div class="col-sm-12">
             <em><small>You said:</small></em>
 
@@ -44,7 +44,7 @@
             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
         </div>
     </div>
-    <div id="next-session" class="row panel-body bg-grey class-info-wrapper {{ (isset($show) && $show == 'next-session') ? '' : 'hidden' }}">
+    <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'next-session') ? '' : 'hidden' }}">
         <div class=" col-sm-7">
             <span><span class="icon icon-clock"></span> Next class, Sept 27th, 4pm</span>
          </div>
@@ -59,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div id="upcoming-session" class="row panel-body bg-grey class-info-wrapper {{ (isset($show) && $show == 'upcoming-session') ? '' : 'hidden' }}">
+    <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'upcoming-session') ? '' : 'hidden' }}">
         <div class=" col-sm-7">
             <span><span class="icon icon-clock"></span> Sept 27th, 4pm</span>
          </div>
@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    <div id="no-session" class="row panel-body bg-grey class-info-wrapper {{ (isset($show) && $show == 'no-session') ? '' : 'hidden' }}">
+    <div id="no-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'no-session') ? '' : 'hidden' }}">
         <div class=" col-sm-7">
             <span>No other classes available</span>
          </div>

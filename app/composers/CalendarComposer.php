@@ -18,7 +18,8 @@ class CalendarComposer {
 		$year = date('Y');
 	}
 	
-	$calendarData = array();
+	$calendarData = [];
+
 	$startDay = $month == date('m') ? date('d')+1 : 1;
 
 	if ($month >= date('m') || $year >= date('Y'))

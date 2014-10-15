@@ -73,6 +73,9 @@ label{
       .sprite(-50px, -280px);
     }
   }
+  select::-ms-expand {
+    display: none;
+  }
 
   select {
     background: transparent;
@@ -81,6 +84,14 @@ label{
   }
   .input-sm{
     line-height: 20px;
+  }
+}
+@-moz-document url-prefix() {
+  .custom-select {
+    position: relative;
+    &:after {
+      position: relative;
+    }
   }
 }
 

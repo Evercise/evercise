@@ -61,7 +61,7 @@
     <div class="container">
         <div class="row mt10">
             <div class="col-sm-4 text-center">
-                <div class="thumbnail">
+                <div class="panel-body">
                     <div class="underline">
                         <h2>What is evercise</h2>
                     </div>
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class="col-sm-4 text-center">
-                <div class="thumbnail">
+                <div class="panel-body">
                     <div class="underline">
                         <h2>Why join evercise</h2>
                     </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="col-sm-4 text-center">
-                <div class="thumbnail">
+                <div class="panel-body">
                     <div class="underline">
                         <h2>How does it work</h2>
                     </div>

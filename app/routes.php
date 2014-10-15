@@ -48,6 +48,31 @@ Route::get('/discover-grid', ['as' => 'discover_grid',  function()
         return View::make('v3.classes.discover.master-grid');
     }]
 );
+Route::get('/register-trainer', ['as' => 'register_trainer',  function()
+    {
+        return View::make('v3.trainers.create');
+    }]
+);
+Route::get('/finished-trainer', ['as' => 'finished_trainer',  function()
+    {
+        return View::make('v3.trainers.complete');
+    }]
+);
+Route::get('/finished-user', ['as' => 'finished_user',  function()
+    {
+        return View::make('v3.users.complete');
+    }]
+);
+Route::get('/create-class', ['as' => 'create-class',  function()
+    {
+        return View::make('v3.classes.create');
+    }]
+);
+Route::get('/class-add-sessions', ['as' => 'class-add-sessions',  function()
+    {
+        return View::make('v3.classes.add_sessions');
+    }]
+);
 
 // popular classes
 

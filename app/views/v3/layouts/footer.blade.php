@@ -1,4 +1,4 @@
-<ul class="nav footer">
+<ul class="nav footer sm-text-center">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">

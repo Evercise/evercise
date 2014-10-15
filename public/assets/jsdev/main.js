@@ -32,5 +32,7 @@ $(function(){
         $(this).mCustomScrollbar();
     })
 
+    new Placeholder();
+
 })
 

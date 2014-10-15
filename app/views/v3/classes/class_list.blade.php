@@ -18,12 +18,12 @@
              <div class="col-sm-6">
                  <div class="row">
                      <div class="col-md-6"><span class="icon icon-clock"></span> 1 hour</div>
-                     <div class="col-dm-6"><i class="fa fa-ticket"></i> x 5 tickets left</div>
+                     <div class="col-dm-6"><span class="icon icon-ticket"></span> x 5 tickets left</div>
                  </div>
              </div>
          </div>
     </div>
-    <div class="class-info-wrapper col-xs-2 bg-grey text-center">
+    <div class="class-info-wrapper col-xs-2 bg-light-grey text-center">
         <strong class="text-primary center-block">&pound;16</strong>
         <button class="btn btn-default center-block">Join Class</button>
     </div>

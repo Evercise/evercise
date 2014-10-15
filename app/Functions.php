@@ -55,24 +55,24 @@ class Functions {
     public static function getCalendarTemplate()
     {
         $template = '
-            {table_open}<table border="0" cellpadding="0" cellspacing="0" id="calendar">{/table_open}
+            {table_open}<table border="0" cellpadding="0" cellspacing="0" id="calendar" class="calendar">{/table_open}
 
             {heading_row_start}<tr class="calendar-head">{/heading_row_start}
 
-            {heading_previous_cell}<th><a href="#" id="month_{previous_url}">&#171;</a></th>{/heading_previous_cell}
-            {heading_title_cell}<th colspan="{colspan}"><h6>{heading}</h6></th>{/heading_title_cell}
-            {heading_next_cell}<th><a href="#" id="month_{next_url}">&#0187;</a></th>{/heading_next_cell}
+            {heading_previous_cell}<th><a href="#" id="month_{previous_url}" class="text-left"><span class="icon icon-grey-left-arrow hover"></span></a></th>{/heading_previous_cell}
+            {heading_title_cell}<th colspan="{colspan}"><strong class="text-center">{heading}</strong></th>{/heading_title_cell}
+            {heading_next_cell}<th><a href="#" id="month_{next_url}" class="text-right"><span class="icon icon-grey-right-arrow hover"></span></a></th>{/heading_next_cell}
 
             {heading_row_end}</tr>{/heading_row_end}
 
             {week_row_start}<tr class="calendar-days">{/week_row_start}
-            {week_day_cell}<td>{week_day}</td>{/week_day_cell}
+            {week_day_cell}<td><a class="active" href="{week_day}">{week_day}</a></td>{/week_day_cell}
             {week_row_end}</tr>{/week_row_end}
 
             {cal_row_start}<tr class="calendar-row">{/cal_row_start}
             {cal_cell_start}<td>{/cal_cell_start}
 
-            {cal_cell_content}<a href="{content}">{day}</a>{/cal_cell_content}
+            {cal_cell_content}<a class="active" href="{content}">{day}</a>{/cal_cell_content}
             {cal_cell_content_today}<div class="calendarHighlight"><a href="{content}">{day}</a></div>{/cal_cell_content_today}
 
             {cal_cell_no_content}{day}{/cal_cell_no_content}
