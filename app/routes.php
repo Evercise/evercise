@@ -12,7 +12,8 @@
 */
 //
 
-// register
+// temporary routes for new layouts
+
 Route::get('/register', ['as' => 'register',  function()
     {
         return View::make('v3.users.create');
@@ -74,10 +75,8 @@ Route::get('/class-add-sessions', ['as' => 'class-add-sessions',  function()
     }]
 );
 
-// popular classes
 
-
-/* tempary routes for new styles */
+/* end tempary routes for new styles */
 
 
 /* Freking wrong url on page */
