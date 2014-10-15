@@ -1,14 +1,13 @@
 <?php
 
 
-
 /**
  * Class AdminController
  */
 class AdminController extends \BaseController {
 
 
-    /**
+	/**
 	 * show all pending trainers.
 	 *
 	 * @return Response
@@ -30,7 +29,7 @@ class AdminController extends \BaseController {
 
         Trainer::approve($user);
 
-        return Redirect::route('admin.yukon.page', ['pendingtrainers']);
+        return Redirect::route('admin.page', ['pendingtrainers']);
 	}
 
     /**
@@ -56,7 +55,7 @@ class AdminController extends \BaseController {
 
 		Withdrawalrequest::find($withdrawal_id)->markProcessed();
 
-		return Redirect::route('admin.yukon.page', ['pendingwithdrawals']);
+		return Redirect::route('admin.page', ['pendingwithdrawals']);
 
 	}
 
@@ -158,15 +157,16 @@ class AdminController extends \BaseController {
 
         Evercisegroup::adminMakeClassFeatured($id, Input::get('featured'));
 
-        return Redirect::route('admin.groups');
+		return Response::json(['callback' => 'successAndRefresh']);
 
     }
 
-    public function yukon($page)
+    public function yukon($page = 'dashboard')
     {
 		//$users = User::with('evercisegroups')->where('display_name', 'LIKE', 'Peter_ATP')->get();
-
+		//return $page;
 		//return $users;
+
 
         return View::make('admin.yukonhtml.index')
             ->with('admin_version', '1.0')
@@ -209,26 +209,59 @@ class AdminController extends \BaseController {
 	public function editSubcategories()
 	{
 		$categoryChanges = Input::get('update_categories');
+		$assNumbers = explode(',', Input::get('update_associations'));
 
-		foreach(explode('-', $categoryChanges) as $change)
+		$associations = [];
+
+		foreach($assNumbers as $assId)
 		{
-			$ch = explode('=', $change);
-			if (count($ch) > 1) {
-				$subcat = $ch[0];
-
-				$subcategory = Subcategory::find($subcat);
-				$subcategory->categories()->detach();
-
-				$catArray = [];
-				foreach (explode('_', $ch[1]) as $cat) {
-					if ( ! in_array($cat, $catArray))
-						array_push($catArray, $cat);
-				}
-				$subcategory->categories()->attach($catArray);
-			}
+			array_push($associations, [$assId => Input::get('associations_' . $assId)]);
 		}
 
-		return Redirect::route('admin.yukon.page', ['subcategories']);
 
+		Subcategory::editSubcategoryCategories($categoryChanges);
+		Subcategory::editAssociations($associations);
+
+		//return Response::json(['callback' => 'adminPopupMessage', 'message' => count($associations).' : '.Input::get('associations_'.'3')]);
+		return Response::json(['callback' => 'successAndRefresh']);
+
+	}
+
+	public function addSubcategory()
+	{
+		$newCategoryName = Input::get('new_subcategory');
+
+		Subcategory::create(['name' => $newCategoryName]);
+
+		return Response::json(['callback' => 'successAndRefresh']);
+
+	}
+
+	public function unapproveTrainer()
+	{
+		$user = Sentry::findUserById(Input::get('user_id'));
+
+		Trainer::unapprove($user);
+
+		return Response::json(['callback' => 'successAndRefresh']);
+
+	}
+
+	public function editGroupSubcats()
+	{
+		$groupIds = explode(',', Input::get('update_categories'));
+
+		$groupSubcats = [];
+
+		foreach($groupIds as $groupId)
+		{
+			array_push($groupSubcats, [$groupId => Input::get('categories_' . $groupId)]);
+			Evercisegroup::adminMakeClassFeatured($groupId, Input::get('featured'));
+		}
+		Evercisegroup::editSubcats($groupSubcats);
+
+
+		return Response::json(['callback' => 'successAndRefresh']);
+		//return Response::json(['callback' => 'adminPopupMessage', 'message' => 'done']);
 	}
 }

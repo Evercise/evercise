@@ -26,6 +26,9 @@
         <!-- page specific stylesheets -->
 <?php echo $css; }?>
 
+        <!-- select2 -->
+        <link href="assets/lib/select2/select2.css" rel="stylesheet" media="screen">
+
         <!-- google webfonts -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
@@ -82,6 +85,10 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
             var BASE_URL = '<?=getenv('APP_URL')?>';
         </script>
         <script src="/assets/application.js?version=2.9"></script>
+
+        <!-- select2 -->
+        <script src="assets/lib/select2/select2.min.js"></script>
+
         <script>
 
             var category_updates = {};
@@ -94,7 +101,12 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     window.location.href = $(this).val();
                 });
 
+                $('#select_status').change(function(){
+                    window.location.href = window.location.pathname +'?status='+ $(this).val();
+                });
+
                 initPut('{"selector": ".reset_password"}');
+                initPut('{"selector": ".unapprove_trainer"}');
 
                 $('#user_list li').click(function(){
                     $(this).find('.user-table').slideToggle(500);
@@ -133,7 +145,58 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     $('#update_categories').val(output);
                     console.debug(output);
 
+
                 });
+
+                //yukon_select2.p_forms_extended();
+
+                $('.associations_label').click(function(e){
+                    var input = $(this).next('input');
+                    if(input.length) {
+                        var update_associations = $('#update_associations');
+                        update_associations.val(update_associations.val() + input.data('id')+',');
+                        trace(update_associations.val());
+                        $(this).hide();
+                        input.show();
+                        input.val(input.data('value'));
+                        input.select2({
+                            placeholder: "Type here...",
+                            tags:[],
+                            tokenSeparators: [",", " "]
+                        });
+                        //input.focus();
+                    }
+                });
+
+                $('.categories_label').click(function(e){
+                    //trace(category_list);
+
+                    var category_array = $.parseJSON(category_list);
+                    var input = $(this).next('input');
+                    if(input.length) {
+                        var update_categories = $('#update_categories');
+                        update_categories.val(update_categories.val() + input.data('id')+',');
+                        //trace(update_categories.val());
+                        $(this).hide();
+                        input.show();
+                        input.val(input.data('value'));
+                        input.select2({
+                            placeholder: "Type here...",
+                            tags:category_array,
+                            tokenSeparators: [","]
+                        });
+                        //input.focus();
+                    }
+                });
+
+                $('.featured').click(function(e){
+                    var update_categories = $('#update_categories');
+                    update_categories.val(update_categories.val() + $(this).data('id')+',');
+                });
+
+                initPut('{"selector": "#edit_subcategories"}');
+                initPut('{"selector": "#add_subcategory"}');
+                initPut('{"selector": "#edit_classes"}');
 
             });
 

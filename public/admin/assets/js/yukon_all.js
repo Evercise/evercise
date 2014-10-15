@@ -1308,8 +1308,8 @@
 					placeholder: "Select..."
 				});
 			}
-			if($('#s2_tokenization').length) {
-				$('#s2_tokenization').select2({
+			if($('.s2_tokenization').length) {
+				$('.s2_tokenization').select2({
 					placeholder: "Select...",
 					tags:["red", "green", "blue", "black", "orange", "white"],
 					tokenSeparators: [",", " "]

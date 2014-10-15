@@ -312,40 +312,6 @@ Route::get(
     )
 );
 
-// admin tools
-/*Route::get(
-    'admin/pending_trainers',
-    array('as' => 'admin.pending', 'before' => 'admin', 'uses' => 'AdminController@pendingTrainers')
-);*/
-Route::post(
-    'admin/approve_trainer',
-    array('as' => 'admin.approve_trainer.post', 'before' => 'admin', 'uses' => 'AdminController@approveTrainer')
-);
-Route::get(
-    'admin/pending_withdrawal',
-    array('as' => 'admin.pending_withdrawal', 'before' => 'admin', 'uses' => 'AdminController@pendingWithdrawal')
-);
-Route::post(
-    'admin/process_withdrawal',
-    array('as' => 'admin.process_withdrawal.post', 'before' => 'admin', 'uses' => 'AdminController@processWithdrawal')
-);
-Route::post(
-    '/admin/log',
-    array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
-);
-Route::get('/admin/groups', array('as' => 'admin.groups', 'before' => 'admin', 'uses' => 'AdminController@showGroups'));
-Route::post(
-    '/admin/groups',
-    array('as' => 'admin.groups.addcat', 'before' => 'admin', 'uses' => 'AdminController@addCategory')
-);
-Route::get(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
-);
-Route::post(
-    '/admin/edit_classes/{id}',
-    array('as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'AdminController@editClasses')
-);
 
 
 /*
@@ -467,7 +433,43 @@ Route::get(
 
 
 
-Route::get('/admin/groups', array('as' => 'admin.groups', 'before' => 'admin', 'uses' => 'AdminController@showGroups'));
+
+
+// layout page
+
+Route::get('/layouts', function()
+{
+    return View::make('layouts.layouts');
+});
+
+// -------------  OLD ADMIN STUFF ---------------
+
+
+Route::post(
+    'admin/approve_trainer',
+    array('as' => 'admin.approve_trainer.post', 'before' => 'admin', 'uses' => 'AdminController@approveTrainer')
+);
+Route::get(
+    'admin/pending_withdrawal',
+    array('as' => 'admin.pending_withdrawal', 'before' => 'admin', 'uses' => 'AdminController@pendingWithdrawal')
+);
+Route::post(
+    'admin/process_withdrawal',
+    array('as' => 'admin.process_withdrawal.post', 'before' => 'admin', 'uses' => 'AdminController@processWithdrawal')
+);
+Route::post(
+    '/admin/log',
+    array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
+);
+Route::get(
+    '/admin/fakeratings',
+    array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
+);
+Route::post(
+    '/admin/edit_classes/{id}',
+    array('as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'AdminController@editClasses')
+);
+
 Route::post(
     '/admin/groups',
     array('as' => 'admin.groups.addcat', 'before' => 'admin', 'uses' => 'AdminController@addCategory')
@@ -482,53 +484,22 @@ Route::post(
     array('as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'AdminController@addRating')
 );
 
-
-
-Route::get(
-    '/classes/{country}',
-    array(
-        'as'   => 'classes.country',
-        'uses' => 'EvercisegroupsController@search_C'
-    )
-);
-Route::get(
-    '/classes/{country}/{city}',
-    array(
-        'as'   => 'classes.country.city',
-        'uses' => 'EvercisegroupsController@search_C_C'
-    )
-);
-Route::get(
-    '/classes/{country}/{city}/{area}',
-    array(
-        'as'   => 'classes.country.city.area',
-        'uses' => 'EvercisegroupsController@search_C_C_A'
-    )
-);
-Route::get(
-    '/classes/{country}/{city}/{area}/{category}',
-    array(
-        'as'   => 'classes.country.city.area.category',
-        'uses' => 'EvercisegroupsController@search_C_C_A_C'
-    )
-);
-
-// layout page
-
-Route::get('/layouts', function()
-{
-    return View::make('layouts.layouts');
-});
+// -------------  ADMIN SECTION ---------------
 
 Route::group(
     array('prefix' => 'admin', 'before' => 'admin'),
     function () {
 
-        Route::get('/{page}', ['as' => 'admin.yukon.page', 'uses' => 'AdminController@yukon']);
+        Route::get('/{page}', ['as' => 'admin.page', 'uses' => 'AdminController@yukon']);
+        Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@yukon']);
+
 
         Route::post('/log_in_as', ['as' => 'admin.log_in_as', 'uses' => 'AdminController@logInAs']);
         Route::post('/reset_password', ['as' => 'admin.reset_password', 'uses' => 'AdminController@resetPassword']);
         Route::post('/edit_subcategories', ['as' => 'admin.edit_subcategories', 'uses' => 'AdminController@editSubcategories']);
+        Route::post('/add_subcategory', ['as' => 'admin.add_subcategory', 'uses' => 'AdminController@addSubcategory']);
+        Route::post('/unapprove_trainer', ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminController@unapproveTrainer']);
+        Route::post('/edit_group_subcats', ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminController@editGroupSubcats']);
 
 
     }

@@ -77,5 +77,6 @@ return [
     ['admin.log' => 'AdminLogComposer'],
     ['admin.categories' => 'AdminCategoriesComposer'],
     ['admin.subcategories' => 'AdminSubcategoriesComposer'],
+    ['admin.searchassociations' => 'AdminAssociationsComposer'],
 
 ];

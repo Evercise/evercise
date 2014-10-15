@@ -19,6 +19,7 @@
                             <li><a <?php if($sPage == "forms-regular_elements") { echo 'class="act_nav" '; }; ?>href="pendingtrainers">Pending Trainers</a></li>
                             <li><a <?php if($sPage == "forms-regular_elements") { echo 'class="act_nav" '; }; ?>href="log">Log</a></li>
                             <li><a <?php if($sPage == "forms-regular_elements") { echo 'class="act_nav" '; }; ?>href="categories">Categories</a></li>
+                            <li><a <?php if($sPage == "forms-regular_elements") { echo 'class="act_nav" '; }; ?>href="groups">Classes</a></li>
                         </ul>
                     </li>
                 </ul>
