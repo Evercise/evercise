@@ -68,11 +68,19 @@
 		.columnsContainer{
 			float: left;
 		}
-
+	/*
+	 Page
+	d style
+	 Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+	*/
 		body,#bodyTable{
 			background-color:#F2F2F2;
 		}
-
+	/*
+	 Page
+	d style
+	 Set the background color and top border for your email. You may want to choose colors that match your company's branding.
+	*/
 		#bodyCell{
 			border-top:0;
 		}
@@ -90,7 +98,6 @@
 			margin-bottom: 10px;
 			text-align:left;
 		}
-
 
 		h2{
 			color:#404040 !important;
@@ -117,7 +124,12 @@
 			margin:0;
 			text-align:left;
 		}
-
+	/*
+	 Page
+	 heading 4
+	 Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+	@style heading 4
+	*/
 		h4{
 			color:#808080 !important;
 			display:block;
@@ -130,13 +142,21 @@
 			margin:0;
 			text-align:left;
 		}
-
+	/*
+	 Preheader
+	 preheader style
+	 Set the background color and borders for your email's preheader area.
+	*/
 		#templatePreheader{
 			background-color:#FFFFFF;
 			border-top:0;
 			border-bottom:0;
 		}
-
+	/*
+	 Preheader
+	 preheader text
+	 Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+	*/
 		.preheaderContainer .mcnTextContent,.preheaderContainer .mcnTextContent p{
 			color:#606060;
 			font-family:Helvetica;
@@ -144,19 +164,23 @@
 			line-height:125%;
 			text-align:left;
 		}
-
+	/*
+	 Preheader
+	preheader link
+	 Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+	*/
 		.preheaderContainer .mcnTextContent a{
 			color:#606060;
 			font-weight:normal;
 			text-decoration:underline;
 		}
-
+	
 		#templateHeader{
 			background-color:#ffffff;
 			border-top:0;
 			border-bottom:0;
 		}
-
+	
 		.headerContainer .mcnTextContent,.headerContainer .mcnTextContent p{
 			color:#606060;
 			font-family:Helvetica;
@@ -164,13 +188,13 @@
 			line-height:150%;
 			text-align:left;
 		}
-
+	
 		.headerContainer .mcnTextContent a{
 			color:#6DC6DD;
 			font-weight:normal;
 			text-decoration:underline;
 		}
-
+	
 		#templateBody{
 			background-color:#FFFFFF;
 			border-top:0;
@@ -184,7 +208,7 @@
 			line-height:150%;
 			text-align:left;
 		}
-
+	
 		.bodyContainer .mcnTextContent a{
 			color:#6DC6DD;
 			font-weight:normal;
@@ -239,6 +263,7 @@
 			text-align:left;
 		}
 
+
 		.footerContainer .mcnTextContent a{
 			color:#606060;
 			font-weight:normal;
@@ -252,219 +277,212 @@
 			-webkit-text-size-adjust:none !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		body{
 			width:100% !important;
 			min-width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcnTextContentContainer]{
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcnBoxedTextContentContainer]{
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcpreview-image-uploader]{
 			width:100% !important;
 			display:none !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		img[class=mcnImage]{
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcnImageGroupContentContainer]{
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageGroupContent]{
 			padding:9px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageGroupBlockInner]{
 			padding-bottom:0 !important;
 			padding-top:0 !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		tbody[class=mcnImageGroupBlockOuter]{
 			padding-bottom:9px !important;
 			padding-top:9px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcnCaptionTopContent],table[class=mcnCaptionBottomContent]{
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcnCaptionLeftTextContentContainer],table[class=mcnCaptionRightTextContentContainer],table[class=mcnCaptionLeftImageContentContainer],table[class=mcnCaptionRightImageContentContainer],table[class=mcnImageCardLeftTextContentContainer],table[class=mcnImageCardRightTextContentContainer]{
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageCardLeftImageContent],td[class=mcnImageCardRightImageContent]{
 			padding-right:18px !important;
 			padding-left:18px !important;
 			padding-bottom:0 !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageCardBottomImageContent]{
 			padding-bottom:9px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageCardTopImageContent]{
 			padding-top:18px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageCardLeftImageContent],td[class=mcnImageCardRightImageContent]{
 			padding-right:18px !important;
 			padding-left:18px !important;
 			padding-bottom:0 !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageCardBottomImageContent]{
 			padding-bottom:9px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnImageCardTopImageContent]{
 			padding-top:18px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		table[class=mcnCaptionLeftContentOuter] td[class=mcnTextContent],table[class=mcnCaptionRightContentOuter] td[class=mcnTextContent]{
 			padding-top:9px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnCaptionBlockInner] table[class=mcnCaptionTopContent]:last-child td[class=mcnTextContent]{
 			padding-top:18px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnBoxedTextContentColumn]{
 			padding-left:18px !important;
 			padding-right:18px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=columnsContainer]{
 			display:block !important;
 			max-width:600px !important;
 			width:100% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=mcnTextContent]{
 			padding-right:18px !important;
 			padding-left:18px !important;
 		}
 
-}	@media only screen and (max-width: 480px){
-
-		table[class=templateContainer],table[id=templateColumns],table[class=templateColumn]{
 
 
-			width:100% !important;
-		}
 
-}	@media only screen and (max-width: 480px){
 		h1{
 			font-size:24px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		h2{
 			font-size:20px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		h3{
 			font-size:18px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		h4{
 			font-size:16px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		table[class=mcnBoxedTextContentContainer] td[class=mcnTextContent],td[class=mcnBoxedTextContentContainer] td[class=mcnTextContent] p{
 			font-size:18px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		table[id=templatePreheader]{
 			display:block !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		td[class=preheaderContainer] td[class=mcnTextContent],td[class=preheaderContainer] td[class=mcnTextContent] p{
 			font-size:14px !important;
 			line-height:115% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		td[class=headerContainer] td[class=mcnTextContent],td[class=headerContainer] td[class=mcnTextContent] p{
 			font-size:18px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
 
+   
 		td[class=bodyContainer] td[class=mcnTextContent],td[class=bodyContainer] td[class=mcnTextContent] p{
 			font-size:18px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
 
 		td[class=leftColumnContainer] td[class=mcnTextContent],td[class=leftColumnContainer] td[class=mcnTextContent] p{
 			font-size:18px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		td[class=rightColumnContainer] td[class=mcnTextContent],td[class=rightColumnContainer] td[class=mcnTextContent] p{
 			font-size:18px !important;
 			line-height:125% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 
 		td[class=footerContainer] td[class=mcnTextContent],td[class=footerContainer] td[class=mcnTextContent] p{
 			font-size:14px !important;
 			line-height:115% !important;
 		}
 
-}	@media only screen and (max-width: 480px){
+
 		td[class=footerContainer] a[class=utilityLink]{
 			display:block !important;
 		}
