@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+		<title>Yukon Admin HTML 1.1(pages-mailbox)</title>
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <!-- favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+        <!-- bootstrap framework -->
+		<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		
+        <!-- icon sets -->
+            <!-- elegant icons -->
+                <link href="assets/icons/elegant/style.css" rel="stylesheet" media="screen">
+            <!-- elusive icons -->
+                <link href="assets/icons/elusive/css/elusive-webfont.css" rel="stylesheet" media="screen">
+            <!-- flags -->
+                <link rel="stylesheet" href="assets/icons/flags/flags.css">
+
+        <!-- page specific stylesheets -->
+
+            <!-- footable -->
+            <link href="assets/lib/footable/css/footable.core.min.css" rel="stylesheet" media="screen">
+		
+        <!-- google webfonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+        <!-- main stylesheet -->
+		<link href="assets/css/main.min.css" rel="stylesheet" media="screen" id="mainCss">
+
+        <!-- moment.js (date library) -->
+        <script src="assets/js/moment-with-langs.min.js"></script>
+
+    </head>
+    <body class="side_menu_active side_menu_expanded">
+        <div id="page_wrapper">
+
+            <!-- header -->
+            <header id="main_header">
+                <div class="container-fluid">
+                    <div class="brand_section">
+                        <a href="dashboard.html"><img src="assets/img/logo.png" alt="site_logo" width="63" height="26"></a>
+                    </div>
+                    <ul class="header_notifications clearfix">
+                        <li class="dropdown">
+                            <span class="label label-danger">8</span>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="el-icon-envelope"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar02_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor sit amet&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar03_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor sit&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar04_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar05_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor sit amet&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-xs btn-primary btn-block">All messages</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown" id="tasks_dropdown">
+                            <span class="label label-danger">14</span>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="el-icon-tasks"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li>
+                                        <div class="clearfix">
+                                            <div class="label label-warning pull-right">Medium</div>
+                                            <small class="text-muted">YUK-21 (24.07.2014)</small>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                    </li>
+                                    <li>
+                                        <div class="clearfix">
+                                            <div class="label label-danger pull-right">High</div>
+                                            <small class="text-muted">YUK-8 (26.07.2014)</small>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                    </li>
+                                    <li>
+                                        <div class="clearfix">
+                                            <div class="label label-success pull-right">Medium</div>
+                                            <small class="text-muted">DES-14 (25.07.2014)</small>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-xs btn-primary btn-block">All tasks</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <span class="label label-primary">2</span>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="el-icon-bell"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                        <small class="text-muted">20 minutes ago</small>
+                                    </li>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit&hellip;</p>
+                                        <small class="text-muted">44 minutes ago</small>
+                                    </li>
+                                    <li>
+                                        <p>Lorem ipsum dolor&hellip;</p>
+                                        <small class="text-muted">10:55</small>
+                                    </li>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-xs btn-primary btn-block">All Alerts</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="header_user_actions dropdown">
+                        <div data-toggle="dropdown" class="dropdown-toggle user_dropdown">
+                            <div class="user_avatar">
+                                <img src="assets/img/avatars/avatar08_tn.png" alt="" title="Carrol Clark (carrol@example.com)" width="38" height="38">
+                            </div>
+                            <span class="caret"></span>
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="pages-user_profile.html">User Profile</a></li>
+                            <li><a href="login_page.html">Log Out</a></li>
+                        </ul>
+                    </div>
+                    <div class="search_section hidden-sm hidden-xs">
+                        <input type="text" class="form-control input-sm">
+                        <button class="btn btn-link btn-sm" type="button"><span class="icon_search"></span></button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- breadcrumbs -->
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="dashboard.html">Home</a></li>
+		            <li><span>Pages</span></li>
+		            <li><span>Mailbox</span></li>
+		        </ul>
+            </nav>
+
+            <!-- main content -->
+            <div id="main_wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2">
+                            <button class="btn btn-info btn-outline btn-sm">Compose</button>
+                            <hr/>
+                            <div class="list-group mailbox_menu">
+                                <a href="pages-mailbox.html" class="active list-group-item">
+                                    <span class="badge badge-danger">96</span>
+                                    <span class="menu_icon icon_download"></span>Inbox
+                                </a>
+                                <a href="pages-mailbox.html" class="list-group-item">
+                                    <span class="menu_icon icon_upload"></span>Sent
+                                </a>
+                                <a href="pages-mailbox.html" class="list-group-item">
+                                    <span class="badge badge-danger">52</span>
+                                    <span class="menu_icon icon_error-circle_alt"></span>Spam
+                                </a>
+                                <a href="pages-mailbox.html" class="list-group-item">
+                                    <span class="menu_icon icon_pencil-edit"></span>Drafts
+                                </a>
+                                <a href="pages-mailbox.html" class="list-group-item">
+                                    <span class="menu_icon icon_trash_alt"></span>Trash
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-lg-10">
+                            <div class="row">
+                                <div class="col-md-5 col-md-push-7">
+                                    <input id="message_filter" type="text" class="form-control input-sm" placeholder="Search..."/>
+                                </div>
+                                <div class="col-md-5 col-md-pull-5">
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-default">Reply</button>
+                                        <button type="button" class="btn btn-default">Spam</button>
+                                        <button type="button" class="btn btn-default text-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                            <table id="mailbox_table" class="table table-yuk2 bg-fill toggle-arrow-tiny" data-page-size="20" data-filter="#message_filter">
+                                <thead>
+                                    <tr>
+                                        <th class="cw footable_toggler"></th>
+                                        <th class="cw"><input type="checkbox" id="msgSelectAll"></th>
+                                        <th class="cw"></th>
+                                        <th data-hide="phone,tablet">From</th>
+                                        <th>Subject</th>
+                                        <th data-hide="phone">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="unreaded">
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Jaren Swift</td>
+                                        <td><a href="pages-mailbox_message.html">Veritatis nihil enim quibusdam sequi eius iusto.</a></td>
+                                        <td>Mon 30.11.2015</td>
+                                    </tr>
+                                    <tr class="unreaded">
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mrs. Marilie Hettinger II</td>
+                                        <td><a href="pages-mailbox_message.html">Quasi sed doloribus ea illum ut aliquam id.</a></td>
+                                        <td>Sun 29.11.2015</td>
+                                    </tr>
+                                    <tr class="unreaded">
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Pasquale Lowe</td>
+                                        <td><a href="pages-mailbox_message.html">Aperiam a aliquam quasi dicta.</a></td>
+                                        <td>Sat 28.11.2015</td>
+                                    </tr>
+                                    <tr class="unreaded">
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Maynard Schmitt</td>
+                                        <td><a href="pages-mailbox_message.html">Reiciendis asperiores laboriosam repellat necessitatibus rerum nobis.</a></td>
+                                        <td>Fri 27.11.2015</td>
+                                    </tr>
+                                    <tr class="unreaded">
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Karen Lakin III</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptas commodi officiis nihil commodi nostrum sunt.</a></td>
+                                        <td>Thu 26.11.2015</td>
+                                    </tr>
+                                    <tr class="unreaded">
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Geoffrey McLaughlin</td>
+                                        <td><a href="pages-mailbox_message.html">Magnam laudantium modi quia.</a></td>
+                                        <td>Wed 25.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Delia Beier</td>
+                                        <td><a href="pages-mailbox_message.html">Possimus fugit quia qui exercitationem explicabo quo mollitia.</a></td>
+                                        <td>Tue 24.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Norval Raynor</td>
+                                        <td><a href="pages-mailbox_message.html">Labore qui reprehenderit odio aut assumenda consequatur ipsam.</a></td>
+                                        <td>Mon 23.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Dr. Kailey West</td>
+                                        <td><a href="pages-mailbox_message.html">Doloremque consequatur alias autem sit.</a></td>
+                                        <td>Sun 22.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Florine Effertz</td>
+                                        <td><a href="pages-mailbox_message.html">Maxime provident facere maxime enim adipisci atque omnis.</a></td>
+                                        <td>Sat 21.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Carolina Hoppe</td>
+                                        <td><a href="pages-mailbox_message.html">Iure odit et possimus non cum.</a></td>
+                                        <td>Fri 20.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Margarita Cartwright</td>
+                                        <td><a href="pages-mailbox_message.html">Vitae impedit et laborum laboriosam culpa alias fuga.</a></td>
+                                        <td>Thu 19.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Melba Dickinson IV</td>
+                                        <td><a href="pages-mailbox_message.html">Magnam culpa molestias nam est cum est.</a></td>
+                                        <td>Wed 18.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Elfrieda Moen</td>
+                                        <td><a href="pages-mailbox_message.html">Libero inventore corporis ea ut repudiandae placeat maxime.</a></td>
+                                        <td>Tue 17.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Quentin Sauer II</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptatem totam ut iure est dicta.</a></td>
+                                        <td>Mon 16.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Luella Farrell</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptatem qui cum mollitia labore qui porro doloremque.</a></td>
+                                        <td>Sun 15.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Forest Jacobs</td>
+                                        <td><a href="pages-mailbox_message.html">Quo iste cumque ipsa.</a></td>
+                                        <td>Sat 14.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Dr. Wayne Baumbach MD</td>
+                                        <td><a href="pages-mailbox_message.html">Magni occaecati qui et molestiae sunt non eius.</a></td>
+                                        <td>Fri 13.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Kaden Breitenberg DVM</td>
+                                        <td><a href="pages-mailbox_message.html">Rem aliquam neque et dolores.</a></td>
+                                        <td>Thu 12.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Dillan Hettinger</td>
+                                        <td><a href="pages-mailbox_message.html">Aut maiores in et debitis autem vero.</a></td>
+                                        <td>Wed 11.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Hardy Harber PhD</td>
+                                        <td><a href="pages-mailbox_message.html">Nisi consequuntur impedit nostrum a.</a></td>
+                                        <td>Tue 10.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Berniece Lowe</td>
+                                        <td><a href="pages-mailbox_message.html">Blanditiis debitis rerum ut quaerat recusandae.</a></td>
+                                        <td>Mon 09.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Brody Yundt</td>
+                                        <td><a href="pages-mailbox_message.html">Itaque non omnis et aliquid et.</a></td>
+                                        <td>Sun 08.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Lolita Dickens</td>
+                                        <td><a href="pages-mailbox_message.html">Similique velit esse eos nulla.</a></td>
+                                        <td>Sat 07.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Lonie Graham I</td>
+                                        <td><a href="pages-mailbox_message.html">Facilis ipsum vitae quia voluptate.</a></td>
+                                        <td>Fri 06.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Braulio Hauck</td>
+                                        <td><a href="pages-mailbox_message.html">Non natus nulla natus quidem et id et.</a></td>
+                                        <td>Thu 05.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Mrs. Cassie Erdman I</td>
+                                        <td><a href="pages-mailbox_message.html">Qui est ab iusto in accusantium consequatur.</a></td>
+                                        <td>Wed 04.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mable Nienow</td>
+                                        <td><a href="pages-mailbox_message.html">Enim libero sed sed et.</a></td>
+                                        <td>Tue 03.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Judah Johnson</td>
+                                        <td><a href="pages-mailbox_message.html">Ut et exercitationem omnis cumque velit possimus.</a></td>
+                                        <td>Mon 02.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Arvid Reinger I</td>
+                                        <td><a href="pages-mailbox_message.html">Et quaerat amet nihil ab consequatur molestiae.</a></td>
+                                        <td>Sun 01.11.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Salma Bradtke</td>
+                                        <td><a href="pages-mailbox_message.html">A non quo nulla sit.</a></td>
+                                        <td>Sat 31.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Cayla Runte I</td>
+                                        <td><a href="pages-mailbox_message.html">Illo pariatur aut molestias quos molestiae.</a></td>
+                                        <td>Fri 30.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mrs. Susanna Carroll</td>
+                                        <td><a href="pages-mailbox_message.html">Quidem velit aut consequatur harum.</a></td>
+                                        <td>Thu 29.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Kyleigh Renner PhD</td>
+                                        <td><a href="pages-mailbox_message.html">Nihil quos reprehenderit debitis deleniti.</a></td>
+                                        <td>Wed 28.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Kenya Lind</td>
+                                        <td><a href="pages-mailbox_message.html">Necessitatibus non culpa est esse.</a></td>
+                                        <td>Tue 27.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mrs. Vanessa Ferry Sr.</td>
+                                        <td><a href="pages-mailbox_message.html">Id consequuntur rem ducimus voluptatem ea dignissimos.</a></td>
+                                        <td>Mon 26.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Breana O'Hara</td>
+                                        <td><a href="pages-mailbox_message.html">Facilis suscipit et aut est officia dolorem praesentium.</a></td>
+                                        <td>Sun 25.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Myrtice Schulist</td>
+                                        <td><a href="pages-mailbox_message.html">Unde qui dolore beatae quo et eum corporis et.</a></td>
+                                        <td>Sat 24.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Libbie Monahan</td>
+                                        <td><a href="pages-mailbox_message.html">Alias eum aliquid et voluptatibus laudantium ut.</a></td>
+                                        <td>Fri 23.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Chester Daugherty</td>
+                                        <td><a href="pages-mailbox_message.html">Aliquam corrupti ipsam et ea.</a></td>
+                                        <td>Thu 22.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Loy McKenzie</td>
+                                        <td><a href="pages-mailbox_message.html">Ut ducimus veritatis cum dignissimos.</a></td>
+                                        <td>Wed 21.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Madie Goodwin</td>
+                                        <td><a href="pages-mailbox_message.html">Qui veniam qui sed est et nesciunt.</a></td>
+                                        <td>Tue 20.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mandy Fisher</td>
+                                        <td><a href="pages-mailbox_message.html">Porro officiis dolores eum non molestiae neque quod velit.</a></td>
+                                        <td>Mon 19.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Macey Heller</td>
+                                        <td><a href="pages-mailbox_message.html">Suscipit quaerat non id quae et excepturi.</a></td>
+                                        <td>Sun 18.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Myriam Gibson</td>
+                                        <td><a href="pages-mailbox_message.html">Exercitationem dicta et aliquid rerum quam hic eligendi iste.</a></td>
+                                        <td>Sat 17.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Dashawn Nader I</td>
+                                        <td><a href="pages-mailbox_message.html">Magni alias quo vel occaecati perspiciatis minima rerum.</a></td>
+                                        <td>Fri 16.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Patience Becker</td>
+                                        <td><a href="pages-mailbox_message.html">Nihil nam nulla fugiat dolore.</a></td>
+                                        <td>Thu 15.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Austen White</td>
+                                        <td><a href="pages-mailbox_message.html">Deserunt odio sint qui consequatur qui modi.</a></td>
+                                        <td>Wed 14.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Maurice Cormier</td>
+                                        <td><a href="pages-mailbox_message.html">Et recusandae inventore libero tempore provident.</a></td>
+                                        <td>Tue 13.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Loraine McGlynn</td>
+                                        <td><a href="pages-mailbox_message.html">Eos mollitia labore quidem aut.</a></td>
+                                        <td>Mon 12.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Alvis Grimes PhD</td>
+                                        <td><a href="pages-mailbox_message.html">Error et eum hic.</a></td>
+                                        <td>Sun 11.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Miss Irma Sauer V</td>
+                                        <td><a href="pages-mailbox_message.html">Animi qui nobis in ipsum voluptates.</a></td>
+                                        <td>Sat 10.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Dr. Triston Kuhn</td>
+                                        <td><a href="pages-mailbox_message.html">Veritatis iusto occaecati aperiam mollitia nam mollitia.</a></td>
+                                        <td>Fri 09.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Jayden Kovacek Sr.</td>
+                                        <td><a href="pages-mailbox_message.html">Nihil tempore cupiditate nisi eaque.</a></td>
+                                        <td>Thu 08.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Jamarcus Bernhard</td>
+                                        <td><a href="pages-mailbox_message.html">Velit a omnis eius nam excepturi.</a></td>
+                                        <td>Wed 07.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Roscoe Wuckert</td>
+                                        <td><a href="pages-mailbox_message.html">Molestiae voluptate nobis omnis officiis deserunt officiis.</a></td>
+                                        <td>Tue 06.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Miss Shanny Morissette DDS</td>
+                                        <td><a href="pages-mailbox_message.html">Harum praesentium itaque maxime cumque.</a></td>
+                                        <td>Mon 05.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Dr. Santa Rosenbaum</td>
+                                        <td><a href="pages-mailbox_message.html">Facere et placeat qui et.</a></td>
+                                        <td>Sun 04.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Dudley Conroy</td>
+                                        <td><a href="pages-mailbox_message.html">Pariatur neque tempora placeat dolores quis nulla possimus.</a></td>
+                                        <td>Sat 03.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Spencer Abshire</td>
+                                        <td><a href="pages-mailbox_message.html">Rem amet animi omnis excepturi quos.</a></td>
+                                        <td>Fri 02.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Keagan Bogisich</td>
+                                        <td><a href="pages-mailbox_message.html">Officia autem sint molestias pariatur suscipit ullam.</a></td>
+                                        <td>Thu 01.10.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Darrion Franecki DVM</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptatibus illum vel harum nisi expedita dolorem dignissimos.</a></td>
+                                        <td>Wed 30.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Flavio Lebsack V</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptates sint impedit perferendis mollitia.</a></td>
+                                        <td>Tue 29.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Joel Conroy</td>
+                                        <td><a href="pages-mailbox_message.html">Ea quam ut error illo.</a></td>
+                                        <td>Mon 28.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star marked"><span class="icon_star"></span></td>
+                                        <td>Prof. Hilbert Carter</td>
+                                        <td><a href="pages-mailbox_message.html">Labore necessitatibus totam quibusdam quod.</a></td>
+                                        <td>Sun 27.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Tre Schultz</td>
+                                        <td><a href="pages-mailbox_message.html">Rerum aut repudiandae qui molestias.</a></td>
+                                        <td>Sat 26.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Destany Cormier</td>
+                                        <td><a href="pages-mailbox_message.html">Ex voluptas assumenda maxime culpa eveniet magnam.</a></td>
+                                        <td>Fri 25.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Raphael Batz I</td>
+                                        <td><a href="pages-mailbox_message.html">Id quia error ut id at exercitationem autem deleniti.</a></td>
+                                        <td>Thu 24.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Stanford Kreiger</td>
+                                        <td><a href="pages-mailbox_message.html">Commodi cum laboriosam cupiditate quia dolor.</a></td>
+                                        <td>Wed 23.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Abbie McKenzie I</td>
+                                        <td><a href="pages-mailbox_message.html">Molestias architecto quo aut sequi dolorem.</a></td>
+                                        <td>Tue 22.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Wilburn Mante</td>
+                                        <td><a href="pages-mailbox_message.html">Animi est provident dolorum ad quia impedit.</a></td>
+                                        <td>Mon 21.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Jalon Emard MD</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptatem expedita labore aut omnis.</a></td>
+                                        <td>Sun 20.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Brown Brakus</td>
+                                        <td><a href="pages-mailbox_message.html">Ut a nam aperiam nobis.</a></td>
+                                        <td>Sat 19.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Fern Skiles PhD</td>
+                                        <td><a href="pages-mailbox_message.html">Qui ut occaecati laborum eius laudantium non inventore.</a></td>
+                                        <td>Fri 18.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Hector Welch</td>
+                                        <td><a href="pages-mailbox_message.html">Et doloribus eaque voluptas totam voluptate in voluptatem ullam.</a></td>
+                                        <td>Thu 17.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Olin Torp</td>
+                                        <td><a href="pages-mailbox_message.html">Nisi sapiente nihil voluptas ducimus.</a></td>
+                                        <td>Wed 16.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Miss Elsa Hauck</td>
+                                        <td><a href="pages-mailbox_message.html">Ut qui nihil aspernatur officiis fugiat.</a></td>
+                                        <td>Tue 15.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Reese Mosciski</td>
+                                        <td><a href="pages-mailbox_message.html">Temporibus perferendis alias rem minima consequatur dolorem optio.</a></td>
+                                        <td>Mon 14.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Kylie Schuster</td>
+                                        <td><a href="pages-mailbox_message.html">Distinctio voluptas illum deleniti rerum illum deleniti.</a></td>
+                                        <td>Sun 13.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Aniyah Johns I</td>
+                                        <td><a href="pages-mailbox_message.html">Aliquid voluptas beatae aut ut beatae.</a></td>
+                                        <td>Sat 12.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Jake Macejkovic III</td>
+                                        <td><a href="pages-mailbox_message.html">Cupiditate dignissimos consectetur accusamus at autem voluptas.</a></td>
+                                        <td>Fri 11.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Rico Hettinger</td>
+                                        <td><a href="pages-mailbox_message.html">Architecto beatae consequatur dolore tempore provident ut est.</a></td>
+                                        <td>Thu 10.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Aleen Hickle</td>
+                                        <td><a href="pages-mailbox_message.html">Id quidem porro maxime dolorum consequatur.</a></td>
+                                        <td>Wed 09.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Bret Lubowitz</td>
+                                        <td><a href="pages-mailbox_message.html">Et excepturi veniam reprehenderit et.</a></td>
+                                        <td>Tue 08.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Sibyl Hartmann</td>
+                                        <td><a href="pages-mailbox_message.html">Quo accusamus in rerum quibusdam sapiente odio.</a></td>
+                                        <td>Mon 07.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Rigoberto D'Amore</td>
+                                        <td><a href="pages-mailbox_message.html">Vel cumque est enim occaecati harum.</a></td>
+                                        <td>Sun 06.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Joanne Lueilwitz</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptas eaque dignissimos nulla beatae.</a></td>
+                                        <td>Sat 05.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Emily Gutkowski PhD</td>
+                                        <td><a href="pages-mailbox_message.html">Maxime ab ratione incidunt labore.</a></td>
+                                        <td>Fri 04.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Mr. Bruce Aufderhar</td>
+                                        <td><a href="pages-mailbox_message.html">Debitis quam necessitatibus inventore debitis et rerum consequuntur.</a></td>
+                                        <td>Thu 03.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Prof. Kristoffer Conroy</td>
+                                        <td><a href="pages-mailbox_message.html">Inventore ab voluptatem explicabo excepturi.</a></td>
+                                        <td>Wed 02.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Ms. Ashtyn Koch</td>
+                                        <td><a href="pages-mailbox_message.html">Voluptatem expedita explicabo consequuntur.</a></td>
+                                        <td>Tue 01.09.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Pedro Jones</td>
+                                        <td><a href="pages-mailbox_message.html">Ut iure dolores autem consectetur id ea.</a></td>
+                                        <td>Mon 31.08.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Jarred Olson</td>
+                                        <td><a href="pages-mailbox_message.html">Cumque explicabo assumenda voluptatem alias inventore voluptatem expedita.</a></td>
+                                        <td>Sun 30.08.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Micah Pouros</td>
+                                        <td><a href="pages-mailbox_message.html">Perferendis dolor est qui iure enim.</a></td>
+                                        <td>Sat 29.08.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Sunny Larson</td>
+                                        <td><a href="pages-mailbox_message.html">Incidunt ut corrupti adipisci totam voluptates aliquid.</a></td>
+                                        <td>Fri 28.08.2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><div><input type="checkbox" class="msgSelect"></div></td>
+                                        <td class="mbox_star"><span class="icon_star_alt"></span></td>
+                                        <td>Maiya Hoppe</td>
+                                        <td><a href="pages-mailbox_message.html">Architecto quis autem magnam ex tempore.</a></td>
+                                        <td>Thu 27.08.2015</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot class="hide-if-no-paging">
+                                    <tr>
+                                        <td colspan="6">
+                                            <ul class="pagination pagination-sm"></ul>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- main menu -->
+            <nav id="main_menu">
+                <ul>
+                    <li class="first_level">
+                        <a href="dashboard.html">
+                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_document_alt first_level_icon"></span>
+                            <span class="menu-title">Forms</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Forms</li>
+                            <li><a href="forms-regular_elements.html">Regular Elements</a></li>
+                            <li><a href="forms-extended_elements.html">Extended Elements</a></li>
+                            <li><a href="forms-gridforms.html">Gridforms</a></li>
+                            <li><a href="forms-validation.html">Validation</a></li>
+                            <li><a href="forms-wizard.html">Wizard</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_folder-alt first_level_icon"></span>
+                            <span class="menu-title">Pages</span>
+                            <span class="label label-danger">7</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Pages</li>
+                            <li><a href="pages-chat.html">Chat</a></li>
+                            <li><a href="error_404.html">Error 404</a></li>
+                            <li><a href="pages-help_faq.html">Help/Faq</a></li>
+                            <li><a href="pages-invoices.html">Invoices</a></li>
+                            <li><a class="act_nav" href="pages-mailbox.html">Mailbox</a></li>
+                            <li><a href="pages-search_page.html">Search Page</a></li>
+                            <li><a href="pages-user_list.html">User List</a></li>
+                            <li><a href="pages-user_profile.html">User Profile</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_puzzle first_level_icon"></span>
+                            <span class="menu-title">Components</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Components</li>
+                            <li><a href="components-bootstrap.html">Bootstrap</a></li>
+                            <li><a href="components-gallery.html">Gallery</a></li>
+                            <li><a href="components-grid.html">Grid</a></li>
+                            <li><a href="components-icons.html">Icons</a></li>
+                            <li><a href="components-notifications_popups.html">Notifications/Popups</a></li>
+                            <li><a href="components-typography.html">Typography</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_lightbulb_alt first_level_icon"></span>
+                            <span class="menu-title">Plugins</span>
+                            <span class="label label-danger">6</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Plugins</li>
+                            <li><a href="plugins-calendar.html">Calendar</a></li>
+                            <li><a href="plugins-charts.html">Charts</a></li>
+                            <li><a href="plugins-google_maps.html">Google Maps</a></li>
+                            <li><a href="plugins-tables_footable.html">Tables</a></li>
+                            <li><a href="plugins-vector_maps.html">Vector Maps</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="menu_toggle">
+                    <span class="icon_menu_toggle">
+                        <i class="arrow_carrot-2left toggle_left"></i>
+                        <i class="arrow_carrot-2right toggle_right" style="display:none"></i>
+                    </span>
+                </div>
+            </nav>
+
+        </div>
+
+        <!-- jQuery -->
+        <script src="assets/js/jquery.min.js"></script>
+        <!-- jQuery Cookie -->
+        <script src="assets/js/jqueryCookie.min.js"></script>
+        <!-- Bootstrap Framework -->
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <!-- retina images -->
+        <script src="assets/js/retina.min.js"></script>
+
+        <!-- Yukon Admin functions -->
+        <script src="assets/js/yukon_all.js"></script>
+
+	    <!-- page specific plugins -->
+
+            <!-- footable -->
+            <script src="assets/lib/footable/footable.min.js"></script>
+            <script src="assets/lib/footable/footable.paginate.min.js"></script>
+            <script src="assets/lib/footable/footable.filter.min.js"></script>
+
+            <script>
+                $(function() {
+                    // footable
+                    yukon_footable.p_pages_mailbox();
+
+                    yukon_mailbox.init();
+                })
+            </script>
+        
+        <!-- style switcher -->
+        <div id="style_switcher">
+            <a class="switcher_toggle"><i class="icon_cog"></i></a>
+            <div class="style_items">
+                <div class="heading_b"><span class="heading_text">Top Bar Color</span></div>
+                <ul class="clearfix" id="topBar_style_switch">
+                    <li class="sw_tb_style_0 style_active" title=""><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_1" title="topBar_style_1"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_2" title="topBar_style_2"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_3" title="topBar_style_3"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_4" title="topBar_style_4"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_5" title="topBar_style_5"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_6" title="topBar_style_6"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_7" title="topBar_style_7"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_8" title="topBar_style_8"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_9" title="topBar_style_9"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_10" title="topBar_style_10"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_11" title="topBar_style_11"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_12" title="topBar_style_12"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_13" title="topBar_style_13"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_14" title="topBar_style_14"><span class="icon_check_alt2"></span></li>
+                </ul>
+            </div>
+            <div class="style_items hidden-sm hidden-md" id="layout_switch">
+                <div class="heading_b"><span class="heading_text">Layout</span></div>
+                <select class="form-control input-sm" id="layout_style_switch">
+                    <option value="full_width">Full Width</option>
+                    <option value="fixed">Fixed</option>
+                </select>
+            </div>
+        </div>
+
+    </body>
+</html>

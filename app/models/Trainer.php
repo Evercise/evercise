@@ -49,6 +49,16 @@ class Trainer extends \Eloquent
     }
 
     /**
+     * @param $user
+     */
+    public static function unapprove($user)
+    {
+
+        Static::where('user_id', $user->id)->update(['confirmed' => 0]);
+
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function User()

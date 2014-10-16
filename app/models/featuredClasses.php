@@ -23,4 +23,9 @@ class FeaturedClasses extends \Eloquent
         return $this->belongsTo('evercisegroup', 'evercisegroup_id');
     }
 
+    public function featureGroups($ids)
+    {
+
+    }
+
 }

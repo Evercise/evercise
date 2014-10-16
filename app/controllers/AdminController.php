@@ -1,14 +1,13 @@
 <?php
 
 
-
 /**
  * Class AdminController
  */
 class AdminController extends \BaseController {
 
 
-    /**
+	/**
 	 * show all pending trainers.
 	 *
 	 * @return Response
@@ -30,7 +29,7 @@ class AdminController extends \BaseController {
 
         Trainer::approve($user);
 
-        return Redirect::route('admin.pending');
+        return Redirect::route('admin.page', ['pendingtrainers']);
 	}
 
     /**
@@ -56,7 +55,7 @@ class AdminController extends \BaseController {
 
 		Withdrawalrequest::find($withdrawal_id)->markProcessed();
 
-		return Redirect::route('admin.pending_withdrawal');
+		return Redirect::route('admin.page', ['pendingwithdrawals']);
 
 	}
 
@@ -84,7 +83,7 @@ class AdminController extends \BaseController {
 		if($del == 'delete_all')
 			file_put_contents('../app/storage/logs/laravel.log', '');
 
-	    return Redirect::route('admin.log');
+	    return Redirect::to('admin/log');
 	}
 
     /**
@@ -144,19 +143,6 @@ class AdminController extends \BaseController {
 
 	}
 
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function showUsers()
-	{
-			$sentryUsers = Sentry::findAllUsers();
-
-			$users = User::with('evercisegroups')->get();
-		
-	    return View::make('admin.users')
-	    ->with('users', $users)
-	    ->with('sentryUsers', $sentryUsers);
-	}
 
     public function editClasses($id)
     {
@@ -171,7 +157,112 @@ class AdminController extends \BaseController {
 
         Evercisegroup::adminMakeClassFeatured($id, Input::get('featured'));
 
-        return Redirect::route('admin.groups');
+		return Response::json(['callback' => 'successAndRefresh']);
 
     }
+
+    public function yukon($page = 'dashboard')
+    {
+		//$users = User::with('evercisegroups')->where('display_name', 'LIKE', 'Peter_ATP')->get();
+		//return $page;
+		//return $users;
+
+
+        return View::make('admin.yukonhtml.index')
+            ->with('admin_version', '1.0')
+            ->with('sPage', '1')
+            ->with('includePage', View::make('admin.'.$page));
+
+    }
+
+	public function logInAs()
+	{
+		$user = Sentry::findUserById(Input::get('user_id'));
+		Sentry::login($user);
+
+		return Redirect::route('users.edit');
+	}
+
+	public function resetPassword()
+	{
+		$user = Sentry::findUserById(Input::get('user_id'));
+
+		$reset_code = $user->getResetPasswordCode();
+		$user->sendForgotPasswordEmail($reset_code);
+		//$newPassword = $user->resetPassword();
+
+		return Response::json(['callback' => 'adminPopupMessage', 'message' => 'Password reset.  Email:'.$user->email]);
+	}
+
+	public function searchUsers()
+	{
+		$searchTerm = Input::get('search');
+		$sentryUsers = Sentry::findAllUsers();
+
+		$users = User::with('evercisegroups')->where('display_name', 'like', $searchTerm);
+
+		return View::make('admin.users')
+			->with('users', $users)
+			->with('sentryUsers', $sentryUsers);
+	}
+
+	public function editSubcategories()
+	{
+		$categoryChanges = Input::get('update_categories');
+		$assNumbers = explode(',', Input::get('update_associations'));
+
+		$associations = [];
+
+		foreach($assNumbers as $assId)
+		{
+			array_push($associations, [$assId => Input::get('associations_' . $assId)]);
+		}
+
+
+		Subcategory::editSubcategoryCategories($categoryChanges);
+		Subcategory::editAssociations($associations);
+
+		//return Response::json(['callback' => 'adminPopupMessage', 'message' => count($associations).' : '.Input::get('associations_'.'3')]);
+		return Response::json(['callback' => 'successAndRefresh']);
+
+	}
+
+	public function addSubcategory()
+	{
+		$newCategoryName = Input::get('new_subcategory');
+
+		Subcategory::create(['name' => $newCategoryName]);
+
+		return Response::json(['callback' => 'successAndRefresh']);
+
+	}
+
+	public function unapproveTrainer()
+	{
+		$user = Sentry::findUserById(Input::get('user_id'));
+
+		Trainer::unapprove($user);
+
+		return Response::json(['callback' => 'successAndRefresh']);
+
+	}
+
+	public function editGroupSubcats()
+	{
+		$groupIds = explode(',', Input::get('update_categories'));
+
+		$groupSubcats = [];
+
+		foreach($groupIds as $groupId)
+		{
+			array_push($groupSubcats, [$groupId => Input::get('categories_' . $groupId)]);
+			if($eg = Evercisegroup::find($groupId))
+				$eg->adminMakeClassFeatured( Input::get('featured_'.$groupId) );
+		}
+		Evercisegroup::editSubcats($groupSubcats);
+
+
+		return Response::json(['callback' => 'successAndRefresh']);
+		//return Response::json(['callback' => 'adminPopupMessage', 'message' => 'done']);
+	}
 }

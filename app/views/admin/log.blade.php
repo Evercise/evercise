@@ -1,6 +1,4 @@
-@extends('layouts.master')
 
-@section('content')
 	<div class="full-width">
 	{{ Form::open(array('id' => 'search-by-location', 'url' => 'admin/log', 'method' => 'post', 'class' => 'search-form')) }}
 	{{ Form::hidden( 'del' , 'delete_all') }}
@@ -11,4 +9,3 @@
 	{{ $log }}
 	</p>
 	</div>
-@stop
