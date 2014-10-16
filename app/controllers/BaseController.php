@@ -21,6 +21,19 @@ class BaseController extends Controller {
 			$userImage =  $this->user->image ? ('profiles'. '/'.$this->user->directory.'/'.$this->user->image) : 'img'.'/'.'no-user-img.jpg' ;
 		}
 		View::share('userImage', isset($userImage) ? $userImage : '');
+
+
+
+
+          /* Testing */
+          /*
+          $content = 'This is i dont know what <br/> <br/>
+        [single_class type=search param=tango nearme=true] and i dont know what
+          maybe a category: <br/> <br/> <br/>';
+
+          echo Shortcode::compile($content);
+        die();
+          */
 	  }
 
 

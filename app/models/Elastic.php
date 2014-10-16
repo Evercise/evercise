@@ -122,6 +122,37 @@ class Elastic
     }
 
 
+    public function getSingle($id = 0)
+    {
+        $searchParams['index'] = $this->elastic_index;
+        $searchParams['type'] = $this->elastic_type;
+
+        $searchParams['size'] = 1;
+        $searchParams['from'] = 0;
+
+        if ($id > 0) {
+            $searchParams['body']['query'] = [
+                'ids' => ['values' => [$id]]
+            ];
+        } else {
+            $searchParams['body']['sort']['_script'] = [
+                'script' => rand(1, 10000),
+                'type'   => 'number',
+                'params' => [],
+                'order'  => 'asc'
+            ];
+        }
+
+        $result = $this->elasticsearch->search($searchParams)['hits'];
+
+        $result_object = json_decode(json_encode($result), false);
+
+
+        return $result_object;
+
+    }
+
+
     /**
      * Encode Latitude and Longtitude into GEOHASH
      *

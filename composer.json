@@ -11,7 +11,6 @@
         "laracasts/utilities":"1.*",
         "intervention/image": "2.0",
         "toin0u/geocoder-laravel": "0.4.0",
-        "toin0u/geotools-laravel": "~0.2",
         "gloudemans/calendar": "dev-master",
         "barryvdh/laravel-dompdf": "0.4.*",
         "thujohn/share": "dev-master",
@@ -29,7 +28,9 @@
         "mixpanel/mixpanel-php" : "2.*",
         "tag-planet/universal-analytics": "dev-master",
         "shift31/laravel-elasticsearch": "1.0.*@dev",
-        "toin0u/geotools-laravel": "0.2.*"
+        "toin0u/geotools-laravel": "0.2.*",
+        "pingpong/shortcode": "1.0.*"
+
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",

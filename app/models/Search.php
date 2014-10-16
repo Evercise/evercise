@@ -41,6 +41,14 @@ class Search
     }
 
 
+    public function getSingle($id = 0) {
+
+        $results = $this->elastic->getSingle($id);
+
+        return $this->formatResults($results);
+    }
+
+
     public function formatResults($results)
     {
         $all_results = [];
@@ -128,6 +136,53 @@ class Search
         return $mapResult;
 
     }
+
+
+    public function cleanSingleResults($results)
+    {
+
+
+        $mapResult = [];
+
+        $not_needed = [
+            'global'  => [
+                'created_at',
+                'updated_at',
+                'venue_id',
+            ],
+            'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
+            'ratings' => ['user_id', 'comment']
+        ];
+        foreach ($results->hits as $row) {
+
+            /** UNSET everything else that we don't need! */
+
+            foreach ($not_needed['global'] as $n) {
+                if (isset($row->{$n})) {
+                    unset($row->{$n});
+                }
+            }
+
+            foreach ($not_needed['venue'] as $n) {
+                if (isset($row->venue->{$n})) {
+                    unset($row->venue->{$n});
+                }
+            }
+
+
+            foreach ($not_needed['ratings'] as $n) {
+                if (isset($row->ratings->{$n})) {
+                    unset($row->ratings->{$n});
+                }
+            }
+
+            $mapResult[] = $row;
+        }
+
+        return $mapResult;
+
+    }
+
 
 
 }
