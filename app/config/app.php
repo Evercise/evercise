@@ -122,6 +122,9 @@ return array(
         'TagPlanet\UniversalAnalytics\UniversalAnalyticsServiceProvider',
         'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
         'Toin0u\Geotools\GeotoolsServiceProvider',
+        'Pingpong\Shortcode\ShortcodeServiceProvider',
+
+
     ),
     /*
     |--------------------------------------------------------------------------
@@ -199,7 +202,8 @@ return array(
         'MailchimpWrapper'   => 'Hugofirth\Mailchimp\Facades\MailchimpWrapper',
         'UniversalAnalytics' => 'TagPlanet\UniversalAnalytics\UniversalAnalyticsFacade',
         'ES'                 => 'Elasticsearch\Client',
-        'Geotools'           => 'Toin0u\Geotools\GeotoolsFacade',
+        'Shortcode'       => 'Pingpong\Shortcode\Facades\Shortcode',
+
     ),
 
 );

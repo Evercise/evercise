@@ -539,19 +539,15 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
-     * @param $id
+     * @param $featured
      */
-    public static function adminMakeClassFeatured($id)
+    public function adminMakeClassFeatured( $featured )
     {
-        if (Input::get('featured')) {
-            $featured = FeaturedClasses::firstOrCreate(['evercisegroup_id' => $id]);
-
-            $featured->evercisegroup_id = $id;
-
-            $featured->save();
-
-        } else {
-            FeaturedClasses::where('evercisegroup_id', $id)->delete();
+        if ($featured)
+            FeaturedClasses::firstOrCreate(['evercisegroup_id' => $this->id]);
+        else {
+            $id = FeaturedClasses::where('evercisegroup_id', $this->id)->pluck('id');
+            if($id) FeaturedClasses::destroy($id);
         }
     }
 
@@ -677,7 +673,6 @@ class Evercisegroup extends \Eloquent
                     ->where(DB::raw($haversine), '<=', $radius);
             }
         );
-
     }
 
     /**
@@ -689,10 +684,17 @@ class Evercisegroup extends \Eloquent
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function isFeatured()
+    {
+        return FeaturedClasses::where('evercisegroup_id', $this->id)->first();
+    }
+
+    /**
      * @return mixed
      */
     public function tester()
-
     {
         return $this->belongsTo('Users_groups', 'user_id', 'user_id')->where('group_id', 5);
     }
@@ -1105,6 +1107,32 @@ class Evercisegroup extends \Eloquent
         )
             ->find($evercisegroupId);
 
+    }
+
+    public static function editSubcats($subcatChanges)
+    {
+
+        foreach($subcatChanges as $subcat)
+        {
+            foreach($subcat as $key => $subcatData) {
+                $evercisegroup = Static::find($key);
+                if($evercisegroup) {
+                    $evercisegroup->subcategories()->detach();
+                    if (!empty($subcatData)) {
+                        $subcatNames = explode(',', $subcatData);
+                        $subcatIds = [];
+                        foreach($subcatNames as $subcatName)
+                        {
+                            array_push($subcatIds, Subcategory::where('name', $subcatName)->pluck('id'));
+                        }
+                        $evercisegroup->subcategories()->attach($subcatIds);
+
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
 

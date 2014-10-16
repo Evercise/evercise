@@ -1,0 +1,30 @@
+/* Login Page */
+
+	body.login_page {
+		background: #ecf0f1;
+		padding: 40px 10px 0;
+        .heading_a {
+            margin-bottom: 20px;
+        }
+        .login_container {
+            width: 400px;
+            margin: 0 auto;
+            position: relative;
+            max-width: 100%;
+            > form {
+                width: 400px;
+                max-width: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                padding: 20px;
+                background: #fff;
+                border: 1px solid #ddd;
+            }
+        }
+        @media @screen-sm-max {
+            [class*="col-"] {
+                margin-bottom: 6px;
+            }
+        }
+	}

@@ -449,6 +449,16 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         );
     }
 
+    public function sendForgotPasswordEmail($reset_code)
+    {
+
+        \Event::fire('user.forgot', array(
+            'email' => $this->email,
+            'displayName' => $this->display_name,
+            'resetCode' => $reset_code
+        ));
+    }
+
     /**
      * @param $newsletter
      * @param $list_id
@@ -516,7 +526,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function Trainer()
+    public function trainer()
     {
         return $this->hasOne('Trainer');
     }
@@ -630,6 +640,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         }
 
         return;
+    }
+    public function resetPassword()
+    {
+        $newPassword = Functions::randomPassword(7);
+        $resetPasswordCode = $this->getResetPasswordCode();
+        $this->attemptResetPassword($resetPasswordCode, $newPassword);
+
+        return $newPassword;
     }
 
 }

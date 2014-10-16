@@ -17,6 +17,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
     app_path().'/models',
     app_path().'/events',
+    app_path().'/widgets',
     app_path().'/composers',
 	app_path().'/database/seeds',
 
@@ -110,3 +111,16 @@ require app_path().'/composers.php';
 
 require app_path().'/observables.php';
 
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Require The ShortCode Classes
+|--------------------------------------------------------------------------
+|
+| Load a file containing the observables
+|
+*/
+
+require app_path().'/shortcodes.php';

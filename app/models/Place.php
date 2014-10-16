@@ -6,7 +6,16 @@
 class Place extends \Eloquent
 {
 
-    protected $fillable = array('name', 'place_type', 'lng', 'lat', 'min_radius', 'zone', 'poly_coordinates', 'coordinate_type');
+    protected $fillable = array(
+        'name',
+        'place_type',
+        'lng',
+        'lat',
+        'min_radius',
+        'zone',
+        'poly_coordinates',
+        'coordinate_type'
+    );
 
     protected $table = 'places';
 
@@ -78,14 +87,12 @@ class Place extends \Eloquent
             }
 
 
-
-
             $name = implode(' ', $location);
 
             $location = Str::slug($name);
 
-            $name .= ($is_london && strpos($name, 'london') === false ? ' London':'');
-            $name .= (!$is_area && strpos($name, 'station') === false ? ' Station':'');
+            $name .= ($is_london && strpos($name, 'london') === false ? ' London' : '');
+            $name .= (!$is_area && strpos($name, 'station') === false ? ' Station' : '');
 
             $return = [];
 
@@ -110,11 +117,11 @@ class Place extends \Eloquent
 
             $return[] = $location;
 
-            /** @var  $return  REMOVE EMPTY Array fields*/
+            /** @var  $return  REMOVE EMPTY Array fields */
             $return = array_filter($return);
 
             $location_url = implode('/', $return);
-            if(substr($location_url, -4) == 'area') {
+            if (substr($location_url, - 4) == 'area') {
                 $location_url = str_replace('/area', '', $location_url);
             }
 
@@ -124,9 +131,9 @@ class Place extends \Eloquent
     }
 
 
-    public static function checkLocation($url, $name, $type, $is_london=false, $is_zip = false)
+    public static function checkLocation($url, $name, $type, $is_london = false, $is_zip = false)
     {
-        $url = rtrim((string)$url,'/');
+        $url = rtrim((string) $url, '/');
         $link = Link::where('permalink', $url)->first();
 
 
@@ -139,7 +146,7 @@ class Place extends \Eloquent
             $link = new Link(['permalink' => $url, 'type' => $type]);
 
             $data = [
-                'name'             => (string)$name,
+                'name'             => (string) $name,
                 'place_type'       => 1,
                 'lng'              => $geo['lng'],
                 'lat'              => $geo['lat'],
@@ -160,7 +167,20 @@ class Place extends \Eloquent
 
     public static function getGeo($location, $is_london, $is_zip)
     {
+        $geocode = self::getLocation($location, $is_london, $is_zip);
 
+        if($geocode) {
+            return ['lat' => $geocode->getLatitude(), 'lng' => $geocode->getLongitude()];
+
+        } else {
+            /** Since this will return a 0 0 in the middle of the ocean.  */
+            /** Lets set london */
+            return ['lat' => 51.517961, 'lng' => - 0.126318];
+        }
+    }
+
+    public static function getLocation($location, $is_london, $is_zip)
+    {
         $geocoder = new \Geocoder\Geocoder();
         $adapter = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 
@@ -175,17 +195,12 @@ class Place extends \Eloquent
         $geocoder->registerProvider($chain);
 
         try {
-
-            $addition = $location.($is_zip ? ' UK':'').($is_london ? ' London':'');
-
+            $addition = $location . ($is_zip ? ' UK' : '') . ($is_london ? ' London' : '');
             $geocode = $geocoder->geocode($addition);
-
-            return ['lat' => $geocode->getLatitude(), 'lng' => $geocode->getLongitude()];
+            return $geocode;
 
         } catch (Exception $e) {
-            /** Since this will return a 0 0 in the middle of the ocean.  */
-            /** Lets set london */
-            return ['lat' => 51.517961, 'lng' => -0.126318];
+            return false;
         }
     }
 
