@@ -1,7 +1,8 @@
 <?php namespace composers;
 
-use JavaScript;
 use Evercisegroup;
+use Input;
+use Subcategory;
 
 class AdminGroupComposer {
 
@@ -9,20 +10,22 @@ class AdminGroupComposer {
     {
         //JavaScript::put(['initSearchByName' => 1 ]);
 
-        $cats = ( \Subcategory::lists( 'name') );
+        $cats = ( Subcategory::lists( 'name') );
         $categories = json_encode($cats);
 
-        JavaScript::put(['category_list' => 'cockmuncherrrr!' ]);
+        $status = Input::get('status');
 
-        $status = \Input::get('status');
-
-
+        $searchTerm = Input::get('search');
 
         $selectedGroups = [];
 
         if ($status == 'active')
         {
-            $futuregroups = Evercisegroup::has('futuresessions')->get();
+            if ($searchTerm != "")
+                $futuregroups = Evercisegroup::has('futuresessions')->where('name', 'LIKE', '%'.$searchTerm.'%')->get();
+            else
+                $futuregroups = Evercisegroup::has('futuresessions')->get();
+
             foreach($futuregroups as $futuregroup)
             {
                 array_push($selectedGroups, $futuregroup);
@@ -33,7 +36,12 @@ class AdminGroupComposer {
             $pastGroupIds = [];
             $futureGroupIds = [];
             $futuregroups = Evercisegroup::has('futuresessions')->get();
-            $pastgroups = Evercisegroup::has('pastsessions')->get();
+
+            if ($searchTerm != "")
+                $pastgroups = Evercisegroup::has('pastsessions')->where('name', 'LIKE', '%'.$searchTerm.'%')->get();
+            else
+                $pastgroups = Evercisegroup::has('pastsessions')->get();
+
             foreach($pastgroups as $pastgroup) array_push($pastGroupIds, $pastgroup->id);
             foreach($futuregroups as $futuregroup) array_push($futureGroupIds, $futuregroup->id);
             foreach($pastgroups as $pastgroup)
@@ -44,7 +52,11 @@ class AdminGroupComposer {
         }
         else
         {
-            $evercisegroups = Evercisegroup::get();
+            if ($searchTerm != "")
+                $evercisegroups = Evercisegroup::where('name', 'LIKE', '%'.$searchTerm.'%')->get();
+            else
+                $evercisegroups = Evercisegroup::get();
+
             foreach($evercisegroups as $evercisegroup)
             {
                 array_push($selectedGroups, $evercisegroup);
@@ -54,6 +66,8 @@ class AdminGroupComposer {
 
         return $view
             ->with('categories', $categories)
-            ->with('selectedGroups', $selectedGroups);
+            ->with('selectedGroups', $selectedGroups)
+            ->with('status', $status)
+            ->with('search', $searchTerm);
     }
 }

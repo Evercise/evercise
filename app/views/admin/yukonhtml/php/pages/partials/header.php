@@ -2,7 +2,7 @@
             <header id="main_header">
                 <div class="container-fluid">
                     <div class="brand_section">
-                        <a href="dashboard.html"><img src="assets/img/logo.png" alt="site_logo" width="63" height="26"></a>
+                        <a href="dashboard"><img src="assets/img/logo.png" alt="site_logo" width="63" height="26"></a>
                     </div>
                     <ul class="header_notifications clearfix">
                         <li class="dropdown">
@@ -36,7 +36,7 @@
                     <div class="header_user_actions dropdown">
                         <div data-toggle="dropdown" class="dropdown-toggle user_dropdown">
                             <div class="user_avatar">
-                                <img src="assets/img/avatars/avatar08_tn.png" alt="" title="Carrol Clark (carrol@example.com)" width="38" height="38">
+                                <img src="../<?php echo $userImage ?>" alt="" title="Carrol Clark (carrol@example.com)" width="38" height="38">
                             </div>
                             <span class="caret"></span>
                         </div>

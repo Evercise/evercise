@@ -90,8 +90,18 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
         <script src="assets/lib/select2/select2.min.js"></script>
 
         <script>
+            function getURLParameter(name) {
+                return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+            }
 
             var category_updates = {};
+
+            var urlParams = {};
+            urlParams.status = getURLParameter('status');
+            urlParams.search = getURLParameter('search');
+            urlParams.order = getURLParameter('order');
+
+            var pageName = (window.location.href.split('/').pop()).split('?')[0];
 
             $( document ).ready( function(){
                 $('#select_user_type').change(function(){
@@ -102,7 +112,8 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                 });
 
                 $('#select_status').change(function(){
-                    window.location.href = window.location.pathname +'?status='+ $(this).val();
+                    urlParams.status = $(this).val();
+                    reloadWithParams();
                 });
 
                 initPut('{"selector": ".reset_password"}');
@@ -115,12 +126,17 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     e.stopPropagation();
                     trace($(this).attr('id'));
                 });*/
+
+                // ----- TRAINERS, GROUPS -----
                 $('#search button').click(function(e){
                     e.stopPropagation();
-                    trace($('#search input').val());
-                    window.location.href = 'trainers?search='+$('#search input').val();
+                    urlParams.search = $('#search input').val();
+                    reloadWithParams();
+
+                   window.location.href = linkTo;
                 });
 
+                // ----- SUBCATEGORIES -----
                 $('#category_list select').change(function(){
                     //trace( $(this).val() );
                     //trace( $(this).attr('name') );
@@ -168,6 +184,7 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     }
                 });
 
+                // ----- CATEGORIES -----
                 $('.categories_label').click(function(e){
                     //trace(category_list);
 
@@ -194,11 +211,25 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     update_categories.val(update_categories.val() + $(this).data('id')+',');
                 });
 
+                $('#sort_by_name').click(function(e){
+                    urlParams.order = 'name';
+                    reloadWithParams();
+                });
+
                 initPut('{"selector": "#edit_subcategories"}');
                 initPut('{"selector": "#add_subcategory"}');
                 initPut('{"selector": "#edit_classes"}');
 
             });
+
+            function reloadWithParams()
+            {
+                var linkTo = pageName+'?'
+                    + (urlParams.status != '' ? 'status='+urlParams.status+'&' : '')
+                    + (urlParams.order ? 'order='+urlParams.order+'&' : '')
+                    + (urlParams.search != '' ? 'search='+urlParams.search+'' : '');
+                window.location.href = linkTo;
+            }
 
         </script>
 
