@@ -7,3 +7,4 @@ $.fn.exists = function(callback) {
 
     return this;
 };
+

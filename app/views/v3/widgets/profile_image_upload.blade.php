@@ -4,7 +4,7 @@
     </div>
     <div class="col-sm-3">
         <div class="image-placeholder">
-            <img data-src="holder.js/130x130/upload" class="img-thumbnail">
+            <img data-src="holder.js/130x130/upload" class="img-thumbnail holder">
         </div>
     </div>
     <div class="col-sm-9 mt25">

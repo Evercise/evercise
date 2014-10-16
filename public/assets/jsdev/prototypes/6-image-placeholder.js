@@ -1,12 +1,12 @@
-var Placeholder = function () {
+var ImagePlaceholder = function () {
     this.colour = '#ebedee';
     this.size = 0;
     this.themes();
 
 }
 
-Placeholder.prototype = {
-    constructor: Placeholder,
+ImagePlaceholder.prototype = {
+    constructor: ImagePlaceholder,
     themes: function(){
         self = this;
         Holder.addTheme("upload", {

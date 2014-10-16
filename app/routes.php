@@ -14,11 +14,7 @@
 
 // temporary routes for new layouts
 
-Route::get('/register', ['as' => 'register',  function()
-    {
-        return View::make('v3.users.create');
-    }]
-);
+
 Route::get('/popular', ['as' => 'popular',  function()
     {
         return View::make('v3.home');
@@ -59,11 +55,7 @@ Route::get('/finished-trainer', ['as' => 'finished_trainer',  function()
         return View::make('v3.trainers.complete');
     }]
 );
-Route::get('/finished-user', ['as' => 'finished_user',  function()
-    {
-        return View::make('v3.users.complete');
-    }]
-);
+
 Route::get('/create-class', ['as' => 'create-class',  function()
     {
         return View::make('v3.classes.create');
@@ -87,21 +79,14 @@ Route::get(
     }
 );
 
+// ajax prefix
+Route::group( [ 'prefix' => 'ajax' ], function()
+{
+    Route::post('/users-store', array('as' => 'users.store', 'uses' => 'ajax\UsersController@store'));
+});
+
 /* Show home page */
 Route::get('/', array('as' => 'home', 'uses' => 'HomeController@showWelcome'));
-
-/* Resource routes */
-Route::resource('users', 'UsersController');
-Route::resource('sessions', 'SessionsController');
-Route::resource('ratings', 'RatingsController');
-//Route::resource('evercisegroups', 'EvercisegroupsController');
-//Route::resource('trainers', 'TrainersController');
-Route::resource('payment', 'PaypalPaymentController');
-Route::resource('stripe', 'StripePaymentController');
-Route::resource('wallets', 'WalletsController');
-Route::resource('referrals', 'ReferralsController');
-Route::resource('landings', 'LandingsController');
-Route::resource('venues', 'VenuesController');
 
 // auth / login
 
@@ -129,6 +114,10 @@ Route::get(
         }
     )
 );
+
+
+
+
 Route::get('login/fb/{redirect?}', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
 Route::post('auth/checkout', array('as' => 'auth.checkout', 'uses' => 'SessionsController@checkout'));
 
@@ -138,7 +127,13 @@ Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthContr
 Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot'));
 
 //  Users
-Route::get('users/create', array('as' => 'users.create', 'uses' => 'UsersController@create'));
+Route::get('/register', array('as' => 'register', 'uses' => 'UsersController@create'));
+Route::get('/finished-user', ['as' => 'finished.user.registration',  function()
+    {
+        return View::make('v3.users.complete');
+    }]
+);
+
 Route::get('users/{id}/edit/{tab}', array('as' => 'users.edit.tab', 'uses' => 'UsersController@edit'));
 Route::get(
     '/users/{display_name}/activate/{code}',

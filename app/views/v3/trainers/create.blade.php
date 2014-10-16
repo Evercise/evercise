@@ -11,7 +11,7 @@
                 <div class="text-center mb50">
                     <strong>Your account has been created, just a few more deatils and then you can create classes.</strong>
                 </div>
-                {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'mb50', 'role' => 'form'] ) }}
+                {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
                    <div class="form-group mb50">
                         @include('v3.widgets.profile_image_upload')
                    </div>

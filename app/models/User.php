@@ -85,14 +85,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $dateBefore
      * @return \Illuminate\Validation\Validator
      */
-    public static function validateUserSignup($inputs, $dateAfter, $dateBefore)
+    public static function validateUserSignup($inputs/*, $dateAfter, $dateBefore*/)
     {
-        Validator::extend(
-            'has',
-            function ($attr, $value, $params) {
-                return ValidationHelper::hasRegex($attr, $value, $params);
-            }
-        );
+
 
         // validation rules for input field on register form
         $validator = Validator::make(
@@ -101,14 +96,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'display_name' => 'required|max:20|min:5|unique:users',
                 'first_name' => 'required|max:15|min:2',
                 'last_name' => 'required|max:15|min:2',
-                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                //'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 'email' => 'required|email|unique:users',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'password' => 'required|min:6|max:32',
                 'phone' => 'numeric',
-            ],
-            ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
-
-
+            ]
         );
         return $validator;
     }
@@ -124,6 +116,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         if ($validator->fails()) {
             $result =
                 [
+                    'callback' => 'error',
                     'validation_failed' => 1,
                     'errors' => $validator->errors()->toArray()
                 ];
@@ -134,6 +127,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             // is user has filled in the area code but no number fail validation
             $result =
                 [
+                    'callback' => 'error',
                     'validation_failed' => 1,
                     'errors' => ['areacode' => 'Please select a country']
                 ];
@@ -321,8 +315,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
             }
         } else {
-            $result = Redirect::route((Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '.edit.tab', [$user->id, 'evercoins'])
-                    ->with('notification',$message );
+            $result = Redirect::route('finished.user.registration');
 
         }
 
@@ -381,9 +374,12 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function validUserSignup($inputs)
     {
-        list($dateBefore, $dateAfter) = self::validDatesUserDob();
+       /* date of birth not been used in v3
+       * list($dateBefore, $dateAfter) = self::validDatesUserDob();
+       */
 
-        $validator = self::validateUserSignup($inputs, $dateAfter, $dateBefore);
+
+       $validator = self::validateUserSignup($inputs/*, $dateAfter, $dateBefore*/);
 
         return self::handleUserValidation($inputs, $validator);
 
@@ -409,7 +405,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $display_name = $inputs['display_name'];
         $first_name = $inputs['first_name'];
         $last_name = $inputs['last_name'];
-        $dob = $inputs['dob'];
         $email = $inputs['email'];
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
@@ -421,7 +416,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'display_name' => $display_name,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'dob' => $dob,
                 'email' => $email,
                 'area_code' => $area_code,
                 'phone' => $phone,

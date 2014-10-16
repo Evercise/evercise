@@ -30,7 +30,11 @@
         var masonry_enabled = (typeof $().masonry == 'function');
         window.masonry_enabled || document.write('<script src="/assets/js/masonry.min.js">\x3C/script>')
     </script>
-
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+    <script>
+        var bootsrap_validation_enabled = (typeof $().bootstrapValidator == 'function');
+        window.bootsrap_validation_enabled || document.write('<script src="/assets/js/bootstrapValidator.min.js">\x3C/script>')
+    </script>
     <script>
         var BASE_URL = '{{ URL::to('/') }}';
         var AJAX_URL = '{{ URL::to('/ajax/') }}';
@@ -44,7 +48,7 @@
 </head>
 <body>
     <!-- include app navigation  -->
-    @include('v3.layouts.navigation-user')
+    {{ isset($header) ? $header : '' }}
     <!-- include page body -->
     @yield('body')
     <!-- include footer -->

@@ -5,6 +5,7 @@ $.ajaxSetup({
 });
 
 $(function(){
+
     // initialise nav bar is nav bar exists
     $('.navbar').exists(function() {
         new Navigation( this , $('.hero-nav-change'), $('.sticky-fixed-nav') );
@@ -32,6 +33,15 @@ $(function(){
         $(this).mCustomScrollbar();
     })
 
-    new Placeholder();
+    $('.holder').exists(function(){
+        new ImagePlaceholder();
+    })
+
+    $('#register-form').exists(function(){
+        self = this;
+        new Validation(this);
+    })
+
+
 
 });

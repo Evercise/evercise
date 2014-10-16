@@ -1,40 +1,57 @@
 <?php
 
-class BaseController extends Controller {
+class BaseController extends Controller
+{
 
-	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
+    /**
+     * Setup the layout used by the controller.
+     *
+     * @return void
+     */
 
-	public $user;
+    public $user;
 
-	public function __construct()
-	  {
+    public function __construct()
+    {
 
         $this->beforeFilter('csrf', array('on' => 'post'));
 
-	  	if (Sentry::check())
-	  	{
-			$this->user=  Sentry::getUser();
-			$userImage =  $this->user->image ? ('profiles'. '/'.$this->user->directory.'/'.$this->user->image) : 'img'.'/'.'no-user-img.jpg' ;
-		}
-		View::share('userImage', isset($userImage) ? $userImage : '');
-	  }
+        if (Sentry::check()) {
+            $this->user = Sentry::getUser();
+            $userImage = $this->user->image ? ('profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
+
+            View::share('header', $this->setupHeader('user'));
+        } else {
+            View::share('header', $this->setupHeader('none'));
+        }
+        View::share('userImage', isset($userImage) ? $userImage : '');
+    }
+
+    protected function setupHeader($user_type = 'none')
+    {
+
+        switch ($user_type) {
+            case 'none':
+                return View::make('v3.layouts.navigation')->render();
+                break;
+
+            case 'user':
+                return View::make('v3.layouts.navigation-user')->render();
+                break;
+        }
+
+    }
+
+    protected function setupLayout()
+    {
+
+        View::share('user', $this->user);
 
 
-	protected function setupLayout()
-	{
-
-		View::share('user', $this->user);
-
-
-		if ( ! is_null($this->layout))
-		{
-			$this->layout = View::make($this->layout);
-		}
-	}
+        if (!is_null($this->layout)) {
+            $this->layout = View::make($this->layout);
+        }
+    }
 
 
     /**
@@ -43,7 +60,8 @@ class BaseController extends Controller {
      * @param bool $redirect
      * @return bool
      */
-    public function checkLogin() {
+    public function checkLogin()
+    {
         return Sentry::check();
     }
 

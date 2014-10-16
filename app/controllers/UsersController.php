@@ -28,7 +28,7 @@ class UsersController extends \BaseController
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
         $email = Session::get('email');
 
-        return View::make('users.register')
+        return View::make('v3.users.create')
             ->with('referralCode', $referralCode)
             ->with('redirect', $redirect)
             ->with('ppcCode', $ppcCode)
@@ -36,87 +36,7 @@ class UsersController extends \BaseController
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
 
-
-        // check user passes validation
-        $valid_user = User::validUserSignup(Input::all());
-
-        if ($valid_user['validation_failed'] == 0) {
-
-            // register user and add to user group
-            $user = User::registerUser(Input::all());
-
-
-            UserHelper::generateUserDefaults($user->id);
-
-            UserHelper::checkReferalCode(Session::get('referralCode'), $user->id);
-
-            UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
-
-            Session::forget('email');
-
-
-            if ($user) {
-
-                User::makeUserDir($user);
-
-                $user->save();
-
-                // check for newsletter and if so add to mailchimp
-
-                $newsletter = Input::get('userNewsletter');
-                $email_address = Input::get('email');
-                $first_name = Input::get('first_name');
-                $last_name = Input::get('last_name');
-                if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(
-                        Config::get('mailchimp')['newsletter'],
-                        $email_address,
-                        $first_name,
-                        $last_name
-                    );
-                }
-
-                Sentry::login($user, true);
-
-                Event::fire('user.registered', [$user]);
-
-
-
-                if (Input::has('redirect')) {
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route(Input::get('redirect'))
-                        ]
-                    );
-                } else {
-
-                    User::sendWelcomeEmail($user);
-
-
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route('users.edit.tab', [$user->id, 'evercoins'])
-                        ]
-                    );
-
-                }
-            }
-        } else {
-            return Response::json($valid_user);
-        }
-
-
-    }
 
     public function fb_login($redirect_url = null)
     {
