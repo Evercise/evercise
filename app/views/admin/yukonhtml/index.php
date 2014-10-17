@@ -215,6 +215,10 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     urlParams.order = 'name';
                     reloadWithParams();
                 });
+                $('#sort_by_id').click(function(e){
+                    urlParams.order = 'id';
+                    reloadWithParams();
+                });
 
                 initPut('{"selector": "#edit_subcategories"}');
                 initPut('{"selector": "#add_subcategory"}');
@@ -225,9 +229,9 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
             function reloadWithParams()
             {
                 var linkTo = pageName+'?'
-                    + (urlParams.status != '' ? 'status='+urlParams.status+'&' : '')
-                    + (urlParams.order ? 'order='+urlParams.order+'&' : '')
-                    + (urlParams.search != '' ? 'search='+urlParams.search+'' : '');
+                    + (urlParams.status ? 'status='+urlParams.status+'&' : '')
+                    + (urlParams.order  ? 'order='+urlParams.order+'&' : '')
+                    + (urlParams.search ? 'search='+urlParams.search+'' : '');
                 window.location.href = linkTo;
             }
 
