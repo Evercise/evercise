@@ -5,6 +5,7 @@
 return [
     'per_page'         => [12, 18, 24],
     'default_per_page' => 12,
+    'max_display_map_results'   => 100,
     'radius'           => [
         '1/2 mile' => '0.5mi',
         '1 mile'   => '1mi',

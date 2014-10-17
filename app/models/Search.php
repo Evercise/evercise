@@ -7,10 +7,24 @@
 class Search
 {
 
+    /**
+     * @var
+     */
     protected $elastic;
+    /**
+     * @var
+     */
     protected $evercisegroup;
+    /**
+     * @var
+     */
     protected $log;
 
+    /**
+     * @param $elastic
+     * @param $evercisegroup
+     * @param $log
+     */
     public function __construct($elastic, $evercisegroup, $log)
     {
         $this->elastic = $elastic;
@@ -19,6 +33,13 @@ class Search
     }
 
 
+    /**
+     * Get results for a specific Place
+     * @param Place $area
+     * @param array $params
+     * @param bool $all
+     * @return mixed
+     */
     public function getResults(Place $area, $params = [], $all = false)
     {
         /**  Set Defaults */
@@ -41,6 +62,11 @@ class Search
     }
 
 
+    /**
+     * Get a single Result from Elastic
+     * @param int $id
+     * @return mixed
+     */
     public function getSingle($id = 0) {
 
         $results = $this->elastic->getSingle($id);
@@ -49,6 +75,11 @@ class Search
     }
 
 
+    /**
+     * Format Results
+     * @param $results
+     * @return mixed
+     */
     public function formatResults($results)
     {
         $all_results = [];
@@ -62,6 +93,11 @@ class Search
         return $results;
     }
 
+    /**
+     * Format a single Result
+     * @param $row
+     * @return mixed
+     */
     public function formatSingle($row)
     {
         /** Add Lat and Lon to the venue */
@@ -85,6 +121,11 @@ class Search
     }
 
 
+    /**
+     * Clean the results for the MAP
+     * @param $results
+     * @return array
+     */
     public function cleanMapResults($results)
     {
 
@@ -138,6 +179,11 @@ class Search
     }
 
 
+    /**
+     * Clean a Single Results
+     * @param $results
+     * @return array
+     */
     public function cleanSingleResults($results)
     {
 

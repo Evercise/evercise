@@ -122,6 +122,10 @@ class Elastic
     }
 
 
+    /**
+     * @param int $id
+     * @return mixed
+     */
     public function getSingle($id = 0)
     {
         $searchParams['index'] = $this->elastic_index;
@@ -315,6 +319,56 @@ class Elastic
 
     }
 
+
+
+
+    /**
+     * Save Search Stats to elastic.. we will use this later
+     * @param $user_id
+     * @param $user_ip
+     * @param $area
+     * @param array $params
+     * @param int $results
+     */
+    public function saveStats($user_id=0, $user_ip=0, Place $area, $params = [], $results = 0)
+    {
+
+
+        try {
+            $data = [
+
+                'index' => 'search_stats',
+                'type'  => 'search',
+                'id'    => str_random(20),
+                'body'  => [
+                    'search'   => $params['search'],
+                    'size'     => $params['size'],
+                    'user_id'  => $user_id,
+                    'user_ip'  => $user_ip,
+                    'radius'   => $params['radius'],
+                    'url'      => $area->link->permalink,
+                    'url_type' => $area->link->type,
+                    'name'     => $area->name,
+                    'lat'      => $area->lat,
+                    'lng'      => $area->lng,
+                    'results'  => $results,
+                    'date'     => date('Y-m-d H:i:s')
+                ]
+            ];
+
+            $this->elasticsearch->index($data);
+
+
+        } catch (Exception $e) {
+            // Log it and move on Do Nothing...
+            $this->log->error('SEARCH INDEX ERROR: ' . $e->getMessage());
+        }
+
+
+    }
+
+
+
     /**
      * @param $id
      * @return array
@@ -420,6 +474,36 @@ class Elastic
                     ],
                 ];
                 break;
+
+            case 'search':
+                $mapping = [
+                    '_source'    => ['enabled' => true],
+                    'properties' => [
+
+                        '_all'     => ['enabled' => true],
+                        'id'       => [
+                            'type'           => 'string',
+                            'index'          => 'not_analyzed',
+                            'include_in_all' => false
+                        ],
+                        'search'   => ['type' => 'string', 'include_in_all' => true],
+                        'size'     => ['type' => 'string', 'include_in_all' => true],
+                        'radius'   => ['type' => 'string', 'include_in_all' => true],
+                        'search'   => ['type' => 'string', 'include_in_all' => true],
+                        'url'      => ['type' => 'string', 'include_in_all' => true],
+                        'url_type' => ['type' => 'string', 'include_in_all' => true],
+                        'user_ip'  => ['type' => 'string', 'include_in_all' => true],
+                        'user_id'  => ['type' => 'string', 'include_in_all' => true],
+                        'name'     => ['type' => 'string', 'include_in_all' => true],
+                        'lat'      => ['type' => 'string', 'include_in_all' => true],
+                        'lng'      => ['type' => 'string', 'include_in_all' => true],
+                        'results'  => ['type' => 'integer'],
+                        'date'     => ['type' => 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
+
+
+                    ],
+                ];
+                break;
         }
 
 
@@ -447,6 +531,7 @@ class Elastic
         }
         return true;
     }
+
 
 
     /**

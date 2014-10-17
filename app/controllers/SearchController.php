@@ -52,7 +52,6 @@ class SearchController extends \BaseController
         );
         $this->search = new Search($this->elastic, $this->evercisegroup, $this->log);
 
-
     }
 
     /**
@@ -199,7 +198,6 @@ class SearchController extends \BaseController
             'search' => $search
         ];
 
-
         $searchResults = $this->search->getResults($area, $params);
 
 
@@ -208,6 +206,8 @@ class SearchController extends \BaseController
         $params['from'] = 0;
         $mapResults = $this->search->cleanMapResults($this->search->getResults($area, $params));
 
+        //Log Stats
+        $this->elastic->saveStats((!empty($this->user->id) ? $this->user->id : 0), $this->input->ip(), $area, $params, $searchResults->total);
 
         $paginatedResults = $this->paginator->make($searchResults->hits, $searchResults->total, $size);
 
