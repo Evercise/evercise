@@ -442,56 +442,15 @@ Route::get('/layouts', function()
     return View::make('layouts.layouts');
 });
 
-// -------------  OLD ADMIN STUFF ---------------
-
-
-Route::post(
-    'admin/approve_trainer',
-    array('as' => 'admin.approve_trainer.post', 'before' => 'admin', 'uses' => 'AdminController@approveTrainer')
-);
-Route::get(
-    'admin/pending_withdrawal',
-    array('as' => 'admin.pending_withdrawal', 'before' => 'admin', 'uses' => 'AdminController@pendingWithdrawal')
-);
-Route::post(
-    'admin/process_withdrawal',
-    array('as' => 'admin.process_withdrawal.post', 'before' => 'admin', 'uses' => 'AdminController@processWithdrawal')
-);
-Route::post(
-    '/admin/log',
-    array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
-);
-Route::get(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
-);
-Route::post(
-    '/admin/edit_classes/{id}',
-    array('as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'AdminController@editClasses')
-);
-
-Route::post(
-    '/admin/groups',
-    array('as' => 'admin.groups.addcat', 'before' => 'admin', 'uses' => 'AdminController@addCategory')
-);
-
-Route::get(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
-);
-Route::post(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'AdminController@addRating')
-);
 
 // -------------  ADMIN SECTION ---------------
+Route::get('/admin', ['as' => 'admin.dashboard', 'uses' => 'AdminController@yukon']);
 
 Route::group(
     array('prefix' => 'admin', 'before' => 'admin'),
     function () {
 
         Route::get('/{page}', ['as' => 'admin.page', 'uses' => 'AdminController@yukon']);
-        Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@yukon']);
 
 
         Route::post('/log_in_as', ['as' => 'admin.log_in_as', 'uses' => 'AdminController@logInAs']);
@@ -502,5 +461,44 @@ Route::group(
         Route::post('/edit_group_subcats', ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminController@editGroupSubcats']);
 
 
+        // -------------  OLD ADMIN STUFF ---------------
+        Route::post(
+            '/approve_trainer',
+            array('as' => 'admin.approve_trainer.post', 'before' => 'admin', 'uses' => 'AdminController@approveTrainer')
+        );
+        Route::get(
+            '/pending_withdrawal',
+            array('as' => 'admin.pending_withdrawal', 'before' => 'admin', 'uses' => 'AdminController@pendingWithdrawal')
+        );
+        Route::post(
+            '/process_withdrawal',
+            array('as' => 'admin.process_withdrawal.post', 'before' => 'admin', 'uses' => 'AdminController@processWithdrawal')
+        );
+        Route::post(
+            '/log',
+            array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
+        );
+        Route::get(
+            '/fakeratings',
+            array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
+        );
+        Route::post(
+            '/edit_classes/{id}',
+            array('as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'AdminController@editClasses')
+        );
+
+        Route::post(
+            '/groups',
+            array('as' => 'admin.groups.addcat', 'before' => 'admin', 'uses' => 'AdminController@addCategory')
+        );
+
+        Route::get(
+            '/fakeratings',
+            array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
+        );
+        Route::post(
+            '/fakeratings',
+            array('as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'AdminController@addRating')
+        );
     }
 );
