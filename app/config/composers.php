@@ -1,10 +1,6 @@
 <?php
 
-return [
-    ['widgets.calendar' => 'CalendarComposer']
-];
 
-/*
 return [
     ['home' => 'HomePageComposer'],
     ['home' => 'RecommendedClassesComposer'],
@@ -84,4 +80,3 @@ return [
     ['admin.searchassociations' => 'AdminAssociationsComposer'],
 
 ];
-*/
