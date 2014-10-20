@@ -15,7 +15,7 @@ class AdminController extends \BaseController {
 	public function pendingTrainers()
 	{
         return View::make('admin.pendingtrainers')
-			->with('trainers', Trainer::getConfirmedTrainers());
+			->with('trainers', Trainer::getUnconfirmedTrainers());
 	}
 
 	/**
@@ -143,34 +143,20 @@ class AdminController extends \BaseController {
 
 	}
 
-
-    public function editClasses($id)
-    {
-        $evercisegroup = Evercisegroup::find($id);
-        $categories = [];
-        if (Input::get('category1') != '') array_push($categories, Input::get('category1'));
-        if (Input::get('category2') != '') array_push($categories, Input::get('category2'));
-        if (Input::get('category3') != '') array_push($categories, Input::get('category3'));
-
-        Evercisegroup::adminAddSubcategories($categories, $evercisegroup);
-
-
-        Evercisegroup::adminMakeClassFeatured($id, Input::get('featured'));
-
-		return Response::json(['callback' => 'successAndRefresh']);
-
-    }
-
     public function yukon($page = 'dashboard')
     {
 		//$users = User::with('evercisegroups')->where('display_name', 'LIKE', 'Peter_ATP')->get();
 		//return $page;
 		//return $users;
 
+		$unconfirmedTrainers = Trainer::getUnconfirmedTrainers();
+		$pendingWithdrawals = Withdrawalrequest::getPendingWithdrawals();
 
         return View::make('admin.yukonhtml.index')
             ->with('admin_version', '1.0')
             ->with('sPage', '1')
+			->with('unconfirmedTrainers', $unconfirmedTrainers)
+			->with('pendingWithdrawals', $pendingWithdrawals)
             ->with('includePage', View::make('admin.'.$page));
 
     }

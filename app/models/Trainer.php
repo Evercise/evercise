@@ -20,7 +20,7 @@ class Trainer extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public static function getConfirmedTrainers()
+    public static function getUnconfirmedTrainers()
     {
         $trainers = Static::with('user')->where('confirmed', 0)->get();
         return $trainers;
@@ -31,7 +31,6 @@ class Trainer extends \Eloquent
      */
     public static function approve($user)
     {
-
         try
         {
             Event::fire('user.upgrade', array(
@@ -61,7 +60,7 @@ class Trainer extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function User()
+    public function user()
     {
         return $this->belongsTo('User');
     }

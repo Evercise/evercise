@@ -482,10 +482,6 @@ Route::group(
             '/fakeratings',
             array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
         );
-        Route::post(
-            '/edit_classes/{id}',
-            array('as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'AdminController@editClasses')
-        );
 
         Route::post(
             '/groups',
