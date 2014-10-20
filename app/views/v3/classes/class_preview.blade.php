@@ -1,5 +1,5 @@
-<div class="side-bar class-preview">
-    <div class="hero hero-sm mb25" style="background-image: url('/img/example-class-img.jpg')">
+<div class="side-bar class-preview" id="{{$class->id}}">
+    <div class="hero hero-sm mb25">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <ul class="nav navbar-nav nav-justified nav-no-float">
             <li class="active"><a href="#about">About</a></li>

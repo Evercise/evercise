@@ -7791,6 +7791,7 @@ fieldset[disabled] .btn-blank.active {
 }
 .class-preview {
   left: 410px;
+  margin-left: -410px;
   top: 132px;
 }
 .class-snippet {
@@ -8358,7 +8359,9 @@ label {
   z-index: -1;
   bottom: 0;
 }
-.map-wrapper .map-canvas {
+.map-wrapper .map-canvas,
+.map-wrapper .angular-google-map-container,
+.map-wrapper .angular-google-map {
   height: 100%;
   width: 100%;
 }

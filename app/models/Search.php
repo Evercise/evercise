@@ -151,7 +151,7 @@ class Search
                 'venue_id',
             ],
             'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
-            'ratings' => ['user_id', 'comment']
+            'ratings' => ['user_id']
         ];
         foreach ($results->hits as $row) {
 

@@ -19,12 +19,13 @@ class BaseController extends Controller
         if (Sentry::check()) {
             $this->user = Sentry::getUser();
             $userImage = $this->user->image ? ('profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
-
-            View::share('header', $this->setupHeader('user'));
+            View::share('userImage', isset($userImage) ? $userImage : '');
+            View::share('user', $this->user);
+            $header = $this->setupHeader('user');
         } else {
-            View::share('header', $this->setupHeader('none'));
+            $header = $this->setupHeader('none');
         }
-        View::share('userImage', isset($userImage) ? $userImage : '');
+        View::share('header', $header);
     }
 
     protected function setupHeader($user_type = 'none')
@@ -45,7 +46,7 @@ class BaseController extends Controller
     protected function setupLayout()
     {
 
-        View::share('user', $this->user);
+
 
 
         if (!is_null($this->layout)) {

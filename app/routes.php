@@ -130,11 +130,12 @@ Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\Aut
 Route::get('/register', array('as' => 'register', 'uses' => 'UsersController@create'));
 Route::get('/finished-user', ['as' => 'finished.user.registration',  function()
     {
+        new BaseController();
         return View::make('v3.users.complete');
     }]
 );
 
-Route::get('users/{id}/edit/{tab}', array('as' => 'users.edit.tab', 'uses' => 'UsersController@edit'));
+Route::get('users/{id}/edit/{tab?}', array('as' => 'users.edit', 'uses' => 'UsersController@edit'));
 Route::get(
     '/users/{display_name}/activate/{code}',
     array('as' => 'users.activate', 'uses' => 'UsersController@activate')

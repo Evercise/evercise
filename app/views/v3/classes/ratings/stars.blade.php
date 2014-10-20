@@ -15,7 +15,7 @@ if(is_array($rating)) {
 	@if($i < floor($rating))
 		<span class="icon icon-full-star"></span>
 	@elseif($i < ceil($rating))
-		{{ HTML::image('img/yellow_halfstar.png', 'stars' , array('class' => 'star-icons')) }}
+		<span class="icon icon-empty-star"></span>
 	@else
 		<span class="icon icon-empty-star"></span>
 	@endif

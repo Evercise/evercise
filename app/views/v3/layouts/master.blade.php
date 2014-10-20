@@ -41,6 +41,12 @@
         var TOKEN = '{{ csrf_token() }}';
     </script>
 
+    {{ HTML::script('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js') }}
+    {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js') }}
+    {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js') }}
+
+    {{ HTML::script('/assets/js/angular-google-maps.min.js') }}
+
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
