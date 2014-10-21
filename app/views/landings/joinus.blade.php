@@ -130,7 +130,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 		<div class="reviews">
 			<div class="image_user1 user-img"></div>
 			<div class="copy">
-				<h3> {{ HTML::linkRoute('trainers.show', 'Krystian', 139) }} </h3>
+				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Krystian', 139) }} </h3>
 				<h4>Thai Boxing Instructor</h4>
 				<h5><strong>4</strong> classes</h5>
 				<p>I have registered our classes with Evercise few months ago.
@@ -142,7 +142,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 		<div class="reviews">
 			<div class="image_user2 user-img"></div>
 			<div class="copy">
-				<h3> {{ HTML::linkRoute('trainers.show', 'Go Mammoth', 439) }} </h3>
+				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Go Mammoth', 436) }} </h3>
 				<h4>Fitness Club</h4>
 				<h5><strong>47</strong> Classes</h5>
 				<p>A great concept you have there. Evercise is an excellent marketing partner for us.</p>
@@ -151,7 +151,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 		<div class="reviews">
 			<div class="image_user3"></div>
 			<div class="copy">
-				<h3> {{ HTML::linkRoute('trainers.show', 'Aqua Fit Pro', 405) }} </h3>
+				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Aqua Fit Pro', 405) }} </h3>
 				<h4>Aqua Cycling Instrutor</h4>
 				<h5><strong>1</strong> class</h5>
 				<p>The team who took me through the whole process was brilliant, I felt I had exceptional support and expertise when needed. Evercise is really easy to understand and manage. Also, not having to pay until I make money is a real plus.</p>
