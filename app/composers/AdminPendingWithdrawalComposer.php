@@ -8,9 +8,9 @@ class AdminPendingWithdrawalComposer {
     {
 
 
-        $pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->get();
+        $pendingWithdrawals = Withdrawalrequest::getPendingWithdrawals();
 
-        $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->get();
+        $processedWithdrawals = Withdrawalrequest::getProcessedWithdrawals();
 
         $view
             ->with('pendingWithdrawals', $pendingWithdrawals)

@@ -11,14 +11,18 @@
 
 {{ Form::open(array('id' => 'add_subcategory', 'url' => 'admin/add_subcategory', 'method' => 'post', 'class' => '')) }}
 {{ Form::text('new_subcategory', null, ['id'=>'new_subcategory'] )}}
-{{ Form::submit('Add new subcategory' , array('class'=>'btn-yellow ')) }}
+<br>
+{{ Form::submit('Add new subcategory' , array('class'=>'btn')) }}
+<br>
 {{ Form::close() }}
 <br>
 <div class="row" id="category_list">
+    <br>
     {{ Form::open(array('id' => 'edit_subcategories', 'url' => 'admin/edit_subcategories', 'method' => 'post', 'class' => '')) }}
     {{ Form::hidden('update_categories', null, ['id'=>'update_categories'] )}}
     {{ Form::hidden('update_associations', null, ['id'=>'update_associations'] )}}
-    {{ Form::submit('Save Changes' , array('class'=>'btn-yellow ')) }}
+    {{ Form::submit('Save changes' , array('class'=>'btn')) }}
+    <br>
     <br>
     <table class="table-yuk table-categories">
         <thead>
@@ -47,6 +51,8 @@
             @endforeach
         <tbody>
     </table>
-    {{ Form::submit('Save Changes' , array('class'=>'btn-yellow ')) }}
+    <br>
+    {{ Form::submit('Save changes' , array('class'=>'btn')) }}
     {{ Form::close() }}
+    <br>
 </div>

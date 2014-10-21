@@ -35,7 +35,7 @@
                                     <h4 class="modal-title">Modal title</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, amet aperiam at autem blanditiis commodi culpa enim est id ipsum iusto magnam minima&hellip;</p>
+                                    <p>Fuck ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, amet aperiam at autem blanditiis commodi culpa enim est id ipsum iusto magnam minima&hellip;</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>

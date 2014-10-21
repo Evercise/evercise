@@ -33,7 +33,7 @@
         <table class="table-yuk table-categories">
             <thead>
                 <tr class="table-header">
-                    <th>id</th>
+                    <th id="sort_by_id">id</th>
                     <th id="sort_by_name">name</th>
                     <th>featured</th>
                     <th>subcategories (max 3)</th>
