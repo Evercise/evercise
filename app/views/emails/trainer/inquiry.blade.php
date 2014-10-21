@@ -44,12 +44,12 @@
 						<table width="600px" height="150" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style=" font-size:12px; line-height:14.4px; color:#000000; padding: 0px 40px 0px 40px; font-family: lato, Helvetica, ‘Helvetica Neue’, Arial; ">
 							<tr align="left">
 								<td valign="top" width="400">
-									<span>{{{ $fname }}}.</span>
+									<span>Name: {{{ $fname }}}.</span>
 									<br>
 									<br>
-									<span>Phone: {{{ $email }}}.</span>
+									<span>Email: {{{ $email }}}.</span>
 									<br>
-									<span>Email: {{{ $phone }}}.</span>
+									<span>Phone: {{{ $phone }}}.</span>
 
 								</td>
 								<td valign="top" width="200" style="table-layout: fixed">
