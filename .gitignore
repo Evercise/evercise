@@ -5,7 +5,7 @@
 .idea/workspace.xml
 .idea/*
 .env.local.php
-node_modules
+node_modules/*
 /vendor
 composer.phar
 composer.lock
