@@ -39,7 +39,7 @@
          <div class="nav-admin">
           <div id="displayName-dropdown" class="dropdown-menu">
           
-              {{ HTML::linkRoute('admin.pending', 'pending trainers') }}
+              {{ HTML::linkRoute('admin.page', 'pending trainers', 'pendingtrainers') }}
               {{ HTML::linkRoute('admin.pending_withdrawal', 'pending withdrawals') }}
             </div>
           </div>

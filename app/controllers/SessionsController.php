@@ -266,6 +266,11 @@ class SessionsController extends \BaseController
         }
     }
 
+    // ---------------------- CHECKOUT FUNCTIONS START --------------------------
+
+
+    // ---------------------- CHECKOUT FUNCTIONS END ----------------------------
+
     /**
      * Actually add the user to the class.  The details of which are all pulled from session data
      *
