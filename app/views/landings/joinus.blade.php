@@ -45,9 +45,10 @@ form{margin:0}
 .usp .signup { width: 300px; height: 193px; float: left; background: url("img/join.png") no-repeat; background-position: center; }
 .usp .commission { width: 300px; height: 193px; float: left; background: url("img/commission.png") no-repeat; background-position: center;}
 .reviews { width: 860px; height: auto; float: left; margin: 30px 20px 0 20px; }
-.reviews .image_user1 {background-size: 100% 100%; width: 130px; height: 130px; float: left; margin: 0 30px 0 0; background: url("img/user_image1.png"); }
-.reviews .image_user2 {background-size: 100% 100%; border-radius: 50%; width: 100px; height: 100px; float: left; margin: 0 45px 0 15px; background: url("img/go-mammoth.jpg"); }
-.reviews .image_user3 {background-size: 100% 100%; width: 130px; height: 130px; float: left; margin: 0 30px 0 0; background: url("img/user_image3.png"); }
+.reviews .image_user1 { border-radius: 50%; width: 130px; height: 130px; float: left; margin: 0 30px 0 0; background: url("img/user_image1.jpg"); }
+.reviews .image_user2 { border-radius: 50%; width: 100px; height: 100px; float: left; margin: 0 45px 0 15px; background: url("img/go-mammoth.jpg"); }
+.reviews .image_user3 {width: 130px; height: 130px; float: left; margin: 0 30px 0 0; background: url("img/user_image3.png"); }
+.reviews .user-img{background-size: auto 100%; background-position: center; width: 100px; height: 100px; margin: 0 45px 0 15px;}
 
 
 .reviews .copy { width: 670px; height: auto; float: left; }
@@ -127,16 +128,19 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 <div class="wrapper">
 	<div class="main_content">
 		<div class="reviews">
-			<div class="image_user1"></div>
+			<div class="image_user1 user-img"></div>
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('trainers.show', 'Krystian', 139) }} </h3>
 				<h4>Thai Boxing Instructor</h4>
 				<h5><strong>4</strong> classes</h5>
-				<p>Running several classes per week, I do not have the personnel or time to develop, implement and manage a strong marketing strategy sufficient to align with my business goals. With Evercise, my marketing is well-managed and well-executed.</p>
-			</div>
+				<p>I have registered our classes with Evercise few months ago.
+                   My experience of the services provided by the management was very positive right from the beginning. After registering on easy to access and operate website I have decided to give them a call and introduce myself closer and talk about possibilities of boosting my business on their website.
+                   We keep in touch and I constantly receive  informations about any new options to help my business running from Evercise.
+                   I found Evercise as a bunch of very energetic and helpful people.</p>
+				</div>
 		</div>
 		<div class="reviews">
-			<div class="image_user2"></div>
+			<div class="image_user2 user-img"></div>
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('trainers.show', 'Go Mammoth', 439) }} </h3>
 				<h4>Fitness Club</h4>
