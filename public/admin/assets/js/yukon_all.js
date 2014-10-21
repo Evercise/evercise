@@ -1697,7 +1697,9 @@
 		},
         p_forms_extended_elements: function() {
 			if ($('#wysiwg_editor').length) {
-				$('#wysiwg_editor').ckeditor();
+				$('#wysiwg_editor').ckeditor({
+                    filebrowserBrowseUrl: '/admin/article_browse',
+                    filebrowserUploadUrl: '/admin/article_upload'});
 			}
 		}
 	};

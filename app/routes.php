@@ -545,15 +545,30 @@ Route::post(
     '/admin/fakeratings',
     array('as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'AdminController@addRating')
 );
+Route::post(
+    '/admin/fakessdsratings',
+    array('as' => 'admin.pending', 'before' => 'admin', 'uses' => 'AdminController@addRating')
+);
+Route::post(
+    '/admin/fakessdsratings',
+    array('as' => 'users.create', 'before' => 'admin', 'uses' => 'AdminController@addRating')
+);
 
 // -------------  ADMIN SECTION ---------------
 
+Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function() {
+
+        Route::post(
+            'check_url',
+            array('as' => 'admin.ajax.check_url', 'uses' => 'ArticlesController@ajaxCheckUrl')
+        );
+
+    });
 Route::group(
     array('prefix' => 'admin', 'before' => 'admin'),
     function () {
 
-        Route::get('/{page}', ['as' => 'admin.page', 'uses' => 'AdminController@yukon']);
-        Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@yukon']);
+        Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'AdminController@yukon']);
 
 
         Route::post('/log_in_as', ['as' => 'admin.log_in_as', 'uses' => 'AdminController@logInAs']);
@@ -564,5 +579,33 @@ Route::group(
         Route::post('/edit_group_subcats', ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminController@editGroupSubcats']);
 
 
+
+        Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminController@users']);
+        Route::get('/categories', ['as' => 'admin.categories', 'uses' => 'AdminController@categories']);
+        Route::get('/users', ['as' => 'admin.users', 'uses' => 'AdminController@users']);
+        Route::get(
+            'log',
+            array('as' => 'admin.log', 'before' => 'admin', 'uses' => 'AdminController@showLog')
+        );
+        Route::get(
+            'articles',
+            array('as' => 'admin.articles', 'before' => 'admin', 'uses' => 'ArticlesController@articles')
+        );
+        Route::get(
+            'article/manage/{id?}',
+            array('as' => 'admin.article.manage', 'before' => 'admin', 'uses' => 'ArticlesController@manage')
+        );
+        Route::post(
+            'article/manage/{id?}',
+            array('as' => 'admin.article.manage', 'before' => 'admin', 'uses' => 'ArticlesController@manage')
+        );
+        Route::post(
+            'article/categories',
+            array('as' => 'admin.article.categories', 'before' => 'admin', 'uses' => 'ArticlesController@manage')
+        );
+
+
+
+        Route::get('/{page}', ['as' => 'admin.page', 'uses' => 'AdminController@yukon']);
     }
 );
