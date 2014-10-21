@@ -31,11 +31,11 @@ $(function(){
     });
 
 
-    $('.mb-scroll').exists(function(){
+    /*$('.mb-scroll').exists(function(){
         $(this).mCustomScrollbar({
             scrollSpeed: 40
         });
-    })
+    })*/
 
     $('.holder').exists(function(){
         new ImagePlaceholder();

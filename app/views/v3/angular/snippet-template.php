@@ -1,7 +1,7 @@
-<div ng-repeat="marker in markers" class="class-snippet">
+<div ng-repeat="marker in markers" class="class-snippet" infinite-scroll-container="'#snippets'">
     <div class="class-image-wrapper col-sm-4">
-        <!-- <img src="{{ marker.image}} " alt="{{ marker.name}}"/>
-    --></div>
+        <img src="{{ marker.image}} " alt="{{ marker.name}}"/>
+    </div>
     <div class="class-title-wrapper panel-body col-sm-8">
         <div class="ml10">
             <a href="#"><h3>{{ marker.name }}</h3></a>

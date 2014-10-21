@@ -17,13 +17,10 @@
                 <strong>Your search returned <span class="text-primary">0</span> results</strong>
 
             </div>
-            <div class="snippet-body mb-scroll">
-                @include('v3.angular.snippet-template')
-                {{--
-                @foreach($evercisegroups as $key => $class)
-                     @include('v3.classes.class_snippet', [ 'class' => $class])
-                @endforeach
-                --}}
+            <div id="main_block_with_scroll" class="snippet-body mb-scroll">
+                <div infinite-scroll="loadMore()"  infinite-scroll-container="'#main_block_with_scroll'" infinite-scroll-parent>
+                    @include('v3.angular.snippet-template')
+                </div>
             </div>
 
 

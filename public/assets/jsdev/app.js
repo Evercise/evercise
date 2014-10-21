@@ -1,5 +1,6 @@
 var app = angular.module('DiscoverApp', [
-    'google-maps'.ns()
+    'google-maps'.ns(),
+    'infinite-scroll'
 ]);
 
 app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
