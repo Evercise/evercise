@@ -4,6 +4,8 @@
         coords="'self'"
         idKey="'idKey'"
         fit = "true"
+        icon = "'icon'"
+        click = "'click'"
         >
 
     </ui-gmap-markers>

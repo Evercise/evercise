@@ -8366,8 +8366,8 @@ label {
   width: 100%;
 }
 .mb-scroll {
-  overflow-x: scroll;
-  overflow-y: visible;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 @media (min-width: 768px) {
   .calendar-wrapper {
