@@ -18,5 +18,12 @@ return [
     'article_main_image'      => [
         'width'  => 300,
         'height' => 200
+    ],
+
+
+    /** SEO CRAPP */
+
+    'seo_keywords' => [
+        'Excercise', 'Remind', 'Iggy', 'TO', 'ADD', 'KEYWORDS', '!!!!!'
     ]
 ];

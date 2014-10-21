@@ -15,7 +15,6 @@ class ArticlesController extends \BaseController
     private $view;
     private $config;
     private $request;
-    private $image;
 
     public function __construct(
         Articles $articles,
@@ -37,7 +36,7 @@ class ArticlesController extends \BaseController
     {
 
         $articles = Articles::orderBy('created_at', 'desc')->get();
-        return $this->view->make('admin.articles', compact('articles'))->render();
+        return $this->view->make('admin.cms.articles', compact('articles'))->render();
     }
 
     /**
@@ -47,6 +46,7 @@ class ArticlesController extends \BaseController
      */
     public function manage($id = 0)
     {
+
         if (!empty($_POST)) {
             $save = $this->saveArticle($id);
 
@@ -65,7 +65,12 @@ class ArticlesController extends \BaseController
         $categories = $this->articlecategories->all();
         $templates = $this->getTemplates();
 
-        return $this->view->make('admin.cms_manage_article', compact('article', 'categories', 'templates'))->render();
+        $cookie = Cookie::make('allowFinder', true,  60);
+        $view = $this->view->make('admin.cms.manage', compact('article', 'categories', 'templates'))->render();
+
+        return Response::make($view)->withCookie($cookie);
+
+
     }
 
 
