@@ -26,17 +26,17 @@
     <div class="container-fluid panel-body bg-dark-grey">
         <div class="container">
             <div class="row no-gutter">
-                <form class="form-inline form-no-gap" role="form">
+                {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-12">
                         <div class="input-group with-addon">
                             <div class="input-group-addon first"><span class="icon icon-search"></span></div>
-                            <input class="form-control" type="text" placeholder="Search for Classes...">
+                            {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...']) }}
 
                             <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
-                            <input class="form-control" type="text" placeholder="Location">
+                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location']) }}
 
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
-                            <select class="form-control mr50">
+                            <select name="radius" class="form-control mr50">
                               <option>Distance</option>
                               <option>1</option>
                               <option>2</option>
@@ -45,7 +45,7 @@
                               <option>5</option>
                             </select>
                             <span class="input-group-btn">
-                                <button class="btn btn-primary btn-block" type="button">
+                                <button class="btn btn-primary btn-block" type="submit">
                                      Find a Class
                                 </button>
                             </span>
@@ -54,7 +54,7 @@
 
                     </div>
 
-                </form>
+                {{ Form::close() }}
             </div>
         </div>
     </div>

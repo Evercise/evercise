@@ -22,9 +22,8 @@
            @include('v3.cart.dropdown')
        </li>
         <li >
-            {{ HTML::decode(HTML::linkRoute('profile', 'Lewis <img class="img-circle" src="/img/lewis.jpg"/>' , null , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-list' : 'nav-list nav-profile'] ) )}}
+            {{ HTML::decode(HTML::linkRoute('profile', $user->display_name.  HTML::image( $userImage, $user->display_name.'s image', ['class' => 'img-circle']) , null , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-list' : 'nav-list nav-profile'] ) )}}
         </li>
-
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

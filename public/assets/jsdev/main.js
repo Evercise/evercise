@@ -25,13 +25,17 @@ $(function(){
         new ToggleSwitch(this);
     });
 
-    $('#map_canvas').exists(function() {
-        map = new Map();
+    $('.map-wrapper').exists(function() {
+       // map = new Map();
+      //  console.log(laracasts.mapResults);
     });
 
-    $('.mb-scroll').exists(function(){
-        $(this).mCustomScrollbar();
-    })
+
+    /*$('.mb-scroll').exists(function(){
+        $(this).mCustomScrollbar({
+            scrollSpeed: 40
+        });
+    })*/
 
     $('.holder').exists(function(){
         new ImagePlaceholder();
@@ -40,6 +44,9 @@ $(function(){
     $('#register-form').exists(function(){
         self = this;
         new Validation(this);
+    })
+    $('.class-preview').exists(function(){
+         new PreviewClassBox(this);
     })
 
 

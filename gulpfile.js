@@ -36,7 +36,7 @@ gulp.task('less', function () {
 
 gulp.task('compress', function() {
 
-    gulp.src('./public/assets/jsdev/**/*.js')
+    gulp.src('./public/assets/jsdev/**/**/*.js')
         .pipe(uglify())
         .pipe(concat('main.min.js'))
         .pipe(gulp.dest('./public/assets/js'))
@@ -46,7 +46,7 @@ gulp.task('compress', function() {
 gulp.task('watch', function () {
 
     gulp.watch('public/assets/less/**/*.less', ['less']);
-    gulp.watch('public/assets/jsdev/**/*.js', ['compress']);
+    gulp.watch('public/assets/jsdev/**/**/*.js', ['compress']);
 
 });
 
