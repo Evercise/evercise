@@ -170,7 +170,7 @@ class LandingsController extends \BaseController
     public function getTrainerLanding()
     {
 
-        return View::make('landings.trainerinquiry');
+        return View::make('landings.joinus');
 
     }
 
