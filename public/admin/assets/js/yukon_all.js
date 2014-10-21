@@ -1697,9 +1697,17 @@
 		},
         p_forms_extended_elements: function() {
 			if ($('#wysiwg_editor').length) {
-				$('#wysiwg_editor').ckeditor({
-                    filebrowserBrowseUrl: '/admin/article_browse',
-                    filebrowserUploadUrl: '/admin/article_upload'});
-			}
+
+
+                var editor = $('#wysiwg_editor').ckeditor({
+                    filebrowserBrowseUrl : '/admin/assets/lib/ckfinder/ckfinder.html',
+                    filebrowserUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                });
+
+                CKFinder.setupCKEditor( editor, '../' );
+
+            }
+
 		}
 	};
