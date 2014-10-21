@@ -282,4 +282,14 @@ class TrainersController extends \BaseController {
 
 		return Redirect::to('users/create');
 	}
+
+	public function numActiveClasses($userId)
+	{
+		return Trainer::where('user_id', $userId)->first()->numActiveClasses();
+	}
+
+	public function numActiveSessions()
+	{
+		return 9;
+	}
 }

@@ -91,4 +91,24 @@ class Trainer extends \Eloquent
             return false;
     }
 
+    public function numActiveClasses()
+    {
+        $user = User::find($this->user_id);
+
+        $groups = $user->evercisegroups;
+
+        $count = 0;
+        foreach($groups as $group)
+        {
+            
+        }
+
+        return $groups;
+    }
+
+    public function numActiveSessions()
+    {
+        return 9;
+    }
+
 }

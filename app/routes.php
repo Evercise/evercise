@@ -266,3 +266,5 @@ Route::get('/classes/{country}/{city}/{area}/{category}', array(
     'as' => 'classes.country.city.area.category',
     'uses' => 'EvercisegroupsController@search_C_C_A_C'
 ));
+
+Route::get('/numactiveclasses/{userId}', ['as'=>'numactiveclasses', 'uses'=>'TrainersController@numActiveClasses']);
