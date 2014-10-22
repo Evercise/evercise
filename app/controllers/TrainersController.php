@@ -282,4 +282,5 @@ class TrainersController extends \BaseController {
 
 		return Redirect::to('users/create');
 	}
+
 }
