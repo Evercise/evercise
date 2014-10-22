@@ -39,9 +39,9 @@
                         </a>
                     </li>
                     <li class="first_level">
-                        <a href="{{ URL::route('admin.pending_withdrawal') }}">
+                        <a href="{{ URL::route('admin.pendingtrainers') }}">
                             <span class="icon_house_alt first_level_icon"></span>
-                            <span class="menu-title">Pending Trainers (NO ROUTE)</span>
+                            <span class="menu-title">Pending Trainers</span>
                         </a>
                     </li>
 

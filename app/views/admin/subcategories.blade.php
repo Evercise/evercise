@@ -1,4 +1,13 @@
+@extends('admin.main')
 
+@section('css')
+@stop
+
+@section('script')
+
+@stop
+
+@section('body')
 <div class="row">
     <div class="col-md-4">
         <select id="select_category_type" class="form-control">
@@ -56,3 +65,5 @@
     {{ Form::close() }}
     <br>
 </div>
+
+@stop

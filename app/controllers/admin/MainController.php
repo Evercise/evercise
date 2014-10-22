@@ -19,20 +19,59 @@ class MainController extends \BaseController
     public function dashboard()
     {
 
-        $unconfirmedTrainers = Trainer::getUnconfirmedTrainers();
-        $pendingWithdrawals = Withdrawalrequest::getPendingWithdrawals();
-
-
-
-        return $this->view->make('admin.dashboard')->render();
-
-        return View::make('admin.yukonhtml.index')
-            ->with('admin_version', '1.0')
-            ->with('sPage', '1')
-            ->with('unconfirmedTrainers', $unconfirmedTrainers)
-            ->with('pendingWithdrawals', $pendingWithdrawals)
-            ->with('includePage', View::make('admin.' . $page));
+        return View::make('admin.dashboard')->render();
     }
+
+
+    public function users() {
+
+        $users = Sentry::findAllUsers();
+
+        $trainerGroup = Sentry::findGroupByName('Trainer');
+
+        return View::make('admin.users', compact('users', 'trainerGroup'))->render();
+
+    }
+
+    public function logInAs()
+    {
+        $user = Sentry::findUserById(Input::get('user_id'));
+        Sentry::login($user);
+
+        return Redirect::route('users.edit');
+    }
+
+    public function resetPassword()
+    {
+        $user = Sentry::findUserById(Input::get('user_id'));
+
+        $reset_code = $user->getResetPasswordCode();
+        $user->sendForgotPasswordEmail($reset_code);
+        //$newPassword = $user->resetPassword();
+
+        return Response::json([
+            'callback' => 'adminPopupMessage',
+            'message' => 'Password reset.  Email:' . $user->email
+        ]);
+    }
+
+
+    public function categories() {
+
+
+        return View::make('admin.categories', compact('categories'))->render();
+
+    }
+    public function subcategories() {
+        $subcategories = \Subcategory::with('categories')->get();
+        $categories = \Category::lists('name');
+
+        array_unshift($categories, '');
+
+        return View::make('admin.subcategories', compact('categories', 'subcategories'))->render();
+
+    }
+
 
 
     /**
@@ -46,6 +85,10 @@ class MainController extends \BaseController
             ->with('trainers', Trainer::getUnconfirmedTrainers());
     }
 
+
+
+
+
     /**
      * Approve trainers.
      *
@@ -57,14 +100,18 @@ class MainController extends \BaseController
 
         Trainer::approve($user);
 
-        return Redirect::route('admin.page', ['pendingtrainers']);
+        return Redirect::route('admin.pendingtrainers');
     }
+
 
     /**
      * @return \Illuminate\View\View
      */
     public function pendingWithdrawal()
     {
+
+
+
         $pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->get();
 
         $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->get();
@@ -73,6 +120,7 @@ class MainController extends \BaseController
             ->with('pendingWithdrawals', $pendingWithdrawals)
             ->with('processedWithdrawals', $processedWithdrawals);
     }
+
 
     /**
      * @return \Illuminate\Http\RedirectResponse
@@ -83,7 +131,7 @@ class MainController extends \BaseController
 
         Withdrawalrequest::find($withdrawal_id)->markProcessed();
 
-        return Redirect::route('admin.page', ['pendingwithdrawals']);
+        return Redirect::route('admin.pending_withdrawal');
 
     }
 
@@ -191,27 +239,9 @@ class MainController extends \BaseController
 
     }
 
-    public function logInAs()
-    {
-        $user = Sentry::findUserById(Input::get('user_id'));
-        Sentry::login($user);
 
-        return Redirect::route('users.edit');
-    }
 
-    public function resetPassword()
-    {
-        $user = Sentry::findUserById(Input::get('user_id'));
 
-        $reset_code = $user->getResetPasswordCode();
-        $user->sendForgotPasswordEmail($reset_code);
-        //$newPassword = $user->resetPassword();
-
-        return Response::json([
-                'callback' => 'adminPopupMessage',
-                'message' => 'Password reset.  Email:' . $user->email
-            ]);
-    }
 
     public function searchUsers()
     {

@@ -71,6 +71,14 @@
             var DEBUG_APP = <?=getenv('DEBUG_APP') ? 'true' : 'false'?>;
             var BASE_URL = '{{ URL::to('/').'/' }}';
             var AJAX_URL = '{{ URL::to('/ajax').'/admin/' }}';
+            var TOKEN = '{{ csrf_token() }}';
+            $(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-Token': TOKEN
+                    }
+                });
+            });
         </script>
 
         <!-- select2 -->
