@@ -93,22 +93,24 @@ class Trainer extends \Eloquent
 
     public function numActiveClasses()
     {
-        $user = User::find($this->user_id);
+        $futuregroups = Evercisegroup::has('futuresessions')->where('user_id', $this->user_id)->get();
 
-        $groups = $user->evercisegroups;
+        $numGroups = count($futuregroups);
 
-        $count = 0;
-        foreach($groups as $group)
-        {
-            
-        }
-
-        return $groups;
+        return $numGroups;
     }
 
     public function numActiveSessions()
     {
-        return 9;
+        $futuregroups = Evercisegroup::has('futuresessions')->where('user_id', $this->user_id)->get();
+
+        $numSessions = 0;
+        foreach ($futuregroups as $futuregroup)
+        {
+            $numSessions += count($futuregroup->futuresessions);
+        }
+
+        return $numSessions;
     }
 
 }
