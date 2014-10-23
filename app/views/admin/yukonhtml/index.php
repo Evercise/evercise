@@ -42,7 +42,7 @@
     <body class="side_menu_active side_menu_expanded fx_width">
         <div id="page_wrapper">
 
-<?php include('php/pages/partials/header.php')?>
+<?php include('php/pages/partials/header.blade.php')?>
 
 <?php include('php/pages/partials/breadcrumbs.php')?>
 
@@ -215,6 +215,10 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                     urlParams.order = 'name';
                     reloadWithParams();
                 });
+                $('#sort_by_id').click(function(e){
+                    urlParams.order = 'id';
+                    reloadWithParams();
+                });
 
                 initPut('{"selector": "#edit_subcategories"}');
                 initPut('{"selector": "#add_subcategory"}');
@@ -225,9 +229,9 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
             function reloadWithParams()
             {
                 var linkTo = pageName+'?'
-                    + (urlParams.status != '' ? 'status='+urlParams.status+'&' : '')
-                    + (urlParams.order ? 'order='+urlParams.order+'&' : '')
-                    + (urlParams.search != '' ? 'search='+urlParams.search+'' : '');
+                    + (urlParams.status ? 'status='+urlParams.status+'&' : '')
+                    + (urlParams.order  ? 'order='+urlParams.order+'&' : '')
+                    + (urlParams.search ? 'search='+urlParams.search+'' : '');
                 window.location.href = linkTo;
             }
 

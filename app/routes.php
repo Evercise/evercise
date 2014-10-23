@@ -15,56 +15,76 @@
 // temporary routes for new layouts
 
 
-Route::get('/popular', ['as' => 'popular',  function()
-    {
-        return View::make('v3.home');
-    }]
+Route::get('/popular', [
+        'as' => 'popular',
+        function () {
+            return View::make('v3.home');
+        }
+    ]
 );
-Route::get('/profile', ['as' => 'profile',  function()
-    {
-        return View::make('v3.users.profile.master');
-    }]
+Route::get('/profile', [
+        'as' => 'profile',
+        function () {
+            return View::make('v3.users.profile.master');
+        }
+    ]
 );
-Route::get('/class', ['as' => 'class',  function()
-    {
-        return View::make('v3.classes.class_page');
-    }]
+Route::get('/class', [
+        'as' => 'class',
+        function () {
+            return View::make('v3.classes.class_page');
+        }
+    ]
 );
-Route::get('/discover', ['as' => 'discover',  function()
-    {
-        return View::make('v3.classes.discover.master');
-    }]
+Route::get('/discover', [
+        'as' => 'discover',
+        function () {
+            return View::make('v3.classes.discover.master');
+        }
+    ]
 );
-Route::get('/discover-list', ['as' => 'discover_list',  function()
-    {
-        return View::make('v3.classes.discover.master-list');
-    }]
+Route::get('/discover-list', [
+        'as' => 'discover_list',
+        function () {
+            return View::make('v3.classes.discover.master-list');
+        }
+    ]
 );
-Route::get('/discover-grid', ['as' => 'discover_grid',  function()
-    {
-        return View::make('v3.classes.discover.master-grid');
-    }]
+Route::get('/discover-grid', [
+        'as' => 'discover_grid',
+        function () {
+            return View::make('v3.classes.discover.master-grid');
+        }
+    ]
 );
-Route::get('/register-trainer', ['as' => 'register_trainer',  function()
-    {
-        return View::make('v3.trainers.create');
-    }]
+Route::get('/register-trainer', [
+        'as' => 'register_trainer',
+        function () {
+            return View::make('v3.trainers.create');
+        }
+    ]
 );
-Route::get('/finished-trainer', ['as' => 'finished_trainer',  function()
-    {
-        return View::make('v3.trainers.complete');
-    }]
+Route::get('/finished-trainer', [
+        'as' => 'finished_trainer',
+        function () {
+            return View::make('v3.trainers.complete');
+        }
+    ]
 );
 
-Route::get('/create-class', ['as' => 'create-class',  function()
-    {
-        return View::make('v3.classes.create');
-    }]
+Route::get('/create-class', [
+        'as' => 'create-class',
+        function () {
+            return View::make('v3.classes.create');
+        }
+    ]
 );
-Route::get('/class-add-sessions', ['as' => 'class-add-sessions',  function()
-    {
-        return View::make('v3.classes.add_sessions');
-    }]
+Route::get('/class-add-sessions', [
+        'as' => 'class-add-sessions',
+        function () {
+            return View::make('v3.classes.add_sessions');
+        }
+    ]
 );
 
 
@@ -80,8 +100,7 @@ Route::get(
 );
 
 // ajax prefix
-Route::group( [ 'prefix' => 'ajax' ], function()
-{
+Route::group(['prefix' => 'ajax'], function () {
     Route::post('/users-store', array('as' => 'users.store', 'uses' => 'ajax\UsersController@store'));
 });
 
@@ -116,8 +135,6 @@ Route::get(
 );
 
 
-
-
 Route::get('login/fb/{redirect?}', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
 Route::post('auth/checkout', array('as' => 'auth.checkout', 'uses' => 'SessionsController@checkout'));
 
@@ -128,11 +145,13 @@ Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\Aut
 
 //  Users
 Route::get('/register', array('as' => 'register', 'uses' => 'UsersController@create'));
-Route::get('/finished-user', ['as' => 'finished.user.registration',  function()
-    {
-        new BaseController();
-        return View::make('v3.users.complete');
-    }]
+Route::get('/finished-user', [
+        'as' => 'finished.user.registration',
+        function () {
+            new BaseController();
+            return View::make('v3.users.complete');
+        }
+    ]
 );
 
 Route::get('users/{id}/edit/{tab?}', array('as' => 'users.edit', 'uses' => 'UsersController@edit'));
@@ -231,7 +250,6 @@ Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'VenuesController@
 Route::post('venues/update/{id}', 'VenuesController@update');
 
 
-// sessions
 Route::get(
     'sessions/{evercisegroup_id}/index',
     array('as' => 'evercisegroups.trainer_show', 'uses' => 'SessionsController@index')
@@ -290,20 +308,16 @@ Route::post(
     '/sessions/{id}/mail_all',
     array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll')
 );
-Route::get(
-    '/sessions/{sessionId}/mail_one/{userId}',
+Route::get( '/sessions/{sessionId}/mail_one/{userId}',
     array('as' => 'sessions.mail_one', 'uses' => 'SessionsController@getMailOne')
 );
-Route::post(
-    '/sessions/{sessionId}/mail_one/{userId}',
+Route::post('/sessions/{sessionId}/mail_one/{userId}',
     array('as' => 'sessions.mail_one.post', 'uses' => 'SessionsController@postMailOne')
 );
-Route::get(
-    '/sessions/{sessionId}/mail_trainer/{trainerId}',
+Route::get('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer', 'uses' => 'SessionsController@getMailTrainer')
 );
-Route::post(
-    '/sessions/{sessionId}/mail_trainer/{trainerId}',
+Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
 
@@ -338,91 +352,7 @@ Route::get('video/create', array('as' => 'video', 'uses' => 'VideoController@cre
 Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
 Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
 Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
-Route::get(
-    'dance',
-    array('as' => 'landing.dance', 'uses' => function () { return (new LandingsController)->landCategory('dance'); })
-);
-Route::get(
-    'pilates',
-    array(
-        'as'   => 'landing.pilates',
-        'uses' => function () { return (new LandingsController)->landCategory('pilates'); }
-    )
-);
-Route::get(
-    'martialarts',
-    array(
-        'as'   => 'landing.martialarts',
-        'uses' => function () { return (new LandingsController)->landCategory('martialarts'); }
-    )
-);
-Route::get(
-    'yoga',
-    array('as' => 'landing.yoga', 'uses' => function () { return (new LandingsController)->landCategory('yoga'); })
-);
-Route::get(
-    'bootcamp',
-    array(
-        'as'   => 'landing.bootcamp',
-        'uses' => function () { return (new LandingsController)->landCategory('bootcamp'); }
-    )
-);
-Route::get(
-    'personaltrainer',
-    array(
-        'as'   => 'landing.personaltrainer',
-        'uses' => function () { return (new LandingsController)->landCategory('personaltrainer'); }
-    )
-);
 
-
-
-/*
-// uncomment for sql statement breakdown
-Event::listen('illuminate.query', function($sql)
-{
-    var_dump($sql);
-});
-*/
-
-
-Route::get(
-    '/email_test',
-    function () {
-        return View::make('emails.template')
-            ->with('title', 'my test email')
-            ->with('mainHeader', 'my main header')
-            ->with('subHeader', 'My sub Header')
-            ->with(
-                'body',
-                '<p>You now have access to a huge range of fitness classes and trainers operating at multiple locations!</p>
-            <br>
-            <p>Here are a few tips to get you started.</p>
-            <br>
-            <ul>
-                <li><strong>Search fitness classes:</strong> Simply click “discover classes” on the navigation bar, then search by category or location.</li>
-                <li><strong>Sign up to a class online:</strong> Click on the class panel and you will see a list of sessions. Choose the time and date you want, and pay for the class online.</li>
-                <li><strong>Show up and shape up:</strong> Make sure you know where to go, at what time you should arrive, how to dress appropriately for the class and if you should bring anything e.g. water.</li>
-                <li><strong>Rate and review:</strong> Once you have taken a class, help improve Evercise by rating the class and reviewing your experience.</li>
-        '
-            )
-            ->with('link', HTML::linkRoute('evercisegroups.index', 'Class Hub'))
-            ->with('linkLabel', 'you link is here')
-            ->with(
-                'sellups',
-                [
-                    0 => [
-                        'body'  => 'Gain evercise credits to spend on classes by reommending your friends. for every 3 friend who join due to you referral you will recieve &pounds;3&apos;s of credit and each person who joined will recieve &pound;1 of credit aswell',
-                        'image' => HTML::image('img/Sign-Up-Online.png', 'join up', array('class' => 'home-step-img'))
-                    ],
-                    1 => [
-                        'body'  => 'Jeff the trainer',
-                        'image' => HTML::image('img/Class.png', 'get fit', array('class' => 'home-step-img'))
-                    ]
-                ]
-            );
-    }
-);
 
 
 Route::get('tokens/fb', array('as' => 'tokens.fbtoken', 'uses' => 'TokensController@fb'));
@@ -430,7 +360,7 @@ Route::get('/tokens/tw', array('as' => 'tokens.twtoken', 'uses' => 'TokensContro
 Route::get(
     '/twitter',
     array(
-        'as'   => 'twitter',
+        'as' => 'twitter',
         'uses' => function () {
             // Reqest tokens
             $tokens = Twitter::oAuthRequestToken();
@@ -442,6 +372,11 @@ Route::get(
     )
 );
 
+/** ARTICLES */
+
+$pagesController = App::make('PagesController');
+$pagesController->generateRoutes();
+
 
 // working on
 
@@ -449,121 +384,115 @@ Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'Referra
 Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
 Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
 
-//Route::get('landing/{category}', array('as' => 'landing.category', 'uses' => 'LandingsController@landingPpc'));
-/*Route::get('dance', array('as' => 'landing.dance', 'uses' => 'LandingsController@dance'));
-Route::get('pilates', array('as' => 'landing.pilates', 'uses' => 'LandingsController@pilates'));
-Route::get('martialarts', array('as' => 'landing.martialarts', 'uses' => 'LandingsController@martialarts'));
-Route::get('yoga', array('as' => 'landing.yoga', 'uses' => 'LandingsController@yoga'));
-Route::get('bootcamp', array('as' => 'landing.bootcamp', 'uses' => 'LandingsController@bootcamp'));
-Route::get('personaltrainer', array('as' => 'landing.personaltrainer', 'uses' => 'LandingsController@personaltrainer'));*/
-
-Route::get(
-    'dance',
-    array('as' => 'landing.dance', 'uses' => function () { return (new LandingsController)->landCategory('dance'); })
-);
-Route::get(
-    'pilates',
-    array(
-        'as'   => 'landing.pilates',
-        'uses' => function () { return (new LandingsController)->landCategory('pilates'); }
-    )
-);
-Route::get(
-    'martialarts',
-    array(
-        'as'   => 'landing.martialarts',
-        'uses' => function () { return (new LandingsController)->landCategory('martialarts'); }
-    )
-);
-Route::get(
-    'yoga',
-    array('as' => 'landing.yoga', 'uses' => function () { return (new LandingsController)->landCategory('yoga'); })
-);
-Route::get(
-    'bootcamp',
-    array(
-        'as'   => 'landing.bootcamp',
-        'uses' => function () { return (new LandingsController)->landCategory('bootcamp'); }
-    )
-);
-Route::get(
-    'personaltrainer',
-    array(
-        'as'   => 'landing.personaltrainer',
-        'uses' => function () { return (new LandingsController)->landCategory('personaltrainer'); }
-    )
-);
 
 
+$landings = ['dance', 'pilates','martialarts', 'yoga', 'bootcamp', 'personaltrainer'];
+
+foreach($landings as $land) {
+    Route::get($land,['as' => 'landing.bootcamp', 'uses' => function () use ($land) {
+        return (new LandingsController)->landCategory($land);
+    }]);
+}
 
 
 
 // layout page
 
-Route::get('/layouts', function()
-{
+Route::get('/layouts', function () {
     return View::make('layouts.layouts');
 });
 
-// -------------  OLD ADMIN STUFF ---------------
 
 
-Route::post(
-    'admin/approve_trainer',
-    array('as' => 'admin.approve_trainer.post', 'before' => 'admin', 'uses' => 'AdminController@approveTrainer')
-);
-Route::get(
-    'admin/pending_withdrawal',
-    array('as' => 'admin.pending_withdrawal', 'before' => 'admin', 'uses' => 'AdminController@pendingWithdrawal')
-);
-Route::post(
-    'admin/process_withdrawal',
-    array('as' => 'admin.process_withdrawal.post', 'before' => 'admin', 'uses' => 'AdminController@processWithdrawal')
-);
-Route::post(
-    '/admin/log',
-    array('as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'AdminController@deleteLog')
-);
-Route::get(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
-);
-Route::post(
-    '/admin/edit_classes/{id}',
-    array('as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'AdminController@editClasses')
-);
-
-Route::post(
-    '/admin/groups',
-    array('as' => 'admin.groups.addcat', 'before' => 'admin', 'uses' => 'AdminController@addCategory')
-);
-
-Route::get(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'AdminController@showGroupRatings')
-);
-Route::post(
-    '/admin/fakeratings',
-    array('as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'AdminController@addRating')
-);
 
 // -------------  ADMIN SECTION ---------------
+Route::get('/admin/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@dashboard']);
+
+Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
+
+    Route::post('check_url',
+        ['as' => 'admin.ajax.check_url', 'uses' => 'AdminAjaxController@ajaxCheckUrl']);
+    Route::post('/reset_password',
+        ['as' => 'admin.reset_password', 'uses' => 'AdminAjaxController@resetPassword']);
+
+    Route::post('/fakeratings',
+        ['as' => 'admin.fakeratings.addrating', 'uses' => 'AdminAjaxController@addRating']);
+
+
+    Route::post('/edit_subcategories',
+        ['as' => 'admin.edit_subcategories', 'uses' => 'AdminAjaxController@editSubcategories']);
+    Route::post('/add_subcategory',
+        ['as' => 'admin.add_subcategory', 'uses' => 'AdminAjaxController@addSubcategory']);
+    Route::post('/edit_group_subcats',
+        ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminAjaxController@editGroupSubcats']);
+
+    Route::post('/unapprove_trainer',
+        ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
+});
+
+
+Route::get('/iggy_login', function() {
+    $user = Sentry::findUserById(323);
+    Sentry::login($user);
+
+    return Redirect::route('admin.dashboard');
+});
+
+// -------------  ADMIN STUFF ---------------
+
 
 Route::group(
-    array('prefix' => 'admin', 'before' => 'admin'),
+    ['prefix' => 'admin', 'before' => 'admin'],
     function () {
-
-        Route::get('/{page}', ['as' => 'admin.page', 'uses' => 'AdminController@yukon']);
-        Route::get('/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@yukon']);
-
-
-        Route::post('/log_in_as', ['as' => 'admin.log_in_as', 'uses' => 'AdminController@logInAs']);
-        Route::post('/reset_password', ['as' => 'admin.reset_password', 'uses' => 'AdminController@resetPassword']);
-        Route::post('/edit_subcategories', ['as' => 'admin.edit_subcategories', 'uses' => 'AdminController@editSubcategories']);
-        Route::post('/add_subcategory', ['as' => 'admin.add_subcategory', 'uses' => 'AdminController@addSubcategory']);
-        Route::post('/unapprove_trainer', ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminController@unapproveTrainer']);
-        Route::post('/edit_group_subcats', ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminController@editGroupSubcats']);
+        Route::get('/dashboard',
+            ['as' => 'admin.dashboard', 'uses' => 'MainController@dashboard']);
 
 
+        /** USERS */
+        Route::get('/users',
+            ['as' => 'admin.users', 'uses' => 'MainController@users']);
+        Route::post('/log_in_as',
+            ['as' => 'admin.log_in_as', 'uses' => 'MainController@logInAs']);
+        Route::get('/pendingtrainers',
+            ['as' => 'admin.pendingtrainers', 'uses' => 'MainController@pendingTrainers']);
+        Route::post('/approve_trainer',
+            ['as' => 'admin.approve_trainer', 'uses' => 'MainController@approveTrainer']);
+        Route::get('/pending_withdrawal',
+            ['as' => 'admin.pending_withdrawal', 'uses' => 'MainController@pendingWithdrawal']);
+        Route::post('/process_withdrawal',
+            ['as' => 'admin.process_withdrawal', 'uses' => 'MainController@processWithdrawal']);
+
+
+
+        Route::get('/categories',
+            ['as' => 'admin.categories', 'uses' => 'MainController@categories']);
+        Route::get('/subcategories',
+            ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
+
+
+        Route::get('articles',
+            ['as' => 'admin.articles', 'uses' => 'ArticlesController@articles']);
+        Route::get('article/manage/{id?}',
+            ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
+        Route::post('article/manage/{id?}',
+            ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
+        Route::post('article/categories',
+            ['as' => 'admin.article.categories', 'uses' => 'ArticlesController@manage']);
+
+
+        /** TO DOOO */
+
+        Route::get('log',
+            ['as' => 'admin.log', 'uses' => 'MainController@showLog']);
+        Route::post('/log',
+            ['as' => 'admin.log.delete', 'uses' => 'MainController@deleteLog']);
+        Route::get('/fakeratings',
+            ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
+        Route::post('/edit_classes/{id}',
+            ['as' => 'admin.edit_classes', 'uses' => 'MainController@editClasses']);
+        Route::post('/groups',
+            ['as' => 'admin.groups.addcat','uses' => 'MainController@addCategory']);
+        Route::get('/fakeratings',
+            ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
     }
 );
