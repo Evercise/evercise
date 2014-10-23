@@ -184,18 +184,4 @@ class ArticlesController extends \BaseController
         return $templates;
 
     }
-
-
-    public function ajaxCheckUrl()
-    {
-
-        $this->beforeFilter('csrf', array('on' => 'post'));
-
-        $url = $this->request->get('url');
-
-
-        return Response::json(['error' => false]);
-
-
-    }
 }

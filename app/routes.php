@@ -372,6 +372,11 @@ Route::get(
     )
 );
 
+/** ARTICLES */
+
+$pagesController = App::make('PagesController');
+$pagesController->generateRoutes();
+
 
 // working on
 
@@ -405,8 +410,24 @@ Route::get('/admin/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@das
 
 Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 
-    Route::post('check_url', ['as' => 'admin.ajax.check_url', 'uses' => 'ArticlesController@ajaxCheckUrl']);
+    Route::post('check_url',
+        ['as' => 'admin.ajax.check_url', 'uses' => 'AdminAjaxController@ajaxCheckUrl']);
+    Route::post('/reset_password',
+        ['as' => 'admin.reset_password', 'uses' => 'AdminAjaxController@resetPassword']);
 
+    Route::post('/fakeratings',
+        ['as' => 'admin.fakeratings.addrating', 'uses' => 'AdminAjaxController@addRating']);
+
+
+    Route::post('/edit_subcategories',
+        ['as' => 'admin.edit_subcategories', 'uses' => 'AdminAjaxController@editSubcategories']);
+    Route::post('/add_subcategory',
+        ['as' => 'admin.add_subcategory', 'uses' => 'AdminAjaxController@addSubcategory']);
+    Route::post('/edit_group_subcats',
+        ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminAjaxController@editGroupSubcats']);
+
+    Route::post('/unapprove_trainer',
+        ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
 });
 
 
@@ -432,14 +453,10 @@ Route::group(
             ['as' => 'admin.users', 'uses' => 'MainController@users']);
         Route::post('/log_in_as',
             ['as' => 'admin.log_in_as', 'uses' => 'MainController@logInAs']);
-        Route::post('/reset_password',
-            ['as' => 'admin.reset_password', 'uses' => 'MainController@resetPassword']);
         Route::get('/pendingtrainers',
             ['as' => 'admin.pendingtrainers', 'uses' => 'MainController@pendingTrainers']);
         Route::post('/approve_trainer',
             ['as' => 'admin.approve_trainer', 'uses' => 'MainController@approveTrainer']);
-        Route::post('/unapprove_trainer',
-            ['as' => 'admin.unapprove_trainer', 'uses' => 'MainController@unapproveTrainer']);
         Route::get('/pending_withdrawal',
             ['as' => 'admin.pending_withdrawal', 'uses' => 'MainController@pendingWithdrawal']);
         Route::post('/process_withdrawal',
@@ -452,45 +469,30 @@ Route::group(
         Route::get('/subcategories',
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 
-        Route::post('/edit_subcategories',
-            ['as' => 'admin.edit_subcategories', 'uses' => 'MainController@editSubcategories']);
-        Route::post('/add_subcategory',
-            ['as' => 'admin.add_subcategory', 'uses' => 'MainController@addSubcategory']);
-        Route::post('/edit_group_subcats',
-            ['as' => 'admin.edit_group_subcats', 'uses' => 'MainController@editGroupSubcats']);
-
 
         Route::get('articles',
-            ['as' => 'admin.articles', 'before' => 'admin', 'uses' => 'ArticlesController@articles']);
+            ['as' => 'admin.articles', 'uses' => 'ArticlesController@articles']);
         Route::get('article/manage/{id?}',
-            ['as' => 'admin.article.manage', 'before' => 'admin', 'uses' => 'ArticlesController@manage']);
+            ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
         Route::post('article/manage/{id?}',
-            ['as' => 'admin.article.manage', 'before' => 'admin', 'uses' => 'ArticlesController@manage']);
+            ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
         Route::post('article/categories',
-            ['as' => 'admin.article.categories', 'before' => 'admin', 'uses' => 'ArticlesController@manage']);
-
-
+            ['as' => 'admin.article.categories', 'uses' => 'ArticlesController@manage']);
 
 
         /** TO DOOO */
 
         Route::get('log',
-            ['as' => 'admin.log', 'before' => 'admin', 'uses' => 'MainController@showLog']);
+            ['as' => 'admin.log', 'uses' => 'MainController@showLog']);
         Route::post('/log',
-            ['as' => 'admin.log.delete', 'before' => 'admin', 'uses' => 'MainController@deleteLog']);
+            ['as' => 'admin.log.delete', 'uses' => 'MainController@deleteLog']);
         Route::get('/fakeratings',
-            ['as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'MainController@showGroupRatings']);
+            ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
         Route::post('/edit_classes/{id}',
-            ['as' => 'admin.edit_classes', 'before' => 'admin', 'uses' => 'MainController@editClasses']);
+            ['as' => 'admin.edit_classes', 'uses' => 'MainController@editClasses']);
         Route::post('/groups',
-            ['as' => 'admin.groups.addcat', 'before' => 'admin', 'uses' => 'MainController@addCategory']);
+            ['as' => 'admin.groups.addcat','uses' => 'MainController@addCategory']);
         Route::get('/fakeratings',
-            ['as' => 'admin.fakeratings', 'before' => 'admin', 'uses' => 'MainController@showGroupRatings']);
-        Route::post('/fakeratings',
-            ['as' => 'admin.fakeratings.addrating', 'before' => 'admin', 'uses' => 'MainController@addRating']);
-        Route::post('/fakessdsratings',
-            ['as' => 'admin.pending', 'before' => 'admin', 'uses' => 'MainController@addRating']);
-        Route::post('/fakessdsratings',
-            ['as' => 'users.create', 'before' => 'admin', 'uses' => 'MainController@addRating']);
+            ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
     }
 );
