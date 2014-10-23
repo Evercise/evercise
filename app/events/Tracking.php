@@ -128,8 +128,8 @@ class Tracking
         $user_object = $this->formatUser($user, $type);
 
 
-        if($func != 'REGISTER') {
-            if(empty($user->salesforce_id)) {
+        if ($func != 'REGISTER') {
+            if (empty($user->salesforce_id)) {
                 $func = 'REGISTER';
             }
         }
@@ -143,6 +143,8 @@ class Tracking
             case "EDIT":
                 $user_object->id = $user->salesforce_id;
                 $res = Salesforce::update([$user_object], 'Contact');
+
+                $this->log->info($res);
                 break;
             case "LOGIN":
                 $obj = new \stdClass();
@@ -152,7 +154,7 @@ class Tracking
                 break;
         }
 
-        $this->log->info($type . ' ' . $user->id . ' ' . $user->salesforce_id.' '.$func . ' in SalesForce');
+        $this->log->info($type . ' ' . $user->id . ' ' . $user->salesforce_id . ' ' . $func . ' in SalesForce');
 
         return $user;
     }
@@ -169,11 +171,11 @@ class Tracking
         $relation = new \stdClass();
 
         /** Check if we dont have them in the DB and create them */
-        if(empty($session->salesforce_id)) {
+        if (empty($session->salesforce_id)) {
             $session = $this->registerSessionTracking($session);
         }
 
-        if(empty($user->salesforce_id)) {
+        if (empty($user->salesforce_id)) {
             $user = $this->registerUserTracking($user, 'USER', 'REGISTER');
         }
 
@@ -182,9 +184,8 @@ class Tracking
 
         $res = Salesforce::create([$relation], 'Class_Registrant__c');
 
-        $this->log->info('Relation Created in SalesForce ' . (implode(',', array_values((array) $relation))));
+        $this->log->info('Relation Created in SalesForce ' . (implode(',', array_values((array)$relation))));
     }
-
 
     /**
      * @param $user
@@ -275,25 +276,30 @@ class Tracking
 
         $user_data['Gender__c'] = ($user_arr['gender'] == 1 ? 'Male' : 'Female');
 
+
         $map = [
-            'email'      => 'Email',
+            'email' => 'Email',
             'first_name' => 'FirstName',
-            'last_name'  => 'LastName',
-            'phone'      => 'Phone'
+            'last_name' => 'LastName',
+            'phone' => 'Phone'
         ];
 
         foreach ($map as $key => $val) {
             $user_data[$val] = $user_arr[$key];
         }
 
-        if(!empty($user_arr['dob']) && strtotime($user_arr['dob']) > 1000) {
+        if (!empty($user_arr['dob']) && strtotime($user_arr['dob']) > 1000) {
             $user_data['Birthdate'] = gmdate("Y-m-d\TH:i:s\Z", strtotime($user_arr['dob']));
         }
-        if(!empty($user_arr['last_login']) && strtotime($user_arr['last_login']) > 1000) {
+        if (!empty($user_arr['last_login']) && strtotime($user_arr['last_login']) > 1000) {
             $user_data['Last_Login__c'] = gmdate("Y-m-d\TH:i:s\Z", strtotime($user_arr['last_login']));
         }
 
-        return (object) $user_data;
+
+        $user_data['MailingCountry']    = 'United Kingdom';
+
+
+        return (object)$user_data;
     }
 
     public static function formatSessionClass($session)
