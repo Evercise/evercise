@@ -27,5 +27,11 @@ return [
 
     'seo_keywords' => [
         'Excercise', 'Remind', 'Iggy', 'TO', 'ADD', 'KEYWORDS', '!!!!!'
+    ],
+
+    'blog'  => [
+        'title' => 'Evercise Blog',
+        'keywords' => 'fitness blog, evercise',
+        'description' => 'Pretty cool description'
     ]
 ];
