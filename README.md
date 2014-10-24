@@ -141,14 +141,14 @@ and your new site is located:
 
 Now to set it up just run the command:
 ```bash
-sh scripts/server.sh dev.mysite.com /home/vagrant/html/mysite/public
+sudo sh scripts/serve.sh dev.mysite.com /home/vagrant/html/mysite/public
 ```
 
 Notice it has public at the end.
 
 
 Now the site will be created automatically in Nginx/Sites Available and linked to the enabled sites.
-Nginx and PHP will be restarted so it should work instancly
+Nginx and PHP will be restarted so it should work instantly
 
 
 
