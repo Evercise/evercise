@@ -26,8 +26,32 @@
         /* style switcher */
         yukon_style_switcher.init();
 
+
+        ERRORS.forEach(function(value) {
+            notify(value);
+        });
+
     });
 
+
+    function notify(message) {
+            new jBox('Notice', {
+                offset: {
+                    y: 36
+                },
+                theme: 'NoticeBorder',
+                color: 'red',
+                stack: true,
+                autoClose: 30000,
+                animation: {
+                    open: 'slide:top',
+                    close: 'slide:right'
+                },
+                onInit: function () {
+                    this.options.content = message;
+                }
+            });
+    }
 
 /* Helpers */
     /* Detect touch devices */

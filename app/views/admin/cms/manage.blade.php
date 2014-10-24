@@ -30,13 +30,8 @@
            <img src="/{{ $article->main_image or "img/default_article.jpg" }}" style="float:left;width:100px !important;margin-right:10px" width="100" heigh="100"/>
            <input type="file" id="file" placeholder="Upload main image" name="main_image" value="" class="form-control" style="width:60%" /> <br/>
            The image will be auto resized to: {{ Config::get('evercise.article_main_image.width') }}x{{ Config::get('evercise.article_main_image.height')}}
-    </div> <br/><br style="clear:both"/>
+    </div><br style="clear:both"/>
 
-
-    <div class="form-group">
-          <label>Intro (Excerpt):</label>
-          <textarea name="intro" id="reg_textarea" cols="10" rows="2" class="form-control">{{ $article->intro or "" }}</textarea>
-    </div>
 
     <div class="form-group">
           <label>Main Content:</label>
@@ -52,7 +47,7 @@
 
         <button type="submit" name="save" value="save" class="btn btn-primary btn-sm">Save</button>
         @if(!empty($article->id))
-            <a href="{{ URL::to(Articles::createUrl($article), ['preview'=>true]) }}" class="btn btn-default btn-sm" target="_blank">Preview</a>
+            <a href="{{ URL::to(Articles::createUrl($article)) }}" class="btn btn-default btn-sm" target="_blank">Preview</a>
         @endif
 
     </div>
@@ -99,12 +94,19 @@
                     <option value="2" {{ (!empty($article->status) && $article->status == 2 ?  'selected="selected"':'') }}>Unpublished</option>
 
            </select>
-</div>
+    </div>
 
     <div class="form-group">
           <label>Date published:</label>
-          <input type="text" name="published_on" class="form-control" id="dp_basic" value="{{ (!empty($article->published_on) ? $article->published_on->format('m/d/Y') : '') }}"/>
+          <input type="text" name="published_on" class="form-control datetime" id="dp_basic" value="{{ (!empty($article->published_on) ? $article->published_on->format('m/d/Y') : '') }}"/>
 
+    </div>
+
+
+
+    <div class="form-group">
+          <label>Intro (Excerpt):</label>
+          <textarea name="intro" id="reg_textarea" cols="10" rows="2" class="form-control">{{ $article->intro or "" }}</textarea>
     </div>
 
     <div class="form-group">
@@ -115,6 +117,15 @@
     <div class="form-group">
           <label>Meta keywords:</label>
            <input type="text" class="form-control tokenization" name="keywords" value="{{ $article->keywords or "" }}">
+
+    </div>
+
+
+    <div class="form-group">
+          <label>Widgets</label>
+
+          <strong>Single Class</strong>
+          <pre>[single_class type=id param=123]</pre>
 
     </div>
 
@@ -142,6 +153,9 @@
             <script src="//cdn.ckeditor.com/4.4.5/standard/ckeditor.js"></script>
             <script type="text/javascript" src="/admin/assets/lib/ckeditor/adapters/jquery.js"></script>
             <script type="text/javascript" src="/admin/assets/lib/ckfinder/ckfinder.js"></script>
+
+            <script type="text/javascript" src="/admin/assets/js/moment.js"></script>
+            <script type="text/javascript" src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
 
 
             <script>
@@ -178,6 +192,7 @@ $(document).ready(function() {
             filebrowserBrowseUrl : '/admin/assets/lib/ckfinder/ckfinder.html',
             filebrowserUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
             filebrowserImageUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+            height : '600px'
         });
 
 

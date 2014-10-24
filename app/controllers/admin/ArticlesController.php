@@ -120,6 +120,7 @@ class ArticlesController extends \BaseController
             }
 
             if ($this->request->file('main_image')) {
+
                 $file = $dir . '/' . Str::slug($data['title']).'.'.$this->request->file('main_image')->getClientOriginalExtension();
                 $image = Image::make($this->request->file('main_image')->getRealPath())->fit(
                     $this->config->get('evercise.article_main_image.width'),
@@ -127,6 +128,10 @@ class ArticlesController extends \BaseController
                 )->save($file);
 
                 $data['main_image'] = str_replace(public_path() . '/', '', $file);
+            }
+
+            if(is_null($data['main_image'])) {
+                unset($data['main_image']);
             }
 
 
@@ -142,6 +147,11 @@ class ArticlesController extends \BaseController
                 $url .= $category->permalink . '/';
             }
             $url .= $data['permalink'];
+
+
+            /** Fix Image Path */
+            $data['content'] = str_replace(getcwd(), '', $data['content']);
+
 
             unset($data['save']);
 
@@ -175,13 +185,131 @@ class ArticlesController extends \BaseController
         $templates = array();
 
         //Get from the main template directory first:
-        foreach (glob(app_path() . '/views/articles/template_*') as $filename) {
+        foreach (glob(app_path() . '/views/v3/pages/template_*') as $filename) {
             $filename = basename($filename);
             $name = str_replace(array('template_', '_', '.blade.php'), array('', ' ', ''), $filename);
-            $templates[str_replace('.php', '', $filename)] = ucfirt($name);
+            $templates[str_replace('.php', '', $filename)] = ucfirst($name);
         }
 
         return $templates;
 
+    }
+
+
+
+    public function categories(){
+
+        $categories = $this->articlecategories->all();
+
+        return $this->view->make('admin.cms.categories', compact('categories'))->render();
+    }
+
+    public function categoriesManage($id = 0){
+
+        if (!empty($_POST)) {
+            $save = $this->saveCategory($id);
+
+            if (!empty($save['validation_failed'])) {
+                return Redirect::back()->withInput()->withErrors(
+                    $save['validator']
+                );
+            }
+            if(!empty($save['new'])) {
+                if ($save['new']) {
+                    return Redirect::route('admin.article.category.manage', ['id' => $save['category']->id]);
+                }
+            }
+        }
+
+        $category = $this->articlecategories->find($id);
+
+        return $this->view->make('admin.cms.manage_categories', compact('category'))->render();
+    }
+
+
+
+
+
+    private function saveCategory($id = 0)
+    {
+        $data = $this->request->except('_token');
+
+
+        $validator = Validator::make(
+            $data,
+            [
+                'title'       => 'required|max:160|min:5',
+                'description' => 'required|max:5000|min:100',
+                'main_image'  => 'image|mimes:jpeg,jpg,png,gif',
+                'keywords'    => 'required|max:160',
+                'permalink'   => 'required',
+                'status'      => 'required'
+            ]
+        );
+
+        if ($validator->fails()) {
+
+            return [
+                'validation_failed' => 1,
+                'validator'         => $validator,
+                'errors'            => $validator->errors()->toArray()
+            ];
+        } else {
+
+            if(!empty($data['id']) && $data['id'] > 0) {
+                $id = $data['id'];
+                unset($data['id']);
+            }
+
+
+            $dir = public_path() . '/img/pages/' . date('Y');
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+            $dir .= '/' . date('m');
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+
+            if ($this->request->file('main_image')) {
+
+                $file = $dir . '/' . Str::slug($data['title']).'.'.$this->request->file('main_image')->getClientOriginalExtension();
+                $image = Image::make($this->request->file('main_image')->getRealPath())->fit(
+                    $this->config->get('evercise.article_category_main_image.width'),
+                    $this->config->get('evercise.article_category_main_image.height')
+                )->save($file);
+
+                $data['main_image'] = str_replace(public_path() . '/', '', $file);
+            }
+
+            if(is_null($data['main_image'])) {
+                unset($data['main_image']);
+            }
+
+
+
+            unset($data['save']);
+
+            if ($id == 0) {
+                $new = true;
+                $category = ArticleCategories::create($data);
+            } else {
+                $new = false;
+                $category = ArticleCategories::find($id);
+
+                foreach ($data as $key => $val) {
+                    $category->{$key} = $val;
+                }
+
+                $category->save();
+
+            }
+
+            return [
+                'new'     => $new,
+                'category' => $category
+            ];
+
+        }
     }
 }

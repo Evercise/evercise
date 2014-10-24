@@ -19,8 +19,10 @@ return [
         'width'  => 300,
         'height' => 200
     ],
-
-
+    'article_category_main_image'=> [
+        'width'  => 300,
+        'height' => 200
+    ],
     /** SEO CRAPP */
 
     'seo_keywords' => [

@@ -1,11 +1,20 @@
 <?php
 
 
+/**
+ * Class PagesController
+ */
 class PagesController extends \BaseController
 {
 
 
+    /**
+     * @var string
+     */
     protected $route_prefix_category = 'articles.category.';
+    /**
+     * @var string
+     */
     protected $route_prefix_article = 'articles.article.';
 
     private $articles;
@@ -14,14 +23,25 @@ class PagesController extends \BaseController
     private $request;
     private $log;
     private $app;
+    private $view;
 
 
+    /**
+     * @param Articles $articles
+     * @param ArticleCategories $articleCategories
+     * @param \Illuminate\Routing\Router $route
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Log\Writer $log
+     * @param \Illuminate\View\Factory $view
+     * @param App $app
+     */
     public function __construct(
         Articles $articles,
         ArticleCategories $articleCategories,
         \Illuminate\Routing\Router $route,
         \Illuminate\Http\Request $request,
         \Illuminate\Log\Writer $log,
+        \Illuminate\View\Factory $view,
         App $app
     ) {
 
@@ -34,6 +54,7 @@ class PagesController extends \BaseController
         $this->request = $request;
         $this->log = $log;
         $this->app = $app;
+        $this->view = $view;
     }
 
 
@@ -55,7 +76,7 @@ class PagesController extends \BaseController
         $articles = $this->articles->all();
         foreach ($articles as $a) {
             $url = '';
-            if ($a->page == 1 && !empty($a->category_id)) {
+            if ($a->page == 1 && !empty($a->category_id) && !empty($cat[$a->category_id]->permalink)) {
                 $url .= $cat[$a->category_id]->permalink . '/';
             }
 
@@ -67,6 +88,10 @@ class PagesController extends \BaseController
     }
 
 
+    /**
+     * @param $object
+     * @return bool
+     */
     private function hasAccess($object)
     {
 
@@ -97,6 +122,10 @@ class PagesController extends \BaseController
     }
 
 
+    /**
+     * @param string $type
+     * @return bool|\Illuminate\Support\Collection|static
+     */
     public function getObject($type = 'article')
     {
 
@@ -127,33 +156,71 @@ class PagesController extends \BaseController
 
     }
 
+    /**
+     *
+     */
     public function index()
     {
-        return 'page';
+        $this->showBlog();
     }
 
+
+    /**
+     * @return string
+     */
+    public function showBlog() {
+
+        return 'blog';
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|string
+     */
     public function showCategory()
     {
         $category = $this->getObject('category');
 
         if (!$this->hasAccess($category)) {
-            //FIGURE OUT SOMETHING HERE!!!
-
-            die('HEEYY');
+            /** Redirect Temporary to blog.. until we figure out what to do here */
+            return Redirect::route('blog', 307)->with('message', 'You don\'t have access to that page!');
         }
+
 
         return 'category';
     }
 
+    /**
+     * @return \Illuminate\View\View
+     */
     public function showPage()
     {
         $article = $this->getObject('article');
 
         if (!$this->hasAccess($article)) {
-            //FIGURE OUT SOMETHING HERE!!!
-
-            die('HEEYYaaaaaa');
+            /** Redirect Temporary to blog.. until we figure out what to do here */
+            return Redirect::route('blog', 307)->with('message', 'You don\'t have access to that page!');
         }
-        return 'page';
+
+
+        $article->content = Shortcode::compile($article->content);
+
+
+
+        /** Categories */
+        $categories = $this->articleCategories->where('status', 1)->get();
+
+        $view = 'v3.pages.single';
+
+        if(!empty($article->template)) {
+            $view = $article->template;
+        }
+
+
+        $metaDescription = $article->description;
+        $title = $article->title;
+        $keywords = $article->keywords;
+
+
+        return $this->view->make($view, compact('article', 'categories', 'metaDescription', 'title', 'keywords'));
     }
 }

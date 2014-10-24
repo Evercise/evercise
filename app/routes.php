@@ -472,12 +472,15 @@ Route::group(
 
         Route::get('articles',
             ['as' => 'admin.articles', 'uses' => 'ArticlesController@articles']);
-        Route::get('article/manage/{id?}',
+
+        Route::match(array('GET', 'POST'), 'article/manage/{id?}',
             ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
-        Route::post('article/manage/{id?}',
-            ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
-        Route::post('article/categories',
-            ['as' => 'admin.article.categories', 'uses' => 'ArticlesController@manage']);
+        Route::get('article/categories',
+            ['as' => 'admin.article.categories', 'uses' => 'ArticlesController@categories']);
+        Route::get('article/categories/{id?}',
+            ['as' => 'admin.article.categories.manage', 'uses' => 'ArticlesController@categoriesManage']);
+        Route::match(array('GET', 'POST'), 'article/categories/{id?}',
+            ['as' => 'admin.article.categories.manage', 'uses' => 'ArticlesController@categoriesManage']);
 
 
         /** TO DOOO */

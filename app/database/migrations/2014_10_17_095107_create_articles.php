@@ -47,6 +47,8 @@ class CreateArticles extends Migration
                 $table->string('description', 500);
                 $table->string('keywords', 500);
                 $table->string('permalink', 255);
+                $table->string('permalink', 255);
+                $table->smallInteger('status')->default(0)->unsigned();
 
                 $table->timestamps();
             }

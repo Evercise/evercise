@@ -18,6 +18,12 @@
             <!-- flags -->
                 <link rel="stylesheet" href="/admin/assets/icons/flags/flags.css">
 
+
+            <!-- jBox -->
+            <link href="/admin/assets/lib/jBox-0.3.0/Source/jBox.css" rel="stylesheet" media="screen">
+            <link href="/admin/assets/lib/jBox-0.3.0/Source/themes/NoticeBorder.css" rel="stylesheet" media="screen">
+
+
         @yield('css')
 
         <!-- select2 -->
@@ -59,19 +65,23 @@
         <script src="/admin/assets/bootstrap/js/bootstrap.min.js"></script>
         <!-- retina images -->
         <script src="/admin/assets/js/retina.min.js"></script>
+        <script src="/admin/assets/lib/jBox-0.3.0/Source/jBox.min.js"></script>
 
-        <!-- Yukon Admin functions -->
-        <script src="/admin/assets/js/yukon_all.js"></script>
-        <!-- Yukon Admin functions -->
-        <script src="/assets/application.js"></script>
-
-        @yield('script')
 
         <script>
             var DEBUG_APP = <?=getenv('DEBUG_APP') ? 'true' : 'false'?>;
             var BASE_URL = '{{ URL::to('/').'/' }}';
             var AJAX_URL = '{{ URL::to('/ajax').'/admin/' }}';
             var TOKEN = '{{ csrf_token() }}';
+            var ERRORS = [];
+
+            @if(isset($errors))
+                @foreach ($errors->all() as $message)
+                    ERRORS.push('{{$message}}');
+                @endforeach
+            @endif
+
+
             $(function() {
                 $.ajaxSetup({
                     headers: {
@@ -80,6 +90,15 @@
                 });
             });
         </script>
+
+
+
+        <!-- Yukon Admin functions -->
+        <script src="/admin/assets/js/yukon_all.js"></script>
+        <!-- Yukon Admin functions -->
+        <script src="/assets/application.js"></script>
+
+        @yield('script')
 
         <!-- select2 -->
         <script src="/admin/assets/lib/select2/select2.min.js"></script>
