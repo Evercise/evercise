@@ -108,3 +108,49 @@ Located in the Settings/System of the Virtual Machine that you are using
 ![Setup](https://www.dropbox.com/s/c9v36501zoqbc35/Screen%20Shot%202014-08-27%20at%209.46.26%201.png?dl=1)
 
 After that open your command line and go to the project root
+
+
+
+
+
+
+# How to ADD a new domain or site
+==================================================
+## Auto
+
+In the Server files you have a .sh file: scripts/server.sh
+
+For example we want to add a new site called dev.mysite.com and its located in the folder mysite
+
+First in your hosts file add the new domain and point to the machine IP
+In my case it would look like this:
+```bash
+192.168.10.10 dev.mysite.com
+```
+
+Log into the Vagrant server.
+Lets assume that your project files are located like this:
+```bash
+/home/vagrant/html
+```
+
+and your new site is located:
+```bash
+/home/vagrant/html/mysite
+```
+
+Now to set it up just run the command:
+```bash
+sh scripts/server.sh dev.mysite.com /home/vagrant/html/mysite/public
+```
+
+Notice it has public at the end.
+
+
+Now the site will be created automatically in Nginx/Sites Available and linked to the enabled sites.
+Nginx and PHP will be restarted so it should work instancly
+
+
+
+
+
