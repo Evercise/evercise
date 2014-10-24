@@ -15,7 +15,7 @@ class CreateArticles extends Migration
     {
 
         self::down();
-        
+
         Schema::create(
             'articles',
             function (Blueprint $table) {
@@ -50,7 +50,7 @@ class CreateArticles extends Migration
                 $table->string('description', 500);
                 $table->string('keywords', 500);
                 $table->string('permalink', 255);
-                $table->smallInteger('status')->default(0)->unsigned();
+                $table->smallInteger('status')->default(1)->unsigned();
 
                 $table->timestamps();
             }
