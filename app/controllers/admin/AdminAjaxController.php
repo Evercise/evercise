@@ -4,12 +4,14 @@
 /**
  * Class AdminAjaxController
  */
-class AdminAjaxController extends AdminController {
+class AdminAjaxController extends AdminController
+{
 
     /**
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
 
         parent::__construct();
 
@@ -46,21 +48,20 @@ class AdminAjaxController extends AdminController {
         /** CHeck if the URL is in the articles */
         $check = Articles::where('permalink', $url)->count();
 
-        if($check > 0) {
+        if ($check > 0) {
             return Response::json(['error' => true]);
         }
 
         /** CHeck if the URL is in the ArticleCategories */
         $check = ArticleCategories::where('permalink', $url)->count();
 
-        if($check > 0) {
+        if ($check > 0) {
             return Response::json(['error' => true]);
         }
 
 
         return Response::json(['error' => false]);
     }
-
 
 
     /**
@@ -147,6 +148,52 @@ class AdminAjaxController extends AdminController {
 
 
         return Response::json(['callback' => 'successAndRefresh']);
+    }
+
+    public function saveTags()
+    {
+        $tags = implode(',',Input::get('tags'));
+        $id = Input::get('id');
+
+        Gallery::where('id', $id)->update(['keywords' => $tags]);
+
+        return Response::json(['saved' => true]);
+    }
+
+
+    public function galleryUploadFile()
+    {
+        if ($file = Request::file('file')) {
+
+            $name = $file->getClientOriginalName();
+            /** Save the image name without the Prefix to the DB */
+
+            $save = false;
+            foreach (Config::get('evercise.gallery.sizes') as $img) {
+
+                $file_name = $img['prefix'] . '_' . $name;
+
+                $image = Image::make($_FILES['file']['tmp_name'])->fit(
+                    $img['width'],
+                    $img['height']
+                )->save(public_path() . '/img/gallery/' . $file_name);
+
+
+                if ($image) {
+                    $save = true;
+                }
+
+            }
+
+            if ($save) {
+                Gallery::create(['image' => $name, 'counter' => Config::get('evercise.gallery.image_counter', 3)]);
+                return '/img/gallery/thumb_' . $name;
+            }
+        }
+
+        return false;
+
+
     }
 
 }

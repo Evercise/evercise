@@ -446,6 +446,15 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 
     Route::post('/unapprove_trainer',
         ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
+
+
+
+    Route::post('galleryImageUpload',
+        ['as' => 'admin.ajax.gallery_upload', 'uses' => 'AdminAjaxController@galleryUploadFile']);
+    Route::post('saveTags',
+        ['as' => 'admin.ajax.saveTags', 'uses' => 'AdminAjaxController@saveTags']);
+
+
 });
 
 
@@ -500,6 +509,10 @@ Route::group(
         Route::match(array('GET', 'POST'), 'article/categories/{id?}',
             ['as' => 'admin.article.categories.manage', 'uses' => 'ArticlesController@categoriesManage']);
 
+
+
+        Route::get('/gallery',
+            ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
 
         /** TO DOOO */
 

@@ -40,7 +40,7 @@
                     y: 36
                 },
                 theme: 'NoticeBorder',
-                color: 'red',
+                color: 'green',
                 stack: true,
                 autoClose: 30000,
                 animation: {

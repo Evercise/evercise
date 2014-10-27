@@ -9,45 +9,52 @@
                     </li>
                     <li class="first_level">
                         <a href="{{ URL::route('admin.users') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="icon_group first_level_icon"></span>
                             <span class="menu-title">Users</span>
                         </a>
                     </li>
                     <li class="first_level">
                         <a href="{{ URL::route('admin.categories') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="icon_ul first_level_icon"></span>
                             <span class="menu-title">Class Categories</span>
                         </a>
                     </li>
                     <li class="first_level">
                         <a href="{{ URL::route('admin.articles') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="icon_menu-square_alt2 first_level_icon"></span>
                             <span class="menu-title">Articles</span>
                         </a>
                     </li>
                     <li class="first_level">
                         <a href="{{ URL::route('admin.article.categories') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="icon_ul first_level_icon"></span>
                             <span class="menu-title">Article Categories</span>
                         </a>
                     </li>
 
                     <li class="first_level">
+                        <a href="{{ URL::route('admin.gallery') }}">
+                            <span class="icon_images first_level_icon"></span>
+                            <span class="menu-title">Gallery</span>
+                        </a>
+                    </li>
+
+                    <li class="first_level">
                         <a href="{{ URL::route('admin.pending_withdrawal') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="icon_currency first_level_icon"></span>
                             <span class="menu-title">Pending Withdrawals</span>
                         </a>
                     </li>
                     <li class="first_level">
                         <a href="{{ URL::route('admin.pendingtrainers') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="el-icon-universal-access first_level_icon"></span>
                             <span class="menu-title">Pending Trainers</span>
                         </a>
                     </li>
 
                     <li class="first_level">
                         <a href="{{ URL::route('admin.log') }}">
-                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="icon_error-triangle_alt first_level_icon"></span>
                             <span class="menu-title">Error Log</span>
                         </a>
                     </li>

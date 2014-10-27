@@ -33,5 +33,14 @@ return [
         'title' => 'Evercise Blog',
         'keywords' => 'fitness blog, evercise',
         'description' => 'Pretty cool description'
+    ],
+
+    'gallery' => [
+        'image_counter' => 3,
+        'sizes' => [
+            ['prefix' => 'main', 'width' => 1024, 'height' => 300],
+            ['prefix' => 'thumb', 'width' => 200, 'height' => 200]
+        ]
+
     ]
 ];
