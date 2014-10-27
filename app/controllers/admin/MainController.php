@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 
 /**
  * Class ArticlesController
@@ -18,8 +19,59 @@ class MainController extends \BaseController
 
     public function dashboard()
     {
+        /** Stats */
+        $this->data['gallery_images_counter'] = Gallery::sum('counter');
+        $this->data['gallery_images_total'] = Gallery::where('counter', '>', 0)->count();
 
-        return View::make('admin.dashboard')->render();
+
+        /** Users */
+        $this->data['total_users'] = User::all()->count();
+
+        $trainer = Sentry::findGroupByName('Trainer');
+        $this->data['total_trainers'] = Sentry::findAllUsersInGroup($trainer)->count();
+
+
+        /** Sales */
+        $this->data['total_sales'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subDays(300))->where('processed', 1)->sum('total');
+        $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subDays(300))->where('processed', 1)->sum('total_after_fees');
+        $this->data['total_commission'] = ($this->data['total_sales'] - $this->data['total_after_fees']);
+
+
+        $this->data['total_year'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subYear())
+                            ->where('processed', 1)
+                            ->groupBy('month')
+                            ->orderBy( DB::raw('year asc, month'))
+                            ->get(array(
+                                DB::raw('YEAR(created_at) as year'),
+                                DB::raw('MONTH(created_at) as month'),
+                                DB::raw('SUM(total) as total'),
+                                DB::raw('SUM(total_after_fees) as total_after_fees')
+                            ));
+
+        $start    = Carbon::now()->subYear();
+        $end      = Carbon::now();
+        $interval = DateInterval::createFromDateString('1 month');
+        $period   = new DatePeriod($start, $interval, $end);
+
+        foreach ($period as $dt) {
+            $this->data['total_months'][] = $dt->format("Y-m").'-01';
+            $this->data['total_year_total'][(int)$dt->format("m")] = 0;
+            $this->data['total_year_fee'][(int)$dt->format("m")] = 0;
+        }
+
+
+        foreach($this->data['total_year'] as $m) {
+            $this->data['total_year_total'][$m->month] = round($m->total, 0);
+            $this->data['total_year_fee'][$m->month] = round($m->total - $m->total_after_fees, 0);
+        }
+
+
+
+        $this->data['total_referrals'] = Referral::all()->count();
+
+
+
+        return View::make('admin.dashboard', $this->data)->render();
     }
 
 
