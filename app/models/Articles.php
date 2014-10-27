@@ -36,36 +36,6 @@ class Articles extends Eloquent
 
 
 
-    /** CACHE THIS SUCKER */
-
-    public function generateRoutes()
-    {
-
-        /** Category Routes */
-        $categories = ArticleCategories::all();
-        $cat = [];
-        foreach ($categories as $c) {
-            $cat[$c->id] = $c;
-            $this->route->get($c->permalink,
-                ['as' => $this->route_prefix_category . $c->id, 'uses' => 'PagesController@showCategory']);
-        }
-
-        /** Articles Routes */
-        $articles = $this->articles->all();
-        foreach ($articles as $a) {
-            $url = '';
-            if ($a->page == 1 && !empty($a->category_id)) {
-                $url .= $cat[$a->category_id]->permalink . '/';
-            }
-
-            $url .= $a->permalink;
-
-            $this->route->get($url,
-                ['as' => $this->route_prefix_article . $a->id, 'uses' => 'PagesController@showPage']);
-        }
-    }
-
-
 
 
 
@@ -78,7 +48,7 @@ class Articles extends Eloquent
     {
         $url = '';
 
-        if ($article->category_id > 0) {
+        if ($article->category_id > 0 && $article->page == 0) {
             $url .= $article->category->permalink . '/';
         }
 

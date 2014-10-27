@@ -124,8 +124,56 @@
     <div class="form-group">
           <label>Widgets</label>
 
-          <strong>Single Class</strong>
-          <pre>[single_class type=id param=123]</pre>
+          <select id="widget" class="form-control">
+            <option value="">-- SELECT --</option>
+            <option value="single_class">Single Class</option>
+          </select>
+          <div class="row_single_class row_widgets ">
+                <label>Display Type</label>
+                <div class="form-group">
+                     <label class="radio-inline">
+                         <input type="radio" class="display_type" name="row_single" value="id">
+                         Specific Class
+                     </label>
+                     <label class="radio-inline">
+                         <input type="radio" class="display_type" name="row_single" value="search">
+                         Keyword Search
+                     </label>
+                </div>
+
+
+                <div class="single_class_id form-group ">
+                    <select id="single_class_id" class="form-control">
+                                <option value="">-- SELECT --</option>
+                          @foreach($evercisegroup as $g)
+                                <option value="{{ $g->id }}">{{ $g->id }} | {{ $g->name }}</option>
+                          @endforeach
+                    </select>
+                </div>
+
+                <div class="single_class_search form-group ">
+                    <div class="input-group sepH_b">
+                        <span class="input-group-addon">Search keyword</span>
+                        <input type="text" id="single_class_search" class="form-control" value="">
+                     </div>
+
+                    <label class="checkbox-inline">
+                            <input type="checkbox" id="single_class_nearme" value="true"> NearMe
+                     </label>
+                </div>
+
+
+          </div>
+
+
+<br/>
+<br/>
+                <div class="form-group ">
+                    <span class="btn btn-success" id="generate">GENERATE</span>
+                    <textarea id="generated"  class="form-control">
+
+                    </textarea>
+                </div>
 
     </div>
 
@@ -154,8 +202,6 @@
             <script type="text/javascript" src="/admin/assets/lib/ckeditor/adapters/jquery.js"></script>
             <script type="text/javascript" src="/admin/assets/lib/ckfinder/ckfinder.js"></script>
 
-            <script type="text/javascript" src="/admin/assets/js/moment.js"></script>
-            <script type="text/javascript" src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/master/src/js/bootstrap-datetimepicker.js"></script>
 
 
             <script>
@@ -183,7 +229,110 @@ var categories = [];
 
 @endforeach
 
+var widget_type = '';
+var check_type = '';
+
+
+function widgets_reset() {
+
+
+	$('.row_widgets').hide();
+	$('.single_class_id').hide();
+	$('.single_class_search').hide();
+
+
+}
+
+function copyToClipboard() {
+        if (document.body.createControlRange) {
+            var htmlContent = document.getElementById('generated');
+            var controlRange;
+
+            var range = document.body.createTextRange();
+            range.moveToElementText(htmlContent);
+
+            //Uncomment the next line if you don't want the text in the div to be selected
+            range.select();
+
+            controlRange = document.body.createControlRange();
+            controlRange.addElement(htmlContent);
+
+            //This line will copy the formatted text to the clipboard
+            controlRange.execCommand('Copy');
+
+            console.log('copied');
+        }
+    }
 $(document).ready(function() {
+widgets_reset();
+
+/** This will be crap!!! */
+$("#widget").change(function(){
+	widget_type = $(this).val();
+
+	widgets_reset();
+
+	console.log(widget_type);
+
+	switch(widget_type) {
+        case 'single_class':
+            $('.row_single_class').show();
+            break;
+    }
+
+});
+
+
+$('.display_type').click(function(){
+    check_type = $(this).val();
+
+
+    switch(check_type) {
+        case 'id':
+            $('.single_class_id').show();
+            $('.single_class_search').hide();
+            break;
+        case 'search':
+            $('.single_class_search').show();
+            $('.single_class_id').hide();
+            break;
+    }
+});
+
+
+
+$('#generate').click(function() {
+
+	switch(widget_type) {
+        case 'single_class':
+
+            if(check_type == 'id') {
+                var check_type_id = $('#single_class_id').val();
+
+
+                $('#generated').val('[single_class type=id param='+check_type_id+']');
+
+            }
+
+
+            if(check_type == 'search') {
+                var check_type_search = $('#single_class_search').val();
+                $('#generated').val('[single_class type=search param='+check_type_search+' '+( $('#single_class_nearme').prop('checked') ? 'nearme=true':'')+']');
+            }
+
+
+
+            break;
+
+}
+
+});
+
+$('#generated').click(function() {
+    $('#generated').select();
+    copyToClipboard();
+});
+
 
     if ($('#wysiwg_editor').length) {
 

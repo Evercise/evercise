@@ -336,6 +336,11 @@ Route::post(
 );
 
 // layouts and static pages
+Route::get('blog', array('as' => 'blog', 'uses' => 'PagesController@showBlog'));
+
+
+
+
 Route::get('about', array('as' => 'static.about', 'uses' => 'StaticController@show'));
 Route::get('terms_of_use', array('as' => 'static.terms_of_use', 'uses' => 'StaticController@show'));
 Route::get('privacy', array('as' => 'static.privacy', 'uses' => 'StaticController@show'));
@@ -406,7 +411,9 @@ Route::get('/layouts', function () {
 
 
 // -------------  ADMIN SECTION ---------------
+Route::get('/admin/', ['as' => 'admin.page', 'uses' => 'AdminController@dashboard']);
 Route::get('/admin/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@dashboard']);
+Route::get('/admin/', ['as' => 'users.create', 'uses' => 'AdminController@dashboard']);
 
 Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 

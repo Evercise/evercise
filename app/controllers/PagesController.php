@@ -24,6 +24,7 @@ class PagesController extends \BaseController
     private $log;
     private $app;
     private $view;
+    private $config;
 
 
     /**
@@ -42,6 +43,7 @@ class PagesController extends \BaseController
         \Illuminate\Http\Request $request,
         \Illuminate\Log\Writer $log,
         \Illuminate\View\Factory $view,
+        \Illuminate\Config\Repository $config,
         App $app
     ) {
 
@@ -55,6 +57,7 @@ class PagesController extends \BaseController
         $this->log = $log;
         $this->app = $app;
         $this->view = $view;
+        $this->config = $config;
     }
 
 
@@ -68,21 +71,19 @@ class PagesController extends \BaseController
         $cat = [];
         foreach ($categories as $c) {
             $cat[$c->id] = $c;
+
+            if(is_null($c->permalink)) {
+                dd($c);
+            }
             $this->route->get($c->permalink,
                 ['as' => $this->route_prefix_category . $c->id, 'uses' => 'PagesController@showCategory']);
         }
 
         /** Articles Routes */
         $articles = $this->articles->all();
+
         foreach ($articles as $a) {
-            $url = '';
-            if ($a->page == 1 && !empty($a->category_id) && !empty($cat[$a->category_id]->permalink)) {
-                $url .= $cat[$a->category_id]->permalink . '/';
-            }
-
-            $url .= $a->permalink;
-
-            $this->route->get($url,
+            $this->route->get($this->articles->createUrl($a),
                 ['as' => $this->route_prefix_article . $a->id, 'uses' => 'PagesController@showPage']);
         }
     }
@@ -170,7 +171,23 @@ class PagesController extends \BaseController
      */
     public function showBlog() {
 
-        return 'blog';
+
+
+
+        /** Articles */
+        $articles = $this->articles->where('status', 1)->orderBy('id', 'desc')->limit(5)->get();
+
+        /** Categories */
+        $categories = $this->articleCategories->where('status', 1)->get();
+
+
+        $metaDescription = $this->config->get('evercise.blog.description');
+        $title = $this->config->get('evercise.blog.title');
+        $keywords = $this->config->get('evercise.blog.keywords');
+
+
+        return $this->view->make('v3.pages.index', compact('articles', 'categories', 'metaDescription', 'title', 'keywords'));
+
     }
 
     /**

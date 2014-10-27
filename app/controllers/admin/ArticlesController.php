@@ -35,7 +35,7 @@ class ArticlesController extends \BaseController
     public function articles()
     {
 
-        $articles = Articles::orderBy('created_at', 'desc')->get();
+        $articles = $this->articles->orderBy('created_at', 'desc')->get();
         return $this->view->make('admin.cms.articles', compact('articles'))->render();
     }
 
@@ -65,8 +65,17 @@ class ArticlesController extends \BaseController
         $categories = $this->articlecategories->all();
         $templates = $this->getTemplates();
 
+
+        $evercisegroup = Evercisegroup::has('futuresessions')
+            ->has('confirmed')
+            ->with('venue')
+            ->with('user')
+            ->with('ratings')
+            ->with('futuresessions')
+            ->get();
+
         $cookie = Cookie::make('allowFinder', true,  60);
-        $view = $this->view->make('admin.cms.manage', compact('article', 'categories', 'templates'))->render();
+        $view = $this->view->make('admin.cms.manage', compact('article', 'categories', 'evercisegroup', 'templates'))->render();
 
         return Response::make($view)->withCookie($cookie);
 
@@ -76,7 +85,7 @@ class ArticlesController extends \BaseController
 
     private function saveArticle($id = 0)
     {
-        $data = $this->request->except('_token');
+        $data = $this->request->except(['_token', 'row_single']);
 
 
         $validator = Validator::make(
@@ -85,7 +94,6 @@ class ArticlesController extends \BaseController
                 'title'       => 'required|max:160|min:5',
                 'description' => 'required|max:5000|min:100',
                 'category_id' => 'required|numeric',
-                'page'        => 'required|numeric|between:0,1',
                 'main_image'  => 'image|mimes:jpeg,jpg,png,gif',
                 'intro'       => 'required|max:500',
                 'keywords'    => 'required|max:160',
@@ -142,8 +150,8 @@ class ArticlesController extends \BaseController
             }
 
             $url = '';
-            if ($data['page'] > 0) {
-                $category = ArticleCategories::find($data['category_id']);
+            if (!empty($data['page']) && $data['page'] > 0) {
+                $category = $this->articlecategories->find($data['category_id']);
                 $url .= $category->permalink . '/';
             }
             $url .= $data['permalink'];
@@ -157,10 +165,10 @@ class ArticlesController extends \BaseController
 
             if ($id == 0) {
                 $new = true;
-                $article = Articles::create($data);
+                $article = $this->articles->create($data);
             } else {
                 $new = false;
-                $article = Articles::find($id);
+                $article = $this->articles->find($id);
 
                 foreach ($data as $key => $val) {
                     $article->{$key} = $val;
@@ -292,10 +300,10 @@ class ArticlesController extends \BaseController
 
             if ($id == 0) {
                 $new = true;
-                $category = ArticleCategories::create($data);
+                $category = $this->articlecategories->create($data);
             } else {
                 $new = false;
-                $category = ArticleCategories::find($id);
+                $category = $this->articlecategories->find($id);
 
                 foreach ($data as $key => $val) {
                     $category->{$key} = $val;
