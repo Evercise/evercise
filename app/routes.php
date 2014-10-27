@@ -250,6 +250,17 @@ Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'VenuesController@
 Route::post('venues/update/{id}', 'VenuesController@update');
 
 
+// Cart
+
+Route::post('cart/add', array('as' => 'cart.add', 'uses' => 'CartController@add'));
+Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'CartController@remove'));
+Route::post('cart/delete', array('as' => 'cart.delete', 'uses' => 'CartController@delete'));
+Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'CartController@emptyCart'));
+Route::get('cart/checkout', array('as' => 'cart.checkout', 'uses' => 'CartController@getCart'));
+
+
+// sessions
+
 Route::get(
     'sessions/{evercisegroup_id}/index',
     array('as' => 'evercisegroups.trainer_show', 'uses' => 'SessionsController@index')
