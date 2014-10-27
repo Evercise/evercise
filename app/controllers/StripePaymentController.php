@@ -22,11 +22,13 @@ class StripePaymentController extends BaseController {
     */
     public function store()
     {
-        /* get session ids */
+        /* get session ids from Cart*/
 
-        $sessionIdsRaw = Input::get('session-ids');
-        $sessionIds = json_decode(Input::get('session-ids'), true);
-        Session::put('sessionIds', $sessionIds);
+        $cartRows = Cart::content();
+        foreach($cartRows as $row)
+        {
+            array_push($sessionIds, $row->options->sessionId);
+        }
 
       //  return var_dump($sessionIds);
         /* get currnet user */
