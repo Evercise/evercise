@@ -64,4 +64,14 @@ class Withdrawalrequest extends \Eloquent
         $this->attributes['processed'] = 1;
         $this->save();
     }
+
+    public static function getPendingWithdrawals()
+    {
+        return Withdrawalrequest::where('processed', 0)->with('user')->get();
+    }
+
+    public static function getProcessedWithdrawals()
+    {
+        return Withdrawalrequest::where('processed', 1)->with('user')->get();
+    }
 }

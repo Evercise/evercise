@@ -26,8 +26,32 @@
         /* style switcher */
         yukon_style_switcher.init();
 
+
+        ERRORS.forEach(function(value) {
+            notify(value);
+        });
+
     });
 
+
+    function notify(message) {
+            new jBox('Notice', {
+                offset: {
+                    y: 36
+                },
+                theme: 'NoticeBorder',
+                color: 'red',
+                stack: true,
+                autoClose: 30000,
+                animation: {
+                    open: 'slide:top',
+                    close: 'slide:right'
+                },
+                onInit: function () {
+                    this.options.content = message;
+                }
+            });
+    }
 
 /* Helpers */
     /* Detect touch devices */
@@ -404,7 +428,7 @@
                         x: 'x',
                         columns: [
                             ['x', '2013-01-01', '2013-02-01', '2013-03-01', '2013-04-01', '2013-05-01', '2013-06-01', '2013-07-01', '2013-08-01', '2013-09-01', '2013-10-01', '2013-11-01', '2013-12-01'],
-                            ['2013', 14512, 10736, 18342, 14582, 16304, 22799, 18833, 21973, 23643, 22488, 24752, 28722],
+                            ['2013', 19512, 10736, 18342, 14582, 16304, 22799, 18833, 21973, 23643, 22488, 24752, 28722],
                             ['2014', 23732, 22904, 23643, 26887, 32629, 30512, 31658, 35782, 36724, 38947, 42426, 37439]
                         ],
                         types: {
@@ -1697,7 +1721,17 @@
 		},
         p_forms_extended_elements: function() {
 			if ($('#wysiwg_editor').length) {
-				$('#wysiwg_editor').ckeditor();
-			}
+
+
+                var editor = $('#wysiwg_editor').ckeditor({
+                    filebrowserBrowseUrl : '/admin/assets/lib/ckfinder/ckfinder.html',
+                    filebrowserUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                    filebrowserImageUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                });
+
+                CKFinder.setupCKEditor( editor, '../' );
+
+            }
+
 		}
 	};

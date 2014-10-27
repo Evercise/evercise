@@ -39,6 +39,7 @@ class Shortcodes
 
     public function singleClass($attr, $content = null, $name = null)
     {
+
         $class = false;
         $area = false;
         $params = [

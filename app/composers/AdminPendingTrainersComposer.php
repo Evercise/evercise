@@ -7,6 +7,6 @@ class AdminPendingTrainersComposer {
     public function compose($view)
     {
         $view
-            ->with('trainers', Trainer::getConfirmedTrainers());
+            ->with('trainers', Trainer::getUnconfirmedTrainers());
     }
 }

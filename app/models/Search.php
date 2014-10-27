@@ -139,12 +139,11 @@ class Search
                 'published',
                 'created_at',
                 'updated_at',
-                'user',
                 'venue_id',
                 'title',
-                'gender',
-                'user'
+                'gender'
             ],
+            'user' => ['id' , 'display_name' , 'first_name', 'last_name', 'email', 'image', 'phone'],
             'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
             'ratings' => ['user_id', 'comment']
         ];
@@ -155,6 +154,12 @@ class Search
             foreach ($not_needed['global'] as $n) {
                 if (isset($row->{$n})) {
                     unset($row->{$n});
+                }
+            }
+
+            foreach ($not_needed['user'] as $n) {
+                if (isset($row->user->{$n})) {
+                    unset($row->user->{$n});
                 }
             }
 
@@ -197,7 +202,7 @@ class Search
                 'venue_id',
             ],
             'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
-            'ratings' => ['user_id', 'comment']
+            'ratings' => ['user_id']
         ];
         foreach ($results->hits as $row) {
 

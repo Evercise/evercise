@@ -1,3 +1,13 @@
+@extends('admin.main')
+
+@section('css')
+@stop
+
+@section('script')
+
+@stop
+
+@section('body')
 
 
             <h1>Pending Withdrawals</h1>
@@ -17,11 +27,11 @@
                         <td>{{ $withdrawal->account }} </td>
                         <td>{{ $withdrawal->transaction_amount }} </td>
                         <td>
-                        {{ Form::open(array('id' => 'process'.$key, 'url' => 'admin/process_withdrawal', 'method' => 'post', 'class' => '')) }}
+                        {{ Form::open(array('id' => 'process'.$key, 'route' => 'admin.process_withdrawal', 'method' => 'post', 'class' => '')) }}
 
                             {{ Form::hidden( 'withdrawal_id' , $withdrawal->id, array('id' => 'withdrawal_id')) }}
 
-                            {{ Form::submit('Mark Processed' , array('class'=>'btn-yellow ')) }}
+                            {{ Form::submit('Mark Processed' , array('class'=>'btn btn-info')) }}
 
                         {{ Form::close() }}
 
@@ -53,3 +63,4 @@
                     </tr>
                 @endforeach
             </table>
+@stop

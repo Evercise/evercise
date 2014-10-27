@@ -1,6 +1,5 @@
 <?php
 
-
 return [
     ['home' => 'HomePageComposer'],
     ['home' => 'RecommendedClassesComposer'],
@@ -78,5 +77,6 @@ return [
     ['admin.categories' => 'AdminCategoriesComposer'],
     ['admin.subcategories' => 'AdminSubcategoriesComposer'],
     ['admin.searchassociations' => 'AdminAssociationsComposer'],
+
 
 ];
