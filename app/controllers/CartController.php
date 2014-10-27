@@ -30,7 +30,7 @@ class CartController extends \BaseController
                 $newQuantity = $currentQuantity + $quantity;
                 Cart::update($rowId, $newQuantity);
             }
-            else
+            else // Make a new entry in the cart, and link it to the session.
             {
                 Cart::associate('Evercisesession')->add( $productCode, $session->evercisegroup->name, $quantity, $session->price,
                     [

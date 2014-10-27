@@ -30,9 +30,6 @@ class StripePaymentController extends BaseController {
             array_push($sessionIds, $row->options->sessionId);
         }
 
-      //  return var_dump($sessionIds);
-        /* get currnet user */
-        $user = User::find($this->user->id);
         /* create confirmation view */
         $evercisegroupId = Input::get('evercisegroup-id');
         Session::put('evercisegroupId', $evercisegroupId);
