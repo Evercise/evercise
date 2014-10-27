@@ -1,6 +1,7 @@
 var app = angular.module('DiscoverApp', [
     'google-maps'.ns(),
-    'infinite-scroll'
+    'infinite-scroll',
+    'ngSanitize'
 ]);
 
 app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
@@ -36,4 +37,5 @@ app.filter('repeat', function() {
         return val;
     };
 });
+
 

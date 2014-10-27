@@ -1,6 +1,7 @@
 @extends('v3.layouts.master')
+<?php View::share('og', $og) ?>
 @section('body')
-    <div class="hero no-nav-change" style="background-image: url('/img/example-class-img.jpg')">
+    <div class="hero no-nav-change" style="background-image: url('{{url()}}/profiles/{{$trainer->user->directory}}/{{$evercisegroup->image}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">
               <ul class="nav navbar-nav nav-justified nav-no-float">
@@ -23,7 +24,7 @@
     <div class="container mt30">
         <div class="row">
             <div class="col-sm-6">
-                <h1 class="mb5">Hartha Yoga restore & energise</h1>
+                <h1 class="mb5">{{ $evercisegroup->name }}</h1>
                 <div class="mb30">
                     <span class="icon icon-full-star"></span>
                     <span class="icon icon-full-star"></span>

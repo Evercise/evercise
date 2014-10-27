@@ -16,6 +16,24 @@
   }
 }
 
+.btn-form-control{
+  display: block;
+  width: 100%;
+  height: @input-height-base; // Make inputs at least the height of their button counterpart (base line-height + padding + border)
+  padding: @padding-base-vertical @padding-base-horizontal;
+  font-size: @font-size-base;
+  line-height: @line-height-base;
+  color: @input-color;
+  background-color: @input-bg;
+  .sprite(100px, -240px);
+  border: 1px solid @input-border;
+  border-radius: @input-border-radius;
+  text-align: left;
+  &:hover,&:active,&:focus{
+    color: @input-color;
+  }
+}
+
 .btn-light-grey {
   .button-variant(@btn-grey-light-color; @btn-grey-light-bg; @btn-grey--light-border);
   &:hover{

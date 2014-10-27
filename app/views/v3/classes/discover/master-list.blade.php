@@ -10,12 +10,6 @@
                 </div>
                 <div class="col-sm-12">
                     @include('v3.classes.class_list')
-                    @include('v3.classes.class_list')
-                    @include('v3.classes.class_list')
-                    @include('v3.classes.class_list')
-                    @include('v3.classes.class_list')
-                    @include('v3.classes.class_list')
-                    @include('v3.classes.class_list')
                 </div>
             </div>
         </div>

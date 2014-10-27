@@ -31,11 +31,12 @@ $(function(){
     });
 
 
-    /*$('.mb-scroll').exists(function(){
+    $('.mb-scroll').exists(function(){
         $(this).mCustomScrollbar({
-            scrollSpeed: 40
+            scrollSpeed: 10,
+            autoHideScrollbar: true
         });
-    })*/
+    })
 
     $('.holder').exists(function(){
         new ImagePlaceholder();
@@ -45,10 +46,10 @@ $(function(){
         self = this;
         new Validation(this);
     })
+
     $('.class-preview').exists(function(){
          new PreviewClassBox(this);
     })
-
 
 
 });

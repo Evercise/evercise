@@ -3,15 +3,12 @@
   top: @discover-both-navbars-height;
   left: @side-navbar-width;
   right: 0;
-  z-index: -1;
   bottom: 0;
   .map-canvas, .angular-google-map-container,.angular-google-map{
     height: 100%;
     width: 100%;
   }
-}
-
-.mb-scroll{
-  overflow-x: hidden;
-  overflow-y: scroll;
+  &.open{
+    left: round( @side-navbar-width +  ( @side-navbar-width / 1.9) );
+  }
 }

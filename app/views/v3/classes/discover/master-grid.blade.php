@@ -11,21 +11,7 @@
                 <div class="col-sm-4">
                     @include('v3.classes.class_module')
                 </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
+
             </div>
         </div>
      </div>

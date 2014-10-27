@@ -80,10 +80,18 @@
 }
 
 .discover-nav{
-  margin-top: @navbar-height-outer;
+  top: @navbar-height-outer;
   height: @discover-navbar-height;
   padding: @discover-navbar-padding;
   border-bottom: 1px solid @gray-light;
+  position: fixed;
+  width: 100%;
+  background: @white;
+  z-index: 10;
+}
+
+.discover-nav-spacer{
+  margin-top: @navbar-height-outer + @discover-navbar-height;
 }
 
 @media (min-width: @grid-float-breakpoint){

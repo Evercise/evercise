@@ -1042,7 +1042,7 @@ class Evercisegroup extends \Eloquent
 
 
         JavaScript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
-        return View::make('evercisegroups.show')
+        return View::make('v3.classes.class_page')
             ->with('evercisegroup', $this)
             ->with('trainer', $trainer)
             ->with('members', $members)

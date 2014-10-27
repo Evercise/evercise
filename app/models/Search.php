@@ -134,7 +134,6 @@ class Search
 
         $not_needed = [
             'global'  => [
-                'description',
                 'default_duration',
                 'published',
                 'created_at',
@@ -147,7 +146,7 @@ class Search
             'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
             'ratings' => ['user_id', 'comment']
         ];
-        foreach ($results->hits as $row) {
+        foreach ($results->hits as $k => $row) {
 
             /** UNSET everything else that we don't need! */
 

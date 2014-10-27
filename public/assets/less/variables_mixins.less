@@ -18,11 +18,12 @@
 .sprite( @x, @y, @int : 40,  @img : "../img/ev_site_icons.png" ){
   background-image: url(@img);
   background-position: @x @y;
+  background-repeat: no-repeat ;
   overflow: hidden;
   &.active{
     background-position: @x ceil(@y - @int);
   }
-  &.hover{
+  &.hover, &.active{
     &:hover{
       cursor: pointer;
       background-position: @x ceil(@y - @int);
@@ -58,17 +59,16 @@
     margin-top: 20px;
   }
 }
-strong.text-primary{
-  font-size: 20px;
+  strong.text-primary{
+    font-size: 20px;
   }
   .class-info-wrapper{
-    height: 100%;
     border-top: @info-border;
+    font-size: 12px;
+    font-weight: 700;
     span{
-      display: inline-block;
-      vertical-align: middle;
-      line-height: 36px;
-      padding-top: 2px;
+      margin-top: -4px;
+
     }
     form{
       padding: 0 15px;

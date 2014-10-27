@@ -2,6 +2,9 @@
 .class-module{
   .class-box(auto, 250px, 12.5px);
   max-width: 311px;
+  .class-rating-wrapper{
+    height: 27px;
+  }
 }
 
 // list style class box
@@ -33,20 +36,38 @@
 
   box-shadow: 3px 0 2px -2px fade(@gray-darker, 50%);
   top: @discover-both-navbars-height;
+  overflow: hidden;
+
   .snippet-header{
     border-bottom: 1px solid @gray-light;
     padding: 10px;
-    height: 5%;
+    background-color: @white;
+    position: relative;
+    z-index: 2;
   }
   .snippet-body{
-    height: 95%;
+    position: relative;
+    z-index: 2;
+  }
+  .mCustomScrollBox{
+    background: @white;
   }
 }
 
 .class-preview{
+  .preview-return{
+    cursor: pointer;
+    padding: 13px 10px;
+  }
   left: @side-navbar-width;
-  margin-left: -@side-navbar-width;
   top: @discover-both-navbars-height;
+  margin-left: -@side-navbar-width;
+  z-index: 1;
+  border-left: 1px solid @gray-light;
+  .transition(margin-left 0.25s;);
+  &.open{
+    margin-left: 0;
+  }
 }
 
 .class-snippet {
@@ -56,23 +77,36 @@
   border-right: 4px solid @white;
   padding-left: 10px;
   margin-bottom: 0;
+  position: relative;
+  cursor: pointer;
   .class-image-wrapper{
     padding: 10px;
   }
   &:last-of-type{
     border-bottom: 0;
   }
-
-}
-
-.class-unactive{
-  opacity: 0.7;
-  h1,h2,h3,h4,h5,h6,p,li,span,strong,small,i{
-    color: @gray-darker;
+  &.active{
+    border-right-color: @brand-primary;
+    z-index: 2;
+    position: relative;
   }
-}
 
-.class-active{
-  border-right-color: @brand-primary;
+  &:not(.active){
+    &:not(:hover){
+      &.fade-out{
+        &:after{
+          position: absolute;
+          background: fade(@white, 50%);
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          content: '';
+          pointer-events: none;
+        }
+      }
+    }
+
+  }
 }
 
