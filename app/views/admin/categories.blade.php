@@ -1,4 +1,13 @@
+@extends('admin.main')
 
+@section('css')
+@stop
+
+@section('script')
+
+@stop
+
+@section('body')
 
 <div class="row">
     <div class="col-md-4">
@@ -16,3 +25,6 @@
         @endforeach
     </ul>
 </div>
+
+
+@stop

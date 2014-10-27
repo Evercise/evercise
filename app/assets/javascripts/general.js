@@ -555,5 +555,5 @@ registerInitFunction('initSearchByName');
 function adminPopupMessage(data)
 {
     trace(data.message);
-    alert(data.message);
+    //alert(data.message);
 }

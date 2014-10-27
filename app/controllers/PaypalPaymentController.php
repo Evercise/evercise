@@ -12,15 +12,18 @@ class PaypalPaymentController extends BaseController {
     */
     public function create()
     {
-        /* get session ids */
+        /* get session ids from Cart*/
 
-        $sessionIdsRaw = Input::get('session-ids');
-        $sessionIds = json_decode(Input::get('session-ids'), true);
+        $cartRows = Cart::content();
+        foreach($cartRows as $row)
+        {
+            array_push($sessionIds, $row->options->sessionId);
+        }
+
+        //$sessionIdsRaw = Input::get('session-ids');
+        //$sessionIds = json_decode(Input::get('session-ids'), true);
         Session::put('sessionIds', $sessionIds);
 
-      //  return var_dump($sessionIds);
-        /* get currnet user */
-        $user = User::find($this->user->id);
         /* create confirmation view */
         $evercisegroupId = Input::get('evercisegroup-id');
         Session::put('evercisegroupId', $evercisegroupId);
@@ -37,7 +40,7 @@ class PaypalPaymentController extends BaseController {
         //Make sure there is not already a matching entry in sessionmembers
         if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
         {
-            return Response::json('USER HAS ALREADY JOINED SESSION');
+            throw new Exception('User '.$this->user->id.' has already joined session ' );
         }
 
 
@@ -55,7 +58,7 @@ class PaypalPaymentController extends BaseController {
 
         if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
         {
-            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
+            throw new Exception( 'User has not got enough evercoins to make this transaction. required:'.$amountToPay );
         }
 
 
@@ -86,11 +89,14 @@ class PaypalPaymentController extends BaseController {
      */
     public function show($id)
     {
-        /* get session ids */
-        $sessionIds = Session::get('sessionIds');
+        /* get session ids from Cart*/
 
-        /* get currnet user */
-        $user = User::find($this->user->id);
+        $cartRows = Cart::content();
+        foreach($cartRows as $row)
+        {
+            array_push($sessionIds, $row->options->sessionId);
+        }
+
         /* create confirmation view */
         $evercisegroupId = $id;
 
@@ -106,7 +112,7 @@ class PaypalPaymentController extends BaseController {
         //Make sure there is not already a matching entry in sessionmembers
         if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
         {
-            return Response::json('USER HAS ALREADY JOINED SESSION');
+            throw new Exception('User '.$this->user->id.' has already joined session ' );
         }
 
 
@@ -125,7 +131,7 @@ class PaypalPaymentController extends BaseController {
 
         if ($amountToPay + Evercoin::evercoinsToPounds($evercoin->balance) < $price)
         {
-            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :'.$amountToPay]);
+            throw new Exception( 'User has not got enough evercoins to make this transaction. required:'.$amountToPay );
         }
 
 
@@ -164,10 +170,6 @@ class PaypalPaymentController extends BaseController {
         {
             return var_dump($response);
         }
-
-
-       
-
     }
 
 }

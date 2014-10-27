@@ -14,17 +14,17 @@ class AdminGroupComposer {
         $categories = json_encode($cats);
 
         $status = Input::get('status');
-
         $searchTerm = Input::get('search');
+        $orderBy = Input::get('order') ? Input::get('order') : 'id';
 
         $selectedGroups = [];
 
         if ($status == 'active')
         {
             if ($searchTerm != "")
-                $futuregroups = Evercisegroup::has('futuresessions')->where('name', 'LIKE', '%'.$searchTerm.'%')->get();
+                $futuregroups = Evercisegroup::has('futuresessions')->where('name', 'LIKE', '%'.$searchTerm.'%')->orderBy($orderBy)->get();
             else
-                $futuregroups = Evercisegroup::has('futuresessions')->get();
+                $futuregroups = Evercisegroup::has('futuresessions')->orderBy($orderBy)->get();
 
             foreach($futuregroups as $futuregroup)
             {
@@ -35,12 +35,12 @@ class AdminGroupComposer {
         {
             $pastGroupIds = [];
             $futureGroupIds = [];
-            $futuregroups = Evercisegroup::has('futuresessions')->get();
+            $futuregroups = Evercisegroup::has('futuresessions')->orderBy($orderBy)->get();
 
             if ($searchTerm != "")
-                $pastgroups = Evercisegroup::has('pastsessions')->where('name', 'LIKE', '%'.$searchTerm.'%')->get();
+                $pastgroups = Evercisegroup::has('pastsessions')->where('name', 'LIKE', '%'.$searchTerm.'%')->orderBy($orderBy)->get();
             else
-                $pastgroups = Evercisegroup::has('pastsessions')->get();
+                $pastgroups = Evercisegroup::has('pastsessions')->orderBy($orderBy)->get();
 
             foreach($pastgroups as $pastgroup) array_push($pastGroupIds, $pastgroup->id);
             foreach($futuregroups as $futuregroup) array_push($futureGroupIds, $futuregroup->id);
@@ -53,9 +53,9 @@ class AdminGroupComposer {
         else
         {
             if ($searchTerm != "")
-                $evercisegroups = Evercisegroup::where('name', 'LIKE', '%'.$searchTerm.'%')->get();
+                $evercisegroups = Evercisegroup::where('name', 'LIKE', '%'.$searchTerm.'%')->orderBy($orderBy)->get();
             else
-                $evercisegroups = Evercisegroup::get();
+                $evercisegroups = Evercisegroup::orderBy($orderBy)->get();
 
             foreach($evercisegroups as $evercisegroup)
             {

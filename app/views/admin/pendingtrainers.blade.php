@@ -1,3 +1,15 @@
+@extends('admin.main')
+
+@section('css')
+@stop
+
+@section('script')
+
+@stop
+
+@section('body')
+
+
 
 <div class="row">
     <ul id="user_list" class="pending_list">
@@ -15,11 +27,11 @@
                         <small class="text-muted">Email:</small> <span class="ul_email"><?php  echo $trainer->user->email ?></span>
                     </p>
 
-					{{ Form::open(array('id' => 'approve'.$key, 'url' => 'admin/approve_trainer', 'method' => 'post', 'class' => '')) }}
+					{{ Form::open(array('id' => 'approve'.$key, 'route' => 'admin.approve_trainer', 'method' => 'post', 'class' => '')) }}
 
 						{{ Form::hidden( 'trainer' , $trainer->id, array('id' => 'trainer')) }}
 
-						{{ Form::submit('Approval' , array('class'=>'btn-yellow ')) }}
+						{{ Form::submit('Approval' , array('class'=>'btn-yellow btn btn-info')) }}
 
 					{{ Form::close() }}
                 </li>
@@ -27,3 +39,6 @@
 			
     </ul>
 </div>
+
+
+@stop

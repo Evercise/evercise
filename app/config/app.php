@@ -123,6 +123,7 @@ return array(
         'Shift31\LaravelElasticsearch\LaravelElasticsearchServiceProvider',
         'Toin0u\Geotools\GeotoolsServiceProvider',
         'Pingpong\Shortcode\ShortcodeServiceProvider',
+        'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
 
 
     ),
@@ -202,7 +203,8 @@ return array(
         'MailchimpWrapper'   => 'Hugofirth\Mailchimp\Facades\MailchimpWrapper',
         'UniversalAnalytics' => 'TagPlanet\UniversalAnalytics\UniversalAnalyticsFacade',
         'ES'                 => 'Elasticsearch\Client',
-        'Shortcode'       => 'Pingpong\Shortcode\Facades\Shortcode',
+        'Shortcode'          => 'Pingpong\Shortcode\Facades\Shortcode',
+        'Cart'               => 'Gloudemans\Shoppingcart\Facades\Cart',
 
     ),
 

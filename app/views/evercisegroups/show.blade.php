@@ -55,49 +55,55 @@
 					@foreach ($evercisegroup->futuresessions as $key => $futuresession)
 
 							
-							@if ($key < 3) 
-								<div class="session-list-row">
-							@else
-								<div class="session-list-row extra hidden">
-							@endif
-									<li>{{ date('M-dS' , strtotime($futuresession->date_time)) }}</li>
-									<li>{{ date('h:ia' , strtotime($futuresession->date_time)) }}</li>
-									<li>{{ date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))}}
-									<li>{{trans('general.currency_sign')}}{{ $futuresession->price }}</li>
-									<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
-									@if (isset($membersIds[$futuresession->id]))
+						@if ($key < 3)
+							<div class="session-list-row">
+						@else
+							<div class="session-list-row extra hidden">
+						@endif
+								<li>{{ date('M-dS' , strtotime($futuresession->date_time)) }}</li>
+								<li>{{ date('h:ia' , strtotime($futuresession->date_time)) }}</li>
+								<li>{{ date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))}}
+								<li>{{trans('general.currency_sign')}}{{ $futuresession->price }}</li>
+								<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
+								@if (isset($membersIds[$futuresession->id]))
 
-										@if ($user ? (in_array($user->id, $membersIds[$futuresession->id]) ? true : false ) : false ) 
+									@if ($user ? (in_array($user->id, $membersIds[$futuresession->id]) ? true : false ) : false )
 
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
-										@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">{{trans('evercisegroups-show.class_full')}}</button></li>
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
+									@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">{{trans('evercisegroups-show.class_full')}}</button></li>
 
-										@else
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
-										@endif
 									@else
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
-										
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
 									@endif
+								@else
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
 
-							@if ($key > 3) 
-								</div>
-							@else
-								</div>
-							@endif
+								@endif
 
-							@if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1) 
-								<div id="expand-sessions" class="session-list-row tc expand">
-									<h5 class="extra">{{trans('evercisegroups-show.show_more')}}</h5>
-									<h5 class="extra hidden">{{trans('evercisegroups-show.hide_more')}}</h5>
-								</div>
-							@endif
+						@if ($key > 3)
+							</div>
+						@else
+							</div>
+						@endif
+
+						@if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1)
+							<div id="expand-sessions" class="session-list-row tc expand">
+								<h5 class="extra">{{trans('evercisegroups-show.show_more')}}</h5>
+								<h5 class="extra hidden">{{trans('evercisegroups-show.hide_more')}}</h5>
+							</div>
+						@endif
 							
 								
 								
 					@endforeach
 				</ul>
+
+				{{ Form::open(array('id' => 'add-to-cart', 'url' => 'cart/add', 'method' => 'post', 'class' => '')) }}
+					{{ Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')) }}
+					{{ Form::hidden( 'session-id' , null, array('id' => 'session-id')) }}
+				{{ Form::close() }}
+
 				<div class="session-total">
 					{{ Form::open(array('id' => 'join-sessions', 'url' => 'sessions/join', 'method' => 'post', 'class' => '')) }}
 						<span>{{trans('evercisegroups-show.total_sessions')}}: <span id="total-sessions">0</span></span>
