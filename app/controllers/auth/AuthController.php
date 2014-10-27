@@ -13,75 +13,7 @@ class AuthController extends \BaseController {
 		return View::make('auth.login');
 	}
 
-	/**
-	* Login action
-	* @return Redirect
-	*/
-	public function postLogin()
-	{
-		$credentials = array(
-			'email' => Input::get('email'),
-			'password' => Input::get('password')
-		);
-		$redirect_after_login = Input::get('redirect_after_login');
-		$redirect_after_login_url = Input::get('redirect_after_login_url');
-		//return(var_dump($redirect_after_login_url));
-		try
-		{
-			$user = Sentry::authenticate($credentials, false);
-			$trainerGroup = Sentry::findGroupByName('trainer');
 
-
-			if ($user)
-			{
-				Sentry::loginAndRemember($user);
-				if ($redirect_after_login == 1) {
-					if(\Request::ajax())
-		        	{
-		        		return \Response::json(route($redirect_after_login_url));
-		        	}
-		        	else{
-		        		return Redirect::route($redirect_after_login_url);
-		        	}
-				}
-				elseif ($user->inGroup($trainerGroup)) 
-				{
-					if(\Request::ajax())
-		        	{
-		        		return \Response::json(route('trainers.edit', $user->display_name));
-		        	}
-		        	else{
-		        		return Redirect::route('trainers.edit', $user->display_name);
-		        	}
-				}
-				else
-				{
-					if(\Request::ajax())
-		        	{
-		        		return \Response::json(route('users.edit', $user->display_name));
-		        	}
-		        	else{
-		        		return Redirect::route('users.edit', $user->display_name);
-		        	}
-				}
-				
-				
-			}
-		}
-		catch(\Exception $e)
-		{
-			if(\Request::ajax())
-	        { 
-				$result = array(
-			            'validation_failed' => 1,
-			            'errors' => $e->getMessage()
-			    );	
-				return \Response::json($result);
-			}else{
-				return Redirect::route('auth.login')->withErrors(array('login' => $e->getMessage()));
-			}
-		}
-	}
 
 	/**
 	* Logout action

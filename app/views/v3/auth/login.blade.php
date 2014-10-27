@@ -1,12 +1,12 @@
-{{ Form::open(['url' => '', 'method' => 'post', 'class'=>'mb10', 'role' => 'form'] ) }}
+{{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10', 'role' => 'form'] ) }}
 
     <div class="col-sm-12">
         <li role="presentation" class="dropdown-header">Login</li>
         <div class="form-group">
-            {{ Form::text('forename', null, ['class' => 'form-control', 'placeholder' => 'Email']) }}
+            {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email']) }}
         </div>
         <div class="form-group">
-            {{ Form::text('forename', null, ['class' => 'form-control', 'placeholder' => 'Password']) }}
+            {{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
         </div>
         <div class="form-group">
             {{  Form::submit('Login', ['class' => 'btn btn-primary btn-block'] ) }}

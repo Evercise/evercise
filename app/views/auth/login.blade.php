@@ -1,6 +1,6 @@
 <div id="login_wrap" class="login_wrap">
     <div id="cancel_login" class="cancel">x</div>
-    {{ Form::open(array('id' => 'login_form', 'url' => 'auth/login', 'method' => 'post')) }}
+    {{ Form::open(array('id' => 'login_form', 'route' => 'auth.login.post', 'method' => 'post')) }}
         @if ($errors->has('login'))
                 <div class="alert alert-error">{{ $errors->first('login', ':message') }}</div>
         @endif

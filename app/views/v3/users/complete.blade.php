@@ -9,8 +9,7 @@
             <div class="col-sm-4 col-sm-offset-4 mt50 mb50">
                 <div class="row">
                     <div class="col-sm-6">
-
-                        <a href="#" class="btn btn-primary btn-block">Browse Class</a>
+                        {{HTML::linkRoute('evercisegroups.search', 'Browse classes' , null, ['class' =>'btn btn-primary btn-block' ])}}
                     </div>
                     <div class="col-sm-6">
                         {{HTML::linkRoute('users.edit', 'Go to Account' , $user->id , ['class' =>'btn btn-primary btn-block' ])}}

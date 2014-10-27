@@ -9,7 +9,7 @@ Masonry.prototype = {
 
         $container.masonry({
             itemSelector: '.masonry-item',
-            isInitLayout: false,
+            isInitLayout: true,
             transitionDuration: 0
         });
         $container.masonry;

@@ -50,6 +50,13 @@ $(function(){
     $('.class-preview').exists(function(){
          new PreviewClassBox(this);
     })
+    $('#login-form').exists(function(){
+        login = this;
+        $(document).on('submit', this, function(e){
+            e.preventDefault();
+            new AjaxRequest(login, redirectTo);
+        })
+    })
 
 
 });

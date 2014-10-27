@@ -7695,7 +7695,7 @@ fieldset[disabled] .btn-blank.active {
   cursor: pointer;
   background-position: -120px -655px;
 }
-.close {
+.modal .close {
   float: left;
 }
 .modal-body {

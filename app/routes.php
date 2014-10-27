@@ -102,6 +102,7 @@ Route::get(
 // ajax prefix
 Route::group(['prefix' => 'ajax'], function () {
     Route::post('/users-store', array('as' => 'users.store', 'uses' => 'ajax\UsersController@store'));
+    Route::post('/auth/login', array('as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin'));
 });
 
 /* Show home page */
@@ -138,7 +139,7 @@ Route::get(
 Route::get('login/fb/{redirect?}', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
 Route::post('auth/checkout', array('as' => 'auth.checkout', 'uses' => 'SessionsController@checkout'));
 
-Route::post('auth/login', array('as' => 'auth.login.post', 'uses' => 'auth\AuthController@postLogin'));
+
 Route::get('auth/logout', array('as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout'));
 Route::get('auth/forgot', array('as' => 'auth.forgot', 'uses' => 'auth\AuthController@getForgot'));
 Route::post('auth/forgot', array('as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot'));
@@ -153,6 +154,8 @@ Route::get('/finished-user', [
         }
     ]
 );
+
+Route::get('profile/{id}', array('as' => 'profile', 'uses' => 'UsersController@edit'));
 
 Route::get('users/{id}/edit/{tab?}', array('as' => 'users.edit', 'uses' => 'UsersController@edit'));
 Route::get(

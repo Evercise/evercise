@@ -45,18 +45,26 @@ AjaxRequest.prototype = {
     failedValidation: function(data){
         self = this;
         var arr = data.errors;
-        $.each(arr, function(index, value)
+
+        if(self.form.attr('id') == 'login-form'){
+            self.form.find("input[name = 'password']").after('<div class="mt10 alert alert-danger alert-dismissible" role="alert">'+arr+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
+        }
+        else
         {
-            if (self.validationscroll == false) {
-                self.form.find("#" + index).focus();
-                $('html, body').animate({ scrollTop: self.form.find("#" + index).offset().top - self.validationoffset }, self.validationScrollSpeed);
-                self.validationscroll = true;
-            }
-            self.form.find('#' + index).parent().addClass('has-error');
-            self.form.find('#' + index).parent().find('.glyphicon-ok').remove();
-            self.form.find('#' + index).after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
-            self.form.find('#' + index).after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="'+index+'" style="display: block;"></i>');
-        })
+            $.each(arr, function(index, value)
+            {
+                if (self.validationscroll == false) {
+                    self.form.find("#" + index).focus();
+                    $('html, body').animate({ scrollTop: self.form.find("#" + index).offset().top - self.validationoffset }, self.validationScrollSpeed);
+                    self.validationscroll = true;
+                }
+                self.form.find('#' + index).parent().addClass('has-error');
+                self.form.find('#' + index).parent().find('.glyphicon-ok').remove();
+                self.form.find('#' + index).after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
+                self.form.find('#' + index).after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="'+index+'" style="display: block;"></i>');
+            })
+        }
+
         self.renableButton();
     }
 

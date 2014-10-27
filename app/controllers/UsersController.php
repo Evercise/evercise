@@ -165,7 +165,9 @@ class UsersController extends \BaseController
             return Redirect::route('home');
         }
 
-        return View::make('users.edit')->with('tab', $tab);
+        $view = Trainer::isTrainerLoggedIn() ? 'v3.users.profile.master-trainer' : 'v3.users.profile.master-user';
+
+        return View::make( $view )->with('tab', $tab);
     }
 
     /**
