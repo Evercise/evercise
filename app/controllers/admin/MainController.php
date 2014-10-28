@@ -212,7 +212,7 @@ class MainController extends \BaseController
         $logFile = file_get_contents('../app/storage/logs/laravel.log', true);
 
         $logFile = str_replace('[] []', '[] []<br><br><br>', $logFile);
-        $logFile = str_replace('#', '<br><span style="color:red;">#</span>', $logFile);
+        $logFile = str_replace('#', '<br><span style="color:#c00; margin-left:20px">#</span>', $logFile);
 
         return View::make('admin.log')
             ->with('log', $logFile);

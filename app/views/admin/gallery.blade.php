@@ -106,12 +106,55 @@
                             data: data,
                             beforeSend: function (json) {
                                 if (currentRequest != null) currentRequest.abort();
+                            },
+                            success:function(res){
+                                console.log(res);
+                                console.log(res.deleted);
+                                if(res.deleted) {
+                                    $('.img_'+res.id).remove();
+                                }
+                            }
+                    }).done(
+                          function(res){
+                              console.log(res);
+                              console.log(res.deleted);
+                              if(res.deleted) {
+                                  $('.img_'+res.id).remove();
+                              }
+                           }
+                      );
+
+
+
+            });
+        }
+
+
+
+            $(".delete_image").on("click", function(e) {
+
+                var data = {
+                    'id'  : $(this).data('id')
+                };
+                currentRequest = $.ajax({
+                            type: "POST",
+                            url: AJAX_URL + "deleteGalleryImage",
+                            cache: false,
+                            dataType: 'json',
+                            data: data,
+                            beforeSend: function (json) {
+                                if (currentRequest != null) currentRequest.abort();
+                            },
+                            success: function (res) {
+                                if(res.deleted) {
+                                    $('.img_'+res.id).hide();
+                                }
                             }
                 });
 
 
             });
-        }
+
     });
 
 </script>
@@ -139,7 +182,8 @@
 <div class="row">
     <ul class="gallery_grid">
         @foreach($images as $img)
-        <li class="boxing">
+        <li class="boxing img_{{ $img->id }}" style="position: relative">
+            <span data-id="{{ $img->id }}" class="delete_image icon_ul el-icon-remove" style="color:#c00; position: absolute;top:5px; right:5px; z-index:1000;cursor: pointer"></span>
             <a href="{{ URL::to('/img/gallery/main_'.$img->image) }}" class="img_wrapper" title="{{ $img->image }}">
                 <img src="{{ URL::to('/img/gallery/thumb_'.$img->image) }}" alt=""/>
                 <span class="gallery_image_zoom">
