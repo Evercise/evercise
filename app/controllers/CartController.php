@@ -117,7 +117,7 @@ class CartController extends \BaseController
         $cartRows = Cart::content();
         $subTotal = Cart::total();
         $discount = 0;
-        $total = ($subTotal / 100) * $discount;
+        $total = ($subTotal / 100) * (100 - $discount);
 
         $data = [
             'discount'   => $discount,
@@ -125,6 +125,8 @@ class CartController extends \BaseController
             'total'      => $total,
             'cartRows'   => $cartRows,
         ];
+
+        return $data;
 
         return View::make('sessions.checkout')
             ->with('data', $data);

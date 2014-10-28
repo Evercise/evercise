@@ -8428,66 +8428,30 @@ label {
 .table > tfoot > tr > td .custom-select select {
   background-color: rgba(255, 255, 255, 0.8);
 }
-.carousel-table .carousel-table-control {
-  width: 4%;
-  float: left;
-  height: 65px;
-  background: #e8ebec;
-  border-bottom: 1px solid #e8ebec;
-}
-.carousel-table .carousel-table-control:hover {
-  cursor: pointer;
-  background: #ff1b7e;
-}
-.carousel-table .carousel-table-control.left-control {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -1042px -225px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  border-right: 2px solid #ffffff;
-}
-.carousel-table .carousel-table-control.left-control.active {
-  background-position: -1042px -265px;
-}
-.carousel-table .carousel-table-control.left-control.hover:hover,
-.carousel-table .carousel-table-control.left-control.active:hover {
-  cursor: pointer;
-  background-position: -1042px -265px;
-}
-.carousel-table .carousel-table-control.right-control {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -1082px -225px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  border-left: 2px solid #ffffff;
-}
-.carousel-table .carousel-table-control.right-control.active {
-  background-position: -1082px -265px;
-}
-.carousel-table .carousel-table-control.right-control.hover:hover,
-.carousel-table .carousel-table-control.right-control.active:hover {
-  cursor: pointer;
-  background-position: -1082px -265px;
-}
-.carousel-table .carousel-table-inner {
-  width: 92%;
-  float: left;
-}
-.carousel-table .nav-carousel li {
+.nav-carousel li {
   background: #768690;
+  width: 1%;
+  display: table-cell;
+  float: none;
+  text-align: center;
 }
-.carousel-table .nav-carousel li a {
+.nav-carousel li a {
   color: #ffffff;
-  padding-top: 13px;
-  padding-bottom: 13px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
-.carousel-table .nav-carousel li a:hover {
+.nav-carousel li a:hover {
   background-color: rgba(255, 27, 126, 0.6);
 }
-.carousel-table .nav-carousel li.active {
-  background: #ff1b7e;
+.nav-carousel li a.disabled {
+  background-color: rgba(255, 255, 255, 0.6);
+  cursor: not-allowed;
+  pointer-events: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
-.carousel-table .nav-carousel li.active a {
+.nav-carousel li a.active {
+  background: #ff1b7e;
   color: #ffffff;
 }
 .map-wrapper {

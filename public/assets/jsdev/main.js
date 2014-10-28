@@ -50,11 +50,42 @@ $(function(){
     $('.class-preview').exists(function(){
          new PreviewClassBox(this);
     })
+
+    $('.hide-by-class').exists(function(){
+        var i = 0;
+        $('.hide-by-class').each(function(){
+            var self = this;
+
+            $('.'+$(this).attr('href').substr(1)).exists(function(){
+                if(i == 0){
+                  //  console.log(self);
+                    $(self).addClass('active');
+                    $(this).removeClass('hide');
+                }
+                $(self).removeClass('disabled');
+                i++;
+            })
+
+        })
+        this.click(function(){
+            $('.hide-by-class').removeClass('active');
+            $(this).addClass('active');
+            $('.hide-by-class-element').addClass('hide');
+            $('.'+ $(this).attr('href').substr(1)).removeClass('hide');
+        })
+    })
+
     $('#login-form').exists(function(){
         login = this;
-        $(document).on('submit', this, function(e){
+        $(document).on('submit', login, function(e){
             e.preventDefault();
             new AjaxRequest(login, redirectTo);
+        })
+    })
+    $('.add-to-class').exists(function(){
+        $(this).submit(function(e){
+            e.preventDefault();
+            new AjaxRequest($(this), updateCart);
         })
     })
 

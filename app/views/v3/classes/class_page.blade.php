@@ -60,72 +60,55 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-sm-10">
+            <div class="col-sm-12">
                 <h1>Upcoming sessions</h1>
             </div>
 
-            <div class="col-sm-2 mt20">
-               <div class="input-group">
-                  <span class="input-group-addon ">
-                       <span class="icon icon-calendar ml5 mr5"></span>
-                  </span>
-                  <div class="custom-select">
-                     {{ Form::select('date',
-                         [
-                             '01' => 'January',
-                             '02' => 'Febuary',
-                         ]
-                      , '01', ['class' => 'form-control input-sm no-border-left custom-select'] ) }}
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-table col-sm-12">
+            <div class="col-sm-12">
+                <ul class="nav navbar-nav nav-carousel hide-by-class-wrapper">
+                    <li><a class="hide-by-class disabled" href="#Mon">MON</a></li>
+                    <li><a class="hide-by-class disabled" href="#Tue">TUE</a></li>
+                    <li><a class="hide-by-class disabled" href="#Wed">WED</a></li>
+                    <li><a class="hide-by-class disabled" href="#Thu">THU</a></li>
+                    <li><a class="hide-by-class disabled" href="#Fri">FRI</a></li>
+                    <li><a class="hide-by-class disabled" href="#Sat">SAT</a></li>
+                    <li><a class="hide-by-class disabled" href="#Sun">SUN</a></li>
+                </ul>
 
-                <div class="carousel-table-control left-control"></div>
-
-                <div class="carousel-table-inner">
-                    <ul class="nav navbar-nav nav-justified text-center nav-no-float nav-carousel" role="tablist">
-                        <li class="active"><a href="#"><div class="condensed">MON</div>Sept 27</a></li>
-                        <li><a href="#"><div class="condensed">TUE</div>Sept 28</a></li>
-                        <li><a href="#"><div class="condensed">WED</div>Sept 29</a></li>
-                        <li><a href="#"><div class="condensed">THU</div>Sept 30</a></li>
-                        <li><a href="#"><div class="condensed">FRI</div>Sept 31</a></li>
-                        <li><a href="#"><div class="condensed">SAT</div>Oct 01</a></li>
-                        <li><a href="#"><div class="condensed">SUN</div>Oct 02</a></li>
-                    </ul>
-
-                    <div class="table-responsive center-block">
-                        <table class="table table-hover pull-left">
-                            <tbody>
+                <div class="table-responsive center-block">
+                    <table class="table table-hover pull-left">
+                        <tbody>
                             @foreach($data['evercisegroup']->futuresessions as $futuresession)
-                                <tr>
-                                    <td class="text-left"><span class="icon icon-clock mr5"></span><span>{{ (date('h:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
-                                    <td class="text-center"><span class="icon icon-ticket mr10"></span><span>x {{ $data['evercisegroup']->capacity -  $data['members'][$futuresession->id] }} tickets left</span></td>
-                                    <td class="text-center"><span class="icon icon-watch mr5"></span><span>{{ $futuresession->formattedDuration() }}</span></td>
-                                    <td class="text-right">
-                                        <span>
-                                            <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
-                                        </span>
+                                <tr class="{{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
+                                    <td><span class="icon icon-calendar mr5"></span><span>{{ date('dS-M-y' , strtotime($futuresession->date_time))}}</span></td>
+                                    <td><span class="icon icon-clock mr5"></span><span>{{ (date('h:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
+                                    <td><span class="icon icon-ticket mr10"></span><span>x {{ $data['evercisegroup']->capacity -  $data['members'][$futuresession->id] }} tickets left</span></td>
+                                    <td><span class="icon icon-watch mr5"></span><span>{{ $futuresession->formattedDuration() }}</span></td>
+                                    <td>
+                                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
+                                            <span>
+                                                <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
+                                            </span>
 
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-primary">JOIN CLASS</button>
-                                          <select class="btn btn-primary btn-select">
-                                            @for($i=0; $i<($data['evercisegroup']->capacity - $data['members'][$futuresession->id] + 1 ); $i++)
-                                            <option>{{$i}}</option>
-                                            @endfor
-                                          </select>
-                                        </div>
+                                            <div class="btn-group pull-right">
+
+                                                {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
+                                                {{ Form::hidden('product-id', CartController::toProductCode('session', $futuresession->id)) }}
+
+                                                  <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                                    @for($i=0; $i<($data['evercisegroup']->capacity - $data['members'][$futuresession->id] + 1 ); $i++)
+                                                    <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                  </select>
+
+                                            </div>
+                                        {{ Form::close() }}
                                     </td>
                                 </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div><!-- end table inner -->
-
-                <div class="carousel-table-control right-control"></div>
-
-
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

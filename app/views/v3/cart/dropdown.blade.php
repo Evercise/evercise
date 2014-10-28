@@ -33,13 +33,13 @@
         <strong>Sub-total</strong>
     </div>
     <div class="col-xs-5">
-        <strong class="text-primary">&pound;18</strong>
+        <strong class="text-primary">&pound;<span id="cart-sub-total">0</span></strong>
     </div>
     <div class="col-xs-2">
         <strong>Discount</strong>
     </div>
     <div class="col-xs-2">
-        <strong class="text-primary">10%</strong>
+        <strong class="text-primary"><span id="cart-discount">0</span>%</strong>
     </div>
     <li class="divider col-xs-12"></li>
 
@@ -47,7 +47,7 @@
         <strong>Total</strong>
     </div>
     <div class="col-xs-5">
-        <strong class="text-primary">&pound;16.20</strong>
+        <strong class="text-primary">&pound;<span id="cart-total">0</span></strong>
     </div>
     <div class="col-xs-4 mb10">
         <button class="btn btn-primary">Checkout</button>
