@@ -539,4 +539,6 @@ Route::group(
             ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
     }
 
+
 );
+    Route::get('/showcart', 'CartController@getCart');

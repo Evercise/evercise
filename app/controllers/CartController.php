@@ -26,7 +26,7 @@ class CartController extends \BaseController
 
             $rowIds = Cart::search(['id' => $productCode]);
 
-            if(count($rowIds)) // If product ID already exists in cart, then add to quantity.
+            if($rowIds[0]) // If product ID already exists in cart, then add to quantity.
             {
                 $rowId = $rowIds[0];
                 $row = Cart::get($rowId);
@@ -120,6 +120,7 @@ class CartController extends \BaseController
      */
     public function getCart()
     {
+
         $cartRows = Cart::content();
         $subTotal = Cart::total();
         $discount = 0;
@@ -132,9 +133,9 @@ class CartController extends \BaseController
             'cartRows'   => $cartRows,
         ];
 
-        return 'nope';
+       // return 'nope';
 
-        return $data;
+        //return $data;
 
         return View::make('sessions.checkout')
             ->with('data', $data);
