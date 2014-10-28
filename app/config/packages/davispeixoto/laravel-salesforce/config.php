@@ -12,9 +12,8 @@ return array(
     // production
     'username'    => 'fan@evercise.com',
 	'password' => 'evercise0709',
-	'token' => 'IecoNXG0PnzZit8wYaOOUddl',
+	'token' => '1V4iJYsTlCqHAambntXRhK2U',
     'wsdl' => base_path() . '/vendor/davispeixoto/laravel-salesforce/src/Davispeixoto/LaravelSalesforce/Wsdl/enterprise.wsdl.xml',
-
 
 //    sandbox
 //    'username'    => '',
