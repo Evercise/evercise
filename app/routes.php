@@ -460,6 +460,8 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
         ['as' => 'admin.ajax.gallery_upload', 'uses' => 'AdminAjaxController@galleryUploadFile']);
     Route::post('saveTags',
         ['as' => 'admin.ajax.saveTags', 'uses' => 'AdminAjaxController@saveTags']);
+    Route::post('deleteGalleryImage',
+        ['as' => 'admin.ajax.gallery_delete', 'uses' => 'AdminAjaxController@deleteGalleryImage']);
 
 
 });
@@ -536,4 +538,5 @@ Route::group(
         Route::get('/fakeratings',
             ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
     }
+
 );

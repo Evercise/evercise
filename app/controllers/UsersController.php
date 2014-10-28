@@ -167,7 +167,29 @@ class UsersController extends \BaseController
 
         $view = Trainer::isTrainerLoggedIn() ? 'v3.users.profile.master-trainer' : 'v3.users.profile.master-user';
 
-        return View::make( $view )->with('tab', $tab);
+        $user = $this->user;
+
+/*        $firstName = $user->first_name;
+        $lastName = $user->last_name;
+        $dob = $user->dob != '0000-00-00 00:00:00' ? $user->dob : '';
+        $email = $user->email;
+        $gender = $user->gender;
+        $area_code = $user->area_code;
+        $phone = $user->phone;*/
+
+        $markPref = $user->marketingpreferences()->where('name', 'newsletter')->first()['option'];
+
+        $hub = Evercisegroup::getHub($user);
+
+        $data = [
+            'user' => $user,
+        ];
+
+        $data = array_merge($hub, $data);
+
+        return View::make( $view )
+            ->with('data', $data)
+            ->with('tab', $tab);
     }
 
     /**

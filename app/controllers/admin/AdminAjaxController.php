@@ -161,6 +161,19 @@ class AdminAjaxController extends AdminController
     }
 
 
+    public function deleteGalleryImage()
+    {
+        $id = Input::get('id');
+
+        $gallery = Gallery::find($id);
+
+        @unlink('img/gallery/'.$gallery->image);
+
+
+        return Response::json(['deleted' => $gallery->delete(), 'id' => $id]);
+    }
+
+
     public function galleryUploadFile()
     {
         if ($file = Request::file('file')) {

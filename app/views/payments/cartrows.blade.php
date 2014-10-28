@@ -20,7 +20,7 @@
 	</li>
 	<li class="cart-item">
 		<br>
-		1
+		{{ $row->qty }}
 	</li>
 	<li class="cart-item">
 		<br>

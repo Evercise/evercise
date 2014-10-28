@@ -84,14 +84,18 @@ class Evercisegroup extends \Eloquent
 
             }
 
-            return View::make('evercisegroups.class_hub')
-                ->with('evercisegroups', $evercisegroups)
-                ->with('sessionDates', $sessionDates)
-                ->with('totalMembers', $totalMembers)
-                ->with('stars', $stars)
-                ->with('totalCapacity', $totalCapacity)
-                ->with('year', date("Y"))->with('month', date("m"))
-                ->with('directory', $directory);
+            $data = [
+                'evercisegroups' => $evercisegroups,
+                'sessionDates' => $sessionDates,
+                'totalMembers' => $totalMembers,
+                'stars' => $stars,
+                'totalCapacity' => $totalCapacity,
+                'year' => date("Y"),
+                'month' => date("m"),
+                'directory' => $directory
+            ];
+
+            return $data;
         }
     }
 
