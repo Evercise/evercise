@@ -25,9 +25,8 @@ $(function(){
         new ToggleSwitch(this);
     });
 
-    $('.map-wrapper').exists(function() {
-       // map = new Map();
-      //  console.log(laracasts.mapResults);
+    $('.map_canvas').exists(function() {
+        map = new Map(this);
     });
 
 

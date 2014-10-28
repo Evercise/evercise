@@ -8470,6 +8470,10 @@ label {
 .map-wrapper.open {
   left: 626px;
 }
+.map_canvas {
+  height: 260px;
+  width: 100%;
+}
 @media (min-width: 768px) {
   .calendar-wrapper {
     margin-right: -70px;

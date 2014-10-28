@@ -1,8 +1,9 @@
 // Class Map
-function Map() {
-    this.lat = 51.53;
-    this.lng = -0.12;
-    this.zoom = 12;
+function Map(map) {
+    this.lat = map.data('lat');
+    this.lng = map.data('lng');
+    this.zoom = map.data('zoom');
+    this.icon = '/assets/img/icon_default_small_pin.png';
     this.init();
 }
 
@@ -24,6 +25,12 @@ Map.prototype = {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             google.maps.event.trigger(map, "resize");
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(self.lat, self.lng),
+                animation: google.maps.Animation.DROP,
+                icon: self.icon
+            });
+            marker.setMap(map);
         }});
     }
 }
