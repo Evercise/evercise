@@ -67,6 +67,39 @@ class MainController extends \BaseController
 
 
 
+        /** Classes Stats */
+        $this->data['total_classes'] = Evercisegroup::where('created_at', '>=', Carbon::now()->subYear())
+            ->groupBy('month')
+            ->orderBy( DB::raw('year asc, month'))
+            ->get(array(
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('COUNT(id) as total')
+            ));
+        $this->data['total_sessions'] = Evercisesession::where('created_at', '>=', Carbon::now()->subYear())
+            ->groupBy('month')
+            ->orderBy( DB::raw('year asc, month'))
+            ->get(array(
+                DB::raw('YEAR(date_time) as year'),
+                DB::raw('MONTH(date_time) as month'),
+                DB::raw('COUNT(id) as total')
+            ));
+
+        foreach ($period as $dt) {
+            $this->data['total_classes_count'][(int)$dt->format("m")] = 0;
+            $this->data['total_sessions_count'][(int)$dt->format("m")] = 0;
+        }
+
+
+        foreach($this->data['total_classes'] as $m) {
+            $this->data['total_classes_count'][$m->month] = round($m->total, 0);
+        }
+        foreach($this->data['total_sessions'] as $m) {
+            $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
+        }
+
+
+
         $this->data['total_referrals'] = Referral::all()->count();
 
 
