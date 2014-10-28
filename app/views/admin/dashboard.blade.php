@@ -142,7 +142,7 @@
         <div class="col-lg-3 col-sm-6">
             <div class="info_box_var_1 box_bg_d">
                 <div class="info_box_body">
-                    <span class="info_box_icon icon_mail_alt"></span>
+                    <span class="info_box_icon el-icon-slideshare"></span>
                     <span class="countUpMe" data-endVal="{{ $total_referrals }}">{{ $total_referrals }}</span>
                 </div>
                 <div class="info_box_footer">
