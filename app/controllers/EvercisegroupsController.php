@@ -90,7 +90,10 @@ class EvercisegroupsController extends \BaseController
                 return $evercisegroup->showAsOwner($this->user);
             } else // This group does not belong to this user
             {
-                return $evercisegroup->showAsNonOwner($this->user);
+                $data = $evercisegroup->showAsNonOwner($this->user);
+
+                return View::make('v3.classes.class_page')
+                    ->with('data', $data);
             }
         } else {
             return View::make('errors.missing');

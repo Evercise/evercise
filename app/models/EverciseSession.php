@@ -626,5 +626,13 @@ class Evercisesession extends \Eloquent
         return $this->hasOne('Sessionpayment');
     }
 
+    public function formattedDuration()
+    {
+        $hours = floor($this->duration / 60);
+        $minutes = $this->duration % 60;
+
+        return ($hours ? $hours . ' hours ' : '') . ( $minutes . ' minutes');
+    }
+
 
 }

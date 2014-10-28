@@ -1044,17 +1044,18 @@ class Evercisegroup extends \Eloquent
         JavaScript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
 
         JavaScript::put(['initPut' => json_encode(['selector' => '#add-to-cart'])]);
-        return View::make('v3.classes.class_page')
 
-            ->with('evercisegroup', $this)
-            ->with('trainer', $trainer)
-            ->with('members', $members)
-            ->with('membersIds', $membersIds)
-            ->with('memberUsers', $memberUsersArray)
-            ->with('venue', $venue)
-            ->with('allRatings', $allRatings)
-            ->with('fakeUsers', $fakeUsers)
-            ->with('og', $og);
+        return [
+            'evercisegroup' => $this,
+            'trainer' => $trainer,
+            'members' => $members,
+            'membersIds' => $membersIds,
+            'memberUsers' => $memberUsersArray,
+            'venue' => $venue,
+            'allRatings' => $allRatings,
+            'fakeUsers' => $fakeUsers,
+            'og' => $og,
+        ];
     }
 
     /**

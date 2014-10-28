@@ -1,7 +1,7 @@
 @extends('v3.layouts.master')
-<?php View::share('og', $og) ?>
+<?php View::share('og', $data['og']) ?>
 @section('body')
-    <div class="hero no-nav-change" style="background-image: url('{{url()}}/profiles/{{$trainer->user->directory}}/{{$evercisegroup->image}}')">
+    <div class="hero no-nav-change" style="background-image: url('{{url()}}/profiles/{{$data['trainer']->user->directory.'/'.$data['evercisegroup']->image}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">
               <ul class="nav navbar-nav nav-justified nav-no-float">
@@ -24,7 +24,7 @@
     <div class="container mt30">
         <div class="row">
             <div class="col-sm-6">
-                <h1 class="mb5">{{ $evercisegroup->name }}</h1>
+                <h1 class="mb5">{{ $data['evercisegroup']->name }}</h1>
                 <div class="mb30">
                     <span class="icon icon-full-star"></span>
                     <span class="icon icon-full-star"></span>
@@ -33,18 +33,18 @@
                     <span class="icon icon-empty-star"></span>
                 </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibu</p>
+                <p>{{ $data['evercisegroup']->description }}</p>
                 <div class="row">
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                <img src="/img/lewis.jpg" alt="profile picture" class="img-responsive img-circle">
+                                <img src="{{url()}}/profiles/{{$data['trainer']->user->directory.'/'.$data['trainer']->user->image}}" alt="profile picture" class="img-responsive img-circle">
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">
                                     <strong>This class is presented by</strong>
                                 </div>
-                                <span>Lodon Yoga</span>
+                                <span>{{ $data['trainer']->user->display_name }}</span>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
 
             <div class="col-sm-6">
                 <h1 class="mb5">Location</h1>
-                <span><span class="icon icon-pink-pointer"></span> The Box, 3 nugent terrance, london nw8 9qd</span>
+                <span><span class="icon icon-pink-pointer"></span>{{ $data['venue']->address }}</span>
             </div>
         </div>
         <hr>
@@ -97,80 +97,27 @@
                     <div class="table-responsive center-block">
                         <table class="table table-hover pull-left">
                             <tbody>
+                            @foreach($data['evercisegroup']->futuresessions as $futuresession)
                                 <tr>
-                                    <td class="text-left"><span class="icon icon-clock mr5"></span><span>10am - 11am</span></td>
-                                    <td class="text-center"><span class="icon icon-ticket mr10"></span><span>x 8 tickets left</span></td>
-                                    <td class="text-center"><span class="icon icon-watch mr5"></span><span>1 hour</span></td>
+                                    <td class="text-left"><span class="icon icon-clock mr5"></span><span>{{ (date('h:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
+                                    <td class="text-center"><span class="icon icon-ticket mr10"></span><span>x {{ $data['evercisegroup']->capacity -  $data['members'][$futuresession->id] }} tickets left</span></td>
+                                    <td class="text-center"><span class="icon icon-watch mr5"></span><span>{{ $futuresession->formattedDuration() }}</span></td>
                                     <td class="text-right">
                                         <span>
-                                            <strong class="text-primary mr25 lead">&pound;16</strong>
+                                            <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
                                         </span>
 
                                         <div class="btn-group">
                                           <button type="button" class="btn btn-primary">JOIN CLASS</button>
                                           <select class="btn btn-primary btn-select">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
+                                            @for($i=0; $i<($data['evercisegroup']->capacity - $data['members'][$futuresession->id] + 1 ); $i++)
+                                            <option>{{$i}}</option>
+                                            @endfor
                                           </select>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="text-left"><span class="icon icon-clock mr5"></span><span>10am - 11am</span></td>
-                                    <td class="text-center"><span class="icon icon-ticket mr10"></span><span>x 8 tickets left</span></td>
-                                    <td class="text-center"><span class="icon icon-watch mr5"></span><span>1 hour</span></td>
-                                    <td class="text-right">
-                                        <span>
-                                            <strong class="text-primary mr25 lead">&pound;16</strong>
-                                        </span>
-
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-primary">JOIN CLASS</button>
-                                          <select class="btn btn-primary btn-select">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                          </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left"><span class="icon icon-clock mr5"></span><span>10am - 11am</span></td>
-                                    <td class="text-center"><span class="icon icon-ticket mr10"></span><span>x 8 tickets left</span></td>
-                                    <td class="text-center"><span class="icon icon-watch mr5"></span><span>1 hour</span></td>
-                                    <td class="text-right">
-                                        <span>
-                                            <strong class="text-primary mr25 lead">&pound;16</strong>
-                                        </span>
-
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-primary">JOIN CLASS</button>
-                                          <select class="btn btn-primary btn-select">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                          </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="text-left"><span class="icon icon-clock mr5"></span><span>10am - 11am</span></td>
-                                    <td class="text-center"><span class="icon icon-ticket mr10"></span><span>x 8 tickets left</span></td>
-                                    <td class="text-center"><span class="icon icon-watch mr5"></span><span>1 hour</span></td>
-                                    <td class="text-right">
-                                        <span>
-                                            <strong class="text-primary mr25 lead">&pound;16</strong>
-                                        </span>
-
-                                        <div class="btn-group">
-                                          <button type="button" class="btn btn-default">SOLD OUT</button>
-                                          <select class="btn btn-default btn-select">
-                                            <option>0</option>
-                                          </select>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -185,52 +132,32 @@
         <hr>
         <div class="row">
             <div class="col-sm-12">
+                @if(count($data['venue']->facilities) > 0)
                 <div class="page-header">
                     <h1>Venue Facilities</h1>
                 </div>
 
                 <ul class="row custom-list">
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
+                    @foreach($data['venue']->facilities as $key => $facility)
+						@if ($facility->category == 'facility')
+							<li>{{ $facility->name}}</li>
+						@endif
+					@endforeach
                 </ul>
+                @endif
 
+                @if(count($data['venue']->facilities) > 0)
                 <div class="page-header">
                     <h1>Venue Amenties</h1>
                 </div>
                 <ul class="row custom-list">
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
-                    <li class="col-sm-3">Cardio Machines</li>
+					@foreach($data['venue']->facilities as $key => $facility)
+						@if ($facility->category == 'Amenity')
+							<li>{{ $facility->name}}</li>
+						@endif
+					@endforeach
                 </ul>
+                @endif
 
 
             </div>
@@ -243,18 +170,11 @@
                     <h1>Reviews</h1>
                 </div>
             </div>
-            <div class="col-sm-6">
-                @include('v3.users.rating_block')
-            </div>
-            <div class="col-sm-6">
-                 @include('v3.users.rating_block')
-            </div>
-            <div class="col-sm-6">
-                 @include('v3.users.rating_block')
-            </div>
-            <div class="col-sm-6">
-                 @include('v3.users.rating_block')
-            </div>
+            @foreach ($data['allRatings'] as $rating)
+                <div class="col-sm-6">
+                    @include('v3.users.rating_block')
+                </div>
+            @endforeach
         </div>
     </div>
 @stop
