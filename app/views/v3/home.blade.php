@@ -36,14 +36,7 @@
                             {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location']) }}
 
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
-                            <select name="radius" class="form-control mr50">
-                              <option>Distance</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
+                            {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                             <span class="input-group-btn">
                                 <button class="btn btn-primary btn-block" type="submit">
                                      Find a Class
