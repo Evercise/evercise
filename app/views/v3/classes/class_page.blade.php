@@ -1,7 +1,7 @@
 @extends('v3.layouts.master')
 <?php View::share('og', $data['og']) ?>
 @section('body')
-    <div class="hero no-nav-change" style="background-image: url('{{url()}}/profiles/{{$data['trainer']->user->directory.'/'.$data['evercisegroup']->image}}')">
+    <div class="hero no-nav-change" style="background-image: url('{{url().'/profiles/'.$data['trainer']->user->directory.'/'.$data['evercisegroup']->image}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">
               <ul class="nav navbar-nav nav-justified nav-no-float">

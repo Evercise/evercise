@@ -4,7 +4,7 @@
             <img src="/img/example-class-img.jpg">
         </div>
         <div class="class-title-wrapper col-xs-6">
-            <a href="#"><h3>Fitness class for ladies</h3></a>
+            <a href="#"><h3>{{ $evercisegroup->name }}</h3></a>
             <div class="class-rating-wrapper">
                 <span class="icon icon-full-star"></span>
                 <span class="icon icon-full-star"></span>

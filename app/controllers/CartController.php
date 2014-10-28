@@ -20,13 +20,17 @@ class CartController extends \BaseController
         if( $idArray['type'] == 'session')
         {
             $sessionId = $idArray['id'];
+
             $session = Evercisesession::find($sessionId)->first();
             $evercisegroupId = $session->evercisegroup_id;
 
-            $rowId = Cart::search(['id' => $productCode]);
-            if($rowId) // If product ID already exists in cart, then add to quantity.
+            $rowIds = Cart::search(['id' => $productCode]);
+
+            if(count($rowIds)) // If product ID already exists in cart, then add to quantity.
             {
-                $currentQuantity = Cart::get($rowId)->qty;
+                $rowId = $rowIds[0];
+                $row = Cart::get($rowId);
+                $currentQuantity = $row->qty;
                 $newQuantity = $currentQuantity + $quantity;
                 Cart::update($rowId, $newQuantity);
             }
@@ -39,7 +43,9 @@ class CartController extends \BaseController
                         'date_time' => $session->date_time
                     ]
                 );
+
             }
+
         }
         else if( $idArray['type'] == 'package')
         {
@@ -47,9 +53,9 @@ class CartController extends \BaseController
         }
         else
         {
+            return 'code does not exist :'.$productCode;
             // Product code type does not exist
         }
-
         return $this->getCart();
     }
 

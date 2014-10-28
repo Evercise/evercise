@@ -5,10 +5,10 @@
             <div class="col-sm-6">
                 <div class="row mb50">
                     <div class="col-sm-4">
-                        <img src="/img/lewis.jpg" alt="profile picture" class="img-responsive img-circle">
+                        <img src="{{url().'/profiles/'.$data['user']->directory.'/'.$data['user']->image}}" alt="profile picture" class="img-responsive img-circle">
                     </div>
                     <div class="col-sm-8 mt20">
-                        <h3>Lewis Bayfield<br><small>LewisB</small></h3>
+                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
                     </div>
                 </div>
 
@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    @include('v3.users.profile.nav')
+    @include('v3.trainers.profile.nav')
 
 
     <div class="">

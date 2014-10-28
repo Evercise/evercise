@@ -534,4 +534,5 @@ Route::group(
         Route::get('/fakeratings',
             ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
     }
+
 );
