@@ -132,6 +132,8 @@ class CartController extends \BaseController
             'cartRows'   => $cartRows,
         ];
 
+        return 'nope';
+
         return $data;
 
         return View::make('sessions.checkout')
