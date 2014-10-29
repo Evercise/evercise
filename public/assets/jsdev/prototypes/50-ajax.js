@@ -69,6 +69,3 @@ AjaxRequest.prototype = {
     }
 
 }
-/*
- return Response::json([ 'view' => View::make('v3.cart.dropdown')->with($data)->render() ]);
- */

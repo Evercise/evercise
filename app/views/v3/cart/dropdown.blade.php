@@ -28,7 +28,10 @@
                     <strong class="text-primary">&pound;{{ $row->price }}</strong>
                 </div>
                 <div class="col-xs-2 text-center mt10">
-                    <span class="icon icon-cross hover"></span>
+                    {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                        {{ Form::hidden('product-id', $row->id) }}
+                        {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
+                    {{Form::close()}}
                 </div>
             </div>
         @endforeach
@@ -40,13 +43,13 @@
         <strong>Sub-total</strong>
     </div>
     <div class="col-xs-5">
-        <strong class="text-primary">&pound;<span id="cart-sub-total">0</span></strong>
+        <strong class="text-primary">&pound;<span id="cart-sub-total">{{ $subTotal }}</span></strong>
     </div>
     <div class="col-xs-2">
         <strong>Discount</strong>
     </div>
     <div class="col-xs-2">
-        <strong class="text-primary"><span id="cart-discount">0</span>%</strong>
+        <strong class="text-primary"><span id="cart-discount">{{ $discount }}</span>%</strong>
     </div>
     <li class="divider col-xs-12"></li>
 
@@ -54,7 +57,7 @@
         <strong>Total</strong>
     </div>
     <div class="col-xs-5">
-        <strong class="text-primary">&pound;<span id="cart-total">0</span></strong>
+        <strong class="text-primary">&pound;<span id="cart-total">{{ $total }}</span></strong>
     </div>
     <div class="col-xs-4 mb10">
         <button class="btn btn-primary">Checkout</button>

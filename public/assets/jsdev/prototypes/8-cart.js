@@ -1,9 +1,5 @@
 function Cart(cart) {
     this.cart = cart;
-    this.subTotalElem = cart.find('#cart-sub-total');
-    this.totalElem = cart.find('#cart-total');
-    this.discountElem = cart.find('#cart-discount');
-    this.empty = cart.find('#empty-cart');
     this.addTo = $('.add-to-class');
     this.watch();
 }
@@ -11,8 +7,11 @@ Cart.prototype = {
     constructor: Cart,
     watch: function(){
         var self = this;
-        this.empty.on("click", function(e){
-            self.submit( $(this), e);
+        $(document).on('submit', '#empty-cart', function(e){
+            self.submit( $('#empty-cart'), e);
+        })
+        $(document).on('submit', '.remove-row', function(e){
+            self.submit( $('.remove-row'), e);
         })
         this.addTo.on('submit', function(e){
             self.submit( $(this), e);
@@ -25,7 +24,7 @@ Cart.prototype = {
     },
 
     updateCart: function(data){
-        cart.cart.dropdown('toggle');
-        cart.cart.replaceWith(data.view);
+        $('.dropdown ').addClass('open');
+        $('.dropdown-cart').replaceWith(data.view);
     }
 }

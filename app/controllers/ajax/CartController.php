@@ -1,6 +1,5 @@
 <?php namespace ajax;
-
-use  Cart, Evercisesession, Input ;
+use Input, EverciseCart, Evercisesession, Response, View;
 
 class CartController extends AjaxBaseController
 {
@@ -18,7 +17,8 @@ class CartController extends AjaxBaseController
         $productCode = Input::get('product-id', false);
         $quantity = Input::get('quantity', 1);
 
-        $idArray = CartController::fromProductCode($productCode);
+        $idArray = EverciseCart::fromProductCode($productCode);
+
         if( $idArray['type'] == 'session')
         {
             $sessionId = $idArray['id'];
@@ -26,19 +26,19 @@ class CartController extends AjaxBaseController
             $session = Evercisesession::find($sessionId)->first();
             $evercisegroupId = $session->evercisegroup_id;
 
-            $rowIds = Cart::search(['id' => $productCode]);
+            $rowIds = EverciseCart::search(['id' => $productCode]);
 
             if($rowIds[0]) // If product ID already exists in cart, then add to quantity.
             {
                 $rowId = $rowIds[0];
-                $row = Cart::get($rowId);
+                $row = EverciseCart::get($rowId);
                 $currentQuantity = $row->qty;
                 $newQuantity = $currentQuantity + $quantity;
-                Cart::update($rowId, $newQuantity);
+                EverciseCart::update($rowId, $newQuantity);
             }
             else // Make a new entry in the cart, and link it to the session.
             {
-                Cart::associate('Evercisesession')->add( $productCode, $session->evercisegroup->name, $quantity, $session->price,
+                EverciseCart::associate('Evercisesession')->add( $productCode, $session->evercisegroup->name, $quantity, $session->price,
                     [
                         'evercisegroupId' => $evercisegroupId,
                         'sessionId' => $sessionId,
@@ -70,17 +70,17 @@ class CartController extends AjaxBaseController
     public function remove()
     {
         $productCode = Input::get('product-id', false);
-        $rowId = Cart::search(['id' => $productCode]);
+        $rowId = EverciseCart::search(['id' => $productCode]);
         if ($rowId)
         {
             $quantity = Input::get('quantity', 1);
 
-            $currentQuantity = Cart::get($rowId)->qty;
+            $currentQuantity = EverciseCart::get($rowId)->qty;
             $newQuantity = $currentQuantity - $quantity;
             if ($newQuantity > 0)
-                Cart::update($rowId, $newQuantity);
+                EverciseCart::update($rowId, $newQuantity);
             else
-                Cart::remove($rowId);
+                EverciseCart::remove($rowId);
         }
 
         return $this->getCart();
@@ -95,10 +95,10 @@ class CartController extends AjaxBaseController
     public function delete()
     {
         $productCode = Input::get('product-id', false);
-        $rowId = Cart::search(['id' => $productCode]);
+        $rowId = EverciseCart::search(['id' => $productCode]);
 
         if ($rowId)
-            Cart::remove($rowId);
+            EverciseCart::remove($rowId);
 
         return $this->getCart();
     }
@@ -110,7 +110,7 @@ class CartController extends AjaxBaseController
      */
     public function emptyCart()
     {
-        Cart::destroy();
+        EverciseCart::destroy();
 
         return $this->getCart();
     }
@@ -122,21 +122,9 @@ class CartController extends AjaxBaseController
      */
     public function getCart()
     {
+        $data = EverciseCart::getCart();
 
-        $cartRows = Cart::content();
-        $subTotal = Cart::total();
-        $discount = 0;
-        $total = ($subTotal / 100) * (100 - $discount);
-
-        $data = [
-            'discount'   => $discount,
-            'subTotal'   => $subTotal,
-            'total'      => $total,
-            'cartRows'   => $cartRows,
-        ];
-
-        return $data;
-
+        return Response::json([ 'view' => View::make('v3.cart.dropdown')->with($data)->render() ]);
     }
 
 

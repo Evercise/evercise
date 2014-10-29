@@ -94,7 +94,7 @@
                                             <div class="btn-group pull-right">
 
                                                 {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
-                                                {{ Form::hidden('product-id', CartController::toProductCode('session', $futuresession->id)) }}
+                                                {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
 
                                                   <select name="quantity" id="quantity" class="btn btn-primary btn-select">
                                                     @for($i=0; $i<($data['evercisegroup']->capacity - $data['members'][$futuresession->id] + 1 ); $i++)

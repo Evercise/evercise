@@ -45,4 +45,28 @@ class EverciseCart extends Cart
 
         return ['id' => $id, 'type' => $type];
     }
+
+    /**
+     * @return $this
+     *
+     * Return Cart data formatted as an array
+     */
+    public static function getCart()
+    {
+
+        $cartRows = parent::content();
+        $subTotal = parent::total();
+        $discount = 0;
+        $total = ($subTotal / 100) * (100 - $discount);
+
+        $data = [
+            'discount'   => $discount,
+            'subTotal'   => $subTotal,
+            'total'      => $total,
+            'cartRows'   => $cartRows,
+        ];
+
+        return $data;
+
+    }
 } 

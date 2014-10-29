@@ -26,35 +26,14 @@ class BaseController extends Controller
             $header = $this->setupHeader('none');
         }
 
-        View::share('cart', $this->getCart());
+        $cart = new EverciseCart;
+
+        View::share('cart', View::make('v3.cart.dropdown')->with($cart->getCart())->render() );
 
         View::share('header', $header);
 
     }
 
-    /**
-     * @return $this
-     *
-     * Return Cart data formatted as an array
-     */
-    protected  function getCart()
-    {
-
-        $cartRows = Cart::content();
-        $subTotal = Cart::total();
-        $discount = 0;
-        $total = ($subTotal / 100) * (100 - $discount);
-
-        $data = [
-            'discount'   => $discount,
-            'subTotal'   => $subTotal,
-            'total'      => $total,
-            'cartRows'   => $cartRows,
-        ];
-
-        return View::make('v3.cart.dropdown')->with($data)->render();
-
-    }
 
     protected function setupHeader($user_type = 'none')
     {
