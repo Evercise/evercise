@@ -13,7 +13,7 @@ class CartController extends \BaseController
      */
     public function add()
     {
-        $productCode = Input::get('product-id', 'S253');
+        $productCode = Input::get('product-id', false);
         $quantity = Input::get('quantity', 1);
 
         $idArray = EverciseCart::fromProductCode($productCode);
