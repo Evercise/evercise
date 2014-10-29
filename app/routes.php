@@ -107,6 +107,10 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('/auth/login', array('as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin'));
     // cart
     Route::post('cart/add', array('as' => 'cart.add', 'uses' => 'CartController@add'));
+    Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'CartController@remove'));
+    Route::post('cart/delete', array('as' => 'cart.delete', 'uses' => 'CartController@delete'));
+    Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'CartController@emptyCart'));
+    Route::post('cart/init', array('as' => 'cart.init', 'uses' => 'CartController@getCart'));
 });
 
 /* Show home page */
@@ -258,12 +262,10 @@ Route::post('venues/update/{id}', 'VenuesController@update');
 
 
 // Cart
-
-
-Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'CartController@remove'));
-Route::post('cart/delete', array('as' => 'cart.delete', 'uses' => 'CartController@delete'));
-Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'CartController@emptyCart'));
 Route::get('cart/checkout', array('as' => 'cart.checkout', 'uses' => 'CartController@getCart'));
+Route::get('cartrow', array('as' => 'cart.row', function () {
+    return View::make('v3.cart.cartrow');
+}));
 
 
 // sessions

@@ -7539,6 +7539,12 @@ fieldset[disabled] .btn-grey.active {
 .btn-grey:hover {
   color: #ffffff;
 }
+.btn-icon {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+}
 .btn-form-control {
   display: block;
   width: 100%;
@@ -8173,34 +8179,19 @@ label {
 .list-group-item h3 {
   margin: 10px 0 0;
 }
-/*
-.dropdown-cart{
-  min-width: 460px;
-  .row{
-    margin-left: 10px;
-  }
-  color: @gray-darker;
-  padding: 15px 0;
-  border: none;
-  background: rgba(255,255,255,0.95);
-  line-height: 1.6;
-  border-radius: @border-radius-base;
-  .icon-cross{
-    margin-top: 5px;
-  }
-  &:after{
-    position: absolute;
-    top: -14px;
-    right: 6px;
-    display: inline-block;
-    border-right: 14px solid transparent;
-    border-bottom: 14px solid rgba(255,255,255,0.95);
-    border-left: 14px solid transparent;
-    content: '';
-  }
-
+.cart-row {
+  padding: 10px 0;
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid #e8ebec;
 }
-*/
+.cart-row:first-of-type {
+  padding-top: 0;
+}
+.cart-row:last-of-type {
+  border: 0;
+  padding-bottom: 0;
+}
 .hero {
   background: #383d48;
   background-size: cover ;

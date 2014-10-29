@@ -3,13 +3,14 @@ function redirectTo(data){
 }
 
 function updateCart(data){
-    var cart = $('.nav-cart');
-    cart.dropdown('toggle');
-    $('.nav-cart').find('#cart-sub-total').html(5000);
-    cart.find('#cart-sub-total').remove();
+
+    var cart = $('.dropdown-cart');
+    cart.find('#cart-sub-total').html(data.subTotal);
     cart.find('#cart-total').html(data.total);
     cart.find('#cart-discount').html(data.discount);
+    cart.dropdown('toggle');
+    cart.find('.btn').prop('disabled', false);
 
-    console.log(data.cartRows);
+    console.log(data);
 
 }

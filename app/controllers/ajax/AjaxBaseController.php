@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Controller, Sentry, View;
+use Controller;
 
 class AjaxBaseController extends Controller
 {

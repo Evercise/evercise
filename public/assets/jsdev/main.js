@@ -81,12 +81,17 @@ $(function(){
             new AjaxRequest(login, redirectTo);
         })
     })
-    $('.add-to-class').exists(function(){
-        $(this).submit(function(e){
-            e.preventDefault();
-            new AjaxRequest($(this), updateCart);
-        })
+
+    $('.dropdown-cart').exists(function(){
+        cart = new Cart(this);
     })
+
+
+
+
+
+
+
 
 
 });
