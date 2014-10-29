@@ -132,7 +132,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Krystian', 139) }} </h3>
 				<h4>Thai Boxing Instructor</h4>
-				<h5><strong>{{ Trainer::numActiveClasses(139) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(139) }}</strong> sessions</h5>
+				<h5><strong>{{ Trainer::numActiveClasses(379) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(379) }}</strong> sessions</h5>
 				<p>I have registered our classes with Evercise few months ago.
                    My experience of the services provided by the management was very positive right from the beginning. After registering on easy to access and operate website I have decided to give them a call and introduce myself closer and talk about possibilities of boosting my business on their website.
                    We keep in touch and I constantly receive  informations about any new options to help my business running from Evercise.
@@ -144,7 +144,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Go Mammoth', 436) }} </h3>
 				<h4>Fitness Club</h4>
-				<h5><strong>{{ Trainer::numActiveClasses(436) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(436) }}</strong> sessions</h5>
+				<h5><strong>{{ Trainer::numActiveClasses(561) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(561) }}</strong> sessions</h5>
 				<p>A great concept you have there. Evercise is an excellent marketing partner for us.</p>
 			</div>
 		</div>
@@ -153,7 +153,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Aqua Fit Pro', 405) }} </h3>
 				<h4>Aqua Cycling Instrutor</h4>
-				<h5><strong>{{ Trainer::numActiveClasses(405) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(405) }}</strong> sessions</h5>
+				<h5><strong>{{ Trainer::numActiveClasses(171) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(171) }}</strong> sessions</h5>
 				<p>The team who took me through the whole process was brilliant, I felt I had exceptional support and expertise when needed. Evercise is really easy to understand and manage. Also, not having to pay until I make money is a real plus.</p>
 			</div>
 		</div
