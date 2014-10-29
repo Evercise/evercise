@@ -541,4 +541,4 @@ Route::group(
 
 
 );
-    Route::get('/showcart', 'CartController@getCart');
+    Route::get('/showcart', 'CartController@add');

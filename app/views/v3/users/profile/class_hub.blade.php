@@ -9,10 +9,10 @@
             <div class="col-sm-4">
                 <ul class="list-unstyled mt25">
                     <strong class="text-dark">Class Stats</strong>
-                    <li>Past Dates: <strong class="text-primary">0</strong> </li>
-                    <li>Upcoming Dates: <strong class="text-primary">4</strong> </li>
-                    <li>Places Filled: <strong class="text-primary">0</strong> </li>
-                    <li>Average Class Booking: <strong class="text-primary">0</strong> </li>
+                    <li>Past Dates: <strong class="text-primary">{{ count($evercisegroup->pastsessions) }}</strong> </li>
+                    <li>Upcoming Dates: <strong class="text-primary">{{ count($evercisegroup->futuresessions) }}</strong> </li>
+                    <li>Places Filled: <strong class="text-primary">{{ $evercisegroup->placesFilled() }} </strong> </li>
+                    <li>Average Class Booking: <strong class="text-primary">{{ $evercisegroup->averageClassBooking() }}</strong> </li>
                 </ul>
             </div>
         </div>
@@ -45,12 +45,7 @@
                             <td>
 
                                 <div class="custom-select">
-                                {{ Form::select('phone',
-                                    [
-                                        '15:00' => '15:00',
-                                        '16:00' => '16:00'
-                                    ]
-                                     , '15:00', ['class' => 'form-control input-sm'] ) }}
+                                {{ Form::select('phone',['15:00' => '15:00','16:00' => '16:00'], '15:00', ['class' => 'form-control input-sm'] ) }}
                                 </div>
 
                             </td>

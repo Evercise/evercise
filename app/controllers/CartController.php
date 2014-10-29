@@ -13,10 +13,11 @@ class CartController extends \BaseController
      */
     public function add()
     {
-        $productCode = Input::get('product-id', false);
+        $productCode = Input::get('product-id', 'S253');
         $quantity = Input::get('quantity', 1);
 
-        $idArray = Static::fromProductCode($productCode);
+        $idArray = EverciseCart::fromProductCode($productCode);
+
         if( $idArray['type'] == 'session')
         {
             $sessionId = $idArray['id'];
@@ -24,19 +25,19 @@ class CartController extends \BaseController
             $session = Evercisesession::find($sessionId)->first();
             $evercisegroupId = $session->evercisegroup_id;
 
-            $rowIds = Cart::search(['id' => $productCode]);
+            $rowIds = EverciseCart::search(['id' => $productCode]);
 
             if($rowIds[0]) // If product ID already exists in cart, then add to quantity.
             {
                 $rowId = $rowIds[0];
-                $row = Cart::get($rowId);
+                $row = EverciseCart::get($rowId);
                 $currentQuantity = $row->qty;
                 $newQuantity = $currentQuantity + $quantity;
-                Cart::update($rowId, $newQuantity);
+                EverciseCart::update($rowId, $newQuantity);
             }
             else // Make a new entry in the cart, and link it to the session.
             {
-                Cart::associate('Evercisesession')->add( $productCode, $session->evercisegroup->name, $quantity, $session->price,
+                EverciseCart::associate('Evercisesession')->add( $productCode, $session->evercisegroup->name, $quantity, $session->price,
                     [
                         'evercisegroupId' => $evercisegroupId,
                         'sessionId' => $sessionId,
@@ -68,17 +69,17 @@ class CartController extends \BaseController
     public function remove()
     {
         $productCode = Input::get('product-id', false);
-        $rowId = Cart::search(['id' => $productCode]);
+        $rowId = EverciseCart::search(['id' => $productCode]);
         if ($rowId)
         {
             $quantity = Input::get('quantity', 1);
 
-            $currentQuantity = Cart::get($rowId)->qty;
+            $currentQuantity = EverciseCart::get($rowId)->qty;
             $newQuantity = $currentQuantity - $quantity;
             if ($newQuantity > 0)
-                Cart::update($rowId, $newQuantity);
+                EverciseCart::update($rowId, $newQuantity);
             else
-                Cart::remove($rowId);
+                EverciseCart::remove($rowId);
         }
 
         return $this->getCart();
@@ -93,10 +94,10 @@ class CartController extends \BaseController
     public function delete()
     {
         $productCode = Input::get('product-id', false);
-        $rowId = Cart::search(['id' => $productCode]);
+        $rowId = EverciseCart::search(['id' => $productCode]);
 
         if ($rowId)
-            Cart::remove($rowId);
+            EverciseCart::remove($rowId);
 
         return $this->getCart();
     }
@@ -108,7 +109,7 @@ class CartController extends \BaseController
      */
     public function emptyCart()
     {
-        Cart::destroy();
+        EverciseCart::destroy();
 
         return $this->getCart();
     }
@@ -120,9 +121,8 @@ class CartController extends \BaseController
      */
     public function getCart()
     {
-
-        $cartRows = Cart::content();
-        $subTotal = Cart::total();
+        $cartRows = EverciseCart::content();
+        $subTotal = EverciseCart::total();
         $discount = 0;
         $total = ($subTotal / 100) * (100 - $discount);
 
@@ -143,47 +143,5 @@ class CartController extends \BaseController
     }
 
 
-    /**
-     * @param $type
-     * @param $id
-     * @return string
-     *
-     * Convert session-id or package-id into a unique product code
-     */
-    public static function toProductCode($type, $id)
-    {
-        $productCode = '';
-        switch($type)
-        {
-            case 'session':
-                $productCode = 'S' . $id;
-                break;
-            case 'package':
-                $productCode = 'P' . $id;
-                break;
-        }
-        return $productCode;
-    }
-
-    /**
-     * @param $productCode
-     * @return array|bool
-     *
-     * Convert product code back to session-id or package-id
-     */
-    public static function fromProductCode($productCode)
-    {
-        if (count( $chunks = explode('S', $productCode) ) > 1) {
-            $id = $chunks[1];
-            $type = 'session';
-        }
-        else if (count( $chunks = explode('P', $productCode) ) > 1){
-            $id = $chunks[1];
-            $type = 'package';
-        }
-        else return false;
-
-        return ['id' => $id, 'type' => $type];
-    }
 
 }

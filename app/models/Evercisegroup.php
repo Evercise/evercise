@@ -33,6 +33,9 @@ class Evercisegroup extends \Eloquent
      */
     protected $table = 'evercisegroups';
 
+
+    private $classStats = [];
+
     /**
      * @param $user
      * @return \Illuminate\View\View
@@ -748,14 +751,35 @@ class Evercisegroup extends \Eloquent
      */
     public function getStars()
     {
+        if(isset($this->classStats['stars'])) return $this->classStats['stars'];
+
         $stars = 0;
         foreach ($this->ratings as $key => $rating) {
             $stars += $rating->stars;
         }
         $stars = count($this->ratings) ? $stars / count($this->ratings) : 0;
 
-
+        $this->classStats['stars'] = $stars;
         return $stars;
+    }
+
+    public function placesFilled()
+    {
+        $members = [];
+        foreach ($this->futuresessions as $evercisesession) {
+            $members[] = count($evercisesession->sessionmembers);
+        }
+        return array_sum($members);
+    }
+
+    public function averageClassBooking()
+    {
+        $members = [];
+        foreach ($this->evercisesession as $evercisesession) {
+            $members[] = count($evercisesession->sessionmembers);
+        }
+        $average = round(array_sum($members) / count($members));
+        return $average;
     }
 
     /**
