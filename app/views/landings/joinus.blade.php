@@ -14,7 +14,7 @@ body { width: 100%; height: auto; margin: 0 auto; padding: 0; background: #FFF; 
 		url('fonts/universltstd-ultracn.ttf') format('truetype'),
 		url('fonts/universltstd-ultracn.svg#UniversLTStd59UltraCondensed') format('svg')
 	}
-h1 { width:100%; font-family:'UniversLTStd59UltraCondensed', arial, helvetica, sans-serif; font-size:60px; letter-spacing: 1px; text-align: center; color: #ffd21e; padding: 260px 0 0 0; }
+h1 { width:100%; font-family:'UniversLTStd59UltraCondensed', arial, helvetica, sans-serif; font-size:60px; letter-spacing: 1px; text-align: center; color: #ffd21e; padding: 260px 0 0 0; text-transform: uppercase }
 h2 { font-family: helvetica, arial, sans-serif; font-size: 16px; font-weight: normal; text-align: center; line-height: 26px; color:#FFF; margin: -40px 0 0 0; }
 
 h3 { font-family: helvetica, arial, sans-serif; font-size: 16px; font-weight: bold; text-align: left; line-height: 16px; color:#000; }
@@ -76,7 +76,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 	<div class="main_messaging">
 		<div class="top">
 		     {{ HTML::linkRoute('home', '' , null, ['class' => 'logo']) }}
-			<h1>PROMOTE YOUR CLASSES IN JUST 5 MINUTES</h1>
+			<h1>Do you have places to fill in your classes? </h1>
 			<!--<h2>Evercise can help you to realise your potential as a professional trainer by connecting you to a growing community of eager participants and simplifying your booking process.</h2>-->
 		</div>
 	</div>
@@ -132,7 +132,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Krystian', 139) }} </h3>
 				<h4>Thai Boxing Instructor</h4>
-				<h5><strong>4</strong> classes</h5>
+				<h5><strong>{{ Trainer::numActiveClasses(139) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(139) }}</strong> sessions</h5>
 				<p>I have registered our classes with Evercise few months ago.
                    My experience of the services provided by the management was very positive right from the beginning. After registering on easy to access and operate website I have decided to give them a call and introduce myself closer and talk about possibilities of boosting my business on their website.
                    We keep in touch and I constantly receive  informations about any new options to help my business running from Evercise.
@@ -144,7 +144,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Go Mammoth', 436) }} </h3>
 				<h4>Fitness Club</h4>
-				<h5><strong>47</strong> Classes</h5>
+				<h5><strong>{{ Trainer::numActiveClasses(436) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(436) }}</strong> sessions</h5>
 				<p>A great concept you have there. Evercise is an excellent marketing partner for us.</p>
 			</div>
 		</div>
@@ -153,7 +153,7 @@ li { list-style: none; font-size: 18px; color:#000; line-height: 26px; font-fami
 			<div class="copy">
 				<h3> {{ HTML::linkRoute('evercisegroups.show', 'Aqua Fit Pro', 405) }} </h3>
 				<h4>Aqua Cycling Instrutor</h4>
-				<h5><strong>1</strong> class</h5>
+				<h5><strong>{{ Trainer::numActiveClasses(405) }}</strong> Classes <strong>{{ Trainer::numActiveSessions(405) }}</strong> sessions</h5>
 				<p>The team who took me through the whole process was brilliant, I felt I had exceptional support and expertise when needed. Evercise is really easy to understand and manage. Also, not having to pay until I make money is a real plus.</p>
 			</div>
 		</div

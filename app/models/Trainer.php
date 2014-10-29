@@ -91,18 +91,18 @@ class Trainer extends \Eloquent
             return false;
     }
 
-    public function numActiveClasses()
+    public static function numActiveClasses($id)
     {
-        $futuregroups = Evercisegroup::has('futuresessions')->where('user_id', $this->user_id)->get();
+        $futuregroups = Evercisegroup::has('futuresessions')->where('user_id', $id)->get();
 
         $numGroups = count($futuregroups);
 
         return $numGroups;
     }
 
-    public function numActiveSessions()
+    public static function numActiveSessions($id)
     {
-        $futuregroups = Evercisegroup::has('futuresessions')->where('user_id', $this->user_id)->get();
+        $futuregroups = Evercisegroup::has('futuresessions')->where('user_id', $id)->get();
 
         $numSessions = 0;
         foreach ($futuregroups as $futuregroup)
