@@ -19,7 +19,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
-            @include('v3.cart.dropdown')
+            {{ isset($cart) ? $cart : '' }}
         </li>
 
         <li class="dropdown">

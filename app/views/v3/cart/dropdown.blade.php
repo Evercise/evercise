@@ -11,7 +11,7 @@
 
     <li class="divider col-xs-12"></li>
     <div class="cart-rows">
-        @foreach($cartRows as $key => $row)
+        @foreach($cartRows as $row)
             <div class="cart-row">
                 <div class="col-xs-3">
                     <div class="btn-group btn-block">
