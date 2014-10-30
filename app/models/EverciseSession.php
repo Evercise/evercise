@@ -10,6 +10,8 @@ class Evercisesession extends \Eloquent
      * @var array
      */
     protected $fillable = array('evercisegroup_id', 'date_time', 'members', 'price', 'duration', 'members_emailed');
+
+    protected $editable = array('date_time', 'price', 'duration');
     /**
      * The database table used by the model.
      *
@@ -647,6 +649,20 @@ class Evercisesession extends \Eloquent
     public function remainingTickets()
     {
         return $this->evercisegroup->capacity - count($this->sessionmembers);
+    }
+
+    public function updateSession($data)
+    {
+        foreach($data as $name => $value)
+        {
+            if(!in_array($name, $this->editable))
+            {
+                throw new Exception( 'Trying to edit uneditable/non-existant field: '.$name );
+            }
+        }
+        $this->update($data);
+
+        return true;
     }
 
 

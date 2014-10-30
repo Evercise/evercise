@@ -62,36 +62,28 @@ class SessionsController extends \BaseController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        return 'Show';
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return 'Edit';
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  int $id
      * @return Response
      */
-    public function update($id)
+    public function update()
     {
-        return 'Update';
+        $id = Input::get('id', false);
+
+        $data = [];
+        if(Input::get('date_time', false)) $data['date_time'] = Input::get('date_time');
+        if(Input::get('duration', false)) $data['duration'] = Input::get('duration');
+        if(Input::get('price', false)) $data['price'] = Input::get('price');
+
+        $session = Session::find($id);
+        $session->updateSession($data);
+
+        return Response::json(
+            [
+                'message'  => 'sweet'
+            ]
+        );
     }
 
     /**
