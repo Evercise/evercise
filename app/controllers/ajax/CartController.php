@@ -23,6 +23,7 @@ class CartController extends AjaxBaseController
         {
             $sessionId = $idArray['id'];
 
+            // needs fixing - this is grabbing the first class, couls of thought you need find in as the id is in a array
             $session = Evercisesession::find($sessionId)->first();
             $evercisegroupId = $session->evercisegroup_id;
 

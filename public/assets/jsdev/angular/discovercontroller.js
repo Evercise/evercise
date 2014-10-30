@@ -32,10 +32,29 @@ if(typeof angular != 'undefined') {
 
         $scope.myMarkers = [];
 
+
+        $scope.clusterStyles = [
+            {
+                textColor: 'white',
+                url: '/assets/img/icon_default_small_pin_number.png',
+                height: 43,
+                width: 33,
+                anchorText: [-14,9]
+            },
+            {
+                textColor: 'white',
+                url: '/assets/img/icon_default_large_pin_number.png',
+                height: 66,
+                width: 51,
+                anchorText: [-22,14]
+            }
+        ];
+
         $scope.clusterOptions = {
             gridSize: 8,
-            maxZoom: 17,
-            zoom: 15
+            maxZoom: 20,
+            zoom: 15,
+            styles: $scope.clusterStyles
         }
 
         $scope.mask = false;
