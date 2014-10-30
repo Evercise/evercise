@@ -15,9 +15,9 @@
             <div class="cart-row">
                 <div class="col-xs-3">
                     <div class="btn-group btn-block">
-                        <button class="btn btn-primary">1</button>
+                        <button class="btn btn-primary">{{ $row->qty }}</button>
                         <button type="button" class="btn btn-primary btn-aside" data-toggle="dropdown">
-                            <span class="caret"></span>
+                            <span class="caret"></span>{{ $row->options->available }}
                         </button>
                     </div>
 
@@ -26,6 +26,7 @@
                     <strong>{{ $row->name }}</strong>
                     <br>
                     <strong class="text-primary">&pound;{{ $row->price }}</strong>
+                    <strong class="text-primary">{{ $row->options->date_time }}</strong>
                 </div>
                 <div class="col-xs-2 text-center mt10">
                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}

@@ -75,12 +75,12 @@ class CartController extends AjaxBaseController
         {
             $quantity = Input::get('quantity', 1);
 
-            $currentQuantity = EverciseCart::get($rowId)->qty;
+            $currentQuantity = EverciseCart::get($rowId[0])->qty;
             $newQuantity = $currentQuantity - $quantity;
             if ($newQuantity > 0)
-                EverciseCart::update($rowId, $newQuantity);
+                EverciseCart::update($rowId[0], $newQuantity);
             else
-                EverciseCart::remove($rowId);
+                EverciseCart::remove($rowId[0]);
         }
 
         return $this->getCart();
@@ -98,7 +98,7 @@ class CartController extends AjaxBaseController
         $rowId = EverciseCart::search(['id' => $productCode]);
 
         if ($rowId)
-            EverciseCart::remove($rowId);
+            EverciseCart::remove($rowId[0]);
 
         return $this->getCart();
     }
