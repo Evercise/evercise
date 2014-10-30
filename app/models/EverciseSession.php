@@ -644,5 +644,10 @@ class Evercisesession extends \Eloquent
         return  date('H:i', strtotime($this->date_time));
     }
 
+    public function remainingTickets()
+    {
+        return $this->evercisegroup->capacity - count($this->sessionmembers);
+    }
+
 
 }

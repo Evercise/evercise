@@ -24,7 +24,7 @@ class CartController extends AjaxBaseController
             $sessionId = $idArray['id'];
 
             // needs fixing - this is grabbing the first class, couls of thought you need find in as the id is in a array
-            $session = Evercisesession::find($sessionId)->first();
+            $session = Evercisesession::find($sessionId);
             $evercisegroupId = $session->evercisegroup_id;
 
             $rowIds = EverciseCart::search(['id' => $productCode]);
@@ -43,12 +43,11 @@ class CartController extends AjaxBaseController
                     [
                         'evercisegroupId' => $evercisegroupId,
                         'sessionId' => $sessionId,
-                        'date_time' => $session->date_time
+                        'date_time' => $session->date_time,
+                        'available' => $session->remainingTickets()
                     ]
                 );
-
             }
-
         }
         else if( $idArray['type'] == 'package')
         {
