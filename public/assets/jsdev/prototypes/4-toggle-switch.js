@@ -5,7 +5,7 @@ var ToggleSwitch = function (toggle) {
     this.init();
 }
 ToggleSwitch.prototype = {
-    constructor: Masonry,
+    constructor: ToggleSwitch,
     init: function(){
         var self = this;
         this.button.on('click', function(e) {

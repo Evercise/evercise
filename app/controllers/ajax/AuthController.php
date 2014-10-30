@@ -32,7 +32,7 @@ class AuthController extends AjaxBaseController
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => route(Trainer::isTrainerLoggedIn() ? 'trainers' : 'users' .'.edit', $user->display_name)
+                            'url'      => route('users.edit', $user->display_name)
                         ]
                     );
                 }

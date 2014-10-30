@@ -467,13 +467,6 @@ class SessionsController extends \BaseController
         return Response::json(['callback' => 'successAndRefresh']);
     }
 
-    public function getSessionsInline($groupId)
-    {
-        $sessions = Evercisegroup::find($groupId)->Evercisesession;
-
-        return View::make('v3.classes.sessions_inline')
-            ->with('sessions', $sessions);
-    }
 
 
 }

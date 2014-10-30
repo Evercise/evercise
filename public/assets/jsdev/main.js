@@ -22,7 +22,7 @@ $(function(){
     });
 
     $('.toggle-switch').exists(function() {
-        new ToggleSwitch(this);
+        //new ToggleSwitch(this);
     });
 
     $('.map_canvas').exists(function() {
@@ -79,6 +79,12 @@ $(function(){
         $(document).on('submit', login, function(e){
             e.preventDefault();
             new AjaxRequest(login, redirectTo);
+        })
+    })
+    $('.edit-class-inline').exists(function(){
+        $(this).on('submit', function(e){
+            e.preventDefault();
+            new AjaxRequest($(this), editClass);
         })
     })
 

@@ -94,6 +94,8 @@
   padding-left: 0;
   li{
     line-height: 30px;
+    position: relative;
+    padding-left: 10px;
     &:before {
       content: "\2022";
       font-size: 18px;
@@ -103,6 +105,13 @@
       color: @brand-primary;
       margin-right: 5px;
     }
+  }
+}
+
+.collapsing {
+  .transition(height 2s ease);
+  &.hub-table-row{
+    .transition(all 0s ease);
   }
 }
 

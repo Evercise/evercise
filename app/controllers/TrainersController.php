@@ -147,18 +147,7 @@ class TrainersController extends \BaseController {
 	 */
 	public function edit($id, $tab=0)
 	{
-		if (!Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
-		$trainer = Trainer::where('user_id' , $this->user->id)
-				//->with('speciality')
-				->first();
-		
 
-
-		return View::make('trainers.edit')
-			->with('trainer', $trainer)
-			->with('profession', $trainer->profession)
-			->with('tab', $tab);
-			//->with('speciality', $speciality);
 	}
 
 	/**

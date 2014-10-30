@@ -48,7 +48,6 @@ Route::filter('auth.basic', function()
 });
 
 
-
 Route::filter('admin', function()
 {
 	if (! App::environment('local'))

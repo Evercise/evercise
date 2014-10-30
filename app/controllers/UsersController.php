@@ -165,27 +165,25 @@ class UsersController extends \BaseController
             return Redirect::route('home');
         }
 
-        $view = Trainer::isTrainerLoggedIn() ? 'v3.users.profile.master-trainer' : 'v3.users.profile.master-user';
-
         $user = $this->user;
-
-/*        $firstName = $user->first_name;
-        $lastName = $user->last_name;
-        $dob = $user->dob != '0000-00-00 00:00:00' ? $user->dob : '';
-        $email = $user->email;
-        $gender = $user->gender;
-        $area_code = $user->area_code;
-        $phone = $user->phone;*/
-
-        $markPref = $user->marketingpreferences()->where('name', 'newsletter')->first()['option'];
-
-        $hub = Evercisegroup::getHub($user);
-
         $data = [
             'user' => $user,
         ];
 
-        $data = array_merge($hub, $data);
+        // if user is trainer lob hub into data
+
+
+        if(Trainer::isTrainerLoggedIn())
+        {
+            $hub = Evercisegroup::getHub($user);
+            $data = array_merge($hub, $data);
+
+            $view = 'v3.users.profile.master_trainer';
+        }
+        else
+        {
+            $view = 'v3.users.profile.master_user';
+        }
 
         return View::make( $view )
             ->with('data', $data)

@@ -13,6 +13,16 @@
 @param border for info box
 
 */
+.collapsing {
+  -webkit-transition: height 2s ease;
+  -o-transition: height 2s ease;
+  transition: height 2s ease;
+}
+.collapsing.hub-table-row {
+  -webkit-transition: all 0s ease;
+  -o-transition: all 0s ease;
+  transition: all 0s ease;
+}
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -6673,6 +6683,8 @@ strong {
 }
 .custom-list li {
   line-height: 30px;
+  position: relative;
+  padding-left: 10px;
 }
 .custom-list li:before {
   content: "\2022";
@@ -7009,6 +7021,20 @@ a.bg-light-grey:hover {
 .icon-cross.active:hover {
   cursor: pointer;
   background-position: -90px -290px;
+}
+.icon-plus {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -130px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-plus.active {
+  background-position: -130px -290px;
+}
+.icon-plus.hover:hover,
+.icon-plus.active:hover {
+  cursor: pointer;
+  background-position: -130px -290px;
 }
 .icon-search {
   background-image: url("../img/ev_site_icons.png");
@@ -8418,6 +8444,12 @@ label {
 .table > tbody > tr > td .custom-select select,
 .table > tfoot > tr > td .custom-select select {
   background-color: rgba(255, 255, 255, 0.8);
+}
+.hub-table-row td.text-left {
+  padding-right: 0;
+}
+.hub-table-row td.text-right {
+  padding-left: 0;
 }
 .nav-carousel li {
   background: #768690;

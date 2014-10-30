@@ -11,7 +11,8 @@
                 @endfor
             </div>
             <button class="btn btn-default mr15">Clone Class</button>
-            {{ isset($type) && $type == 'edit' ? '<button class="btn btn-grey btn-transparent">Done Editing</button>' : '<button class="btn btn-default">Edit Class</button>' }}
+            <button class="btn btn-default toggle-switch" data-toggle="collapse" data-target=".hub-table-row">Edit Class</button>
+
 
         </div>
     </div>

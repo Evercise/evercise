@@ -22,70 +22,6 @@ Route::get('/popular', [
         }
     ]
 );
-Route::get('/profile', [
-        'as' => 'profile',
-        function () {
-            return View::make('v3.users.profile.master');
-        }
-    ]
-);
-Route::get('/class', [
-        'as' => 'class',
-        function () {
-            return View::make('v3.classes.class_page');
-        }
-    ]
-);
-Route::get('/discover', [
-        'as' => 'discover',
-        function () {
-            return View::make('v3.classes.discover.master');
-        }
-    ]
-);
-Route::get('/discover-list', [
-        'as' => 'discover_list',
-        function () {
-            return View::make('v3.classes.discover.master-list');
-        }
-    ]
-);
-Route::get('/discover-grid', [
-        'as' => 'discover_grid',
-        function () {
-            return View::make('v3.classes.discover.master-grid');
-        }
-    ]
-);
-Route::get('/register-trainer', [
-        'as' => 'register_trainer',
-        function () {
-            return View::make('v3.trainers.create');
-        }
-    ]
-);
-Route::get('/finished-trainer', [
-        'as' => 'finished_trainer',
-        function () {
-            return View::make('v3.trainers.complete');
-        }
-    ]
-);
-
-Route::get('/create-class', [
-        'as' => 'create-class',
-        function () {
-            return View::make('v3.classes.create');
-        }
-    ]
-);
-Route::get('/class-add-sessions', [
-        'as' => 'class-add-sessions',
-        function () {
-            return View::make('v3.classes.add_sessions');
-        }
-    ]
-);
 
 
 /* end tempary routes for new styles */
@@ -110,6 +46,8 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'ajax\CartController@remove'));
     Route::post('cart/delete', array('as' => 'cart.delete', 'uses' => 'ajax\CartController@delete'));
     Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'ajax\CartController@emptyCart'));
+    // sessions
+    Route::post('/sessions/inline', ['as'=>'sessions.inline.groupId', 'uses'=>'ajax\SessionsController@getSessionsInline'] );
 });
 
 /* Show home page */
@@ -162,9 +100,9 @@ Route::get('/finished-user', [
     ]
 );
 
-Route::get('profile/{id}', array('as' => 'profile', 'uses' => 'UsersController@edit'));
+Route::get('/profile/{id}', [ 'as' => 'users.edit', 'uses' => 'UsersController@edit'] );
 
-Route::get('users/{id}/edit/{tab?}', array('as' => 'users.edit', 'uses' => 'UsersController@edit'));
+
 Route::get(
     '/users/{display_name}/activate/{code}',
     array('as' => 'users.activate', 'uses' => 'UsersController@activate')
@@ -340,9 +278,6 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
 
-Route::get('/sessions/inline/{groupId}',
-    ['as'=>'sessions.inline.groupId', 'uses'=>'SessionsController@getSessionsInline']
-);
 
 // widgets
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
