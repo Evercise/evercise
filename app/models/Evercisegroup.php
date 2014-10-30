@@ -548,13 +548,13 @@ class Evercisegroup extends \Eloquent
     /**
      * @param $featured
      */
-    public function adminMakeClassFeatured( $featured )
+    public function adminMakeClassFeatured($featured)
     {
         if ($featured)
             FeaturedClasses::firstOrCreate(['evercisegroup_id' => $this->id]);
         else {
             $id = FeaturedClasses::where('evercisegroup_id', $this->id)->pluck('id');
-            if($id) FeaturedClasses::destroy($id);
+            if ($id) FeaturedClasses::destroy($id);
         }
     }
 
@@ -751,7 +751,7 @@ class Evercisegroup extends \Eloquent
      */
     public function getStars()
     {
-        if(isset($this->classStats['stars'])) return $this->classStats['stars'];
+        if (isset($this->classStats['stars'])) return $this->classStats['stars'];
 
         $stars = 0;
         foreach ($this->ratings as $key => $rating) {
@@ -791,20 +791,20 @@ class Evercisegroup extends \Eloquent
         $validator = Validator::make(
             Input::all(),
             [
-                'classname'   => 'required|max:100|min:5',
+                'classname' => 'required|max:100|min:5',
                 'description' => 'required|max:5000|min:100',
-                'duration'    => 'required|numeric|between:10,240',
-                'maxsize'     => 'required|numeric|between:1,200',
-                'price'       => 'required|numeric|between:1,1000',
-                'image'       => 'required',
-                'gender'      => 'required',
-                'venue'       => 'required',
+                'duration' => 'required|numeric|between:10,240',
+                'maxsize' => 'required|numeric|between:1,200',
+                'price' => 'required|numeric|between:1,1000',
+                'image' => 'required',
+                'gender' => 'required',
+                'venue' => 'required',
             ]
         );
         if ($validator->fails()) {
             $result = array(
                 'validation_failed' => 1,
-                'errors'            => $validator->errors()->toArray()
+                'errors' => $validator->errors()->toArray()
             );
             return Response::json($result);
         } else {
@@ -845,7 +845,7 @@ class Evercisegroup extends \Eloquent
                     return Response::json(
                         [
                             'validation_failed' => 1,
-                            'errors'            => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
+                            'errors' => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
                         ]
                     );
                 }
@@ -853,16 +853,16 @@ class Evercisegroup extends \Eloquent
 
             $evercisegroup = Evercisegroup::create(
                 [
-                    'name'             => $classname,
-                    'user_id'          => $user->id,
-                    'venue_id'         => $venue,
-                    'description'      => $description,
+                    'name' => $classname,
+                    'user_id' => $user->id,
+                    'venue_id' => $venue,
+                    'description' => $description,
                     'default_duration' => $duration,
-                    'capacity'         => $maxsize,
-                    'default_price'    => $price,
-                    'image'            => $image,
-                    'gender'           => $gender,
-                    'venue_id'         => $venue,
+                    'capacity' => $maxsize,
+                    'default_price' => $price,
+                    'image' => $image,
+                    'gender' => $gender,
+                    'venue_id' => $venue,
                 ]
             );
 
@@ -870,10 +870,10 @@ class Evercisegroup extends \Eloquent
 
             Trainerhistory::create(
                 [
-                    'user_id'      => $user->id,
-                    'type'         => 'created_evercisegroup',
+                    'user_id' => $user->id,
+                    'type' => 'created_evercisegroup',
                     'display_name' => $user->display_name,
-                    'name'         => $evercisegroup->name
+                    'name' => $evercisegroup->name
                 ]
             );
 
@@ -938,7 +938,7 @@ class Evercisegroup extends \Eloquent
                     $totalSessionMembers = $totalSessionMembers + $members[$key];
                     $revenue = $revenue + ($members[$key] * $evercisesession->price);
                     $totalRevenue = $totalRevenue + ($evercisesession->price * $this->capacity);
-                    ++ $totalSessions;
+                    ++$totalSessions;
                 }
 
                 $averageSessionMembers = round($totalSessionMembers / $totalSessions, 1);
@@ -1054,7 +1054,7 @@ class Evercisegroup extends \Eloquent
                 ->image(
                     url() . '/profiles/' . $trainer->user->directory . '/' . $this->image,
                     [
-                        'width'  => 400,
+                        'width' => 400,
                         'height' => 200
                     ]
                 )
@@ -1113,10 +1113,10 @@ class Evercisegroup extends \Eloquent
 
                 Trainerhistory::create(
                     array(
-                        'user_id'      => $user->id,
-                        'type'         => 'deleted_evercisegroup',
+                        'user_id' => $user->id,
+                        'type' => 'deleted_evercisegroup',
                         'display_name' => $user->display_name,
-                        'name'         => $this->name
+                        'name' => $this->name
                     )
                 );
             }
@@ -1144,17 +1144,15 @@ class Evercisegroup extends \Eloquent
     public static function editSubcats($subcatChanges)
     {
 
-        foreach($subcatChanges as $subcat)
-        {
-            foreach($subcat as $key => $subcatData) {
+        foreach ($subcatChanges as $subcat) {
+            foreach ($subcat as $key => $subcatData) {
                 $evercisegroup = Static::find($key);
-                if($evercisegroup) {
+                if ($evercisegroup) {
                     $evercisegroup->subcategories()->detach();
                     if (!empty($subcatData)) {
                         $subcatNames = explode(',', $subcatData);
                         $subcatIds = [];
-                        foreach($subcatNames as $subcatName)
-                        {
+                        foreach ($subcatNames as $subcatName) {
                             array_push($subcatIds, Subcategory::where('name', $subcatName)->pluck('id'));
                         }
                         $evercisegroup->subcategories()->attach($subcatIds);

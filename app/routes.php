@@ -340,6 +340,10 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
 
+Route::get('/sessions/inline/{groupId}',
+    ['as'=>'sessions.inline.groupId', 'uses'=>'SessionsController@getSessionsInline']
+);
+
 // widgets
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
 Route::post('/widgets/upload', array('as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload'));
@@ -542,4 +546,3 @@ Route::group(
 
 
 );
-    Route::get('/showcart', 'CartController@getCart');
