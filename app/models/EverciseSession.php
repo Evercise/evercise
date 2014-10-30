@@ -634,5 +634,15 @@ class Evercisesession extends \Eloquent
         return ($hours ? $hours . ' hours ' : '') . ( $minutes . ' minutes');
     }
 
+    public function formattedDate()
+    {
+        return  date('D M dS Y', strtotime($this->date_time));
+    }
+
+    public function formattedTime()
+    {
+        return  date('H:i', strtotime($this->date_time));
+    }
+
 
 }
