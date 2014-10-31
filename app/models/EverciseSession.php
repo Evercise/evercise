@@ -67,7 +67,6 @@ class Evercisesession extends \Eloquent
                 'time' => 'required',
                 'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
                 'duration' => 'required|numeric|between:10,240',
-                'members' => 'required'
             ]
         );
         if ($validator->fails()) {
@@ -78,19 +77,19 @@ class Evercisesession extends \Eloquent
             return Response::json($result);
         }
         else {
-            $inputs = Input::all();
+            $date_time = $inputs['date'] . ' ' . $inputs['time'];
+            $members = isset($inputs['members']) ? $inputs['members'] : 0;
 
-            $time = $inputs['s-time-hour'] . ':' . $inputs['s-time-minute'] . ':00';
-            $date_time = $inputs['s-year'] . '-' . $inputs['s-month'] . '-' . $inputs['s-date'] . ' ' . $time;
-
-            Evercisesession::create(array(
-                'evercisegroup_id' => $inputs['s-evercisegroupId'],
+            $evercisegroupName = Evercisesession::create(array(
+                'evercisegroup_id' => $inputs['evercisegroupId'],
                 'date_time' => $date_time,
-                'price' => $inputs['s-price'],
-                'duration' => $inputs['s-duration']
-            ));
+                'price' => $inputs['price'],
+                'duration' => $inputs['duration'],
+                'members' => $members,
+            ))->evercisegroup->name;
 
-            $evercisegroupName = Evercisegroup::where('id', $inputs['s-evercisegroupId'])->firstOrFail()->pluck('name');
+            //$evercisegroupName = Evercisegroup::where('id', $inputs['evercisegroupId'])->firstOrFail()->pluck('name');
+
 
             $timestamp = strtotime($date_time);
             $niceTime = date('h:ia', $timestamp);

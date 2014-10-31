@@ -488,9 +488,10 @@ Route::group(
 
 // Tris's test route
 Route::get(
-    '/session_edit',
+    '/session_add',
     function () {
-        EverciseSession::find('1378')->updateSession(['time'=>'02:00', ]);
-        return 'done';
+        //EverciseSession::find('1378')->updateSession(['time'=>'02:00', ]);
+        $session = Evercisesession::validateAndStore(['evercisegroupId'=>'136', 'date'=>'2014-12-01', 'time'=>'21:30:00', 'price'=>'3.33', 'duration'=>'45', 'members'=>'5']);
+        return 'done: '.$session;
     }
 );
