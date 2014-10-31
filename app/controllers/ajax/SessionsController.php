@@ -44,13 +44,32 @@ class SessionsController extends AjaxBaseController{
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
      * @return Response
      */
     public function destroy()
     {
         $id = Input::get('id', false);
         return Evercisesession::deleteById($id);
+    }
+
+     /** Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $inputs = Input::all();
+
+        if( Evercisesession::validateAndStore($inputs) )
+        {
+            $groupId = $inputs['evercisegroupId'];
+            $sessions = Evercisegroup::find($groupId)->Evercisesession;
+
+            return Response::json([
+                'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
+                'id'   => $groupId
+            ]);
+        }
 
     }
 }

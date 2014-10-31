@@ -51,18 +51,6 @@ class SessionsController extends \BaseController
             ->with('minute', $createVariables['minute']);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        $inputs = Input::all();
-
-        return Evercisesession::validateAndStore($inputs);
-    }
-
 
 
     /**
