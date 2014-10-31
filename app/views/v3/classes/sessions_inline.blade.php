@@ -20,21 +20,36 @@
                         <td>{{ count($session->sessionmembers).'/'.$session->evercisegroup->capacity}}</td>
                         <td>{{'&pound'. $session->price}}</td>
                         <td class="text-right">
-                            <span class="icon icon-mail mr15 hover"></span>
-                            <span class="icon icon-download mr15 hover"></span>
-                            <span class="icon icon-people mr15 hover"></span>
-                            <span class="icon icon-cross ml20 hover"></span>
+
+                            {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post']) }}
+                                <span class="icon icon-mail mr15 hover"></span>
+                                <span class="icon icon-download mr15 hover"></span>
+                                <span class="icon icon-people mr15 hover"></span>
+                                {{ Form::hidden('id', $session->id) }}
+                                {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
+                            {{ Form::close() }}
                         </td>
                     </tr>
                 @endforeach
                 <tr class="text-center">
-                    <td class="text-left">Add a new date to this class</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-left">
+                        <div class="hub-add-td collapse">{{ Form::text('date', date('Y-m-d') , ['class' => 'form-control input-sm date-picker', 'form' => 'add-new-session', 'placeholder' =>'add a date'] ) }}</div>
+                        <div class="hub-add-td collapse in">Add a new date to this class</div>
+                    </td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('time', Config::get('evercise.time'), '12:00', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('duration', Config::get('evercise.duration'), '30', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('members', Config::get('evercise.tickets'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('price', Config::get('evercise.price'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
                     <td class="text-right">
-                        <span class="icon icon-plus ml40 hover"></span>
+                        <span>
+                            {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.add', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
+
+                                {{ Form::hidden('id', $session->evercisegroup->id) }}
+                                {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}
+                            {{ Form::close() }}
+                        </span>
+
+                        <button class="btn btn-icon icon icon-plus ml20 hover toggle-switch" data-switchclass="icon-cross" data-removeclass="icon-plus" data-toggle="collapse" data-target=".hub-add-td"></button>
                     </td>
                 </tr>
 
@@ -97,7 +112,7 @@
                 @endforeach
                 <tr class="text-center">
                     <td class="text-left">
-                        <div class="hub-add-td collapse">{{ Form::text('date', null, ['class' => 'form-control input-sm date-picker', 'form' => 'add-new-session', 'placeholder' =>'add a date'] ) }}</div>
+                        <div class="hub-add-td collapse">{{ Form::text('date', date('Y-m-d'), ['class' => 'form-control input-sm date-picker', 'form' => 'add-new-session', 'placeholder' =>'add a date'] ) }}</div>
                         <div class="hub-add-td collapse in">Add a new date to this class</div>
                     </td>
                     <td><div class="hub-add-td collapse">{{ Form::select('time', Config::get('evercise.time'), '12:00', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
@@ -105,7 +120,7 @@
                     <td><div class="hub-add-td collapse">{{ Form::select('members', Config::get('evercise.tickets'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
                     <td><div class="hub-add-td collapse">{{ Form::select('price', Config::get('evercise.price'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
                     <td class="text-right">
-                        {{ Form::open(['id' => 'add-new-session', 'route' => 'home', 'method' => 'post', 'class' => 'add-session  collapse hub-add-td pull-right']) }}
+                        {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.add', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
 
                             {{ Form::hidden('id', $session->evercisegroup->id) }}
                             {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}

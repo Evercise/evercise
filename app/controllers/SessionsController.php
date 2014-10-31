@@ -66,19 +66,6 @@ class SessionsController extends \BaseController
 
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-
-        return Evercisesession::deleteById($id);
-
-    }
-
-    /**
      * Show the popup form for mailing all users signed up to a session
      *
      * @param $id

@@ -40,4 +40,17 @@ class SessionsController extends AjaxBaseController{
             ]
         );
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy()
+    {
+        $id = Input::get('id', false);
+        return Evercisesession::deleteById($id);
+
+    }
 }

@@ -11,13 +11,18 @@ function editClass(data){
         e.preventDefault();
         new AjaxRequest($(this), updateHubRow);
     })
+    $('.add-session').on('submit', function(e){
+        e.preventDefault();
+        new AjaxRequest($(this), newSessionAdded);
+    })
     $('.toggle-switch').exists(function() {
         $(this).on('click', function(){
             new ToggleSwitch($(this) );
         })
     });
+
     $('.date-picker').datepicker({
-        format: "dd/mm/yyyy",
+        format: "yyyy-mm-dd",
         startDate: "+1d",
         autoclose: true,
         todayHighlight: true
@@ -26,4 +31,8 @@ function editClass(data){
 
 function updateHubRow(data){
     alert('row '+data.id+' edited');
+}
+
+function newSessionAdded(data){
+    console.log(data);
 }
