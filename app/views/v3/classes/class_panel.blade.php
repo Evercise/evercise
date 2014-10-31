@@ -4,7 +4,7 @@
             <img src="img/example-class-img.jpg">
         </div>
         <div class="class-title-wrapper col-xs-8">
-            <a href="#"><h3>Fitness class for ladies</h3></a>
+            <a href="#"><h3>{{ $session->evercisegroup->name }}</h3></a>
             <button class="btn btn-primary">Add Review</button>
         </div>
     </div>

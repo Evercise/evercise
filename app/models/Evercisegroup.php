@@ -904,7 +904,7 @@ class Evercisegroup extends \Eloquent
      */
     public static function getById($id)
     {
-        return Static::find($id);
+        return static::find($id);
     }
 
     /**
@@ -1133,7 +1133,7 @@ class Evercisegroup extends \Eloquent
 
     public static function getGroupWithSpecificSessions($evercisegroupId, $sessionIds)
     {
-        return Static::with(
+        return static::with(
             array(
                 'evercisesession' => function ($query) use (&$sessionIds) {
 
@@ -1152,7 +1152,7 @@ class Evercisegroup extends \Eloquent
 
         foreach ($subcatChanges as $subcat) {
             foreach ($subcat as $key => $subcatData) {
-                $evercisegroup = Static::find($key);
+                $evercisegroup = static::find($key);
                 if ($evercisegroup) {
                     $evercisegroup->subcategories()->detach();
                     if (!empty($subcatData)) {

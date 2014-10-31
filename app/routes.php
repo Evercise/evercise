@@ -483,3 +483,13 @@ Route::group(
 
 
 );
+
+
+// Tris's test route
+Route::get(
+    '/session_edit',
+    function () {
+        EverciseSession::find('1378')->updateSession(['time'=>'02:00', ]);
+        return 'done';
+    }
+);

@@ -56,22 +56,21 @@ class Evercisesession extends \Eloquent
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function validateAndStore()
+    public static function validateAndStore($inputs)
     {
-        $max_price = Config::get('values')['max_price'];
 
         $validator = Validator::make(
-            Input::all(),
-            array(
+            $inputs,
+            [
                 's-evercisegroupId' => 'required',
                 's-year' => 'required',
                 's-month' => 'required',
                 's-date' => 'required',
                 's-time-hour' => 'required',
                 's-time-minute' => 'required',
-                's-price' => 'required|numeric|between:1,'.$max_price,
+                's-price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
                 's-duration' => 'required|numeric|between:10,240',
-            )
+            ]
         );
         if ($validator->fails()) {
             $result = array(
@@ -653,6 +652,12 @@ class Evercisesession extends \Eloquent
 
     public function updateSession($data)
     {
+        if($data['time'])
+        {
+            $data['date_time'] = date('Y-m-d', strtotime($this->date_time)) . ' ' . date('H:i', strtotime($data['time']));
+            unset($data['time']);
+        }
+
         foreach($data as $name => $value)
         {
             if(!in_array($name, $this->editable))
