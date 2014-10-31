@@ -778,7 +778,13 @@ class Evercisegroup extends \Eloquent
         foreach ($this->evercisesession as $evercisesession) {
             $members[] = count($evercisesession->sessionmembers);
         }
-        $average = round(array_sum($members) / count($members));
+        if( count($members) > 0){
+            $average = round(array_sum($members) / count($members));
+        }
+        else{
+            $average = 0;
+        }
+
         return $average;
     }
 
