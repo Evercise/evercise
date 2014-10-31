@@ -279,6 +279,8 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
 );
 
 
+Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'SessionsController@update']);
+
 // widgets
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));
 Route::post('/widgets/upload', array('as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload'));
