@@ -49,7 +49,7 @@ Route::group(['prefix' => 'ajax'], function () {
     // sessions
     Route::post('/sessions/inline', ['as'=>'sessions.inline.groupId', 'uses'=>'ajax\SessionsController@getSessionsInline'] );
     Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'ajax\SessionsController@update']);
-    Route::post('sessions/add', array('as' => 'sessions.add', 'uses' => 'SessionsController@store'));
+    Route::post('sessions/add', array('as' => 'sessions.add', 'uses' => 'ajax\SessionsController@store'));
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
 });
 
