@@ -70,11 +70,7 @@ class Evercisesession extends \Eloquent
             ]
         );
         if ($validator->fails()) {
-            $result = array(
-                'validation_failed' => 1,
-                'errors' => $validator->errors()->toArray()
-            );
-            return Response::json($result);
+            return false;
         }
         else {
             $date_time = $inputs['date'] . ' ' . $inputs['time'];
@@ -88,9 +84,6 @@ class Evercisesession extends \Eloquent
                 'members' => $members,
             ))->evercisegroup->name;
 
-            //$evercisegroupName = Evercisegroup::where('id', $inputs['evercisegroupId'])->firstOrFail()->pluck('name');
-
-
             $timestamp = strtotime($date_time);
             $niceTime = date('h:ia', $timestamp);
             $niceDate = date('dS F Y', $timestamp);
@@ -98,7 +91,7 @@ class Evercisesession extends \Eloquent
 
             /* callback */
             Event::fire('session.create', [Sentry::getUser() ]);
-            return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
+            return true;
         }
     }
 

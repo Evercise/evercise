@@ -40,4 +40,25 @@ class SessionsController extends AjaxBaseController{
             ]
         );
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
+        $inputs = Input::all();
+
+        if( Evercisesession::validateAndStore($inputs) )
+        {
+            $groupId = $inputs['evercisegroupId'];
+            $sessions = Evercisegroup::find($groupId)->Evercisesession;
+
+            return Response::json([
+                'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
+                'id'   => $groupId
+            ]);
+        }
+    }
 }
