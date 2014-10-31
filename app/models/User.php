@@ -567,6 +567,30 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pastsessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
+            ->where('date_time', '<', DB::raw('NOW()'))
+            ->orderBy('date_time', 'asc')
+            ->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function futuresessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
+            ->where('date_time', '>=', DB::raw('NOW()'))
+            ->orderBy('date_time', 'asc')
+            ->withTimestamps();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function evercisegroups()

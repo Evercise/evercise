@@ -58,7 +58,9 @@ class SessionsController extends \BaseController
      */
     public function store()
     {
-        return Evercisesession::validateAndStore();
+        $inputs = Input::all();
+
+        return Evercisesession::validateAndStore($inputs);
     }
 
 
