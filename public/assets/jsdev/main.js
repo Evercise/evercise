@@ -22,7 +22,9 @@ $(function(){
     });
 
     $('.toggle-switch').exists(function() {
-        //new ToggleSwitch(this);
+        $(this).on('click', function(){
+            new ToggleSwitch($(this) );
+        })
     });
 
     $('.map_canvas').exists(function() {
@@ -57,7 +59,6 @@ $(function(){
 
             $('.'+$(this).attr('href').substr(1)).exists(function(){
                 if(i == 0){
-                  //  console.log(self);
                     $(self).addClass('active');
                     $(this).removeClass('hide');
                 }
@@ -84,9 +85,11 @@ $(function(){
     $('.edit-class-inline').exists(function(){
         $(this).on('submit', function(e){
             e.preventDefault();
+            $(this).find('.btn-toggle-down').addClass('loading');
             new AjaxRequest($(this), editClass);
         })
     })
+
 
     $('.dropdown-cart').exists(function(){
         cart = new Cart(this);

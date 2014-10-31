@@ -48,6 +48,7 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'ajax\CartController@emptyCart'));
     // sessions
     Route::post('/sessions/inline', ['as'=>'sessions.inline.groupId', 'uses'=>'ajax\SessionsController@getSessionsInline'] );
+    Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'ajax\SessionsController@update']);
 });
 
 /* Show home page */
@@ -279,7 +280,7 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
 );
 
 
-Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'SessionsController@update']);
+
 
 // widgets
 Route::get('/widgets/upload', array('as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm'));

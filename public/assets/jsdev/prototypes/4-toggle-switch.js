@@ -1,23 +1,19 @@
 var ToggleSwitch = function (toggle) {
-    this.button = toggle;
-    this.html = '';
-    this.toggledHtml = '';
+    this.toggle = toggle;
+    this.originalClass = toggle.data('removeclass');
+    this.switchClass = toggle.data('switchclass');
+    this.originalText = toggle.text();
+    this.switchText = toggle.data('switchtext');
     this.init();
 }
 ToggleSwitch.prototype = {
     constructor: ToggleSwitch,
     init: function(){
-        var self = this;
-        this.button.on('click', function(e) {
-            e.preventDefault();
-            self.changeState();
-            $($(this).attr('data-target')).collapse('toggle');
-        });
-    },
-    changeState: function(){
-        this.html = this.button.html();
-        this.toggledHtml = this.button.data('toggled');
-        this.button.html(this.toggledHtml);
-        this.button.data('toggled', this.html);
+        this.toggle.text(this.switchText);
+        this.toggle.addClass(this.switchClass);
+        this.toggle.removeClass(this.originalClass);
+        this.toggle.data('switchtext', this.originalText);
+        this.toggle.data('removeclass', this.switchClass);
+        this.toggle.data('switchclass', this.originalClass);
     }
 }

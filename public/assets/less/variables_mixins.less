@@ -115,3 +115,23 @@
   }
 }
 
+.btn-toggle(@x, @y){
+  position: relative;
+  padding-right: 40px;
+  &:after{
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 10px;
+    height: 20px;
+    width: 22px;
+    content: '';
+    .sprite(@x, @y);
+  }
+  &.loading{
+    &:after{
+      .sprite(@x, ceil(@y - 40));
+    }
+  }
+}
+

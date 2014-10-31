@@ -7260,6 +7260,20 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -968px -290px;
 }
+.icon-tick {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1210px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-tick.active {
+  background-position: -1210px -290px;
+}
+.icon-tick.hover:hover,
+.icon-tick.active:hover {
+  cursor: pointer;
+  background-position: -1210px -290px;
+}
 .icon-full-star {
   background-image: url("../img/ev_site_icons.png");
   background-position: -536px -410px;
@@ -7645,6 +7659,51 @@ fieldset[disabled] .btn-light-grey.active {
 .btn-light-grey:hover {
   color: #ffffff;
 }
+.btn-transparent-grey {
+  color: #768690;
+  background-color: transparent;
+  border-color: #768690;
+}
+.btn-transparent-grey:hover,
+.btn-transparent-grey:focus,
+.btn-transparent-grey:active,
+.btn-transparent-grey.active,
+.open > .dropdown-toggle.btn-transparent-grey {
+  color: #768690;
+  background-color: rgba(0, 0, 0, 0);
+  border-color: #5a676f;
+}
+.btn-transparent-grey:active,
+.btn-transparent-grey.active,
+.open > .dropdown-toggle.btn-transparent-grey {
+  background-image: none;
+}
+.btn-transparent-grey.disabled,
+.btn-transparent-grey[disabled],
+fieldset[disabled] .btn-transparent-grey,
+.btn-transparent-grey.disabled:hover,
+.btn-transparent-grey[disabled]:hover,
+fieldset[disabled] .btn-transparent-grey:hover,
+.btn-transparent-grey.disabled:focus,
+.btn-transparent-grey[disabled]:focus,
+fieldset[disabled] .btn-transparent-grey:focus,
+.btn-transparent-grey.disabled:active,
+.btn-transparent-grey[disabled]:active,
+fieldset[disabled] .btn-transparent-grey:active,
+.btn-transparent-grey.disabled.active,
+.btn-transparent-grey[disabled].active,
+fieldset[disabled] .btn-transparent-grey.active {
+  background-color: transparent;
+  border-color: #768690;
+}
+.btn-transparent-grey .badge {
+  color: transparent;
+  background-color: #768690;
+}
+.btn-transparent-grey:hover {
+  background-color: #768690;
+  color: #ffffff;
+}
 .btn-blank {
   color: #768690;
   background-color: #ffffff;
@@ -7688,6 +7747,84 @@ fieldset[disabled] .btn-blank.active {
 }
 .btn-transparent {
   background: transparent;
+}
+.btn-toggle-up {
+  position: relative;
+  padding-right: 40px;
+}
+.btn-toggle-up:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  right: 10px;
+  height: 20px;
+  width: 22px;
+  content: '';
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -370px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.btn-toggle-up:after.active {
+  background-position: -370px -290px;
+}
+.btn-toggle-up:after.hover:hover,
+.btn-toggle-up:after.active:hover {
+  cursor: pointer;
+  background-position: -370px -290px;
+}
+.btn-toggle-up.loading:after {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -370px -290px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.btn-toggle-up.loading:after.active {
+  background-position: -370px -330px;
+}
+.btn-toggle-up.loading:after.hover:hover,
+.btn-toggle-up.loading:after.active:hover {
+  cursor: pointer;
+  background-position: -370px -330px;
+}
+.btn-toggle-down {
+  position: relative;
+  padding-right: 40px;
+}
+.btn-toggle-down:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  right: 10px;
+  height: 20px;
+  width: 22px;
+  content: '';
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -410px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.btn-toggle-down:after.active {
+  background-position: -410px -290px;
+}
+.btn-toggle-down:after.hover:hover,
+.btn-toggle-down:after.active:hover {
+  cursor: pointer;
+  background-position: -410px -290px;
+}
+.btn-toggle-down.loading:after {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -410px -290px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.btn-toggle-down.loading:after.active {
+  background-position: -410px -330px;
+}
+.btn-toggle-down.loading:after.hover:hover,
+.btn-toggle-down.loading:after.active:hover {
+  cursor: pointer;
+  background-position: -410px -330px;
 }
 .btn-aside {
   padding-left: 9px;
@@ -8445,12 +8582,6 @@ label {
 .table > tfoot > tr > td .custom-select select {
   background-color: rgba(255, 255, 255, 0.8);
 }
-.hub-table-row td.text-left {
-  padding-right: 0;
-}
-.hub-table-row td.text-right {
-  padding-left: 0;
-}
 .nav-carousel li {
   background: #768690;
   width: 1%;
@@ -8537,4 +8668,13 @@ label {
 }
 .calendar .calendar-days a.active {
   background-color: #ffffff;
+}
+.hub-row {
+  border-bottom: 1px solid #e8ebec;
+}
+.hub-table-row td.text-left {
+  padding-right: 0;
+}
+.hub-table-row td.text-right {
+  padding-left: 0;
 }

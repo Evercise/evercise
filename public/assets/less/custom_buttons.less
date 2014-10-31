@@ -48,12 +48,28 @@
   }
 }
 
+.btn-transparent-grey{
+  .button-variant(@btn-grey-color; transparent; @btn-grey-border);
+  &:hover{
+    background-color: @btn-grey-bg;
+    color: @white;
+  }
+}
+
 .btn-blank{
   .button-variant(@btn-grey-color; @white; @white);
 }
 
 .btn-transparent{
   background: transparent;
+}
+
+.btn-toggle-up{
+    .btn-toggle(-370px, -250px);
+}
+
+.btn-toggle-down{
+    .btn-toggle(-410px, -250px);
 }
 
 .btn-aside{

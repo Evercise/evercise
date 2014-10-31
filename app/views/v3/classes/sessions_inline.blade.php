@@ -57,37 +57,43 @@
             </thead>
             <tbody>
                 @foreach($sessions as $session)
-                    {{ Form::open(['route' => 'home', 'method' => 'put', 'class' => 'update-session']) }}
-                    <tr class="text-center">
+
+                    <tr class="text-center" id="hub-edit-row-{{$session->id}}">
+
                         <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('time',['15:00' => '15:00','16:00' => '16:00'], '15:00', ['class' => 'form-control input-sm'] ) }}
+                                {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
                             </div>
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('duration',['15:00' => '15:00','16:00' => '16:00'], '15:00', ['class' => 'form-control input-sm'] ) }}
+                                {{ Form::select('duration',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
                             </div>
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('tickets',['15:00' => '15:00','16:00' => '16:00'], '15:00', ['class' => 'form-control input-sm'] ) }}
+                                {{ Form::select('members',Config::get('evercise.tickets'), $session->evercisegroup->capacity , ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
                             </div>
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('price',['15:00' => '15:00','16:00' => '16:00'], '15:00', ['class' => 'form-control input-sm'] ) }}
+                                {{ Form::select('price',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
                             </div>
                         </td>
                         <td class="text-right">
-                            <span class="icon icon-mail mr15 hover"></span>
-                            <span class="icon icon-download mr15 hover"></span>
-                            <span class="icon icon-people mr15 hover"></span>
-                            {{ Form::submit('',['class' => 'btn btn-icon icon icon-plus hover ml20']) }}
+                            {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session']) }}
+                                <span class="icon icon-mail mr15 hover"></span>
+                                <span class="icon icon-download mr15 hover"></span>
+                                <span class="icon icon-people mr15 hover"></span>
+
+                                {{ Form::hidden('id', $session->id) }}
+                                {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' , 'form' => 'update-sessions-'.$session->id]) }}
+                            {{ Form::close() }}
                         </td>
+
                     </tr>
-                    {{ Form::close() }}
+
                 @endforeach
                 <tr class="text-center">
                     <td class="text-left">Add a new date to this class</td>
