@@ -62,14 +62,12 @@ class Evercisesession extends \Eloquent
         $validator = Validator::make(
             $inputs,
             [
-                's-evercisegroupId' => 'required',
-                's-year' => 'required',
-                's-month' => 'required',
-                's-date' => 'required',
-                's-time-hour' => 'required',
-                's-time-minute' => 'required',
-                's-price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
-                's-duration' => 'required|numeric|between:10,240',
+                'evercisegroupId' => 'required',
+                'date' => 'required',
+                'time' => 'required',
+                'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
+                'duration' => 'required|numeric|between:10,240',
+                'members' => 'required'
             ]
         );
         if ($validator->fails()) {
