@@ -43,6 +43,7 @@
 
 
     {{ HTML::script('/assets/js/holder.js') }}
+    {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
 

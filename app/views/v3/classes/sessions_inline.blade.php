@@ -96,13 +96,21 @@
 
                 @endforeach
                 <tr class="text-center">
-                    <td class="text-left">Add a new date to this class</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-left">
+                        <div class="hub-add-td collapse">{{ Form::text('date', null, ['class' => 'form-control input-sm date-picker', 'form' => 'add-new-session', 'placeholder' =>'add a date'] ) }}</div>
+                        <div class="hub-add-td collapse in">Add a new date to this class</div>
+                    </td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('time', Config::get('evercise.time'), '12:00', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('duration', Config::get('evercise.duration'), '30', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('members', Config::get('evercise.tickets'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
+                    <td><div class="hub-add-td collapse">{{ Form::select('price', Config::get('evercise.price'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
                     <td class="text-right">
-                        <span class="icon icon-plus ml40 hover"></span>
+                        {{ Form::open(['id' => 'add-new-session', 'route' => 'home', 'method' => 'post', 'class' => 'add-session  collapse hub-add-td pull-right']) }}
+
+                            {{ Form::hidden('id', $session->evercisegroup->id) }}
+                            {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}
+                        {{ Form::close() }}
+                        <button class="btn btn-icon icon icon-plus ml20 hover toggle-switch" data-switchclass="icon-cross" data-removeclass="icon-plus" data-toggle="collapse" data-target=".hub-add-td"></button>
                     </td>
                 </tr>
 

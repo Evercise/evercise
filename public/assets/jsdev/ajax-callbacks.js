@@ -11,6 +11,17 @@ function editClass(data){
         e.preventDefault();
         new AjaxRequest($(this), updateHubRow);
     })
+    $('.toggle-switch').exists(function() {
+        $(this).on('click', function(){
+            new ToggleSwitch($(this) );
+        })
+    });
+    $('.date-picker').datepicker({
+        format: "dd/mm/yyyy",
+        startDate: "+1d",
+        autoclose: true,
+        todayHighlight: true
+    });
 }
 
 function updateHubRow(data){
