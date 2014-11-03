@@ -25,6 +25,7 @@ for($pounds=0; $pounds<100; $pounds++)
 
 
 return [
+    'testing_ips' => ['188.39.12.12', '192.168', '127.0.0'],
     'per_page'                => [12, 18, 24],
     'default_per_page'        => 12,
     'max_display_map_results' => 100,

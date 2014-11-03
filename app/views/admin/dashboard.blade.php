@@ -1,6 +1,47 @@
 @extends('admin.main')
 
 @section('css')
+<style>
+
+
+                .livelogger{
+                    padding:0;
+                    margin:0;
+                    background: #000;
+                    height:100%;
+                    min-height:650px;
+                }
+                #notify-messages {
+                    margin:0;
+                    padding:0;
+                    list-style-type: none;
+
+                }
+
+                #notify-messages li{
+                    width:100%;
+                    clear:both;
+                    font-weight: bold;
+                }
+
+                .message{
+                    padding:3px;
+                    min-height: 30px;
+                    font-size:12px;
+                }
+                .level_debug{color:#fff}
+                .level_info{color:#4bb1b1}
+                .level_notice{color:#8ed9f6}
+                .level_warning{color:#bcd42a}
+                .level_error{font-size:14px; color:#f5aca6}
+                .level_emergency{font-size:16px; color:#c00}
+                .level_live{color:#4288CE}
+
+                a, a:visited {
+                    text-decoration:none;
+                }
+
+            </style>
 
 @stop
 
@@ -18,6 +59,8 @@
             <script src="assets/lib/switchery/dist/switchery.min.js"></script>
             <!-- easePie chart -->
             <script src="assets/lib/easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+
+            <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>
 
             <script>
                 $(function() {
@@ -163,6 +206,37 @@
                 })
             </script>
 
+
+
+
+
+                <script type="text/javascript">
+
+                    (function($){
+
+                        $.extend({
+                            playSound: function(){
+                                return $("<embed src='"+arguments[0]+".mp3' hidden='true' autostart='true' loop='false' class='playSound'>" + "<audio autoplay='autoplay' style='display:none;' controls='controls'><source src='"+arguments[0]+".mp3' /><source src='"+arguments[0]+".ogg' /></audio>").appendTo('body');
+                            }
+                        });
+
+                    })(jQuery);
+
+
+
+                    var pusher = new Pusher('{{ Config::get('laravel-livelogger::pusher_api_key') }}');
+                    var channel = pusher.subscribe('livelogger');
+                    channel.bind('log', function(data) {
+                        $('#notify-messages').prepend('<li class="message level_'+data.level+'">['+data.date+'] '+data.message+'</li>');
+
+                        // $.playSound('/admin/assets/lib/jBox-0.3.0/Source/audio/bling2');
+                        $.playSound('http://www.soundboard.com/mediafiles/nd/NDY5NzQxMTQ2OTc0Mw_HqhAfKAPHhs');
+
+
+
+                    });
+                </script>
+
 @stop
 
 @section('body')
@@ -221,24 +295,27 @@
 
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="heading_a">
-                <span class="heading_text">Sales</span>
+        <div class="col-md-8">
+             <div class="row">
+                <div class="heading_a">
+                    <span class="heading_text">Sales</span>
+                </div>
+                <div id="sales_all" style="height:280px"></div>
             </div>
-            <div id="sales_all" style="height:280px"></div>
+            <div class="row">
+                <div class="heading_a">
+                    <span class="heading_text">Classes</span>
+                </div>
+                <div id="classes_all" style="height:280px"></div>
+            </div>
         </div>
-    </div>
+
+        <div class="col-md-4 livelogger">
 
 
+                <ul id="notify-messages">
 
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="heading_a">
-                <span class="heading_text">Classes</span>
-            </div>
-            <div id="classes_all" style="height:280px"></div>
+                </ul>
         </div>
     </div>
 
