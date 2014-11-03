@@ -114,7 +114,7 @@ class Evercisesession extends \Eloquent
             $dateTime = $evercisesession->date_time;
             $price = $evercisesession->price;
             $duration = $evercisesession->duration;
-            $undoDetails = ['mode' => 'delete', 'evercisegroup_id' => $evercisegroupId, 'date_time' => $dateTime, 'price' => $price, 'duration' => $duration, 'user_id' => $user_id];
+            $undoDetails = ['mode' => 'delete', 'id' => $id,  'evercisegroup_id' => $evercisegroupId, 'date_time' => $dateTime, 'price' => $price, 'duration' => $duration, 'user_id' => $user_id];
 
             Evercisesession::destroy($id);
             Event::fire('session.delete', [Sentry::getUser(), $evercisesession ]);

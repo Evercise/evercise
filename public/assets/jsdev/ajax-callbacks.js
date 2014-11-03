@@ -7,26 +7,12 @@ function editClass(data){
     $('#submit-'+ data.id).hide();
     $('#'+ data.id).parent().collapse('show');
     $('#infoToggle-'+data.id).removeClass('hide');
-    $('.update-session').on('submit', function(e){
-        e.preventDefault();
-        new AjaxRequest($(this), updateHubRow);
-    })
-    $('.add-session').on('submit', function(e){
-        e.preventDefault();
-        new AjaxRequest($(this), newSessionAdded);
-    })
-    $('.toggle-switch').exists(function() {
-        $(this).on('click', function(){
-            new ToggleSwitch($(this) );
-        })
-    });
+    datepick();
+    /*
+    updateSession();
 
-    $('.date-picker').datepicker({
-        format: "yyyy-mm-dd",
-        startDate: "+1d",
-        autoclose: true,
-        todayHighlight: true
-    });
+    deleteSession();
+    */
 }
 
 function updateHubRow(data){
@@ -34,5 +20,11 @@ function updateHubRow(data){
 }
 
 function newSessionAdded(data){
-    console.log(data);
+    $('#'+ data.id).html(data.view);
+    addSession();
+    datepick();
+}
+
+function removeSessionRow(data){
+    $('#hub-static-row-'+data.id).remove();
 }

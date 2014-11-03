@@ -7,3 +7,30 @@ $.fn.exists = function(callback) {
 
     return this;
 };
+
+function datepick(){
+    $('.date-picker').datepicker({
+        format: "yyyy-mm-dd",
+        startDate: "+1d",
+        autoclose: true,
+        todayHighlight: true
+    });
+}
+
+/*
+
+
+function updateSession(){
+    $('.update-session').on('submit', function(e){
+        e.preventDefault();
+        new AjaxRequest($(this), updateHubRow);
+    })
+}
+
+function deleteSession(){
+    $('.remove-session').on('submit', function(e){
+        e.preventDefault();
+        new AjaxRequest($(this), removeSessionRow);
+    })
+}
+*/

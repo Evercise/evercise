@@ -21,9 +21,10 @@ $(function(){
         new Profile(this);
     });
 
+    // used to change a button on click
     $('.toggle-switch').exists(function() {
-        $(this).on('click', function(){
-            new ToggleSwitch($(this) );
+        $(document).on('click', '.toggle-switch', function(e){
+            new ToggleSwitch($(e.target));
         })
     });
 
@@ -83,10 +84,18 @@ $(function(){
         })
     })
     $('.edit-class-inline').exists(function(){
-        $(this).on('submit', function(e){
+        $(document).on('submit', '.edit-class-inline', function(e){
             e.preventDefault();
-            $(this).find('.btn-toggle-down').addClass('loading');
-            new AjaxRequest($(this), editClass);
+            $(e.target).find('.btn-toggle-down').addClass('loading');
+            new AjaxRequest($(e.target), editClass);
+        })
+        $(document).on('submit', '.add-session', function(e){
+            e.preventDefault();
+            new AjaxRequest($(e.target), newSessionAdded);
+        })
+        $(document).on('submit', '.update-session', function(e){
+            e.preventDefault();
+            new AjaxRequest($(e.target), updateHubRow);
         })
     })
 

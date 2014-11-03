@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 @foreach($sessions as $session)
-                    <tr class="text-center">
+                    <tr class="text-center" id="hub-static-row-{{$session->id}}">
                         <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
                         <td>{{ $session->formattedTime()}}</td>
                         <td>{{ $session->formattedDuration()}}</td>
@@ -21,7 +21,7 @@
                         <td>{{'&pound'. $session->price}}</td>
                         <td class="text-right">
 
-                            {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post']) }}
+                            {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session']) }}
                                 <span class="icon icon-mail mr15 hover"></span>
                                 <span class="icon icon-download mr15 hover"></span>
                                 <span class="icon icon-people mr15 hover"></span>
@@ -44,7 +44,7 @@
                         <span>
                             {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.add', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
 
-                                {{ Form::hidden('id', $session->evercisegroup->id) }}
+                                {{ Form::hidden('evercisegroupId', $session->evercisegroup->id) }}
                                 {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}
                             {{ Form::close() }}
                         </span>
@@ -122,7 +122,7 @@
                     <td class="text-right">
                         {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.add', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
 
-                            {{ Form::hidden('id', $session->evercisegroup->id) }}
+                            {{ Form::hidden('evercisegroupId', $session->evercisegroup->id) }}
                             {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}
                         {{ Form::close() }}
                         <button class="btn btn-icon icon icon-plus ml20 hover toggle-switch" data-switchclass="icon-cross" data-removeclass="icon-plus" data-toggle="collapse" data-target=".hub-add-td"></button>
