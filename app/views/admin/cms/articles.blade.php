@@ -37,6 +37,9 @@
         <div class="col-md-3">
             <a class="btn btn-default btn-sm" id="clearFilters">Clear</a>
         </div>
+        <div class="col-md-3">
+            <a class="btn btn-success btn-sm" href="{{ URL::route('admin.article.manage', ['id'=> 0]) }}">Create New Article</a>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">

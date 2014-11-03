@@ -9,11 +9,6 @@
 
 
 <div class="col-md-12">
-@if(isset($errors))
-@foreach ($errors->all('<li>:message</li>') as $message)
-    {{ $message }}
-@endforeach
-@endif
 <div class="col-lg-9">
     <div class="form-group">
         <label>Title:</label>
@@ -66,7 +61,7 @@
             <select name="category_id" id="category_id" placeholder="Category"  class="form-control">
                 <option value="0">None</option>
                 @foreach ($categories as $category)
-                    <option value="<?php echo $category->id; ?>" {{ ( isset($article->category_id) && $article->category_id == $category->id ? 'selected="selected"':'')}}><?php echo $category->title; ?></option>
+                    <option value="<?php echo $category->id; ?>" {{ ( !empty($article->category_id) && $article->category_id == $category->id ? 'selected="selected"':'')}}><?php echo $category->title; ?></option>
                 @endforeach
            </select>
     </div>
@@ -77,7 +72,7 @@
           <select name="template" id="template"  class="form-control">
               <option value="">Default</option>
               @foreach ($templates as $temp => $name)
-                <option value="{{ $temp }}" {{ ( $article->template == $temp ? 'selected="selected"':'')}}>{{ $name }}</option>
+                <option value="{{ $temp }}" {{ ( !empty($article->template) && $article->template == $temp ? 'selected="selected"':'')}}>{{ $name }}</option>
               @endforeach
         </select>
 
