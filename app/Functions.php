@@ -1,7 +1,45 @@
 <?php
- 
-class Functions {
- 
+
+
+if (!function_exists('isTesting')) {
+
+    function isTesting()
+    {
+
+        if (isset($_GET['test'])) {
+            if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+                $ip = $_SERVER['HTTP_CLIENT_IP'];
+            } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            } else {
+                $ip = $_SERVER['REMOTE_ADDR'];
+            }
+
+            $allowed_ips = Config::get('evercise.testing_ips');
+
+
+
+            foreach ($allowed_ips as $i) {
+                if (strpos($ip, $i) !== false) {
+                    return true;
+                }
+
+            }
+
+        }
+
+        return false;
+
+
+    }
+
+
+}
+
+
+class Functions
+{
+
     public static function getPosition($address = null)
     {
         if (is_null($address)) {
@@ -10,20 +48,19 @@ class Functions {
             if ($query == '127.0.0.1' || $query == null) {
                 $query = '151.237.238.126'; /* london office? */
             }
-        }else{
+        } else {
             $query = $address;
         }
-        
+
 
         $geocoder = new \Geocoder\Geocoder();
-        $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+        $adapter = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 
-        $chain    = new \Geocoder\Provider\ChainProvider(array(
-                    new \Geocoder\Provider\FreeGeoIpProvider($adapter),
-                    new \Geocoder\Provider\HostIpProvider($adapter),
-                    new \Geocoder\Provider\IpGeoBaseProvider($adapter),
-                    
-                    new \Geocoder\Provider\GoogleMapsProvider($adapter),
+        $chain = new \Geocoder\Provider\ChainProvider(array(
+            new \Geocoder\Provider\FreeGeoIpProvider($adapter),
+            new \Geocoder\Provider\HostIpProvider($adapter),
+            new \Geocoder\Provider\IpGeoBaseProvider($adapter),
+            new \Geocoder\Provider\GoogleMapsProvider($adapter),
         ));
 
         $geocoder->registerProvider($chain);
@@ -31,8 +68,8 @@ class Functions {
         try {
             $geocode = $geocoder->geocode($query);
         } catch (Exception $e) {
-             $geocode = $geocoder->geocode('london');
-        }   
+            $geocode = $geocoder->geocode('london');
+        }
 
         /* catch should pick this up
         if ($geocode->getLatitude() == 0 && $geocode->getLongitude() == 0) {
@@ -44,12 +81,12 @@ class Functions {
 
     public static function getDistance($clientLat, $clientLng, $lat, $lng)
     {
-    $geotools = new \League\Geotools\Geotools();
-    $coordA   = new \League\Geotools\Coordinate\Coordinate(array($clientLat, $clientLng));
-    $coordB   = new \League\Geotools\Coordinate\Coordinate(array($lat, $lng));
-    $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
+        $geotools = new \League\Geotools\Geotools();
+        $coordA = new \League\Geotools\Coordinate\Coordinate(array($clientLat, $clientLng));
+        $coordB = new \League\Geotools\Coordinate\Coordinate(array($lat, $lng));
+        $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
 
-    return $distance;
+        return $distance;
     }
 
     public static function getCalendarTemplate()
@@ -89,7 +126,8 @@ class Functions {
         return $template;
     }
 
-    public static function randomPassword($charachters) {
+    public static function randomPassword($charachters)
+    {
         $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
         $pass = array(); //remember to declare $pass as an array
         $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
@@ -101,8 +139,7 @@ class Functions {
     }
 
 
-
-    public static function arrayDate($array, $format='h:ia M-dS')
+    public static function arrayDate($array, $format = 'h:ia M-dS')
     {
         $dateTime = array();
 
@@ -111,5 +148,5 @@ class Functions {
         }
         return $dateTime;
     }
- 
+
 }
