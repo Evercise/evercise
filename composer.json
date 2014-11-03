@@ -30,7 +30,8 @@
         "shift31/laravel-elasticsearch": "1.0.*@dev",
         "toin0u/geotools-laravel": "0.2.*",
         "pingpong/shortcode": "1.0.*",
-        "gloudemans/shoppingcart": "~1.2"
+        "gloudemans/shoppingcart": "~1.2",
+        "igormatkovic/laravel-livelogger": "~1.0"
 
     },
     "require-dev": {

@@ -88,7 +88,7 @@ return array(
         'Illuminate\Filesystem\FilesystemServiceProvider',
         'Illuminate\Hashing\HashServiceProvider',
         'Illuminate\Html\HtmlServiceProvider',
-        'Illuminate\Log\LogServiceProvider',
+        //'Illuminate\Log\LogServiceProvider',
         'Illuminate\Mail\MailServiceProvider',
         'Illuminate\Database\MigrationServiceProvider',
         'Illuminate\Pagination\PaginationServiceProvider',
@@ -124,6 +124,8 @@ return array(
         'Toin0u\Geotools\GeotoolsServiceProvider',
         'Pingpong\Shortcode\ShortcodeServiceProvider',
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
+        'Igormatkovic\Livelogger\LiveloggerServiceProvider',
+
 
 
     ),
@@ -171,7 +173,7 @@ return array(
         'HTML'               => 'Illuminate\Support\Facades\HTML',
         'Input'              => 'Illuminate\Support\Facades\Input',
         'Lang'               => 'Illuminate\Support\Facades\Lang',
-        'Log'                => 'Illuminate\Support\Facades\Log',
+        //'Log'                => 'Illuminate\Support\Facades\Log',
         'Mail'               => 'Illuminate\Support\Facades\Mail',
         'Paginator'          => 'Illuminate\Support\Facades\Paginator',
         'Password'           => 'Illuminate\Support\Facades\Password',
@@ -205,6 +207,7 @@ return array(
         'ES'                 => 'Elasticsearch\Client',
         'Shortcode'          => 'Pingpong\Shortcode\Facades\Shortcode',
         'Cart'               => 'Gloudemans\Shoppingcart\Facades\Cart',
+        'Log'               => 'Igormatkovic\Livelogger\Facades\Livelogger'
 
     ),
 
