@@ -16,21 +16,3 @@ function datepick(){
         todayHighlight: true
     });
 }
-
-/*
-
-
-function updateSession(){
-    $('.update-session').on('submit', function(e){
-        e.preventDefault();
-        new AjaxRequest($(this), updateHubRow);
-    })
-}
-
-function deleteSession(){
-    $('.remove-session').on('submit', function(e){
-        e.preventDefault();
-        new AjaxRequest($(this), removeSessionRow);
-    })
-}
-*/

@@ -1,13 +1,18 @@
 @extends('v3.layouts.master')
 @section('body')
+<div class="container">
+    <h1>{{ $article->content }}</h1>
 
 
+</div>
+
+<!--
     <div class="col-lg-12">
     <br/>
     <br/>
     <br/>
 
-    <h1>{{ $article->title }}</h1>
+
 
     {{ $article->content }}
     </div>
@@ -29,5 +34,5 @@
         })();
     </script>
     </div>
-
+-->
 @stop

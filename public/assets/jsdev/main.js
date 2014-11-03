@@ -97,6 +97,14 @@ $(function(){
             e.preventDefault();
             new AjaxRequest($(e.target), updateHubRow);
         })
+        $(document).on('submit', '.remove-session', function(e){
+            e.preventDefault();
+            new AjaxRequest($(e.target), removeSessionRow);
+        })
+        $(document).on('submit', '.remove-session', function(e){
+            e.preventDefault();
+            new AjaxRequest($(e.target), removeSessionRow);
+        })
     })
 
 

@@ -7774,18 +7774,9 @@ fieldset[disabled] .btn-blank.active {
   background-position: -370px -290px;
 }
 .btn-toggle-up.loading:after {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -370px -290px;
+  background: url("../img/spinner.gif");
   background-repeat: no-repeat;
-  overflow: hidden;
-}
-.btn-toggle-up.loading:after.active {
-  background-position: -370px -330px;
-}
-.btn-toggle-up.loading:after.hover:hover,
-.btn-toggle-up.loading:after.active:hover {
-  cursor: pointer;
-  background-position: -370px -330px;
+  background-position: center center;
 }
 .btn-toggle-down {
   position: relative;
@@ -7813,18 +7804,9 @@ fieldset[disabled] .btn-blank.active {
   background-position: -410px -290px;
 }
 .btn-toggle-down.loading:after {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -410px -290px;
+  background: url("../img/spinner.gif");
   background-repeat: no-repeat;
-  overflow: hidden;
-}
-.btn-toggle-down.loading:after.active {
-  background-position: -410px -330px;
-}
-.btn-toggle-down.loading:after.hover:hover,
-.btn-toggle-down.loading:after.active:hover {
-  cursor: pointer;
-  background-position: -410px -330px;
+  background-position: center center;
 }
 .btn-aside {
   padding-left: 9px;
@@ -9472,4 +9454,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   border-width: 1px 0;
   margin-left: -5px;
   margin-right: -5px;
+}
+.alert.fixed {
+  top: 180px;
+  right: 80px;
 }

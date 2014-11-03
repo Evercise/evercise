@@ -11,7 +11,7 @@ class Evercisesession extends \Eloquent
      */
     protected $fillable = array('evercisegroup_id', 'date_time', 'members', 'price', 'duration', 'members_emailed');
 
-    protected $editable = array('date_time', 'price', 'duration');
+    protected $editable = array('date_time', 'price', 'duration', 'members');
     /**
      * The database table used by the model.
      *

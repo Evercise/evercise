@@ -25,7 +25,7 @@ class SessionsController extends AjaxBaseController{
         $id = Input::get('id', false);
 
         $data = [];
-        if(Input::get('date_time', false)) $data['date_time'] = Input::get('date_time');
+        if(Input::get('time', false)) $data['time'] = Input::get('time');
         if(Input::get('duration', false)) $data['duration'] = Input::get('duration');
         if(Input::get('members', false)) $data['members'] = Input::get('members');
         if(Input::get('price', false)) $data['price'] = Input::get('price');
@@ -35,7 +35,7 @@ class SessionsController extends AjaxBaseController{
 
         return Response::json(
             [
-                'message'  => 'success',
+                'view' => View::make('v3.layouts.positive-alert')->with('message', 'your session was updated successfully')->with('fixed', true)->render(),
                 'id'       => $id
             ]
         );

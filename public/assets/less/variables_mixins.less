@@ -130,7 +130,9 @@
   }
   &.loading{
     &:after{
-      .sprite(@x, ceil(@y - 40));
+      background: url("../img/spinner.gif");
+      background-repeat: no-repeat;
+      background-position: center center;
     }
   }
 }

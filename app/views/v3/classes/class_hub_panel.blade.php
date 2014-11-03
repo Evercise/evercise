@@ -11,9 +11,7 @@
                 @endfor
             </div>
             <button class="btn btn-default mr15">Clone Class</button>
-            <button class="btn btn-default toggle-switch" data-toggle="collapse" data-target=".hub-table-row" data-removeclass="btn-default" data-switchclass="btn-transparent-grey" data-switchtext="Done Editing">Edit Class</button>
-
-
+            <button id="edit-{{$evercisegroup->id}}" class="btn btn-default toggle-switch disabled" data-toggle="collapse" data-target=".hub-table-row" data-removeclass="btn-default" data-switchclass="btn-transparent-grey" data-switchtext="Done Editing">Edit Class</button>
         </div>
     </div>
 </div>

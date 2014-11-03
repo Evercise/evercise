@@ -4,19 +4,15 @@ function redirectTo(data){
 
 function editClass(data){
     $('#'+ data.id).html(data.view);
+    $('#edit-'+ data.id).removeClass('disabled');
     $('#submit-'+ data.id).hide();
     $('#'+ data.id).parent().collapse('show');
     $('#infoToggle-'+data.id).removeClass('hide');
     datepick();
-    /*
-    updateSession();
-
-    deleteSession();
-    */
 }
 
 function updateHubRow(data){
-    alert('row '+data.id+' edited');
+    $('#hub-edit-row-'+data.id).after(data.view);
 }
 
 function newSessionAdded(data){
