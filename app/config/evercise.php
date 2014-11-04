@@ -43,12 +43,12 @@ return [
     'price' => $priceArray,
     'default_radius'          => '0.5mi',
     'article_main_image'      => [
-        'width'  => 300,
-        'height' => 200
+        'width'  => 600,
+        'height' => 280
     ],
     'article_category_main_image'=> [
-        'width'  => 300,
-        'height' => 200
+        'width'  => 600,
+        'height' => 280
     ],
     /** SEO CRAPP */
 
