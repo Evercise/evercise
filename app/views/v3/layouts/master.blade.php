@@ -14,6 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     {{ HTML::style('assets/css/main.css') }}
+    {{ HTML::style('assets/css/cropper.min.css') }}
     <!-- load jquery -->
     <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.1.min.js"></script>
     <!-- if jquery not loaded, load locally -->
@@ -35,6 +36,8 @@
         var bootsrap_validation_enabled = (typeof $().bootstrapValidator == 'function');
         window.bootsrap_validation_enabled || document.write('<script src="/assets/js/bootstrapValidator.min.js">\x3C/script>')
     </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
+
     <script>
         var BASE_URL = '{{ URL::to('/') }}';
         var AJAX_URL = '{{ URL::to('/ajax/') }}';
@@ -45,6 +48,7 @@
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
+    {{ HTML::script('/assets/js/cropper.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
 
 </head>
