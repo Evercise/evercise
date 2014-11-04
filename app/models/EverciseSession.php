@@ -288,24 +288,24 @@ class Evercisesession extends \Eloquent
     }
 
     /**
-     * @param $evercisegroupId
-     * @param $sessionData
+     * @param $cartRow
+     *
      * @return array
      */
-    public static function addSessionMember($evercisegroupId, $sessionData)
+    public static function addSessionMember($evercisegroupId, $cartRows, $token, $transactionId, $paymentMethod, $amount, $userId)
     {
-        if(is_null($sessionData['sessionIds'])) {
-            //THE FUCK NOW?
 
-            return Redirect::route('sessions.join');
-        }
+        /* get session ids from Cart*/
+        $sessionIds = [];
+        foreach($cartRows as $row)
+            array_push($sessionIds, $row->options->sessionId);
 
-        $evercisegroup = Evercisegroup::getGroupWithSpecificSessions($evercisegroupId, $sessionData['sessionIds']);
+        $evercisegroup = Evercisegroup::getGroupWithSpecificSessions($evercisegroupId, $sessionIds);
 
         //Make sure there is not already a matching entry in sessionmember
-        if (Sessionmember::where('user_id', Sentry::getUser()->id)->whereIn('evercisesession_id', $sessionData['sessionIds'])->count()) {
+/*        if (Sessionmember::where('user_id', Sentry::getUser()->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
             return Response::json('error: USER HAS ALREADY JOINED SESSION');
-        }
+        }*/
 
         $userTrainer = User::find($evercisegroup->user_id);
 
@@ -324,37 +324,19 @@ class Evercisesession extends \Eloquent
             Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'joined_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
         }
 
-        $amountToPay = (null !== $sessionData['amountToPay']) ? $sessionData['amountToPay'] : $price;
-        $deductEverciseCoins = Evercoin::poundsToEvercoins($price - $amountToPay);
-        $getUser = Evercoin::where('user_id', Sentry::getUser()->id)->first();
-        $newEvercoinBalance = $getUser->withdraw($deductEverciseCoins);
-
-        if ($amountToPay + Evercoin::evercoinsToPounds($newEvercoinBalance) < $price) {
-            Log::info('User attempted to buy a class with insufficient Evercoins');
-            return Response::json(['message' => ' User has not got enough evercoins to make this transaction :' . $amountToPay]);
-        }
 
         /* Pivot current user with session via session members */
-        Sentry::getUser()->sessions()->attach($sessionData['sessionIds'], ['token' => $sessionData['token'], 'transaction_id' =>  $sessionData['transactionId'], 'payer_id' => (is_null($sessionData['payerId']) ? Sentry::getUser()->id :$sessionData['payerId']), 'payment_method' => $sessionData['paymentMethod']]);
+        Sentry::getUser()->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' =>  $transactionId, 'payer_id' => $userId, 'payment_method' => $paymentMethod]);
 
-        self::sendSessionJoinedEmail($evercisegroup, $userTrainer,  $sessionData['transactionId']);
+        self::sendSessionJoinedEmail($evercisegroup, $userTrainer, $transactionId);
 
         Event::fire('session.payed', [Sentry::getUser(), $evercisegroup]);
-        Log::info('User '.Sentry::getUser()->display_name.' has paid for sessions '.implode(',', $sessionData['sessionIds']).' of group '.$evercisegroupId);
+        Log::info('User '.Sentry::getUser()->display_name.' has paid for sessions '.implode(',', $sessionIds).' of group '.$evercisegroupId);
 
-        self::newMemberAnalytics($sessionData['transactionId'], $amountToPay, $evercisegroup, $sessionData['sessionIds']);
+        self::newMemberAnalytics($transactionId, $amount, $evercisegroup, $sessionIds);
 
 
-        return [
-            'evercisegroup' => $evercisegroup,
-            'members' => $members,
-            'userTrainer' => $userTrainer,
-            'totalPrice' => $price,
-            'totalSessions' => $total,
-            'amountPaid' => $amountToPay,
-            'evercoins' => $newEvercoinBalance,
-            'deductEverciseCoins' => $deductEverciseCoins,
-        ];
+        return true;
     }
 
     /**
