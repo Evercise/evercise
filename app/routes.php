@@ -51,6 +51,9 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'ajax\SessionsController@update']);
     Route::post('sessions/add', array('as' => 'sessions.add', 'uses' => 'ajax\SessionsController@store'));
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
+
+
+    Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
 });
 
 /* Show home page */
@@ -230,6 +233,8 @@ Route::post(
 /* New Stripe payment */
 Route::post('stripe', array('as' => 'stripe', 'uses' => 'PaymentController@confirmStripePayment'));
 Route::get('sessions/{evercisegroupId}/paid', ['as' => 'sessions.paid', 'uses' => 'PaymentController@paid']);
+Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@confirmation']);
+Route::get('conftest', ['as' => 'conftest', 'uses' => 'PaymentController@conftest']);
 /* ------------------ */
 
 // payment (old)

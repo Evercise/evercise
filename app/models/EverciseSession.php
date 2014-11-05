@@ -288,11 +288,18 @@ class Evercisesession extends \Eloquent
     }
 
     /**
-     * @param $cartRow
+     * Adds the user to the sessions they have purchased.  Takes an array of Cart rows, which must be of the same Evercisegroup
      *
-     * @return array
+     * @param $evercisegroupId
+     * @param $cartRows
+     * @param $token
+     * @param $transactionId
+     * @param $paymentMethod
+     * @param $amount
+     * @param $user
+     * @return bool
      */
-    public static function addSessionMember($evercisegroupId, $cartRows, $token, $transactionId, $paymentMethod, $amount, $userId)
+    public static function addSessionMember($evercisegroupId, $cartRows, $token, $transactionId, $paymentMethod, $amount, $user)
     {
 
         /* get session ids from Cart*/
@@ -303,7 +310,7 @@ class Evercisesession extends \Eloquent
         $evercisegroup = Evercisegroup::getGroupWithSpecificSessions($evercisegroupId, $sessionIds);
 
         //Make sure there is not already a matching entry in sessionmember
-/*        if (Sessionmember::where('user_id', Sentry::getUser()->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
+/*        if (Sessionmember::where('user_id', $user->id)->whereIn('evercisesession_id', $sessionIds)->count()) {
             return Response::json('error: USER HAS ALREADY JOINED SESSION');
         }*/
 
@@ -321,17 +328,17 @@ class Evercisesession extends \Eloquent
             $niceTime = date('h:ia', $timestamp);
             $niceDate = date('dS F Y', $timestamp);
 
-            Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'joined_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
+            Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'joined_session', 'display_name' => $user->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
         }
 
 
         /* Pivot current user with session via session members */
-        Sentry::getUser()->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' =>  $transactionId, 'payer_id' => $userId, 'payment_method' => $paymentMethod]);
+        $user->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' =>  $transactionId, 'payer_id' => $user->id, 'payment_method' => $paymentMethod]);
 
         self::sendSessionJoinedEmail($evercisegroup, $userTrainer, $transactionId);
 
-        Event::fire('session.payed', [Sentry::getUser(), $evercisegroup]);
-        Log::info('User '.Sentry::getUser()->display_name.' has paid for sessions '.implode(',', $sessionIds).' of group '.$evercisegroupId);
+        Event::fire('session.payed', [$user, $evercisegroup]);
+        Log::info('User '.$user->display_name.' has paid for sessions '.implode(',', $sessionIds).' of group '.$evercisegroupId);
 
         self::newMemberAnalytics($transactionId, $amount, $evercisegroup, $sessionIds);
 
