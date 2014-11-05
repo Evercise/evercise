@@ -233,6 +233,8 @@ Route::post(
 /* New Stripe payment */
 Route::post('stripe', array('as' => 'stripe', 'uses' => 'PaymentController@confirmStripePayment'));
 Route::get('sessions/{evercisegroupId}/paid', ['as' => 'sessions.paid', 'uses' => 'PaymentController@paid']);
+Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@confirmation']);
+Route::get('conftest', ['as' => 'conftest', 'uses' => 'PaymentController@conftest']);
 /* ------------------ */
 
 // payment (old)

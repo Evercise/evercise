@@ -74,29 +74,20 @@ class PaymentController extends BaseController {
                 'amount'   => $amountInPennies,
                 'currency' => 'gbp'
             ));
-            //return var_dump($charge['id']);
-
-            $transactionId = $charge['id'];
         }
         catch(Stripe_CardError $e)
         {
-                return Redirect::to('evercisegroups/'. $evercisegroupId)
-                    ->with('errorNotification', $e->getMessage());
+            return 'card error';
         }
 
-        $this->paid($token, $transactionId);
+        $this->paid($token, $charge['id']);
 
-
-        return View::make('v3.cart.confirmation')
-            ->with('data', $cartData);
-
-        //return 'token: '.$token.' . transaction id: '.$transactionId;
-
-/*        return Redirect::to('sessions/'.$evercisegroupId.'/pay')
-        ->with('token',$token )
-        ->with('transactionId', $charge['id'] )
-        ->with('payerId',$customer->id )
-        ->with('paymentMethod', 'stripe' );*/
+        return Redirect::to('payment_confirmation')
+            ->with('cartData', $cartData );
+/*            ->with('token',$token )
+            ->with('transactionId', $charge['id'] )
+            ->with('payerId',$customer->id )
+            ->with('paymentMethod', 'stripe' )*/
     }
 
 
@@ -116,20 +107,42 @@ class PaymentController extends BaseController {
         $sessionsSortedByGroup = [];
         foreach($cartData['cartRows'] as $row)
         {
-            if (isset($sessionsSortedByGroup[$row->options->evercisegroupId]))
-                array_push( $sessionsSortedByGroup[$row->options->evercisegroupId], $row );
-            else
-                $sessionsSortedByGroup[$row->options->evercisegroupId] = [$row];
+            for($i=0; $i<$row->qty; $i++)
+            {
+                if (isset($sessionsSortedByGroup[$row->options->evercisegroupId]))
+                    array_push($sessionsSortedByGroup[$row->options->evercisegroupId], $row);
+                else
+                    $sessionsSortedByGroup[$row->options->evercisegroupId] = [$row];
+            }
         }
 
         /* Add members to sessions */
         foreach($sessionsSortedByGroup as $evercisegroupId => $sessionsInSameGroup)
-            Evercisesession::addSessionMember($evercisegroupId, $sessionsInSameGroup, $token, $transactionId, $paymentMethod, $cartData['total'], $this->user->id);
+            Evercisesession::addSessionMember($evercisegroupId, $sessionsInSameGroup, $token, $transactionId, $paymentMethod, $cartData['total'], $this->user);
 
         /* Empty cart */
         EverciseCart::destroy();
 
         return true;
+    }
+
+    public function conftest()
+    {
+        $this->user->sessions()->attach(['303', '303'], ['token' => 'double', 'transaction_id' =>  'action', 'payer_id' => $this->user->id, 'payment_method' => 'fake']);
+
+        $cartData = EverciseCart::getCart();
+        return View::make('v3.cart.confirmation')
+            ->with('data', $cartData);
+
+    }
+
+    public function confirmation()
+    {
+        /* Get cart data sent with redirect, as Cart has now been cleared */
+        $cartData = Session::get('cartData');
+
+        return View::make('v3.cart.confirmation')
+            ->with('data', $cartData);
 
     }
 
