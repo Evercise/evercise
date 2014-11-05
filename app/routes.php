@@ -52,7 +52,7 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('sessions/add', array('as' => 'sessions.add', 'uses' => 'ajax\SessionsController@store'));
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
 
-
+    // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
 });
 

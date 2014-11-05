@@ -213,7 +213,7 @@ class UploadController extends AjaxBaseController
                 'height' => 'required|numeric',
                 'box_width' => 'required|numeric',
                 'box_height' => 'required|numeric',
-                'file' => 'mimes:jpeg,gif,png'
+                'file' => 'required|mimes:jpeg,gif,png'
             ]
         );
 
@@ -237,23 +237,16 @@ class UploadController extends AjaxBaseController
         $folder = hashDir($this->user->id, 'gallery');
 
 
-        $org_width = $file->width();
-        $org_height = $file->height();
-
-
         /** Get the right Ratio for the original image VS the cropbox size */
-        $ration_width = ($org_width / $this->request->get('box_width'));
-        $ration_height = ($org_height / $this->request->get('box_height'));
-
 
         /**Calculate the crop ration based on the original image */
-        $crop_width = ($ration_width * $this->request->get('width'));
-        $crop_height = ($ration_height * $this->request->get('height'));
+        $crop_width = $this->request->get('width');
+        $crop_height = $this->request->get('height');
 
 
         /**Crop locations calculate */
-        $crop_x = ($ration_width * $this->request->get('x'));
-        $crop_y = ($ration_height * $this->request->get('y'));
+        $crop_x = $this->request->get('x');
+        $crop_y = $this->request->get('y');
 
 
         $image = $file->crop((int)$crop_width, (int)$crop_height, (int)$crop_x, (int)$crop_y);

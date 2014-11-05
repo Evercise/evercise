@@ -3,15 +3,18 @@ function imageCropper(elem){
     this.modal = this.elem.find(".modal-cropper");
     this.modalImage = this.modal.find("#uploaded-image");
     this.uploadForm = this.elem.find("#image-upload-form");
-    this.uploadButton = this.uploadForm.find("#image");
+    this.galleryImage = $('.gallery-option');
+    this.croppedForm = this.modal.find("#cropped-image");
+    this.uploadButton = this.modal.find("input[name='file']");
     this.imageSelect = this.uploadForm.find("#image-select");
+    this.removeButton = this.uploadForm.find("#cover-remove");
     this.image = this.modal.find(".bootstrap-modal-cropper img");
     this.xInput = this.modal.find("input[name='x']");
     this.yInput = this.modal.find("input[name='y']");
     this.wInput = this.modal.find("input[name='width']");
     this.hInput = this.modal.find("input[name='height']");
-    this.bwInput = this.modal.find("input[name='box-width']");
-    this.bhInput = this.modal.find("input[name='box-height']");
+    this.bwInput = this.modal.find("input[name='box_width']");
+    this.bhInput = this.modal.find("input[name='box_height']");
     this.originalData = {};
     this.ratio = 2.35;
     this.x = 0;
@@ -34,6 +37,9 @@ imageCropper.prototype = {
         this.modalImage.on("load", $.proxy(this.openModal, this))
         this.modal.on("shown.bs.modal", $.proxy(this.crop, this));
         this.modal.on("hidden.bs.modal", $.proxy(this.destroyCrop, this));
+        this.croppedForm.on("submit", $.proxy(this.submitForm, this));
+        this.galleryImage.on("click", $.proxy(this.clickGalleryOption, this));
+        this.removeButton.on("click", $.proxy(this.removeCover, this));
     },
     upload: function(){
         this.uploadButton.trigger('click');
@@ -54,12 +60,12 @@ imageCropper.prototype = {
     openModal: function(){
         this.modal.modal('show');
     },
+    closeModal: function(){
+        this.modal.modal('hide');
+    },
     crop: function(){
         self = this;
-
-
-        this.bw = self.image.cropper("getImageData").width;
-        this.bh = self.image.cropper("getImageData").height;
+        this.image = this.modal.find(".bootstrap-modal-cropper img");
         this.image.cropper({
             data: this.originalData,
             aspectRatio: this.ratio,
@@ -68,15 +74,6 @@ imageCropper.prototype = {
                 self.y = data.y;
                 self.w = data.width;
                 self.h = data.height;
-
-                /*
-                self.xInput.val(data.x);
-                self.yInput.val(data.y);
-                self.wInput.val(data.width);
-                self.hInput.val(data.height);
-                self.bwInput.val(self.image.cropper("getImageData").width);
-                self.bhInput.val(self.image.cropper("getImageData").height);
-                */
             }
         });
     },
@@ -84,6 +81,58 @@ imageCropper.prototype = {
         this.image.cropper("destroy");
         self.modalImage.attr('src',null);
         this.uploadButton.val('');
+    },
+    submitForm: function(e){
+        e.preventDefault();
+
+        this.bw = this.image.cropper("getImageData").width;
+        this.bh = this.image.cropper("getImageData").height;
+        this.xInput.val(this.x);
+        this.yInput.val(this.y);
+        this.wInput.val(this.w);
+        this.hInput.val(this.h);
+        this.bwInput.val(this.bw);
+        this.bhInput.val(this.bh);
+        this.ajaxUpload();
+
+    },
+    ajaxUpload: function () {
+        var url = this.croppedForm.attr("action"),
+            data = new FormData(this.croppedForm[0]),
+            self = this;
+
+        $.ajax(url, {
+            type: "post",
+            data: data,
+            processData: false,
+            contentType: false,
+
+            beforeSend: function () {
+                self.croppedForm.find("input[type='submit']").prop('disabled', true).after('<span id="cropping-loading" class="icon icon-loading ml10"></span>');
+            },
+
+            success: function (data) {
+                self.croppedForm.find("input[type=submit]").prop('disabled', false);
+                self.uploadForm.append('<img src="/'+data.file +'" alt="cover photo" class="img-responsive">')
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+            },
+
+            complete: function () {
+                $('#cropping-loading').remove();
+                self.removeButton.removeClass('hidden');
+                self.closeModal();
+            }
+        });
+    },
+    clickGalleryOption: function(e){
+        this.uploadForm.append( $(e.target).clone().removeClass('gallery-option') );
+    },
+    removeCover: function(){
+        console.log(self.uploadForm.find("img"));
+        self.uploadForm.find("img").remove();
     }
 
 }

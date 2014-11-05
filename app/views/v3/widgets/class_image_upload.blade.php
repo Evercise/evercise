@@ -5,11 +5,18 @@
         </div>
         <div class="col-sm-12 mb20" id="image-cropper">
             <div class="holder cover" id="cover_image">
-                {{ Form::open(['route' => 'home', 'method' => 'post', 'id' => 'image-upload-form']) }}
-                    {{ Form::file('image', ['class' => 'hidden']) }}
-                    <span id="image-select" class="icon-block icon-lg-camera hover mt50 mb50"></span>
-                    <p>Min image size (H)blub pixels X (W)blub pixels - maximum file size of 2MB</p>
-                    <p>Formats: JPG, JPEG, PNG or GIF</p>
+                {{ Form::open(['route' => 'home', 'method' => 'post', 'id' => 'image-upload-form' ]) }}
+                    <button id="cover-remove" type="button" class="btn btn-danger hidden btn-remove">remove</button>
+                    <div class="row">
+                        <div class="text-center col-sm-12 mt50">
+                            <span id="image-select" class="icon-block icon-lg-camera hover mb50"></span>
+                            <p>Min image size (H)blub pixels X (W)blub pixels - maximum file size of 2MB</p>
+                            <p>Formats: JPG, JPEG, PNG or GIF</p>
+                        </div>
+                    </div>
+
+
+
                 {{ Form::close() }}
                 </div>
                 <div class="modal modal-cropper" id="create-image" data-backdrop="static">
@@ -25,15 +32,17 @@
                             </div>
                           </div>
                           <div class="modal-footer">
-                            {{ Form::open(['route' => 'home', 'method' => 'post']) }}
+                            {{ Form::open(['route' => 'ajax.upload.cover', 'enctype' => 'multipart/form-data' , 'method' => 'post', 'id' => 'cropped-image']) }}
+                                {{ Form::file('file', ['class' => 'hidden']) }}
                                 {{ Form::hidden('x',null) }}
                                 {{ Form::hidden('y',null) }}
                                 {{ Form::hidden('width',null) }}
                                 {{ Form::hidden('height',null) }}
-                                {{ Form::hidden('box-width',null) }}
-                                {{ Form::hidden('box-height',null) }}
+                                {{ Form::hidden('box_width',null) }}
+                                {{ Form::hidden('box_height',null) }}
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                 {{ Form::submit('Save',['class' => 'btn btn-primary']) }}
+
                             {{ Form::close() }}
                           </div>
                         </div>

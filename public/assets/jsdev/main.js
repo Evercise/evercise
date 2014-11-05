@@ -125,9 +125,6 @@ $(function(){
         });
     })
 
-    $('.cover-select').exists(function(){
-        new CoverSelect(this);
-    })
 
     $('#image-cropper').exists(function(){
         new imageCropper(this);
