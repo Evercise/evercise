@@ -121,6 +121,11 @@ class Venue extends \Eloquent
         return $this->hasMany('Evercisegroup');
     }
 
+    public function images()
+    {
+        return $this->hasMany('VenueImages');
+    }
+
 
     public function Facilities()
     {

@@ -18,7 +18,7 @@ class BaseController extends Controller
 
         if (Sentry::check()) {
             $this->user = Sentry::getUser();
-            $userImage = $this->user->image ? ('profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
+            $userImage = $this->user->image ? (Config::get('evercise.upload_dir') . 'profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
             View::share('userImage', isset($userImage) ? $userImage : '');
             View::share('user', $this->user);
             $header = $this->setupHeader('user');
