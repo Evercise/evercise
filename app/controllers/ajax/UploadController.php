@@ -276,4 +276,38 @@ class UploadController extends AjaxBaseController
 
     }
 
+    /**
+     * @param string $file
+     * @param array $params
+     * @return bool|string
+     *
+     *
+            $ajax = App::make('ajax\UploadController');
+
+            die($ajax->renameFile('files/gallery/61/35/thumb_igor-matkovic-72.JPG', ['some'=> 'param', 'name' => 'what is this lololo', 'car'=>'tetstet']));
+     */
+
+    public function renameFile($file = '', array $params = [])
+    {
+        if (!empty($file) && count($params) > 0) {
+            $new_file = substr(Str::slug(implode(' ', array_values($params))), 0, 40);
+
+            $ext = pathinfo($file);
+
+            if (!empty($ext['extension'])) {
+
+                $new_file = $ext['dirname'] . '/' . $new_file . '.' . $ext['extension'];
+
+                try {
+                    rename($file, $new_file);
+                    return $new_file;
+                } catch (\Exception $e) {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
