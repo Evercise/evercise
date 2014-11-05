@@ -14,7 +14,7 @@
 
             </div>
             <div class="col-sm-6 text-right mt50">
-                <a href="#" class="btn btn-primary">Create a new class</a>
+                {{ HTML::linkRoute('evercisegroups.create', 'Create a new class', null, ['class' => 'btn btn-primary']) }}
             </div>
         </div>
     </div>

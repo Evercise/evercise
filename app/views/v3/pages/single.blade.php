@@ -1,7 +1,31 @@
 @extends('v3.layouts.master')
 @section('body')
-<div class="container">
-    <h1>{{ $article->content }}</h1>
+<div class="container first-container article">
+    <div class="row">
+        <div class="col-sm-4">
+            <ul class="list-group">
+              <li class="list-group-item">something</li>
+              <li class="list-group-item">else</li>
+              <li class="list-group-item">some crap</li>
+              <li class="list-group-item">more crap</li>
+              <li class="list-group-item">belgium</li>
+            </ul>
+        </div>
+        <div class="col-sm-8">
+            <div class="article-block">
+                <h1>{{ $article->title }}</h1>
+                {{ HTML::image('img/pages/2014/11/mewis-test-article.jpg', $article->title.' main image' ,['class' => 'article-main-img']) }}
+                {{ $article->content }}
+            </div>
+            <div class="article-block">
+                <h1>{{ $article->title }}</h1>
+                {{ HTML::image('img/pages/2014/11/mewis-test-article.jpg', $article->title.' main image' ,['class' => 'article-main-img']) }}
+                {{ $article->content }}
+            </div>
+        </div>
+    </div>
+
+
 
 
 </div>

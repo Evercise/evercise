@@ -212,47 +212,6 @@ class SessionsController extends \BaseController
         }
     }
 
-    /**
-     * Actually add the user to the class.  The details of which are all pulled from session data
-     *
-     * @param $evercisegroupId
-     * @return \Illuminate\View\View
-     */
-    function payForSessions($evercisegroupId)
-    {
-        $evercoinPaymentDetails = Evercisesession::generateEvercoinPaymentDetails();
-
-        /* Get evercisesession payment stuff from session, and delete it so it wont be used again. */
-        $sessionData = [
-            'amountToPay' => Session::pull('amountToPay'),
-            'sessionIds' => Session::pull('sessionIds'),
-            'token' => $evercoinPaymentDetails['token'],
-            'transactionId' => $evercoinPaymentDetails['transactionId'],
-            'payerId' => Sentry::getUser()->id,
-            'paymentMethod' => $evercoinPaymentDetails['paymentMethod'],
-        ];
-        Session::forget('evercisegroupId');
-
-        $payParams = Evercisesession::addSessionMember($evercisegroupId, $sessionData);
-
-        if (!empty($payParams['error'])) {
-            die('THERE HAS BEEN A ERROR');
-
-        } else {
-
-            return View::make('sessions.confirmation')
-                ->with('sessionIds', $sessionData['sessionIds'])
-                ->with('transactionId', $sessionData['transactionId'])
-                ->with('evercisegroup', $payParams['evercisegroup'])
-                ->with('members', $payParams['members'])
-                ->with('userTrainer', $payParams['userTrainer'])
-                ->with('totalPrice', $payParams['totalPrice'])
-                ->with('totalSessions', $payParams['totalSessions'])
-                ->with('amountPaid', $payParams['amountPaid'])
-                ->with('evercoins', $payParams['evercoins'])
-                ->with('deductEverciseCoins', $payParams['deductEverciseCoins']);
-        }
-    }
 
 
     /**

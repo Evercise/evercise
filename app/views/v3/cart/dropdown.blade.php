@@ -26,7 +26,8 @@
                     <strong>{{ $row->name }}</strong>
                     <br>
                     <strong class="text-primary">&pound;{{ $row->price }}</strong>
-                    <strong class="text-primary">{{ $row->options->date_time }}</strong>
+                    <br><strong class="text-primary">{{ $row->options->date_time }}</strong>
+                    <br><strong class="text-primary">subtotal: &pound;{{ $row->price * $row->qty }}</strong>
                 </div>
                 <div class="col-xs-2 text-center mt10">
                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
@@ -61,6 +62,6 @@
         <strong class="text-primary">&pound;<span id="cart-total">{{ $total }}</span></strong>
     </div>
     <div class="col-xs-4 mb10">
-        <button class="btn btn-primary">Checkout</button>
+        <a href="/cart/checkout"><button class="btn btn-primary">Checkout</button></a>
     </div>
 </ul>

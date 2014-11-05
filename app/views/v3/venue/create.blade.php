@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span class="icon icon-cross" aria-hidden="true"></span><span class="sr-only">Close</span></button>
-        <h3 class="modal-title text-center" id="myModalLabel">Create a Class</h3>
+        <h3 class="modal-title text-center">Create a Class</h3>
         <ul class="nav nav-pills nav-justified mt30">
           <li class="active"><a data-toggle="pill" href="#venue-tab">Venue</a></li>
           <li><a href="#facilities" data-toggle="pill">Facilities</a></li>

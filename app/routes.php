@@ -220,10 +220,6 @@ Route::get(
 Route::get('sessions/date_list', array('as' => 'sessions.date_list'));
 Route::post('sessions/join', array('as' => 'sessions.join', 'uses' => 'SessionsController@joinSessions'));
 Route::get('sessions/join/class', array('as' => 'sessions.join.get', 'uses' => 'SessionsController@joinSessions'));
-Route::get(
-    'sessions/{evercisegroupId}/pay',
-    array('as' => 'sessions.pay', 'uses' => 'SessionsController@payForSessions')
-);
 Route::get('/sessions/{id}', array('as' => 'sessions.show', 'uses' => 'SessionsController@show'));
 Route::get(
     '/sessions/{sessionId}/leave',
@@ -234,13 +230,17 @@ Route::post(
     array('as' => 'sessions.leave.post', 'uses' => 'SessionsController@postLeaveSession')
 );
 
-// payment
+/* New Stripe payment */
+Route::post('stripe', array('as' => 'stripe', 'uses' => 'PaymentController@confirmStripePayment'));
+Route::get('sessions/{evercisegroupId}/paid', ['as' => 'sessions.paid', 'uses' => 'PaymentController@paid']);
+/* ------------------ */
+
+// payment (old)
 Route::get(
     'sessions/{evercisegroupId}/paywithstripe',
     array('as' => 'sessions.pay.stripe', 'uses' => 'SessionsController@payForSessionsStripe')
 );
-Route::get('stripetestpay', array('as' => 'pay.stripe', 'uses' => 'StripePaymentController@pay'));
-Route::get('stripetest', array('as' => 'paid.stripe', 'uses' => 'StripePaymentController@paid'));
+
 Route::post(
     'wallets/{userId}/update_paypal',
     array('as' => 'wallets.updatepaypal', 'uses' => 'WalletsController@updatePaypal')

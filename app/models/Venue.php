@@ -19,7 +19,7 @@ class Venue extends \Eloquent
     {
         // list all venues belonging to this user
         $venues = static::where('user_id', $id)->lists('name', 'id');
-        return View::make('venues.index')->with('venues', $venues);
+        return $venues;
     }
 
     /**
