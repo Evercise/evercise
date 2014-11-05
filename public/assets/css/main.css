@@ -6639,6 +6639,12 @@ yx-axis
   filter: "alpha(opacity=90)";
   -ms-filter: "alpha(opacity=90)";
 }
+.select2-hidden {
+  display: none;
+}
+.select2-hidden.select2-drop-active {
+  display: block;
+}
 .select2-container,
 .select2-drop,
 .select2-search,
@@ -6762,6 +6768,7 @@ yx-axis
   border: 0;
   margin: 0;
   padding: 4px 0;
+  line-height: 16px;
   cursor: text;
   overflow: hidden;
   height: auto !important;
@@ -8651,6 +8658,7 @@ label {
 }
 .form-control {
   box-shadow: none;
+  line-height: 16px;
 }
 .form-control:focus {
   box-shadow: none;

@@ -27,7 +27,7 @@
                         </div>
                      </div>
                      <div class="text-center">
-                        <button class="btn btn-primary">Save Venue</button>
+                        <button href="#facilities" data-toggle="pill" type="button" class="btn btn-primary next">Add Facilities</button>
                      </div>
                    </div>
               </div>
@@ -67,7 +67,7 @@
 
                    </div>
                    <div class="text-center">
-                        <button class="btn btn-primary">Save Facilities</button>
+                        <button href="#amenities" data-toggle="pill" type="button" class="btn btn-primary next">Add Amenities</button>
                    </div>
               </div>
               <div class="tab-pane" id="amenities">

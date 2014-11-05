@@ -3,12 +3,42 @@
         <div class="col-sm-12">
             {{ Form::label('image', 'Add a Cover Image', ['class' => 'mb15'] )  }}
         </div>
-        <div class="col-sm-12 mb20">
-            <div class="holder cover" id="cover_image" data-toggle="modal" data-target="#create-image">
-                <span class="icon-block icon-lg-camera hover mt50 mb50"></span>
-                <p>Min image size (H)blub pixels X (W)blub pixels - maximum file size of 2MB</p>
-                <p>Formats: JPG, JPEG, PNG or GIF</p>
-            </div>
+        <div class="col-sm-12 mb20" id="image-cropper">
+            <div class="holder cover" id="cover_image">
+                {{ Form::open(['route' => 'home', 'method' => 'post', 'id' => 'image-upload-form']) }}
+                    {{ Form::file('image', ['class' => 'hidden']) }}
+                    <span id="image-select" class="icon-block icon-lg-camera hover mt50 mb50"></span>
+                    <p>Min image size (H)blub pixels X (W)blub pixels - maximum file size of 2MB</p>
+                    <p>Formats: JPG, JPEG, PNG or GIF</p>
+                {{ Form::close() }}
+                </div>
+                <div class="modal modal-cropper" id="create-image" data-backdrop="static">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span class="icon icon-cross" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                            <h3 class="modal-title text-center">Crop your image</h3>
+                          </div>
+                          <div class="modal-body">
+                            <div class="bootstrap-modal-cropper">
+                                <img src="" id="uploaded-image" class="img-responsive">
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            {{ Form::open(['route' => 'home', 'method' => 'post']) }}
+                                {{ Form::hidden('x',null) }}
+                                {{ Form::hidden('y',null) }}
+                                {{ Form::hidden('width',null) }}
+                                {{ Form::hidden('height',null) }}
+                                {{ Form::hidden('box-width',null) }}
+                                {{ Form::hidden('box-height',null) }}
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                {{ Form::submit('Save',['class' => 'btn btn-primary']) }}
+                            {{ Form::close() }}
+                          </div>
+                        </div>
+                      </div>
+                 </div>
 
         </div>
     </div>
@@ -64,27 +94,6 @@
     </div>
 
 
-     <div class="modal modal-cropper" id="create-image">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span class="icon icon-cross" aria-hidden="true"></span><span class="sr-only">Close</span></button>
-                <h3 class="modal-title text-center">Crop your image</h3>
-              </div>
-              <div class="modal-body">
-                <div class="bootstrap-modal-cropper">
-                    <img src="/img/example-class-img.jpg" class="img-responsive">
-                </div>
-              </div>
-              <div class="modal-footer">
-                {{ Form::open(['route' => 'home', 'method' => 'post']) }}
 
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    {{ Form::submit('Save',['class' => 'btn btn-primary']) }}
-                {{ Form::close() }}
-              </div>
-            </div>
-          </div>
-     </div>
 </div>
 

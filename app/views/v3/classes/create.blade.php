@@ -7,9 +7,10 @@
             </div>
             <strong>Some type of instructions for the trainer to continue</strong>
         </div>
-        <div class="row mt50">
+        <div class="row mt50 mb50">
             <div class="col-sm-8 col-sm-offset-2">
                 {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'mb50', 'role' => 'form'] ) }}
+                {{Form::close()}}
                     <div class="form-group mb15">
                         {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
                         {{ Form::select('category-select', $subcategories, '', ['class' => 'form-control mb40 select2', 'multiple'] ) }}
@@ -45,7 +46,7 @@
                         <div class="col-sm-6 text-right"><button class="btn btn-default">Cancel</button> </div>
                         <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary'] )  }}</div>
                     </div>
-                {{Form::close()}}
+
 
             </div>
         </div>

@@ -117,7 +117,11 @@ $(function(){
             minimumResultsForSearch: 1,
             placeholder: 'Choose upto 3 categories',
             closeOnSelect: true,
-            openOnEnter: false
+            openOnEnter: false,
+            formatNoMatches: function() {
+                return '';
+            },
+            dropdownCssClass: 'select2-hidden'
         });
     })
 
@@ -125,23 +129,11 @@ $(function(){
         new CoverSelect(this);
     })
 
-    $('.modal-cropper').exists(function(){
-        var $modal = $(this),
-            $image = $modal.find(".bootstrap-modal-cropper img"),
-            originalData = {};
-
-        $modal.on("shown.bs.modal", function() {
-            $image.cropper({
-                data: originalData,
-                aspectRatio: 2.35,
-                done: function(data) {
-                    console.log(data);
-                }
-            });
-        }).on("hidden.bs.modal", function() {
-            originalData = $image.cropper("getData");
-            $image.cropper("destroy");
-        });
+    $('#image-cropper').exists(function(){
+        new imageCropper(this);
+    })
+    $('#create-venue').exists(function(){
+        new createVenue(this);
     })
 
 
