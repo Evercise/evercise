@@ -122,7 +122,7 @@ imageCropper.prototype = {
 
             complete: function () {
                 $('#cropping-loading').remove();
-                self.removeButton.removeClass('hidden');
+                self.displayRemove();
                 self.closeModal();
             }
         });
@@ -131,8 +131,15 @@ imageCropper.prototype = {
         this.uploadForm.append( $(e.target).clone().removeClass('gallery-option') );
     },
     removeCover: function(){
-        console.log(self.uploadForm.find("img"));
-        self.uploadForm.find("img").remove();
+        this.hideRemove();
+        this.uploadForm.find("img").remove();
+    },
+    displayRemove: function(){
+        this.removeButton.removeClass('hidden');
+    },
+    hideRemove: function(){
+        this.removeButton.addClass('hidden');
     }
+
 
 }
