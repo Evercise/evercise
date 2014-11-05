@@ -1,6 +1,37 @@
 <?php
 
 
+if (!function_exists('hashDir')) {
+
+    function hashDir($id, $folder = 'gallery')
+    {
+
+        $id = abs($id + 20000);
+
+        $path = 'files/' . $folder;
+
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+
+        $h = $id % 4096;
+        $maindir = floor($h / 64);
+        $subdir = $h % 64;
+        if (!is_dir($path . '/' .  $maindir)) {
+            mkdir($path . '/' .  $maindir);
+        }
+        if (!is_dir($path .  '/' .  $maindir . '/' . $subdir)) {
+            mkdir($path . '/' .  $maindir . '/' . $subdir);
+        }
+
+        return $path . '/' .  $maindir . '/' . $subdir;
+
+
+    }
+}
+
+
 if (!function_exists('isTesting')) {
 
     function isTesting()
@@ -18,7 +49,6 @@ if (!function_exists('isTesting')) {
             $allowed_ips = Config::get('evercise.testing_ips');
 
 
-
             foreach ($allowed_ips as $i) {
                 if (strpos($ip, $i) !== false) {
                     return true;
@@ -29,11 +59,7 @@ if (!function_exists('isTesting')) {
         }
 
         return false;
-
-
     }
-
-
 }
 
 

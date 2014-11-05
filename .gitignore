@@ -16,6 +16,7 @@ Thumbs.db
 public/profiles/
 public/img/pages/*
 public/img/gallery/*
+public/files/gallery/*
 /app/storage/logs/*
 /app/storage/cache/*
 /app/storage/sessions/*
