@@ -231,10 +231,11 @@ Route::post(
 );
 
 /* New Stripe payment */
-Route::post('stripe', array('as' => 'stripe', 'uses' => 'PaymentController@confirmStripePayment'));
-Route::get('sessions/{evercisegroupId}/paid', ['as' => 'sessions.paid', 'uses' => 'PaymentController@paid']);
-Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@confirmation']);
-Route::get('conftest', ['as' => 'conftest', 'uses' => 'PaymentController@conftest']);
+Route::post('stripe/sessions', array('as' => 'stripe.sessions', 'uses' => 'PaymentController@processStripePaymentSessions'));
+Route::post('stripe/topup', array('as' => 'stripe.topup', 'uses' => 'PaymentController@processStripePaymentTopup'));
+Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@sessionConfirmation']);
+Route::get('topup_confirmation', ['as' => 'topup_confirmation', 'uses' => 'PaymentController@topupConfirmation']);
+Route::get('topup', ['as' => 'topup', 'uses' => 'PaymentController@topup']);
 /* ------------------ */
 
 // payment (old)
@@ -491,4 +492,3 @@ Route::group(
 
 
 );
-

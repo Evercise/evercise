@@ -16,7 +16,7 @@
     <strong>Total: £{{ $data['total'] }}</strong>
 
 
-    {{ Form::open(array('id' => 'join-sessions-stripe', 'url' => 'stripe/', 'method' => 'post', 'class' => '')) }}
+    {{ Form::open(array('id' => 'join-sessions-stripe', 'url' => 'stripe/sessions/', 'method' => 'post', 'class' => '')) }}
         <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
           data-key="@stripeKey"
           data-image="{{url()}}/img/evercoin.png"

@@ -34,14 +34,20 @@ class EverciseCart extends Cart
     public static function fromProductCode($productCode)
     {
         if (count( $chunks = explode('S', $productCode) ) > 1) {
-            $id = $chunks[1];
             $type = 'session';
+            if (count($chunks) < 2) return false;
+            $id = $chunks[1];
         }
         else if (count( $chunks = explode('P', $productCode) ) > 1){
-            $id = $chunks[1];
             $type = 'package';
+            if (count($chunks) < 2) return false;
+            $id = $chunks[1];
         }
-        else return false;
+        else if (count( $chunks = explode('T', $productCode) ) > 1){
+
+            $type = 'topup';
+            $id = 'TOPUP';
+        }
 
         return ['id' => $id, 'type' => $type];
     }
@@ -68,5 +74,13 @@ class EverciseCart extends Cart
 
         return $data;
 
+    }
+
+    public static function clearTopup()
+    {
+        $cartRowIds = EverciseCart::search(['id' => 'TOPUP']);
+        if($cartRowIds)
+            foreach($cartRowIds as $cartRowId)
+                EverciseCart::remove($cartRowId);
     }
 } 
