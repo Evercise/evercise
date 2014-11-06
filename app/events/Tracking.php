@@ -197,10 +197,11 @@ class Tracking
         $class_obj = $this->formatSessionClass($session);
 
         $res = Salesforce::create([$class_obj], 'Class__c');
+
         $session->salesforce_id = $res[0]->id;
         $session->save();
 
-        $this->log->info('New Session ' . $session->id . '  in SalesForce');
+        $this->log->info('New Session ' . $session->id . '  in SalesForce '.$session->salesforce_id);
 
         return $session;
     }
@@ -310,12 +311,16 @@ class Tracking
 
         $venue = $class->venue;
 
+
         $categories = $class->subcategories;
 
+
+        $main_categories = [];
 
         $categories_arr = [];
         foreach ($categories as $cat) {
             $categories_arr[] = $cat->name;
+            $main_categories[$cat->categories->first()->name] = true;
         }
 
         $class_obj = new \stdClass();
@@ -336,6 +341,7 @@ class Tracking
         $class_obj->Name = $class->name . ' | ' . $session->id;
         $class_obj->Trainer__c = $user->salesforce_id;
         $class_obj->Description__c = $user->description;
+        $class_obj->Category__c = implode(', ', array_keys($main_categories));
         $class_obj->Category_1__c = (!empty($categories_arr[0]) ? $categories_arr[0] : '');
         $class_obj->Category_2__c = (!empty($categories_arr[1]) ? $categories_arr[1] : '');
         $class_obj->Category_3__c = (!empty($categories_arr[2]) ? $categories_arr[2] : '');
