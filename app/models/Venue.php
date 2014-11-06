@@ -23,16 +23,6 @@ class Venue extends \Eloquent
     }
 
     /**
-     * @return VenuesController|\Illuminate\View\View
-     */
-    public static function createNewVenue()
-    {
-        // create new vuewnue view with facilities
-        $facilities = Facility::get();
-        return View::make('venues.create')->with('facilities', $facilities);
-    }
-
-    /**
      * @return array
      */
     public static function storeNewVenue($inputs, $id)
@@ -52,7 +42,6 @@ class Venue extends \Eloquent
             $inputs,
             [
                 'venue_name' => 'required|max:45',
-                'latbox' => 'required',
                 'street' => 'required|min:2',
                 'city' => 'required|min:2',
                 'postcode' => 'required|has_not:special|has:letter,num|min:4',
@@ -73,8 +62,6 @@ class Venue extends \Eloquent
             $address = $inputs['street'];
             $town = $inputs['city'];
             $postcode = $inputs['postcode'];
-            $lat = $inputs['latbox'];
-            $lng = $inputs['lngbox'];
 
             $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
 

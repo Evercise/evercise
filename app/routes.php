@@ -492,3 +492,8 @@ Route::group(
 
 
 );
+
+Route::get('facilitylist', function(){
+    return Facility::getLists();
+});
+

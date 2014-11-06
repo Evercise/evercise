@@ -39,7 +39,7 @@ class EvercisegroupsController extends \BaseController
      */
     public function store()
     {
-        return Evercisegroup::validateAndStore($this->user);
+        return Evercisegroup::validateAndStore(Input::all(), $this->user);
     }
 
     /**

@@ -792,18 +792,14 @@ class Evercisegroup extends \Eloquent
      * @param $user
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function validateAndStore($user)
+    public static function validateAndStore($inputs, $user)
     {
         $validator = Validator::make(
-            Input::all(),
+            $inputs,
             [
                 'classname' => 'required|max:100|min:5',
                 'description' => 'required|max:5000|min:100',
-                'duration' => 'required|numeric|between:10,240',
-                'maxsize' => 'required|numeric|between:1,200',
-                'price' => 'required|numeric|between:1,1000',
                 'image' => 'required',
-                'gender' => 'required',
                 'venue' => 'required',
             ]
         );
@@ -815,30 +811,20 @@ class Evercisegroup extends \Eloquent
             return Response::json($result);
         } else {
 
-            $classname = Input::get('classname');
-            $description = Input::get('description');
-            $duration = Input::get('duration');
-            $maxsize = Input::get('maxsize');
-            $price = Input::get('price');
-            $image = Input::get('image');
-            $gender = Input::get('gender');
-            $venue = Input::get('venue');
-
-            $category1 = Input::get('category1');
-            $category2 = Input::get('category2');
-            $category3 = Input::get('category3');
+            $classname = $inputs['classname'];
+            $description = $inputs['description'];
+            $image = $inputs['image'];
+            $venue = $inputs['venue'];
 
             // Push categories into an array, and fail if there are none.
             $categories = [];
-            if ($category1 != '') {
-                array_push($categories, $category1);
-            }
-            if ($category2 != '') {
-                array_push($categories, $category2);
-            }
-            if ($category3 != '') {
-                array_push($categories, $category3);
-            }
+            if ($inputs['category1'] != '')
+                array_push($categories, $inputs['category1']);
+            if ($inputs['category2'] != '')
+                array_push($categories, $inputs['category2']);
+            if ($inputs['category3'] != '')
+                array_push($categories, $inputs['category3']);
+
             if (empty($categories)) {
                 return Response::json(
                     ['validation_failed' => 1, 'errors' => ['category1' => 'you must choose at least one category']]
@@ -863,11 +849,7 @@ class Evercisegroup extends \Eloquent
                     'user_id' => $user->id,
                     'venue_id' => $venue,
                     'description' => $description,
-                    'default_duration' => $duration,
-                    'capacity' => $maxsize,
-                    'default_price' => $price,
                     'image' => $image,
-                    'gender' => $gender,
                     'venue_id' => $venue,
                 ]
             );
@@ -885,7 +867,7 @@ class Evercisegroup extends \Eloquent
 
             Event::fire('evecisegroup.created', [$user, $evercisegroup]);
 
-            return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
+            return Response::json(['success' => 'true', 'id' => $evercisegroup->id ]);
         }
     }
 
