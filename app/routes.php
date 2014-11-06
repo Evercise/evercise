@@ -171,6 +171,7 @@ Route::get('/admin/groups', array('as' => 'admin.groups', 'before'=>'admin', 'us
 Route::post('/admin/groups', array('as' => 'admin.groups.addcat', 'before'=>'admin', 'uses' => 'AdminController@addCategory'));
 Route::get('/admin/fakeratings', array('as' => 'admin.fakeratings', 'before'=>'admin', 'uses' => 'AdminController@showGroupRatings'));
 Route::post('/admin/edit_classes/{id}', array('as' => 'admin.edit_classes', 'before'=>'admin', 'uses' => 'AdminController@editClasses'));
+Route::get('/admin/logInAsUser/{id}', array('as' => 'admin.logInAsUser', 'before'=>'admin', 'uses' => 'AdminController@logInAsUser'));
 
 
 /*

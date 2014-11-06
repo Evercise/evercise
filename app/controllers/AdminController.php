@@ -33,6 +33,14 @@ class AdminController extends \BaseController {
         return Redirect::route('admin.pending');
 	}
 
+
+    public function logInAsUser($id) {
+
+        $user = Sentry::findUserById($id);
+        Sentry::login($user);
+        return Redirect::route('home');
+    }
+
     /**
      * @return \Illuminate\View\View
      */
