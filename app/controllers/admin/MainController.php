@@ -32,45 +32,46 @@ class MainController extends \BaseController
 
 
         /** Sales */
-        $this->data['total_sales'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subDays(300))->where('processed', 1)->sum('total');
-        $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subDays(300))->where('processed', 1)->sum('total_after_fees');
+        $this->data['total_sales'] = Sessionpayment::where('created_at', '>=',
+            Carbon::now()->subDays(300))->where('processed', 1)->sum('total');
+        $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=',
+            Carbon::now()->subDays(300))->where('processed', 1)->sum('total_after_fees');
         $this->data['total_commission'] = ($this->data['total_sales'] - $this->data['total_after_fees']);
 
 
         $this->data['total_year'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subYear())
-                            ->where('processed', 1)
-                            ->groupBy('month')
-                            ->orderBy( DB::raw('year asc, month'))
-                            ->get(array(
-                                DB::raw('YEAR(created_at) as year'),
-                                DB::raw('MONTH(created_at) as month'),
-                                DB::raw('SUM(total) as total'),
-                                DB::raw('SUM(total_after_fees) as total_after_fees')
-                            ));
+            ->where('processed', 1)
+            ->groupBy('month')
+            ->orderBy(DB::raw('year asc, month'))
+            ->get(array(
+                DB::raw('YEAR(created_at) as year'),
+                DB::raw('MONTH(created_at) as month'),
+                DB::raw('SUM(total) as total'),
+                DB::raw('SUM(total_after_fees) as total_after_fees')
+            ));
 
-        $start    = Carbon::now()->subYear();
-        $end      = Carbon::now();
+        $start = Carbon::now()->subYear();
+        $end = Carbon::now();
         $interval = DateInterval::createFromDateString('1 month');
-        $period   = new DatePeriod($start, $interval, $end);
+        $period = new DatePeriod($start, $interval, $end);
 
         foreach ($period as $dt) {
-            $this->data['total_months'][] = $dt->format("Y-m").'-01';
+            $this->data['total_months'][] = $dt->format("Y-m") . '-01';
             $this->data['total_year_total'][(int)$dt->format("m")] = 0;
             $this->data['total_year_fee'][(int)$dt->format("m")] = 0;
         }
 
 
-        foreach($this->data['total_year'] as $m) {
+        foreach ($this->data['total_year'] as $m) {
             $this->data['total_year_total'][$m->month] = round($m->total, 0);
             $this->data['total_year_fee'][$m->month] = round($m->total - $m->total_after_fees, 0);
         }
 
 
-
         /** Classes Stats */
         $this->data['total_classes'] = Evercisegroup::where('created_at', '>=', Carbon::now()->subYear())
             ->groupBy('month')
-            ->orderBy( DB::raw('year asc, month'))
+            ->orderBy(DB::raw('year asc, month'))
             ->get(array(
                 DB::raw('YEAR(created_at) as year'),
                 DB::raw('MONTH(created_at) as month'),
@@ -78,7 +79,7 @@ class MainController extends \BaseController
             ));
         $this->data['total_sessions'] = Evercisesession::where('created_at', '>=', Carbon::now()->subYear())
             ->groupBy('month')
-            ->orderBy( DB::raw('year asc, month'))
+            ->orderBy(DB::raw('year asc, month'))
             ->get(array(
                 DB::raw('YEAR(date_time) as year'),
                 DB::raw('MONTH(date_time) as month'),
@@ -91,20 +92,44 @@ class MainController extends \BaseController
         }
 
 
-        foreach($this->data['total_classes'] as $m) {
+        foreach ($this->data['total_classes'] as $m) {
             $this->data['total_classes_count'][$m->month] = round($m->total, 0);
         }
-        foreach($this->data['total_sessions'] as $m) {
+        foreach ($this->data['total_sessions'] as $m) {
             $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
         }
-
 
 
         $this->data['total_referrals'] = Referral::all()->count();
 
 
-
         return View::make('admin.dashboard', $this->data)->render();
+    }
+
+
+    public function expired($date = false)
+    {
+        if (!$date) {
+            $date = date('Y-m-d', strtotime( '-1 month', time()));
+        }
+
+        $date = $date.' 00:00:00';
+
+        $expired = DB::table('evercisesessions')
+            ->select(DB::raw('evercisesessions.id, evercisesessions.date_time, evercisesessions.members, evercisesessions.price, evercisegroups.user_id, evercisegroups.name, users.email, users.first_name, users.last_name, users.phone'))
+            ->leftJoin('evercisegroups', 'evercisegroups.id', '=', 'evercisesessions.evercisegroup_id')
+            ->leftJoin('users', 'users.id', '=', 'evercisegroups.user_id')
+            ->where('evercisesessions.date_time', '>', $date)
+            ->whereNotIn('evercisesessions.evercisegroup_id', function ($query) {
+                $query->select(DB::raw('evercisegroup_id'))
+                    ->from('evercisesessions')
+                    ->whereRaw('date_time > now()');
+            })
+            ->orderBy('evercisesessions.date_time', 'desc')
+            ->get();
+        return View::make('admin.expired', compact('expired'))->render();
+
+
     }
 
 
@@ -115,7 +140,7 @@ class MainController extends \BaseController
 
         $trainerGroup = Sentry::findGroupByName('Trainer');
 
-        return View::make('admin.users', compact('users', 'trainerGroup'))->render();
+        return View::make('admin . users', compact('users', 'trainerGroup'))->render();
 
     }
 
@@ -124,14 +149,14 @@ class MainController extends \BaseController
         $user = Sentry::findUserById(Input::get('user_id'));
         Sentry::login($user);
 
-        return Redirect::route('users.edit');
+        return Redirect::route('users . edit');
     }
 
 
     public function categories()
     {
 
-        return View::make('admin.categories', compact('categories'))->render();
+        return View::make('admin . categories', compact('categories'))->render();
     }
 
 
@@ -142,7 +167,7 @@ class MainController extends \BaseController
 
         array_unshift($categories, '');
 
-        return View::make('admin.subcategories', compact('categories', 'subcategories'))->render();
+        return View::make('admin . subcategories', compact('categories', 'subcategories'))->render();
 
     }
 
@@ -154,7 +179,7 @@ class MainController extends \BaseController
      */
     public function pendingTrainers()
     {
-        return View::make('admin.pendingtrainers')
+        return View::make('admin . pendingtrainers')
             ->with('trainers', Trainer::getUnconfirmedTrainers());
     }
 
@@ -170,7 +195,7 @@ class MainController extends \BaseController
 
         Trainer::approve($user);
 
-        return Redirect::route('admin.pendingtrainers');
+        return Redirect::route('admin . pendingtrainers');
     }
 
 
@@ -185,7 +210,7 @@ class MainController extends \BaseController
 
         $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->get();
 
-        return View::make('admin.pendingwithdrawals')
+        return View::make('admin . pendingwithdrawals')
             ->with('pendingWithdrawals', $pendingWithdrawals)
             ->with('processedWithdrawals', $processedWithdrawals);
     }
@@ -200,7 +225,7 @@ class MainController extends \BaseController
 
         Withdrawalrequest::find($withdrawal_id)->markProcessed();
 
-        return Redirect::route('admin.pending_withdrawal');
+        return Redirect::route('admin . pending_withdrawal');
 
     }
 
@@ -209,9 +234,9 @@ class MainController extends \BaseController
      */
     public function showLog()
     {
-        $logFile = file_get_contents('../app/storage/logs/laravel.log', true);
+        $logFile = file_get_contents(' ../app / storage / logs / laravel . log', true);
 
-        $logFile = str_replace('[] []', '[] []<br><br><br>', $logFile);
+        $logFile = str_replace('[] []', '[] [] < br><br ><br > ', $logFile);
         $logFile = str_replace('#', '<br><span style="color:#c00; margin-left:20px">#</span>', $logFile);
 
         return View::make('admin.log')

@@ -488,6 +488,10 @@ Route::group(
             ['as' => 'admin.groups.addcat','uses' => 'MainController@addCategory']);
         Route::get('/fakeratings',
             ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
+
+
+        Route::get('expired/{date?}',
+            ['as' => 'admin.expired', 'uses' => 'MainController@expired']);
     }
 
 
