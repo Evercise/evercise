@@ -14,7 +14,6 @@
 
 // temporary routes for new layouts
 
-
 Route::get('/popular', [
         'as' => 'popular',
         function () {
@@ -54,6 +53,9 @@ Route::group(['prefix' => 'ajax'], function () {
 
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
+
+    //Gallery
+    Route::post('gallery/getDefaults', array('as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults'));
 });
 
 /* Show home page */
