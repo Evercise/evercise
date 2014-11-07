@@ -22,10 +22,7 @@ class Venue extends \Eloquent
         return $venues;
     }
 
-    /**
-     * @return array
-     */
-    public static function storeNewVenue($inputs, $id)
+    private static function validateInputs($inputs)
     {
 
         Validator::extend('has_not', function ($attr, $value, $params) {
@@ -51,6 +48,53 @@ class Venue extends \Eloquent
             ]
 
         );
+
+        return $validator;
+    }
+
+    /**
+     * @return array
+     */
+    public static function validateAndStore($userId, $inputs)
+    {
+        $validator = static::validateInputs($inputs);
+
+        if ($validator->fails()) {
+            $result = [
+                'validation_failed' => 1,
+                'errors' => $validator->errors()->toArray()
+            ];
+
+        } else {
+            $venue_name = $inputs['name'];
+            $address = $inputs['address'];
+            $town = $inputs['town'];
+            $postcode = $inputs['postcode'];
+
+            $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
+
+            $venue = static::create([
+                'user_id' => $userId,
+                'name' => $venue_name,
+                'address' => $address,
+                'town' => $town,
+                'postcode' => $postcode,
+            ]);
+
+            $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+
+            $result = [
+                'venue_id' => $venue->id
+            ];
+
+        }
+        return $result;
+    }
+
+    public function validateAndUpdate($inputs)
+    {
+        $validator = static::validateInputs($inputs);
+
         if ($validator->fails()) {
             $result = [
                 'validation_failed' => 1,
@@ -65,43 +109,22 @@ class Venue extends \Eloquent
 
             $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
 
-            $venue = static::create([
-                'user_id' => $id,
+            $this->update([
                 'name' => $venue_name,
                 'address' => $address,
                 'town' => $town,
                 'postcode' => $postcode,
-                'lat' => $lat,
-                'lng' => $lng
             ]);
 
-            $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+            $this->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
 
             $result = [
-                'venue_id' => $venue->id
+                'venue_id' => $this->id
             ];
 
         }
         return $result;
     }
-
-    /**
-     * @param $id
-     * @return VenuesController|\Illuminate\View\View
-     */
-    public static function editUsersVenue($id)
-    {
-        $venue = static::find($id);
-
-        $facilities = [];
-        foreach ($venue->facilities as $facility) {
-            $facilities[] = $facility->id;
-        }
-
-        return View::make('venues.edit_form')->with('venue', $venue)->with('selectedFacilities', $facilities);
-    }
-
-
 
     public function evercisegroup()
     {

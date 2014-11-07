@@ -28,7 +28,7 @@ class StripePaymentTest extends TestCase
         $evercisegroupId = 136;
         $sessionId = 1231;
         $date_time = '2014-11-17 21:30:00';
-
+/*
         Cart::associate('Evercisesession')->add( $productCode, $groupName, $quantity, $price,
             [
                 'evercisegroupId' => $evercisegroupId,
@@ -38,7 +38,7 @@ class StripePaymentTest extends TestCase
         );
 
         $response = $this->action('POST', 'StripePaymentController@store');
-
+*/
 
 
     }

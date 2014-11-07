@@ -20,19 +20,14 @@ class VenuesController extends \BaseController
      */
     public function edit($id)
     {
-        return Venue::editUsersVenue($id);
-    }
+        $venue = Venue::find($id);
 
-    /**
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update($id)
-    {
+        $facilities = [];
+        foreach ($venue->facilities as $facility) {
+            $facilities[] = $facility->id;
+        }
 
-        $result = Venue::storeNewVenue(Input::all(), $this->user->id);
-
-        return Response::json($result);
+        return View::make('venues.edit_form')->with('venue', $venue)->with('selectedFacilities', $facilities);
     }
 
 
