@@ -2,7 +2,7 @@
 
 use Input, Response, Validator, Event, Evercisegroup, Subcategory, Trainerhistory;
 
-class SessionsController extends AjaxBaseController{
+class EvercisegroupsController extends AjaxBaseController{
 
 
 
