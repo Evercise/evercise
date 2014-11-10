@@ -9,30 +9,29 @@
         </div>
         <div class="row mt50 mb50">
             <div class="col-sm-8 col-sm-offset-2">
-                {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'mb50', 'role' => 'form'] ) }}
-                {{Form::close()}}
-                    <div class="form-group mb15">
-                        {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
-                        {{ Form::select('category-select', $subcategories, '', ['class' => 'form-control mb40 select2', 'multiple'] ) }}
-                    </div>
-                    <div class="form-group mb15">
-                        @include('v3.widgets.class_image_upload')
+                <div class="form-group mb15">
+                    {{ Form::label('category-select', 'Category', ['class' => 'mb15', 'form' => 'create-class'] ) }}
+                    {{ Form::select('category-select', $subcategories, '', ['class' => 'form-control mb40 select2', 'multiple' , 'form' => 'create-class'] ) }}
+                </div>
+                <div class="form-group mb50">
+                    @include('v3.widgets.class_image_upload')
 
+                </div>
+                {{ Form::open(['url' => 'home', 'method' => 'post', 'role' => 'form', 'id' => 'create-class'] ) }}
+                    <div class="form-group mb50">
+                        {{ Form::label('class_name', 'Name of your Class', ['class' => 'mb15 required' , 'form' => 'create-class'] )  }}
+                        {{ Form::text('class_name', null, ['class' => 'form-control', 'placeholder' => 'Max 50 Characters', 'maxlength' => 50, 'form' => 'create-class']) }}
                     </div>
                     <div class="form-group mb50">
-                        {{ Form::label('class-name', 'Name of your Class', ['class' => 'mb15'] )  }}
-                        {{ Form::text('class-name', null, ['class' => 'form-control required', 'placeholder' => 'Max 50 Characters', 'maxlength' => 50]) }}
+                        {{ Form::label('class_description', 'Class Description', ['class' => 'mb15', 'form' => 'create-class'] )  }}
+                        {{ Form::textarea('class_description', null, ['class' => 'form-control required', 'placeholder' => 'Between 50 and 500 characters', 'maxlength' => 500, 'rows'=> 7, 'form' => 'create-class']) }}
                     </div>
                     <div class="form-group mb50">
-                        {{ Form::label('class-description', 'Class Description', ['class' => 'mb15'] )  }}
-                        {{ Form::textarea('class-description', null, ['class' => 'form-control required', 'placeholder' => 'Between 50 and 500 characters', 'maxlength' => 500, 'rows'=> 7]) }}
-                    </div>
-                    <div class="form-group mb50">
-                        {{ Form::label('venue-select', 'Venue', ['class' => 'mb15'] ) }}
+                        {{ Form::label('venue_select', 'Venue', ['class' => 'mb15', 'form' => 'create-class'] ) }}
                         <div class="input-group">
 
                             <div class="custom-select">
-                                {{ Form::select('venue-select', $venues , '', ['class' => 'form-control '] ) }}
+                                {{ Form::select('venue_select', $venues , '', ['class' => 'form-control', 'form' => 'create-class'] ) }}
                             </div>
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#create-venue">
@@ -44,8 +43,9 @@
 
                     <div class="row">
                         <div class="col-sm-6 text-right"><button class="btn btn-default">Cancel</button> </div>
-                        <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary'] )  }}</div>
+                        <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>
                     </div>
+                {{Form::close()}}
 
 
             </div>

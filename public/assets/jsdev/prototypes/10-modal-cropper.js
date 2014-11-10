@@ -109,6 +109,7 @@ imageCropper.prototype = {
 
             beforeSend: function () {
                 self.croppedForm.find("input[type='submit']").prop('disabled', true).after('<span id="cropping-loading" class="icon icon-loading ml10"></span>');
+                self.image.cropper("disable");
             },
 
             success: function (data) {

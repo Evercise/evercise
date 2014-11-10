@@ -1,42 +1,34 @@
-@media (min-width: @grid-float-breakpoint) {
-  .calendar-wrapper {
-    margin-right: -70px;
-  }
-  .calendar {
-    margin-left: -35px;
-  }
-}
 .calendar{
-  width: 100%;
-  th,td{
-    text-align: center;
-    padding: 7px;
-  }
-
-  a{
-    height: 38px;
-    width: 38px;
-    display: inline-block;
-    line-height: 32px;
-    vertical-align: middle;
-    border-radius: 50%;
-    border: 3px solid @white;
-  }
-  .active{
-    background-color: @brand-success;
-    border: 3px solid @brand-success;
-    color: @white;
-  }
-  th{
-    padding-bottom: 20px;
-    color: @gray-darker;
-  }
-  .calendar-days{
-    a{
-      color: @gray-darker;
-      font-weight: 700;
-      &.active{
-        background-color: @white;
+  margin-left: -40px;
+  margin-right: -40px;
+  .datepicker-inline{
+    width: 100%;
+    table{
+      width: 100%;
+      tr{
+        .dow{
+          cursor: pointer;
+        }
+        td{
+          &.active{
+            background-color: transparent!important;
+            border-color: @white!important;
+            position: relative;
+            &:before{
+              content: '';
+              border-radius: 50%;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              background: @brand-success;
+              height: 40px;
+              width: 40px;
+              margin-top: -20px;
+              margin-left: -20px;
+              z-index: -1;
+            }
+          }
+        }
       }
     }
   }

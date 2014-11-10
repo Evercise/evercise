@@ -7934,6 +7934,9 @@ a.bg-light-grey:hover {
 .form-control-feedback {
   top: 41px;
 }
+.form-control-feedback.bv-no-label {
+  top: 0;
+}
 .btn-fb {
   color: #ffffff;
   background-color: #395284;
@@ -9140,46 +9143,36 @@ label {
   height: 260px;
   width: 100%;
 }
-@media (min-width: 768px) {
-  .calendar-wrapper {
-    margin-right: -70px;
-  }
-  .calendar {
-    margin-left: -35px;
-  }
-}
 .calendar {
+  margin-left: -40px;
+  margin-right: -40px;
+}
+.calendar .datepicker-inline {
   width: 100%;
 }
-.calendar th,
-.calendar td {
-  text-align: center;
-  padding: 7px;
+.calendar .datepicker-inline table {
+  width: 100%;
 }
-.calendar a {
-  height: 38px;
-  width: 38px;
-  display: inline-block;
-  line-height: 32px;
-  vertical-align: middle;
+.calendar .datepicker-inline table tr .dow {
+  cursor: pointer;
+}
+.calendar .datepicker-inline table tr td.active {
+  background-color: transparent!important;
+  border-color: #ffffff !important;
+  position: relative;
+}
+.calendar .datepicker-inline table tr td.active:before {
+  content: '';
   border-radius: 50%;
-  border: 3px solid #ffffff;
-}
-.calendar .active {
-  background-color: #87cf39;
-  border: 3px solid #87cf39;
-  color: #ffffff;
-}
-.calendar th {
-  padding-bottom: 20px;
-  color: #383d48;
-}
-.calendar .calendar-days a {
-  color: #383d48;
-  font-weight: 700;
-}
-.calendar .calendar-days a.active {
-  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #87cf39;
+  height: 40px;
+  width: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  z-index: -1;
 }
 .hub-row {
   border-bottom: 1px solid #e8ebec;

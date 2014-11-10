@@ -9,14 +9,12 @@
                     <button id="cover-remove" type="button" class="btn btn-danger hidden btn-remove">remove</button>
                     <div class="row">
                         <div class="text-center col-sm-12 mt50">
-                            <span id="image-select" class="icon-block icon-lg-camera hover mb50"></span>
-                            <p>Min image size (H)blub pixels X (W)blub pixels - maximum file size of 2MB</p>
+                            <span id="image-select" class="icon-block icon-lg-camera hover mb40"></span>
+                            <p>Click to icon above to upload your own image or alternatively choose from the selection below</p>
+                            <p>Maximum file size of 2MB</p>
                             <p>Formats: JPG, JPEG, PNG or GIF</p>
                         </div>
                     </div>
-
-
-
                 {{ Form::close() }}
                 </div>
                 <div class="modal modal-cropper" id="create-image" data-backdrop="static">

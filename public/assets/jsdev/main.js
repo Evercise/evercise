@@ -44,8 +44,7 @@ $(function(){
         new ImagePlaceholder();
     })
 
-    $('#register-form').exists(function(){
-        self = this;
+    $('#register-form, #create-class').exists(function(){
         new Validation(this);
     })
 
@@ -133,9 +132,9 @@ $(function(){
         new createVenue(this);
     })
 
-
-
-
+    $('#calendar').exists(function(){
+        new Calendar(this);
+    })
 
 
 });

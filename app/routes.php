@@ -23,6 +23,14 @@ Route::get('/popular', [
     ]
 );
 
+Route::get('/addsessions', [
+        'as' => 'add.sessions',
+        function () {
+            return View::make('v3.classes.add_sessions');
+        }
+    ]
+);
+
 
 /* end tempary routes for new styles */
 

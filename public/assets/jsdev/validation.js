@@ -86,13 +86,40 @@ var Validation = function(form){
             }
         }
     };
+    this.class_name = {
+        validators: {
+            notEmpty: {
+                message: 'Your class name is required'
+            },
+            stringLength: {
+                min: 3,
+                max: 50,
+                message: 'Your class name must be more than 3 and less than 50 characters long'
+            }
+        }
+    };
+    this.class_description = {
+        validators: {
+            notEmpty: {
+                message: 'Your class needs a description'
+            },
+            stringLength: {
+                min: 50,
+                max: 500,
+                message: 'Your class description must be more than 50 and less than 500 characters long'
+            }
+        }
+    };
 
     this.init();
 }
 Validation.prototype = {
     constructor: Validation,
     init: function(){
-
+        this.form.find("input[type='submit']").prop('disabled', true);
+        this.validation();
+    },
+    validation: function(){
         this.form.bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -107,7 +134,9 @@ Validation.prototype = {
                 first_name: this.first_name,
                 last_name: this.last_name,
                 password: this.password,
-                confirmed_password: this.confirmed_password
+                confirmed_password: this.confirmed_password,
+                class_name: this.class_name,
+                class_description: this.class_description
             }
         })
         .on('success.form.bv', function(e) {
