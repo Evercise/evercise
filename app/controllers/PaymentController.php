@@ -12,7 +12,7 @@ class PaymentController extends BaseController {
      * After user enters payment details, Stripe directs back to '/stripe' (specified in the stripe JS button)
      * This function will specify the payment amount, and receive the token from Stripe.
     */
-    public function confirmStripePayment()
+    public function processStripePaymentSessions()
     {
 
         /* get Cart data */
@@ -80,7 +80,8 @@ class PaymentController extends BaseController {
             return 'card error';
         }
 
-        $this->paid($token, $charge['id']);
+        $transactionId = $charge['id'];
+        $this->paid($token, $transactionId);
 
         return Redirect::to('payment_confirmation')
             ->with('cartData', $cartData );
@@ -88,6 +89,60 @@ class PaymentController extends BaseController {
             ->with('transactionId', $charge['id'] )
             ->with('payerId',$customer->id )
             ->with('paymentMethod', 'stripe' )*/
+    }
+
+    public function processStripePaymentTopup()
+    {
+        $cartRowId = EverciseCart::search(['id' => 'TOPUP'])[0];
+        $cartRow = EverciseCart::get($cartRowId);
+
+        $amount = $cartRow['price'];
+
+        $token  = '';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['stripeToken'])) {
+                $token = $_POST['stripeToken'];
+            } else {
+
+                throw new \Exception('Could not find token');
+            }
+        }
+
+        /* Convert amount to pennies to be sent to Stripe */
+        $amountInPennies = SessionPayment::poundsToPennies($amount);
+
+        try
+        {
+            $customer = Stripe_Customer::create(array(
+                'email' => $this->user->email,
+                'card'  => $token
+            ));
+
+            $charge = Stripe_Charge::create(array(
+                'customer' => $customer->id,
+                'amount'   => $amountInPennies,
+                'currency' => 'gbp'
+            ));
+        }
+        catch(Stripe_CardError $e)
+        {
+            return 'card error';
+        }
+
+        $transactionId = $charge['id'];
+        $this->user->wallet->deposit($amount);
+        EverciseCart::clearTopup();
+
+
+        $data = [
+            'amount' => $amount,
+            'token' => $token,
+            'transactionId' => $transactionId,
+        ];
+
+        return Redirect::to('topup_confirmation')
+            ->with('topup_details', $data );
+
     }
 
 
@@ -99,7 +154,7 @@ class PaymentController extends BaseController {
      */
     public function paid($token, $transactionId)
     {
-        /* Get evercisesession payment stuff from session, and delete it so it wont be used again. */
+        /* Get evercisesession payment stuff from Cart, and delete it so it wont be used again. */
         $cartData = EverciseCart::getCart();
         $paymentMethod = 'stripe';
 
@@ -136,13 +191,23 @@ class PaymentController extends BaseController {
 
     }
 
-    public function confirmation()
+    public function sessionConfirmation()
     {
         /* Get cart data sent with redirect, as Cart has now been cleared */
         $cartData = Session::get('cartData');
 
         return View::make('v3.cart.confirmation')
             ->with('data', $cartData);
+
+    }
+
+    public function topupConfirmation()
+    {
+        /* Get topup details sent with redirect */
+        $data = Session::get('topup_details');
+
+        return View::make('v3.cart.topup_confirmation')
+            ->with('data', $data);
 
     }
 

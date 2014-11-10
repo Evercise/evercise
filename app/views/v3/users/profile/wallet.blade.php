@@ -6,7 +6,6 @@
         <div id="masonry" class="row masonry">
             <div class="col-md-6 masonry-item">
                 <ul class="list-group">
-                    {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
                       <li class="list-group-item ">
                         <div class="row">
                             <div class="col-sm-8">
@@ -25,10 +24,18 @@
                         </div>
                         <div class="row mt20 sm-inline-gutter">
                             <div class="btn-group col-sm-2">
-                                <button class="btn btn-primary btn-sm btn-block">&pound;10</button>
+                                {{ Form::open(array('id' => 'add-topup', 'url' => 'ajax/cart/add', 'method' => 'post', 'class' => '')) }}
+                                    {{ Form::hidden( 'product-id' , 'T', array('id' => 'product-id')) }}
+                                    {{ Form::hidden( 'amount' , '10', array('id' => 'amount')) }}
+                                    {{ Form::submit('&pound;10' , array('class'=>'btn btn-primary btn-sm btn-block', 'id' => '')) }}
+                                {{ Form::close() }}
                             </div>
                             <div class="btn-group col-sm-2">
-                                <button class="btn btn-light-grey btn-transparent btn-sm btn-block">&pound;25</button>
+                                {{ Form::open(array('id' => 'add-topup', 'url' => 'ajax/cart/add', 'method' => 'post', 'class' => '')) }}
+                                    {{ Form::hidden( 'product-id' , 'T', array('id' => 'product-id')) }}
+                                    {{ Form::hidden( 'amount' , '25', array('id' => 'amount')) }}
+                                    {{ Form::submit('&pound;25' , array('class'=>'btn btn-primary btn-sm btn-block', 'id' => '')) }}
+                                {{ Form::close() }}
                             </div>
                             <div class="btn-group col-sm-2">
                                 <button class="btn btn-light-grey btn-transparent btn-sm btn-block">&pound;50</button>
@@ -39,16 +46,6 @@
                         </div>
 
                       </li>
-                      <li class="list-group-item ">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <strong>Have a voucher to redeem?</strong>
-                            </div>
-                            <div class="col-sm-12 mt20">
-                               {{ Form::text('voucher', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter Voucher Code']) }}
-                            </div>
-                        </div>
-                      </li>
                       <li class="list-group-item">
                         <div class="row">
                             <div class="col-sm-5">
@@ -58,11 +55,21 @@
                                 Or
                             </div>
                             <div class="col-sm-5">
-                                <button class="btn btn-primary btn-block">Pay with Credit Card</button>
+                                {{ Form::open(array('id' => 'join-sessions-stripe', 'url' => 'stripe/topup', 'method' => 'post', 'class' => '')) }}
+                                    <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+                                      data-key="@stripeKey"
+                                      data-image="{{url()}}/img/evercoin.png"
+                                      data-name="Evercise"
+                                      data-currency="gbp"
+                                      data-email="{{ $user->email}}"
+                                      data-address="true"
+                                      data-description=""
+                                      data-amount="1000">
+                                      </script>
+                                {{ Form::close() }}
                             </div>
                         </div>
                       </li>
-                    {{ Form::close() }}
                 </ul>
             </div>
             <div class="col-md-6 masonry-item">

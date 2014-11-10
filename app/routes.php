@@ -14,7 +14,6 @@
 
 // temporary routes for new layouts
 
-
 Route::get('/popular', [
         'as' => 'popular',
         function () {
@@ -62,6 +61,9 @@ Route::group(['prefix' => 'ajax'], function () {
 
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
+
+    //Gallery
+    Route::post('gallery/getDefaults', array('as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults'));
 });
 
 /* Show home page */
@@ -208,7 +210,7 @@ Route::any('/uk/', array('as' => 'evercisegroups.search', 'uses' => 'SearchContr
 Route::get('venues', 'VenuesController@index');
 Route::get('venues/create', 'VenuesController@create');
 Route::get('venues/edit/{id}', 'VenuesController@edit');
-Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'VenuesController@store']);
+Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
 Route::post('venues/update/{id}', 'VenuesController@update');
 
 
@@ -239,10 +241,11 @@ Route::post(
 );
 
 /* New Stripe payment */
-Route::post('stripe', array('as' => 'stripe', 'uses' => 'PaymentController@confirmStripePayment'));
-Route::get('sessions/{evercisegroupId}/paid', ['as' => 'sessions.paid', 'uses' => 'PaymentController@paid']);
-Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@confirmation']);
-Route::get('conftest', ['as' => 'conftest', 'uses' => 'PaymentController@conftest']);
+Route::post('stripe/sessions', array('as' => 'stripe.sessions', 'uses' => 'PaymentController@processStripePaymentSessions'));
+Route::post('stripe/topup', array('as' => 'stripe.topup', 'uses' => 'PaymentController@processStripePaymentTopup'));
+Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@sessionConfirmation']);
+Route::get('topup_confirmation', ['as' => 'topup_confirmation', 'uses' => 'PaymentController@topupConfirmation']);
+Route::get('topup', ['as' => 'topup', 'uses' => 'PaymentController@topup']);
 /* ------------------ */
 
 // payment (old)
@@ -495,8 +498,21 @@ Route::group(
             ['as' => 'admin.groups.addcat','uses' => 'MainController@addCategory']);
         Route::get('/fakeratings',
             ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
+
+
+        Route::get('expired/{date?}',
+            ['as' => 'admin.expired', 'uses' => 'MainController@expired']);
     }
 
 
 );
+
+Route::get('newvenue', function(){
+    $venue = Venue::validateAndStore(['venue_name' => 'name2', 'street' => 'street2', 'city' => 'city2', 'postcode' => 'postcode2'], '169');
+    return var_dump($venue);
+});
+Route::get('updatevenue/{id}', function($id){
+    $venue = Venue::find($id)->validateAndUpdate(['venue_name' => 'edited1', 'street' => 'edited1', 'city' => 'edited1', 'postcode' => 'edited1', 'facilities_array' => ['4', '5']]);
+    return var_dump($venue);
+});
 

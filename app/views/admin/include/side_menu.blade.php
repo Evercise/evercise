@@ -53,6 +53,13 @@
                     </li>
 
                     <li class="first_level">
+                        <a href="{{ URL::route('admin.expired') }}">
+                            <span class="icon_error-triangle_alt first_level_icon"></span>
+                            <span class="menu-title">Expired Classes</span>
+                        </a>
+                    </li>
+
+                    <li class="first_level">
                         <a href="{{ URL::route('admin.log') }}">
                             <span class="icon_error-triangle_alt first_level_icon"></span>
                             <span class="menu-title">Error Log</span>

@@ -19,6 +19,7 @@ class CartController extends AjaxBaseController
 
         $idArray = EverciseCart::fromProductCode($productCode);
 
+
         if( $idArray['type'] == 'session')
         {
             $sessionId = $idArray['id'];
@@ -52,6 +53,12 @@ class CartController extends AjaxBaseController
         else if( $idArray['type'] == 'package')
         {
             // Package has been added
+        }
+        else if( $idArray['type'] == 'topup')
+        {
+            $amount = Input::get('amount', 0);
+            EverciseCart::clearTopup();
+            EverciseCart::add( $idArray['id'], 'top up', 1, $amount, []);
         }
         else
         {
