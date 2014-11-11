@@ -610,6 +610,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+    public function wallethistory()
+    {
+        return $this->hasMany('Wallethistory');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function evercoin()
     {
         return $this->hasOne('Evercoin');

@@ -94,14 +94,14 @@ class Wallet extends \Eloquent
         return $result;
     }
 
-    public function deposit($amount, $sessionpayment_id = 0)
+    public function deposit($amount, $description, $sessionmember_id = 0)
     {
-        $this->transaction($amount, $sessionpayment_id);
+        $this->transaction($amount, $description, $sessionmember_id);
     }
 
-    public function withdraw($amount, $sessionpayment_id = 0)
+    public function withdraw($amount, $description, $sessionmember_id = 0)
     {
-        $this->transaction(-$amount, $sessionpayment_id);
+        $this->transaction(-$amount, $description, $sessionmember_id);
     }
 
     public function recordedSave(array $params)
@@ -113,7 +113,8 @@ class Wallet extends \Eloquent
                 'user_id' => $params['user_id'],
                 'transaction_amount' => $params['transaction_amount'],
                 'new_balance' => $params['new_balance'],
-                'sessionpayment_id' => $params['sessionpayment_id']
+                'sessionmember_id' => $params['sessionmember_id'],
+                'description' => $params['description'],
             ]
         );
 
@@ -121,7 +122,7 @@ class Wallet extends \Eloquent
 
     }
 
-    protected function transaction($amount, $sessionpayment_id)
+    protected function transaction($amount, $description, $sessionmember_id)
     {
 
         $user_id = $this->attributes['user_id'];
@@ -132,9 +133,10 @@ class Wallet extends \Eloquent
         Wallethistory::create(
             [
                 'user_id' => $user_id,
-                'sessionpayment_id' => $sessionpayment_id,
+                'sessionmember_id' => $sessionmember_id,
                 'transaction_amount' => $amount,
-                'new_balance' => $this->attributes['balance']
+                'new_balance' => $this->attributes['balance'],
+                'description' => $description,
             ]
         );
     }
@@ -151,5 +153,9 @@ class Wallet extends \Eloquent
         return Wallet::where('user_id', $user_id)->first();
     }
 
+    public function getBalance()
+    {
+        return sprintf('%0.2f', $this->balance);
+    }
+
 }
-  

@@ -69,7 +69,7 @@ class ReferralsController extends \BaseController {
 		        ));
 			}
 
-			return Response::json(['callback'=>'gotoUrl', 'url'=>route('users.edit.tab', [$this->user->id, 'evercoins'])]);
+			return Response::json(['success'=>'true']);
 		}
 	}
 

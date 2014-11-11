@@ -339,6 +339,7 @@ Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'Referra
 Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
 Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
 
+Route::post('referral', array('as' => 'referral', 'uses' => 'ReferralsController@store'));
 
 
 Route::get('tokens/fb', array('as' => 'tokens.fbtoken', 'uses' => 'TokensController@fb'));
@@ -534,10 +535,19 @@ Route::get('updategroup/{id}', function($id){
 Route::get('creategroup', function(){
     $result = Evercisegroup::validateAndStore([
         'name'=>'Some new rubbish group',
-        'venue_id'=>'288',
+        'venue_id'=>'28',
         'description'=>'new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one ',
         'image'=>'image.jpg',
         'category2'=>'Dance',
     ], Sentry::getUser());
     return var_dump($result);
 });
+
+Route::get('show_amenities/{venueId}', function($id){
+        return Venue::find($id)->getAmenities($id);
+    }
+);
+Route::get('show_facilities/{venueId}', function($id){
+        return Venue::find($id)->getFacilities($id);
+    }
+);

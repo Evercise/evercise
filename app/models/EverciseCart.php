@@ -78,9 +78,9 @@ class EverciseCart extends Cart
 
     public static function clearTopup()
     {
-        $cartRowIds = EverciseCart::search(['id' => 'TOPUP']);
+        $cartRowIds = EverciseCart::instance('topup')->search(['id' => 'TOPUP']);
         if($cartRowIds)
             foreach($cartRowIds as $cartRowId)
-                EverciseCart::remove($cartRowId);
+                EverciseCart::instance('topup')->remove($cartRowId);
     }
 } 

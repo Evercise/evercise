@@ -147,4 +147,30 @@ class Venue extends \Eloquent
     {
         return $this->hasManyThrough('Evercisesession', 'Evercisegroup');
     }
+
+    public function getAmenities()
+    {
+        $amenities = [];
+        foreach($this->facilities as $facility)
+        {
+            if ($facility->category == 'amenity')
+            {
+                array_push($amenities, $facility);
+            }
+        }
+        return $amenities;
+    }
+
+    public function getFacilities()
+    {
+        $facilities = [];
+        foreach($this->facilities as $facility)
+        {
+            if ($facility->category == 'facility')
+            {
+                array_push($facilities, $facility);
+            }
+        }
+        return $facilities;
+    }
 }
