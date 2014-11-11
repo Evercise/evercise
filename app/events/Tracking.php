@@ -320,7 +320,14 @@ class Tracking
         $categories_arr = [];
         foreach ($categories as $cat) {
             $categories_arr[] = $cat->name;
-            $main_categories[$cat->categories->first()->name] = true;
+
+            $first = $cat->categories()->first();
+
+            if(!empty($first->name)) {
+
+                $main_categories[$first->name] = true;
+            }
+
         }
 
         $class_obj = new \stdClass();
@@ -358,6 +365,7 @@ class Tracking
 
 
         $class_obj->Date_Time__c = gmdate("Y-m-d\TH:i:s\Z", strtotime($session->date_time));
+
 
 
         return $class_obj;
