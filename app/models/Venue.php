@@ -38,9 +38,9 @@ class Venue extends \Eloquent
         $validator = Validator::make(
             $inputs,
             [
-                'venue_name' => 'required|max:45',
-                'street' => 'required|min:2',
-                'city' => 'required|min:2',
+                'name' => 'required|max:45',
+                'address' => 'required|min:2',
+                'town' => 'required|min:2',
                 'postcode' => 'required|has_not:special|has:letter,num|min:4',
             ],
             ['postcode.has_not' => 'Post code must not contain any special characters',
@@ -84,7 +84,8 @@ class Venue extends \Eloquent
             $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
 
             $result = [
-                'venue_id' => $venue->id
+                'venue_id' => $venue->id,
+                'venue_name' => $venue->name
             ];
 
         }

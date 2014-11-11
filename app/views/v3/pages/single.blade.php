@@ -14,12 +14,6 @@
         <div class="col-sm-8">
             <div class="article-block">
                 <h1>{{ $article->title }}</h1>
-                {{ HTML::image('img/pages/2014/11/mewis-test-article.jpg', $article->title.' main image' ,['class' => 'article-main-img']) }}
-                {{ $article->content }}
-            </div>
-            <div class="article-block">
-                <h1>{{ $article->title }}</h1>
-                {{ HTML::image('img/pages/2014/11/mewis-test-article.jpg', $article->title.' main image' ,['class' => 'article-main-img']) }}
                 {{ $article->content }}
             </div>
         </div>

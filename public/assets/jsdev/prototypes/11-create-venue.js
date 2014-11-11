@@ -1,5 +1,6 @@
-function createVenue(form){
-    this.form = form;
+function createVenue(container){
+    this.container = container;
+    this.form = container.find('#create_venue');
     this.next = this.form.find('.next');
     this.validIcon = 'glyphicon glyphicon-ok';
     this.invalidIcon = 'glyphicon glyphicon-remove';
@@ -27,6 +28,19 @@ function createVenue(form){
                 min: 2,
                 max: 50,
                 message: 'Your street name must be more than 2 and less than 50 characters long'
+            }
+        }
+    };
+    this.town = {
+        message: 'Your town is not valid',
+        validators: {
+            notEmpty: {
+                message: 'Your Venue requires a town'
+            },
+            stringLength: {
+                min: 2,
+                max: 50,
+                message: 'Your town name must be more than 2 and less than 50 characters long'
             }
         }
     };
@@ -64,7 +78,7 @@ createVenue.prototype = {
     validation: function(){
         var self = this;
 
-        $('#create_venue').bootstrapValidator({
+        $(this.form).bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
                 valid: this.validIcon,
@@ -73,9 +87,10 @@ createVenue.prototype = {
             },
 
             fields: {
-                venue_name: this.venueName,
-                venue_street: this.venueStreet,
-                venue_post_code: this.venuePC
+                name: this.venueName,
+                address: this.venueStreet,
+                town: this.town,
+                postcode: this.venuePC
             }
         })
         .on('success.form.bv', function(e) {
@@ -84,21 +99,24 @@ createVenue.prototype = {
         });
     },
     ajaxUpload: function () {
-        var url = this.form.attr("action"),
-            data = new FormData(this.form[0]),
-            self = this;
-        $.ajax(url, {
+        var  self = this;
+        console.log(self.form.serialize());
+        $.ajax(self.form.attr("action"), {
             type: "post",
-            data: data,
-            processData: false,
-            contentType: false,
+            data: self.form.serialize(),
+            dataType: 'json',
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true).after('<span id="cropping-loading" class="icon icon-loading ml10"></span>');
             },
 
             success: function (data) {
+                console.log(data);
                 self.form.find("input[type=submit]").prop('disabled', false);
+                $('#venue_select').append( $('<option />', {text : data.venue_name, value: data.venue_id, selected: true} ) );
+
+
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -106,6 +124,7 @@ createVenue.prototype = {
             },
 
             complete: function () {
+                $('#cropping-loading').remove();
                 console.log('complete');
             }
         });

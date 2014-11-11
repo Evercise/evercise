@@ -59,6 +59,9 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('sessions/add', array('as' => 'sessions.add', 'uses' => 'ajax\SessionsController@store'));
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
 
+    // venue
+    Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
+
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
 
@@ -210,7 +213,6 @@ Route::any('/uk/', array('as' => 'evercisegroups.search', 'uses' => 'SearchContr
 Route::get('venues', 'VenuesController@index');
 Route::get('venues/create', 'VenuesController@create');
 Route::get('venues/edit/{id}', 'VenuesController@edit');
-Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
 Route::post('venues/update/{id}', 'VenuesController@update');
 
 

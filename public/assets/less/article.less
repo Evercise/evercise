@@ -62,31 +62,32 @@
     font-size: @article-font-size-base;
     line-height: @article-line-height-computed;
 
-    h1, .h1 { .heading-text(); font-size: @article-font-size-h1; }
-    h2, .h2 { .heading-text(); font-size: @article-font-size-h2; }
-    h3, .h3 { .heading-text(); font-size: @article-font-size-h3; }
-    h4, .h4 { .heading-text(); font-size: @article-font-size-h4; }
-    h5, .h5 { .heading-text(); font-size: @article-font-size-h5; }
-    h6, .h6 { .heading-text(); font-size: @article-font-size-h6; }
 
-   .article-main-img{
+  h1, .h1 { .heading-text(); font-size: @article-font-size-h1; }
+  h2, .h2 { .heading-text(); font-size: @article-font-size-h2; }
+  h3, .h3 { .heading-text(); font-size: @article-font-size-h3; }
+  h4, .h4 { .heading-text(); font-size: @article-font-size-h4; }
+  h5, .h5 { .heading-text(); font-size: @article-font-size-h5; }
+  h6, .h6 { .heading-text(); font-size: @article-font-size-h6; }
+
+  img.article-main-img{
      display: block;
      width: 100% \9;
      max-width: 100%;
      height: auto;
      margin-bottom: 20px;
    }
-  .article-img-left{
+  img.article-img-left{
     float: left;
     margin-right: 20px;
     margin-bottom: 10px;
   }
-  .article-img-right{
+  img.article-img-right{
     float: right;
     margin-left: 20px;
     margin-bottom: 10px;
   }
-  .article-img-center{
+  img.article-img-center{
     float: none;
     margin: auto;
     display: block;
@@ -109,7 +110,7 @@
     border: 1px solid #cccccc;
     border-radius: 3px;
   }
-  
+
   strong{
     color: #383d48;
     font-width: bold;
@@ -124,5 +125,25 @@
     margin-bottom: 10px;
     border-bottom: 1px solid @article-grey;
   }
-
+  span.alert{
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #ebccd1;
+    background: #f2dede;
+    color: #a94442;
+  }
+  span.success{
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #d6e9c6;
+    background: #dff0d8;
+    color: #87cf39;
+  }
+  blockquote{
+    padding: 12.5px 25px;
+    margin: 0 0 25px;
+    font-size: 17.5px;
+    border-left: 5px solid #f1f2f3;
+  }
 }
+

@@ -1,6 +1,12 @@
 @extends('v3.layouts.master')
 @section('body')
-    <h2>{{ $article->title }}</h2>
+    <div class="container first-container article">
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <h1>{{ $article->title }}</h1>
 
-    {{ $article->content }}
+                {{ $article->content }}
+            </div>
+        </div>
+    </div>
 @stop

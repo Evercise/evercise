@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Response, Venue;
+use Input, Response, Venue, Sentry;
 
 class VenuesController extends AjaxBaseController{
 
@@ -23,7 +23,6 @@ class VenuesController extends AjaxBaseController{
     public function store()
     {
         $result = Venue::validateAndStore( $this->user->id, Input::all() );
-
         return Response::json($result);
     }
 

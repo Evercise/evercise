@@ -11,23 +11,23 @@
         </ul>
       </div>
       <div class="modal-body">
-        {{ Form::open(['url' => '', 'method' => 'post', 'id' => 'create_venue', 'class'=>'', 'role' => 'form'] ) }}
+        {{ Form::open(['route' => 'venue.store', 'method' => 'post', 'id' => 'create_venue', 'class'=>'', 'role' => 'form'] ) }}
             <div class="tab-content">
               <div class="tab-pane active" id="venue-tab">
                    <div class="form-group">
-                     {{ Form::label('venue_name', 'Add a new venue', ['class' => 'mb15'] )  }}
-                     {{ Form::text('venue_name', null, ['class' => 'form-control mb20', 'placeholder' => 'Venue Name']) }}
+                     {{ Form::label('name', 'Add a new venue', ['class' => 'mb15'] )  }}
+                     {{ Form::text('name', null, ['class' => 'form-control mb20', 'placeholder' => 'Venue Name']) }}
                    </div>
                    <div class="form-group">
-                     {{ Form::text('venue_street', null, ['class' => 'form-control mb20', 'placeholder' => 'Street Name and Number']) }}
+                     {{ Form::text('address', null, ['class' => 'form-control mb20', 'placeholder' => 'Street Name and Number']) }}
                    </div>
                      <div class="row">
                         <div class="col-sm-6 text-right">
-                            {{ Form::text('venue_city', null, ['class' => 'form-control mb20', 'placeholder' => 'City']) }}
+                            {{ Form::text('town', null, ['class' => 'form-control mb20', 'placeholder' => 'City']) }}
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                              {{ Form::text('venue_post_code', null, ['class' => 'form-control mb20', 'placeholder' => 'Postal Code']) }}
+                              {{ Form::text('postcode', null, ['class' => 'form-control mb20', 'placeholder' => 'Postal Code']) }}
                             </div>
                         </div>
                      </div>

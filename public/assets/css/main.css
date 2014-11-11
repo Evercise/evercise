@@ -10105,24 +10105,24 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   font-weight: 500;
   font-size: 12px;
 }
-.article .article-main-img {
+.article img.article-main-img {
   display: block;
   width: 100% \9;
   max-width: 100%;
   height: auto;
   margin-bottom: 20px;
 }
-.article .article-img-left {
+.article img.article-img-left {
   float: left;
   margin-right: 20px;
   margin-bottom: 10px;
 }
-.article .article-img-right {
+.article img.article-img-right {
   float: right;
   margin-left: 20px;
   margin-bottom: 10px;
 }
-.article .article-img-center {
+.article img.article-img-center {
   float: none;
   margin: auto;
   display: block;
@@ -10158,4 +10158,24 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   margin-left: 60px;
   margin-bottom: 10px;
   border-bottom: 1px solid #e8ebec;
+}
+.article span.alert {
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 1px solid #ebccd1;
+  background: #f2dede;
+  color: #a94442;
+}
+.article span.success {
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 1px solid #d6e9c6;
+  background: #dff0d8;
+  color: #87cf39;
+}
+.article blockquote {
+  padding: 12.5px 25px;
+  margin: 0 0 25px;
+  font-size: 17.5px;
+  border-left: 5px solid #f1f2f3;
 }
