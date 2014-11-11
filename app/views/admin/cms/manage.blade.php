@@ -193,7 +193,7 @@
             <script src="/admin/assets/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
             <!-- wysiwg editor -->
-            <script src="//cdn.ckeditor.com/4.4.5/standard/ckeditor.js"></script>
+            <script type="text/javascript" src="/admin/assets/lib/ckeditor/ckeditor.js"></script>
             <script type="text/javascript" src="/admin/assets/lib/ckeditor/adapters/jquery.js"></script>
             <script type="text/javascript" src="/admin/assets/lib/ckfinder/ckfinder.js"></script>
 
@@ -338,7 +338,6 @@ $('#generated').click(function() {
             filebrowserImageUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
             height : '600px'
         });
-
 
     }
 
