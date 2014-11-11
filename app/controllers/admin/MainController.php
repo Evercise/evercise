@@ -140,7 +140,7 @@ class MainController extends \BaseController
 
         $trainerGroup = Sentry::findGroupByName('Trainer');
 
-        return View::make('admin . users', compact('users', 'trainerGroup'))->render();
+        return View::make('admin.users', compact('users', 'trainerGroup'))->render();
 
     }
 
@@ -149,7 +149,7 @@ class MainController extends \BaseController
         $user = Sentry::findUserById(Input::get('user_id'));
         Sentry::login($user);
 
-        return Redirect::route('users . edit');
+        return Redirect::route('users.edit');
     }
 
 
