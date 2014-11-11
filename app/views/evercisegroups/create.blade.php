@@ -9,7 +9,7 @@
     <div class="col10 push1">
         <div id="upload_wrapper">
             @if(Session::has('image_full'))
-                @include('widgets.upload-form', array('uploadImage' => Session::get('image_full') , 'label' => trans('evercisegroups-create.upload_image'), 'fieldtext'=>trans('evercisegroups-create.choose_class_image')))
+                @include('widgets.upload-form', array('uploadImage' => Session::get('image_full').'?'.time() , 'label' => trans('evercisegroups-create.upload_image'), 'fieldtext'=>trans('evercisegroups-create.choose_class_image')))
             @else
                 @include('widgets.upload-form', array('uploadImage' => null, 'default_image' => HTML::image( '/img/add_eg.png', 'preview image', array('class' => 'class-block-img')) , 'label' => trans('evercisegroups-create.upload_image'), 'fieldtext'=>trans('image.choose_class_image_tooltip')))
             @endif

@@ -111,5 +111,19 @@ class Functions {
         }
         return $dateTime;
     }
+
+
+    /**
+     * Create a slug URL and convert all shitty characters (non English) to english ones.. where possible)
+     * @param $string
+     * @return string
+     */
+    public static function urlSlug($string) {
+
+        $characters = Config::get('characters');
+
+        return Str::slug(preg_replace(array_keys($characters), array_values($characters), $string));
+
+    }
  
 }

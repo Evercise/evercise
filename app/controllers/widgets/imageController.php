@@ -39,7 +39,9 @@ class ImageController extends \BaseController {
 
             // change file name
             $filename = $file->getClientOriginalName();
-            $filename = Str::slug(' ', '_', $filename);
+            // $filename = Str::slug(' ', '_', $filename);
+            $filename = \Functions::urlSlug($filename).'-'.rand(1, 999);
+
             $ext = $file->getClientOriginalExtension();
             $filename = pathinfo($filename, PATHINFO_FILENAME);
             $filename = substr($filename, 0, 20); // Truncate file name to 20 characters
@@ -65,6 +67,8 @@ class ImageController extends \BaseController {
     }
 
     public function postCrop() {
+
+
         $pos_x = Input::get('pos_x');
         $pos_y = Input::get('pos_y');
         $width = Input::get('width');
@@ -93,13 +97,13 @@ class ImageController extends \BaseController {
         // crop image
         $img->crop($scaledCoords['width'], $scaledCoords['height'], $scaledCoords['pos_x'], $scaledCoords['pos_y']);
 
-        $increment = 0;
 
-        while(file_exists($img_path.'/'.(Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.Str::slug($user->display_name) .'-'. $increment . '.' . $ext)) {
-            $increment++;
-        }
 
-        $thumbFilename = (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'.Str::slug($user->display_name) .'-'. $increment . '.' . $ext;
+        $image_name = \Functions::urlSlug($user->display_name).'-'.rand(1, 999);
+
+
+
+        $thumbFilename = (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users').'-'. $image_name . '.' . $ext;
         $fileNameWithPath = '/profiles/' . $save_location . '/'.$thumbFilename;
         $img->save(public_path() . $fileNameWithPath);
 
