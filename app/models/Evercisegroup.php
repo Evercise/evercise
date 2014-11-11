@@ -10,7 +10,7 @@ class Evercisegroup extends \Eloquent
     /**
      * @var array
      */
-    protected $fillable = array(
+    protected $fillable = [
         'user_id',
         'category_id',
         'venue_id',
@@ -23,8 +23,17 @@ class Evercisegroup extends \Eloquent
         'default_duration',
         'default_price',
         'published'
-    );
+    ];
 
+    protected $editable = [
+        'name',
+        'venue_id',
+        'description',
+        'image',
+        'category1',
+        'category2',
+        'category3',
+    ];
 
     /**
      * The database table used by the model.
@@ -32,6 +41,176 @@ class Evercisegroup extends \Eloquent
      * @var string
      */
     protected $table = 'evercisegroups';
+
+    private static function validateInputs($inputs)
+    {
+
+        $validator = Validator::make(
+            $inputs,
+            [
+                'name' => 'required|max:100|min:5',
+                'description' => 'required|max:5000|min:100',
+                'image' => 'required',
+                'venue_id' => 'required',
+            ]
+        );
+
+        return $validator;
+    }
+
+    /**
+     * @param $inputs
+     * @param $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function validateAndStore($inputs, $user)
+    {
+        $validator = static::validateInputs($inputs);
+
+
+        if ($validator->fails()) {
+            $result = array(
+                'validation_failed' => 1,
+                'errors' => $validator->errors()->toArray()
+            );
+            return Response::json($result);
+        } else {
+
+            $classname = $inputs['name'];
+            $description = $inputs['description'];
+            $image = $inputs['image'];
+            $venueId = $inputs['venue_id'];
+
+            // Push categories into an array, and fail if there are none.
+            $categories = static::categoriesToArray($inputs);
+
+            if (empty($categories)) {
+                return Response::json(
+                    ['validation_failed' => 1, 'errors' => ['category1' => 'you must choose at least one category']]
+                );
+            }
+
+            // convert array of category names into id's
+            foreach ($categories as $key => $category) {
+                if (!$categories[$key] = Subcategory::where('name', $category)->pluck('id')) {
+                    return Response::json(
+                        [
+                            'validation_failed' => 1,
+                            'errors' => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
+                        ]
+                    );
+                }
+            }
+
+            $evercisegroup = static::create(
+                [
+                    'name' => $classname,
+                    'user_id' => $user->id,
+                    'venue_id' => $venueId,
+                    'description' => $description,
+                    'image' => $image,
+                    'venue_id' => $venueId,
+                ]
+            );
+
+            $evercisegroup->subcategories()->attach($categories);
+
+            Trainerhistory::create(
+                [
+                    'user_id' => $user->id,
+                    'type' => 'created_evercisegroup',
+                    'display_name' => $user->display_name,
+                    'name' => $evercisegroup->name
+                ]
+            );
+
+            Event::fire('evecisegroup.created', [$user, $evercisegroup]);
+
+            return Response::json(['success' => 'true', 'id' => $evercisegroup->id ]);
+        }
+    }
+
+    private static function categoriesToArray($inputs)
+    {
+        $categories = [];
+        if (isset($inputs['category1']) != '')
+            array_push($categories, $inputs['category1']);
+        if (isset($inputs['category2']) != '')
+            array_push($categories, $inputs['category2']);
+        if (isset($inputs['category3']) != '')
+            array_push($categories, $inputs['category3']);
+        return $categories;
+    }
+
+    public function validateAndUpdate($inputs, $user)
+    {
+        $validator = static::validateInputs($inputs);
+
+        if ($validator->fails()) {
+            return Response::json([
+                'validation_failed' => 1,
+                'errors' => $validator->errors()->toArray()
+            ]);
+        }
+        else
+        {
+            foreach ($inputs as $name => $value) {
+                if (!in_array($name, $this->editable)) {
+                    return Response::json([
+                        'validation_failed' => 1,
+                        'errors' => ['classname' => 'Trying to edit uneditable/non-existant field: ' . $name]
+                    ]);
+                }
+            }
+
+            $classname = $inputs['name'];
+            $venueId = $inputs['venue_id'];
+            $description = $inputs['description'];
+            $image = $inputs['image'];
+
+            // Push categories into an array, and fail if there are none.
+            $categories = static::categoriesToArray($inputs);
+
+            // convert array of category names into id's
+            foreach ($categories as $key => $category) {
+                if (!$categories[$key] = Subcategory::where('name', $category)->pluck('id')) {
+                    return Response::json(
+                        [
+                            'validation_failed' => 1,
+                            'errors' => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
+                        ]
+                    );
+                }
+            }
+
+            $this->update([
+                'name' => $classname,
+                'venue_id' => $venueId,
+                'description' => $description,
+                'image' => $image,
+            ]);
+
+
+            if (!empty($categories)) {
+                $this->subcategories()->sync($categories);
+            }
+
+            Trainerhistory::create(
+                [
+                    'user_id' => $user->id,
+                    'type' => 'edited_evercisegroup',
+                    'display_name' => $user->display_name,
+                    'name' => $this->name
+                ]
+            );
+
+            Event::fire('evecisegroup.created', [$user, $this]);
+
+
+        }
+        return true;
+
+    }
 
 
     private $classStats = [];

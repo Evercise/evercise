@@ -33,16 +33,6 @@ class EvercisegroupsController extends \BaseController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        return Evercisegroup::validateAndStore(Input::all(), $this->user);
-    }
-
-    /**
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */

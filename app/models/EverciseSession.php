@@ -9,9 +9,9 @@ class Evercisesession extends \Eloquent
     /**
      * @var array
      */
-    protected $fillable = array('evercisegroup_id', 'date_time', 'members', 'price', 'duration', 'members_emailed');
+    protected $fillable = ['evercisegroup_id', 'date_time', 'members', 'price', 'duration', 'members_emailed'];
 
-    protected $editable = array('date_time', 'price', 'duration', 'members');
+    protected $editable = ['date_time', 'price', 'duration', 'members'];
     /**
      * The database table used by the model.
      *
@@ -629,24 +629,38 @@ class Evercisesession extends \Eloquent
         return $this->evercisegroup->capacity - count($this->sessionmembers);
     }
 
-    public function updateSession($data)
+    public function updateSession($inputs)
     {
-        if($data['time'])
+        if($inputs['time'])
         {
-            $data['date_time'] = date('Y-m-d', strtotime($this->date_time)) . ' ' . date('H:i', strtotime($data['time']));
-            unset($data['time']);
+            $inputs['date_time'] = date('Y-m-d', strtotime($this->date_time)) . ' ' . date('H:i', strtotime($inputs['time']));
+            unset($inputs['time']);
         }
 
-        foreach($data as $name => $value)
-        {
-            if(!in_array($name, $this->editable))
-            {
-                throw new Exception( 'Trying to edit uneditable/non-existant field: '.$name );
+        $validator = Validator::make(
+            $inputs,
+            [
+                'evercisegroupId' => 'required',
+                'date' => 'required',
+                'time' => 'required',
+                'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
+                'duration' => 'required|numeric|between:10,240',
+            ]
+        );
+        if ($validator->fails()) {
+            return false;
+        }
+        else {
+
+            foreach ($inputs as $name => $value) {
+                if (!in_array($name, $this->editable)) {
+                    throw new Exception('Trying to edit uneditable/non-existant field: ' . $name);
+                }
             }
-        }
-        $this->update($data);
+            $this->update($inputs);
 
-        return true;
+            return true;
+        }
     }
 
 

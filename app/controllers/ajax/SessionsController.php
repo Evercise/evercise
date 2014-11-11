@@ -24,14 +24,14 @@ class SessionsController extends AjaxBaseController{
     {
         $id = Input::get('id', false);
 
-        $data = [];
-        if(Input::get('time', false)) $data['time'] = Input::get('time');
-        if(Input::get('duration', false)) $data['duration'] = Input::get('duration');
-        if(Input::get('members', false)) $data['members'] = Input::get('members');
-        if(Input::get('price', false)) $data['price'] = Input::get('price');
+        $inputs = [];
+        if(Input::get('time', false)) $inputs['time'] = Input::get('time');
+        if(Input::get('duration', false)) $inputs['duration'] = Input::get('duration');
+        if(Input::get('members', false)) $inputs['members'] = Input::get('members');
+        if(Input::get('price', false)) $inputs['price'] = Input::get('price');
 
         $session = Evercisesession::find($id);
-        $session->updateSession($data);
+        $session->updateSession($inputs);
 
         return Response::json(
             [
