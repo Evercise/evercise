@@ -37,7 +37,7 @@ gulp.task('less', function () {
 gulp.task('compress', function() {
 
     gulp.src('./public/assets/jsdev/**/**/*.js')
-        // commented out for speed .pipe(uglify())
+        .pipe(uglify())
         .pipe(concat('main.min.js'))
         .pipe(gulp.dest('./public/assets/js'))
 });

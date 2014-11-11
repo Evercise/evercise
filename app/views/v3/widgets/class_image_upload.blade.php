@@ -6,10 +6,9 @@
         <div class="col-sm-12 mb20" id="image-cropper">
             <div class="holder cover" id="cover_image">
                 {{ Form::open(['route' => 'home', 'method' => 'post', 'id' => 'image-upload-form' ]) }}
-                    <button id="cover-remove" type="button" class="btn btn-danger hidden btn-remove">remove</button>
                     <div class="row">
                         <div class="text-center col-sm-12 mt50">
-                            <span id="image-select" class="icon-block icon-lg-camera hover mb40"></span>
+                            <span id="image-select" class="image-select icon-block icon-lg-camera hover mb40"></span>
                             <p>Click to icon above to upload your own image or alternatively choose from the selection below</p>
                             <p>Maximum file size of 2MB</p>
                             <p>Formats: JPG, JPEG, PNG or GIF</p>
@@ -49,55 +48,8 @@
 
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <div id="image-carousel" class="carousel slide" data-interval="false">
-                 <!-- Carousel items -->
-                 <div class="carousel-inner">
-                     <div class="item active">
-                         <div class="row">
-                             <div class="col-sm-4">
-                                <img src="/img/example-class-img.jpg" alt="Image" class="img-responsive gallery-option" id="gallery-option-1">
-                             </div>
-                             <div class="col-sm-4">
-                                <img src="/img/example-class-img.jpg" alt="Image" class="img-responsive gallery-option" id="gallery-option-2">
-                             </div>
-                             <div class="col-sm-4">
-                                <img src="/img/example-class-img.jpg" alt="Image" class="img-responsive gallery-option" id="gallery-option-3">
-                             </div>
-
-                         </div>
-                         <!--/row-->
-                     </div>
-                     <!--/item-->
-                     <div class="item">
-                         <div class="row">
-                             <div class="col-sm-4">
-                                <img src="/img/example-class-img.jpg" alt="Image" class="img-responsive gallery-option">
-                             </div>
-                             <div class="col-sm-4">
-                                <img src="/img/example-class-img.jpg" alt="Image" class="img-responsive gallery-option">
-                             </div>
-                             <div class="col-sm-4">
-                                <img src="/img/example-class-img.jpg" alt="Image" class="img-responsive gallery-option">
-                             </div>
-
-                         </div>
-                         <!--/row-->
-                     </div>
-                     <!--/item-->
-                 </div>
-                 <!--/carousel-inner-->
-                 <a class="left carousel-control" href="#image-carousel" data-slide="prev">
-                    <span class="icon icon-left-triangle"></span>
-                 </a>
-
-                 <a class="right carousel-control" href="#image-carousel" data-slide="next">
-                    <span class="icon icon-right-triangle"></span>
-                 </a>
-            </div>
-             <!--/myCarousel-->
-        </div>
+    <div class="row" id="gallery-row">
+        @include('v3.widgets.class_gallery_row')
     </div>
 
 

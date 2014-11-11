@@ -110,18 +110,8 @@ $(function(){
     $('.dropdown-cart').exists(function(){
         cart = new Cart(this);
     })
-    $('.select2').exists(function(){
-        $(this).select2({
-            maximumSelectionSize: 3,
-            minimumResultsForSearch: 1,
-            placeholder: 'Choose upto 3 categories',
-            closeOnSelect: true,
-            openOnEnter: false,
-            formatNoMatches: function() {
-                return '';
-            },
-            dropdownCssClass: 'select2-hidden'
-        });
+    $('#find_gallery_image_by_category').exists(function(){
+        new categorySelect($(this) );
     })
 
 

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Gallery;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 
 class GalleryController extends AjaxBaseController
@@ -13,15 +14,19 @@ class GalleryController extends AjaxBaseController
     private $request;
     private $response;
 
+    private $view;
+
     public function __construct(
         Gallery $gallery,
         Request $request,
-        Response $response
+        Response $response,
+        View $view
     ) {
 
         $this->gallery = $gallery;
         $this->request = $request;
         $this->response = $response;
+        $this->view = $view;
     }
 
 
@@ -59,7 +64,10 @@ class GalleryController extends AjaxBaseController
             $gallery = $this->gallery->limit(20)->get();
         }
 
-        return $this->response->json($gallery->toArray());
+        //return $this->response->json($gallery->toArray());
+        return $this->response->json([
+            'view' => View::make('v3.widgets.class_gallery_row')->with('gallery', $gallery->toArray())->render()
+        ]);
     }
 
 

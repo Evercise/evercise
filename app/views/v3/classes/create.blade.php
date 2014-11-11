@@ -10,8 +10,11 @@
         <div class="row mt50 mb50">
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="form-group mb15">
-                    {{ Form::label('category-select', 'Category', ['class' => 'mb15', 'form' => 'create-class'] ) }}
-                    {{ Form::select('category-select', $subcategories, '', ['class' => 'form-control mb40 select2', 'multiple' , 'form' => 'create-class'] ) }}
+                    {{ Form::open(['route' => 'ajax.gallery.getdefaults', 'method' => 'post', 'id' => 'find_gallery_image_by_category']) }}
+                        {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
+                        {{ Form::select('keywords-select', $subcategories, '', ['class' => 'form-control mb40 select2', 'multiple' ] ) }}
+                        {{ Form::hidden('keywords',null) }}
+                    {{ Form::close() }}
                 </div>
                 <div class="form-group mb50">
                     @include('v3.widgets.class_image_upload')
@@ -43,6 +46,7 @@
 
                     <div class="row">
                         <div class="col-sm-6 text-right"><button class="btn btn-default">Cancel</button> </div>
+                        {{ Form::hidden('image', null) }}
                         <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>
                     </div>
                 {{Form::close()}}

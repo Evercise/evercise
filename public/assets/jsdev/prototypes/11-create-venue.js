@@ -107,7 +107,7 @@ createVenue.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find("input[type='submit']").prop('disabled', true).after('<span id="cropping-loading" class="icon icon-loading ml10"></span>');
+                self.form.find("input[type='submit']").prop('disabled', true).after('<span id="venue-loading" class="icon icon-loading ml10"></span>');
             },
 
             success: function (data) {
@@ -124,7 +124,7 @@ createVenue.prototype = {
             },
 
             complete: function () {
-                $('#cropping-loading').remove();
+                $('#venue-loading').remove();
                 console.log('complete');
             }
         });

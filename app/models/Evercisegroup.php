@@ -48,10 +48,10 @@ class Evercisegroup extends \Eloquent
         $validator = Validator::make(
             $inputs,
             [
-                'name' => 'required|max:100|min:5',
-                'description' => 'required|max:5000|min:100',
+                'class_name' => 'required|max:100|min:5',
+                'class_description' => 'required|max:5000|min:100',
                 'image' => 'required',
-                'venue_id' => 'required',
+                'venue_select' => 'required',
             ]
         );
 
@@ -76,10 +76,10 @@ class Evercisegroup extends \Eloquent
             return Response::json($result);
         } else {
 
-            $classname = $inputs['name'];
-            $description = $inputs['description'];
+            $classname = $inputs['class_name'];
+            $description = $inputs['class_description'];
             $image = $inputs['image'];
-            $venueId = $inputs['venue_id'];
+            $venueId = $inputs['venue_select'];
 
             // Push categories into an array, and fail if there are none.
             $categories = static::categoriesToArray($inputs);
