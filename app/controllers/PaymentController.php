@@ -130,7 +130,7 @@ class PaymentController extends BaseController {
         }
 
         $transactionId = $charge['id'];
-        $this->user->wallet->deposit($amount);
+        $this->user->wallet->deposit($amount, 'top up with Stripe');
         EverciseCart::clearTopup();
 
 

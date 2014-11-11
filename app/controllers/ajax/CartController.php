@@ -58,7 +58,7 @@ class CartController extends AjaxBaseController
         {
             $amount = Input::get('amount', 0);
             EverciseCart::clearTopup();
-            EverciseCart::add( $idArray['id'], 'top up', 1, $amount, []);
+            EverciseCart::instance('topup')->add( $idArray['id'], 'top up', 1, $amount, []);
         }
         else
         {

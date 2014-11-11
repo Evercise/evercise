@@ -9,7 +9,7 @@
                       <li class="list-group-item ">
                         <div class="row">
                             <div class="col-sm-8">
-                                <h3>Current Balance: <span class="text-primary">£16.00</span> </h3>
+                                <h3>Current Balance: <span class="text-primary">£{{round($data['user']->wallet->getBalance(), 2)}}</span> </h3>
                             </div>
                             <div class="col-sm-4">
                                 <button class="btn btn-default btn-block">Cancel</button>
@@ -38,7 +38,11 @@
                                 {{ Form::close() }}
                             </div>
                             <div class="btn-group col-sm-2">
-                                <button class="btn btn-light-grey btn-transparent btn-sm btn-block">&pound;50</button>
+                                {{ Form::open(array('id' => 'add-topup', 'url' => 'ajax/cart/add', 'method' => 'post', 'class' => '')) }}
+                                    {{ Form::hidden( 'product-id' , 'T', array('id' => 'product-id')) }}
+                                    {{ Form::hidden( 'amount' , '50', array('id' => 'amount')) }}
+                                    {{ Form::submit('&pound;50' , array('class'=>'btn btn-light-grey btn-sm btn-block', 'id' => '')) }}
+                                {{ Form::close() }}
                             </div>
                             <div class="btn-group col-sm-6">
                                 {{ HTML::decode( Form::text('custom', null, ['class' => 'form-control input-sm', 'placeholder' => '&pound Custom amount' ]) )  }}
@@ -111,26 +115,18 @@
                                 <thead>
                                     <tr>
                                         <th>Date</th>
-                                        <th>Description of Purchase</th>
+                                        <th>Description of Transaction</th>
                                         <th class="text-right">Cost</th>
                                     </tr>
 
                                <tbody>
-                                    <tr>
-                                        <td class="transparent-border-top">29/09/14</td>
-                                        <td>Fitness Class for Ladies</td>
-                                        <td class="text-right">-&pound;16.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="transparent-border-top">31/09/14</td>
-                                        <td>Top up via Paypal</td>
-                                        <td class="text-right text-success">&pound;20.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="transparent-border-top">29/09/14</td>
-                                        <td>Upside down Zumba</td>
-                                        <td class="text-right">-&pound;9.00</td>
-                                    </tr>
+                                   @foreach($data['user']->wallethistory as $wh)
+                                        <tr>
+                                            <td class="transparent-border-top">{{$wh->created_at}}</td>
+                                            <td>{{$wh->description}}</td>
+                                            <td class="text-right">{{$wh->getTransactionAmount()}}</td>
+                                        </tr>
+                                    @endforeach
                                </tbody>
                             </table>
                         </div>
@@ -157,13 +153,13 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <strong>Refer a friend</strong>
-                            <p>Enter a friends email address below and tey&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral
+                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral
                             </p>
                             <div class="form-group row mt20">
-                                {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
+                                {{ Form::open(['url' => 'referral', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
                                     {{ Form::label('email', 'Email' , ['class' => 'mt5 col-sm-2 control-label'])  }}
                                     <div class="col-sm-7">
-                                        {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Enter Friends Email Address']) }}
+                                        {{ Form::text('referee_email', null, ['class' => 'form-control', 'placeholder' => 'Enter Friends Email Address']) }}
                                     </div>
                                     <div class="col-sm-3">
                                         <button class="btn btn-primary btn-block">Invite</button>
@@ -172,7 +168,7 @@
                             </div>
                             <div class="form-group row mt20">
                                 <div class="col-sm-12">
-                                    <strong>Friends reffered: <span class="text-primary">0/3</span></strong>
+                                    <strong>Friends referred: <span class="text-primary">{{$data['user']->milestone->referrals}}/3</span></strong>
                                </div>
                             </div>
                         </div>
