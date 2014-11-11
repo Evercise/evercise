@@ -12,25 +12,27 @@
 <div class="col-lg-9">
     <div class="form-group">
         <label>Title:</label>
-       <input type="text" id="title" placeholder="Article title" name="title" class="form-control" value="{{ $article->title or "" }}" />
+        {{ Form::text('title', (!empty($article->title) ? $article->title : null), ['placeholder'=> 'Article title', 'class' => 'form-control', 'id'=>'title']) }}
     </div>
     <div class="form-group" id="url_box">
    		  <label>URL:<span id="full_url" class="fr">
    		  </span></label>
-   		  <input type="text" id="content_url" placeholder="Article URL" name="permalink" class="form-control" value="{{ $article->permalink or "" }}" />
+
+        {{ Form::text('permalink', (!empty($article->permalink) ? $article->permalink : null), ['placeholder'=> 'Article url', 'class' => 'form-control', 'id'=>'content_url']) }}
     </div>
 
     <div class="form-group">
    		   <label>Main Image:</label>
            <img src="/{{ $article->main_image or "img/default_article.jpg" }}" style="float:left;width:100px !important;margin-right:10px" width="100" heigh="100"/>
-           <input type="file" id="file" placeholder="Upload main image" name="main_image" value="" class="form-control" style="width:60%" /> <br/>
+            {{ Form::file('main_image', ['placeholder'=> 'Upload main image', 'class' => 'form-control', 'id'=>'file', 'style' => 'width:60%']) }}
            The image will be auto resized to: {{ Config::get('evercise.article_main_image.width') }}x{{ Config::get('evercise.article_main_image.height')}}
     </div><br style="clear:both"/>
 
 
     <div class="form-group">
           <label>Main Content:</label>
-           <textarea name="content" id="wysiwg_editor" cols="30" rows="4" class="form-control">{{ $article->content or "" }}</textarea>
+          {{ Form::textarea('content', (!empty($article->content) ? $article->content : null), ['cols' => '30', 'rows'=> '4', 'placeholder'=> 'Main Content', 'class' => 'form-control', 'id'=>'wysiwg_editor']) }}
+
     </div>
 
 </div>
@@ -51,30 +53,24 @@
 
     <label style="display:inline-block" title="A single page is a main page. Like the about us. A single page can be without a category. If no category is selected the page is automaticly marked as a Single page">Is this a single page?</label>
 
-    <input value="1" id="is_page" class="form-control" name="page" <?=(!empty($article->page) && $article->page == 1?'checked="checked"':'')?> type="checkbox"/>
 
+        {{ Form::checkbox('page', 1, (!empty($article->page) && $article->page == 1 ? true : false) , ['id'=>'is_page']) }}
     </div>
     </div>
 
     <div class="form-group">
           <label>Category:</label>
-            <select name="category_id" id="category_id" placeholder="Category"  class="form-control">
-                <option value="0">None</option>
-                @foreach ($categories as $category)
-                    <option value="<?php echo $category->id; ?>" {{ ( !empty($article->category_id) && $article->category_id == $category->id ? 'selected="selected"':'')}}><?php echo $category->title; ?></option>
-                @endforeach
-           </select>
+
+          {{  Form::select('category_id', $cat_drop, ( !empty($article->category_id) ? $article->category_id : null), ['id'=>'category_id', 'placeholder' => 'Category', 'class' => 'form-control']) }}
+
     </div>
 
 @if(count($templates) > 0)
     <div class="form-group">
           <label>Article template:</label>
-          <select name="template" id="template"  class="form-control">
-              <option value="">Default</option>
-              @foreach ($templates as $temp => $name)
-                <option value="{{ $temp }}" {{ ( !empty($article->template) && $article->template == $temp ? 'selected="selected"':'')}}>{{ $name }}</option>
-              @endforeach
-        </select>
+
+          {{  Form::select('template', $templates, ( !empty($article->template) ? $article->template : null), ['id'=>'template', 'placeholder' => 'template', 'class' => 'form-control']) }}
+
 
 </div>
 @endif
@@ -82,18 +78,15 @@
 
     <div class="form-group">
           <label>Article status:</label>
-          <select name="status" id="status"  class="form-control">
 
-                    <option value="0">Draft</option>
-                    <option value="1"  {{ (!empty($article->status) && $article->status == 1 ?  'selected="selected"':'') }}>Published</option>
-                    <option value="2" {{ (!empty($article->status) && $article->status == 2 ?  'selected="selected"':'') }}>Unpublished</option>
+          {{  Form::select('template', ['0' => 'Draft', '1'=> 'Published', '2' => 'Unpublished'], ( !empty($article->status) ? $article->status : 0), ['id'=>'status', 'placeholder' => 'status', 'class' => 'form-control']) }}
 
-           </select>
     </div>
 
     <div class="form-group">
           <label>Date published:</label>
-          <input type="text" name="published_on" class="form-control datetime" id="dp_basic" value="{{ (!empty($article->published_on) ? $article->published_on->format('m/d/Y') : '') }}"/>
+           {{ Form::text('published_on', (!empty($article->published_on) ? $article->published_on->format('m/d/Y') :  null), ['placeholder'=> 'Date published', 'class' => 'form-control datetime', 'id'=>'dp_basic']) }}
+
 
     </div>
 
@@ -101,17 +94,20 @@
 
     <div class="form-group">
           <label>Intro (Excerpt):</label>
-          <textarea name="intro" id="reg_textarea" cols="10" rows="2" class="form-control">{{ $article->intro or "" }}</textarea>
+
+          {{ Form::textarea('intro', (!empty($article->intro) ? $article->intro : null), ['rows'=> '2', 'placeholder'=> 'Intro', 'class' => 'form-control', 'id'=>'reg_textarea']) }}
+
     </div>
 
     <div class="form-group">
           <label>Meta description:</label>
-		  <textarea id="meta_description" name="description" rows="3" cols=""  class="form-control">{{ $article->description or "" }}</textarea>
+          {{ Form::textarea('description', (!empty($article->description) ? $article->description : null), ['rows'=> '3', 'placeholder'=> 'Meta Desc', 'class' => 'form-control', 'id'=>'meta_description']) }}
 
     </div>
     <div class="form-group">
           <label>Meta keywords:</label>
-           <input type="text" class="form-control tokenization" name="keywords" value="{{ $article->keywords or "" }}">
+          {{ Form::text('keywords', (!empty($article->keywords) ? $article->keywords :  null), ['placeholder'=> 'keywords', 'class' => 'form-control tokenization']) }}
+
 
     </div>
 

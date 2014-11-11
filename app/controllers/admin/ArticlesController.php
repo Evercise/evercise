@@ -63,6 +63,11 @@ class ArticlesController extends \BaseController
         }
         $article = $this->articles->find($id);
         $categories = $this->articlecategories->all();
+
+        $cat_drop = [];
+        foreach($categories as $c) {
+            $cat_drop[$c->id] = $c->title;
+        }
         $templates = $this->getTemplates();
 
 
@@ -75,7 +80,7 @@ class ArticlesController extends \BaseController
             ->get();
 
         $cookie = Cookie::make('allowFinder', true,  60);
-        $view = $this->view->make('admin.cms.manage', compact('article', 'categories', 'evercisegroup', 'templates'))->render();
+        $view = $this->view->make('admin.cms.manage', compact('article', 'categories', 'evercisegroup', 'templates', 'cat_drop'))->render();
 
         return Response::make($view)->withCookie($cookie);
 
@@ -110,6 +115,7 @@ class ArticlesController extends \BaseController
                 'validator'         => $validator,
                 'errors'            => $validator->errors()->toArray()
             ];
+
         } else {
 
             if(!empty($data['id']) && $data['id'] > 0) {
@@ -195,8 +201,8 @@ class ArticlesController extends \BaseController
         //Get from the main template directory first:
         foreach (glob(app_path() . '/views/v3/pages/template_*') as $filename) {
             $filename = basename($filename);
-            $name = str_replace(array('template_', '_', '.blade.php'), array('', ' ', ''), $filename);
-            $templates[str_replace('.php', '', $filename)] = ucfirst($name);
+            $name = str_replace(array('template_', '_','.blade.php'), array('', ' ', ''), $filename);
+            $templates[str_replace('.blade.php', '', $filename)] = ucfirst($name);
         }
 
         return $templates;

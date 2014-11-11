@@ -229,7 +229,7 @@ class PagesController extends \BaseController
         $view = 'v3.pages.single';
 
         if(!empty($article->template)) {
-            $view = $article->template;
+            $view = 'v3.pages.'.$article->template;
         }
 
 
