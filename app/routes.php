@@ -521,24 +521,22 @@ Route::get('updatevenue/{id}', function($id){
 
 Route::get('updategroup/{id}', function($id){
     $result = Evercisegroup::find($id)->validateAndUpdate([
-        'name'=>'Running or something',
-        'venue_id'=>'28',
-        'description'=>'changed2 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1updategroupupdategroup ',
+        'class_name'=>'Running or something',
+        'venue_select'=>'28',
+        'class_description'=>'changed2 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1updategroupupdategroup ',
         'image'=>'changed1',
-        'category1'=>'Pilates',
-        'category2'=>'Dance',
-        'category3'=>'Cycling',
+        'category_array'=>['1', '2'],
     ], Sentry::getUser());
     return var_dump($result);
 });
 
 Route::get('creategroup', function(){
     $result = Evercisegroup::validateAndStore([
-        'name'=>'Some new rubbish group',
-        'venue_id'=>'28',
-        'description'=>'new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one ',
+        'class_name'=>'Fancy shit',
+        'venue_select'=>'28',
+        'class_description'=>'new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one ',
         'image'=>'image.jpg',
-        'category2'=>'Dance',
+        'category_array'=>['4'],
     ], Sentry::getUser());
     return var_dump($result);
 });

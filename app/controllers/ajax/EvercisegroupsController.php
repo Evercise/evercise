@@ -17,7 +17,7 @@ class EvercisegroupsController extends AjaxBaseController{
      * venue_id
      * description
      * image
-     * category1, category2, category3
+     * category_array (array of id's)
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -36,7 +36,7 @@ class EvercisegroupsController extends AjaxBaseController{
      * venue_id
      * description
      * image
-     * category1, category2, category3
+     * category_array (array of id's)
      *
      * @param $id
      * @throws \Exception
