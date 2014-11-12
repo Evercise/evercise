@@ -82,24 +82,13 @@ class Evercisegroup extends \Eloquent
             $venueId = $inputs['venue_select'];
 
             // Push categories into an array, and fail if there are none.
-            $categories = static::categoriesToArray($inputs);
+            //$categories = static::categoriesToArray($inputs);
+            $categories = $inputs['category_array'];
 
             if (empty($categories)) {
                 return Response::json(
                     ['validation_failed' => 1, 'errors' => ['category1' => 'you must choose at least one category']]
                 );
-            }
-
-            // convert array of category names into id's
-            foreach ($categories as $key => $category) {
-                if (!$categories[$key] = Subcategory::where('name', $category)->pluck('id')) {
-                    return Response::json(
-                        [
-                            'validation_failed' => 1,
-                            'errors' => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
-                        ]
-                    );
-                }
             }
 
             $evercisegroup = static::create(
@@ -154,34 +143,23 @@ class Evercisegroup extends \Eloquent
         }
         else
         {
-            foreach ($inputs as $name => $value) {
+/*            foreach ($inputs as $name => $value) {
                 if (!in_array($name, $this->editable)) {
                     return Response::json([
                         'validation_failed' => 1,
                         'errors' => ['classname' => 'Trying to edit uneditable/non-existant field: ' . $name]
                     ]);
                 }
-            }
+            }*/
 
-            $classname = $inputs['name'];
-            $venueId = $inputs['venue_id'];
-            $description = $inputs['description'];
+            $classname = $inputs['class_name'];
+            $description = $inputs['class_description'];
             $image = $inputs['image'];
+            $venueId = $inputs['venue_select'];
 
             // Push categories into an array, and fail if there are none.
-            $categories = static::categoriesToArray($inputs);
-
-            // convert array of category names into id's
-            foreach ($categories as $key => $category) {
-                if (!$categories[$key] = Subcategory::where('name', $category)->pluck('id')) {
-                    return Response::json(
-                        [
-                            'validation_failed' => 1,
-                            'errors' => [('category' . ($key + 1)) => 'One of the categories you have chosen is not in the list']
-                        ]
-                    );
-                }
-            }
+            //$categories = static::categoriesToArray($inputs);
+            $categories = $inputs['category_array'];
 
             $this->update([
                 'name' => $classname,

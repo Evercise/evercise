@@ -17,6 +17,7 @@ class VenuesController extends AjaxBaseController{
      * address
      * town
      * postcode
+     * facilities_array (array of id's)
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -32,6 +33,7 @@ class VenuesController extends AjaxBaseController{
      * address
      * town
      * postcode
+     * facilities_array (array of id's)
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
