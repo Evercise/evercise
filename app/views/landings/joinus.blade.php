@@ -3,6 +3,9 @@
 <html>
 <head>
 
+
+{{ UniversalAnalytics::render() }}
+
 <style>
 body { width: 100%; height: auto; margin: 0 auto; padding: 0; background: #FFF; }
 
