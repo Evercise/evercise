@@ -100,7 +100,6 @@ createVenue.prototype = {
     },
     ajaxUpload: function () {
         var  self = this;
-        console.log(self.form.serialize());
         $.ajax(self.form.attr("action"), {
             type: "post",
             data: self.form.serialize(),
@@ -111,12 +110,8 @@ createVenue.prototype = {
             },
 
             success: function (data) {
-                console.log(data);
                 self.form.find("input[type=submit]").prop('disabled', false);
                 $('#venue_select').append( $('<option />', {text : data.venue_name, value: data.venue_id, selected: true} ) );
-
-
-
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -125,7 +120,7 @@ createVenue.prototype = {
 
             complete: function () {
                 $('#venue-loading').remove();
-                console.log('complete');
+                self.container.modal('hide')
             }
         });
     }

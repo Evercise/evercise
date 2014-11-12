@@ -27,8 +27,12 @@ class EvercisegroupsController extends \BaseController
         natsort($subcategories);
 
         $venues = Venue::usersVenues($this->user->id);
+        $facilities = Facility::getLists();
 
-        return View::make('v3.classes.create')->with('venues', $venues)->with('subcategories', $subcategories);
+        return View::make('v3.classes.create')
+            ->with('venues', $venues)
+            ->with('facilities', $facilities)
+            ->with('subcategories', $subcategories);
         //return View::make('evercisegroups.create')->with('subcategories', $subcategories);
     }
 

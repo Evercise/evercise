@@ -39,9 +39,11 @@
                    <div class="form-group mb50">
                      {{ Form::label('facilities', 'What Facilities does this venue have?', ['class' => 'mb15'] )  }}
                      <div class="row">
-                        <div class="col-sm-4">
-                             <label class="custom-checkbox text-grey">{{ Form::checkbox('pool', 'pool', false ) }}Swimming Pool</label>
-                        </div>
+                        @foreach($facilities['facilities'] as $key => $facility)
+                            <div class="col-sm-6">
+                                <label class="custom-checkbox text-grey">{{ Form::checkbox('facilities_array[]', $key, false ) }}{{ $facility }}</label>
+                            </div>
+                        @endforeach
                      </div>
                    </div>
                    <div class="text-center">
@@ -52,9 +54,11 @@
                 <div class="form-group mb50">
                  {{ Form::label('amenities', 'What Amenities does this venue have?', ['class' => 'mb15'] )  }}
                  <div class="row">
-                    <div class="col-sm-4">
-                         <label class="custom-checkbox text-grey">{{ Form::checkbox('pool', 'pool', false ) }}Swimming Pool</label>
-                    </div>
+                    @foreach($facilities['amenities'] as $key => $amenities)
+                        <div class="col-sm-6">
+                            <label class="custom-checkbox text-grey">{{ Form::checkbox('facilities_array[]', $key, false ) }}{{ $amenities }}</label>
+                        </div>
+                    @endforeach
                  </div>
                </div>
                <div class="text-center">

@@ -44,7 +44,7 @@ $(function(){
         new ImagePlaceholder();
     })
 
-    $('#register-form, #create-class').exists(function(){
+    $('#register-form').exists(function(){
         new Validation(this);
     })
 
@@ -124,6 +124,9 @@ $(function(){
 
     $('#calendar').exists(function(){
         new Calendar(this);
+    })
+    $('#create-class').exists(function(){
+        new createClass(this);
     })
 
 

@@ -3,6 +3,7 @@ function categorySelect(form){
     this.select = this.form.find('.select2');
     this.keywordSelect = this.form.find('input[name="keywords"]');
     this.keywords = [];
+    this.keys = [];
     this.gallery = '';
     this.maximumSelectionSize = 3;
     this.minimumResultsForSearch = 1;
@@ -64,13 +65,22 @@ categorySelect.prototype = {
         });
     },
     addToKeywords: function(e){
+        this.keys.push(e.choice.id);
         this.keywords.push(e.choice.text);
         this.keywordSelect.val(this.keywords);
+        this.updateCategoriesInput();
         this.form.submit();
     },
     removeFromKeywords: function(e){
         this.keywords = $.grep(this.keywords, function(value) {
             return value != e.choice.text;
         });
+        this.keys = $.grep(this.keys, function(value) {
+            return value != e.choice.id;
+        });
+        this.updateCategoriesInput();
+    },
+    updateCategoriesInput: function(){
+        $('input[name="category_array[]"]').val(this.keys);
     }
 }

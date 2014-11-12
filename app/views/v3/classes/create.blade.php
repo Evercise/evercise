@@ -47,6 +47,7 @@
                     <div class="row">
                         <div class="col-sm-6 text-right"><button class="btn btn-default">Cancel</button> </div>
                         {{ Form::hidden('image', null) }}
+                        {{ Form::hidden('category_array[]',null ) }}
                         <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>
                     </div>
                 {{Form::close()}}
