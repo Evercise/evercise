@@ -2,6 +2,8 @@
 
 @section('css')
 <link href="/admin/assets/lib/footable/css/footable.core.min.css" rel="stylesheet" media="screen">
+<link href="/admin/assets/lib/jBox-0.3.0/Source/jBox.css" rel="stylesheet" media="screen">
+<link href="/admin/assets/lib/jBox-0.3.0/Source/themes/NoticeBorder.css" rel="stylesheet" media="screen">
 @stop
 
 @section('script')
@@ -9,11 +11,13 @@
 <script src="/admin/assets/lib/footable/footable.min.js"></script>
 <script src="/admin/assets/lib/footable/footable.paginate.min.js"></script>
 <script src="/admin/assets/lib/footable/footable.filter.min.js"></script>
+<script src="/admin/assets/lib/jBox-0.3.0/Source/jBox.min.js"></script>
+
 
 <script>
     $(function() {
-        // footable
         yukon_footable.p_plugins_tables_footable();
+        yukon_jBox.p_components_notifications_popups();
     })
 </script>
 
@@ -48,6 +52,7 @@
                     <tr>
                         <th data-toggle="true">ID</th>
                         <th>TITLE</th>
+                        <th>Category</th>
                         <th data-hide="phone,tablet">Preview</th>
                         <th data-hide="phone,tablet" data-name="Date Of Birth"> Published date</th>
                         <th data-hide="phone"> Status</th>
@@ -60,6 +65,7 @@
                     <tr>
                         <td>{{ $a->id }}</td>
                         <td>{{ $a->title }}</td>
+                        <td>{{ $a->category->title or '' }}</td>
                         <td><a href="{{ URL::to(Articles::createUrl($a)) }}?preview=true">Preview</a></td>
                         <td>{{ $a->published_on->format('d/m/Y') }}</td>
                         <td data-value="{{ $a->status }}">
@@ -77,6 +83,7 @@
                         <td>
 
                         <a  title="Edit" href="{{ Url::route('admin.article.manage', ['id' => $a->id]) }}"><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a>
+                        <a  title="Delete" href="{{ Url::route('admin.article.delete',['id' => $a->id]) }}" data-confirm="Are you sure you want to delete this Article? It cant be UNDONE!!!" ><span class="el-icon-remove bs_ttip" style="color:#c00" title="" data-original-title="Remove Article"></span></a>
 
                         </td>
 

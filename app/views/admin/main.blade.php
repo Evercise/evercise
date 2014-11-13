@@ -47,6 +47,34 @@
 
             <!-- main content -->
             <div id="main_wrapper">
+
+               @if(isset($notification))
+                <div role="alert" class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Success!</strong> {{ $notification }}
+                   </div>
+               @endif
+               @if ($notification = Session::get('notification'))
+                <div role="alert" class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <strong>Success!</strong> {{ $notification }}
+                   </div>
+               @endif
+
+               @if(isset($errorNotification))
+                  <div role="alert" class="alert alert-danger">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Oh snap!</strong> {{ $errorNotification }}
+                  </div>
+               @endif
+               @if ($errorNotification = Session::get('errorNotification'))
+                  <div role="alert" class="alert alert-danger">
+                      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                      <strong>Oh snap!</strong> {{ $errorNotification }}
+                  </div>
+               @endif
+
+
                 <div class="container-fluid">
                     @yield('body')
                 </div>

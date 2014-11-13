@@ -1084,21 +1084,7 @@
             new jBox('Confirm', {
                 closeButton: false,
                 confirmButton: 'Yes',
-                cancelButton: 'No',
-                _onOpen: function() {
-                    // Set the new action for the submit button
-                    this.submitButton
-                        .off('click.jBox-Confirm' + this.id)
-                        .on('click.jBox-Confirm' + this.id, function() {
-                            new jBox('Notice', {
-                                offset: {
-                                    y: 36
-                                },
-                                content: 'Comment deleted: id=34'
-                            });
-                            this.close();
-                        }.bind(this));
-                }
+                cancelButton: 'No'
             });
             $('#jbox_n_default').click(function() {
                 new jBox('Notice', {

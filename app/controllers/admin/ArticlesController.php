@@ -55,11 +55,16 @@ class ArticlesController extends \BaseController
                     $save['validator']
                 );
             }
+
+            Session::set('notification', 'Article Saved');
+
             if(!empty($save['new'])) {
                 if ($save['new']) {
                     return Redirect::route('admin.article.manage', ['id' => $save['article']->id]);
                 }
             }
+
+
         }
         $article = $this->articles->find($id);
         $categories = $this->articlecategories->all();
@@ -121,6 +126,10 @@ class ArticlesController extends \BaseController
             if(!empty($data['id']) && $data['id'] > 0) {
                 $id = $data['id'];
                 unset($data['id']);
+            }
+
+            if($data['template'] == 0) {
+                $data['template'] = '';
             }
 
 
@@ -197,6 +206,7 @@ class ArticlesController extends \BaseController
     {
 
         $templates = array();
+        $templates[] = 'Default';
 
         //Get from the main template directory first:
         foreach (glob(app_path() . '/views/v3/pages/template_*') as $filename) {
@@ -206,6 +216,22 @@ class ArticlesController extends \BaseController
         }
 
         return $templates;
+
+    }
+
+
+    public function deleteArticle($id = 0) {
+        $article = $this->articles->find($id);
+
+
+        if($article) {
+
+            $article->delete();
+
+            return Redirect::route('admin.articles')->with('notification', 'Article Deleted');
+        }
+
+
 
     }
 

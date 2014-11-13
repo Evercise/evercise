@@ -473,6 +473,8 @@ Route::group(
 
         Route::get('articles',
             ['as' => 'admin.articles', 'uses' => 'ArticlesController@articles']);
+        Route::get('article/delete/{id?}',
+            ['as' => 'admin.article.delete', 'uses' => 'ArticlesController@deleteArticle']);
 
         Route::match(array('GET', 'POST'), 'article/manage/{id?}',
             ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);
