@@ -56,7 +56,7 @@ class ArticlesController extends \BaseController
                 );
             }
 
-            Session::set('notification', 'Article Saved');
+            Session::flash('notification', 'Article Saved');
 
             if(!empty($save['new'])) {
                 if ($save['new']) {

@@ -331,4 +331,10 @@ class MainController extends \BaseController
             ->with('sentryUsers', $sentryUsers);
     }
 
+
+    public function searchStats()
+    {
+        return View::make('admin.searchstats');
+    }
+
 }

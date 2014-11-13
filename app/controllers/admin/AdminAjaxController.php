@@ -3,20 +3,99 @@
 
 /**
  * Class AdminAjaxController
+ * @property Elastic elastic
  */
 class AdminAjaxController extends AdminController
 {
+    /**
+     * @var Evercisegroup
+     */
+    private $evercisegroup;
+    /**
+     * @var \Illuminate\Http\Request
+     */
+    private $input;
+    /**
+     * @var \Illuminate\Log\Writer
+     */
+    private $log;
+    /**
+     * @var Es
+     */
+    private $elasticsearch;
+    /**
+     * @var Geotools
+     */
+    private $geotools;
+    private $elastic;
 
     /**
      *
      */
-    public function __construct()
-    {
+    public function __construct(
+        Evercisegroup $evercisegroup,
+        Illuminate\Http\Request $input,
+        Illuminate\Log\Writer $log,
+        Es $elasticsearch,
+        Geotools $geotools
+    ) {
 
         parent::__construct();
 
+        $this->evercisegroup = $evercisegroup;
+        $this->input = $input;
+        $this->log = $log;
+        $this->elasticsearch = $elasticsearch;
+        $this->geotools = $geotools;
     }
 
+    public function searchStats()
+    {
+
+        $this->elastic = new Elastic(
+            Geotools::getFacadeRoot(),
+            $this->evercisegroup,
+            Es::getFacadeRoot(),
+            $this->log
+        );
+
+        $response = ['draw' => $this->input->get('draw')];
+
+        $search = $this->input->get('search');
+
+        $from = $this->input->get('start', 0);
+        $size = $this->input->get('lenght', 50);
+
+
+
+
+
+
+
+
+
+
+        $results = $this->elastic->searchStats(['size' => $size, 'from' => $from, 'search' => $search['value']]);
+
+
+
+        $response['recordsTotal'] = $results->total;
+        $response['recordsFiltered'] = $results->total;
+
+        foreach ($results->hits as $r) {
+
+            $response['data'][] = [
+                $r->_source->search,
+                $r->_source->size,
+                $r->_source->results,
+                $r->_source->user_id,
+                $r->_source->name,
+                $r->_source->date
+            ];
+
+        }
+        return Response::json($response);
+    }
 
     /**
      * @return \Illuminate\Http\JsonResponse
@@ -152,7 +231,7 @@ class AdminAjaxController extends AdminController
 
     public function saveTags()
     {
-        $tags = implode(',',Input::get('tags'));
+        $tags = implode(',', Input::get('tags'));
         $id = Input::get('id');
 
         Gallery::where('id', $id)->update(['keywords' => $tags]);
@@ -167,7 +246,7 @@ class AdminAjaxController extends AdminController
 
         $gallery = Gallery::find($id);
 
-        @unlink('img/gallery/'.$gallery->image);
+        @unlink('img/gallery/' . $gallery->image);
 
 
         return Response::json(['deleted' => $gallery->delete(), 'id' => $id]);

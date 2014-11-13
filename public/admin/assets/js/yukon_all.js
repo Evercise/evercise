@@ -788,7 +788,8 @@
 
 			if ($("#dp_basic").length) {
 				$("#dp_basic").datepicker({
-					autoclose: true
+					autoclose: true,
+                    format: "dd/mm/yyyy"
 				});
 			}
 			if ($("#dp_component").length) {

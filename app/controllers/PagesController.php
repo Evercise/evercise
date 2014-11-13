@@ -162,7 +162,7 @@ class PagesController extends \BaseController
      */
     public function index()
     {
-        $this->showBlog();
+        return $this->showBlog();
     }
 
 
@@ -202,8 +202,9 @@ class PagesController extends \BaseController
             return Redirect::route('blog', 307)->with('message', 'You don\'t have access to that page!');
         }
 
+        $articles = $this->articles->where('category_id', $category->id)->get();
 
-        return 'category';
+        return $this->view->make('v3.pages.category', compact('articles', 'category'));
     }
 
     /**
