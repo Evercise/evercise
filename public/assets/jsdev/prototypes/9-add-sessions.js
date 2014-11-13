@@ -5,6 +5,7 @@ function AddSessions(form){
     this.dates = [];
     this.index = '';
     this.recurring = 6;
+    this.recurringFor = this.form.find('#recurring-days').val();
     this.rows = [];
     this.currentDates = [];
     this.init();
@@ -27,6 +28,7 @@ AddSessions.prototype = {
         this.daysOfWeek.on("click", $.proxy(this.dayOfWeek, this) );
         $('input[name="recurring"]').on('change', $.proxy(this.recurringCheck, this));
         this.form.on("submit", $.proxy(this.submitForm, this));
+        this.form.find('#recurring-days').on("change", $.proxy(this.changeRecurringFor, this));
     },
     dayOfWeek: function(e){
         this.index = ($(e.target).index());
@@ -98,7 +100,7 @@ AddSessions.prototype = {
     },
     setRecurringDays: function(day, month, week) {
         var self = this;
-        for( var i = 0; i < 3; i++){
+        for( var i = 0; i < self.recurringFor; i++){
             var d = new Date();
 
             d.setMonth(month + i);
@@ -116,7 +118,6 @@ AddSessions.prototype = {
             }
 
             self.dates.push( new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() ) );
-            console.log(self.dates);
 
         }
         this.setCalendarDates();
@@ -134,5 +135,8 @@ AddSessions.prototype = {
     },
     resetCalendarDates: function(){
         this.calendar.datepicker('setDates', this.currentDates  );
+    },
+    changeRecurringFor : function(e){
+        this.recurringFor = $(e.target).val();
     }
 }
