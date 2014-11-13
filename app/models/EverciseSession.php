@@ -54,7 +54,7 @@ class Evercisesession extends \Eloquent
     }
 
     /**
-     * $sessionData = [evercisegroup_id, date_time, duration, tickets, price]
+     * $sessionData = [evercisegroup_id, date, time, duration, tickets, price]
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -65,7 +65,8 @@ class Evercisesession extends \Eloquent
             $sessionData,
             [
                 'evercisegroup_id' => 'required',
-                'date_time' => 'required',
+                'date' => 'required',
+                'time' => 'required',
                 'tickets' => 'required',
                 'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
                 'duration' => 'required|numeric|between:10,240',
@@ -75,10 +76,11 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
+            $date_time = $sessionData['date'] . ' ' . $sessionData['time'];
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
-                'date_time' => $sessionData['date_time'],
+                'date_time' => $date_time,
                 'price' => $sessionData['price'],
                 'duration' => $sessionData['duration'],
                 'tickets' => $sessionData['tickets'],

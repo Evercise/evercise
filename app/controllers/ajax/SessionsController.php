@@ -59,7 +59,7 @@ class SessionsController extends AjaxBaseController{
       * duration
       * tickets
       * price
-      * session_array = [date_time, date_time, ...]
+      * session_array = [[date, time], [date, time], ...]
      *
      * @return Response
      */
@@ -75,7 +75,8 @@ class SessionsController extends AjaxBaseController{
         foreach($sessionArray as $sessionData)
         {
             if(!Evercisesession::validateAndStore([
-                'date_time' => $sessionData['date_time'],
+                'date' => $sessionData['date'],
+                'time' => $sessionData['time'],
                 'evercisegroup_id' => $evercisegroupId,
                 'duration' => $duration,
                 'tickets' => $tickets,
