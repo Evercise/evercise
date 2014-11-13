@@ -71,7 +71,7 @@ AddSessions.prototype = {
     submitForm: function(e){
         e.preventDefault();
 
-        //this.ajaxUpload();
+        this.ajaxUpload();
     },
     ajaxUpload: function () {
         var self = this;
@@ -132,9 +132,11 @@ AddSessions.prototype = {
     },
     setCalendarDates: function(){
         this.calendar.datepicker('setDates', this.dates  );
+        $('input[name="session_array[]"]').val(this.dates);
     },
     resetCalendarDates: function(){
         this.calendar.datepicker('setDates', this.currentDates  );
+        $('input[name="session_array[]"]').val(this.currentDates);
     },
     changeRecurringFor : function(e){
         this.recurringFor = $(e.target).val();
