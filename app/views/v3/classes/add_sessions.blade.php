@@ -70,7 +70,7 @@
                             <div class="form-group text-center">
                                   {{ Form::label('tickets', 'Tickets', ['class' => 'mb15'] )  }}
                                   <div class="custom-select">
-                                     {{ Form::select('members', Config::get('evercise.tickets'), '10', ['class' => 'form-control'] ) }}
+                                     {{ Form::select('tickets', Config::get('evercise.tickets'), '10', ['class' => 'form-control'] ) }}
                                   </div>
                             </div>
                         </div>
@@ -78,18 +78,14 @@
                             <div class="form-group text-center">
                                   {{ Form::label('price', 'Price (GBP)', ['class' => 'mb15'] )  }}
                                   <div class="custom-select">
-                                     {{ Form::select('price',
-                                         [
-                                             '10' => '&pound;10.00',
-                                             '15' => '&pound;15.00',
-                                         ]
-                                      , '10', ['class' => 'form-control'] ) }}
+                                     {{ Form::select('price', Config::get('evercise.price'), '10', ['class' => 'form-control'] ) }}
                                   </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt50 mb50">
                         <div class="col-sm-4 col-sm-offset-4">
+                            {{ Form::hidden('evercisegroup_id', $data['evercisegroup_id']) }}
                             {{ Form::submit('Save', ['class' => 'btn btn-default btn-block']) }}
                         </div>
 

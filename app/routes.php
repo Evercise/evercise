@@ -220,7 +220,7 @@ Route::get(
     'sessions/{evercisegroup_id}/index',
     array('as' => 'evercisegroups.trainer_show', 'uses' => 'SessionsController@index')
 );
-Route::get('sessions/add', ['as' => 'sessions.add', 'uses' => 'SessionsController@create']);
+Route::get('sessions/add/{id}', ['as' => 'sessions.add', 'uses' => 'SessionsController@create']);
 Route::get('sessions/date_list', array('as' => 'sessions.date_list'));
 Route::post('sessions/join', array('as' => 'sessions.join', 'uses' => 'SessionsController@joinSessions'));
 Route::get('sessions/join/class', array('as' => 'sessions.join.get', 'uses' => 'SessionsController@joinSessions'));
