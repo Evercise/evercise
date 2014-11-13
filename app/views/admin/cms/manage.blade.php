@@ -332,7 +332,8 @@ $('#generated').click(function() {
             filebrowserBrowseUrl : '/admin/assets/lib/ckfinder/ckfinder.html',
             filebrowserUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
             filebrowserImageUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-            height : '600px'
+            height : '600px',
+            stylesSet : 'my_style:{{URL::to('/')}}/assets/js/article_styles.js'
         });
 
     }
