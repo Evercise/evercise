@@ -132,7 +132,6 @@ AddSessions.prototype = {
     },
     setCalendarDates: function(){
         this.calendar.datepicker('setDates', this.dates  );
-        $('input[name="session_array[]"]').val(this.dates);
     },
     resetCalendarDates: function(){
         this.calendar.datepicker('setDates', this.currentDates  );
