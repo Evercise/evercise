@@ -110,10 +110,10 @@ class MainController extends \BaseController
     public function expired($date = false)
     {
         if (!$date) {
-            $date = date('Y-m-d', strtotime( '-1 month', time()));
+            $date = date('Y-m-d', strtotime('-1 month', time()));
         }
 
-        $date = $date.' 00:00:00';
+        $date = $date . ' 00:00:00';
 
         $expired = DB::table('evercisesessions')
             ->select(DB::raw('evercisesessions.id, evercisesessions.date_time, evercisesessions.members, evercisesessions.price, evercisegroups.user_id, evercisegroups.name, users.email, users.first_name, users.last_name, users.phone'))
@@ -156,7 +156,7 @@ class MainController extends \BaseController
     public function categories()
     {
 
-        return View::make('admin . categories', compact('categories'))->render();
+        return View::make('admin.categories', compact('categories'))->render();
     }
 
 
@@ -167,7 +167,7 @@ class MainController extends \BaseController
 
         array_unshift($categories, '');
 
-        return View::make('admin . subcategories', compact('categories', 'subcategories'))->render();
+        return View::make('admin.subcategories', compact('categories', 'subcategories'))->render();
 
     }
 
@@ -179,7 +179,7 @@ class MainController extends \BaseController
      */
     public function pendingTrainers()
     {
-        return View::make('admin . pendingtrainers')
+        return View::make('admin.pendingtrainers')
             ->with('trainers', Trainer::getUnconfirmedTrainers());
     }
 
@@ -195,7 +195,7 @@ class MainController extends \BaseController
 
         Trainer::approve($user);
 
-        return Redirect::route('admin . pendingtrainers');
+        return Redirect::route('admin.pendingtrainers');
     }
 
 
@@ -210,7 +210,7 @@ class MainController extends \BaseController
 
         $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->get();
 
-        return View::make('admin . pendingwithdrawals')
+        return View::make('admin.pendingwithdrawals')
             ->with('pendingWithdrawals', $pendingWithdrawals)
             ->with('processedWithdrawals', $processedWithdrawals);
     }
@@ -225,7 +225,7 @@ class MainController extends \BaseController
 
         Withdrawalrequest::find($withdrawal_id)->markProcessed();
 
-        return Redirect::route('admin . pending_withdrawal');
+        return Redirect::route('admin.pending_withdrawal');
 
     }
 
@@ -234,7 +234,7 @@ class MainController extends \BaseController
      */
     public function showLog()
     {
-        $logFile = file_get_contents(' ../app / storage / logs / laravel . log', true);
+        $logFile = file_get_contents('../app/storage/logs/laravel.log', true);
 
         $logFile = str_replace('[] []', '[] [] < br><br ><br > ', $logFile);
         $logFile = str_replace('#', '<br><span style="color:#c00; margin-left:20px">#</span>', $logFile);

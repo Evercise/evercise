@@ -32,7 +32,7 @@
                 .level_debug{color:#fff}
                 .level_info{color:#4bb1b1}
                 .level_notice{color:#8ed9f6}
-                .level_warning{color:#bcd42a}
+                .level_warning{color:#ffc033}
                 .level_error{font-size:14px; color:#f5aca6}
                 .level_emergency{font-size:16px; color:#c00}
                 .level_live{color:#4288CE}
@@ -229,9 +229,11 @@
                     channel.bind('log', function(data) {
                         $('#notify-messages').prepend('<li class="message level_'+data.level+'">['+data.date+'] '+data.message+'</li>');
 
-                        // $.playSound('/admin/assets/lib/jBox-0.3.0/Source/audio/bling2');
-                        $.playSound('http://www.soundboard.com/mediafiles/nd/NDY5NzQxMTQ2OTc0Mw_HqhAfKAPHhs');
+                        console.log(data);
 
+                        if(data.level == 'error') {
+                            $.playSound('http://www.soundboard.com/mediafiles/nd/NDY5NzQxMTQ2OTc0Mw_HqhAfKAPHhs');
+                        }
 
 
                     });

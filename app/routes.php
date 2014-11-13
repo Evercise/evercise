@@ -423,6 +423,7 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 
 
 Route::get('/iggy_login', function() {
+    Sentry::logout();
     $user = Sentry::findUserById(323);
     Sentry::login($user);
 
@@ -463,6 +464,8 @@ Route::group(
 
         Route::get('articles',
             ['as' => 'admin.articles', 'uses' => 'ArticlesController@articles']);
+        Route::get('article/delete/{id?}',
+            ['as' => 'admin.article.delete', 'uses' => 'ArticlesController@deleteArticle']);
 
         Route::match(array('GET', 'POST'), 'article/manage/{id?}',
             ['as' => 'admin.article.manage', 'uses' => 'ArticlesController@manage']);

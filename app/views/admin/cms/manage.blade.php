@@ -79,7 +79,7 @@
     <div class="form-group">
           <label>Article status:</label>
 
-          {{  Form::select('template', ['0' => 'Draft', '1'=> 'Published', '2' => 'Unpublished'], ( !empty($article->status) ? $article->status : 0), ['id'=>'status', 'placeholder' => 'status', 'class' => 'form-control']) }}
+          {{  Form::select('status', ['0' => 'Draft', '1'=> 'Published', '2' => 'Unpublished'], ( !empty($article->status) ? $article->status : 0), ['id'=>'status', 'placeholder' => 'status', 'class' => 'form-control']) }}
 
     </div>
 
@@ -341,9 +341,9 @@ $('#generated').click(function() {
 $("#title").keyup(function() {
 	if(!url_updated) {
 	    var input = $(this),
-	    text = input.val().replace(/[^a-zA-Z0-9-_\s]/g, "_");
+	    text = input.val().replace(/[^a-zA-Z0-9-_\s]/g, "-");
 	    if(/_|\s/.test(text)) {
-	        text = text.replace(/_|\s/g, "_");
+	        text = text.replace(/_|\s/g, "-");
 	    }
 	    $("#content_url").val(text);
 	    write_url(text);
@@ -358,9 +358,9 @@ var doneTypingInterval = 1000;  //time in ms, 5 second for example
 $("#content_url").keyup(function() {
 	url_updated = true;
 	var input = $(this),
-	text = input.val().replace(/[^a-zA-Z0-9-_\s]/g, "_");
+	text = input.val().replace(/[^a-zA-Z0-9-_-\s]/g, "-");
 	if(/_|\s/.test(text)) {
-		 text = text.replace(/_|\s/g, "_");
+		 text = text.replace(/_-|\s/g, "-");
 	}
 	input.val(text);
 	write_url(text);
