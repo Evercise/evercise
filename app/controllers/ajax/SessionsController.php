@@ -73,10 +73,11 @@ class SessionsController extends AjaxBaseController{
         $tickets = $inputs['tickets'];
         $price = $inputs['price'];
 
+
         foreach($sessionArray as $sessionData)
         {
             if(!Evercisesession::validateAndStore([
-                'date' => $sessionData['date'],
+                'date' => $sessionData,
                 'time' => $time,
                 'evercisegroup_id' => $evercisegroupId,
                 'duration' => $duration,

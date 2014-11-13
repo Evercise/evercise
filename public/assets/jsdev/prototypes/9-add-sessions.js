@@ -70,7 +70,7 @@ AddSessions.prototype = {
     },
     submitForm: function(e){
         e.preventDefault();
-
+        $('input[name="session_array[]"]').val(this.calendar.datepicker('getUTCDates') );
         this.ajaxUpload();
     },
     ajaxUpload: function () {
@@ -136,7 +136,6 @@ AddSessions.prototype = {
     },
     resetCalendarDates: function(){
         this.calendar.datepicker('setDates', this.currentDates  );
-        $('input[name="session_array[]"]').val(this.currentDates);
     },
     changeRecurringFor : function(e){
         this.recurringFor = $(e.target).val();

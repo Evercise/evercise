@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="row">
-            {{ Form::open(['route' => 'home', 'method' => 'post', 'id' => 'add-session']) }}
+            {{ Form::open(['route' => 'sessions.store', 'method' => 'post', 'id' => 'add-session']) }}
                 <div class="col-sm-8 col-sm-offset-2">
                     <div id="calendar" class="calendar"></div>
                     <div class="row mt50">
