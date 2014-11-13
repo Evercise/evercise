@@ -22,15 +22,6 @@ Route::get('/popular', [
     ]
 );
 
-Route::get('/addsessions', [
-        'as' => 'add.sessions',
-        function () {
-            return View::make('v3.classes.add_sessions');
-        }
-    ]
-);
-
-
 /* end tempary routes for new styles */
 
 
@@ -62,6 +53,8 @@ Route::group(['prefix' => 'ajax'], function () {
     // venue
     Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
 
+    // evercise groups
+    Route::post( 'evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
 
@@ -169,10 +162,7 @@ Route::get(
     'evercisegroups/create',
     ['as' => 'evercisegroups.create', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@create']
 );
-Route::post(
-    'evercisegroups',
-    ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@store']
-);
+
 Route::get('/class/{id}', array('as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show'));
 Route::delete(
     '/evercisegroups/{id}',
@@ -229,6 +219,7 @@ Route::get(
     'sessions/{evercisegroup_id}/index',
     array('as' => 'evercisegroups.trainer_show', 'uses' => 'SessionsController@index')
 );
+Route::get('sessions/add', ['as' => 'sessions.add', 'uses' => 'SessionsController@create']);
 Route::get('sessions/date_list', array('as' => 'sessions.date_list'));
 Route::post('sessions/join', array('as' => 'sessions.join', 'uses' => 'SessionsController@joinSessions'));
 Route::get('sessions/join/class', array('as' => 'sessions.join.get', 'uses' => 'SessionsController@joinSessions'));

@@ -20,7 +20,7 @@
                     @include('v3.widgets.class_image_upload')
 
                 </div>
-                {{ Form::open(['url' => 'home', 'method' => 'post', 'role' => 'form', 'id' => 'create-class'] ) }}
+                {{ Form::open(['route' => 'evercisegroups.store', 'method' => 'post', 'role' => 'form', 'id' => 'create-class'] ) }}
                     <div class="form-group mb50">
                         {{ Form::label('class_name', 'Name of your Class', ['class' => 'mb15 required' , 'form' => 'create-class'] )  }}
                         {{ Form::text('class_name', null, ['class' => 'form-control', 'placeholder' => 'Max 50 Characters', 'maxlength' => 50, 'form' => 'create-class']) }}

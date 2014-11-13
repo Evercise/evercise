@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Response, Evercisegroup;
+use Input, Response, Evercisegroup, Sentry;
 
 class EvercisegroupsController extends AjaxBaseController{
 

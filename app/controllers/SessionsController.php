@@ -33,22 +33,7 @@ class SessionsController extends \BaseController
      */
     public function create()
     {
-        // The slider is initialised in JS from the view, as the document.ready has already run
-
-        $createVariables = Evercisesession::getCreateForm(Input::all());
-
-
-        return View::make('sessions.create')
-            ->with('year', $createVariables['year'])
-            ->with('month', $createVariables['month'])
-            ->with('displayMonth', $createVariables['displayMonth'])
-            ->with('date', $createVariables['date'])
-            ->with('id', $createVariables['evercisegroupId'])
-            ->with('duration', $createVariables['duration'])
-            ->with('price', $createVariables['price'])
-            ->with('name', $createVariables['name'])
-            ->with('hour', $createVariables['hour'])
-            ->with('minute', $createVariables['minute']);
+        return View::make('v3.classes.add_sessions');
     }
 
 

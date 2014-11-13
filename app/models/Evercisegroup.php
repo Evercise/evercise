@@ -115,7 +115,13 @@ class Evercisegroup extends \Eloquent
 
             Event::fire('evecisegroup.created', [$user, $evercisegroup]);
 
-            return Response::json(['success' => 'true', 'id' => $evercisegroup->id ]);
+            return Response::json(
+                [
+                    'url' => route('sessions.add'),
+                    'success' => 'true',
+                    'id' => $evercisegroup->id
+                ]
+            );
         }
     }
 

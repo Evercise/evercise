@@ -119,7 +119,7 @@ imageCropper.prototype = {
                 self.uploadForm.append(self.galleryImage);
                 $('#first-img').html(self.galleryImage);
                 $('#first-img').append('<div class="holder-add-more"><span class="image-select icon-lg icon-md-camera hover"></span>');
-                $('input[name="image"]').val(self.galleryValue);
+                $('input[name="image"]').val(self.galleryValue).trigger('change');
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -135,7 +135,7 @@ imageCropper.prototype = {
     clickGalleryOption: function(e){
         this.galleryValue = $(e.target).attr("src")
         this.uploadForm.append('<img src="'+this.galleryValue+'" alt="cover image" class="img-responsive">');
-        $('input[name="image"]').val(this.galleryValue);
+        $('input[name="image"]').val(this.galleryValue).trigger('change');
     },
     updatedRow: function(){
         if(this.galleryImage != '')

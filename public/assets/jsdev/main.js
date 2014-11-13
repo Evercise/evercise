@@ -122,8 +122,8 @@ $(function(){
         new createVenue(this);
     })
 
-    $('#calendar').exists(function(){
-        new Calendar(this);
+    $('#add-session').exists(function(){
+        new AddSessions(this);
     })
     $('#create-class').exists(function(){
         new createClass(this);
