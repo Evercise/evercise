@@ -101,8 +101,11 @@ class EverciseCart extends Cart
         $walletPaymentIds = EverciseCart::instance('topup')->search(['id' => 'WALLET']);
 
         if( count($walletPaymentIds) > 0 )
-            return EverciseCart::instance('topup')->get($walletPaymentIds[0])->price;
-        else
-            return 0;
+        {
+            $cartRow = EverciseCart::instance('topup')->get($walletPaymentIds[0]);
+            if ($cartRow)
+                return $cartRow->price;
+        }
+        return 0;
     }
 } 
