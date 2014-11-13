@@ -56,7 +56,10 @@ class SessionsController extends AjaxBaseController{
       *
       * POST variables:
       * evercisegroup_id
-      * session_array = [[date_time, duration, tickets, price], [...]]
+      * duration
+      * tickets
+      * price
+      * session_array = [date_time, date_time, ...]
      *
      * @return Response
      */
@@ -65,11 +68,19 @@ class SessionsController extends AjaxBaseController{
         $inputs = Input::all();
         $sessionArray = $inputs['session_array'];
         $evercisegroupId = $inputs['evercisegroup_id'];
+        $duration = $inputs['duration'];
+        $tickets = $inputs['tickets'];
+        $price = $inputs['price'];
 
         foreach($sessionArray as $sessionData)
         {
-            $sessionData['evercisegroup_id'] = $evercisegroupId;
-            if(!Evercisesession::validateAndStore($sessionData))
+            if(!Evercisesession::validateAndStore([
+                'date_time' => $sessionData['date_time'],
+                'evercisegroup_id' => $evercisegroupId,
+                'duration' => $duration,
+                'tickets' => $tickets,
+                'price' => $price,
+            ]))
             {
                 // A session has failed validation
             }
