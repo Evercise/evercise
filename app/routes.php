@@ -432,6 +432,7 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 
 
 Route::get('/iggy_login', function() {
+    Sentry::logout();
     $user = Sentry::findUserById(323);
     Sentry::login($user);
 
