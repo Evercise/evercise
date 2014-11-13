@@ -60,6 +60,19 @@ class CartController extends AjaxBaseController
             EverciseCart::clearTopup();
             EverciseCart::instance('topup')->add( $idArray['id'], 'top up', 1, $amount, []);
         }
+        else if( $idArray['type'] == 'wallet_payment')
+        {
+            $amount = Input::get('amount', 0);
+
+            if ($amount > \Sentry::getUser()->wallet->balance)
+            {
+                // Not enough credit in wallet.
+
+            }
+
+            EverciseCart::clearWalletPayment();
+            EverciseCart::instance('topup')->add( $idArray['id'], 'top up', 1, $amount, []);
+        }
         else
         {
             return 'code does not exist :'.$productCode;

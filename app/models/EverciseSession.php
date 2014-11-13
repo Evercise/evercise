@@ -54,17 +54,19 @@ class Evercisesession extends \Eloquent
     }
 
     /**
+     * $sessionData = [evercisegroup_id, date_time, duration, tickets, price]
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function validateAndStore($inputs)
+    public static function validateAndStore($sessionData)
     {
 
         $validator = Validator::make(
-            $inputs,
+            $sessionData,
             [
-                'evercisegroupId' => 'required',
-                'date' => 'required',
-                'time' => 'required',
+                'evercisegroup_id' => 'required',
+                'date_time' => 'required',
+                'tickets' => 'required',
                 'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
                 'duration' => 'required|numeric|between:10,240',
             ]
@@ -73,18 +75,16 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
-            $date_time = $inputs['date'] . ' ' . $inputs['time'];
-            $members = isset($inputs['members']) ? $inputs['members'] : 0;
 
-            $evercisegroupName = Evercisesession::create(array(
-                'evercisegroup_id' => $inputs['evercisegroupId'],
-                'date_time' => $date_time,
-                'price' => $inputs['price'],
-                'duration' => $inputs['duration'],
-                'members' => $members,
-            ))->evercisegroup->name;
+            $evercisegroupName = Evercisesession::create([
+                'evercisegroup_id' => $sessionData['evercisegroup_id'],
+                'date_time' => $sessionData['date_time'],
+                'price' => $sessionData['price'],
+                'duration' => $sessionData['duration'],
+                'tickets' => $sessionData['tickets'],
+            ])->evercisegroup->name;
 
-            $timestamp = strtotime($date_time);
+            $timestamp = strtotime($sessionData['date_time']);
             $niceTime = date('h:ia', $timestamp);
             $niceDate = date('dS F Y', $timestamp);
             Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'created_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));

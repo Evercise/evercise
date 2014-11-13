@@ -44,6 +44,7 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'ajax\CartController@remove'));
     Route::post('cart/delete', array('as' => 'cart.delete', 'uses' => 'ajax\CartController@delete'));
     Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'ajax\CartController@emptyCart'));
+    Route::post('cart/wallet_payment', ['as' => 'cart.wallet.payment', 'uses' => 'CartController@walletPayment']);
     // sessions
     Route::post('/sessions/inline', ['as'=>'sessions.inline.groupId', 'uses'=>'ajax\SessionsController@getSessionsInline'] );
     Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'ajax\SessionsController@update']);

@@ -52,24 +52,37 @@ class SessionsController extends AjaxBaseController{
         return Evercisesession::deleteById($id);
     }
 
-     /** Store a newly created resource in storage.
+     /** Save a new set of sessions
+      *
+      * POST variables:
+      * evercisegroup_id
+      * session_array = [[date_time, duration, tickets, price], [...]]
      *
      * @return Response
      */
     public function store()
     {
         $inputs = Input::all();
+        $sessionArray = $inputs['session_array'];
+        $evercisegroupId = $inputs['evercisegroup_id'];
 
-        if( Evercisesession::validateAndStore($inputs) )
+        foreach($sessionArray as $sessionData)
         {
-            $groupId = $inputs['evercisegroupId'];
-            $sessions = Evercisegroup::find($groupId)->Evercisesession;
-
-            return Response::json([
-                'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
-                'id'   => $groupId
-            ]);
+            $sessionData['evercisegroup_id'] = $evercisegroupId;
+            if(!Evercisesession::validateAndStore($sessionData))
+            {
+                // A session has failed validation
+            }
         }
+
+        $groupId = $inputs['evercisegroupId'];
+        $sessions = Evercisegroup::find($groupId)->Evercisesession;
+
+        return Response::json([
+            'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
+            'id'   => $groupId
+        ]);
+
 
     }
 }

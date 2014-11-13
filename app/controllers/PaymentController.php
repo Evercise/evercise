@@ -59,21 +59,25 @@ class PaymentController extends BaseController {
             }
         }
 
+        $walletPayment = EverciseCart::getWalletPayment();
+
+        $totalToPay = $cartData['total'] - $walletPayment;
+
         /* Convert amount to pennies to be sent to Stripe */
-        $amountInPennies = SessionPayment::poundsToPennies($cartData['total']);
+        $amountInPennies = SessionPayment::poundsToPennies($totalToPay);
 
         try
         {
-            $customer = Stripe_Customer::create(array(
+            $customer = Stripe_Customer::create([
                 'email' => $this->user->email,
                 'card'  => $token
-            ));
+            ]);
 
-            $charge = Stripe_Charge::create(array(
+            $charge = Stripe_Charge::create([
                 'customer' => $customer->id,
                 'amount'   => $amountInPennies,
                 'currency' => 'gbp'
-            ));
+            ]);
         }
         catch(Stripe_CardError $e)
         {
@@ -93,8 +97,8 @@ class PaymentController extends BaseController {
 
     public function processStripePaymentTopup()
     {
-        $cartRowId = EverciseCart::search(['id' => 'TOPUP'])[0];
-        $cartRow = EverciseCart::get($cartRowId);
+        $cartRowId = EverciseCart::instance('topup')->search(['id' => 'TOPUP'])[0];
+        $cartRow = EverciseCart::instance('topup')->get($cartRowId);
 
         $amount = $cartRow['price'];
 

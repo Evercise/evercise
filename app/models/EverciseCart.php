@@ -48,6 +48,11 @@ class EverciseCart extends Cart
             $type = 'topup';
             $id = 'TOPUP';
         }
+        else if (count( $chunks = explode('W', $productCode) ) > 1){
+
+            $type = 'wallet_payment';
+            $id = 'WALLET';
+        }
 
         return ['id' => $id, 'type' => $type];
     }
@@ -82,5 +87,22 @@ class EverciseCart extends Cart
         if($cartRowIds)
             foreach($cartRowIds as $cartRowId)
                 EverciseCart::instance('topup')->remove($cartRowId);
+    }
+    public static function clearWalletPayment()
+    {
+        $cartRowIds = EverciseCart::instance('topup')->search(['id' => 'WALLET']);
+        if($cartRowIds)
+            foreach($cartRowIds as $cartRowId)
+                EverciseCart::instance('topup')->remove($cartRowId);
+    }
+
+    public static function getWalletPayment()
+    {
+        $walletPaymentIds = EverciseCart::instance('topup')->search(['id' => 'WALLET']);
+
+        if( count($walletPaymentIds) > 0 )
+            return EverciseCart::instance('topup')->get($walletPaymentIds[0])->price;
+        else
+            return 0;
     }
 } 
