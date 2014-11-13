@@ -17,6 +17,10 @@ class SessionsController extends AjaxBaseController{
     /**
      * Update the specified resource in storage.
      *
+     * POST variables:
+     * evercisesession_id
+     * session_array = [[time, duration, tickets, price], ...]
+     *
      * @param  int $id
      * @return Response
      */
