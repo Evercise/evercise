@@ -724,7 +724,7 @@ class Evercisegroup extends \Eloquent
     /**
      * @return mixed
      */
-    public function Evercisesession()
+    public function evercisesession()
     {
         return $this->hasMany('Evercisesession')->orderBy('date_time', 'asc');
     }

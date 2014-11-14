@@ -78,10 +78,6 @@ class SessionsController extends AjaxBaseController{
         $tickets = $inputs['tickets'];
         $price = $inputs['price'];
 
-        //dd(new DateTime($sessionArray));
-
-        return $sessionArray;
-
         foreach($sessionArray as $date)
         {
 
@@ -99,12 +95,12 @@ class SessionsController extends AjaxBaseController{
             
         }
 
-        $sessions = Evercisegroup::find($evercisegroupId)->Evercisesession;
+        $sessions = Evercisegroup::find($evercisegroupId)->evercisesession;
 
-        /*return Response::json([
+        return Response::json([
             'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
             'id'   => $evercisegroupId
-        ]);*/
+        ]);
 
 
     }
