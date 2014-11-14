@@ -3,6 +3,7 @@ function AddSessions(form){
     this.calendar = this.form.find('#calendar');
     this.daysOfWeek = '';
     this.dates = [];
+    this.submitDates = [];
     this.index = '';
     this.recurring = 6;
     this.recurringFor = this.form.find('#recurring-days').val();
@@ -70,7 +71,8 @@ AddSessions.prototype = {
     },
     submitForm: function(e){
         e.preventDefault();
-        $('input[name="session_array[]"]').val(this.calendar.datepicker('getUTCDates') );
+        this.submitDates = this.calendar.datepicker('getDates');
+        $('input[name="session_array"]').val( this.submitDates );
         this.ajaxUpload();
     },
     ajaxUpload: function () {
@@ -82,7 +84,7 @@ AddSessions.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find("input[type='submit']").prop('disabled', true).after('<span id="cropping-loading" class="icon icon-loading ml10"></span>');
+                self.form.find("input[type='submit']").prop('disabled', true).parent().after('<span id="cropping-loading" class="icon icon-loading ml10 mt10"></span>');
             },
 
             success: function (data) {
