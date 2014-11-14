@@ -19,34 +19,36 @@
                         <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                {{ Form::select('time[]', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm', 'form' => 'update-sessions'] ) }}
                             </div>
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('duration',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                {{ Form::select('duration[]',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm', 'form' => 'update-sessions'] ) }}
                             </div>
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('members',Config::get('evercise.tickets'), $session->evercisegroup->capacity , ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                {{ Form::select('tickets[]',Config::get('evercise.tickets'), $session->evercisegroup->capacity , ['class' => 'form-control input-sm', 'form' => 'update-sessions'] ) }}
                             </div>
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('price',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                {{ Form::select('price[]',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm', 'form' => 'update-sessions'] ) }}
                             </div>
                         </td>
                         <td class="text-left">
                             {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session']) }}
-                                {{ Form::hidden('id', $session->id) }}
+                                {{ Form::hidden('id[]', $session->id) }}
                                 {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
                             {{ Form::close() }}
                         </td>
 
                     </tr>
+                    {{ Form::hidden('id[]', $session->id, ['form' =>'update-sessions']) }}
 
                 @endforeach
+
 
             </tbody>
         </table>

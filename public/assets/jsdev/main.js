@@ -125,6 +125,9 @@ $(function(){
     $('#add-session').exists(function(){
         new AddSessions(this);
     })
+    $('#update-sessions').exists(function(){
+        new UpdateSessions(this);
+    })
     $('#create-class').exists(function(){
         new createClass(this);
     })

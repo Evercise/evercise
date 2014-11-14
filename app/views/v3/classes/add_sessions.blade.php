@@ -113,17 +113,20 @@
             </div>
             <div class="row mt25 mb50">
                 <div class="col-sm-6 col-sm-offset-3">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <button class="btn btn-default btn-block">Cancel</button>
+                    {{ Form::open(['route' => 'sessions.update', 'method' => 'put', 'id' => 'update-sessions']) }}
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <button class="btn btn-default btn-block">Cancel</button>
+                            </div>
+                            <div class="col-sm-4">
+                                {{ Form::submit('Save & Preview', ['class' => 'btn btn-default btn-block']) }}
+                            </div>
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary btn-block">Create</button>
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <button class="btn btn-default btn-block">Save & Preview</button>
-                        </div>
-                        <div class="col-sm-4">
-                            <button class="btn btn-primary btn-block">Create</button>
-                        </div>
-                    </div>
+                    {{ Form::close() }}
+
                 </div>
             </div>
         </div>
