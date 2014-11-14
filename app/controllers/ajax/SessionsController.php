@@ -78,10 +78,12 @@ class SessionsController extends AjaxBaseController{
         $price = $inputs['price'];
 
 
-        foreach($sessionArray as $sessionData)
+
+        foreach($sessionArray as $date)
         {
+
             if(!Evercisesession::validateAndStore([
-                'date' => $sessionData,
+                'date' => $date,
                 'time' => $time,
                 'evercisegroup_id' => $evercisegroupId,
                 'duration' => $duration,
@@ -93,12 +95,11 @@ class SessionsController extends AjaxBaseController{
             }
         }
 
-        $groupId = $inputs['evercisegroupId'];
-        $sessions = Evercisegroup::find($groupId)->Evercisesession;
+        $sessions = Evercisegroup::find($evercisegroupId)->Evercisesession;
 
         return Response::json([
             'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
-            'id'   => $groupId
+            'id'   => $evercisegroupId
         ]);
 
 
