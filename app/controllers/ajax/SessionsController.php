@@ -84,19 +84,21 @@ class SessionsController extends AjaxBaseController{
       * duration
       * tickets
       * price
-      * session_array = [[date, time], [date, time], ...]
+      * session_array = [date, date, ...]
      *
      * @return Response
      */
     public function store()
     {
         $inputs = Input::all();
-        $sessionArray = $inputs['session_array'];
+        $sessionArray = explode(',', $inputs['session_array']);
         $evercisegroupId = $inputs['evercisegroup_id'];
         $time = $inputs['time'];
         $duration = $inputs['duration'];
         $tickets = $inputs['tickets'];
         $price = $inputs['price'];
+
+        //return $sessionArray;
 
         foreach($sessionArray as $date)
         {

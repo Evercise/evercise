@@ -76,11 +76,11 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
-            $date_time = static::toDateTime($sessionData['date'], $sessionData['time']);
+            $date_time = $sessionData['date'] . ' ' . $sessionData['time'];
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
-                'date_time' => date("Y-m-d H:i:s", $date_time),
+                'date_time' => $date_time,
                 'price' => $sessionData['price'],
                 'duration' => $sessionData['duration'],
                 'tickets' => $sessionData['tickets'],
