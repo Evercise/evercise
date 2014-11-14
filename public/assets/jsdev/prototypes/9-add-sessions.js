@@ -79,7 +79,7 @@ AddSessions.prototype = {
             var year = v.getFullYear();
             self.submitDates.push(year + '-'+ month + '-' + day);
         })
-        $('input[name="session_array[]"]').val( this.submitDates );
+        $('input[name="session_array"]').val( this.submitDates );
         this.ajaxUpload();
     },
     ajaxUpload: function () {
