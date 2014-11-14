@@ -13,7 +13,7 @@
             </thead>
             <tbody>
                 @foreach($sessions as $session)
-                    <tr class="text-center" id="hub-static-row-{{$session->id}}">
+                    <tr class="text-center" id="update-row-{{$session->id}}">
                         <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
                         <td>{{ $session->formattedTime()}}</td>
                         <td>{{ $session->formattedDuration()}}</td>

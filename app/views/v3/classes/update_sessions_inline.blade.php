@@ -39,7 +39,7 @@
                         </td>
                         <td class="text-left">
                             {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session']) }}
-                                {{ Form::hidden('id[]', $session->id) }}
+                                {{ Form::hidden('id', $session->id) }}
                                 {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
                             {{ Form::close() }}
                         </td>

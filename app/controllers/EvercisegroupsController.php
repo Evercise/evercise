@@ -74,7 +74,7 @@ class EvercisegroupsController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id, $preview = null)
     {
         if ($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
             ->with('evercisesession.sessionpayment')
@@ -89,8 +89,16 @@ class EvercisegroupsController extends \BaseController
             {
                 $data = $evercisegroup->showAsNonOwner($this->user);
 
-                return View::make('v3.classes.class_page')
-                    ->with('data', $data);
+                if($preview == 'preview'){
+                    return View::make('v3.classes.class_page')
+                        ->with('preview', 'preview')
+                        ->with('data', $data);
+                }
+                else{
+                    return View::make('v3.classes.class_page')
+                        ->with('data', $data);
+                }
+
             }
         } else {
             return View::make('errors.missing');

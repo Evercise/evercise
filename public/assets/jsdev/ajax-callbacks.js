@@ -22,5 +22,5 @@ function newSessionAdded(data){
 }
 
 function removeSessionRow(data){
-    $('#hub-static-row-'+data.id).remove();
+    $('#update-row-'+data.id).remove();
 }

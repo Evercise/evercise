@@ -28,8 +28,7 @@ UpdateSessions.prototype = {
             },
 
             success: function (data) {
-                //$('#update-session').html(data.view);
-                console.log(data);
+                window.location.href = data.url;
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

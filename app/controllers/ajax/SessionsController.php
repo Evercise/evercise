@@ -30,11 +30,13 @@ class SessionsController extends AjaxBaseController{
      */
     public function update()
     {
+        $preview = Input::get('preview');
         $sessionIds = Input::get('id');
         $time_array = Input::get('time');
         $duration_array = Input::get('duration');
         $tickets_array = Input::get('tickets');
         $price_array = Input::get('price');
+        $evercisegoupId = Input::get('$evercisegoupId');
 
         $userId = \Sentry::getUser()->id;
 
@@ -58,12 +60,25 @@ class SessionsController extends AjaxBaseController{
                 );
         }
 
-        return Response::json(
-            [
-                'view' => View::make('v3.layouts.positive-alert')->with('message', 'your sessions were updated successfully')->with('fixed', true)->render(),
-                'id'       => $id
-            ]
-        );
+
+
+        if(isset($preview) && $preview == 'yes'){
+            return Response::json(
+                [
+                    'url' => route('evercisegroups.show',[$evercisegoupId,'preview'] )
+                ]
+            );
+        }
+        else
+        {
+            return Response::json(
+                [
+                    'view' => View::make('v3.layouts.positive-alert')->with('message', 'your sessions were updated successfully')->with('fixed', true)->render(),
+                    'id'       => $id
+                ]
+            );
+        }
+
     }
 
     /**

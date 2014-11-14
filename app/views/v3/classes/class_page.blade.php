@@ -1,6 +1,22 @@
 @extends('v3.layouts.master')
 <?php View::share('og', $data['og']) ?>
 @section('body')
+    @if(isset($preview))
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="preview">
+          <div class="container mt10">
+
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <span class="text-white">This is what your class will look like when published</span>
+                    {{ Html::linkRoute('sessions.add', 'Go back', $data['evercisegroup']->id, ['class' => 'btn btn-default text-right ml20 mr20'] ) }}
+                    <a href="#" class="btn btn-primary">Publish</a>
+                </div>
+            </div>
+           </div>
+
+        </nav>
+
+    @endif
     <div class="hero no-nav-change" style="background-image: url('{{url().'/profiles/'.$data['trainer']->user->directory.'/'.$data['evercisegroup']->image}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">

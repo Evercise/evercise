@@ -164,7 +164,7 @@ Route::get(
     ['as' => 'evercisegroups.create', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@create']
 );
 
-Route::get('/class/{id}', array('as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show'));
+Route::get('/class/{id}/{preview?}', array('as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show'));
 Route::delete(
     '/evercisegroups/{id}',
     array('as' => 'evercisegroups.destroy', 'uses' => 'EvercisegroupsController@destroy')

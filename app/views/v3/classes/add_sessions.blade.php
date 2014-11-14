@@ -119,6 +119,8 @@
                                 <button class="btn btn-default btn-block">Cancel</button>
                             </div>
                             <div class="col-sm-4">
+                                {{ Form::hidden('$evercisegoupId', $data['evercisegroup_id']) }}
+                                {{ Form::hidden('preview', 'yes') }}
                                 {{ Form::submit('Save & Preview', ['class' => 'btn btn-default btn-block']) }}
                             </div>
                             <div class="col-sm-4">
