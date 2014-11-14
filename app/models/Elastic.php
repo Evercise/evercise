@@ -122,6 +122,51 @@ class Elastic
     }
 
 
+
+
+    /**
+     * Search Evercisegroups Index
+     *
+     * @param Place $area
+     * @param array $params
+     * @return array
+     * @throws Exception
+     */
+    public function searchStats($params = [])
+    {
+        $searchParams['index'] = 'search_stats';
+        $searchParams['type'] = 'search';
+
+        $searchParams['size'] = $params['size'];
+        $searchParams['from'] = $params['from'];
+
+        /** Are we going to Search Something? */
+        if (!empty($params['search'])) {
+            $searchParams['body']['query']['filtered']['query'] = [
+
+                'flt' => [
+                    'like_text'       => $params['search'],
+                    'max_query_terms' => 12,
+
+                ],
+
+            ];
+        } else {
+            /** Guess not! */
+            $searchParams['body']['query']['filtered']['query']['match_all'] = [];
+        }
+
+
+        $result = $this->elasticsearch->search($searchParams)['hits'];
+
+        $result_object = json_decode(json_encode($result), false);
+
+
+        return $result_object;
+
+    }
+
+
     /**
      * @param int $id
      * @return mixed

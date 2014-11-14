@@ -410,6 +410,9 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
     Route::post('/unapprove_trainer',
         ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
 
+    Route::get('/search/stats',
+        ['as' => 'admin.ajax.searchstats', 'uses' => 'AdminAjaxController@searchStats']);
+
 
 
     Route::post('galleryImageUpload',
@@ -478,6 +481,8 @@ Route::group(
             ['as' => 'admin.article.categories.manage', 'uses' => 'ArticlesController@categoriesManage']);
 
 
+        Route::get('/search/stats',
+            ['as' => 'admin.searchstats', 'uses' => 'MainController@searchStats']);
 
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);

@@ -44,7 +44,7 @@ class Articles extends Eloquent
         return $this->hasOne('ArticleCategories', 'id');
     }
 
-    public static function createUrl($article)
+    public static function createUrl($article, $full = false)
     {
         $url = '';
 
@@ -54,6 +54,9 @@ class Articles extends Eloquent
 
         $url .= $article->permalink;
 
+        if($full) {
+            return URL::to($url);
+        }
 
         return $url;
     }
