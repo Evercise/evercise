@@ -133,7 +133,7 @@ class ArticlesController extends \BaseController
             }
 
 
-            $dir = public_path() . '/img/pages/' . date('Y');
+            $dir = public_path() . '/files/pages/' . date('Y');
             if (!is_dir($dir)) {
                 mkdir($dir);
             }
@@ -302,7 +302,11 @@ class ArticlesController extends \BaseController
             }
 
 
-            $dir = public_path() . '/img/pages/' . date('Y');
+            $dir = public_path() . '/files/pages';
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+            $dir .= '/' . date('Y');
             if (!is_dir($dir)) {
                 mkdir($dir);
             }

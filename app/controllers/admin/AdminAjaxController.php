@@ -246,7 +246,7 @@ class AdminAjaxController extends AdminController
 
         $gallery = Gallery::find($id);
 
-        @unlink('img/gallery/' . $gallery->image);
+        @unlink('files/gallery_defaults/' . $gallery->image);
 
 
         return Response::json(['deleted' => $gallery->delete(), 'id' => $id]);
@@ -256,6 +256,11 @@ class AdminAjaxController extends AdminController
     public function galleryUploadFile()
     {
         if ($file = Request::file('file')) {
+
+
+            if(!is_dir('files/gallery_defaults')) {
+                mkdir('files/gallery_defaults');
+            }
 
             $name = $file->getClientOriginalName();
             /** Save the image name without the Prefix to the DB */
@@ -268,7 +273,7 @@ class AdminAjaxController extends AdminController
                 $image = Image::make($_FILES['file']['tmp_name'])->fit(
                     $img['width'],
                     $img['height']
-                )->save(public_path() . '/img/gallery/' . $file_name);
+                )->save(public_path() . '/files/gallery_defaults/' . $file_name);
 
 
                 if ($image) {
@@ -279,7 +284,7 @@ class AdminAjaxController extends AdminController
 
             if ($save) {
                 Gallery::create(['image' => $name, 'counter' => Config::get('evercise.gallery.image_counter', 3)]);
-                return '/img/gallery/thumb_' . $name;
+                return '/files/gallery_defaults/thumb_' . $name;
             }
         }
 

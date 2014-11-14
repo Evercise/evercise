@@ -17,6 +17,8 @@ public/profiles/
 public/img/pages/*
 public/img/gallery/*
 public/files/gallery/*
+public/files/pages/*
+public/files/gallery_defaults/*
 /app/storage/logs/*
 /app/storage/cache/*
 /app/storage/sessions/*
