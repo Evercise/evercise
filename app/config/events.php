@@ -34,6 +34,8 @@
  * rating.create => User left a rating for a class
  * wallet.request => Trainer has requested a withdrawel from there wallet
  * wallet.updatePaypal => User has updated there paypal details
+ *
+ * user.admin.trainerCreate => ($user, $trainer) when a admin creates a trainer
  */
 
 
@@ -52,7 +54,8 @@ return [
         ['user.loginFacebook' => 'Tracking@userFacebookLogin'],
         ['user.edit' => 'Tracking@userEdit'],
         ['trainer.edit' => 'Tracking@trainerEdit'],
-        ['user.changedPassword' => 'Tracking@userChangePassword']
+        ['user.changedPassword' => 'Tracking@userChangePassword'],
+        ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer']
 
 
     ]

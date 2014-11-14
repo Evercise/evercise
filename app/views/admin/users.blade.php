@@ -39,6 +39,9 @@
         <div class="col-md-3">
             <a class="btn btn-default btn-sm" id="clearFilters">Clear</a>
         </div>
+        <div class="col-md-3">
+            <a class="btn btn-default btn-sm" href="{{ URL::route('admin.users.trainerCreate') }}">Create new Trainer</a>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -73,7 +76,7 @@
                                     {{ Form::submit('Log in as user' , array('class'=>'btn btn-sm btn-info')) }}
                                 {{ Form::close() }}
 
-                                {{ Form::open(array('id' => 'reset_password_'.$user->id, 'url' => 'admin/reset_password', 'method' => 'post', 'class' => 'reset_password', 'style' => 'float:left')) }}
+                                {{ Form::open(array('id' => 'reset_password_'.$user->id, 'url' => 'ajax/admin/reset_password', 'method' => 'post', 'class' => 'reset_password', 'style' => 'float:left')) }}
                                     {{ Form::hidden( 'user_id' , $user->id) }}
                                     {{ Form::submit('Reset Password' , array('class'=>'btn btn-sm btn-warning')) }}
                                 {{ Form::close() }}
