@@ -76,7 +76,7 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
-            $date_time = toDateTime($sessionData['date'], $sessionData['time']);
+            $date_time = static::toDateTime($sessionData['date'], $sessionData['time']);
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
@@ -97,7 +97,7 @@ class Evercisesession extends \Eloquent
         }
     }
 
-    public function toDateTime($date, $time)
+    public static function toDateTime($date, $time)
     {
         $date = strtotime($date);
         $date_str = date("Y-m-d H:i:s", $date);
@@ -105,13 +105,13 @@ class Evercisesession extends \Eloquent
         $date_time = strtotime($date_time_str);
     }
 
-    public function validateAndUpdate($sessionData)
+    public function validateAndUpdate($sessionData, $userId)
     {
 
         $validator = Validator::make(
             $sessionData,
             [
-                'date' => 'required',
+                'tickets' => 'required',
                 'time' => 'required',
                 'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
                 'duration' => 'required|numeric|between:10,240',
@@ -121,10 +121,15 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
-            $date_time = toDateTime($sessionData['date'], $sessionData['time']);
+            if (! $this->evercisegroup->user_id == $userId)
+                return false;
+
+            $currentDate = strtotime($this->date_time);
+            $date_str = date("Y-m-d", $currentDate);
+            $date_time_str = $date_str . ' ' . $sessionData['time'];
 
             $this->update([
-                'date_time' => date("Y-m-d H:i:s", $date_time),
+                'date_time' => $date_time_str,
                 'price' => $sessionData['price'],
                 'duration' => $sessionData['duration'],
                 'tickets' => $sessionData['tickets'],

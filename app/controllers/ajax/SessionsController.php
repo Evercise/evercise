@@ -19,7 +19,6 @@ class SessionsController extends AjaxBaseController{
      * Update a set of sessions.
      *
      * POST variables:
-     * session_array = [[id, date, time, duration, tickets, price], ...]
      *
      * id = []
      * time = []
@@ -37,6 +36,8 @@ class SessionsController extends AjaxBaseController{
         $tickets_array = Input::get('tickets');
         $price_array = Input::get('price');
 
+        $userId = \Sentry::getUser()->id;
+
         foreach($sessionIds as $key => $id)
         {
             $inputs = [
@@ -47,7 +48,14 @@ class SessionsController extends AjaxBaseController{
             ];
 
             $session = Evercisesession::find($id);
-            $session->validateAndUpdate($inputs);
+            //return $session->validateAndUpdate($inputs, $userId);
+            if(!$session->validateAndUpdate($inputs, $userId))
+                return Response::json(
+                    [
+                        'view' => View::make('v3.layouts.positive-alert')->with('message', 'It fucked up')->with('fixed', true)->render(),
+                        'id'       => $id
+                    ]
+                );
 
         }
 
