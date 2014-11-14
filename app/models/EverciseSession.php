@@ -76,10 +76,7 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
-            $date = strtotime($sessionData['date']);
-            $date_str = date("Y-m-d H:i:s", $date);
-            $date_time_str = str_replace('00:00:00', $sessionData['time'], $date_str);
-            $date_time = strtotime($date_time_str);
+            $date_time = toDateTime($sessionData['date'], $sessionData['time']);
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
@@ -96,6 +93,43 @@ class Evercisesession extends \Eloquent
 
             /* callback */
             Event::fire('session.create', [Sentry::getUser() ]);
+            return true;
+        }
+    }
+
+    public function toDateTime($date, $time)
+    {
+        $date = strtotime($date);
+        $date_str = date("Y-m-d H:i:s", $date);
+        $date_time_str = str_replace('00:00:00', $time, $date_str);
+        $date_time = strtotime($date_time_str);
+    }
+
+    public function validateAndUpdate($sessionData)
+    {
+
+        $validator = Validator::make(
+            $sessionData,
+            [
+                'date' => 'required',
+                'time' => 'required',
+                'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
+                'duration' => 'required|numeric|between:10,240',
+            ]
+        );
+        if ($validator->fails()) {
+            return false;
+        }
+        else {
+            $date_time = toDateTime($sessionData['date'], $sessionData['time']);
+
+            $this->update([
+                'date_time' => date("Y-m-d H:i:s", $date_time),
+                'price' => $sessionData['price'],
+                'duration' => $sessionData['duration'],
+                'tickets' => $sessionData['tickets'],
+            ]);
+
             return true;
         }
     }
@@ -634,39 +668,6 @@ class Evercisesession extends \Eloquent
         return $this->evercisegroup->capacity - count($this->sessionmembers);
     }
 
-    public function updateSession($inputs)
-    {
-        if($inputs['time'])
-        {
-            $inputs['date_time'] = date('Y-m-d', strtotime($this->date_time)) . ' ' . date('H:i', strtotime($inputs['time']));
-            unset($inputs['time']);
-        }
-
-        $validator = Validator::make(
-            $inputs,
-            [
-                'evercisegroupId' => 'required',
-                'date' => 'required',
-                'time' => 'required',
-                'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
-                'duration' => 'required|numeric|between:10,240',
-            ]
-        );
-        if ($validator->fails()) {
-            return false;
-        }
-        else {
-
-            foreach ($inputs as $name => $value) {
-                if (!in_array($name, $this->editable)) {
-                    throw new Exception('Trying to edit uneditable/non-existant field: ' . $name);
-                }
-            }
-            $this->update($inputs);
-
-            return true;
-        }
-    }
 
 
 }
