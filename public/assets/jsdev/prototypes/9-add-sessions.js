@@ -99,7 +99,8 @@ AddSessions.prototype = {
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+                console.log('error');
+                //console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
             },
 
             complete: function () {
