@@ -9,7 +9,7 @@ class Evercisesession extends \Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['evercisegroup_id', 'date_time', 'members', 'price', 'duration', 'members_emailed'];
+    protected $fillable = ['evercisegroup_id', 'date_time', 'price', 'duration', 'members_emailed', 'tickets'];
 
     protected $editable = ['date_time', 'price', 'duration', 'members'];
     /**

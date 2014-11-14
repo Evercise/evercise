@@ -52,16 +52,15 @@ class SessionsController extends AjaxBaseController{
             if(!$session->validateAndUpdate($inputs, $userId))
                 return Response::json(
                     [
-                        'view' => View::make('v3.layouts.positive-alert')->with('message', 'It fucked up')->with('fixed', true)->render(),
+                        'view' => View::make('v3.layouts.negative-alert')->with('message', 'Sessions could not be updated')->with('fixed', true)->render(),
                         'id'       => $id
                     ]
                 );
-
         }
 
         return Response::json(
             [
-                'view' => View::make('v3.layouts.positive-alert')->with('message', 'your session was updated successfully')->with('fixed', true)->render(),
+                'view' => View::make('v3.layouts.positive-alert')->with('message', 'your sessions were updated successfully')->with('fixed', true)->render(),
                 'id'       => $id
             ]
         );
