@@ -71,9 +71,16 @@ AddSessions.prototype = {
     },
     submitForm: function(e){
         e.preventDefault();
-        this.submitDates = this.calendar.datepicker('getDates');
-        $('input[name="session_array"]').val( this.submitDates );
-        this.ajaxUpload();
+        var self =this;
+
+        $.each(this.calendar.datepicker('getDates') , function(i,v){
+            var day = v.getDate();
+            var month = (v.getMonth() + 1);
+            var year = v.getFullYear();
+            self.submitDates.push(year + '-'+ month + '-' + day);
+        })
+        $('input[name="session_array[]"]').val( this.submitDates );
+        //this.ajaxUpload();
     },
     ajaxUpload: function () {
         var self = this;
