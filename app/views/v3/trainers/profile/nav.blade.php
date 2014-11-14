@@ -7,7 +7,7 @@
                 <li><a href="#upcoming">Upcoming Classes</a></li>
                 <li><a href="#activity">Activity</a></li>
                 <li><a href="#wallet">Wallet</a></li>
-                <li><a href="#profile">Edit Profile</a></li>
+                <li><a href="#edit">Edit Profile</a></li>
             </ul>
         </div>
     </nav>

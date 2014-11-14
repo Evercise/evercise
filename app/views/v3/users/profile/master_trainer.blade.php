@@ -35,6 +35,9 @@
         <div id="wallet" class="hidden profile-panels">
             @include('v3.users.profile.wallet')
         </div>
+        <div id="edit" class="hidden profile-panels">
+            @include('v3.users.profile.edit')
+        </div>
 
     </div>
 @stop

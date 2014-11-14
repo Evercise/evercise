@@ -96,7 +96,8 @@ AddSessions.prototype = {
 
             success: function (data) {
                 $('#update-session').html(data.view);
-                console.log(data);
+                this.dates = [];
+                this.submitDates = [];
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

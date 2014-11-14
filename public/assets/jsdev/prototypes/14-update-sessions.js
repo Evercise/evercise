@@ -24,7 +24,7 @@ UpdateSessions.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find("input[type='submit']").prop('disabled', true).parent().after('<span id="sessionupdate-loading" class="icon icon-loading ml10 mt10"></span>');
+                self.form.find("input[type='submit']").prop('disabled', true).append('<span id="sessionupdate-loading" class="icon icon-loading ml10 mt10"></span>');
             },
 
             success: function (data) {
@@ -38,6 +38,7 @@ UpdateSessions.prototype = {
             },
 
             complete: function () {
+                self.form.find("input[type='submit']").prop('disabled', false)
                 $('#sessionupdate-loading').remove();
             }
         });
