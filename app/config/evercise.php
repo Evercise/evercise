@@ -14,7 +14,7 @@ for ($hours = 0; $hours < 24; $hours++) {
 }
 
 for ($mins = 0; $mins < 125; $mins += 5) {
-    $durationArray[str_pad($mins, 2, '0', STR_PAD_LEFT)] = str_pad($mins, 2, '0', STR_PAD_LEFT);
+    $durationArray[str_pad($mins, 2, '0', STR_PAD_LEFT)] = str_pad($mins, 2, '0', STR_PAD_LEFT).' mins';
 }
 
 for ($tickets = 0; $tickets < 50; $tickets += 1) {

@@ -98,7 +98,7 @@ class SessionsController extends AjaxBaseController{
         $sessions = Evercisegroup::find($evercisegroupId)->evercisesession;
 
         return Response::json([
-            'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
+            'view' => View::make('v3.classes.update_sessions_inline')->with('sessions', $sessions)->render(),
             'id'   => $evercisegroupId
         ]);
 

@@ -106,72 +106,8 @@
             </div>
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Selected Dates</th>
-                                    <th class="text-center">Time</th>
-                                    <th class="text-center">Duration</th>
-                                    <th class="text-center">Tickets</th>
-                                    <th class="text-center">Price(GBP)</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="text-center">
-                                    <td class="text-left"><span>Mon Sept 1st 2014</span></td>
-
-                                    <td>
-                                      <div class="custom-select">
-                                         {{ Form::select('time',
-                                             [
-                                                 '12:00' => '12:00',
-                                                 '13:00' => '13:00',
-                                                 '14:00' => '14:00'
-                                             ]
-                                          , '12:00', ['class' => 'form-control'] ) }}
-                                      </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-select">
-                                           {{ Form::select('duration',
-                                               [
-                                                   '30' => '30 mins',
-                                                   '45' => '45 mins',
-                                               ]
-                                            , '30', ['class' => 'form-control'] ) }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="custom-select">
-                                           {{ Form::select('tickets',
-                                               [
-                                                   '10' => '10',
-                                                   '15' => '15',
-                                               ]
-                                            , '10', ['class' => 'form-control'] ) }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                          <div class="custom-select">
-                                             {{ Form::select('price',
-                                                 [
-                                                     '10' => '&pound;10.00',
-                                                     '15' => '&pound;15.00',
-                                                 ]
-                                              , '10', ['class' => 'form-control'] ) }}
-                                          </div>
-                                    </td>
-
-                                    <td class="text-left">
-                                        <span class="icon icon-cross hover"></span>
-                                    </td>
-                                </tr>
-
-
-                            </tbody>
-                        </table>
+                    <div id="update-session">
+                        @include('v3.classes.update_sessions_inline')
                     </div>
                 </div>
             </div>

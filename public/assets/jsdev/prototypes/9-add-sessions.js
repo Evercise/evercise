@@ -91,10 +91,11 @@ AddSessions.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find("input[type='submit']").prop('disabled', true).parent().after('<span id="cropping-loading" class="icon icon-loading ml10 mt10"></span>');
+                self.form.find("input[type='submit']").prop('disabled', true).parent().after('<span id="session-loading" class="icon icon-loading ml10 mt10"></span>');
             },
 
             success: function (data) {
+                $('#update-session').html(data.view);
                 console.log(data);
             },
 
@@ -104,7 +105,7 @@ AddSessions.prototype = {
             },
 
             complete: function () {
-                console.log('comaplete');
+                $('#session-loading').remove();
             }
         });
     },
