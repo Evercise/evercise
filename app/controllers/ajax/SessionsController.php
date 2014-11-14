@@ -16,27 +16,31 @@ class SessionsController extends AjaxBaseController{
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update a set of sessions.
      *
      * POST variables:
-     * evercisesession_id
-     * session_array = [[time, duration, tickets, price], ...]
+     * session_array = [[id, date, time, duration, tickets, price], ...]
      *
-     * @param  int $id
      * @return Response
      */
     public function update()
     {
-        $id = Input::get('id', false);
+        $sessionEdits = Input::get('session_array');
+        foreach($sessionEdits as $sessionData)
+        {
+            $id = $sessionData['id'];
 
-        $inputs = [];
-        if(Input::get('time', false)) $inputs['time'] = Input::get('time');
-        if(Input::get('duration', false)) $inputs['duration'] = Input::get('duration');
-        if(Input::get('members', false)) $inputs['members'] = Input::get('members');
-        if(Input::get('price', false)) $inputs['price'] = Input::get('price');
+            $inputs = [
+                'time' => $sessionData['time'],
+                'duration' => $sessionData['duration'],
+                'tickets' => $sessionData['tickets'],
+                'price' => $sessionData['price'],
+            ];
 
-        $session = Evercisesession::find($id);
-        $session->updateSession($inputs);
+            $session = Evercisesession::find($id);
+            $session->updateSession($inputs);
+
+        }
 
         return Response::json(
             [
