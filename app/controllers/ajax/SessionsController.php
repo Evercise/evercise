@@ -80,6 +80,7 @@ class SessionsController extends AjaxBaseController{
 
         //dd(new DateTime($sessionArray));
 
+        return $sessionArray;
 
         foreach($sessionArray as $date)
         {
