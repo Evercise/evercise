@@ -78,10 +78,11 @@ class Evercisesession extends \Eloquent
         else {
             //$date_time = $sessionData['date'] . ' ' . $sessionData['time'];
 
-            $date_time = str_replace('(GMT Standard Time)', '(GMT)', $sessionData['date']);
-            $date_time = str_replace('00:00:00', $date_time, $sessionData['time']);
-            $date_time = strtotime($date_time);
-            //return date("Y-m-d H:i:s", $date_time);
+
+            $date_time_str = str_replace('(GMT Standard Time)', '(GMT)', $sessionData['date']);
+            $date_time_str = str_replace('00:00:00', $date_time_str, $sessionData['time']);
+            $date_time = strtotime($date_time_str);
+            return date("Y-m-d H:i:s", $date_time);
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],

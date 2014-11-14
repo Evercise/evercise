@@ -1,4 +1,5 @@
 <?php namespace ajax;
+use DateTime;
 use Input, Response, Evercisegroup, Evercisesession, View;
 
 class SessionsController extends AjaxBaseController{
@@ -77,6 +78,7 @@ class SessionsController extends AjaxBaseController{
         $tickets = $inputs['tickets'];
         $price = $inputs['price'];
 
+        //dd(new DateTime($sessionArray));
 
 
         foreach($sessionArray as $date)
@@ -93,14 +95,15 @@ class SessionsController extends AjaxBaseController{
             {
                 // A session has failed validation
             }
+            
         }
 
         $sessions = Evercisegroup::find($evercisegroupId)->Evercisesession;
 
-        return Response::json([
+        /*return Response::json([
             'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->render(),
             'id'   => $evercisegroupId
-        ]);
+        ]);*/
 
 
     }
