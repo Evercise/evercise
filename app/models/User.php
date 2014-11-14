@@ -407,7 +407,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $last_name = $inputs['last_name'];
         $email = $inputs['email'];
         $password = $inputs['password'];
-        $area_code = isset($inputs['areacode'])? $inputs['areacode'] : null ;
+        $area_code = isset($inputs['areacode'])? $inputs['areacode'] : '+44' ;
         $phone = isset($inputs['phone']) ?  $inputs['phone'] : null;
         $gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
 

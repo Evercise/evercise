@@ -447,6 +447,11 @@ Route::group(
         /** USERS */
         Route::get('/users',
             ['as' => 'admin.users', 'uses' => 'MainController@users']);
+        Route::get('/users/trainer',
+            ['as' => 'admin.users.trainerCreate', 'uses' => 'MainController@trainerCreate']);
+        Route::post('/users/trainer',
+            ['as' => 'admin.users.trainerStore', 'uses' => 'MainController@trainerStore']);
+
         Route::post('/log_in_as',
             ['as' => 'admin.log_in_as', 'uses' => 'MainController@logInAs']);
         Route::get('/pendingtrainers',

@@ -144,6 +144,100 @@ class MainController extends \BaseController
 
     }
 
+
+    public function trainerCreate() {
+
+        return View::make('admin.users.create')->render();
+
+    }
+    public function trainerStore() {
+
+
+        $inputs =  Input::except(['_token', 'trainer']);
+        $validator = Validator::make(
+            $inputs,
+            array(
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:25|min:2',
+                'email' => 'required|unique:users,email',
+                'display_name' => 'required|unique:users,display_name',
+                'phone' => 'numeric',
+                'gender' => 'required',
+                'profession' => 'required|max:500|min:50',
+                'bio'   =>  'required|max:500'
+            )
+        );
+
+
+        if ($validator->fails()) {
+
+            return Redirect::route('admin.users.trainerCreate')
+                ->withErrors($validator)
+                ->withInput();
+
+        } else {
+
+            $inputs['display_name'] = str_replace(' ', '_', $inputs['display_name']);
+            $inputs['dob'] = null;
+            $inputs['password'] = Functions::randomPassword(8);
+            $inputs['activated'] = true;
+            $inputs['gender'] = $inputs['gender'] == 'male' ? 1 : 2;
+
+            $inputs['areacode'] = '+44';
+
+            try {
+
+                // register user and add to user group
+                $user = User::registerUser($inputs);
+
+
+                if ($user) {
+                    UserHelper::generateUserDefaults($user->id);
+
+                    Session::forget('email');
+
+                    User::subscribeMailchimpNewsletter(
+                        Config::get('mailchimp')['newsletter'],
+                        $user->email,
+                        $user->first_name,
+                        $user->last_name
+                    );
+                    User::makeUserDir($user);
+
+                }
+            } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
+                die($e->getMessage());
+            }
+
+
+            Event::fire('user.registered', [$user]);
+
+            $trainer=['confirmed' => 1, 'user_id' => $user->id];
+
+            $include = ['bio', 'phone', 'website', 'profession'];
+
+
+            foreach($inputs as $key => $val) {
+                if(in_array($key, $include)) {
+                    $trainer[$key] = $val;
+                }
+            }
+
+
+            if($res = Trainer::createOrFail($trainer)) {
+
+
+                Event::fire('trainer.registered', [$user]);
+
+
+                Event::fire('user.admin.trainerCreate', compact('user', 'trainer'));
+
+                Session::flash('notification', 'Trainer Created');
+                return Redirect::route('admin.users');
+            }
+        }
+    }
+
     public function logInAs()
     {
         $user = Sentry::findUserById(Input::get('user_id'));
@@ -336,5 +430,9 @@ class MainController extends \BaseController
     {
         return View::make('admin.searchstats');
     }
+
+
+
+
 
 }

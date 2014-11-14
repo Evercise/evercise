@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="text-center mb50">
-                    <strong>Your account has been created, just a few more deatils and then you can create classes.</strong>
+                    <strong>Your account has been created, just a few more details and then you can create classes.</strong>
                 </div>
                 {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
                    <div class="form-group mb50">
