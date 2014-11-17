@@ -178,6 +178,7 @@ Route::post(
     '/evercisegroups/delete/{id}',
     array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG')
 );
+Route::post('publish', ['before' => 'trainer', 'uses' => 'EvercisegroupsController@publish']);
 
 
 //NEW STATIC PAGES

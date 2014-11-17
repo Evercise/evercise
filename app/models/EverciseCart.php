@@ -108,4 +108,4 @@ class EverciseCart extends Cart
         }
         return 0;
     }
-} 
+}

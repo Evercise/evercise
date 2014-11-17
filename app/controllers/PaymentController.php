@@ -87,8 +87,10 @@ class PaymentController extends BaseController {
         $transactionId = $charge['id'];
         $this->paid($token, $transactionId);
 
+
         return Redirect::to('payment_confirmation')
-            ->with('cartData', $cartData );
+            ->with('cartData', $cartData )
+            ->with('walletPayment', $walletPayment );
 /*            ->with('token',$token )
             ->with('transactionId', $charge['id'] )
             ->with('payerId',$customer->id )
@@ -181,6 +183,7 @@ class PaymentController extends BaseController {
 
         /* Empty cart */
         EverciseCart::destroy();
+        EverciseCart::clearWalletPayment();
 
         return true;
     }
@@ -199,9 +202,11 @@ class PaymentController extends BaseController {
     {
         /* Get cart data sent with redirect, as Cart has now been cleared */
         $cartData = Session::get('cartData');
+        $walletPayment = Session::get('walletPayment');
 
         return View::make('v3.cart.confirmation')
-            ->with('data', $cartData);
+            ->with('data', $cartData)
+            ->with('walletPayment', $walletPayment);
 
     }
 

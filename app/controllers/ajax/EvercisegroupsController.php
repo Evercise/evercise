@@ -50,4 +50,29 @@ class EvercisegroupsController extends AjaxBaseController{
 
         return $response;
     }
+
+    public function publish()
+    {
+        $id = Input::get('id', false);
+        $publish = Input::get('publish', false);
+
+        $group = Evercisegroup::find($id);
+
+        if ($group)
+            $group->publish($publish);
+        else
+            return Response::json(
+                [
+                    'view' => View::make('v3.layouts.negative-alert')->with('message', 'Sessions could not be updated')->with('fixed', true)->render(),
+                    'id'       => $id
+                ]
+            );
+
+        return Response::json(
+            [
+                'view' => View::make('v3.layouts.positive-alert')->with('message', 'group '.($publish?'':'un').'published')->with('fixed', true)->render(),
+                'id'       => $id
+            ]
+        );
+    }
 }

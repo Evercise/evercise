@@ -1233,5 +1233,11 @@ class Evercisegroup extends \Eloquent
         return true;
     }
 
+    public function publish($publish)
+    {
+        $this->published = $publish ? 1 : 0;
+        $this->save();
+    }
+
 
 }

@@ -14,6 +14,8 @@
     </ul>
 
     <strong>Total: £{{ $data['total'] }}</strong>
+    <strong>Paid from wallet: £{{ $data['walletPayment'] }}</strong>
+    <strong>Total: £{{ $data['total'] }}</strong>
 
 
 
