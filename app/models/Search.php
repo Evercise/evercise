@@ -45,8 +45,8 @@ class Search
         /**  Set Defaults */
         $defaults = [
             'radius' => '1mi',
-            'size'   => 24,
-            'from'   => 0
+            'size' => 24,
+            'from' => 0
         ];
 
         foreach ($defaults as $key => $val) {
@@ -67,7 +67,8 @@ class Search
      * @param int $id
      * @return mixed
      */
-    public function getSingle($id = 0) {
+    public function getSingle($id = 0)
+    {
 
         $results = $this->elastic->getSingle($id);
 
@@ -109,8 +110,8 @@ class Search
                 $row->venue->lng = $decoded['longtitude'];
 
 
-                $row->distance = $this->getDistance($decoded['latitude'], $decoded['longtitude'], $area->lat, $area->lng, 'M');
-
+                $row->distance = $this->getDistance($decoded['latitude'], $decoded['longtitude'], $area->lat,
+                    $area->lng, 'M');
 
 
             } catch (Exception $e) {
@@ -127,8 +128,11 @@ class Search
     }
 
 
-    private function getDistance($lat1, $lon1, $lat2, $lon2, $unit)
+    private function getDistance($lat1 = false, $lon1 = false, $lat2 = false, $lon2 = false, $unit = 'K')
     {
+        if (!$lat1 || !$lon1 || !$lat2 || !$lon2) {
+            return '';
+        }
 
         $theta = $lon1 - $lon2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
@@ -162,7 +166,7 @@ class Search
         $mapResult = [];
 
         $not_needed = [
-            'global'  => [
+            'global' => [
                 'default_duration',
                 'published',
                 'created_at',
@@ -171,8 +175,8 @@ class Search
                 'title',
                 'gender'
             ],
-            'user' => ['id' , 'display_name' , 'first_name', 'last_name', 'email', 'image', 'phone'],
-            'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
+            'user' => ['id', 'display_name', 'first_name', 'last_name', 'email', 'image', 'phone'],
+            'venue' => ['id', 'address', 'postcode', 'location', 'image'],
             'ratings' => ['user_id', 'comment']
         ];
         foreach ($results->hits as $k => $row) {
@@ -224,12 +228,12 @@ class Search
         $mapResult = [];
 
         $not_needed = [
-            'global'  => [
+            'global' => [
                 'created_at',
                 'updated_at',
                 'venue_id',
             ],
-            'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
+            'venue' => ['id', 'address', 'postcode', 'location', 'image'],
             'ratings' => ['user_id']
         ];
         foreach ($results->hits as $row) {
@@ -261,7 +265,6 @@ class Search
         return $mapResult;
 
     }
-
 
 
 }
