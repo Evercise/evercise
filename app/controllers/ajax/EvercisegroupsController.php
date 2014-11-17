@@ -46,7 +46,12 @@ class EvercisegroupsController extends AjaxBaseController{
     {
         $inputs = Input::all();
 
-        $response = Evercisegroup::find($id)->validateAndUpdate($inputs, $this->user);
+        $group = Evercisegroup::find($id);
+
+        if($group->user_id != $this->user->id)
+            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Class does not belong to user')->with('fixed', true)->render()]);
+
+        $response = $group->validateAndUpdate($inputs, $this->user);
 
         return $response;
     }

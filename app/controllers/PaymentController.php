@@ -155,7 +155,8 @@ class PaymentController extends BaseController {
     /**
      * Actually add the user to the classes they have purchased, or credit their account with the package/top up.
      *
-     * @param $evercisegroupId
+     * @param $token
+     * @param $transactionId
      * @return \Illuminate\View\View
      */
     public function paid($token, $transactionId)

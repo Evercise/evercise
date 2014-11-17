@@ -190,25 +190,4 @@ class EvercisegroupsController extends \BaseController
         return Evercisegroup::doSearch(['address' => $location], $category, $radius, $this->user);
     }
 
-    public function publish()
-    {
-        $id = Input::get('id', false);
-        $publish = Input::get('publish', false);
-
-        $group = Evercisegroup::find($id);
-
-        if($group->user_id != $this->user->id)
-            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Class does not belong to user')->with('fixed', true)->render()]);
-
-
-        if ($group)
-            $group->publish($publish);
-        else
-            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Group not found')->with('fixed', true)->render()]);
-
-        return Response::json(['view' => View::make('v3.layouts.positive-alert')->with('message', 'group '.($publish?'':'un').'published')->with('fixed', true)->render()]);
-    }
-
-
-
 }
