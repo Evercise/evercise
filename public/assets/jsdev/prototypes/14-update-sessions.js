@@ -48,7 +48,7 @@ UpdateSessions.prototype = {
     },
     scrollToCalendar: function(e){
         e.preventDefault();
-        console.log(e);
-        $("html, body").animate({scrollTop: $(e.target.attr('href')).offset().top -60 }, 1000);
+        var target = $(e.target).attr('href');
+        $("html, body").animate({scrollTop: $(target).offset().top -60 }, 1000);
     }
 }
