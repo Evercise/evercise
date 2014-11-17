@@ -57,7 +57,7 @@ class Search
 
         $results = $this->elastic->searchEvercisegroups($area, $params);
 
-        return $this->formatResults($results);
+        return $this->formatResults($results, $area);
 
     }
 
@@ -80,12 +80,12 @@ class Search
      * @param $results
      * @return mixed
      */
-    public function formatResults($results)
+    public function formatResults($results, $area)
     {
         $all_results = [];
 
         foreach ($results->hits as $r) {
-            $all_results[] = $this->formatSingle($r->_source);
+            $all_results[] = $this->formatSingle($r->_source, $area);
         }
 
         $results->hits = $all_results;
@@ -98,7 +98,7 @@ class Search
      * @param $row
      * @return mixed
      */
-    public function formatSingle($row)
+    public function formatSingle($row, $area)
     {
         /** Add Lat and Lon to the venue */
         if (!empty($row->venue->location->geohash)) {
@@ -108,16 +108,45 @@ class Search
                 $row->venue->lat = $decoded['latitude'];
                 $row->venue->lng = $decoded['longtitude'];
 
+
+                $row->distance = $this->getDistance($decoded['latitude'], $decoded['longtitude'], $area->lat, $area->lng, 'M');
+
+
+
             } catch (Exception $e) {
 
                 /** We don't have a location for this guys.. lets just skip */
                 $this->log->error('Missing LOCATION for ' . $row->id);
                 $row->venue->lat = '';
                 $row->venue->lng = '';
+                $row->distance = '';
             }
         }
 
         return $row;
+    }
+
+
+    private function getDistance($lat1, $lon1, $lat2, $lon2, $unit)
+    {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) + cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $unit = strtoupper($unit);
+
+        if ($unit == "K") {
+            return ($miles * 1.609344);
+        } else {
+            if ($unit == "N") {
+                return ($miles * 0.8684);
+            } else {
+                return $miles;
+            }
+        }
+
     }
 
 
