@@ -1,5 +1,6 @@
 function UpdateSessions(form){
     this.form = form;
+    self.data = '';
     this.init();
 }
 
@@ -9,7 +10,8 @@ UpdateSessions.prototype = {
         this.addListeners();
     },
     addListeners: function(){
-        this.form.on('submit', $.proxy(this.submitUpdate, this));
+        //this.form.on('submit', $.proxy(this.submitUpdate, this));
+        $(document).on('submit', '#update-sessions', $.proxy(this.submitUpdate, this) );
     },
     submitUpdate: function(e){
         e.preventDefault();
@@ -17,10 +19,11 @@ UpdateSessions.prototype = {
     },
     ajaxUpload: function () {
         var self = this;
+        self.data = self.form.serialize();
 
         $.ajax(self.form.attr("action"), {
             type: "post",
-            data: self.form.serialize(),
+            data: self.data,
             dataType: 'json',
 
             beforeSend: function () {

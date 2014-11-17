@@ -117,7 +117,7 @@ class Evercisegroup extends \Eloquent
 
             return Response::json(
                 [
-                    'url' => route('sessions.add'),
+                    'url' => route('sessions.add', $evercisegroup->id),
                     'success' => 'true',
                     'id' => $evercisegroup->id
                 ]

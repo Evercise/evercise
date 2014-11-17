@@ -98,7 +98,7 @@
 
     </div>
 
-    <div class="container-fluid bg-grey">
+    <div class="container-fluid bg-grey" id="update-container">
         <div class="container">
             <div class="row text-center mt40">
                 <div class="underline">

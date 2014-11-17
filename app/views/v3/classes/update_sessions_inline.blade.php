@@ -45,7 +45,7 @@
                         </td>
 
                     </tr>
-                    {{ Form::hidden('id[]', $session->id, ['form' =>'update-sessions']) }}
+                    {{ Form::hidden('id[]', $session->id, ['form' =>'update-sessions', 'id' => 'update-id-'.$session->id]) }}
 
                 @endforeach
 

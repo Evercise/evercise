@@ -81,24 +81,18 @@ class EvercisegroupsController extends \BaseController
             ->with('subcategories.categories')
             ->find($id)
         ) {
+            $data = $evercisegroup->showAsNonOwner($this->user);
+
             if (Sentry::check() && $evercisegroup->user_id == $this->user->id
             ) // This Group belongs to this User/Trainer
             {
-                return $evercisegroup->showAsOwner($this->user);
+                return View::make('v3.classes.class_page')
+                    ->with('preview', 'preview')
+                    ->with('data', $data);
             } else // This group does not belong to this user
             {
-                $data = $evercisegroup->showAsNonOwner($this->user);
-
-                if($preview == 'preview'){
-                    return View::make('v3.classes.class_page')
-                        ->with('preview', 'preview')
-                        ->with('data', $data);
-                }
-                else{
-                    return View::make('v3.classes.class_page')
-                        ->with('data', $data);
-                }
-
+                return View::make('v3.classes.class_page')
+                    ->with('data', $data);
             }
         } else {
             return View::make('errors.missing');

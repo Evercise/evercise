@@ -15,7 +15,7 @@
                                     <div class="holder gallery-img-wrapper" id="first-img">
                                         <div class="row">
                                             <div class="text-center col-sm-12 mt10">
-                                                <span class=" image-select icon-lg icon-md-camera hover"></span>
+                                                <span class="image-select icon-lg icon-md-camera hover"></span>
                                                 <p>Add an image</p>
                                             </div>
                                         </div>
@@ -41,7 +41,7 @@
                         <div class="holder gallery-img-wrapper" id="first-img">
                             <div class="row">
                                 <div class="text-center col-sm-12 mt10">
-                                    <span class=" image-select icon-lg icon-md-camera hover"></span>
+                                    <span class="image-select icon-lg icon-md-camera hover"></span>
                                     <p>Add an image</p>
                                 </div>
                             </div>

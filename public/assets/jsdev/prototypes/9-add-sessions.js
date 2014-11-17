@@ -5,6 +5,7 @@ function AddSessions(form){
     this.dates = [];
     this.submitDates = [];
     this.index = '';
+    this.recur = 'no';
     this.recurring = 6;
     this.recurringFor = this.form.find('#recurring-days').val();
     this.rows = [];
@@ -96,8 +97,10 @@ AddSessions.prototype = {
 
             success: function (data) {
                 $('#update-session').html(data.view);
-                this.dates = [];
-                this.submitDates = [];
+                self.dates = [];
+                self.submitDates = [];
+                self.setCalendarDates();
+                $("html, body").animate({scrollTop: $('#update-container').offset().top -20 }, 1000);
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -106,6 +109,7 @@ AddSessions.prototype = {
             },
 
             complete: function () {
+                self.form.find("input[type='submit']").prop('disabled', false)
                 $('#session-loading').remove();
             }
         });
@@ -136,9 +140,11 @@ AddSessions.prototype = {
     },
     recurringCheck: function(e){
         if($(e.target).val() == 'yes'){
+            this.recur = 'yes';
             this.recurringDates();
         }
         else{
+            this.recur = 'no';
             this.resetCalendarDates();
         }
     },
@@ -150,5 +156,10 @@ AddSessions.prototype = {
     },
     changeRecurringFor : function(e){
         this.recurringFor = $(e.target).val();
+        if(this.recur == 'yes'){
+            this.calendar.datepicker('setDates', this.currentDates  );
+        }
+        $('input[name="recurring"][value="'+this.recur+'"]').trigger('change');
+
     }
 }
