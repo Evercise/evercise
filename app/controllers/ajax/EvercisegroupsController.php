@@ -58,21 +58,15 @@ class EvercisegroupsController extends AjaxBaseController{
 
         $group = Evercisegroup::find($id);
 
+        if($group->user_id != $this->user->id)
+            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Class does not belong to user')->with('fixed', true)->render()]);
+
+
         if ($group)
             $group->publish($publish);
         else
-            return Response::json(
-                [
-                    'view' => View::make('v3.layouts.negative-alert')->with('message', 'Sessions could not be updated')->with('fixed', true)->render(),
-                    'id'       => $id
-                ]
-            );
+            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Group not found')->with('fixed', true)->render()]);
 
-        return Response::json(
-            [
-                'view' => View::make('v3.layouts.positive-alert')->with('message', 'group '.($publish?'':'un').'published')->with('fixed', true)->render(),
-                'id'       => $id
-            ]
-        );
+        return Response::json(['view' => View::make('v3.layouts.positive-alert')->with('message', 'group '.($publish?'':'un').'published')->with('fixed', true)->render()]);
     }
 }
