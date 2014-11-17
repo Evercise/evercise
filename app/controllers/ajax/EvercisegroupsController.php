@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Response, Evercisegroup, Sentry;
+use Input, Response, Evercisegroup, Sentry, View;
 
 class EvercisegroupsController extends AjaxBaseController{
 
@@ -59,14 +59,29 @@ class EvercisegroupsController extends AjaxBaseController{
         $group = Evercisegroup::find($id);
 
         if($group->user_id != $this->user->id)
-            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Class does not belong to user')->with('fixed', true)->render()]);
+            return Response::json(
+                [
+                    'view' => View::make('v3.layouts.negative-alert')->with('message', 'Class does not belong to user')->with('fixed', true)->render(),
+                    'state' => 'hack'
+                ]
+            );
 
 
         if ($group)
             $group->publish($publish);
         else
-            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'Group not found')->with('fixed', true)->render()]);
+            return Response::json(
+                [
+                    'view' => View::make('v3.layouts.negative-alert')->with('message', 'Class not found')->with('fixed', true)->render(),
+                    'state' => 'error'
+                ]
+            );
 
-        return Response::json(['view' => View::make('v3.layouts.positive-alert')->with('message', 'group '.($publish?'':'un').'published')->with('fixed', true)->render()]);
+        return Response::json(
+            [
+                'view' => View::make('v3.layouts.positive-alert')->with('message', 'Class '.($publish?'':'un').'published')->with('fixed', true)->render(),
+                'state' => $publish
+            ]
+        );
     }
 }

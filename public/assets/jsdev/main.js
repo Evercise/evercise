@@ -136,6 +136,9 @@ $(function(){
     $('#preview').exists(function(){
         new previewBox(this);
     })
+    $('#publish-class').exists(function(){
+        new publishClass(this);
+    })
 
 
 });

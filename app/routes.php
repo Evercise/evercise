@@ -56,6 +56,7 @@ Route::group(['prefix' => 'ajax'], function () {
 
     // evercise groups
     Route::post( 'evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
+    Route::post('publish', ['as' => 'evercisegroups.publish','before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
 
@@ -178,7 +179,7 @@ Route::post(
     '/evercisegroups/delete/{id}',
     array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG')
 );
-Route::post('publish', ['before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
+
 
 
 //NEW STATIC PAGES

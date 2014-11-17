@@ -12,6 +12,7 @@ UpdateSessions.prototype = {
     addListeners: function(){
         //this.form.on('submit', $.proxy(this.submitUpdate, this));
         $(document).on('submit', '#update-sessions', $.proxy(this.submitUpdate, this) );
+        $(document).on('click', '#more-sessions', $.proxy(this.scrollToCalendar, this) );
     },
     submitUpdate: function(e){
         e.preventDefault();
@@ -44,5 +45,10 @@ UpdateSessions.prototype = {
                 $('#sessionupdate-loading').remove();
             }
         });
+    },
+    scrollToCalendar: function(e){
+        e.preventDefault();
+        console.log(e);
+        $("html, body").animate({scrollTop: $(e.target.attr('href')).offset().top -60 }, 1000);
     }
 }

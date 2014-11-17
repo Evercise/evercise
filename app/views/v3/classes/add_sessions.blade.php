@@ -116,15 +116,15 @@
                     {{ Form::open(['route' => 'sessions.update', 'method' => 'put', 'id' => 'update-sessions']) }}
                         <div class="row">
                             <div class="col-sm-4">
-                                <button class="btn btn-default btn-block">Cancel</button>
+                                {{ Html::linkRoute('users.edit', 'Class Hub', null,['class' => 'btn btn-default btn-block']) }}
                             </div>
                             <div class="col-sm-4">
                                 {{ Form::hidden('$evercisegoupId', $data['evercisegroup_id']) }}
                                 {{ Form::hidden('preview', 'yes') }}
-                                {{ Form::submit('Save & Preview', ['class' => 'btn btn-default btn-block']) }}
+                                {{ Form::submit('Save & Preview', ['class' => 'btn btn-primary btn-block']) }}
                             </div>
                             <div class="col-sm-4">
-                                <button class="btn btn-primary btn-block">Create</button>
+                                <a href="#calendar" id="more-sessions" class="btn btn-default btn-block">More sessions</a>
                             </div>
                         </div>
                     {{ Form::close() }}

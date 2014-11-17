@@ -7,9 +7,14 @@
 
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
-                    <span class="text-white">This is what your class will look like when published</span>
-                    {{ Html::linkRoute('sessions.add', 'Go back', $data['evercisegroup']->id, ['class' => 'btn btn-default text-right ml20 mr20'] ) }}
-                    <a href="#" class="btn btn-primary">Publish</a>
+                    {{ Form::open(['route' => 'evercisegroups.publish', 'method' => 'post', 'id' =>'publish-class']) }}
+                        <span class="text-white">This is what your class will look like when published</span>
+
+                        {{ Html::linkRoute('sessions.add', 'Edit Sessions', $data['evercisegroup']->id, ['class' => 'btn btn-default text-right ml20 mr20'] ) }}
+                        {{ Form::hidden('id', $data['evercisegroup']->id ) }}
+                        {{ Form::hidden('publish', $data['evercisegroup']->published == 1 ? 0 : 1) }}
+                        {{Form::submit( $data['evercisegroup']->published == 1 ? 'Un-publish' : 'Publish',['class'=>'btn btn-primary'])}}
+                    {{ Form::close() }}
                 </div>
             </div>
            </div>
