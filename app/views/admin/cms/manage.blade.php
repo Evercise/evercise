@@ -23,7 +23,9 @@
 
     <div class="form-group">
    		   <label>Main Image:</label>
+   		   @if(!empty($article->main_image))
            <img src="/{{ $article->main_image or "img/default_article.jpg" }}" style="float:left;width:100px !important;margin-right:10px" width="100" heigh="100"/>
+           @endif
             {{ Form::file('main_image', ['placeholder'=> 'Upload main image', 'class' => 'form-control', 'id'=>'file', 'style' => 'width:60%']) }}
            The image will be auto resized to: {{ Config::get('evercise.article_main_image.width') }}x{{ Config::get('evercise.article_main_image.height')}}
     </div><br style="clear:both"/>
@@ -333,7 +335,8 @@ $('#generated').click(function() {
             filebrowserUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
             filebrowserImageUploadUrl : '/admin/assets/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
             height : '600px',
-            stylesSet : 'my_style:{{URL::to('/')}}/assets/js/article_styles.js'
+            stylesSet : 'my_style:{{URL::to('/')}}/assets/js/article_styles.js',
+            extraAllowedContent : 'div(*)'
         });
 
     }

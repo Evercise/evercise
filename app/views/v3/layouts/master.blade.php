@@ -51,6 +51,9 @@
     {{ HTML::script('/assets/js/cropper.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
 
+
+     @yield('script')
+
 </head>
 <body>
     <!-- include app navigation  -->

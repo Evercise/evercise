@@ -98,6 +98,7 @@ class ArticlesController extends \BaseController
         $data = $this->request->except(['_token', 'row_single']);
 
 
+
         $validator = Validator::make(
             $data,
             [
@@ -128,12 +129,15 @@ class ArticlesController extends \BaseController
                 unset($data['id']);
             }
 
-            if($data['template'] == 0) {
+            if($data['template'] == '0') {
                 $data['template'] = '';
             }
 
-
-            $dir = public_path() . '/files/pages/' . date('Y');
+            $dir = public_path() . '/files/pages';
+            if (!is_dir($dir)) {
+                mkdir($dir);
+            }
+            $dir .= '/' . date('Y');
             if (!is_dir($dir)) {
                 mkdir($dir);
             }
@@ -177,6 +181,7 @@ class ArticlesController extends \BaseController
 
 
             unset($data['save']);
+
 
             if ($id == 0) {
                 $new = true;
