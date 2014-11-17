@@ -7,15 +7,15 @@
     </div>
 
     <ul>
-        @foreach($data['cartRows'] as $row)
+        @foreach($data['cartData']['cartRows'] as $row)
             <li>{{ $row->name . ' : ' . $row->options->date_time . ' : £' . $row->price }}</li>
             <strong class="text-primary">x{{$row->qty}} . subtotal: &pound;{{ $row->price * $row->qty }}</strong>
         @endforeach
     </ul>
 
-    <strong>Total: £{{ $data['total'] }}</strong>
+    <strong>Total: £{{ $data['cartData']['total'] }}</strong>
     <strong>Paid from wallet: £{{ $data['walletPayment'] }}</strong>
-    <strong>Total: £{{ $data['total'] }}</strong>
+    <strong>Total: £{{ $data['cartData']['total'] }}</strong>
 
 
 

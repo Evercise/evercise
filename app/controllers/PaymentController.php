@@ -183,7 +183,7 @@ class PaymentController extends BaseController {
             Evercisesession::addSessionMember($evercisegroupId, $sessionsInSameGroup, $token, $transactionId, $paymentMethod, $cartData['total'], $this->user);
 
         /* Empty cart */
-        EverciseCart::destroy();
+        EverciseCart::clearCart();
         EverciseCart::clearWalletPayment();
 
         return true;
@@ -205,9 +205,13 @@ class PaymentController extends BaseController {
         $cartData = Session::get('cartData');
         $walletPayment = Session::get('walletPayment');
 
+        $data = [
+            'cartData' => $cartData,
+            'walletPayment' => $walletPayment,
+        ];
+
         return View::make('v3.cart.confirmation')
-            ->with('data', $cartData)
-            ->with('walletPayment', $walletPayment);
+            ->with('data', $data);
 
     }
 
