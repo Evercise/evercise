@@ -95,6 +95,10 @@ class EverciseCart extends Cart
             foreach($cartRowIds as $cartRowId)
                 EverciseCart::instance('topup')->remove($cartRowId);
     }
+    public static function clearCart()
+    {
+        EverciseCart::instance('main')->destroy();
+    }
 
     public static function getWalletPayment()
     {
