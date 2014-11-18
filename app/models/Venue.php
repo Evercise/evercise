@@ -82,22 +82,33 @@ class Venue extends \Eloquent
                 $postcode
             ]);
 
-            $venue = static::create([
-                'user_id' => $userId,
-                'name' => $venue_name,
-                'address' => $address,
-                'town' => $town,
-                'postcode' => $postcode,
-                'lat' => $geo['lat'],
-                'lng' => $geo['lng'],
-            ]);
 
-            $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+            if (isset($geo['error']))
+            {
+                $result = [
+                    'validation_failed' => 1,
+                    'errors' => ['address' => 'not found']
+                ];
+            }
+            else
+            {
+                $venue = static::create([
+                    'user_id' => $userId,
+                    'name' => $venue_name,
+                    'address' => $address,
+                    'town' => $town,
+                    'postcode' => $postcode,
+                    'lat' => $geo['lat'],
+                    'lng' => $geo['lng'],
+                ]);
 
-            $result = [
-                'venue_id' => $venue->id,
-                'venue_name' => $venue->name
-            ];
+                $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
+
+                $result = [
+                    'venue_id' => $venue->id,
+                    'venue_name' => $venue->name
+                ];
+            }
 
         }
         return $result;
