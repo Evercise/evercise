@@ -29,7 +29,7 @@
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('tickets[]',Config::get('evercise.tickets'), $session->evercisegroup->capacity , ['class' => 'form-control input-sm', 'form' => 'update-sessions'] ) }}
+                                {{ Form::select('tickets[]',Config::get('evercise.tickets'), $session->tickets , ['class' => 'form-control input-sm', 'form' => 'update-sessions'] ) }}
                             </div>
                         </td>
                         <td>

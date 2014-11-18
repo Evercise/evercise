@@ -104,7 +104,7 @@
                                 <tr class="{{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
                                     <td><span class="icon icon-calendar mr5"></span><span>{{ date('dS-M-y' , strtotime($futuresession->date_time))}}</span></td>
                                     <td><span class="icon icon-clock mr5"></span><span>{{ (date('h:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
-                                    <td><span class="icon icon-ticket mr10"></span><span>x {{ $data['evercisegroup']->capacity -  $data['members'][$futuresession->id] }} tickets left</span></td>
+                                    <td><span class="icon icon-ticket mr10"></span><span>x {{ $futuresession->tickets -  $data['members'][$futuresession->id] }} tickets left</span></td>
                                     <td><span class="icon icon-watch mr5"></span><span>{{ $futuresession->formattedDuration() }}</span></td>
                                     <td>
                                         {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
@@ -118,7 +118,7 @@
                                                 {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
 
                                                   <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-                                                    @for($i=0; $i<($data['evercisegroup']->capacity - $data['members'][$futuresession->id] + 1 ); $i++)
+                                                    @for($i=0; $i<($futuresession->tickets - $data['members'][$futuresession->id] + 1 ); $i++)
                                                     <option value="{{$i}}">{{$i}}</option>
                                                     @endfor
                                                   </select>
@@ -157,7 +157,7 @@
                 </div>
                 <ul class="row custom-list">
 					@foreach($data['venue']->facilities as $key => $facility)
-						@if ($facility->category == 'Amenity')
+						@if ($facility->category == 'amenity')
 							<li>{{ $facility->name}}</li>
 						@endif
 					@endforeach
