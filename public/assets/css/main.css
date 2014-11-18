@@ -9994,7 +9994,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 }
 .alert.fixed {
   position: fixed;
-  top: 180px;
+  top: 100px;
   right: 80px;
 }
 .carousel-control.left {

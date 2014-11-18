@@ -21,7 +21,8 @@ AddSessions.prototype = {
             startDate: "+1d",
             todayHighlight: true,
             multidate: true
-        });
+        })
+        .on('changeDate', $.proxy(this.getCurrentDates, this) );
         this.daysOfWeek = this.calendar.find('.dow');
 
         this.addListener();
@@ -32,14 +33,31 @@ AddSessions.prototype = {
         this.form.on("submit", $.proxy(this.submitForm, this));
         this.form.find('#recurring-days').on("change", $.proxy(this.changeRecurringFor, this));
     },
+
     dayOfWeek: function(e){
         this.index = ($(e.target).index());
         this.rows = [];
         this.setdayOfWeeks();
 
     },
+    getCurrentDates: function(e){
+        var self = this;
+        this.currentDates = e.dates;
+
+        this.dates = [];
+
+        // keep original dates intact
+
+        $.each(this.currentDates , function(i,v){
+            self.dates.push({
+                'key': v.valueOf(),
+                'dates': v
+            })
+        })
+    },
     setdayOfWeeks: function(){
-        this.currentDates = this.calendar.datepicker('getDates');
+
+
         var d = new Date(),
             month = d.getMonth(),
             self = this;
@@ -53,9 +71,27 @@ AddSessions.prototype = {
 
         // Get all the other nth in the month
          while (d.getMonth()  === month) {
-             self.dates.push( new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() ) );
+             var date = new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() );
+
+             var resultFound = $.grep(self.dates, function(e){
+                 return e.key == date.valueOf();
+             });
+
+             if (resultFound.length == 0) {
+                 self.dates.push({
+                     'key' : date.valueOf(),
+                     'dates' : date
+                 }  );
+             }
+             else{
+                 self.dates = self.dates.filter(function(el){
+                     return el.key !== date.valueOf();
+                 })
+             }
              d.setDate(d.getDate() + 7);
          }
+
+
         this.setCalendarDates();
     },
     recurringDates: function(){
@@ -63,7 +99,10 @@ AddSessions.prototype = {
 
         var self = this;
         $.each(this.currentDates , function(i, val){
-            self.dates.push(val);
+            self.dates.push({
+                'key' : val.valueOf(),
+                'dates' : val
+            });
             var weekOfMonth = Math.ceil(val.getDate() / 7 );
             var dayOfWeek = val.getDay();
             var monthOfYear = val.getMonth() + 1;
@@ -117,7 +156,9 @@ AddSessions.prototype = {
     setRecurringDays: function(day, month, week) {
         var self = this;
         for( var i = 0; i < self.recurringFor; i++){
-            var d = new Date();
+            var d = new Date(),
+                formatedDate;
+
 
             d.setMonth(month + i);
             d.setDate(1);
@@ -133,7 +174,12 @@ AddSessions.prototype = {
                 d.setDate(d.getDate() + 7);
             }
 
-            self.dates.push( new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() ) );
+            formatedDate = new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() );
+
+            self.dates.push( {
+                'key' : formatedDate.valueOf(),
+                'dates' : formatedDate
+            } );
 
         }
         this.setCalendarDates();
@@ -149,7 +195,19 @@ AddSessions.prototype = {
         }
     },
     setCalendarDates: function(){
-        this.calendar.datepicker('setDates', this.dates  );
+        var dates = [];
+        var dateValues ={};
+
+        $.each(this.dates , function (index, value) {
+            // check for duplicates
+            if ( ! dateValues[ value.key ]){
+                dateValues[value.key] = true;
+                dates.push(value.dates);
+            }
+
+        });
+
+        this.calendar.datepicker('setDates', dates );
     },
     resetCalendarDates: function(){
         this.calendar.datepicker('setDates', this.currentDates  );

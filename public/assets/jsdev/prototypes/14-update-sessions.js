@@ -1,5 +1,6 @@
 function UpdateSessions(form){
     this.form = form;
+    this.saveOnly = false;
     self.data = '';
     this.init();
 }
@@ -11,8 +12,15 @@ UpdateSessions.prototype = {
     },
     addListeners: function(){
         //this.form.on('submit', $.proxy(this.submitUpdate, this));
+        $(document).on('click', '#save', $.proxy(this.justSave, this) );
         $(document).on('submit', '#update-sessions', $.proxy(this.submitUpdate, this) );
         $(document).on('click', '#more-sessions', $.proxy(this.scrollToCalendar, this) );
+    },
+    justSave: function(e){
+        e.preventDefault();
+        this.saveOnly = true;
+        this.form.find('input[name="preview"]').val('no');
+        $('#update-sessions').trigger('submit');
     },
     submitUpdate: function(e){
         e.preventDefault();
@@ -32,7 +40,15 @@ UpdateSessions.prototype = {
             },
 
             success: function (data) {
-                window.location.href = data.url;
+                if(self.saveOnly == false){
+                    window.location.href = data.url;
+                }
+                else{
+                    $('body').append(data.view);
+                    self.saveOnly = false;
+                    self.form.find('input[name="preview"]').val('yes');
+                }
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

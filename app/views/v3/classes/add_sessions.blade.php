@@ -3,14 +3,14 @@
     <div class="container first-container">
         <div class="row text-center mt30">
             <div class="underline">
-                <h1>Create a class</h1>
+                <h1>Your class Sessions</h1>
             </div>
-            <strong>Some type of instructions for the trainer to continue</strong>
+            <strong>From this page you can add new sessions to your class and edit any existing sessions</strong>
         </div>
         <div class="row mt40">
             <div class="col-sm-8 col-sm-offset-2">
                 <strong>Select Dates</strong>
-                <p>Select the dates you want your class to take place. To have a class every Monday for example, simply click/tap the "Mo" and all mondays (for 3 months) will be added. To remove a day from the section, click it</p>
+                <p>Select the dates you want your class to take place. To have a class every Monday for example, simply click/tap the "Mo" and all mondays this month will be added. To remove a day from the section, click it</p>
             </div>
         </div>
         <div class="row">
@@ -20,7 +20,7 @@
                     <div class="row mt50">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                {{ Form::label('recurring', 'Is this a recurring class?', ['class' => 'control-label pull-left mr10'])  }}
+                                {{ Form::label('recurring', 'Do your selected sessions recur monthly?', ['class' => 'control-label pull-left mr10'])  }}
                                <label class="custom-checkbox pull-left">
                                  {{ Form::radio('recurring', 'yes') }}
                                  Yes
@@ -30,13 +30,16 @@
                                  No
                                </label>
                             </div>
-                           <small><i>Recurring classes take place the day same every week.</i></small><br>
-                           <small><i>Deselect days you do not wish to be recurring.</i></small>
+                            <div class="pull-left">
+                                <small><i>Recurring classes take place the same day each month.</i></small><br>
+                                <small><i>Deselect days you do not wish to be recurring.</i></small>
+                            </div>
+
 
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                  {{ Form::label('recurring-days', 'Run recurring class for:', ['class' => 'mb15'] )  }}
+                                  {{ Form::label('recurring-days', 'Extend recurring classes for:', ['class' => 'mb15'] )  }}
                                   <div class="custom-select">
                                      {{ Form::select('recurring-days',
                                          [
@@ -102,7 +105,7 @@
         <div class="container">
             <div class="row text-center mt40">
                 <div class="underline">
-                <h1>Create a class</h1>
+                <h1>Edit your sessions</h1>
             </div>
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
@@ -114,13 +117,14 @@
             <div class="row mt25 mb50">
                 <div class="col-sm-6 col-sm-offset-3">
                     {{ Form::open(['route' => 'sessions.update', 'method' => 'put', 'id' => 'update-sessions']) }}
+                        {{ Form::hidden('$evercisegoupId', $data['evercisegroup_id']) }}
+                        {{ Form::hidden('preview', 'yes') }}
                         <div class="row">
                             <div class="col-sm-4">
-                                {{ Html::linkRoute('users.edit', 'Class Hub', null,['class' => 'btn btn-default btn-block']) }}
+                                {{ Form::submit('Save', ['class' => 'btn btn-default btn-block', 'id' => 'save']) }}
                             </div>
                             <div class="col-sm-4">
-                                {{ Form::hidden('$evercisegoupId', $data['evercisegroup_id']) }}
-                                {{ Form::hidden('preview', 'yes') }}
+
                                 {{ Form::submit('Save & Preview', ['class' => 'btn btn-primary btn-block']) }}
                             </div>
                             <div class="col-sm-4">
