@@ -23,7 +23,10 @@
                    </div>
                      <div class="row">
                         <div class="col-sm-6 text-right">
-                            {{ Form::text('town', null, ['class' => 'form-control mb20', 'placeholder' => 'City']) }}
+                            <div class="form-group">
+                                {{ Form::text('town', null, ['class' => 'form-control mb20', 'placeholder' => 'City']) }}
+                            </div>
+
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">

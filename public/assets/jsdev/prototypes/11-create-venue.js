@@ -110,8 +110,15 @@ createVenue.prototype = {
             },
 
             success: function (data) {
-                self.form.find("input[type=submit]").prop('disabled', false);
-                $('#venue_select').append( $('<option />', {text : data.venue_name, value: data.venue_id, selected: true} ) );
+                if( data.validation_failed == 1 ){
+                    self.failedValidation(data);
+                }
+                else{
+                    self.container.modal('hide');
+                    self.form.find("input[type=submit]").prop('disabled', false);
+                    $('#venue_select').append( $('<option />', {text : data.venue_name, value: data.venue_id, selected: true} ) );
+                }
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -120,8 +127,22 @@ createVenue.prototype = {
 
             complete: function () {
                 $('#venue-loading').remove();
-                self.container.modal('hide')
             }
         });
+    },
+    failedValidation: function(data){
+        console.log(data);
+        self = this;
+        var arr = data.errors;
+        $('#venue-pill').trigger('click');
+
+        $.each(arr, function(index, value)
+        {
+            console.log(index);
+            self.form.find('input[name="' + index+ '"]').parent().addClass('has-error');
+            self.form.find('input[name="' + index+ '"]').parent().find('.glyphicon-ok').remove();
+            self.form.find('input[name="' + index+ '"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
+            self.form.find('input[name="' + index+ '"]').after('<i class="form-control-feedback bv-no-label glyphicon glyphicon-remove" data-bv-icon-for="'+index+'"></i>');
+        })
     }
 }
