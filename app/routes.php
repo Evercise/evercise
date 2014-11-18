@@ -556,3 +556,10 @@ Route::get('show_facilities/{venueId}', function($id){
         return Venue::find($id)->getFacilities($id);
     }
 );
+
+
+Route::get('paytest', function(){
+        $pc = new PaymentController;
+        $pc->paid('bollocks', 'more bollocks');
+    }
+);

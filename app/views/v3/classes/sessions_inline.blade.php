@@ -17,7 +17,7 @@
                         <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
                         <td>{{ $session->formattedTime()}}</td>
                         <td>{{ $session->formattedDuration()}}</td>
-                        <td>{{ count($session->sessionmembers).'/'.$session->evercisegroup->capacity}}</td>
+                        <td>{{ count($session->sessionmembers).'/'.$session->tickets}}</td>
                         <td>{{'&pound'. $session->price}}</td>
                         <td class="text-right">
 
@@ -88,7 +88,7 @@
                         </td>
                         <td>
                             <div class="custom-select">
-                                {{ Form::select('members',Config::get('evercise.tickets'), $session->evercisegroup->capacity , ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                {{ Form::select('tickets',Config::get('evercise.tickets'), $session->tickets , ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
                             </div>
                         </td>
                         <td>
