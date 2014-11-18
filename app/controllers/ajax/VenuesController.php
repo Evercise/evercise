@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Response, Venue, Sentry;
+use Input, Response, Venue, Sentry, \widgets\LocationController;
 
 class VenuesController extends AjaxBaseController{
 
@@ -23,7 +23,15 @@ class VenuesController extends AjaxBaseController{
      */
     public function store()
     {
-        $result = Venue::validateAndStore( $this->user->id, Input::all() );
+        $inputs = Input::all();
+
+        $address = $inputs['address'];
+        $town = $inputs['town'];
+        $postcode = $inputs['postcode'];
+
+        $geo = LocationController::addressToGeo([ $address, $town, $postcode ]);
+
+        $result = Venue::validateAndStore( $this->user->id, $inputs, $geo );
         return Response::json($result);
     }
 

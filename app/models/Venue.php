@@ -1,7 +1,5 @@
 <?php
 
-use \widgets\LocationController;
-
 class Venue extends \Eloquent
 {
 
@@ -57,7 +55,7 @@ class Venue extends \Eloquent
     /**
      * @return array
      */
-    public static function validateAndStore($userId, $inputs)
+    public static function validateAndStore($userId, $inputs, $geo)
     {
         $validator = static::validateInputs($inputs);
 
@@ -74,14 +72,6 @@ class Venue extends \Eloquent
             $postcode = $inputs['postcode'];
 
             $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
-
-
-            $geo = LocationController::addressToGeo([
-                $address,
-                $town,
-                $postcode
-            ]);
-
 
             if (isset($geo['error']))
             {
