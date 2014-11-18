@@ -8,6 +8,7 @@ function AddSessions(form){
     this.recur = 'no';
     this.recurring = 6;
     this.recurringFor = this.form.find('#recurring-days').val();
+    this.originalDates = [];
     this.rows = [];
     this.currentDates = [];
     this.init();
@@ -71,22 +72,25 @@ AddSessions.prototype = {
 
         // Get all the other nth in the month
          while (d.getMonth()  === month) {
-             var date = new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() );
+
+             var recurringDate = new Date( d.getFullYear() + '-' + ('0' + (d.getMonth()+1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2) );
 
              var resultFound = $.grep(self.dates, function(e){
-                 return e.key == date.valueOf();
+                 return e.key == recurringDate.valueOf();
              });
 
              if (resultFound.length == 0) {
                  self.dates.push({
-                     'key' : date.valueOf(),
-                     'dates' : date
+                     'key' : recurringDate.valueOf(),
+                     'dates' : recurringDate
                  }  );
              }
              else{
+
                  self.dates = self.dates.filter(function(el){
-                     return el.key !== date.valueOf();
+                     return el.key !== recurringDate.valueOf();
                  })
+
              }
              d.setDate(d.getDate() + 7);
          }
@@ -95,7 +99,7 @@ AddSessions.prototype = {
         this.setCalendarDates();
     },
     recurringDates: function(){
-        this.currentDates = this.calendar.datepicker('getDates');
+        //this.currentDates = this.calendar.datepicker('getDates');
 
         var self = this;
         $.each(this.currentDates , function(i, val){
@@ -103,6 +107,7 @@ AddSessions.prototype = {
                 'key' : val.valueOf(),
                 'dates' : val
             });
+            self.originalDates.push( val );
             var weekOfMonth = Math.ceil(val.getDate() / 7 );
             var dayOfWeek = val.getDay();
             var monthOfYear = val.getMonth() + 1;
@@ -136,8 +141,10 @@ AddSessions.prototype = {
 
             success: function (data) {
                 $('#update-session').html(data.view);
+                $('input[name="recurring"][value="no"]').click();
                 self.dates = [];
                 self.submitDates = [];
+                self.originalDates = [];
                 self.setCalendarDates();
                 $("html, body").animate({scrollTop: $('#update-container').offset().top -20 }, 1000);
             },
@@ -174,7 +181,7 @@ AddSessions.prototype = {
                 d.setDate(d.getDate() + 7);
             }
 
-            formatedDate = new Date( d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() );
+            var formatedDate = new Date( d.getFullYear() + '-' + ('0' + (d.getMonth()+1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2) );
 
             self.dates.push( {
                 'key' : formatedDate.valueOf(),
@@ -210,7 +217,8 @@ AddSessions.prototype = {
         this.calendar.datepicker('setDates', dates );
     },
     resetCalendarDates: function(){
-        this.calendar.datepicker('setDates', this.currentDates  );
+        console.log(this.originalDates);
+        this.calendar.datepicker('setDates', this.originalDates  );
     },
     changeRecurringFor : function(e){
         this.recurringFor = $(e.target).val();
