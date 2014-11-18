@@ -184,8 +184,8 @@
         @foreach($images as $img)
         <li class="boxing img_{{ $img->id }}" style="position: relative">
             <span data-id="{{ $img->id }}" class="delete_image icon_ul el-icon-remove" style="color:#c00; position: absolute;top:5px; right:5px; z-index:1000;cursor: pointer"></span>
-            <a href="{{ URL::to('/img/gallery/main_'.$img->image) }}" class="img_wrapper" title="{{ $img->image }}">
-                <img src="{{ URL::to('/img/gallery/thumb_'.$img->image) }}" alt=""/>
+            <a href="{{ URL::to('/files/gallery_defaults/main_'.$img->image) }}" class="img_wrapper" title="{{ $img->image }}">
+                <img src="{{ URL::to('/files/gallery_defaults/thumb_'.$img->image) }}" alt=""/>
                 <span class="gallery_image_zoom">
                     <span class="arrow_expand"></span>
                 </span>
