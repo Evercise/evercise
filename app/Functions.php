@@ -46,6 +46,13 @@ if (!function_exists('hashDir')) {
         $h = $id % 4096;
         $maindir = floor($h / 64);
         $subdir = $h % 64;
+
+
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+
+
         if (!is_dir($path . '/' . $maindir)) {
             mkdir($path . '/' . $maindir);
         }
