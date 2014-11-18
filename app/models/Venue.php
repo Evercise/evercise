@@ -1,5 +1,7 @@
 <?php
 
+use \widgets\LocationController;
+
 class Venue extends \Eloquent
 {
 
@@ -73,12 +75,21 @@ class Venue extends \Eloquent
 
             $facilities = isset($inputs['facilities_array']) ? $inputs['facilities_array'] : [];
 
+
+            $geo = LocationController::addressToGeo([
+                $address,
+                $town,
+                $postcode
+            ]);
+
             $venue = static::create([
                 'user_id' => $userId,
                 'name' => $venue_name,
                 'address' => $address,
                 'town' => $town,
                 'postcode' => $postcode,
+                'lat' => $geo['lat'],
+                'lng' => $geo['lng'],
             ]);
 
             $venue->facilities()->sync($facilities); // Bang the id's of the facilities in venue_facility
