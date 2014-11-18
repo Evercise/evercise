@@ -1,5 +1,33 @@
 <?php
 
+if (!function_exists('slugIt')) {
+
+    /*
+     * Slug the string and convert all non latin characters into similar letters
+     *
+     * Example:
+     *  ć  =>  c
+     *  Ể  =>  E
+     *
+     */
+
+    function slugIt($str, $slug = true)
+    {
+        $foreign_chars = Config::get('foreign_chars');
+
+        $array_from = array_keys($foreign_chars);
+        $array_to = array_values($foreign_chars);
+
+
+        $str = preg_replace($array_from, $array_to, $str);
+
+        if ($slug) {
+            return Str::slug($str);
+        }
+
+        return $str;
+    }
+}
 
 if (!function_exists('hashDir')) {
 
@@ -18,14 +46,14 @@ if (!function_exists('hashDir')) {
         $h = $id % 4096;
         $maindir = floor($h / 64);
         $subdir = $h % 64;
-        if (!is_dir($path . '/' .  $maindir)) {
-            mkdir($path . '/' .  $maindir);
+        if (!is_dir($path . '/' . $maindir)) {
+            mkdir($path . '/' . $maindir);
         }
-        if (!is_dir($path .  '/' .  $maindir . '/' . $subdir)) {
-            mkdir($path . '/' .  $maindir . '/' . $subdir);
+        if (!is_dir($path . '/' . $maindir . '/' . $subdir)) {
+            mkdir($path . '/' . $maindir . '/' . $subdir);
         }
 
-        return $path . '/' .  $maindir . '/' . $subdir;
+        return $path . '/' . $maindir . '/' . $subdir;
 
 
     }

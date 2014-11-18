@@ -52,7 +52,7 @@ class UsersController extends \BaseController
 
 
         $inputs = [];
-        $inputs['display_name'] = str_replace(' ', '_', $me['name']);
+        $inputs['display_name'] = slugIt($me['name']);
         $inputs['first_name'] = $me['first_name'];
         $inputs['last_name'] = $me['last_name'];
         $inputs['dob'] = isset($me['birthday']) ? new DateTime($me['birthday']) : null;
