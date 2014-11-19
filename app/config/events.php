@@ -35,6 +35,10 @@
  * wallet.request => Trainer has requested a withdrawel from there wallet
  * wallet.updatePaypal => User has updated there paypal details
  *
+ *
+ * class.index.single => Index a Single Class
+ * class.index.all => Index all Classes
+ *
  * user.admin.trainerCreate => ($user, $trainer) when a admin creates a trainer
  */
 
@@ -55,7 +59,9 @@ return [
         ['user.edit' => 'Tracking@userEdit'],
         ['trainer.edit' => 'Tracking@trainerEdit'],
         ['user.changedPassword' => 'Tracking@userChangePassword'],
-        ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer']
+        ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer'],
+        ['class.index.single' => 'Indexer@indexSingle'],
+        ['class.index.all' => 'Indexer@indexAll']
 
 
     ]

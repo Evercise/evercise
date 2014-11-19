@@ -97,7 +97,7 @@ return [
         'image_counter' => 3,
         'sizes' => [
             ['prefix' => 'main', 'width' => 1024, 'height' => 300],
-            ['prefix' => 'thumb', 'width' => 200, 'height' => 200]
+            ['prefix' => 'thumb', 'width' => 205, 'height' => 87]
         ]
 
     ]
