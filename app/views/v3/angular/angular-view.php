@@ -5,27 +5,25 @@
         </div>
         <div id="main_block_with_scroll" class="snippet-body mb-scroll">
 
-            <div infinite-scroll="loadMore()"  infinite-scroll-container="'#main_block_with_scroll'" infinite-scroll-parent>
-                <div ng-repeat="marker in markers | orderBy: sort:reverse"
-                     id = {{marker.id}}
-                     class="class-snippet"
-                     ng-click="clicked(marker)"
-                     infinite-scroll-container="'#snippets'">
-                    <div class="class-image-wrapper col-sm-4">
-                        <img src="{{ marker.image}} " alt="{{ marker.name}}"/>
+            <div ng-repeat="marker in markers | orderBy: sort:reverse"
+                 id = {{marker.id}}
+                 class="class-snippet"
+                 ng-click="clicked(marker)"
+                 infinite-scroll-container="'#snippets'">
+                <div class="class-image-wrapper col-sm-4">
+                    <img src="{{ marker.image}} " alt="{{ marker.name}}"/>
+                </div>
+                <div class="class-title-wrapper panel-body col-sm-8">
+                    <div class="ml10">
+                        <h3>{{ marker.name | truncate:20  }}</h3>
                     </div>
-                    <div class="class-title-wrapper panel-body col-sm-8">
-                        <div class="ml10">
-                            <h3>{{ marker.name | truncate:20  }}</h3>
-                        </div>
-                        <div class="class-rating-wrapper col-xs-9">
-                            <span class="icon icon-full-star" ng-repeat="n in [] | repeat:marker.stars"></span>
-                            <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
-                        </div>
-                        <div class="col-xs-3">
+                    <div class="class-rating-wrapper col-xs-9">
+                        <span class="icon icon-full-star" ng-repeat="n in [] | repeat:marker.stars"></span>
+                        <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
+                    </div>
+                    <div class="col-xs-3">
 
-                            <strong class="text-primary">&pound;{{ marker.price }}</strong>
-                        </div>
+                        <strong class="text-primary">&pound;{{ marker.price }}</strong>
                     </div>
                 </div>
             </div>
@@ -43,29 +41,51 @@
         <div class="hero hero-sm mb25" style="background-image: {{ preview.image }}  ">
             <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
                 <ul class="nav navbar-nav nav-justified nav-no-float">
-                    <li class="active"><a href="#about">About</a></li>
-                    <li><a href="#schedule">Schedule</a></li>
-                    <li><a href="#facilities">Reviews</a></li>
+                    <li class="active"><a href="#about" data-toggle="tab">About</a></li>
+                    <li><a href="#schedule" data-toggle="tab">Schedule</a></li>
+                    <li><a href="#reviews" data-toggle="tab">Reviews</a></li>
                 </ul>
             </nav>
         </div>
-        <div class="col-sm-12">
-            <div class="underline text-center">
-                <h3>About the class</h3>
-            </div>
-            <div class="row text-center mb30">
-                <div class="col-sm-5"><span class="icon icon-clock"></span>{{ preview.nextClassDate | date : 'MMM d, h:mma'  }}</div>
-                <div class="col-sm-4"><span class="icon icon-watch"></span> {{ preview.nextClassDuration}} mins</div>
-                <div class="col-sm-3"><span class="icon icon-ticket"></span> x {{ preview.capacity }}</div>
-            </div>
-            <div class="row mb40">
-                <div class="col-sm-12 text-center">
-                    <p>{{ preview.description }}</p>
+        <div class="col-sm-12 tab-content">
+            <div role="tabpanel" class="tab-pane active" id="about">
+                <div class="underline text-center">
+                    <h3>About the class</h3>
+                </div>
+                <div class="row text-center mb30">
+                    <div class="col-sm-5"><span class="icon icon-clock"></span>{{ preview.nextClassDate | date : 'MMM d, h:mma'  }}</div>
+                    <div class="col-sm-4"><span class="icon icon-watch"></span> {{ preview.nextClassDuration}} mins</div>
+                    <div class="col-sm-3"><span class="icon icon-ticket"></span> x {{ preview.capacity }}</div>
+                </div>
+                <div class="row mb40">
+                    <div class="col-sm-12 text-center">
+                        <p>{{ preview.description }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 mb20 text-center">
+                        <a href="{{ preview.link }}" class="btn btn-grey btn-transparent">Read More</a>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12 mb20 text-center">
-                    <a href="{{ preview.link }}" class="btn btn-grey btn-transparent">Read More</a>
+            <div role="tabpanel" class="tab-pane" id="schedule">
+                <div ng-repeat="session in preview.sessions | orderBy: date_time:reverse">
+                    <div class="well" >
+                        {{ session.date_time }}
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="reviews">
+                <div ng-repeat="review in preview.reviews" >
+
+                    <div class="well" >
+                        <div class="class-rating-wrapper">
+                            <span class="icon icon-full-star" ng-repeat="n in [] | repeat:review.stars"></span>
+                            <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - review.stars"></span>
+                        </div>
+                        <p>{{ review.comment }}</p>
+                    </div>
+
                 </div>
             </div>
         </div>

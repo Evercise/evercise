@@ -45,7 +45,6 @@ categorySelect.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.select.prop('disabled', true);
                 $('#gallery-row').after('<div id="gallery-loading"  class="alert alert-success text-center"><span class="icon icon-loading ml10"></span> Loading gallery based on your selected categories...</div>');
             },
 

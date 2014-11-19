@@ -1,8 +1,6 @@
 if(typeof angular != 'undefined') {
     var app = angular.module('DiscoverApp', [
-        'google-maps'.ns(),
-        'infinite-scroll',
-        'ngSanitize'
+        'google-maps'.ns()
     ]);
 
     app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {

@@ -79,11 +79,12 @@ if(typeof angular != 'undefined') {
                 icon: '/assets/img/icon_default_small_pin.png',
                 price: data.default_price,
                 rating: data.ratings.length,
+                reviews: data.ratings,
                 description: data.description,
                 stars: $scope.getStars(data.ratings),
                 capacity: data.capacity,
                 sessions: data.futuresessions,
-                nextClassDate: new Date(data.futuresessions[0].date_time),
+                nextClassDate: new Date(data.futuresessions[0].date_time.replace(/-/g, '/')),
                 nextClassDuration: data.futuresessions[0].duration,
                 link: '/class/' + data.id,
                 click: function () {
@@ -110,17 +111,18 @@ if(typeof angular != 'undefined') {
 
 
         $scope.clicked = function (marker) {
-
-
             $scope.isPreviewOpen = true;
+
             // change preview
             $scope.preview.id = 'preview-' + marker.id;
             $scope.preview.image = "url('" + marker.image + "')";
             $scope.preview.description = marker.description;
-            $scope.preview.nextClassDate = new Date(marker.sessions[0].date_time);
+            $scope.preview.nextClassDate = new Date(marker.sessions[0].date_time.replace(/-/g, '/'));
             $scope.preview.nextClassDuration = marker.sessions[0].duration;
             $scope.preview.capacity = marker.capacity;
             $scope.preview.link = marker.link;
+            $scope.preview.sessions = marker.sessions;
+            $scope.preview.reviews = marker.reviews;
 
             // topggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
@@ -128,10 +130,6 @@ if(typeof angular != 'undefined') {
             marker.icon = '/assets/img/icon_default_large_pin.png';
 
             //pan map
-            $scope.map.pan = {
-                latitude: marker.latitude,
-                longitude: marker.longitude
-            };
             $scope.map.center = {
                 latitude: marker.latitude,
                 longitude: marker.longitude
@@ -140,6 +138,8 @@ if(typeof angular != 'undefined') {
 
             $scope.mask = true;
             // find in side bar ands scroll
+
+
             scrollToSnippet('#' + marker.id);
         }
 
@@ -159,7 +159,6 @@ if(typeof angular != 'undefined') {
                 for (var i = 0; i < ratings.length; i++) {
                     total = total + ratings[i].stars;
                 }
-                //result = (Math.round( (total / ratings.length) *2) / 2).toFixed(1);
                 result = Math.round(total / ratings.length);
             }
             else {
@@ -189,22 +188,5 @@ if(typeof angular != 'undefined') {
 
         }, true);
 
-        // load more on scroll
-        /*
-         $scope.loadMore = function(){
-         var last = $scope.markers.length -1;
-         if($scope.everciseGroups.length < last + 16)
-         {
-         var extraLoad = $scope.everciseGroups.length - last;
-         }
-         else
-         {
-         var extraLoad = 16;
-         }
-         for (var i = 1; i < extraLoad; i++) {
-         $scope.myMarkers.push(createMarker($scope.everciseGroups[ last + i ]))
-         }
-         };
-         */
     }]);
 }

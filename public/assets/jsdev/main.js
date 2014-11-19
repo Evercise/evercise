@@ -77,7 +77,7 @@ $(function(){
 
     $('#login-form').exists(function(){
         login = this;
-        $(document).on('submit', login, function(e){
+        $(document).on('submit', '#login-form', function(e){
             e.preventDefault();
             new AjaxRequest(login, redirectTo);
         })

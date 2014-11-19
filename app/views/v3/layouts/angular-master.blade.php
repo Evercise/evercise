@@ -46,8 +46,6 @@
     {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js') }}
 
     {{ HTML::script('/assets/js/angular-google-maps.min.js') }}
-    {{ HTML::script('/assets/js/ng-inifinity-scroll.min.js') }}
-    {{ HTML::script('/assets/js/angular-sanitize.min.js') }}
 
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
