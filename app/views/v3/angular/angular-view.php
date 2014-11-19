@@ -102,7 +102,7 @@
                 click = "'click'"
                 doRebuildAll = "false"
                 doCluster = "true"
-                clusterOptions = "clusterOptions"
+                 clusterOptions = "clusterOptions"
                 clusterEvents="clusterEvents"
                 >
 

@@ -17,7 +17,7 @@
             {{ Form::open(['route' => 'sessions.store', 'method' => 'post', 'id' => 'add-session']) }}
                 <div class="col-sm-8 col-sm-offset-2">
                     <div id="calendar" class="calendar"></div>
-                    <div class="row mt50">
+                    <!--<div class="row mt50">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 {{ Form::label('recurring', 'Do your selected sessions recur monthly?', ['class' => 'control-label pull-left mr10'])  }}
@@ -51,7 +51,7 @@
                                   </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row mt20">
                         <div class="col-sm-3">
                             <div class="form-group text-center">

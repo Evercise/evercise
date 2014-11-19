@@ -125,7 +125,8 @@ $(function(){
     })
 
     $('#add-session').exists(function(){
-        new AddSessions(this);
+       // new AddSessions(this);
+        new AddSessionsToCalendar(this);
     })
     $('#update-sessions').exists(function(){
         new UpdateSessions(this);
