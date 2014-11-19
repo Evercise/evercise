@@ -34,6 +34,7 @@
                 chunk_size : '100mb',
                 rename : true,
                 dragdrop: true,
+                preinit: attachCallbacks,
 
                 filters : {
                     // Maximum file size
@@ -69,7 +70,6 @@
                                    '</a>' +
                                '</li>';
                         // Called when file has finished uploading
-                        console.log(row);
 
                         $('.gallery_grid').prepend(row);
                     },
@@ -80,8 +80,18 @@
                     }
                 }
             });
-        }
 
+            function attachCallbacks(Uploader) {
+
+                Uploader.bind('FileUploaded', function(Up, File, Response) {
+
+                      if( (Uploader.total.uploaded + 1) == Uploader.files.length)
+                      {
+                        window.location = '{{ Request::url() }}';
+                      }
+                });
+            }
+            }
 
 
 
