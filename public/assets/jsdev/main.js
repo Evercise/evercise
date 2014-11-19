@@ -139,6 +139,9 @@ $(function(){
     $('#publish-class').exists(function(){
         new publishClass(this);
     })
+    $('#register-fb').exists(function(){
+        new facebookRedirect(this);
+    })
 
 
 });

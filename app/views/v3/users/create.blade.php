@@ -24,7 +24,7 @@
                            </div>
                         </div>
                         <div class="mb20 text-center">
-                            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb"></span>Log in with facebook', null , ['class' => 'btn btn-lg btn-fb']) )}}
+                            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb"></span>Log in with facebook', null , ['class' => 'btn btn-lg btn-fb', 'id' => 'register-fb']) )}}
                         </div>
                         <div class="row  mt10">
                             <div class="col-sm-6">
@@ -75,11 +75,8 @@
 
                                 <div class="input-group">
                                     <div class="input-group-addon custom-select">
-                                       {{ Form::select('phone',
-                                           [
-                                               '+44' => '+44',
-                                               '+123' => '+123'
-                                           ]
+                                       {{ Form::select('areacode', Config::get('countrycodes.pretty')
+
                                         , '+44', ['class' => 'select-addon'] ) }}
                                     </div>
                                     {{ Form::text('phone', null, ['class' => 'form-control']) }}
