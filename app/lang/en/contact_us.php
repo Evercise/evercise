@@ -6,17 +6,17 @@ return [
 'please_contact' => 'please contact',
 // ---------------------------------------------------------------------------------------------------------
 'general_title' => 'General enquiries',
-'general_contact' => 'Naseeim Bangura (participants) or Tanaïs Gustave (trainers)',
+'general_contact' => 'Giga Zulmatashvili and Tanaïs Gustave',
 'general_email' => 'contact@evercise.com',
-'general_phone' => '+44(0)2033 266216',
+'general_phone' => '+44(0)20 3515 0157',
 // ---------------------------------------------------------------------------------------------------------
 'careers_title' => 'Careers',
 'careers_contact' => 'Jie Sun',
 'careers_email' => 'jie@evercise.com',
-'careers_phone' => '+44(0)2033 266216',
+'careers_phone' => '+44(0)20 3515 0157',
 // ---------------------------------------------------------------------------------------------------------
 'business_title' => 'Business collaboration',
 'business_contact' => 'Liqiang Fan',
 'business_email' => 'fan@evercise.com',
-'business_phone' => '+44(0)2033 266216',
+'business_phone' => '+44(0)20 3515 0157',
 ];

@@ -51,7 +51,7 @@ we offer a generous reward system so that the more you earn, <br>
 the smaller the rate of commission!</p>
 ',
 'section4-image_url' => 'img/why_join.png',
-'section4-image_alt' => 'why join evercise as a profesional trainer',
+'section4-image_alt' => 'why join evercise as a professional trainer',
 
 'section5-title' => 'What makes Evercise different?',
 'section5-subtitle' => 'Evercise is not just another profile site.',
