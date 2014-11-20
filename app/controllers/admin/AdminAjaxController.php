@@ -67,16 +67,7 @@ class AdminAjaxController extends AdminController
         $size = $this->input->get('lenght', 50);
 
 
-
-
-
-
-
-
-
-
         $results = $this->elastic->searchStats(['size' => $size, 'from' => $from, 'search' => $search['value']]);
-
 
 
         $response['recordsTotal'] = $results->total;
@@ -258,7 +249,7 @@ class AdminAjaxController extends AdminController
         if ($file = Request::file('file')) {
 
 
-            if(!is_dir('files/gallery_defaults')) {
+            if (!is_dir('files/gallery_defaults')) {
                 mkdir('files/gallery_defaults');
             }
 
@@ -290,6 +281,25 @@ class AdminAjaxController extends AdminController
 
         return false;
 
+
+    }
+
+
+    public function featureClass()
+    {
+        $id = $this->input->get('id');
+
+        $class = $this->evercisegroup->find($id);
+
+
+        if ($class->isFeatured()) {
+            FeaturedClasses::where('id', $id)->delete();
+            return Response::json(['featured' => false]);
+        }
+
+
+        FeaturedClasses::create(array('evercisegroup_id' => $id));
+        return Response::json(['featured' =>  true]);
 
     }
 

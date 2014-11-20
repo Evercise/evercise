@@ -425,6 +425,10 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
         ['as' => 'admin.ajax.gallery_delete', 'uses' => 'AdminAjaxController@deleteGalleryImage']);
 
 
+    Route::post('featureClass',
+        ['as' => 'admin.ajax.featureClass', 'uses' => 'AdminAjaxController@featureClass']);
+
+
 });
 
 
@@ -472,6 +476,8 @@ Route::group(
         Route::get('/subcategories',
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 
+        Route::get('/listclasses',
+            ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);
 
         Route::get('articles',
             ['as' => 'admin.articles', 'uses' => 'ArticlesController@articles']);

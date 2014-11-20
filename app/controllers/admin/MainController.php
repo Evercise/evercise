@@ -432,6 +432,15 @@ class MainController extends \BaseController
     }
 
 
+    public function listClasses()
+    {
+        $classes = Evercisegroup::all();
+
+
+        return View::make('admin.classes', compact('classes'));
+    }
+
+
 
 
 

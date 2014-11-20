@@ -14,6 +14,14 @@
                         </a>
                     </li>
                     <li class="first_level">
+                        <a href="{{ URL::route('admin.listClasses') }}">
+                            <span class="icon_globe-2 first_level_icon"></span>
+                            <span class="menu-title">Classes</span>
+                        </a>
+                    </li>
+
+
+                    <li class="first_level">
                         <a href="{{ URL::route('admin.categories') }}">
                             <span class="icon_ul first_level_icon"></span>
                             <span class="menu-title">Class Categories</span>

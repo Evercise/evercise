@@ -93,7 +93,7 @@ class SearchController extends \BaseController
             switch ($link->type) {
                 case 'AREA':
                 case 'STATION':
-                case 'ZIP':
+                case 'POSTCODE':
                     return $this->search($link->getArea);
                     break;
                 case 'CLASS':

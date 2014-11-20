@@ -4343,3 +4343,7 @@ body.error_page {
 .icon_list.list_small li > span {
   margin-top: 10px;
 }
+
+.cp{cursor: pointer}
+.fl{float:left}
+.fr{float: right}
