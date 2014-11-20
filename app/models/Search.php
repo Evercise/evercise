@@ -54,8 +54,8 @@ class Search
                 $params[$key] = $val;
             }
         }
-
         $results = $this->elastic->searchEvercisegroups($area, $params);
+
 
         return $this->formatResults($results, $area);
 
@@ -86,10 +86,11 @@ class Search
         $all_results = [];
 
         foreach ($results->hits as $r) {
-            $all_results[] = $this->formatSingle($r->_source, $area);
+            $all_results[] = $this->formatSingle($r, $area);
         }
 
         $results->hits = $all_results;
+
 
         return $results;
     }
@@ -101,30 +102,35 @@ class Search
      */
     public function formatSingle($row, $area)
     {
+
         /** Add Lat and Lon to the venue */
-        if (!empty($row->venue->location->geohash)) {
+        if (!empty($row->_source->venue->location->geohash)) {
             try {
-                $decoded = $this->elastic->decodeLocationHash($row->venue->location->geohash);
+                $decoded = $this->elastic->decodeLocationHash($row->_source->venue->location->geohash);
 
-                $row->venue->lat = $decoded['latitude'];
-                $row->venue->lng = $decoded['longtitude'];
+                $row->_source->venue->lat = $decoded['latitude'];
+                $row->_source->venue->lng = $decoded['longtitude'];
 
 
-                $row->distance = $this->getDistance($decoded['latitude'], $decoded['longtitude'], $area->lat,
-                    $area->lng, 'M');
+
+                if(!empty($row->sort[0])) {
+                    $row->_source->distance = round($row->sort[0], 2);
+                } else {
+                    $row->_source->distance = round($this->getDistance($decoded['latitude'], $decoded['longtitude'], $area->lat,
+                        $area->lng, 'M'), 2);
+                }
 
 
             } catch (Exception $e) {
-
                 /** We don't have a location for this guys.. lets just skip */
                 $this->log->error('Missing LOCATION for ' . $row->id);
-                $row->venue->lat = '';
-                $row->venue->lng = '';
-                $row->distance = '';
+                $row->_source->venue->lat = '';
+                $row->_source->venue->lng = '';
+                $row->_source->distance = '';
             }
         }
 
-        return $row;
+        return $row->_source;
     }
 
 

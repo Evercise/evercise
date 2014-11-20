@@ -79,6 +79,11 @@ class Elastic
         }
 
 
+        if(!empty($params['sort'])) {
+            $searchParams['body']['sort'] = $params['sort'];
+        }
+
+
         /** What Are we Searching For */
         if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
@@ -112,10 +117,11 @@ class Elastic
             }
         }
 
+
+
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
         $result_object = json_decode(json_encode($result), false);
-
 
         return $result_object;
 
@@ -286,6 +292,7 @@ class Elastic
                 'id'               => (int) $a->id,
                 'user_id'          => (int) $a->user_id,
                 'venue_id'         => (int) $a->venue_id,
+                'counter'          => (int) $a->counter,
                 'name'             => $a->name,
                 'title'            => $a->title,
                 'gender'           => $a->gender,
@@ -453,6 +460,7 @@ class Elastic
                         ],
                         'slug'             => ['type' => 'string', 'include_in_all' => false],
                         'name'             => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
+                        'counter'          => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
                         'title'            => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
                         'venue_id'         => ['type' => 'integer', 'include_in_all' => true],
                         'user_id'          => ['type' => 'integer', 'include_in_all' => true],

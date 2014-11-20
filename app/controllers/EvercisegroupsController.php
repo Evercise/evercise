@@ -83,6 +83,8 @@ class EvercisegroupsController extends \BaseController
         ) {
             $data = $evercisegroup->showAsNonOwner($this->user);
 
+            Event::fire('stats.class.counter', ['class' => $evercisegroup]);
+
             if (Sentry::check() && $evercisegroup->user_id == $this->user->id
             ) // This Group belongs to this User/Trainer
             {
