@@ -7,6 +7,14 @@ if(typeof angular != 'undefined') {
 
         $scope.sort = 'id';
 
+
+        $scope.toggle = function(toggle){
+            if( $('#'+toggle).hasClass('active') ){
+                $('#'+toggle).removeClass('active');
+               // $('#'+toggle+'-btn').removeClass('active');
+            }
+        };
+
         $scope.changeView = function (view) {
             $scope.view = view;
         };
@@ -84,6 +92,7 @@ if(typeof angular != 'undefined') {
                 stars: $scope.getStars(data.ratings),
                 capacity: data.capacity,
                 sessions: data.futuresessions,
+                distance : data.distance,
                 nextClassDate: new Date(data.futuresessions[0].date_time.replace(/-/g, '/')),
                 nextClassDuration: data.futuresessions[0].duration,
                 link: '/class/' + data.id,

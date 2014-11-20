@@ -7390,89 +7390,19 @@ a.bg-light-grey:hover {
 .btn-lg .icon {
   margin: -5px 15px -5px 0;
 }
-.icon-cart {
+.icon-dropdown {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -890px -250px;
+  background-position: -50px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-cart.active {
-  background-position: -890px -290px;
+.icon-dropdown.active {
+  background-position: -50px -290px;
 }
-.icon-cart.hover:hover,
-.icon-cart.active:hover {
+.icon-dropdown.hover:hover,
+.icon-dropdown.active:hover {
   cursor: pointer;
-  background-position: -890px -290px;
-}
-.icon-clock {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -290px -250px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-.icon-clock.active {
-  background-position: -290px -290px;
-}
-.icon-clock.hover:hover,
-.icon-clock.active:hover {
-  cursor: pointer;
-  background-position: -290px -290px;
-}
-.icon-white-clock {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -290px -330px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-.icon-white-clock.active {
-  background-position: -290px -370px;
-}
-.icon-white-clock.hover:hover,
-.icon-white-clock.active:hover {
-  cursor: pointer;
-  background-position: -290px -370px;
-}
-.icon-watch {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -330px -250px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-.icon-watch.active {
-  background-position: -330px -290px;
-}
-.icon-watch.hover:hover,
-.icon-watch.active:hover {
-  cursor: pointer;
-  background-position: -330px -290px;
-}
-.icon-ticket {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -930px -250px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-.icon-ticket.active {
-  background-position: -930px -290px;
-}
-.icon-ticket.hover:hover,
-.icon-ticket.active:hover {
-  cursor: pointer;
-  background-position: -930px -290px;
-}
-.icon-bin {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -850px -250px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-.icon-bin.active {
-  background-position: -850px -290px;
-}
-.icon-bin.hover:hover,
-.icon-bin.active:hover {
-  cursor: pointer;
-  background-position: -850px -290px;
+  background-position: -50px -290px;
 }
 .icon-cross {
   background-image: url("../img/ev_site_icons.png");
@@ -7502,61 +7432,103 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -130px -290px;
 }
-.icon-search {
+.icon-minus {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -610px -250px;
+  background-position: -170px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-search.active {
-  background-position: -610px -290px;
+.icon-minus.active {
+  background-position: -170px -290px;
 }
-.icon-search.hover:hover,
-.icon-search.active:hover {
+.icon-minus.hover:hover,
+.icon-minus.active:hover {
   cursor: pointer;
-  background-position: -610px -290px;
+  background-position: -170px -290px;
 }
-.icon-pointer {
+.icon-grey-left-arrow {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -650px -250px;
+  background-position: -210px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-pointer.active {
-  background-position: -650px -290px;
+.icon-grey-left-arrow.active {
+  background-position: -210px -290px;
 }
-.icon-pointer.hover:hover,
-.icon-pointer.active:hover {
+.icon-grey-left-arrow.hover:hover,
+.icon-grey-left-arrow.active:hover {
   cursor: pointer;
-  background-position: -650px -290px;
+  background-position: -210px -290px;
 }
-.icon-pink-pointer {
+.icon-grey-right-arrow {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -650px -290px;
+  background-position: -250px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-pink-pointer.active {
-  background-position: -650px -330px;
+.icon-grey-right-arrow.active {
+  background-position: -250px -290px;
 }
-.icon-pink-pointer.hover:hover,
-.icon-pink-pointer.active:hover {
+.icon-grey-right-arrow.hover:hover,
+.icon-grey-right-arrow.active:hover {
   cursor: pointer;
-  background-position: -650px -330px;
+  background-position: -250px -290px;
 }
-.icon-distance {
+.icon-clock {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -690px -250px;
+  background-position: -290px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-distance.active {
-  background-position: -690px -290px;
+.icon-clock.active {
+  background-position: -290px -290px;
 }
-.icon-distance.hover:hover,
-.icon-distance.active:hover {
+.icon-clock.hover:hover,
+.icon-clock.active:hover {
   cursor: pointer;
-  background-position: -690px -290px;
+  background-position: -290px -290px;
+}
+.icon-watch {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -330px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-watch.active {
+  background-position: -330px -290px;
+}
+.icon-watch.hover:hover,
+.icon-watch.active:hover {
+  cursor: pointer;
+  background-position: -330px -290px;
+}
+.icon-grey-up-arrow {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -370px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-grey-up-arrow.active {
+  background-position: -370px -290px;
+}
+.icon-grey-up-arrow.hover:hover,
+.icon-grey-up-arrow.active:hover {
+  cursor: pointer;
+  background-position: -370px -290px;
+}
+.icon-grey-down-arrow {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -410px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-grey-down-arrow.active {
+  background-position: -410px -290px;
+}
+.icon-grey-down-arrow.hover:hover,
+.icon-grey-down-arrow.active:hover {
+  cursor: pointer;
+  background-position: -410px -290px;
 }
 .icon-calendar {
   background-image: url("../img/ev_site_icons.png");
@@ -7614,61 +7586,47 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -570px -290px;
 }
-.icon-grey-up-arrow {
+.icon-search {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -370px -250px;
+  background-position: -610px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-grey-up-arrow.active {
-  background-position: -370px -290px;
+.icon-search.active {
+  background-position: -610px -290px;
 }
-.icon-grey-up-arrow.hover:hover,
-.icon-grey-up-arrow.active:hover {
+.icon-search.hover:hover,
+.icon-search.active:hover {
   cursor: pointer;
-  background-position: -370px -290px;
+  background-position: -610px -290px;
 }
-.icon-grey-down-arrow {
+.icon-pointer {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -410px -250px;
+  background-position: -650px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-grey-down-arrow.active {
-  background-position: -410px -290px;
+.icon-pointer.active {
+  background-position: -650px -290px;
 }
-.icon-grey-down-arrow.hover:hover,
-.icon-grey-down-arrow.active:hover {
+.icon-pointer.hover:hover,
+.icon-pointer.active:hover {
   cursor: pointer;
-  background-position: -410px -290px;
+  background-position: -650px -290px;
 }
-.icon-grey-left-arrow {
+.icon-expand {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -210px -250px;
+  background-position: -690px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-grey-left-arrow.active {
-  background-position: -210px -290px;
+.icon-expand.active {
+  background-position: -690px -290px;
 }
-.icon-grey-left-arrow.hover:hover,
-.icon-grey-left-arrow.active:hover {
+.icon-expand.hover:hover,
+.icon-expand.active:hover {
   cursor: pointer;
-  background-position: -210px -290px;
-}
-.icon-grey-right-arrow {
-  background-image: url("../img/ev_site_icons.png");
-  background-position: -250px -250px;
-  background-repeat: no-repeat;
-  overflow: hidden;
-}
-.icon-grey-right-arrow.active {
-  background-position: -250px -290px;
-}
-.icon-grey-right-arrow.hover:hover,
-.icon-grey-right-arrow.active:hover {
-  cursor: pointer;
-  background-position: -250px -290px;
+  background-position: -690px -290px;
 }
 .icon-grid {
   background-image: url("../img/ev_site_icons.png");
@@ -7711,6 +7669,202 @@ a.bg-light-grey:hover {
 .icon-map.active:hover {
   cursor: pointer;
   background-position: -810px -290px;
+}
+.icon-bin {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -850px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-bin.active {
+  background-position: -850px -290px;
+}
+.icon-bin.hover:hover,
+.icon-bin.active:hover {
+  cursor: pointer;
+  background-position: -850px -290px;
+}
+.icon-cart {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -890px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-cart.active {
+  background-position: -890px -290px;
+}
+.icon-cart.hover:hover,
+.icon-cart.active:hover {
+  cursor: pointer;
+  background-position: -890px -290px;
+}
+.icon-ticket {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -930px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-ticket.active {
+  background-position: -930px -290px;
+}
+.icon-ticket.hover:hover,
+.icon-ticket.active:hover {
+  cursor: pointer;
+  background-position: -930px -290px;
+}
+.icon-radio {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -970px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-radio.active {
+  background-position: -970px -290px;
+}
+.icon-radio.hover:hover,
+.icon-radio.active:hover {
+  cursor: pointer;
+  background-position: -970px -290px;
+}
+.icon-point {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1110px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-point.active {
+  background-position: -1110px -290px;
+}
+.icon-point.hover:hover,
+.icon-point.active:hover {
+  cursor: pointer;
+  background-position: -1110px -290px;
+}
+.icon-pan-left {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1150px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-pan-left.active {
+  background-position: -1150px -290px;
+}
+.icon-pan-left.hover:hover,
+.icon-pan-left.active:hover {
+  cursor: pointer;
+  background-position: -1150px -290px;
+}
+.icon-pan-right {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1180px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-pan-right.active {
+  background-position: -1180px -290px;
+}
+.icon-pan-right.hover:hover,
+.icon-pan-right.active:hover {
+  cursor: pointer;
+  background-position: -1180px -290px;
+}
+.icon-filter {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1130px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-filter.active {
+  background-position: -1130px -290px;
+}
+.icon-filter.hover:hover,
+.icon-filter.active:hover {
+  cursor: pointer;
+  background-position: -1130px -290px;
+}
+.icon-sort {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1170px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-sort.active {
+  background-position: -1170px -290px;
+}
+.icon-sort.hover:hover,
+.icon-sort.active:hover {
+  cursor: pointer;
+  background-position: -1170px -290px;
+}
+.icon-tick {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1210px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-tick.active {
+  background-position: -1210px -290px;
+}
+.icon-tick.hover:hover,
+.icon-tick.active:hover {
+  cursor: pointer;
+  background-position: -1210px -290px;
+}
+.icon-small-cross {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -1250px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-small-cross.active {
+  background-position: -1250px -290px;
+}
+.icon-small-cross.hover:hover,
+.icon-small-cross.active:hover {
+  cursor: pointer;
+  background-position: -1250px -290px;
+}
+.icon-white-clock {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -290px -330px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-white-clock.active {
+  background-position: -290px -370px;
+}
+.icon-white-clock.hover:hover,
+.icon-white-clock.active:hover {
+  cursor: pointer;
+  background-position: -290px -370px;
+}
+.icon-pink-pointer {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -650px -290px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-pink-pointer.active {
+  background-position: -650px -330px;
+}
+.icon-pink-pointer.hover:hover,
+.icon-pink-pointer.active:hover {
+  cursor: pointer;
+  background-position: -650px -330px;
+}
+.icon-distance {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -690px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-distance.active {
+  background-position: -690px -290px;
+}
+.icon-distance.hover:hover,
+.icon-distance.active:hover {
+  cursor: pointer;
+  background-position: -690px -290px;
 }
 .icon-checkbox {
   background-image: url("../img/ev_site_icons.png");
@@ -8590,10 +8744,23 @@ fieldset[disabled] .btn-blank.active {
 }
 .class-snippet-wrapper .snippet-header {
   border-bottom: 1px solid #e8ebec;
-  padding: 10px;
+  padding: 10px 0;
   background-color: #ffffff;
   position: relative;
   z-index: 2;
+}
+.class-snippet-wrapper .snippet-header.sub-menu {
+  background-color: #f1f2f3;
+}
+.class-snippet-wrapper .snippet-header.sub-menu .nav-pills li.active a {
+  background-color: transparent;
+  color: inherit;
+}
+.class-snippet-wrapper .snippet-header.sub-menu .nav-pills li:first-of-type {
+  border-right: 1px solid #e8ebec;
+}
+.class-snippet-wrapper .snippet-header.sub-menu .list-group {
+  margin: 10px 0 0;
 }
 .class-snippet-wrapper .snippet-body {
   position: relative;

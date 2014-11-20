@@ -61,7 +61,7 @@
 
                     <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
                     <div class="caption">
-                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</p>
+                        <p>Evercise is the exciting new Pay As You Go fitness community that&apos;s flexible enough to fit in with your modern lifestyle. Evercise unites talented trainers with an active community who want more fun and flexibility from their fitness routine.</p>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
 
                     <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
                     <div class="caption">
-                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</p>
+                        <p>We want fitness to be fun and flexible rather than routine and restricted. By bringing together trainers and a keen community of fitness enthusiasts Evercise really does benefit everyone. Evercise makes fitness fun again, emphasising social, group-exercise that fits in with your life.</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
 
                     <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
                     <div class="caption">
-                      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu</p>
+                      <p>Whether you&apos;re a trainer or a participant Evercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
                     </div>
                 </div>
             </div>
