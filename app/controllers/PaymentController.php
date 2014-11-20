@@ -84,8 +84,11 @@ class PaymentController extends BaseController {
             return 'card error';
         }
 
+        if ($walletPayment)
+            $this->user->wallet->withdraw($walletPayment, 'Part payment for classes'/*, implode( ',', $sessionIds )*/);
+
         $transactionId = $charge['id'];
-        $this->paid($token, $transactionId);
+        $this->paid($token, $transactionId, 'stripe');
 
 
         return Redirect::to('payment_confirmation')
@@ -159,11 +162,10 @@ class PaymentController extends BaseController {
      * @param $transactionId
      * @return \Illuminate\View\View
      */
-    public function paid($token, $transactionId)
+    public function paid($token, $transactionId, $paymentMethod)
     {
         /* Get evercisesession payment stuff from Cart, and delete it so it wont be used again. */
         $cartData = EverciseCart::getCart();
-        $paymentMethod = 'stripe';
 
         /* Sort sessions into groups */
         $sessionsSortedByGroup = [];
@@ -180,7 +182,10 @@ class PaymentController extends BaseController {
 
         /* Add members to sessions */
         foreach($sessionsSortedByGroup as $evercisegroupId => $sessionsInSameGroup)
-            Evercisesession::addSessionMember($evercisegroupId, $sessionsInSameGroup, $token, $transactionId, $paymentMethod, $cartData['total'], $this->user);
+        {
+            return Evercisesession::addSessionMember($evercisegroupId, $sessionsInSameGroup, $token, $transactionId, $paymentMethod, $cartData['total'], $this->user);
+        }
+
 
         /* Empty cart */
         EverciseCart::clearCart();
@@ -191,11 +196,13 @@ class PaymentController extends BaseController {
 
     public function conftest()
     {
-        $this->user->sessions()->attach(['303', '303'], ['token' => 'double', 'transaction_id' =>  'action', 'payer_id' => $this->user->id, 'payment_method' => 'fake']);
+        $this->user->sessions()->attach(['304', '305'], ['token' => 'double', 'transaction_id' =>  'action', 'payer_id' => $this->user->id, 'payment_method' => 'fake']);
 
         $cartData = EverciseCart::getCart();
+        $walletPayment = Session::get('walletPayment');
         return View::make('v3.cart.confirmation')
-            ->with('data', $cartData);
+            ->with('data', ['cartData'=>$cartData,
+            'walletPayment' => $walletPayment,]);
 
     }
 

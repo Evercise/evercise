@@ -65,7 +65,7 @@ class EverciseCart extends Cart
     public static function getCart()
     {
 
-        $cartRows = parent::content();
+        $cartRows = parent::instance('main')->content();
         $subTotal = parent::total();
         $discount = 0;
         $total = ($subTotal / 100) * (100 - $discount);

@@ -374,7 +374,7 @@ class Evercisesession extends \Eloquent
 
             Trainerhistory::create(array('user_id' => $evercisegroup->user_id, 'type' => 'joined_session', 'display_name' => $user->display_name, 'name' => $evercisegroup->name, 'time' => $niceTime, 'date' => $niceDate));
         }
-
+    //return var_dump($user);
 
         /* Pivot current user with session via session members */
         $user->sessions()->attach($sessionIds, ['token' => $token, 'transaction_id' =>  $transactionId, 'payer_id' => $user->id, 'payment_method' => $paymentMethod]);
@@ -387,7 +387,7 @@ class Evercisesession extends \Eloquent
         self::newMemberAnalytics($transactionId, $amount, $evercisegroup, $sessionIds);
 
 
-        return true;
+        return 'done';
     }
 
     /**

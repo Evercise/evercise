@@ -560,6 +560,8 @@ Route::get('show_facilities/{venueId}', function($id){
 
 Route::get('paytest', function(){
         $pc = new PaymentController;
-        $pc->paid('bollocks', 'more bollocks');
+        return $pc->paid('bollocks', 'more bollocks', 'paytest');
+        //return 'yeah';
     }
 );
+Route::get('conftest',['uses' => 'PaymentController@conftest'] );
