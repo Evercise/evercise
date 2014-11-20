@@ -61,7 +61,8 @@ return [
         ['user.changedPassword' => 'Tracking@userChangePassword'],
         ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer'],
         ['class.index.single' => 'Indexer@indexSingle'],
-        ['class.index.all' => 'Indexer@indexAll']
+        ['class.index.all' => 'Indexer@indexAll'],
+        ['stats.class.counter' => 'Stats@classViewed']
 
 
     ]
