@@ -9,14 +9,14 @@
             <!-- Nav tabs -->
             <ul class="nav nav-pills nav-justified" role="tablist">
                 <li role="presentation" id="filter-btn">
-                    <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" ng-click="toggle('filter')">
+                    <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" ng-click="toggle($event,'filter')">
                         <span class="icon icon-filter mr20"></span>
                         Filter
                         <span class="icon icon-dropdown ml10"></span>
                     </a>
                 </li>
                 <li role="presentation" id="sort-btn">
-                    <a href="#sort" aria-controls="sort" role="tab" data-toggle="tab" ng-click="toggle('sort')">
+                    <a href="#sort" aria-controls="sort" role="tab" data-toggle="tab" ng-click="toggle($event,'sort')">
                         <span class="icon icon-sort mr20"></span>
                         Sort
                         <span class="icon icon-dropdown ml10"></span>
@@ -24,28 +24,7 @@
                 </li>
             </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-                <div role="tabpanel fade" class="tab-pane" id="filter">
-                    <ul class="list-group">
-                        <li class="list-group-item">Distance</li>
-                        <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" >Less than 1 mile<span class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" >2 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" >5 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" >10 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
-                    </ul>
-                </div>
-                <div role="tabpanel fade" class="tab-pane" id="sort">
-                    <ul class="list-group">
-                        <li class="list-group-item">Sort by</li>
-                        <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = 'distance'; reverse=false">Distance - Closest First<span ng-class="{ active : sort == 'distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" ng-click="sort = '-distance'; reverse=false">Distance - Furthest First<span ng-class="{ active : sort == '-distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" ng-click="sort = 'price'; reverse=false">Price Ascending<span ng-class="{ active : sort == 'price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" ng-click="sort = '-price'; reverse=false">Price Descending<span ng-class="{ active : sort == '-price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-                        <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#soon" ng-click="sort = 'nextClassDate'; reverse=false" >Soonest<span ng-class="{ active : sort == 'nextClassDate' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-                    </ul>
-                </div>
-            </div>
+
 
         </div>
 
@@ -247,4 +226,26 @@
         </div>
     </div>
 
+</div>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div role="tabpanel fade" class="tab-pane" id="filter">
+        <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
+            <li class="list-group-item">Distance</li>
+            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" >Less than 1 mile<span class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" >2 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" >5 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" >10 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
+        </ul>
+    </div>
+    <div role="tabpanel fade" class="tab-pane" id="sort">
+        <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
+            <li class="list-group-item">Sort by</li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = 'distance'; reverse=false">Distance - Closest First<span ng-class="{ active : sort == 'distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" ng-click="sort = '-distance'; reverse=false">Distance - Furthest First<span ng-class="{ active : sort == '-distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" ng-click="sort = 'price'; reverse=false">Price Ascending<span ng-class="{ active : sort == 'price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" ng-click="sort = '-price'; reverse=false">Price Descending<span ng-class="{ active : sort == '-price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#soon" ng-click="sort = 'nextClassDate'; reverse=false" >Soonest<span ng-class="{ active : sort == 'nextClassDate' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+        </ul>
+    </div>
 </div>

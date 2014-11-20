@@ -7,8 +7,17 @@ if(typeof angular != 'undefined') {
 
         $scope.sort = 'id';
 
+        $scope.dropwdownStyle = {
+            top
+        }
 
-        $scope.toggle = function(toggle){
+        $scope.top = 0;
+        $scope.left = 0;
+
+        $scope.toggle = function(e,toggle){
+            var offset = $(e.target).offset();
+            $scope.top = offset.top;
+            $scope.left = offset.left;
             if( $('#'+toggle).hasClass('active') ){
                 $('#'+toggle).removeClass('active');
                // $('#'+toggle+'-btn').removeClass('active');
