@@ -236,7 +236,6 @@ class SearchController extends \BaseController
 
     }
 
-
     private function getSort($area)
     {
         $sort = $this->input->get('sort');
@@ -262,6 +261,32 @@ class SearchController extends \BaseController
         }
 
         return false;
+
+    }
+
+
+    public function getClasses($params) {
+
+        /*
+         *
+         * location = 'london';
+         *
+         */
+
+
+            $location = $this->place->getByLocation((!empty($params['location']) ? $params['location'] : 'London'));
+            $query = [
+                'size' => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
+                'from' => 0,
+                'sort' => (!empty($params['sort']) ? $params['sort'] : 'nearme'),
+                'radius' => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
+                'search' => (!empty($params['search']) ? $params['sort'] : '')
+            ];
+
+            $searchResults = $this->search->getResults($location, $params);
+
+
+            return $searchResults;
 
     }
 

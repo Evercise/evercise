@@ -856,7 +856,7 @@ class Evercisegroup extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function isFeatured()
+    public function iseatured()
     {
         return FeaturedClasses::where('evercisegroup_id', $this->id)->first();
     }

@@ -73,9 +73,18 @@ class Elastic
                 ],
 
             ];
+        } elseif (!empty($params['featured'])){
+            /** Guess not! */
+            $searchParams['body']['query']['filtered']['query']["term"] = ['featured' => true];
         } else {
             /** Guess not! */
             $searchParams['body']['query']['filtered']['query']['match_all'] = [];
+        }
+
+
+
+        if(!empty($params['sort'])) {
+            $searchParams['body']['sort'] = $params['sort'];
         }
 
 
@@ -302,6 +311,7 @@ class Elastic
                 'default_duration' => (int) $a->default_duration,
                 'default_price'    => (double) $a->default_price,
                 'published'        => $a->published,
+                'featured'         => ($a->iseatured() ? true : false),
                 'user'             => [
                     'id'           => (int) $a->user->id,
                     'email'        => $a->user->email,
@@ -469,6 +479,7 @@ class Elastic
                         'capacity'         => ['type' => 'integer'],
                         'default_duration' => ['type' => 'integer'],
                         'published'        => ['type' => 'integer'],
+                        'published'        => ['type' => 'boolean'],
                         'description'      => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
                         'image'            => ['type' => 'string'],
                         'venue'            => [
