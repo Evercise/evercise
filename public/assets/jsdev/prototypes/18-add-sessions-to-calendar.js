@@ -4,6 +4,7 @@ function AddSessionsToCalendar(form){
     this.index = '';
     this.dates = [];
     this.selectedDates = [];
+    this.submitDates = [];
     this.currentMonthYear = [];
     this.init();
 }
@@ -21,6 +22,7 @@ AddSessionsToCalendar.prototype = {
     },
     addListener: function () {
         $(document).on('click', '.dow',  $.proxy(this.dayOfWeek, this) );
+        this.form.on("submit", $.proxy(this.submitForm, this));
     },
     getCurrentDates: function(e){
 
@@ -107,5 +109,51 @@ AddSessionsToCalendar.prototype = {
             return new Date(d).getMonth();
         }
         return -1;
+    },
+    submitForm: function(e){
+        e.preventDefault();
+        var self =this;
+
+        $.each(this.calendar.datepicker('getDates') , function(i,v){
+            var day = v.getDate();
+            var month = (v.getMonth() + 1);
+            var year = v.getFullYear();
+            self.submitDates.push(year + '-'+ month + '-' + day);
+        })
+        $('input[name="session_array"]').val( this.submitDates );
+        this.ajaxUpload();
+    },
+    ajaxUpload: function () {
+        var self = this;
+
+        $.ajax(self.form.attr("action"), {
+            type: "post",
+            data: self.form.serialize(),
+            dataType: 'json',
+
+            beforeSend: function () {
+                self.form.find("input[type='submit']").prop('disabled', true).parent().after('<span id="session-loading" class="icon icon-loading ml10 mt10"></span>');
+            },
+
+            success: function (data) {
+                $('#update-session').html(data.view);
+                $('input[name="recurring"][value="no"]').click();
+                self.dates = [];
+                self.submitDates = [];
+                self.selectedDates = [];
+                self.setCalendarDates();
+                $("html, body").animate({scrollTop: $('#update-container').offset().top -20 }, 1000);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log('error');
+                //console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+            },
+
+            complete: function () {
+                self.form.find("input[type='submit']").prop('disabled', false)
+                $('#session-loading').remove();
+            }
+        });
     }
 }

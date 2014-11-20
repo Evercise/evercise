@@ -1,4 +1,5 @@
 // unused at the moment see addSessionsToCalendar
+/*
 function AddSessions(form){
     this.form = form;
     this.calendar = this.form.find('#calendar');
@@ -230,3 +231,4 @@ AddSessions.prototype = {
 
     }
 }
+*/
