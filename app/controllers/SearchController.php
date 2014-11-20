@@ -100,9 +100,9 @@ class SearchController extends \BaseController
                     return $this->show($link->getClass);
                     break;
             }
-        } elseif( !$link && !$this->input->get('location', false) && $all_segments != '') {
+        } elseif (!$link && !$this->input->get('location', false) && $all_segments != '') {
 
-            $this->log->info('Somebody tried to access a missing URL '.$this->input->url());
+            $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
 
             $input['allsegments'] = '';
             return $this->redirect->route(
@@ -125,8 +125,10 @@ class SearchController extends \BaseController
         $input = array_filter($this->input->all());
 
         /** Clean up empty Arrays  */
-        foreach($input as $key => $val) {
-            if(empty($val)) unset($input[$key]);
+        foreach ($input as $key => $val) {
+            if (empty($val)) {
+                unset($input[$key]);
+            }
         }
 
         unset($input['area_id']);
@@ -146,7 +148,7 @@ class SearchController extends \BaseController
             $location = $this->place->getByLocation($input['location']);
 
 
-            if(is_null($location)) {
+            if (is_null($location)) {
 
                 $this->log->info('Address ERROR: ' . $input['location'] . '?' . http_build_query($input));
 
@@ -179,16 +181,18 @@ class SearchController extends \BaseController
         $size = $this->session->get('PER_PAGE', $this->config->get('evercise.default_per_page'));
 
 
-        if (!empty($area->min_radius) && str_replace('mi','',$area->min_radius) > str_replace('mi','',$radius)) {
+        if (!empty($area->min_radius) && str_replace('mi', '', $area->min_radius) > str_replace('mi', '', $radius)) {
             $radius = $area->min_radius;
         }
 
         $page = $this->input->get('page', 1);
+        $sort = $this->getSort($area);
         $search = $this->input->get('search');
 
         $params = [
-            'size'   => $size,
-            'from'   => (($page - 1) * $size),
+            'size' => $size,
+            'from' => (($page - 1) * $size),
+            'sort' => $sort,
             'radius' => (in_array(
                 $radius,
                 array_values($this->config->get('evercise.radius'))
@@ -201,31 +205,64 @@ class SearchController extends \BaseController
         $searchResults = $this->search->getResults($area, $params);
 
 
+        dd($searchResults);
+
+
         /* Overide $params arr so it will show the map results only */
         $params['size'] = $this->config->get('evercise.max_display_map_results');
         $params['from'] = 0;
         $mapResults = $this->search->cleanMapResults($this->search->getResults($area, $params));
 
         //Log Stats
-        $this->elastic->saveStats((!empty($this->user->id) ? $this->user->id : 0), $this->input->ip(), $area, $params, $searchResults->total);
+        $this->elastic->saveStats((!empty($this->user->id) ? $this->user->id : 0), $this->input->ip(), $area, $params,
+            $searchResults->total);
 
         $paginatedResults = $this->paginator->make($searchResults->hits, $searchResults->total, $size);
 
 
         $data = [
-            'area'           => $area,
-            'places'         => json_encode($mapResults),
+            'area' => $area,
+            'places' => json_encode($mapResults),
             'evercisegroups' => $paginatedResults,
-            'radius'         => $radius,
+            'radius' => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
-            'page'           => $page,
-            'search'         => $search
+            'page' => $page,
+            'search' => $search
         ];
 
-        JavaScript::put(['mapResults' => $mapResults ]);
+        JavaScript::put(['mapResults' => $mapResults]);
 
         return View::make('v3.classes.discover.master')
             ->with($data);
+
+    }
+
+
+    private function getSort($area)
+    {
+        $sort = $this->input->get('sort');
+
+        $options = [
+            'price_asc' => ['default_price' => 'asc'],
+            'price_desc' => ['default_price' => 'desc'],
+            'duration_asc' => ['duration_price' => 'asc'],
+            'duration_desc' => ['duration_price' => 'desc'],
+            'viewed_asc' => ['counter' => 'asc'],
+            'viewed_desc' => ['counter' => 'desc'],
+            'nearme' => [
+                "_geo_distance" => [
+                    'venue.location' => $this->elastic->getLocationHash($area->lat, $area->lng),
+                    "order" => "asc",
+                    "unit" => "mi"
+                ]
+            ]
+        ];
+
+        if (!empty($options[$sort])) {
+            return $options[$sort];
+        }
+
+        return false;
 
     }
 

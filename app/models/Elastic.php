@@ -79,6 +79,11 @@ class Elastic
         }
 
 
+        if(!empty($params['sort'])) {
+            $searchParams['body']['sort'] = $params['sort'];
+        }
+
+
         /** What Are we Searching For */
         if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
@@ -112,10 +117,11 @@ class Elastic
             }
         }
 
+
+
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
         $result_object = json_decode(json_encode($result), false);
-
 
         return $result_object;
 

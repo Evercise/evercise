@@ -1,5 +1,24 @@
 <?php
 
+
+if (!function_exists('d')) {
+
+    /*
+     * nice print of vardump without the xdebug
+     *
+     */
+
+    function d($var, $die = true)
+    {
+        echo "<pre>";
+        print_r($var);
+        echo "</pre>";
+        if ($die) {
+            die();
+        }
+    }
+}
+
 if (!function_exists('slugIt')) {
 
     /*
