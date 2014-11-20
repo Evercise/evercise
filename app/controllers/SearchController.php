@@ -205,8 +205,6 @@ class SearchController extends \BaseController
         $searchResults = $this->search->getResults($area, $params);
 
 
-        dd($searchResults);
-
 
         /* Overide $params arr so it will show the map results only */
         $params['size'] = $this->config->get('evercise.max_display_map_results');
