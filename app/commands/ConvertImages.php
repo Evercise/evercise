@@ -23,12 +23,50 @@ class ConvertImages extends Command
      *
      * @return mixed
      */
+
+
     public function fire()
     {
 
-        $all = Evercisegroup::all();
 
         $user_completed = [];
+        $users = User::all();
+
+        foreach($users as $user) {
+
+            $dir = hashDir($user->id, 'u');
+            $user_completed[$user->id] = $user->directory;
+
+            $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)]));
+            if (!empty($user->image) && strpos($user->image, '.') !== false) {
+                $extension = explode('.', $user->image);
+                $user_file_name .= '.' . end($extension);
+
+                try {
+                    copy('public/profiles/' . $user_completed[$user->id] . '/' . $user->image,
+                        'public/' . $dir . '/' . $user_file_name);
+
+                    $user->image = $user_file_name;
+                    $this->info('Success  public/' . $dir . '/' . $user_file_name);
+
+                } catch (Exception $e) {
+                    $this->error('Shit... Failed User Image');
+                    $this->error($e->getMessage());
+                    $this->error('Copy From: public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
+                    $this->error('Copy To: public/' . $dir . '/' . $user_file_name);
+                }
+            }
+
+
+            $user->directory = $dir;
+            $user->save();
+        }
+
+
+
+
+        $all = Evercisegroup::all();
+
 
         foreach ($all as $a) {
 
@@ -42,12 +80,6 @@ class ConvertImages extends Command
 
             $dir = hashDir($user->id, 'u');
 
-            $new_user = false;
-            if(!isset($user_completed[$user->id])) {
-
-                $new_user = true;
-                $user_completed[$user->id] = $user->directory;
-            }
 
 
             /** Im Going TO Just copy the file to the new place.... just in case */
@@ -93,35 +125,6 @@ class ConvertImages extends Command
             } else {
                 $this->error('Shit... Failed');
                 $this->error('Copy From: public/profiles/' . $dir . '/' . $slug);
-            }
-
-
-            /** Move Profile Image */
-
-            if($new_user) {
-                $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)]));
-                if (!empty($user->image) && strpos($user->image, '.') !== false) {
-                    $extension = explode('.', $user->image);
-                    $user_file_name .= '.' . end($extension);
-
-                    try {
-                        copy('public/profiles/' . $user_completed[$user->id] . '/' . $user->image,
-                            'public/' . $dir . '/' . $user_file_name);
-
-                        $user->image = $user_file_name;
-                        $user->save();
-                        $this->info('Success  public/' . $dir . '/' . $file_name);
-
-                    } catch (Exception $e) {
-                        $this->error('Shit... Failed User Image');
-                        $this->error($e->getMessage());
-                        $this->error('Copy From: public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
-                        $this->error('Copy To: public/' . $dir . '/' . $user_file_name);
-                    }
-                }
-
-                $user->directory = $dir;
-                $user->save();
             }
 
         }
