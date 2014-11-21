@@ -14,7 +14,7 @@ for ($hours = 0; $hours < 24; $hours++) {
 }
 
 for ($mins = 0; $mins < 125; $mins += 5) {
-    $durationArray[str_pad($mins, 2, '0', STR_PAD_LEFT)] = str_pad($mins, 2, '0', STR_PAD_LEFT).' mins';
+    $durationArray[str_pad($mins, 2, '0', STR_PAD_LEFT)] = str_pad($mins, 2, '0', STR_PAD_LEFT) . ' mins';
 }
 
 for ($tickets = 0; $tickets < 50; $tickets += 1) {
@@ -76,6 +76,16 @@ return [
             'width' => 200,
             'height' => 80
         ]
+    ],
+    'class_images' => [
+        ['prefix' => 'cover', 'width' => 1000, 'height' => 400],
+        ['prefix' => 'thumb', 'width' => 200, 'height' => 80],
+        ['prefix' => 'search', 'width' => 315, 'height' => 205]
+    ],
+    'user_images' => [
+        ['prefix' => 'small', 'width' => 100, 'height' => 100],
+        ['prefix' => 'medium', 'width' => 200, 'height' => 200],
+        ['prefix' => 'large', 'width' => 300, 'height' => 300]
     ],
     /** SEO CRAP */
 

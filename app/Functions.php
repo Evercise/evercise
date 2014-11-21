@@ -37,6 +37,9 @@ if (!function_exists('slugIt')) {
         $array_from = array_keys($foreign_chars);
         $array_to = array_values($foreign_chars);
 
+        if (is_array($str) || is_object($str)) {
+            $str = implode(' ', (array)$str);
+        }
 
         $str = preg_replace($array_from, $array_to, $str);
 
@@ -55,10 +58,16 @@ if (!function_exists('hashDir')) {
 
         $id = abs($id + 20000);
 
+        $public = '';
+
+        if (App::runningInConsole()) {
+            $public = 'public/';
+        }
+
         $path = 'files/' . $folder;
 
-        if (!is_dir($path)) {
-            mkdir($path);
+        if (!is_dir($public . $path)) {
+            mkdir($public . $path);
         }
 
 
@@ -67,16 +76,16 @@ if (!function_exists('hashDir')) {
         $subdir = $h % 64;
 
 
-        if (!is_dir($path)) {
-            mkdir($path);
+        if (!is_dir($public . $path)) {
+            mkdir($public . $path);
         }
 
 
-        if (!is_dir($path . '/' . $maindir)) {
-            mkdir($path . '/' . $maindir);
+        if (!is_dir($public . $path . '/' . $maindir)) {
+            mkdir($public . $path . '/' . $maindir);
         }
-        if (!is_dir($path . '/' . $maindir . '/' . $subdir)) {
-            mkdir($path . '/' . $maindir . '/' . $subdir);
+        if (!is_dir($public . $path . '/' . $maindir . '/' . $subdir)) {
+            mkdir($public . $path . '/' . $maindir . '/' . $subdir);
         }
 
         return $path . '/' . $maindir . '/' . $subdir;
