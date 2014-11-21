@@ -68,7 +68,7 @@ class UsersController extends AjaxBaseController{
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => route('trainers.trainerSignup')
+                            'url'      => route('trainer')
                         ]
                     );
                 } else {

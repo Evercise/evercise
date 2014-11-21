@@ -11,11 +11,12 @@
                 <div class="text-center mb50">
                     <strong>Your account has been created, just a few more details and then you can create classes.</strong>
                 </div>
+
+               <div class="form-group mb50">
+                    @include('v3.widgets.profile_image_upload')
+
+               </div>
                 {{ Form::open(['url' => 'ajax/trainers/store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
-                   <div class="form-group mb50">
-                        @include('v3.widgets.profile_image_upload')
-                        {{ Form::hidden('image', 'fucksticks', ['id' => 'image']) }}
-                   </div>
                    <div class="form-group mb50">
                         {{ Form::label('profession', 'Add your Profession', ['class' => 'mb15'] )  }}
                         {{ Form::text('profession', null, ['class' => 'form-control', 'placeholder' => 'Max 50 Characters', 'maxlength' => 50]) }}
@@ -37,6 +38,7 @@
 
 
                     <div class="text-center mt50">
+                        {{ Form::hidden('image', null, ['id' => 'image']) }}
                         {{ Form::submit('Finish Up', ['class' => 'btn btn-primary'] )  }}
                     </div>
 
