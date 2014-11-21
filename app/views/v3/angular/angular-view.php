@@ -8,14 +8,14 @@
 
             <!-- Nav tabs -->
             <ul class="nav nav-pills nav-justified" role="tablist">
-                <li role="presentation" id="filter-btn">
+                <li role="presentation" class="filter-btn">
                     <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" ng-click="toggle($event,'filter')">
                         <span class="icon icon-filter mr20"></span>
                         Filter
                         <span class="icon icon-dropdown ml10"></span>
                     </a>
                 </li>
-                <li role="presentation" id="sort-btn">
+                <li role="presentation" class="sort-btn">
                     <a href="#sort" aria-controls="sort" role="tab" data-toggle="tab" ng-click="toggle($event,'sort')">
                         <span class="icon icon-sort mr20"></span>
                         Sort
@@ -30,7 +30,7 @@
 
         <div id="main_block_with_scroll" class="snippet-body mb-scroll">
 
-            <div ng-repeat="marker in markers | orderBy: sort:reverse"
+            <div ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter"
                  id = {{marker.id}}
                  class="class-snippet"
                  ng-click="clicked(marker)"
@@ -128,7 +128,7 @@
                 click = "'click'"
                 doRebuildAll = "false"
                 doCluster = "true"
-                 clusterOptions = "clusterOptions"
+                clusterOptions = "clusterOptions"
                 clusterEvents="clusterEvents"
                 >
 
@@ -141,10 +141,31 @@
     <div class="container-fluid bg-light-grey">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 mt15 mb20">
-                    <strong>Your search return <span class="text-primary">{{ results }}</span> results</strong>
+                <div class="mt15 mb20 pull-left">
+                    <div class="col-sm-6 mt5">
+                        <strong>Your search return <span class="text-primary">{{ results }}</span> results</strong>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
+                            <li role="presentation" class="filter-btn">
+                                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" ng-click="toggle($event,'filter')">
+                                    <span class="icon icon-filter mr20"></span>
+                                    Filter
+                                    <span class="icon icon-dropdown ml10"></span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="sort-btn">
+                                <a href="#sort" aria-controls="sort" role="tab" data-toggle="tab" ng-click="toggle($event,'sort')">
+                                    <span class="icon icon-sort mr20"></span>
+                                    Sort
+                                    <span class="icon icon-dropdown ml10"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-sm-12" ng-repeat="marker in markers | orderBy: sort:reverse" id = {{marker.id}}>
+                <div class="col-sm-12" ng-repeat="marker in markers | orderBy: sort:revers | filter: distanceFiltere" id = {{marker.id}}>
                     <div class="class-list center-block row">
                         <div class="class-image-wrapper col-xs-2">
                             <img src="{{ marker.image}} " alt="{{ marker.name}}"/>
@@ -183,10 +204,31 @@
     <div class="container-fluid bg-light-grey">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 mt10 mb20">
-                    <strong>Your search return <span class="text-primary">{{ results }}</span> results</strong>
+                <div class="mt15 mb20 pull-left">
+                    <div class="col-sm-6 mt5">
+                        <strong>Your search return <span class="text-primary">{{ results }}</span> results</strong>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
+                            <li role="presentation" class="filter-btn">
+                                <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" ng-click="toggle($event,'filter')">
+                                    <span class="icon icon-filter mr20"></span>
+                                    Filter
+                                    <span class="icon icon-dropdown ml10"></span>
+                                </a>
+                            </li>
+                            <li role="presentation" class="sort-btn">
+                                <a href="#sort" aria-controls="sort" role="tab" data-toggle="tab" ng-click="toggle($event,'sort')">
+                                    <span class="icon icon-sort mr20"></span>
+                                    Sort
+                                    <span class="icon icon-dropdown ml10"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-sm-4"  ng-repeat="marker in markers | orderBy: sort:reverse" id = {{marker.id}}>
+                <div class="col-sm-4"  ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter" id = {{marker.id}}>
 
                     <div class="class-module center-block">
                         <div class="class-image-wrapper">
@@ -232,20 +274,20 @@
     <div role="tabpanel fade" class="tab-pane" id="filter">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Distance</li>
-            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" >Less than 1 mile<span class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" >2 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" >5 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li  class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" >10 miles<span class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a ng-click="distance = '1' ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#1" >Less than 1 mile<span ng-class="{ active : distance == '1' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a ng-click="distance = '2' ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#2" >2 miles<span  ng-class="{ active : distance == '2' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a ng-click="distance = '5' ; closeDropdown('filter')"" role="menuitem" tabindex="-1" href="#5" >5 miles<span  ng-class="{ active : distance == '5' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a ng-click="distance = '10' ; closeDropdown('filter')"" role="menuitem" tabindex="-1" href="#10" >10 miles<span  ng-class="{ active : distance == '10' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
         </ul>
     </div>
     <div role="tabpanel fade" class="tab-pane" id="sort">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Sort by</li>
-            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = 'distance'; reverse=false">Distance - Closest First<span ng-class="{ active : sort == 'distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" ng-click="sort = '-distance'; reverse=false">Distance - Furthest First<span ng-class="{ active : sort == '-distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" ng-click="sort = 'price'; reverse=false">Price Ascending<span ng-class="{ active : sort == 'price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" ng-click="sort = '-price'; reverse=false">Price Descending<span ng-class="{ active : sort == '-price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#soon" ng-click="sort = 'nextClassDate'; reverse=false" >Soonest<span ng-class="{ active : sort == 'nextClassDate' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = 'distance'; reverse=false ; closeDropdown('sort')">Distance - Closest First<span ng-class="{ active : sort == 'distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" ng-click="sort = '-distance'; reverse=false ; closeDropdown('sort')">Distance - Furthest First<span ng-class="{ active : sort == '-distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" ng-click="sort = 'price'; reverse=false ; closeDropdown('sort')">Price Ascending<span ng-class="{ active : sort == 'price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-des" ng-click="sort = '-price'; reverse=false ; closeDropdown('sort')">Price Descending<span ng-class="{ active : sort == '-price' }" class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#soon" ng-click="sort = 'nextClassDate'; reverse=false ; closeDropdown('sort')" >Soonest<span ng-class="{ active : sort == 'nextClassDate' }" class="pull-right icon icon-checkbox hover"></span></a></li>
         </ul>
     </div>
 </div>

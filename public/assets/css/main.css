@@ -9243,6 +9243,11 @@ label {
 .dropdown-cart {
   width: 440px;
 }
+.custom-dropdown {
+  position: fixed;
+  z-index: 10;
+  min-width: 250px;
+}
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,

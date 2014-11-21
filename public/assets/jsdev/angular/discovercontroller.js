@@ -8,21 +8,41 @@ if(typeof angular != 'undefined') {
         $scope.sort = 'id';
 
         $scope.dropwdownStyle = {
-            top
+            top : 0,
+            left : 0
         }
 
-        $scope.top = 0;
-        $scope.left = 0;
+        $scope.active = {};
+        $scope.distance = 10;
+
+        $scope.distanceFilter = function (marker) {
+            if( marker.distance <= $scope.distance || marker == $scope.active){
+                return marker;
+            }
+        };
 
         $scope.toggle = function(e,toggle){
             var offset = $(e.target).offset();
-            $scope.top = offset.top;
-            $scope.left = offset.left;
-            if( $('#'+toggle).hasClass('active') ){
-                $('#'+toggle).removeClass('active');
-               // $('#'+toggle+'-btn').removeClass('active');
+            var height = ( $(e.target).height() * 1.5 );
+            $scope.dropwdownStyle = {
+                top : offset.top + height,
+                left : offset.left
+            }
+
+            if( $(e.target).parent().hasClass('active') ){
+                window.setTimeout(function(){
+                    $('#'+toggle).removeClass('active');
+                    $(e.target).parent().removeClass('active');
+                },1);
             }
         };
+
+        $scope.closeDropdown = function(toggle){
+            window.setTimeout(function(){
+                $('.tab-pane').removeClass('active');
+                $('.'+toggle+'-btn').removeClass('active');
+            },1);
+        }
 
         $scope.changeView = function (view) {
             $scope.view = view;
@@ -93,6 +113,11 @@ if(typeof angular != 'undefined') {
                 image: '/profiles/' + data.user.directory + '/' + data.image,
                 latitude: data.venue.lat,
                 longitude: data.venue.lng,
+                coords : {
+                    latitude: data.venue.lat,
+                    longitude: data.venue.lng
+                },
+
                 icon: '/assets/img/icon_default_small_pin.png',
                 price: data.default_price,
                 rating: data.ratings.length,
@@ -129,6 +154,8 @@ if(typeof angular != 'undefined') {
 
 
         $scope.clicked = function (marker) {
+            $scope.active = marker;
+            $scope.distanceFilter(marker);
             $scope.isPreviewOpen = true;
 
             // change preview
