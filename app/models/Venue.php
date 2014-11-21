@@ -160,6 +160,14 @@ class Venue extends \Eloquent
         return $this->hasManyThrough('Evercisesession', 'Evercisegroup');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
+
     public function getAmenities()
     {
         $amenities = [];

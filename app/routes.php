@@ -60,6 +60,7 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('publish', ['as' => 'evercisegroups.publish','before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
+    Route::post('upload/profile', array('as' => 'ajax.upload.profile', 'uses' => 'ajax\UploadController@uploadProfilePicture'));
 
     //Gallery
     Route::post('gallery/getDefaults', array('as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults'));

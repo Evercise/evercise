@@ -89,6 +89,8 @@ class UploadController extends AjaxBaseController
         $id = $this->request->get('venue_id');
         $venue = $this->venue->find($id);
 
+        $user = $venue->user()->first();
+
         if (!$this->hasPermissions($venue)) {
             $this->data = [
                 'error' => true,
@@ -124,7 +126,7 @@ class UploadController extends AjaxBaseController
 
 
             /** HashDirectory of the new gallery */
-            $folder = hashDir($id, 'gallery');
+            $folder = $user->directory;
 
             /** New Slug for the Image */
             $slug = $this->string->slug(implode(' ', [$venue->name, $venue->town, $venue->postcode, rand(1, 300)]));
@@ -201,7 +203,17 @@ class UploadController extends AjaxBaseController
     }
 
 
-    public function uploadCover()
+
+    public function uploadCover() {
+        return $this->upload('class_images');
+    }
+
+    public function uploadProfilePicture() {
+        return $this->upload('user_images');
+    }
+
+
+    private function upload($type)
     {
 
         $validator = $this->validator->make(
@@ -229,15 +241,18 @@ class UploadController extends AjaxBaseController
 
         $upload_file = $this->request->file('file');
 
+        $user_id = $this->request->get('user_id', $this->user->id);
+
+        $user = Sentry::findUserById($user_id);
+
         $file = $this->image->make($upload_file->getRealPath());
 
-        $sizes = $this->config->get('evercise.cover_image');
+        $sizes = $this->config->get('evercise.'.$type);
 
 
-        $folder = hashDir($this->user->id, 'gallery');
+        $folder = $user->directory;
 
 
-        /** Get the right Ratio for the original image VS the cropbox size */
 
         /**Calculate the crop ration based on the original image */
         $crop_width = $this->request->get('width');
@@ -252,19 +267,17 @@ class UploadController extends AjaxBaseController
         $image = $file->crop((int)$crop_width, (int)$crop_height, (int)$crop_x, (int)$crop_y);
 
         /** New Slug for the Image */
-        $slug = $this->string->slug(implode(' ', [$this->user->display_name, rand(1, 300)]));
-
-        $file_name = $slug . '.' . $upload_file->getClientOriginalExtension();
-        $thumb_file_name = 'thumb_' . $slug . '.' . $upload_file->getClientOriginalExtension();
+        $slug = slugIt(implode(' ', [$user->display_name, rand(1, 100)])) . '.' . $upload_file->getClientOriginalExtension();
 
 
         /** Save the images */
 
-        $image->fit($sizes['regular']['width'], $sizes['regular']['height'])->save($folder . '/' . $file_name);
-        $image->fit($sizes['thumb']['width'], $sizes['thumb']['height'])->save($folder . '/' . $thumb_file_name);
+        foreach($sizes as $s) {
+            $file_name = $s['prefix'].'_' . $slug;
+            $image->fit($s['width'], $s['height'])->save($folder . '/' . $file_name);
+        }
 
-
-        return $this->response->json(['file' => $folder . '/' . $file_name]);
+        return $this->response->json(['file' => $folder . '/main_' . $slug, 'filename' => $slug, 'folder' => $folder]);
 
 
     }
