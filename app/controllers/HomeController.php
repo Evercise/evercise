@@ -18,11 +18,12 @@ class HomeController extends BaseController {
 	public function showWelcome()
 	{
 
-        $searchController = App::make('searchController');
+        $searchController = App::make('SearchController');
         $featured = $searchController->getClasses([
             'size' => 5,
             'radious' => '5mi',
-            'featured' => true
+            'featured' => true,
+            'location' => 'London'
         ]);
 
 		return View::make('v3.home', compact('featured'));

@@ -49,6 +49,8 @@ class UsersController extends AjaxBaseController{
                     );
                 }
 
+                Wallet::createIfDoesntExist($user->id);
+
                 Sentry::login($user, true);
 
                 Event::fire('user.registered', [$user]);

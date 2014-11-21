@@ -120,9 +120,8 @@ class UsersController extends \BaseController
                     Event::fire('user.loginFacebook', [$user]);
                 }
 
-
-               $result = User::facebookRedirectHandler($redirect_url, $user);
-
+                //$result = User::facebookRedirectHandler($redirect_url, $user);
+                $result = Redirect::route('home');
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
                 Log::error($e);

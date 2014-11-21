@@ -14,11 +14,11 @@
                            {{ Form::label('trainer-question', 'Are you a trainer?', ['class' => 'col-sm-3 col-sm-offset-3 control-label text-right'])  }}
                            <div class="col-sm-6 mb20">
                                <label class="custom-checkbox">
-                                 {{ Form::radio('trainer', 'yes', true) }}
+                                 {{ Form::radio('trainer', 'yes') }}
                                  Yes
                                </label>
                                <label class="custom-checkbox">
-                                 {{ Form::radio('trainer', 'no') }}
+                                 {{ Form::radio('trainer', 'no', true) }}
                                  No
                                </label>
                            </div>

@@ -202,6 +202,11 @@ class SearchController extends \BaseController
             'search' => $search
         ];
 
+
+        if(!empty($input['featured'])) {
+            $params['featured'] = true;
+        }
+
         $searchResults = $this->search->getResults($area, $params);
 
 

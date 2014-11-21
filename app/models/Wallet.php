@@ -158,4 +158,10 @@ class Wallet extends \Eloquent
         return sprintf('%0.2f', $this->balance);
     }
 
+    public static function createIfDoesntExist($user_id)
+    {
+        // Use firstOrCreate just in case to make sure no duplicates are made
+        static::firstOrCreate(['user_id'=>$user_id, 'balance'=>0, 'previous_balance'=>0]);
+    }
+
 }

@@ -37,6 +37,7 @@ Route::get(
 Route::group(['prefix' => 'ajax'], function () {
     // register
     Route::post('/users-store', array('as' => 'users.store', 'uses' => 'ajax\UsersController@store'));
+    Route::post('/trainers/store', array('as' => 'trainers.store', 'uses' => 'ajax\TrainersController@store'));
     // login
     Route::post('/auth/login', array('as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin'));
     // cart
@@ -95,6 +96,10 @@ Route::get(
 );
 
 
+/*Route::get('login/fb/{redirect?}', ['as' => 'users.fb', function($redirect)
+{
+   return $redirect;
+}]);*/
 Route::get('login/fb/{redirect?}', array('as' => 'users.fb', 'uses' => 'UsersController@fb_login'));
 Route::post('auth/checkout', array('as' => 'auth.checkout', 'uses' => 'SessionsController@checkout'));
 
@@ -148,11 +153,10 @@ Route::get(
     'trainers/trainer/signup',
     array('as' => 'trainers.trainerSignup', 'uses' => 'TrainersController@trainerSignup')
 );
-Route::get('trainers/create', array('as' => 'trainers.create', 'uses' => 'TrainersController@create'));
+Route::get('trainers/create', array('as' => 'trainer', 'uses' => 'TrainersController@create'));
 Route::get('trainers/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
 Route::get('trainers/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));
 Route::get('trainers/{id}/edit/{tab}', array('as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit'));
-Route::post('trainers/store', array('as' => 'trainers.store', 'uses' => 'TrainersController@store'));
 Route::put('trainers/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
 
 // evercisegroups (classes)

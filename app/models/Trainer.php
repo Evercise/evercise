@@ -100,4 +100,51 @@ class Trainer extends \Eloquent
             return false;
     }
 
+
+    /**
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validTrainerSignup($inputs)
+    {
+        $validator = self::validateTrainerSignup($inputs);
+
+        return self::handleTrainerValidation($validator);
+    }
+
+    /**
+     * @param $inputs
+     * @return \Illuminate\Validation\Validator
+     */
+    public static function validateTrainerSignup($inputs)
+    {
+        // validation rules for input field on register form
+        $validator = Validator::make(
+            $inputs,
+            [
+                'bio' => 'required|max:500|min:50',
+                'image' => 'required',
+                'website' => 'sometimes',
+                'profession' => 'required|max:50|min:2',
+            ]
+        );
+        return $validator;
+    }
+
+    public static function handleTrainerValidation($validator)
+    {
+        if($validator->fails()) {
+            $result = [
+                'validation_failed' => 1,
+                'errors' =>  $validator->errors()->toArray()
+            ];
+        }
+        else {
+            // if validation passes return validation_failed false
+            $result = [
+                'validation_failed' => 0
+            ];
+        }
+        return $result;
+    }
+
 }
