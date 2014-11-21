@@ -113,6 +113,7 @@ class Evercisegroup extends \Eloquent
                 ]
             );
 
+            Event::fire('class.index.single', ['id' => $evercisegroup->id]);
             Event::fire('evecisegroup.created', [$user, $evercisegroup]);
 
             return Response::json(

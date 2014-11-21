@@ -41,8 +41,7 @@ class UsersController extends AjaxBaseController{
                 $first_name = Input::get('first_name');
                 $last_name = Input::get('last_name');
                 if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(
-                        Config::get('mailchimp')['newsletter'],
+                    User::subscribeMailchimpNewsletter(                        Config::get('mailchimp')['newsletter'],
                         $email_address,
                         $first_name,
                         $last_name
@@ -62,6 +61,14 @@ class UsersController extends AjaxBaseController{
                         [
                             'callback' => 'gotoUrl',
                             'url'      => route(Input::get('redirect'))
+                        ]
+                    );
+                }
+                else if (Input::get('trainer', 'no') == 'yes' ) {
+                    return Response::json(
+                        [
+                            'callback' => 'gotoUrl',
+                            'url'      => route('trainers.trainerSignup')
                         ]
                     );
                 } else {

@@ -1,11 +1,8 @@
 <div class="class-panel center-block">
     <div class="row">
+    {{ $session->evercisegroup->name }}
         <div class="class-image-wrapper col-xs-4">
-            <img src="img/example-class-img.jpg">
-        </div>
-        <div class="class-title-wrapper col-xs-8">
-            <a href="#"><h3>{{ $session->evercisegroup->name }}</h3></a>
-            <button class="btn btn-primary">Add Review</button>
+            <img src="{{url().'/profiles/'.$session->evercisegroup->user->directory.'/'.$session->evercisegroup->image}}">
         </div>
     </div>
     <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center {{ (isset($show) && $show == 'rate-it') ? '' : 'hidden' }}">
@@ -16,15 +13,16 @@
         <strong><i class="fa fa-star-o"></i></strong>
         <strong><i class="fa fa-star-o"></i></strong>
         <strong><i class="fa fa-star-o"></i></strong>
-        <form role="form">
+        {{ Form::open(['route' => 'rating', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form', 'role' => 'form'] ) }}
+            {{ Form::hidden('stars', 3, ['id' => 'stars']) }}
             <div class="form-group">
-                <textarea rows="6" class="form-control" type="text" placeholder="Add your review about the class..."></textarea>
+                {{Form::textarea('review', null, ['class' => 'form-control', 'rows' => '6', 'placeholder' => 'Add your review about the class...'])}}
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-primary">Add Review</button>
+                {{ Form::submit('Cancel', ['class' => 'btn btn-default'] )  }}
+                {{ Form::submit('Add Review', ['class' => 'btn btn-primary'] )  }}
             </div>
-        </form>
+        {{ Form::close() }}
     </div>
     <div id="user-rating" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show)  && $show == 'user-rating') ? '' : 'hidden' }} ">
         <div class="col-sm-12">

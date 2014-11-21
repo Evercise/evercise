@@ -9,7 +9,7 @@
                 <div class="col-md-6 masonry-item">
                     @include('v3.classes.class_panel',['show'=>'rate-it'])
                 </div>
-            @endforeach
+           @endforeach
         </div>
     </div>
 </div>
