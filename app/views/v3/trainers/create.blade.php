@@ -14,9 +14,8 @@
 
                <div class="form-group mb50">
                     @include('v3.widgets.profile_image_upload')
-
                </div>
-                {{ Form::open(['url' => 'ajax/trainers/store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
+                {{ Form::open(['url' => 'ajax/trainers/store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-trainer'] ) }}
                    <div class="form-group mb50">
                         {{ Form::label('profession', 'Add your Profession', ['class' => 'mb15'] )  }}
                         {{ Form::text('profession', null, ['class' => 'form-control', 'placeholder' => 'Max 50 Characters', 'maxlength' => 50]) }}

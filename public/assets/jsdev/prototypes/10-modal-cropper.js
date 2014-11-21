@@ -17,7 +17,7 @@ function imageCropper(elem){
     this.bwInput = this.modal.find("input[name='box_width']");
     this.bhInput = this.modal.find("input[name='box_height']");
     this.originalData = {};
-    this.ratio = 2.35;
+    this.ratio = ( this.modal.data('ratio')) ? this.modal.data('ratio') :  2.35;
     this.x = 0;
     this.y = 0;
     this.w = 0;
@@ -113,12 +113,15 @@ imageCropper.prototype = {
             },
 
             success: function (data) {
+                console.log(data);
                 self.galleryValue = data.file;
                 self.galleryImage = '<img src="/'+data.file +'" alt="cover photo" class="img-responsive">';
                 self.croppedForm.find("input[type=submit]").prop('disabled', false);
                 self.uploadForm.append(self.galleryImage);
-                $('#first-img').html(self.galleryImage);
-                $('#first-img').append('<div class="holder-add-more"><span class="image-select icon-lg icon-md-camera hover"></span>');
+                if( $('#first-img')){
+                    $('#first-img').html(self.galleryImage);
+                    $('#first-img').append('<div class="holder-add-more"><span class="image-select icon-lg icon-md-camera hover"></span>');
+                }
                 $('input[name="image"]').val(self.galleryValue).trigger('change');
             },
 

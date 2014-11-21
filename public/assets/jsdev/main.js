@@ -46,7 +46,9 @@ $(function(){
 
     $('#register-form').exists(function(){
         new registerUser(this);
-        //new Validation(this);
+    })
+    $('#register-trainer').exists(function(){
+        new registerTrainer(this);
     })
 
     $('.class-preview').exists(function(){

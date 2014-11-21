@@ -10196,6 +10196,9 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .holder.cover {
   height: 270px;
 }
+.holder.profile {
+  height: 170px;
+}
 .holder.gallery-img-wrapper {
   height: 87px;
 }
