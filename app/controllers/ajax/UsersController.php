@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use User, UserHelper, Session, Input, Config, Sentry, Event, Response;
+use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet;
 
 class UsersController extends AjaxBaseController{
 

@@ -45,7 +45,8 @@ $(function(){
     })
 
     $('#register-form').exists(function(){
-        new Validation(this);
+        new registerUser(this);
+        //new Validation(this);
     })
 
     $('.class-preview').exists(function(){

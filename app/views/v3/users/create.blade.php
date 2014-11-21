@@ -106,7 +106,7 @@
                             </label>
 
                         </div>
-                        <div class="text-center form-group">
+                        <div class="text-center form-group mt40">
                             {{ Form::submit('Create My Account', ['class' => 'btn btn-primary'] )  }}
                         </div>
 
