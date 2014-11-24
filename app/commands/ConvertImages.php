@@ -1,6 +1,11 @@
 <?php
 
+
+ini_set('gd.jpeg_ignore_warning', true);
+
 use Illuminate\Console\Command;
+
+use Symfony\Component\Debug\Exception\FatalErrorException;
 
 
 class ConvertImages extends Command
@@ -46,6 +51,7 @@ class ConvertImages extends Command
 
 
                 try {
+                    $this->info('public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
                     $file = Image::make('public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
                 } catch (Exception $e) {
                     $this->error('Crap ' . $e->getMessage());
@@ -63,6 +69,7 @@ class ConvertImages extends Command
                     foreach ($sizes as $s) {
                         $file_name = $s['prefix'] . '_' . $user_file_name;
                         try {
+                            $this->info('public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
                             $file->fit($s['width'], $s['height'])->save('public/' . $dir . '/' . $file_name);
                             $this->info('Success  public/' . $dir . '/' . $file_name);
                         } catch (Exception $e) {
@@ -123,6 +130,7 @@ class ConvertImages extends Command
 
 
             try {
+                $this->info('public/profiles/' . $user_completed[$user->id] . '/' . $a->image);
                 $file = Image::make('public/profiles/' . $user_completed[$user->id] . '/' . $a->image);
             } catch (Exception $e) {
                 $this->error('Crap ' . $e->getMessage());
@@ -138,6 +146,7 @@ class ConvertImages extends Command
                     $file_name = $s['prefix'] . '_' . $slug;
                     try {
 
+                        $this->info('public/' . $dir . '/' . $file_name);
                         $file->fit($s['width'], $s['height'])->save('public/' . $dir . '/' . $file_name);
                         $this->info('Success  public/' . $dir . '/' . $file_name);
 
