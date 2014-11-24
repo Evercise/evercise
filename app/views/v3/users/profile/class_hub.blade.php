@@ -10,8 +10,8 @@
                         <strong class="text-dark">Class Stats</strong>
                         <li>Past Dates: <strong class="text-primary">{{ count($evercisegroup->pastsessions) }}</strong> </li>
                         <li>Upcoming Dates: <strong class="text-primary">{{ count($evercisegroup->futuresessions) }}</strong> </li>
-                        <li>Places Filled: <strong class="text-primary">{{ $evercisegroup->placesFilled() }} </strong> </li>
-                        <li>Average Class Booking: <strong class="text-primary">{{ $evercisegroup->averageClassBooking() }}</strong> </li>
+                        <li>Places Filled: <strong class="text-primary">{{ $evercisegroup->evercisegroup->placesFilled() }} </strong> </li>
+                        <li>Average Class Booking: <strong class="text-primary">{{ $evercisegroup->evercisegroup->averageClassBooking() }}</strong> </li>
                     </ul>
                 </div>
             </div>

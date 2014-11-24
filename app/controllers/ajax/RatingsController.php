@@ -28,35 +28,32 @@ class RatingsController extends AjaxBaseController{
         );
         if($validator->fails())
         {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors' =>  $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
+            $result = [ 'validation_failed' => 1, 'errors' =>  $validator->errors()->toArray() ];
+            return Response::json($result);
         }
         else
         {
             $user_id = Input::get('user_id');
             $sessionmember_id = Input::get('sessionmember_id');
-            $session_id = Input::get('session_id');
-            $evercisegroup_id = Input::get('evercisegroup_id');
             $user_created_id = $this->user->id;
             $stars = Input::get('stars');
             $comment = Input::get('feedback_text');
+            $user_id = $this->user->id;
 
             $sessionmember = Sessionmember::find($sessionmember_id);
-            $group = Evercisegroup::find($evercisegroup_id);
+            $session_id = $sessionmember->evercisesession_id;
             $session = Evercisesession::find($session_id);
+            $evercisegroup_id = $session->evercisegroup_id;
+            $group = Evercisegroup::find($evercisegroup_id);
 
             // Check integrity of id's
             if (!$sessionmember)
-                return Response::json(['callback' => 'sendhome' ,'message' => 'no sessionmember']);
-            elseif ( $sessionmember->user_id != $user_created_id || $user_id != $group->user_id || $sessionmember->evercisesession_id != $session_id || $session->evercisegroup_id != $evercisegroup_id)
-                return Response::json(['callback' => 'sendhome' ,'message' => 'ids do not match']);
+                return [ 'validation_failed' => 1, 'errors' =>  ['message' => 'no sessionmember'] ];
+            elseif ( $sessionmember->user_id != $user_created_id )
+                return [ 'validation_failed' => 1, 'errors' =>  ['message' => 'ids do not match'] ];
             // Check group is in past
             elseif (strtotime($session->date_time) >= strtotime( date('Y-m-d H:i:s') ) )
-                return Response::json(['callback' => 'sendhome' ,'message' => 'Session is in the future']);
+                return [ 'validation_failed' => 1, 'errors' =>  ['message' => 'Cannot rate a session in the future'] ];
 
             Rating::create([
                 'user_id' => $user_id,

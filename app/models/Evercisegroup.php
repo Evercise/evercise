@@ -208,11 +208,13 @@ class Evercisegroup extends \Eloquent
     {
         $directory = $user->directory;
 
-        $evercisegroups = static::with('evercisesession.sessionmembers')
+        /*$evercisegroups = static::with('evercisesession.sessionmembers')
             ->with('futuresessions.sessionmembers')
             ->with('pastsessions')
             ->with('venue')
-            ->where('user_id', $user->id)->get();
+            ->where('user_id', $user->id)->get();*/
+
+        $evercisegroups = $user->pastsessions;
 
         if ($evercisegroups->isEmpty()) {
             return View::make('evercisegroups.first_class');
@@ -226,20 +228,20 @@ class Evercisegroup extends \Eloquent
             $evercisegroup_ids = [];
             $stars = [];
 
-            foreach ($evercisegroups as $key => $group) {
+            foreach ($evercisegroups as $key => $session) {
 
-                $sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
+                //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
                 //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
                 $capacity = 0;
-                $evercisegroup_ids[] = $group->id;
-                foreach ($group['Evercisesession'] as $k => $session) {
+                $evercisegroup_ids[] = $session->evercisegroup->id;
+                //foreach ($group['evercisesession'] as $k => $session) {
                     //if (new DateTime($session->date_time) > $currentDate) {
                         $totalMembers[$key][] = count($session->sessionmembers);
-                        $capacity += $group->capacity;
+                        $capacity += $session->tickets;
                         foreach($session->sessionmembers as $sessionmember)
                             $sessionmember_ids[$session->id] = $sessionmember->id;
                     //}
-                }
+                //}
                 $totalCapacity[] = $capacity;
 
             }
@@ -251,7 +253,6 @@ class Evercisegroup extends \Eloquent
                 foreach ($ratings as $key => $rating) {
                     $stars[$rating->evercisegroup_id][] = $rating->stars;
                 }
-
             }
 
             $data = [

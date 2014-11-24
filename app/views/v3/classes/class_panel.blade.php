@@ -15,7 +15,7 @@
         <strong><i class="fa fa-star-o"></i></strong>
         {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating'] ) }}
             {{ Form::hidden('stars', 3, ['id' => 'stars']) }}
-            {{ Form::hidden('session_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
+            {{ Form::hidden('sessionmember_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
             <div class="form-group">
                 {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '6', 'placeholder' => 'Add your review about the class...'])}}
             </div>
