@@ -311,7 +311,7 @@ class Elastic
                 'default_duration' => (int) $a->default_duration,
                 'default_price'    => (double) $a->default_price,
                 'published'        => $a->published,
-                'featured'         => ($a->iseatured() ? true : false),
+                'featured'         => ($a->isfeatured() ? true : false),
                 'user'             => [
                     'id'           => (int) $a->user->id,
                     'email'        => $a->user->email,
