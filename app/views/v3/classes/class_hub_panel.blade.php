@@ -1,7 +1,7 @@
 <div class="class-hub-panel center-block">
     <div class="row">
         <div class="class-image-wrapper col-xs-6">
-            <img src="{{url().'/profiles/'.$data['user']->directory.'/'.$evercisegroup->evercisegroup->image}}">
+            {{ image( $data['user']->directory. '/thumb_' . $evercisegroup->evercisegroup->image, $evercisegroup->evercisegroup->name. ' image') }}
         </div>
         <div class="class-title-wrapper col-xs-6">
             <a href="#"><h3>{{ $evercisegroup->name }}</h3></a>

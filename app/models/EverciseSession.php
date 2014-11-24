@@ -670,7 +670,7 @@ class Evercisesession extends \Eloquent
 
     public function remainingTickets()
     {
-        return $this->evercisegroup->capacity - count($this->sessionmembers);
+        return $this->tickets - count($this->sessionmembers);
     }
 
 

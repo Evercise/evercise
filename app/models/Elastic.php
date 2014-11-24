@@ -311,7 +311,7 @@ class Elastic
                 'default_duration' => (int) $a->default_duration,
                 'default_price'    => (double) $a->default_price,
                 'published'        => $a->published,
-                'featured'         => ($a->iseatured() ? true : false),
+                'featured'         => ($a->isfeatured() ? true : false),
                 'user'             => [
                     'id'           => (int) $a->user->id,
                     'email'        => $a->user->email,
@@ -354,7 +354,9 @@ class Elastic
                     'date_time'       => $s->date_time,
                     'price'           => (double) $s->price,
                     'duration'        => (int) $s->duration,
-                    'members_emailed' => (int) $s->members_emailed
+                    'members_emailed' => (int) $s->members_emailed,
+                    'tickets'         => (int) $s->tickets,
+                    'remaining'       => (int) $s->remainingTickets()
                 ];
                 $with_session ++;
             }
@@ -527,6 +529,8 @@ class Elastic
                                 'members'   => ['type' => 'integer'],
                                 'price'     => ['type' => 'double'],
                                 'duration'  => ['type' => 'integer'],
+                                'tickets'  => ['type' => 'integer'],
+                                'remaining'  => ['type' => 'integer'],
                                 'date_time' => [
                                     'type'           => 'date',
                                     'format'         => 'yyyy-MM-dd HH:mm:ss',

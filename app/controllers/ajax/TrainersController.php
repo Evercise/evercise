@@ -53,8 +53,12 @@ class TrainersController extends AjaxBaseController{
             ));
 
             Event::fire('trainer.registered', [$this->user]);
-
-            return Response::json(['result' => 'done it bitch']);
+            return Response::json(
+                [
+                    'callback' => 'gotoUrl',
+                    'url'      => route('users.edit', $this->user->id )
+                ]
+            );
         } else {
             return Response::json($valid_trainer);
         }

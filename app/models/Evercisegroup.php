@@ -218,57 +218,57 @@ class Evercisegroup extends \Eloquent
 
         if ($evercisegroups->isEmpty()) {
             return View::make('evercisegroups.first_class');
-        } else {
-            $sessionDates = array();
-            $totalMembers = array();
-            $totalCapacity = array();
-            $currentDate = new DateTime();
-            $sessionmember_ids = []; // For rating
-
-            $evercisegroup_ids = [];
-            $stars = [];
-
-            foreach ($evercisegroups as $key => $session) {
-
-                //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
-                //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
-                $capacity = 0;
-                $evercisegroup_ids[] = $session->evercisegroup->id;
-                //foreach ($group['evercisesession'] as $k => $session) {
-                    //if (new DateTime($session->date_time) > $currentDate) {
-                        $totalMembers[$key][] = count($session->sessionmembers);
-                        $capacity += $session->tickets;
-                        foreach($session->sessionmembers as $sessionmember)
-                            $sessionmember_ids[$session->id] = $sessionmember->id;
-                    //}
-                //}
-                $totalCapacity[] = $capacity;
-
-            }
-
-
-            if (!empty($evercisegroup_ids)) {
-                $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
-
-                foreach ($ratings as $key => $rating) {
-                    $stars[$rating->evercisegroup_id][] = $rating->stars;
-                }
-            }
-
-            $data = [
-                'evercisegroups' => $evercisegroups,
-                'sessionDates' => $sessionDates,
-                'totalMembers' => $totalMembers,
-                'stars' => $stars,
-                'totalCapacity' => $totalCapacity,
-                'year' => date("Y"),
-                'month' => date("m"),
-                'directory' => $directory,
-                'sessionmember_ids' => $sessionmember_ids,
-            ];
-
-            return $data;
         }
+
+        $sessionDates = array();
+        $totalMembers = array();
+        $totalCapacity = array();
+        $currentDate = new DateTime();
+        $sessionmember_ids = []; // For rating
+
+        $evercisegroup_ids = [];
+        $stars = [];
+
+        foreach ($evercisegroups as $key => $session) {
+
+            //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
+            //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
+            $capacity = 0;
+            $evercisegroup_ids[] = $session->evercisegroup->id;
+            //foreach ($group['evercisesession'] as $k => $session) {
+                //if (new DateTime($session->date_time) > $currentDate) {
+                    $totalMembers[$key][] = count($session->sessionmembers);
+                    $capacity += $session->tickets;
+                    foreach($session->sessionmembers as $sessionmember)
+                        $sessionmember_ids[$session->id] = $sessionmember->id;
+                //}
+            //}
+            $totalCapacity[] = $capacity;
+
+        }
+
+        if (!empty($evercisegroup_ids)) {
+            $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+
+            foreach ($ratings as $key => $rating) {
+                $stars[$rating->evercisegroup_id][] = $rating->stars;
+            }
+        }
+
+
+        $data = [
+            'evercisegroups' => $evercisegroups,
+            'sessionDates' => $sessionDates,
+            'totalMembers' => $totalMembers,
+            'stars' => $stars,
+            'totalCapacity' => $totalCapacity,
+            'year' => date("Y"),
+            'month' => date("m"),
+            'directory' => $directory,
+            'sessionmember_ids' => $sessionmember_ids,
+        ];
+
+        return $data;
     }
 
     public static function parseSegments($segments)
@@ -862,7 +862,7 @@ class Evercisegroup extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function iseatured()
+    public function isFeatured()
     {
         return FeaturedClasses::where('evercisegroup_id', $this->id)->first();
     }

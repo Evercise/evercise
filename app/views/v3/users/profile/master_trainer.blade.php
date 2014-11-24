@@ -5,7 +5,7 @@
             <div class="col-sm-6">
                 <div class="row mb50">
                     <div class="col-sm-4">
-                        <img src="{{url().'/profiles/'.$data['user']->directory.'/'.$data['user']->image}}" alt="profile picture" class="img-responsive img-circle">
+                        {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
                     </div>
                     <div class="col-sm-8 mt20">
                         <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
@@ -24,7 +24,16 @@
     <div class="">
 
         <div id="hub" class="profile-panels">
-            @include('v3.users.profile.class_hub')
+            @if( !$data['evercisegroups']->isEmpty() )
+                @include('v3.users.profile.class_hub')
+            @else
+                <div class="container">
+                    <div class="underline text-center">
+                        <h1>Class Hub</h1>
+                    </div>
+                    <div class="well text-center">You currently have no classes, click the create a class button above to get started</div>
+                </div>
+            @endif
         </div>
         <div id="attended" class="hidden profile-panels">
             @include('v3.users.profile.attended_classes')

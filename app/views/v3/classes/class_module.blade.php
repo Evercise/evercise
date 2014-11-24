@@ -1,35 +1,26 @@
-
 <div class="class-module center-block">
     <div class="class-image-wrapper">
-        <a href="#">
-            <img src="/img/example-class-img.jpg">
-        </a>
+         {{ HTML::decode( HTML::linkRoute('evercisegroups.show', image($class->user->directory. '/thumb_'. $class->image,  $class->name . ' cover image') , $class->id)  )}}
     </div>
     <div class="class-title-wrapper text-center">
-        <a href="#"><h3>Fitness class for ladies</h3></a>
+        <a href="#"><h3>{{ $class->name }}</h3></a>
         <div class="class-rating-wrapper">
-            <span class="icon icon-full-star"></span>
-            <span class="icon icon-full-star"></span>
-            <span class="icon icon-full-star"></span>
-            <span class="icon icon-empty-star"></span>
-            <span class="icon icon-empty-star"></span>
+            @if (isset($class->ratings))
+                @include('v3.classes.ratings.stars', array('rating' => $class->ratings))
+            @endif
         </div>
     </div>
     <div class="class-info-wrapper panel-body bg-light-grey row">
-        <div class="col-xs-6">
-            <span class="icon icon-clock"></span> Sept 27th, 4pm
+        <div class="col-sm-6">
+            <span class="icon icon-clock"></span>{{ date('M dS, h:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}
         </div>
-        <div class="col-xs-6">
-            <div class="row no-gutter">
-                <div class="col-xs-7"><span class="icon icon-watch"></span> 1 hour</div>
-                <div class="col-xs-5"><span class="icon icon-ticket"></span> x 5</div>
-            </div>
 
-        </div>
+        <div class="pull-left mr15"><span class="icon icon-watch"></span> {{$class->futuresessions[0]->duration}} mins</div>
+        <div class="pull-left"><span class="icon icon-ticket"></span> x 5</div>
 
     </div>
     <div class="class-info-wrapper panel-body bg-light-grey row">
-        <div class="col-xs-6" ><strong class="text-primary">&pound;16</strong></div>
-        <div class="col-xs-6"> <button class="btn btn-default pull-right">Join Class</button></div>
+        <div class="col-xs-6" ><strong class="text-primary">&pound;{{ $class->futuresessions[0]->price }}</strong></div>
+        <div class="col-xs-6"> {{ HTML::linkRoute('evercisegroups.show', 'Join Class', $class->id, ['class'=>'btn btn-default pull-right']) }}</div>
     </div>
 </div>
