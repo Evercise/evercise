@@ -20,7 +20,7 @@ class HomeController extends BaseController {
 
         $searchController = App::make('SearchController');
         $featured = $searchController->getClasses([
-            'size' => 5,
+            'size' => 9,
             'radius' => '5mi',
             'featured' => true,
             'location' => 'London'

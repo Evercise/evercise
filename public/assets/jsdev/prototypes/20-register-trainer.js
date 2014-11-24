@@ -92,7 +92,7 @@ registerTrainer.prototype ={
                     self.failedValidation(data);
                 }
                 else{
-                    console.log(data);
+                    window.location.href = data.url;
                 }
             },
 

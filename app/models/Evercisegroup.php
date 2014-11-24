@@ -215,37 +215,32 @@ class Evercisegroup extends \Eloquent
             ->where('user_id', $user->id)->get();
 
 
-        if ($evercisegroups->isEmpty()) {
-            return View::make('evercisegroups.first_class');
-        } else {
-            $sessionDates = array();
-            $totalMembers = array();
-            $totalCapacity = array();
-            $currentDate = new DateTime();
-            $sessionmember_ids = []; // For rating
 
-            $evercisegroup_ids = [];
-            $stars = [];
+        $sessionDates = array();
+        $totalMembers = array();
+        $totalCapacity = array();
+        $currentDate = new DateTime();
+        $sessionmember_ids = []; // For rating
 
-            foreach ($evercisegroups as $key => $group) {
+        $evercisegroup_ids = [];
+        $stars = [];
 
-                $sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
-                //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
-                $capacity = 0;
-                $evercisegroup_ids[] = $group->id;
-                foreach ($group['Evercisesession'] as $k => $session) {
-                    //if (new DateTime($session->date_time) > $currentDate) {
-                        $totalMembers[$key][] = count($session->sessionmembers);
-                        $capacity += $group->capacity;
-                        foreach($session->sessionmembers as $sessionmember)
-                            $sessionmember_ids[$session->id] = $sessionmember->id;
-                    //}
-                }
+        foreach ($evercisegroups as $key => $group) {
+
+            $sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
+            //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
+            $capacity = 0;
+            $evercisegroup_ids[] = $group->id;
+            foreach ($group['Evercisesession'] as $k => $session) {
+                //if (new DateTime($session->date_time) > $currentDate) {
+                    $totalMembers[$key][] = count($session->sessionmembers);
+                    $capacity += $group->capacity;
+                    foreach($session->sessionmembers as $sessionmember)
+                        $sessionmember_ids[$session->id] = $sessionmember->id;
+                //}
             }
-            $totalCapacity[] = $capacity;
-
         }
-
+        $totalCapacity[] = $capacity;
 
         if (!empty($evercisegroup_ids)) {
             $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();

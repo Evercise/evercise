@@ -1,8 +1,5 @@
 @extends('v3.layouts.master')
 @section('body')
-{{ var_dump($featured) }}
-
-
     <div class="hero hero-nav-change">
         <div class="jumbotron">
           <div class="container text-center">
@@ -100,14 +97,39 @@
                  <h1 class="text-center">Featured classes</h1>
             </div>
             <div class="row">
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
-                </div>
-                <div class="col-sm-4">
-                    @include('v3.classes.class_module')
+
+                <div id="image-carousel" class="carousel slide" data-interval="false">
+                    <!-- Indicators -->
+                      <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                      </ol>
+                      <div class="carousel-inner mb50">
+                            @foreach($featured->hits as $index => $featured_class)
+                                @if($index % 3 === 0)
+                                    {{ $index > 0 ? '</div></div>' : null }}
+                                    <div class="item {{ $index === 0 ? 'active' : null }}">
+                                    <div class="row">
+                                @endif
+                                      <div class="col-sm-4">
+                                         @include('v3.classes.class_module', ['class' => $featured_class])
+                                     </div>
+
+                                @if($index == count($featured->hits) -1 )
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                      </div>
+                      <!--/carousel-inner-->
+                      <a class="left carousel-control" href="#image-carousel" data-slide="prev">
+                         <span class="icon icon-left-triangle"></span>
+                      </a>
+
+                      <a class="right carousel-control" href="#image-carousel" data-slide="next">
+                         <span class="icon icon-right-triangle"></span>
+                      </a>
                 </div>
             </div>
         </div>
