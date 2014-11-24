@@ -12,7 +12,9 @@ class EditColumnsWallethistory extends Migration {
 	 */
 	public function up()
 	{
-		DB::statement('ALTER TABLE `evercise`.`wallethistory` CHANGE COLUMN `sessionmember_id` `sessionmember_id` VARCHAR(500) NOT NULL');
+		DB::statement('ALTER TABLE  `wallethistory` CHANGE  `sessionmember_id`  `sessionmember_id` VARCHAR( 500 ) NOT NULL');
+
+
 	}
 
 	/**
