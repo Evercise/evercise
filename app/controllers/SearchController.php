@@ -288,7 +288,7 @@ class SearchController extends \BaseController
                 'search' => (!empty($params['search']) ? $params['sort'] : '')
             ];
 
-            $searchResults = $this->search->getResults($location, $params);
+            $searchResults = $this->search->getResults($location, $query);
 
 
             return $searchResults;

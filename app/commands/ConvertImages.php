@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
 
 
 class ConvertImages extends Command
@@ -32,6 +30,10 @@ class ConvertImages extends Command
         $user_completed = [];
         $users = User::all();
 
+
+        $sizes = Config::get('evercise.user_images');
+
+
         foreach($users as $user) {
 
             $dir = hashDir($user->id, 'u');
@@ -42,16 +44,38 @@ class ConvertImages extends Command
                 $extension = explode('.', $user->image);
                 $user_file_name .= '.' . end($extension);
 
-                try {
-                    copy('public/profiles/' . $user_completed[$user->id] . '/' . $user->image,
-                        'public/' . $dir . '/' . $user_file_name);
 
+                try {
+                    $file = Image::make('public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
+                } catch (Exception $e) {
+                    $this->error('Crap ' . $e->getMessage());
+                    $this->error('public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
+                    continue;
+                }
+
+
+
+
+                if ($file) {
+
+                    /** Save the images */
+
+                    foreach ($sizes as $s) {
+                        $file_name = $s['prefix'] . '_' . $user_file_name;
+                        try {
+                            $file->fit($s['width'], $s['height'])->save('public/' . $dir . '/' . $file_name);
+                            $this->info('Success  public/' . $dir . '/' . $file_name);
+                        } catch (Exception $e) {
+                            $this->error('Crap ' . $e->getMessage());
+                            $this->error('public/' . $dir . '/' . $file_name);
+                            continue;
+                        }
+                    }
                     $user->image = $user_file_name;
                     $this->info('Success  public/' . $dir . '/' . $user_file_name);
 
-                } catch (Exception $e) {
+                } else {
                     $this->error('Shit... Failed User Image');
-                    $this->error($e->getMessage());
                     $this->error('Copy From: public/profiles/' . $user_completed[$user->id] . '/' . $user->image);
                     $this->error('Copy To: public/' . $dir . '/' . $user_file_name);
                 }
@@ -107,16 +131,21 @@ class ConvertImages extends Command
             }
 
 
-
-
             if ($file) {
 
                 /** Save the images */
-
                 foreach ($sizes as $s) {
                     $file_name = $s['prefix'] . '_' . $slug;
-                    $file->fit($s['width'], $s['height'])->save('public/' . $dir . '/' . $file_name);
-                    $this->info('Success  public/' . $dir . '/' . $file_name);
+                    try {
+
+                        $file->fit($s['width'], $s['height'])->save('public/' . $dir . '/' . $file_name);
+                        $this->info('Success  public/' . $dir . '/' . $file_name);
+
+                    } catch (Exception $e) {
+                        $this->error('Crap ' . $e->getMessage());
+                        $this->error('public/' . $dir . '/' . $file_name);
+                        continue;
+                    }
                 }
 
                 $a->image = $slug;
