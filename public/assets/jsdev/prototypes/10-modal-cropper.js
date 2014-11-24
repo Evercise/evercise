@@ -114,8 +114,8 @@ imageCropper.prototype = {
 
             success: function (data) {
                 console.log(data);
-                self.galleryValue = data.file;
-                self.galleryImage = '<img src="/'+data.file +'" alt="cover photo" class="img-responsive">';
+                self.galleryValue = data.filename;
+                self.galleryImage = '<img src="/'+data.folder + '/medium_' +data.filename +'" alt="cover photo" class="img-responsive">';
                 self.croppedForm.find("input[type=submit]").prop('disabled', false);
                 self.uploadForm.append(self.galleryImage);
                 if( $('#first-img')){

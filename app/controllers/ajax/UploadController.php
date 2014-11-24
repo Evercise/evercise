@@ -277,7 +277,7 @@ class UploadController extends AjaxBaseController
             $image->fit($s['width'], $s['height'])->save($folder . '/' . $file_name);
         }
 
-        return $this->response->json(['file' => $folder . '/main_' . $slug, 'filename' => $slug, 'folder' => $folder]);
+        return $this->response->json(['file' => $folder . '/' . $slug, 'filename' => $slug, 'folder' => $folder]);
 
 
     }

@@ -1,5 +1,8 @@
 @extends('v3.layouts.master')
 @section('body')
+{{ var_dump($featured) }}
+
+
     <div class="hero hero-nav-change">
         <div class="jumbotron">
           <div class="container text-center">

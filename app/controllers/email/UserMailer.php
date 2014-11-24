@@ -235,7 +235,7 @@ class UserMailer extends Mailer {
         $data['mainHeader'] = 'A new trainer is awaiting verification';
         $data['subHeader'] = 'You will need to be logged in with an admin account';
         $data['body'] = $body;
-        $data['link'] = HTML::linkRoute('admin.pending', 'Pending Trainers');
+        $data['link'] = HTML::linkRoute('admin.pendingtrainers', 'Pending Trainers');
         $data['linkLabel'] = 'Verify the new trainer here:';
 
         return $this->sendTo(getenv('EMAIL_ADMIN'), $subject, $view, $data );

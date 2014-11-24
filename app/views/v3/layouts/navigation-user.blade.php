@@ -22,7 +22,7 @@
            {{ isset($cart) ? $cart : '' }}
        </li>
         <li >
-            {{ HTML::decode(HTML::linkRoute('users.edit', $user->display_name.  HTML::image( $userImage, $user->display_name.'s image', ['class' => 'img-circle']) , $user->id , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-list' : 'nav-list nav-profile'] ) )}}
+            {{ HTML::decode(HTML::linkRoute('users.edit', $user->display_name.  image( $user->directory.'/small_'.$user->image, $user->display_name.'s image', ['class' => 'img-circle']) , $user->id , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-list' : 'nav-list nav-profile'] ) )}}
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->

@@ -19,6 +19,22 @@ if (!function_exists('d')) {
     }
 }
 
+if (!function_exists('image')) {
+
+    /*
+     * nice print of vardump without the xdebug
+     *
+     */
+
+    function image($image, $alt = 'image', $params = [])
+    {
+        /*
+         * return html image tag
+         */
+        return HTML::image( $image, $alt, $params );
+    }
+}
+
 if (!function_exists('slugIt')) {
 
     /*
