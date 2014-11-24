@@ -177,11 +177,4 @@ class TrainersController extends \BaseController {
 
 		}
 	}
-
-	public function trainerSignup()
-	{
-		Session::put('redirectAfter', 'trainer/create');
-
-		return Redirect::to('users/create');
-	}
 }

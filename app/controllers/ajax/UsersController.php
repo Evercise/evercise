@@ -92,4 +92,8 @@ class UsersController extends AjaxBaseController{
 
     }
 
+    function fuckout(){
+        return 'fucked out';
+    }
+
 } 

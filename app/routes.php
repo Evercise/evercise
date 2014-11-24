@@ -64,6 +64,10 @@ Route::group(['prefix' => 'ajax'], function () {
 
     //Gallery
     Route::post('gallery/getDefaults', array('as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults'));
+
+    //Ratings
+    Route::post('ratings/store', ['as' => 'ratings.store', 'uses' => 'ajax\RatingsController@store']);
+
 });
 
 /* Show home page */
@@ -150,10 +154,6 @@ Route::post(
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
 // trainers
-Route::get(
-    'trainers/trainer/signup',
-    array('as' => 'trainers.trainerSignup', 'uses' => 'TrainersController@trainerSignup')
-);
 Route::get('trainers/create', array('as' => 'trainer', 'uses' => 'TrainersController@create'));
 Route::get('trainers/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
 Route::get('trainers/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));

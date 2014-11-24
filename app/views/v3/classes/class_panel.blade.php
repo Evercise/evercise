@@ -13,10 +13,11 @@
         <strong><i class="fa fa-star-o"></i></strong>
         <strong><i class="fa fa-star-o"></i></strong>
         <strong><i class="fa fa-star-o"></i></strong>
-        {{ Form::open(['route' => 'rating', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form', 'role' => 'form'] ) }}
+        {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating'] ) }}
             {{ Form::hidden('stars', 3, ['id' => 'stars']) }}
+            {{ Form::hidden('session_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
             <div class="form-group">
-                {{Form::textarea('review', null, ['class' => 'form-control', 'rows' => '6', 'placeholder' => 'Add your review about the class...'])}}
+                {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '6', 'placeholder' => 'Add your review about the class...'])}}
             </div>
             <div class="form-group">
                 {{ Form::submit('Cancel', ['class' => 'btn btn-default'] )  }}

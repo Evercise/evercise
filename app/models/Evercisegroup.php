@@ -221,6 +221,7 @@ class Evercisegroup extends \Eloquent
             $totalMembers = array();
             $totalCapacity = array();
             $currentDate = new DateTime();
+            $sessionmember_ids = []; // For rating
 
             $evercisegroup_ids = [];
             $stars = [];
@@ -232,10 +233,12 @@ class Evercisegroup extends \Eloquent
                 $capacity = 0;
                 $evercisegroup_ids[] = $group->id;
                 foreach ($group['Evercisesession'] as $k => $session) {
-                    if (new DateTime($session->date_time) > $currentDate) {
+                    //if (new DateTime($session->date_time) > $currentDate) {
                         $totalMembers[$key][] = count($session->sessionmembers);
                         $capacity += $group->capacity;
-                    }
+                        foreach($session->sessionmembers as $sessionmember)
+                            $sessionmember_ids[$session->id] = $sessionmember->id;
+                    //}
                 }
                 $totalCapacity[] = $capacity;
 
@@ -259,7 +262,8 @@ class Evercisegroup extends \Eloquent
                 'totalCapacity' => $totalCapacity,
                 'year' => date("Y"),
                 'month' => date("m"),
-                'directory' => $directory
+                'directory' => $directory,
+                'sessionmember_ids' => $sessionmember_ids,
             ];
 
             return $data;
