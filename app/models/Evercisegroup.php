@@ -214,6 +214,7 @@ class Evercisegroup extends \Eloquent
             ->with('venue')
             ->where('user_id', $user->id)->get();
 
+
         $sessionDates = array();
         $totalMembers = array();
         $totalCapacity = array();
@@ -854,7 +855,7 @@ class Evercisegroup extends \Eloquent
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function iseatured()
+    public function isFeatured()
     {
         return FeaturedClasses::where('evercisegroup_id', $this->id)->first();
     }

@@ -79,13 +79,17 @@ return [
     ],
     'class_images' => [
         ['prefix' => 'cover', 'width' => 1000, 'height' => 400],
-        ['prefix' => 'thumb', 'width' => 200, 'height' => 80],
-        ['prefix' => 'search', 'width' => 315, 'height' => 205]
+        ['prefix' => 'search', 'width' => 315, 'height' => 205],
+        [
+            'prefix' => 'thumb',
+            'width' => 200,
+            'height' => 80
+        ],
     ],
     'user_images' => [
-        ['prefix' => 'small', 'width' => 100, 'height' => 100],
+        ['prefix' => 'large', 'width' => 300, 'height' => 300],
         ['prefix' => 'medium', 'width' => 200, 'height' => 200],
-        ['prefix' => 'large', 'width' => 300, 'height' => 300]
+        ['prefix' => 'small', 'width' => 100, 'height' => 100]
     ],
     /** SEO CRAP */
 
