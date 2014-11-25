@@ -107,7 +107,7 @@ var currentRequest;
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-yuk2 toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
+            <table class="table toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
                 <thead>
                     <tr>
                         <th data-toggle="true">ID</th>
@@ -154,7 +154,7 @@ var currentRequest;
 
                         <td>
                             <input type="checkbox" class="check_box {{ (!$slider_image ? 'hide':'') }}" {{ ( !empty($slider->active) && $slider->active == 1 ? 'checked="checked"':'') }} data-id="{{ $a->id }}"/>
-                            <span class="icon_upload cp image_upload " style="margin-left:20px" data-id="{{ $a->id }}"></span>
+                            <span class="icon_upload cp image_upload " style="margin-left: {{ (!$slider_image ? '36':'20') }}px" data-id="{{ $a->id }}"></span>
                             <form class="form_{{$a->id}}" action="{{ URL::route('admin.ajax.slider_upload') }}" method="post" enctype="multipart/form-data">
                                  <input type="file" name="file" class="hide upload_{{$a->id}} upload_input" data-id="{{ $a->id }}"/>
                                  <input type="hidden" name="_token" value="{{csrf_token()}}"/>

@@ -7,4 +7,9 @@ class Slider extends Eloquent {
     protected $hidden = ['created_at', 'updated_at'];
     protected $dates = ['date_end'];
 
+
+    public function evercisegroup()
+    {
+        return $this->belongsTo('Evercisegroup');
+    }
 }
