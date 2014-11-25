@@ -230,25 +230,13 @@ class Evercisegroup extends \Eloquent
 
             //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
             //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
-<<<<<<< HEAD
-            $capacity = 0;
-            $evercisegroup_ids[] = $group->id;
-            foreach ($group['Evercisesession'] as $k => $session) {
-                //if (new DateTime($session->date_time) > $currentDate) {
-                    $totalMembers[$key][] = count($session->sessionmembers);
-                    $capacity += $session->tickets;
-                    foreach($session->sessionmembers as $sessionmember)
-                        $sessionmember_ids[$session->id] = $sessionmember->id;
-                //}
-=======
-
+            
             $evercisegroup_ids[] = $session->evercisegroup->id;
             if (new DateTime($session->date_time) < $currentDate) {
                 $pastSessions[] = $session;
                 $totalMembers[$key][] = count($session->sessionmembers);
                 foreach($session->sessionmembers as $sessionmember)
                     $sessionmember_ids[$session->id] = $sessionmember->id;
->>>>>>> d2e7c5b0420a34f08060a9fe8c4032ce811390d3
             }
             else
             {
