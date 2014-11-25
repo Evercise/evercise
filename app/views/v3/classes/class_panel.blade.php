@@ -2,7 +2,7 @@
     <div class="row">
     {{ $session->evercisegroup->name }}
         <div class="class-image-wrapper col-xs-4">
-            <img src="{{url().'/profiles/'.$session->evercisegroup->user->directory.'/'.$session->evercisegroup->image}}">
+            {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
         </div>
     </div>
     <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center {{ (isset($show) && $show == 'rate-it') ? '' : 'hidden' }}">
