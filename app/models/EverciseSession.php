@@ -675,4 +675,5 @@ class Evercisesession extends \Eloquent
 
 
 
+
 }

@@ -24,8 +24,8 @@
     <div class="">
 
         <div id="hub" class="profile-panels">
-            @if( !$data['evercisegroups']->isEmpty() )
-                @include('v3.users.profile.class_hub')
+            @if( !$data['trainer_groups']->isEmpty() )
+                @include('v3.users.profile.class_hub', ['groups' => $data['trainer_groups']])
             @else
                 <div class="container">
                     <div class="underline text-center">
@@ -36,10 +36,10 @@
             @endif
         </div>
         <div id="attended" class="hidden profile-panels">
-            @include('v3.users.profile.attended_classes')
+            @include('v3.users.profile.attended_classes', ['sessions' => $data['past_sessions']])
         </div>
         <div id="upcoming" class="hidden profile-panels">
-            @include('v3.users.profile.upcoming_classes')
+            @include('v3.users.profile.upcoming_classes', ['sessions' => $data['future_sessions']])
         </div>
         <div id="wallet" class="hidden profile-panels">
             @include('v3.users.profile.wallet')

@@ -208,15 +208,13 @@ class Evercisegroup extends \Eloquent
     {
         $directory = $user->directory;
 
-        $evercisegroups = static::with('evercisesession.sessionmembers')
+        $trainerGroups = static::with('evercisesession.sessionmembers')
             ->with('futuresessions.sessionmembers')
             ->with('pastsessions')
             ->with('venue')
             ->where('user_id', $user->id)->get();
 
 
-
-        $sessionDates = array();
         $totalMembers = array();
         $totalCapacity = array();
         $currentDate = new DateTime();
@@ -225,10 +223,14 @@ class Evercisegroup extends \Eloquent
         $evercisegroup_ids = [];
         $stars = [];
 
-        foreach ($evercisegroups as $key => $group) {
+        $pastSessions = [];
+        $futureSessions = [];
 
-            $sessionDates[$key] = Functions::arrayDate($group->EverciseSession->lists('date_time', 'id'));
+        foreach ($user->sessions as $key => $session) {
+
+            //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
             //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
+<<<<<<< HEAD
             $capacity = 0;
             $evercisegroup_ids[] = $group->id;
             foreach ($group['Evercisesession'] as $k => $session) {
@@ -238,9 +240,22 @@ class Evercisegroup extends \Eloquent
                     foreach($session->sessionmembers as $sessionmember)
                         $sessionmember_ids[$session->id] = $sessionmember->id;
                 //}
+=======
+
+            $evercisegroup_ids[] = $session->evercisegroup->id;
+            if (new DateTime($session->date_time) < $currentDate) {
+                $pastSessions[] = $session;
+                $totalMembers[$key][] = count($session->sessionmembers);
+                foreach($session->sessionmembers as $sessionmember)
+                    $sessionmember_ids[$session->id] = $sessionmember->id;
+>>>>>>> d2e7c5b0420a34f08060a9fe8c4032ce811390d3
             }
+            else
+            {
+                $futureSessions[] = $session;
+            }
+
         }
-        $totalCapacity[] = $capacity;
 
         if (!empty($evercisegroup_ids)) {
             $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
@@ -248,36 +263,24 @@ class Evercisegroup extends \Eloquent
             foreach ($ratings as $key => $rating) {
                 $stars[$rating->evercisegroup_id][] = $rating->stars;
             }
-
-
-            $data = [
-                'evercisegroups' => $evercisegroups,
-                'sessionDates' => $sessionDates,
-                'totalMembers' => $totalMembers,
-                'stars' => $stars,
-                'totalCapacity' => $totalCapacity,
-                'year' => date("Y"),
-                'month' => date("m"),
-                'directory' => $directory,
-                'sessionmember_ids' => $sessionmember_ids,
-            ];
-
-            return $data;
         }
+/*
+        $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
+        foreach ( $ratings as $rating )
+        {
+
+        }*/
+
+
 
         $data = [
-            'evercisegroups' => $evercisegroups,
-            'sessionDates' => $sessionDates,
-            'totalMembers' => $totalMembers,
-            'stars' => $stars,
-            'totalCapacity' => $totalCapacity,
-            'year' => date("Y"),
-            'month' => date("m"),
-            'directory' => $directory
+            'past_sessions' => $pastSessions,
+            'future_sessions' => $futureSessions,
+            'trainer_groups' => $trainerGroups,
+            'sessionmember_ids' => $sessionmember_ids,
         ];
 
         return $data;
-
     }
 
     public static function parseSegments($segments)

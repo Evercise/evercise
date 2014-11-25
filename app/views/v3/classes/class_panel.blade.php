@@ -15,7 +15,7 @@
         <strong><i class="fa fa-star-o"></i></strong>
         {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating'] ) }}
             {{ Form::hidden('stars', 3, ['id' => 'stars']) }}
-            {{ Form::hidden('session_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
+            {{ Form::hidden('sessionmember_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
             <div class="form-group">
                 {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '6', 'placeholder' => 'Add your review about the class...'])}}
             </div>
@@ -32,15 +32,13 @@
         </div>
         <div class="col-sm-12">
             <div class="class-rating-wrapper">
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
+                    @for ($i = 0; $i < 5; $i++)
+                        <span class="icon icon-{{ $i < $session->sessionmembers[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
+                    @endfor
             </div>
         </div>
         <div class="col-sm-12">
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+            <p>{{$session->sessionmembers[0]->rating['comment']}}</p>
         </div>
     </div>
     <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'next-session') ? '' : 'hidden' }}">

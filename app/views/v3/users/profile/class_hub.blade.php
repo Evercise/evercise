@@ -1,4 +1,4 @@
-@foreach($data['evercisegroups'] as $evercisegroup)
+@foreach($groups as $evercisegroup)
     <div class="container hub-row" >
             <div class="row mt40">
                 <div class="col-sm-8">
