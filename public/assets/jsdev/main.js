@@ -153,6 +153,9 @@ $(function(){
     $('#profile-nav').exists(function(){
         new profileNav(this);
     })
+    $('.rate-it').exists(function(){
+        new RateIt(this);
+    })
 
 
 });
