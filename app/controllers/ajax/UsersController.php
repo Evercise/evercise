@@ -92,6 +92,47 @@ class UsersController extends AjaxBaseController{
 
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function setLocation() {
+
+        $lat = Input::get('lat');
+        $lon = Input::get('lon');
+
+
+        Session::put('location', ['lat' => $lat, 'lon' => $lon]);
+
+
+        $user = Sentry::getUser();
+
+        if(!empty($user->id)) {
+            $user->lat = $lat;
+            $user->lon = $lon;
+
+            $user->save();
+        }
+
+        return Response::json(['stored' => true]);
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function getLocation() {
+
+        $value = Session::get('location', function() {
+
+            $user = Sentry::getUser();
+            return [
+                'lat' => ($user->lat == '0.00' ? '': $user->lat),
+                'lon' => ($user->lon == '0.00' ? '': $user->lon)
+            ];
+        });
+
+        return Response::json($value);
+    }
+
     function fuckout(){
         return 'fucked out';
     }
