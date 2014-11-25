@@ -13,6 +13,7 @@
 <script src="/admin/assets/lib/footable/footable.filter.min.js"></script>
 <script src="/admin/assets/lib/footable/footable.sort.min.js"></script>
 <script src="/admin/assets/lib/jBox-0.3.0/Source/jBox.min.js"></script>
+<script src="/admin/assets/js/light.js"></script>
 
 
 <script>
@@ -49,6 +50,44 @@ var currentRequest;
                 })
 
         });
+
+
+
+
+        $('.image_upload').click(function(e) {
+            var id = $(this).data('id');
+
+            $('.upload_'+id).trigger('click');
+
+        });
+        $('.upload_input').change(function(e) {
+            var id = $(this).data('id');
+
+            $('.form_'+id).submit();
+
+        });
+        $('.check_box').change(function(e) {
+            var id = $(this).data('id');
+
+            var data = 'id='+id+'&checked='+this.checked;
+             currentRequest = $.ajax({
+                type: "POST",
+                url: AJAX_URL + "sliderStatus",
+                cache: false,
+                dataType: 'json',
+                data: data,
+                beforeSend: function (json) {
+                    if (currentRequest != null) currentRequest.abort();
+                },
+                success:function(res){
+                    console.log(res);
+                }
+             })
+
+
+        });
+
+
     })
 
 </script>
@@ -68,25 +107,32 @@ var currentRequest;
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-yuk2 toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
+            <table class="table toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
                 <thead>
                     <tr>
                         <th data-toggle="true">ID</th>
                         <th>Name</th>
-                        <th>Capacity</th>
+                        <th class="warning">Capacity</th>
                         <th>Default price</th>
                         <th>Future Sessions</th>
                         <th>Status</th>
+                        <th>Frontpage Image</th>
+                        <th>Frontpage Image</th>
                         <th data-sort-initial="descending" >Options</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($classes as $a)
+                    <?php
+                    $slider = $a->slider()->first();
+                    $slider_image = (!empty($slider->image) ? '/files/slider/medium_'.$slider->image : false);
+                    ?>
+
 
                     <tr>
                         <td>{{ $a->id }}</td>
                         <td>{{ $a->name }}</td>
-                        <td>{{ $a->capacity }}</td>
+                        <td class="warning">{{ $a->capacity }}</td>
                         <td>{{ $a->default_price }}</td>
                         <td>{{ $a->futuresessions()->count() }}</td>
                         <td>
@@ -96,6 +142,25 @@ var currentRequest;
                         @if($a->published == 0)
                         <span class="label label-default status-disabled" title="Unpublished">Unpublished</span></td>
                         @endif
+                        </td>
+
+
+                        <td>
+                        {{$slider->image or ''}}
+                        @if($slider_image)
+                            <span class="el-icon-zoom-in cp" href="{{ $slider_image }}" data-featherlight="image" data-image="{{$slider->image}}"></span>
+                        @endif
+                        </td>
+
+                        <td>
+                            <input type="checkbox" class="check_box {{ (!$slider_image ? 'hide':'') }}" {{ ( !empty($slider->active) && $slider->active == 1 ? 'checked="checked"':'') }} data-id="{{ $a->id }}"/>
+                            <span class="icon_upload cp image_upload " style="margin-left: {{ (!$slider_image ? '36':'20') }}px" data-id="{{ $a->id }}"></span>
+                            <form class="form_{{$a->id}}" action="{{ URL::route('admin.ajax.slider_upload') }}" method="post" enctype="multipart/form-data">
+                                 <input type="file" name="file" class="hide upload_{{$a->id}} upload_input" data-id="{{ $a->id }}"/>
+                                 <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                                 <input type="hidden" name="id" value="{{$a->id}}"/>
+                             </form>
+
                         </td>
 
                         <?php

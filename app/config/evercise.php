@@ -91,6 +91,12 @@ return [
         ['prefix' => 'medium', 'width' => 200, 'height' => 200],
         ['prefix' => 'small', 'width' => 100, 'height' => 100]
     ],
+    'slider_images' => [
+        ['prefix' => 'cover', 'width' => 2000, 'height' => 1000],
+        ['prefix' => 'medium', 'width' => 1000, 'height' => 500],
+        ['prefix' => 'thumb', 'width' => 200, 'height' => 200]
+    ],
+
     /** SEO CRAP */
 
     'seo_keywords' => [

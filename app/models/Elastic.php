@@ -63,6 +63,10 @@ class Elastic
         $searchParams['from'] = $params['from'];
 
         /** Are we going to Search Something? */
+
+        $search = false;
+
+
         if (!empty($params['search'])) {
             $searchParams['body']['query']['filtered']['query'] = [
 
@@ -73,18 +77,23 @@ class Elastic
                 ],
 
             ];
-        } elseif (!empty($params['featured'])){
-            /** Guess not! */
-            $searchParams['body']['query']['filtered']['query']["term"] = ['featured' => true];
-        } else {
-            /** Guess not! */
-            $searchParams['body']['query']['filtered']['query']['match_all'] = [];
+            $search = true;
+        }
+
+        if( !isset($params['all'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => true];
         }
 
 
+        if (!empty($params['featured'])){
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['featured' => true];
+            $search = true;
+        }
 
-        if(!empty($params['sort'])) {
-            $searchParams['body']['sort'] = $params['sort'];
+
+        if(!$search) {
+            /** Guess not! */
+            $searchParams['body']['query']['filtered']['query']['match_all'] = [];
         }
 
 
@@ -110,7 +119,7 @@ class Elastic
             }
 
             if (count($location_points) > 0) {
-                $searchParams['body']['query']['filtered']['filter']['geo_polygon']['venue.location']['points'] = $location_points;
+                $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_polygon']['venue.location']['points'] = $location_points;
             } else {
 
                 $this->log->error('Area ' . $area->id . ' is set to be Polygon but has 0 valid datapoints');
@@ -119,13 +128,12 @@ class Elastic
         } else {
 
             if (!empty($area->lat) && !empty($area->lng)) {
-                $searchParams['body']['query']['filtered']['filter']['geo_distance'] = [
+                $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_distance'] = [
                     'distance'       => $params['radius'],
                     'venue.location' => $this->getLocationHash($area->lat, $area->lng)
                 ];
             }
         }
-
 
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
@@ -310,7 +318,7 @@ class Elastic
                 'capacity'         => (int) $a->capacity,
                 'default_duration' => (int) $a->default_duration,
                 'default_price'    => (double) $a->default_price,
-                'published'        => $a->published,
+                'published'        => ($a->published == 0 ? false : true),
                 'featured'         => ($a->isfeatured() ? true : false),
                 'user'             => [
                     'id'           => (int) $a->user->id,

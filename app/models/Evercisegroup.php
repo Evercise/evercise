@@ -851,7 +851,15 @@ class Evercisegroup extends \Eloquent
      */
     public function featuredClasses()
     {
-        return $this->hasOne('FeaturedClasses');
+        return $this->b('FeaturedClasses');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function slider()
+    {
+        return $this->hasOne('Slider');
     }
 
     /**
