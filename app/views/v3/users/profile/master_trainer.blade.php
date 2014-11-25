@@ -22,9 +22,9 @@
     @include('v3.trainers.profile.nav')
 
 
-    <div class="tab-content">
+    <div class="">
 
-        <div id="hub" class="profile-panels tab-pane fade in active">
+        <div id="hub" class="{{ ($tab === 0 ? 'profile-panels' : ($tab === 'hub' ? 'profile-panels' : 'profile-panels hidden')) }}">
             @if( !$data['trainer_groups']->isEmpty() )
                 @include('v3.users.profile.class_hub', ['groups' => $data['trainer_groups']])
             @else
@@ -36,16 +36,16 @@
                 </div>
             @endif
         </div>
-        <div id="attended" class="profile-panels tab-pane fade">
+        <div id="attended" class="{{ $tab === 'attended' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.attended_classes', ['sessions' => $data['past_sessions']])
         </div>
-        <div id="upcoming" class="profile-panels tab-pane fade">
+        <div id="upcoming" class="{{ $tab === 'upcoming' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.upcoming_classes', ['sessions' => $data['future_sessions']])
         </div>
-        <div id="wallet" class="profile-panels tab-pane fade">
+        <div id="wallet" class="{{ $tab === 'wallet' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.wallet')
         </div>
-        <div id="edit" class="profile-panels tab-pane fade">
+        <div id="edit" class="{{ $tab === 'edit' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.edit')
         </div>
 
