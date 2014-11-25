@@ -230,17 +230,19 @@ class Evercisegroup extends \Eloquent
 
             //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
             //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
-            
+
             $evercisegroup_ids[] = $session->evercisegroup->id;
             if (new DateTime($session->date_time) < $currentDate) {
-                $pastSessions[] = $session;
+                if (! array_key_exists($session->id, $futureSessions))
+                    $pastSessions[$session->id] = $session;
                 $totalMembers[$key][] = count($session->sessionmembers);
                 foreach($session->sessionmembers as $sessionmember)
                     $sessionmember_ids[$session->id] = $sessionmember->id;
             }
             else
             {
-                $futureSessions[] = $session;
+                if (! array_key_exists($session->id, $futureSessions))
+                    $futureSessions[$session->id] = $session;
             }
 
         }
@@ -252,20 +254,13 @@ class Evercisegroup extends \Eloquent
                 $stars[$rating->evercisegroup_id][] = $rating->stars;
             }
         }
-/*
-        $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
-        foreach ( $ratings as $rating )
-        {
-
-        }*/
-
-
 
         $data = [
             'past_sessions' => $pastSessions,
             'future_sessions' => $futureSessions,
             'trainer_groups' => $trainerGroups,
             'sessionmember_ids' => $sessionmember_ids,
+            'user_id' => $user->id,
         ];
 
         return $data;
