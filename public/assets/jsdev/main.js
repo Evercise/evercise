@@ -8,7 +8,7 @@ $(function(){
 
     // initialise nav bar is nav bar exists
     $('.navbar').exists(function() {
-        new Navigation( this , $('.hero-nav-change'), $('.sticky-fixed-nav') );
+        new Navigation( this , $('.hero-nav-change') );
     });
 
     // initialise masonry if masonry container exists
@@ -150,8 +150,8 @@ $(function(){
     $('#scroll-to').exists(function(){
         new scrollTo(this);
     })
-    $('#scroll-to').exists(function(){
-        new scrollTo(this);
+    $('#profile-nav').exists(function(){
+        new profileNav(this);
     })
 
 

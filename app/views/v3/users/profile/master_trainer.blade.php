@@ -1,5 +1,6 @@
 @extends('v3.layouts.master')
 @section('body')
+
     <div class="container first-container mt20">
         <div class="row">
             <div class="col-sm-6">

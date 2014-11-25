@@ -124,7 +124,7 @@ Route::get('/finished-user', [
     ]
 );
 
-Route::get('/profile/{id}', [ 'as' => 'users.edit', 'uses' => 'UsersController@edit'] );
+Route::get('/profile/{id}/{tab?}', [ 'as' => 'users.edit', 'uses' => 'UsersController@edit'] );
 
 
 Route::get(
