@@ -234,7 +234,7 @@ class Evercisegroup extends \Eloquent
             foreach ($group['Evercisesession'] as $k => $session) {
                 //if (new DateTime($session->date_time) > $currentDate) {
                     $totalMembers[$key][] = count($session->sessionmembers);
-                    $capacity += $group->capacity;
+                    $capacity += $session->tickets;
                     foreach($session->sessionmembers as $sessionmember)
                         $sessionmember_ids[$session->id] = $sessionmember->id;
                 //}

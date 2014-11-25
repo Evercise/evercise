@@ -147,5 +147,9 @@ $(function(){
         new facebookRedirect(this);
     })
 
+    $('#scroll-to').exists(function(){
+        new scrollTo(this);
+    })
+
 
 });

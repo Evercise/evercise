@@ -15,8 +15,6 @@
 				<div class="switch-inner">
 					{{ HTML::image( '/img/list-v5.png', 'choose user', array('class' => 'switch-image')) }}
 					<span>{{ HTML::image( '/img/tick.png', 'choose user', array('class' => 'tick')) }}I want to join classes</span>
-
-					
 				</div>
 				
 			</div>

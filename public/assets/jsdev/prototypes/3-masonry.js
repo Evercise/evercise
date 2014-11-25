@@ -6,7 +6,6 @@ Masonry.prototype = {
     constructor: Masonry,
     init: function(){
         var $container = this.masonry;
-
         $container.masonry({
             itemSelector: '.masonry-item',
             isInitLayout: true,

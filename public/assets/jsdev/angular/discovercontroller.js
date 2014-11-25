@@ -110,7 +110,8 @@ if(typeof angular != 'undefined') {
             var result = {
                 id: data.id,
                 name: data.name,
-                image: '/profiles/' + data.user.directory + '/' + data.image,
+                directory: data.user.directory,
+                image: data.image,
                 latitude: data.venue.lat,
                 longitude: data.venue.lng,
                 coords : {
@@ -160,7 +161,7 @@ if(typeof angular != 'undefined') {
 
             // change preview
             $scope.preview.id = 'preview-' + marker.id;
-            $scope.preview.image = "url('" + marker.image + "')";
+            $scope.preview.image = marker.directory+ "/search_"+ marker.image;
             $scope.preview.description = marker.description;
             $scope.preview.nextClassDate = new Date(marker.sessions[0].date_time.replace(/-/g, '/'));
             $scope.preview.nextClassDuration = marker.sessions[0].duration;

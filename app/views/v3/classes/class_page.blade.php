@@ -22,36 +22,34 @@
         </nav>
 
     @endif
-    <div class="hero no-nav-change" style="background-image: url('{{url().'/profiles/'.$data['trainer']->user->directory.'/'.$data['evercisegroup']->image}}')">
+    <div class="hero no-nav-change" style="background-image: url('{{url().'/'.$data['trainer']->user->directory.'/cover_'.$data['evercisegroup']->image}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">
-              <ul class="nav navbar-nav nav-justified nav-no-float">
+              <ul class="nav navbar-nav nav-justified nav-no-float" id="scroll-to">
                 <li class="active"><a href="#about">About</a></li>
-                <li><a href="#schedule">Schedule</a></li>
-                <li><a href="#facilities">Facilities & Amenities</a></li>
-                <li><a href="#reviews">Reviews</a></li>
+                <li class="{{ count($data['evercisegroup']->futuresessions) == 0 ? 'disabled' : null}}"><a href="#schedule">Schedule</a></li>
+                <li class="{{ count($data['venue']->facilities) == 0 ? 'disabled' : null}}"><a href="#facilities">Facilities & Amenities</a></li>
+                <li class="{{ count($data['allRatings']) == 0 ? 'disabled' : null}}"><a href="#ratings" >Reviews</a></li>
                 <li class="text-center">
                     <span>
-                        <a href="#"><span class="icon icon-fb mr20 hover"></span> </a>
-                        <a href="#"><span class="icon icon-twitter mr20 hover"></span> </a>
-                        <a href="#"><span class="icon icon-google hover"></span> </a>
+                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->facebook()  }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>
+                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->twitter()  }}" target="_blank"><span class="icon icon-twitter mr20 hover"></span> </a>
+                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->gplus()  }}" target="_blank"><span class="icon icon-google hover"></span> </a>
                     </span>
-
                 </li>
               </ul>
           </div>
         </nav>
     </div>
-    <div class="container mt30">
-        <div class="row">
+    <div class="container mt30 mb40">
+        <div class="row" id="about">
             <div class="col-sm-6">
                 <h1 class="mb5">{{ $data['evercisegroup']->name }}</h1>
                 <div class="mb30">
-                    <span class="icon icon-full-star"></span>
-                    <span class="icon icon-full-star"></span>
-                    <span class="icon icon-full-star"></span>
-                    <span class="icon icon-empty-star"></span>
-                    <span class="icon icon-empty-star"></span>
+
+                    @if (isset($data['allRatings']))
+                        @include('v3.classes.ratings.stars', array('rating' => $data['allRatings']))
+                    @endif
                 </div>
 
                 <p>{{ $data['evercisegroup']->description }}</p>
@@ -59,7 +57,7 @@
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                <img src="{{url()}}/profiles/{{$data['trainer']->user->directory.'/'.$data['trainer']->user->image}}" alt="profile picture" class="img-responsive img-circle">
+                                {{ image($data['trainer']->user->directory.'/small_'.$data['trainer']->user->image, $data['trainer']->user->first_name, ['class' => 'img-responsive img-circle']) }}
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">
@@ -81,7 +79,7 @@
             </div>
         </div>
         <hr>
-        <div class="row">
+        <div id="schedule" class="row">
             <div class="col-sm-12">
                 <h1>Upcoming sessions</h1>
             </div>
@@ -113,7 +111,6 @@
                                             </span>
 
                                             <div class="btn-group pull-right">
-
                                                 {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
                                                 {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
 
@@ -135,7 +132,7 @@
         </div>
 
         <hr>
-        <div class="row">
+        <div id="facilities" class="row">
             <div class="col-sm-12">
                 @if(count($data['venue']->facilities) > 0)
                 <div class="page-header">
@@ -144,9 +141,11 @@
 
                 <ul class="row custom-list">
                     @foreach($data['venue']->facilities as $key => $facility)
-						@if ($facility->category == 'facility')
-							<li>{{ $facility->name}}</li>
-						@endif
+                        @if ($facility->category == 'facility')
+                            <div class="col-sm-3">
+                                <li>{{ $facility->name}}</li>
+                            </div>
+                        @endif
 					@endforeach
                 </ul>
                 @endif
@@ -157,19 +156,19 @@
                 </div>
                 <ul class="row custom-list">
 					@foreach($data['venue']->facilities as $key => $facility)
-						@if ($facility->category == 'amenity')
-							<li>{{ $facility->name}}</li>
-						@endif
+					        @if ($facility->category == 'amenity')
+					            <div class="col-sm-3">
+                                    <li>{{ $facility->name}}</li>
+                                </div>
+                            @endif
 					@endforeach
                 </ul>
                 @endif
-
-
             </div>
-
         </div>
+        @if(count($data['allRatings']) > 0)
         <hr>
-        <div class="row">
+        <div id="ratings" class="row">
             <div class="col-sm-12">
                 <div class="page-header">
                     <h1>Reviews</h1>
@@ -181,5 +180,6 @@
                 </div>
             @endforeach
         </div>
+        @endif
     </div>
 @stop

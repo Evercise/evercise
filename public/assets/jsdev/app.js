@@ -1,7 +1,10 @@
 if(typeof angular != 'undefined') {
     var app = angular.module('DiscoverApp', [
         'google-maps'.ns()
-    ]);
+    ] , ['$interpolateProvider',function ($interpolateProvider) {
+            $interpolateProvider.startSymbol('{[{');
+            $interpolateProvider.endSymbol('}]}');
+        }]);
 
     app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
         GoogleMapApi.configure({
