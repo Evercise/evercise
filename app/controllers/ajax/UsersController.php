@@ -93,8 +93,59 @@ class UsersController extends AjaxBaseController{
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
      */
+    public function update()
+    {
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
+
+        $valid_user = User::validUserEdit(Input::all());
+
+        if ($valid_user['validation_failed'] == 0) {
+            // Actually update the user record
+            $first_name = Input::get('first_name');
+            $last_name = Input::get('last_name');
+            $dob = Input::get('dob');
+            $gender = Input::get('gender');
+            $image = Input::get('thumbFilename');
+            $area_code = Input::get('areacode');
+            $phone = Input::get('phone');
+
+
+            $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
+
+            $this->user->checkProfileMilestones();
+
+            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
+
+            return Response::json(
+                [
+                    'callback' => 'gotoUrl',
+                    'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn(
+                        ) ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
+                ]
+            );
+        } else {
+            return Response::json($valid_user);
+        }
+    }
+
+    /**
+     * Check if the user is logged in and redirect if needed
+     *
+     * @return bool
+     */
+    public function checkLogin()
+    {
+        return Sentry::check();
+    }
+
     function setLocation() {
 
         $lat = Input::get('lat');
@@ -132,9 +183,4 @@ class UsersController extends AjaxBaseController{
 
         return Response::json($value);
     }
-
-    function fuckout(){
-        return 'fucked out';
-    }
-
 } 

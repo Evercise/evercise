@@ -204,35 +204,18 @@ class Evercisegroup extends \Eloquent
      * @param $user
      * @return \Illuminate\View\View
      */
-    public static function getHub($user)
+    public static function getUserHub($user)
     {
-        $directory = $user->directory;
-
-        $trainerGroups = static::with('evercisesession.sessionmembers')
-            ->with('futuresessions.sessionmembers')
-            ->with('pastsessions')
-            ->with('venue')
-            ->where('user_id', $user->id)->get();
-
-
         $totalMembers = array();
-        $totalCapacity = array();
         $currentDate = new DateTime();
         $sessionmember_ids = []; // For rating
-
-        $evercisegroup_ids = [];
-        $stars = [];
-
         $pastSessions = [];
         $futureSessions = [];
 
-        foreach ($user->sessions as $key => $session) {
-
-            //$sessionDates[$key] = Functions::arrayDate($group->evercisesession->lists('date_time', 'id'));
-            //$totalCapacity[] =  $group->capacity * count($group['Evercisesession']);
-
-            $evercisegroup_ids[] = $session->evercisegroup->id;
-            if (new DateTime($session->date_time) < $currentDate) {
+        foreach ($user->sessions as $key => $session)
+        {
+            if (new DateTime($session->date_time) < $currentDate)
+            {
                 if (! array_key_exists($session->id, $futureSessions))
                     $pastSessions[$session->id] = $session;
                 $totalMembers[$key][] = count($session->sessionmembers);
@@ -247,21 +230,29 @@ class Evercisegroup extends \Eloquent
 
         }
 
-        if (!empty($evercisegroup_ids)) {
-            $ratings = Rating::whereIn('evercisegroup_id', $evercisegroup_ids)->get();
-
-            foreach ($ratings as $key => $rating) {
-                $stars[$rating->evercisegroup_id][] = $rating->stars;
-            }
-        }
-
         $data = [
-            'past_sessions' => $pastSessions,
-            'future_sessions' => $futureSessions,
-            'trainer_groups' => $trainerGroups,
+            'past_sessions' => $pastSessions ?: [],
+            'future_sessions' => $futureSessions ?: [],
             'sessionmember_ids' => $sessionmember_ids,
             'user_id' => $user->id,
         ];
+
+        return $data;
+    }
+
+    public static function getTrainerHub($user)
+    {
+        $data = static::getUserHub($user);
+
+        $trainerGroups = static::with('evercisesession.sessionmembers')
+            ->with('futuresessions.sessionmembers')
+            ->with('pastsessions')
+            ->with('venue')
+            ->where('user_id', $user->id)->get();
+
+        $data = array_merge($data, [
+            'trainer_groups' => $trainerGroups ?: [],
+        ]);
 
         return $data;
     }

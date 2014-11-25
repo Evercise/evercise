@@ -170,7 +170,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $area_code
      * @param $phone
      */
-    public static function updateUser($user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone)
+    public function updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone)
     {
         $user->update(
             array(
@@ -185,16 +185,16 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         );
     }
 
-    public static function checkProfileMilestones($user)
+    public function checkProfileMilestones()
     {
         if (
-            $user->gender
-            && $user->dob
-            && $user->phone
-            && $user->image
+            $this->gender
+            && $this->dob
+            && $this->phone
+            && $this->image
         ) {
-            Event::fire('user.fullProfile', [$user]);
-            Milestone::where('user_id', $user->id)->first()->add('profile');
+            Event::fire('user.fullProfile', [$this]);
+            Milestone::where('user_id', $this->id)->first()->add('profile');
         }
     }
 
@@ -666,6 +666,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $this->attemptResetPassword($resetPasswordCode, $newPassword);
 
         return $newPassword;
+    }
+
+    public function getGender()
+    {
+        return $this->gender ? ($this->gender == 1 ? 'male' : 'female') : '' ;
     }
 
 }

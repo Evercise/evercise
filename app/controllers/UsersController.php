@@ -171,68 +171,24 @@ class UsersController extends \BaseController
 
         // if user is trainer lob hub into data
 
-
         if(Trainer::isTrainerLoggedIn())
         {
-            $hub = Evercisegroup::getHub($user);
+            $hub = Evercisegroup::getTrainerHub($user);
             $data = array_merge($hub, $data);
 
             $view = 'v3.users.profile.master_trainer';
         }
         else
         {
+            $hub = Evercisegroup::getUserHub($user);
+            $data = array_merge($hub, $data);
+
             $view = 'v3.users.profile.master_user';
         }
 
         return View::make( $view )
             ->with('data', $data)
             ->with('tab', $tab);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function update($id)
-    {
-
-        if(!$this->checkLogin()) {
-            return Redirect::route('home');
-        }
-
-        $valid_user = User::validUserEdit(Input::all());
-
-        if ($valid_user['validation_failed'] == 0) {
-            // Actually update the user record
-            $first_name = Input::get('first_name');
-            $last_name = Input::get('last_name');
-            $dob = Input::get('dob');
-            $gender = Input::get('gender');
-            $image = Input::get('thumbFilename');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-
-
-            User::updateUser($this->user, $first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
-
-            User::checkProfileMilestones($this->user);
-
-            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
-
-            return Response::json(
-                [
-                    'callback' => 'gotoUrl',
-                    'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn(
-                        ) ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
-                ]
-            );
-        } else {
-            return Response::json($valid_user);
-        }
-
-
     }
 
 
