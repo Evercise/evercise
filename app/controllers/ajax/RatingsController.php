@@ -76,6 +76,11 @@ class RatingsController extends AjaxBaseController{
 
         }
 
-        return Response::json(['callback' => 'refreshpage' ,'notification' => $session_id]);
+        return Response::json(
+            [
+                'callback' => 'refreshpage',
+                'notification' => $session_id
+            ]
+        );
     }
 } 
