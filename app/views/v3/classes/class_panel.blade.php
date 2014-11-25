@@ -6,7 +6,12 @@
         </div>
     </div>
     <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center {{ (isset($show) && $show == 'rate-it') ? '' : 'hidden' }}">
-        Rate it
+        <div class=" col-sm-7">
+            <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+        </div>
+        <div class=" col-sm-7">
+            <span>Rate it</span>
+        </div>
         <br>
         <strong><i class="fa fa-star-o"></i></strong>
         <strong><i class="fa fa-star-o"></i></strong>
@@ -26,15 +31,17 @@
         {{ Form::close() }}
     </div>
     <div id="user-rating" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show)  && $show == 'user-rating') ? '' : 'hidden' }} ">
+        <div class=" col-sm-7">
+            <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+        </div>
         <div class="col-sm-12">
             <em><small>You said:</small></em>
-
         </div>
         <div class="col-sm-12">
             <div class="class-rating-wrapper">
-                    @for ($i = 0; $i < 5; $i++)
-                        <span class="icon icon-{{ $i < $session->sessionmembers[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
-                    @endfor
+                @for ($i = 0; $i < 5; $i++)
+                    <span class="icon icon-{{ $i < $session->userSessionmembers($data['user_id'])[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
+                @endfor
             </div>
         </div>
         <div class="col-sm-12">
@@ -43,8 +50,8 @@
     </div>
     <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'next-session') ? '' : 'hidden' }}">
         <div class=" col-sm-7">
-            <span><span class="icon icon-clock"></span> Next class, Sept 27th, 4pm</span>
-         </div>
+            <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+        </div>
         <div class=" col-sm-5">
             <div class="row">
                 <div class="col-xs-4">
@@ -58,12 +65,15 @@
     </div>
     <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'upcoming-session') ? '' : 'hidden' }}">
         <div class=" col-sm-7">
-            <span><span class="icon icon-clock"></span> Sept 27th, 4pm</span>
+            <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+        </div>
+        <div class=" col-sm-7">
+            <span>Tickets purchased: {{ count($session->userSessionmembers($data['user_id'])) }}</span>
          </div>
         <div class=" col-sm-5">
             <div class="row">
                 <div class="col-xs-4">
-                    <strong class="text-primary">&pound;16</strong>
+                    <strong class="text-primary">&pound;{{ $session->price }}</strong>
                 </div>
                 <div class="col-xs-8">
                     <button class="btn btn-default btn-block">Cancel</button>

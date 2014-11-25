@@ -626,6 +626,15 @@ class Evercisesession extends \Eloquent
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userSessionmembers($user_id)
+    {
+        return $this->hasMany('Sessionmember')
+            ->where('user_id', $user_id)->get();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function evercisegroup()
