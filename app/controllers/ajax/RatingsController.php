@@ -75,7 +75,6 @@ class RatingsController extends AjaxBaseController{
             Event::fire('rating.create', [$this->user,$group, $session ]);
 
         }
-
         return View::make('v3.classes.class_panel')->with($session);
     }
 } 

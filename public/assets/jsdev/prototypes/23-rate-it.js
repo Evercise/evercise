@@ -128,9 +128,10 @@ RateIt.prototype = {
 
             success: function (data) {
                 console.log(data);
-               /*$('#panel-'+data.notification).find('#user-rating').add
+                $('#panel-'+data.notification).find('#user-rating').addClass('hidden');
                 $('#panel-'+data.notification).find('#user-rating').removeClass('hidden');
-                */
+                // re masonry
+                new Masonry($('.masonry'));
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
