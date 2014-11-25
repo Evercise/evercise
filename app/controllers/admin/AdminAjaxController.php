@@ -303,4 +303,60 @@ class AdminAjaxController extends AdminController
 
     }
 
+    public function sliderStatus() {
+        $id = Input::get('id');
+        $checked = Input::get('checked');
+
+        $slider = Slider::where(['evercisegroup_id' => $id])->first();
+        $slider->active = (int)$checked;
+        $slider->save();
+    }
+
+    public function sliderUpload()
+    {
+
+        $class = Evercisegroup::find(Input::get('id'));
+        if ($file = Request::file('file')) {
+
+
+            if (!is_dir('files/slider')) {
+                mkdir('files/slider');
+            }
+            $image = Image::make($_FILES['file']['tmp_name']);
+            $ext = $file->getClientOriginalExtension();
+            $name = slugIt([$class->id, $class->name]).'.'.$ext;
+            /** Save the image name without the Prefix to the DB */
+
+            $save = false;
+            foreach (Config::get('evercise.slider_images') as $img) {
+
+                $file_name = $img['prefix'] . '_' . $name;
+
+                $image = $image->fit(
+                    $img['width'],
+                    $img['height']
+                )->save(public_path() . '/files/slider/' . $file_name);
+
+
+                if ($image) {
+                    $save = true;
+                }
+
+            }
+
+            if ($save) {
+
+                $slide = Slider::firstOrNew(['evercisegroup_id' => $class->id]);
+                $slide->image = $name;
+                $slide->evercisegroup_id = $class->id;
+                $slide->active = 1;
+                $slide->save();
+            }
+        }
+
+        return Redirect::route('admin.listClasses');
+
+
+    }
+
 }

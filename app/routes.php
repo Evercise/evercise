@@ -39,8 +39,14 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('/users-store', array('as' => 'users.store', 'uses' => 'ajax\UsersController@store'));
     Route::post('/users-update', array('as' => 'users.update', 'uses' => 'ajax\UsersController@update'));
     Route::post('/trainers/store', array('as' => 'trainers.store', 'uses' => 'ajax\TrainersController@store'));
+
+    // Location
+    Route::post('/users/getLocation', array('as' => 'users.location.get', 'uses' => 'ajax\UsersController@getLocation'));
+    Route::post('/users/setLocation', array('as' => 'users.location.set', 'uses' => 'ajax\UsersController@setLocation'));
+
     // login
     Route::post('/auth/login', array('as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin'));
+
     // cart
     Route::post('cart/add', array('as' => 'cart.add', 'uses' => 'ajax\CartController@add'));
     Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'ajax\CartController@remove'));
@@ -433,6 +439,10 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 
     Route::post('featureClass',
         ['as' => 'admin.ajax.featureClass', 'uses' => 'AdminAjaxController@featureClass']);
+    Route::post('sliderUpload',
+        ['as' => 'admin.ajax.slider_upload', 'uses' => 'AdminAjaxController@sliderUpload']);
+    Route::post('sliderStatus',
+        ['as' => 'admin.ajax.sliderStatus', 'uses' => 'AdminAjaxController@sliderStatus']);
 
 
 });

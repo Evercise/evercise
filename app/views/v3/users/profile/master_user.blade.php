@@ -2,7 +2,6 @@
 @section('body')
     @include('v3.users.profile.nav')
 
-    FUCK YOUR OWN FACE
     <div class="">
 
         <div id="attended" class="profile-panels">

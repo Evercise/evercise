@@ -65,7 +65,6 @@ class BaseController extends Controller
     /**
      * Check if the user is logged in and redirect if needed
      *
-     * @param bool $redirect
      * @return bool
      */
     public function checkLogin()

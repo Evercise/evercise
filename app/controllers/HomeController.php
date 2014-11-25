@@ -27,7 +27,17 @@ class HomeController extends BaseController {
         ]);
 
 
-		return View::make('v3.home', compact('featured'));
+        $slider = Slider::where('active', 1)->limit(5)->get();
+
+        /**
+         * foreach($slider as $slide)
+         * $image = 'files/slider/$prefix_$slide->image'
+         *
+         * $evercisegroup = $slide->evercisegroup
+         */
+
+
+		return View::make('v3.home', compact('featured', 'slider'));
 	}
 
 }
