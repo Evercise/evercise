@@ -25,4 +25,9 @@ class Sessionmember extends \Eloquent
         return $this->belongsTo('User', 'user_id');
     }
 
+    public function rating()
+    {
+        return $this->hasOne('Rating');
+    }
+
 }

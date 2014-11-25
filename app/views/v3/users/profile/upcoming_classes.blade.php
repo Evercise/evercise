@@ -4,7 +4,7 @@
             <h1>Upcoming Classes</h1>
         </div>
         <div id="masonry" class="row masonry">
-           @foreach($user->futuresessions as $session)
+           @foreach($sessions as $session)
                 <div class="col-md-6 masonry-item">
                     @include('v3.classes.class_panel', ['show' => 'upcoming-session'])
                 </div>

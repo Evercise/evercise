@@ -32,15 +32,13 @@
         </div>
         <div class="col-sm-12">
             <div class="class-rating-wrapper">
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
-                <span class="icon icon-full-star"></span>
+                    @for ($i = 0; $i < 5; $i++)
+                        <span class="icon icon-{{ $i < $session->sessionmembers[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
+                    @endfor
             </div>
         </div>
         <div class="col-sm-12">
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
+            <p>{{$session->sessionmembers[0]->rating['comment']}}</p>
         </div>
     </div>
     <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper {{ (isset($show) && $show == 'next-session') ? '' : 'hidden' }}">
