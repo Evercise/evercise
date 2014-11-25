@@ -280,11 +280,12 @@ class SearchController extends \BaseController
 
             $location = $this->place->getByLocation((!empty($params['location']) ? $params['location'] : 'London'));
             $query = [
-                'size' => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
-                'from' => 0,
-                'sort' => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
-                'radius' => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
-                'search' => (!empty($params['search']) ? $params['sort'] : '')
+                'size'      => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
+                'from'      =>(!empty($params['from']) ? $params['from'] : 0),
+                'sort'      => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
+                'radius'    => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
+                'search'    => (!empty($params['search']) ? $params['sort'] : ''),
+                'featured'  => (isset($params['featured']) ? $params['featured'] : '')
             ];
 
             $searchResults = $this->search->getResults($location, $query);
