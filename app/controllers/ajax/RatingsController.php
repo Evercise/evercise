@@ -76,6 +76,6 @@ class RatingsController extends AjaxBaseController{
 
         }
 
-        return Response::json(['callback' => 'refreshpage' ,'notification' => $session_id]);
+        return View::make('v3.classes.class_panel')->with($session);
     }
 } 
