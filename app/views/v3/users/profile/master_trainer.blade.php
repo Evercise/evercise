@@ -22,9 +22,9 @@
     @include('v3.trainers.profile.nav')
 
 
-    <div class="">
+    <div class="tab-content">
 
-        <div id="hub" class="profile-panels">
+        <div id="hub" class="profile-panels tab-pane fade in active">
             @if( !$data['trainer_groups']->isEmpty() )
                 @include('v3.users.profile.class_hub', ['groups' => $data['trainer_groups']])
             @else
@@ -36,16 +36,16 @@
                 </div>
             @endif
         </div>
-        <div id="attended" class="hidden profile-panels">
+        <div id="attended" class="profile-panels tab-pane fade">
             @include('v3.users.profile.attended_classes', ['sessions' => $data['past_sessions']])
         </div>
-        <div id="upcoming" class="hidden profile-panels">
+        <div id="upcoming" class="profile-panels tab-pane fade">
             @include('v3.users.profile.upcoming_classes', ['sessions' => $data['future_sessions']])
         </div>
-        <div id="wallet" class="hidden profile-panels">
+        <div id="wallet" class="profile-panels tab-pane fade">
             @include('v3.users.profile.wallet')
         </div>
-        <div id="edit" class="hidden profile-panels">
+        <div id="edit" class="profile-panels tab-pane fade">
             @include('v3.users.profile.edit')
         </div>
 
