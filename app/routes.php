@@ -438,6 +438,10 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 
     Route::post('featureClass',
         ['as' => 'admin.ajax.featureClass', 'uses' => 'AdminAjaxController@featureClass']);
+    Route::post('sliderUpload',
+        ['as' => 'admin.ajax.slider_upload', 'uses' => 'AdminAjaxController@sliderUpload']);
+    Route::post('sliderStatus',
+        ['as' => 'admin.ajax.sliderStatus', 'uses' => 'AdminAjaxController@sliderStatus']);
 
 
 });
