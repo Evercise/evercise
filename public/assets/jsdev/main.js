@@ -150,6 +150,9 @@ $(function(){
     $('#scroll-to').exists(function(){
         new scrollTo(this);
     })
+    $('#scroll-to').exists(function(){
+        new scrollTo(this);
+    })
 
 
 });

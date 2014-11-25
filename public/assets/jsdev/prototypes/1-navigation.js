@@ -9,7 +9,7 @@ var Navigation = function (nav, hero, stickyHeader) {
     this.scroll = 0;
 
     this.init();
-    this.checkScrollPosition();
+    //this.checkScrollPosition();
 
 }
 
@@ -20,10 +20,12 @@ Navigation.prototype = {
         if (this.hero.length > 0) {
             this.addHeroClass();
         }
+        /*
         if (this.sticky.length > 0) {
             this.stickyTop = this.sticky.offset().top;
             this.stick();
         }
+        */
 
     },
     addHeroClass: function () {
@@ -31,7 +33,7 @@ Navigation.prototype = {
     },
     removeHeroClass: function () {
         this.nav.removeClass(this.heroClass);
-    },
+    }/*,
     addStickyClass: function(){
         this.sticky.addClass('navbar-fixed-top');
         this.sticky.css({'top':this.height })
@@ -65,7 +67,7 @@ Navigation.prototype = {
         else{
             self.removeStickyClass();
         }
-    }
+    }*/
 
 }
 
