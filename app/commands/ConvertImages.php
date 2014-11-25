@@ -44,6 +44,12 @@ class ConvertImages extends Command
             $dir = hashDir($user->id, 'u');
             $user_completed[$user->id] = $user->directory;
 
+
+
+
+            $user->directory = $dir;
+            $user->save();
+
             $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)]));
             if (!empty($user->image) && strpos($user->image, '.') !== false) {
                 $extension = explode('.', $user->image);
@@ -87,10 +93,6 @@ class ConvertImages extends Command
                     $this->error('Copy To: public/' . $dir . '/' . $user_file_name);
                 }
             }
-
-
-            $user->directory = $dir;
-            $user->save();
         }
 
 
