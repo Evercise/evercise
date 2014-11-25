@@ -37,6 +37,7 @@ Route::get(
 Route::group(['prefix' => 'ajax'], function () {
     // register
     Route::post('/users-store', array('as' => 'users.store', 'uses' => 'ajax\UsersController@store'));
+    Route::post('/users-update', array('as' => 'users.update', 'uses' => 'ajax\UsersController@update'));
     Route::post('/trainers/store', array('as' => 'trainers.store', 'uses' => 'ajax\TrainersController@store'));
     // login
     Route::post('/auth/login', array('as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin'));
