@@ -210,10 +210,12 @@ class Evercisegroup extends \Eloquent
         $sessionmember_ids = []; // For rating
         $pastSessions = [];
         $futureSessions = [];
-        $nextSessions = [];
+        $nextSessions = []; // Links past session with the next Future session (of the same group) which this member has signed up for
 
+        $pastSessionsAwaitingFutureBuddy = [];
         foreach ($user->sessions as $key => $session)
         {
+            // Past sessions
             if (new DateTime($session->date_time) < $currentDate)
             {
                 if (! array_key_exists($session->id, $futureSessions))
@@ -221,13 +223,18 @@ class Evercisegroup extends \Eloquent
                 foreach($session->sessionmembers as $sessionmember)
                     $sessionmember_ids[$session->id] = $sessionmember->id;
 
-                //if()
-                //$nextSessions = $session->evercisegroup->
+                $pastSessionsAwaitingFutureBuddy[$session->evercisegroup->id] = $session->id;
             }
+            // Future sessions
             else
             {
                 if (! array_key_exists($session->id, $futureSessions))
                     $futureSessions[$session->id] = $session;
+
+                if(array_key_exists($session->evercisegroup->id, $pastSessionsAwaitingFutureBuddy))
+                {
+                    $nextSessions[$pastSessionsAwaitingFutureBuddy[$session->evercisegroup->id]] = $session->id;
+                }
 
             }
 
@@ -238,6 +245,7 @@ class Evercisegroup extends \Eloquent
             'future_sessions' => $futureSessions,
             'sessionmember_ids' => $sessionmember_ids,
             'user_id' => $user->id,
+            'next_sessions' => $nextSessions,
         ];
 
         return $data;
@@ -733,6 +741,22 @@ class Evercisegroup extends \Eloquent
             'date_time',
             'asc'
         );
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function nextFutureSession()
+    {
+        return $this->hasMany('Evercisesession')
+            ->where('date_time', '>=', DB::raw('NOW()'))
+            ->take(1)
+            ->orderBy(
+            'date_time',
+            'asc'
+            )
+            ->first();
 
     }
 
