@@ -84,7 +84,7 @@ Route::filter('trainer', function()
 {
     // Kick out if not a trainer - send to trainer sign up page
     if (! Trainer::isTrainerLoggedIn())
-        return Redirect::route('trainers.create');
+        return Redirect::route('trainer');
 });
 
 

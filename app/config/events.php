@@ -40,6 +40,27 @@
  * class.index.all => Index all Classes
  *
  * user.admin.trainerCreate => ($user, $trainer) when a admin creates a trainer
+ *
+ *activity.class.payed =>  $class, $user
+ *activity.class.canceled  $class, $user
+ *activity.class.create  $class, $user
+ *activity.class.update  $class, $user
+ *activity.class.delete  $class, $user
+ *activity.venue.create  $venue, $user
+ *activity.venue.update  $venue, $user
+ *activity.venue.delete  $venue, $user
+
+ *activity.session.create  $class, $user
+ *activity.session.update  $class, $user
+ *activity.session.delete  $class, $user
+
+ *activity.wallet.topup  $user, $amount
+ *activity.wallet.withdraw  $user, $amount
+
+ *activity.user.editprofile  $user
+ *activity.user.facebook  $user
+ *activity.user.twitter  $user
+ *activity.user.invite  $user, $email
  */
 
 
@@ -63,7 +84,28 @@ return [
         ['class.index.single' => 'Indexer@indexSingle'],
         ['class.index.all' => 'Indexer@indexAll'],
         ['stats.class.counter' => 'Stats@classViewed']
+    ],
+    '20' => [
+        ['activity.class.payed' => 'Activity@payedClass'],  // $class, $user
+        ['activity.class.canceled' => 'Activity@canceledClass'],  // $class, $user
+        ['activity.class.create' => 'Activity@createdClass'],  // $class, $user
+        ['activity.class.update' => 'Activity@updatedClass'],  // $class, $user
+        ['activity.class.delete' => 'Activity@deletedClass'],  // $class, $user
+        ['activity.venue.create' => 'Activity@createdVenue'],  // $venue, $user
+        ['activity.venue.update' => 'Activity@updatedVenue'],  // $venue, $user
+        ['activity.venue.delete' => 'Activity@deletedVenue'],  // $venue, $user
 
+        ['activity.session.create' => 'Activity@createdSessions'],  // $class, $user
+        ['activity.session.update' => 'Activity@updatedSessions'],  // $class, $user
+        ['activity.session.delete' => 'Activity@deletedSessions'],  // $class, $user
+
+        ['activity.wallet.topup' => 'Activity@walletToppup'],  // $user, $amount
+        ['activity.wallet.withdraw' => 'Activity@walletWithdraw'],  // $user, $amount
+
+        ['activity.user.editprofile' => 'Activity@userEditProfile'],  // $user
+        ['activity.user.facebook' => 'Activity@linkFacebook'],  // $user
+        ['activity.user.twitter' => 'Activity@linkTwitter'],  // $user
+        ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
 
     ]
 ];

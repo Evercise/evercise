@@ -607,6 +607,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->hasOne('Wallet');
     }
 
+    public function getWallet()
+    {
+        if(! isset($this->wallet))
+        {
+            Wallet::createIfDoesntExist($this->id);
+        }
+        return $this->wallet;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

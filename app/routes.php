@@ -59,11 +59,14 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('sessions/store', [ 'as' => 'sessions.store', 'uses' => 'ajax\SessionsController@store' ]);
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
 
+    Route::post('/sessions/getparticipants', ['as'=>'sessions.get.participants', 'uses'=>'ajax\SessionsController@getParticipants'] );
+
+
     // venue
     Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
 
     // evercise groups
-    Route::post( 'evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
+    Route::post('evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
     Route::post('publish', ['as' => 'evercisegroups.publish','before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
@@ -161,11 +164,13 @@ Route::post(
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
 // trainers
-Route::get('trainers/create', array('as' => 'trainer', 'uses' => 'TrainersController@create'));
-Route::get('trainers/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
-Route::get('trainers/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));
-Route::get('trainers/{id}/edit/{tab}', array('as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit'));
-Route::put('trainers/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
+Route::group(['prefix' => 'trainers'], function () {
+    Route::get('/create', array('as' => 'trainers.create', 'uses' => 'TrainersController@create'));
+    Route::get('/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
+    Route::get('/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));
+    Route::get('/{id}/edit/{tab}', array('as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit'));
+    Route::put('/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
+});
 
 // evercisegroups (classes)
 Route::get(
@@ -192,19 +197,6 @@ Route::post(
     array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG')
 );
 
-
-
-//NEW STATIC PAGES
-
-// layouts and static pages
-Route::get('uk/about', array('as' => 'static.about', 'uses' => 'StaticController@show'));
-Route::get('uk/terms_of_use', array('as' => 'static.terms_of_use', 'uses' => 'StaticController@show'));
-Route::get('uk/privacy', array('as' => 'static.privacy', 'uses' => 'StaticController@show'));
-Route::get('uk/the_team', array('as' => 'static.the_team', 'uses' => 'StaticController@show'));
-Route::get('uk/faq', array('as' => 'static.faq', 'uses' => 'StaticController@show'));
-Route::get('uk/class_guidelines', array('as' => 'static.class_guidelines', 'uses' => 'StaticController@show'));
-Route::get('uk/contact_us', array('as' => 'static.contact_us', 'uses' => 'StaticController@show'));
-Route::get('uk/how_it_works', array('as' => 'static.how_it_works', 'uses' => 'StaticController@show'));
 
 //Redirect All UK segments to the same function and we will go from there
 Route::any('/uk/{allsegments}', array('as' => 'search.parse', 'uses' => 'SearchController@parseUrl'))->where(
@@ -304,6 +296,8 @@ Route::get('/sessions/{sessionId}/mail_trainer/{trainerId}',
 Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
+
+
 
 
 
@@ -451,6 +445,13 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 Route::get('/iggy_login', function() {
     Sentry::logout();
     $user = Sentry::findUserById(323);
+    Sentry::login($user);
+
+    return Redirect::route('admin.dashboard');
+});
+Route::get('/tris_login', function() {
+    Sentry::logout();
+    $user = Sentry::findUserById(169);
     Sentry::login($user);
 
     return Redirect::route('admin.dashboard');

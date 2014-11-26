@@ -14,7 +14,7 @@
     </div>
     @if( empty($session->sessionmembers[0]->rating))
         <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center">
-            <div cla ss=" col-sm-12">
+            <div class=" col-sm-12">
                 <span>Rate it</span>
             </div>
             <div class="rate-it">
@@ -59,7 +59,9 @@
             </div>
         </div>
     @endif
-    @if($session->sessionmembers[0]->rating)
+
+
+    @if($session->sessionmembers[0]->rating) {{-- If there is a future session of this group, not signed up to--}}
         <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
             <div class=" col-sm-7">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
@@ -75,31 +77,32 @@
                 </div>
             </div>
         </div>
-    @else
+    @elseif(true) {{-- User has signed up to a future session of this group --}}
+        <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper">
+            <div class=" col-sm-7">
+                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+            </div>
+            <div class=" col-sm-7">
+                <span>Tickets purchased: {{ count($session->userSessionmembers($data['user_id'])) }}</span>
+             </div>
+            <div class=" col-sm-5">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <strong class="text-primary">&pound;{{ $session->price }}</strong>
+                    </div>
+                    <div class="col-xs-8">
+                        <button class="btn btn-default btn-block">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else {{-- There are no future sessions of this group --}}
 
         <div id="no-session" class="row panel-body bg-light-grey class-info-wrapper">
             <div class=" col-sm-7">
                 <span>No other classes available</span>
              </div>
         </div>
-    @endif
 
-    <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper">
-        <div class=" col-sm-7">
-            <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
-        </div>
-        <div class=" col-sm-7">
-            <span>Tickets purchased: {{ count($session->userSessionmembers($data['user_id'])) }}</span>
-         </div>
-        <div class=" col-sm-5">
-            <div class="row">
-                <div class="col-xs-4">
-                    <strong class="text-primary">&pound;{{ $session->price }}</strong>
-                </div>
-                <div class="col-xs-8">
-                    <button class="btn btn-default btn-block">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endif
 </div>
