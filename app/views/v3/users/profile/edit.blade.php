@@ -34,8 +34,8 @@
                             </div>
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('confirmed_password', 'Confirmed Password' , ['class' => 'mb15'])  }}
-                                 {{ Form::password('confirmed_password', ['class' => 'form-control', 'placeholder' => 'confirm your password']) }}
+                                 {{ Form::label('password_confirmation', 'Confirmed Password' , ['class' => 'mb15'])  }}
+                                 {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'confirm your password']) }}
                                </div>
                             </div>
                         </div>

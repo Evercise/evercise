@@ -154,8 +154,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             array(
                 'first_name' => 'required|max:15|min:2',
                 'last_name' => 'required|max:15|min:2',
-                'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'dob' => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 'phone' => 'numeric',
+                'password' => 'confirmed|min:6|max:32',
             )
         );
         return $validator;
@@ -170,19 +171,18 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $area_code
      * @param $phone
      */
-    public function updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone)
+    public function updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password)
     {
-        $user->update(
-            array(
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'dob' => $dob,
-                'gender' => $gender,
-                'image' => $image,
-                'area_code' => $area_code,
-                'phone' => $phone,
-            )
-        );
+        $this->update(array_filter([
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'dob' => $dob,
+            'gender' => $gender,
+            'image' => $image,
+            'area_code' => $area_code,
+            'phone' => $phone,
+            'password' => $password,
+        ]));
     }
 
     public function checkProfileMilestones()
