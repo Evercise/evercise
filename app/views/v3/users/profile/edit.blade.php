@@ -2,7 +2,7 @@
 <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="row">
-                    {{ Form::open(['route' => 'users.update', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
+                    {{ Form::open(['route' => 'users.update', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'update-user-form'] ) }}
                         <div class="row  mt10">
                             <div class="col-sm-6">
                                <div class="form-group mb50">
