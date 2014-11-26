@@ -79,8 +79,8 @@ class TrainersController extends \BaseController {
 
 		// check if trainer has classes else redirect them home
 		try{
-			$evercisegroups = Evercisegroup::has('evercisesession')
-			->with('evercisesession')
+			$evercisegroups = Evercisegroup::has('futuresessions')
+			->with('futuresessions')
 			->with('venue')
 			->where('user_id', $trainer->user->id)->get();
 		}catch(Exception $e){
@@ -108,13 +108,18 @@ class TrainersController extends \BaseController {
 	    {
 	    	$ratings = [];
 	    }
+
+        $data =[
+            'trainer' => $trainer,
+            'evercisegroups' => $evercisegroups,
+            'stars' => $stars,
+            'totalStars' => $totalStars,
+            'ratings' => $ratings
+        ];
 	    
-		return View::make('trainers.show')
-				->with('trainer', $trainer)
-				->with('evercisegroups', $evercisegroups)
-				->with('stars', $stars)
-				->with('totalStars', $totalStars)
-				->with('ratings', $ratings);
+		return View::make('v3.trainers.show')
+				->with('data', $data)
+                ->with('tab', 0);
 	}
 
 	/**

@@ -7950,47 +7950,89 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -536px -490px;
 }
-.icon-fb {
+.icon-fb-white {
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -411px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-fb.active {
-  background-position: -50px -491px;
+.icon-fb-white.active {
+  background-position: -50px -451px;
 }
-.icon-fb.hover:hover,
-.icon-fb.active:hover {
+.icon-fb-white.hover:hover,
+.icon-fb-white.active:hover {
   cursor: pointer;
-  background-position: -50px -491px;
+  background-position: -50px -451px;
 }
-.icon-twitter {
+.icon-twitter-white {
   background-image: url("../img/ev_site_icons.png");
   background-position: -90px -411px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-twitter.active {
-  background-position: -90px -491px;
+.icon-twitter-white.active {
+  background-position: -90px -451px;
 }
-.icon-twitter.hover:hover,
-.icon-twitter.active:hover {
+.icon-twitter-white.hover:hover,
+.icon-twitter-white.active:hover {
   cursor: pointer;
-  background-position: -90px -491px;
+  background-position: -90px -451px;
 }
-.icon-google {
+.icon-google-white {
   background-image: url("../img/ev_site_icons.png");
   background-position: -130px -411px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-google.active {
+.icon-google-white.active {
+  background-position: -130px -451px;
+}
+.icon-google-white.hover:hover,
+.icon-google-white.active:hover {
+  cursor: pointer;
+  background-position: -130px -451px;
+}
+.icon-fb {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -50px -491px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-fb.active {
+  background-position: -50px -531px;
+}
+.icon-fb.hover:hover,
+.icon-fb.active:hover {
+  cursor: pointer;
+  background-position: -50px -531px;
+}
+.icon-twitter {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -90px -491px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-twitter.active {
+  background-position: -90px -531px;
+}
+.icon-twitter.hover:hover,
+.icon-twitter.active:hover {
+  cursor: pointer;
+  background-position: -90px -531px;
+}
+.icon-google {
+  background-image: url("../img/ev_site_icons.png");
   background-position: -130px -491px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-google.active {
+  background-position: -130px -531px;
 }
 .icon-google.hover:hover,
 .icon-google.active:hover {
   cursor: pointer;
-  background-position: -130px -491px;
+  background-position: -130px -531px;
 }
 .icon-lg-tweeter {
   background-image: url("../img/ev_site_icons.png");
@@ -8729,9 +8771,6 @@ fieldset[disabled] .btn-blank.active {
 }
 .class-hub-panel .class-info-wrapper form {
   padding: 0 15px;
-}
-.class-hub-panel .class-image-wrapper img {
-  margin-left: -52px;
 }
 .class-snippet-wrapper {
   box-shadow: 3px 0 2px -2px rgba(56, 61, 72, 0.5);
@@ -10163,6 +10202,14 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   position: fixed;
   top: 100px;
   right: 80px;
+}
+.alert.absolute {
+  position: absolute;
+  left: 30px;
+  right: 30px;
+}
+.alert.alert-sm {
+  padding: 5px 35px 5px 5px;
 }
 .carousel-control.left {
   background-image: none;

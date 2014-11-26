@@ -13,8 +13,8 @@ Cart.prototype = {
         $(document).on('submit', '.remove-row', function(e){
             self.submit( $('.remove-row'), e);
         })
-        this.addTo.on('submit', function(e){
-            self.submit( $(this), e);
+        $(document).on('submit', '.add-to-class', function(e){
+            self.submit( $('.add-to-class'), e);
         })
     },
     submit: function(form , e){

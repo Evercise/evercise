@@ -8,7 +8,8 @@
                     <th class="text-center">Duration</th>
                     <th class="text-center">Tickets</th>
                     <th class="text-center">Price (GBP)</th>
-                    <th class="text-center">Options</th>
+                    <th class="text-center">{{ (isset($mode) && $mode == 'edit'?  'Options' : '') }}</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -20,14 +21,34 @@
                         <td>{{ count($session->sessionmembers).'/'.$session->tickets}}</td>
                         <td>{{'&pound'. $session->price}}</td>
                         <td class="text-right">
+                            @if( isset($mode) && $mode == 'edit')
 
-                            {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session']) }}
-                                <span class="icon icon-mail mr15 hover"></span>
-                                <span class="icon icon-download mr15 hover"></span>
-                                <span class="icon icon-people mr15 hover"></span>
-                                {{ Form::hidden('id', $session->id) }}
-                                {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
-                            {{ Form::close() }}
+                                {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session']) }}
+                                    <span class="icon icon-mail mr15 hover"></span>
+                                    <span class="icon icon-download mr15 hover"></span>
+                                    <span class="icon icon-people mr15 hover"></span>
+                                    {{ Form::hidden('id', $session->id) }}
+                                    {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
+                                {{ Form::close() }}
+                            @else
+                                {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
+                                    <span>
+                                        <strong class="text-primary mr25 lead">&pound;{{ $session->price }} </strong>
+                                    </span>
+
+                                    <div class="btn-group pull-right">
+                                        {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
+
+                                          <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                            @for($i=1; $i<($session->tickets - count($session->sessionmembers) + 1 ); $i++)
+                                            <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                          </select>
+
+                                    </div>
+                                {{ Form::close() }}
+                            @endif
                         </td>
                     </tr>
                 @endforeach

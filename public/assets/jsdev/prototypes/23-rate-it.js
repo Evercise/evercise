@@ -109,7 +109,7 @@ RateIt.prototype = {
                 OTransition      : 'transform 1s ease-in-out',
                 transition       : 'transform 1s ease-in-out'
             });
-            this.form.find("input[type='submit']").after('<div class="alert alert-danger alert-dismissible fade in pull-right" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>You must add your star rating</div>');
+            this.form.append('<div class="alert alert-danger alert-dismissible fade in absolute alert-sm" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>You must add your star rating</div>');
         }
         else{
             this.ajaxUpload();

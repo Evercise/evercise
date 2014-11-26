@@ -32,9 +32,9 @@
                 <li class="{{ count($data['allRatings']) == 0 ? 'disabled' : null}}"><a href="#ratings" >Reviews</a></li>
                 <li class="text-center">
                     <span>
-                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->facebook()  }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>
-                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->twitter()  }}" target="_blank"><span class="icon icon-twitter mr20 hover"></span> </a>
-                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->gplus()  }}" target="_blank"><span class="icon icon-google hover"></span> </a>
+                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->facebook()  }}" target="_blank"><span class="icon icon-fb-white mr20 hover"></span> </a>
+                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->twitter()  }}" target="_blank"><span class="icon icon-twitter-white mr20 hover"></span> </a>
+                        <a href="{{ Share::load(Request::url() , $data['evercisegroup']->name)->gplus()  }}" target="_blank"><span class="icon icon-google-white hover"></span> </a>
                     </span>
                 </li>
               </ul>
@@ -63,7 +63,7 @@
                                 <div class="condensed">
                                     <strong>This class is presented by</strong>
                                 </div>
-                                <span>{{ $data['trainer']->user->display_name }}</span>
+                                <span>{{ Html::linkRoute('trainers.show', $data['trainer']->user->display_name, $data['trainer']->user->id) }}</span>
                             </div>
                         </div>
 
@@ -115,7 +115,7 @@
                                                 {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
 
                                                   <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-                                                    @for($i=0; $i<($futuresession->tickets - $data['members'][$futuresession->id] + 1 ); $i++)
+                                                    @for($i=1; $i<($futuresession->tickets - $data['members'][$futuresession->id] + 1 ); $i++)
                                                     <option value="{{$i}}">{{$i}}</option>
                                                     @endfor
                                                   </select>
