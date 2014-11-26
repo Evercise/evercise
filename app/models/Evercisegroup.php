@@ -741,23 +741,16 @@ class Evercisegroup extends \Eloquent
             'date_time',
             'asc'
         );
-
     }
 
     /**
      * @return mixed
      */
-    public function nextFutureSession()
+    public function getNextFutureSession()
     {
         return $this->hasMany('Evercisesession')
             ->where('date_time', '>=', DB::raw('NOW()'))
-            ->take(1)
-            ->orderBy(
-            'date_time',
-            'asc'
-            )
             ->first();
-
     }
 
     /**

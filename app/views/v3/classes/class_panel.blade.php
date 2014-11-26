@@ -12,52 +12,54 @@
 
          </div>
     </div>
-    @if( empty($session->sessionmembers[0]->rating))
-        <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center">
-            <div class=" col-sm-12">
-                <span>Rate it</span>
-            </div>
-            <div class="rate-it">
-                 <div class="mb40 col-sm-12">
-                     <span class="icon icon-empty-star"></span>
-                     <span class="icon icon-empty-star"></span>
-                     <span class="icon icon-empty-star"></span>
-                     <span class="icon icon-empty-star"></span>
-                     <span class="icon icon-empty-star"></span>
-                 </div>
+    @if($session->isInPast())
+        @if( empty($session->sessionmembers[0]->rating))
+            <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center">
+                <div class=" col-sm-12">
+                    <span>Rate it</span>
+                </div>
+                <div class="rate-it">
+                     <div class="mb40 col-sm-12">
+                         <span class="icon icon-empty-star"></span>
+                         <span class="icon icon-empty-star"></span>
+                         <span class="icon icon-empty-star"></span>
+                         <span class="icon icon-empty-star"></span>
+                         <span class="icon icon-empty-star"></span>
+                     </div>
 
-                {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating-'.$session->id] ) }}
-                    {{ Form::hidden('stars', null, ['id' => 'stars']) }}
-                    {{ Form::hidden('sessionmember_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
-                    <div class="form-group pull-left">
-                        {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '8', 'placeholder' => 'Add your review about the class...'])}}
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-default" type="button">Cancel</button>
-                        {{ Form::submit('Add Review', ['class' => 'btn btn-primary'] )  }}
-                    </div>
-                {{ Form::close() }}
-            </div>
-        </div>
-    @else
-        <div id="user-rating" class="row panel-body bg-light-grey class-info-wrapper">
-            <div class=" col-sm-7">
-                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
-            </div>
-            <div class="col-sm-12">
-                <em><small>You said:</small></em>
-            </div>
-            <div class="col-sm-12">
-                <div class="class-rating-wrapper">
-                    @for ($i = 0; $i < 5; $i++)
-                        <span class="icon icon-{{ $i < $session->userSessionmembers($data['user_id'])[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
-                    @endfor
+                    {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating-'.$session->id] ) }}
+                        {{ Form::hidden('stars', null, ['id' => 'stars']) }}
+                        {{ Form::hidden('sessionmember_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
+                        <div class="form-group pull-left">
+                            {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '8', 'placeholder' => 'Add your review about the class...'])}}
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="button">Cancel</button>
+                            {{ Form::submit('Add Review', ['class' => 'btn btn-primary'] )  }}
+                        </div>
+                    {{ Form::close() }}
                 </div>
             </div>
-            <div class="col-sm-12">
-                <p>{{$session->sessionmembers[0]->rating['comment']}}</p>
+        @else
+            <div id="user-rating" class="row panel-body bg-light-grey class-info-wrapper">
+                <div class=" col-sm-7">
+                    <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+                </div>
+                <div class="col-sm-12">
+                    <em><small>You said:</small></em>
+                </div>
+                <div class="col-sm-12">
+                    <div class="class-rating-wrapper">
+                        @for ($i = 0; $i < 5; $i++)
+                            <span class="icon icon-{{ $i < $session->userSessionmembers($data['user_id'])[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
+                        @endfor
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <p>{{$session->sessionmembers[0]->rating['comment']}}</p>
+                </div>
             </div>
-        </div>
+        @endif
     @endif
 
 
@@ -81,15 +83,15 @@
                 </div>
             </div>
         </div>
-    @elseif($session->evercisegroup->nextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
+    @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
         <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
             <div class=" col-sm-7">
-                <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->nextFutureSession()->formattedDate().', '.$session->evercisegroup->nextFutureSession()->formattedTime() }}</span>
+                <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->getNextFutureSession()->formattedDate().', '.$session->evercisegroup->getNextFutureSession()->formattedTime() }}</span>
             </div>
             <div class=" col-sm-5">
                 <div class="row">
                     <div class="col-xs-4">
-                        <strong class="text-primary">&pound;{{$session->evercisegroup->nextFutureSession()->price}}</strong>
+                        <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
                     </div>
                     <div class="col-xs-8">
                         {{ Form::open(['id' => 'add-to-cart', 'url' => route('cart.add'), 'method' => 'post', 'class' => '']) }}
