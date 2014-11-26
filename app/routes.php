@@ -161,7 +161,7 @@ Route::post(
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
 // trainers
-Route::get('trainers/create', array('as' => 'trainer', 'uses' => 'TrainersController@create'));
+Route::get('trainers/create', array('as' => 'trainers.create', 'uses' => 'TrainersController@create'));
 Route::get('trainers/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
 Route::get('trainers/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));
 Route::get('trainers/{id}/edit/{tab}', array('as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit'));
@@ -192,19 +192,6 @@ Route::post(
     array('as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG')
 );
 
-
-
-//NEW STATIC PAGES
-
-// layouts and static pages
-Route::get('uk/about', array('as' => 'static.about', 'uses' => 'StaticController@show'));
-Route::get('uk/terms_of_use', array('as' => 'static.terms_of_use', 'uses' => 'StaticController@show'));
-Route::get('uk/privacy', array('as' => 'static.privacy', 'uses' => 'StaticController@show'));
-Route::get('uk/the_team', array('as' => 'static.the_team', 'uses' => 'StaticController@show'));
-Route::get('uk/faq', array('as' => 'static.faq', 'uses' => 'StaticController@show'));
-Route::get('uk/class_guidelines', array('as' => 'static.class_guidelines', 'uses' => 'StaticController@show'));
-Route::get('uk/contact_us', array('as' => 'static.contact_us', 'uses' => 'StaticController@show'));
-Route::get('uk/how_it_works', array('as' => 'static.how_it_works', 'uses' => 'StaticController@show'));
 
 //Redirect All UK segments to the same function and we will go from there
 Route::any('/uk/{allsegments}', array('as' => 'search.parse', 'uses' => 'SearchController@parseUrl'))->where(
