@@ -25,7 +25,7 @@ function RateIt(block){
 RateIt.prototype = {
     constructor: RateIt,
     init: function(){
-        $("input[type='submit']").prop('disabled', true);
+        this.block.find("input[type='submit']").prop('disabled', true);
         this.addListeners();
         this.validation();
     },
