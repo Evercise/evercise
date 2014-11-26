@@ -11,10 +11,7 @@
                 @endfor
             </div>
 
-            @if( isset($mode) && $mode != 'user')
-                <button class="btn btn-default mr15">Clone Class</button>
-                <button id="edit-{{$evercisegroup->id}}" class="btn btn-default toggle-switch disabled" data-toggle="collapse" data-target=".hub-table-row" data-removeclass="btn-default" data-switchclass="btn-transparent-grey" data-switchtext="Done Editing">Edit Class</button>
-            @else
+            @if( isset($mode) && $mode == 'user')
                 <div class="mt40">
                     <strong class="mr20">Share this class:</strong>
                     <span>
@@ -24,6 +21,9 @@
                     </span>
                 </div>
 
+            @else
+                <button class="btn btn-default mr15">Clone Class</button>
+                <button id="edit-{{$evercisegroup->id}}" class="btn btn-default toggle-switch disabled" data-toggle="collapse" data-target=".hub-table-row" data-removeclass="btn-default" data-switchclass="btn-transparent-grey" data-switchtext="Done Editing">Edit Class</button>
             @endif
         </div>
     </div>
