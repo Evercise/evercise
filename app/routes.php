@@ -161,11 +161,13 @@ Route::post(
 Route::get('/users/{display_name}/logout', array('as' => 'users.logout', 'uses' => 'UsersController@logout'));
 
 // trainers
-Route::get('trainers/create', array('as' => 'trainers.create', 'uses' => 'TrainersController@create'));
-Route::get('trainers/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
-Route::get('trainers/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));
-Route::get('trainers/{id}/edit/{tab}', array('as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit'));
-Route::put('trainers/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
+Route::group(['prefix' => 'trainers'], function () {
+    Route::get('/create', array('as' => 'trainers.create', 'uses' => 'TrainersController@create'));
+    Route::get('/{id}/edit', array('as' => 'trainers.edit', 'uses' => 'TrainersController@edit'));
+    Route::get('/{id}', array('as' => 'trainers.show', 'uses' => 'TrainersController@show'));
+    Route::get('/{id}/edit/{tab}', array('as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit'));
+    Route::put('/update/{id}', array('as' => 'trainers.update', 'uses' => 'TrainersController@update'));
+});
 
 // evercisegroups (classes)
 Route::get(
