@@ -682,6 +682,14 @@ class Evercisesession extends \Eloquent
         return $this->tickets - count($this->sessionmembers);
     }
 
+    public function isInPast()
+    {
+        if (new DateTime($this->date_time) < new DateTime())
+            return true;
+        else
+            return false;
+    }
+
 
 
 
