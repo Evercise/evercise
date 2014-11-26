@@ -842,7 +842,7 @@ class Evercisegroup extends \Eloquent
      */
     public function featuredClasses()
     {
-        return $this->b('FeaturedClasses');
+        return $this->belongsTo('FeaturedClasses');
     }
 
     /**
