@@ -444,6 +444,13 @@ Route::get('/iggy_login', function() {
 
     return Redirect::route('admin.dashboard');
 });
+Route::get('/tris_login', function() {
+    Sentry::logout();
+    $user = Sentry::findUserById(169);
+    Sentry::login($user);
+
+    return Redirect::route('admin.dashboard');
+});
 
 // -------------  ADMIN STUFF ---------------
 

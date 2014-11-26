@@ -206,11 +206,11 @@ class Evercisegroup extends \Eloquent
      */
     public static function getUserHub($user)
     {
-        $totalMembers = array();
         $currentDate = new DateTime();
         $sessionmember_ids = []; // For rating
         $pastSessions = [];
         $futureSessions = [];
+        $nextSessions = [];
 
         foreach ($user->sessions as $key => $session)
         {
@@ -218,21 +218,24 @@ class Evercisegroup extends \Eloquent
             {
                 if (! array_key_exists($session->id, $futureSessions))
                     $pastSessions[$session->id] = $session;
-                $totalMembers[$key][] = count($session->sessionmembers);
                 foreach($session->sessionmembers as $sessionmember)
                     $sessionmember_ids[$session->id] = $sessionmember->id;
+
+                //if()
+                //$nextSessions = $session->evercisegroup->
             }
             else
             {
                 if (! array_key_exists($session->id, $futureSessions))
                     $futureSessions[$session->id] = $session;
+
             }
 
         }
 
         $data = [
-            'past_sessions' => $pastSessions ?: [],
-            'future_sessions' => $futureSessions ?: [],
+            'past_sessions' => $pastSessions,
+            'future_sessions' => $futureSessions,
             'sessionmember_ids' => $sessionmember_ids,
             'user_id' => $user->id,
         ];
