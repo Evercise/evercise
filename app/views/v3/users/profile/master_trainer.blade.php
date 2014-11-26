@@ -42,6 +42,9 @@
         <div id="upcoming" class="{{ $tab === 'upcoming' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.upcoming_classes', ['sessions' => $data['future_sessions']])
         </div>
+        <div id="activity" class="{{ $tab === 'activity' ? 'profile-panels' : 'hidden profile-panels' }}">
+            @include('v3.users.profile.activity')
+        </div>
         <div id="wallet" class="{{ $tab === 'wallet' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.wallet')
         </div>

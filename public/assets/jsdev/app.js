@@ -9,7 +9,7 @@ if(typeof angular != 'undefined') {
     app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
         GoogleMapApi.configure({
             v: '3.16',
-            libraries: 'weather,geometry,visualization'
+            libraries: 'places'
         });
     }]);
 

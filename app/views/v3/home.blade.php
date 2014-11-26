@@ -33,7 +33,7 @@
                             {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...']) }}
 
                             <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
-                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location']) }}
+                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
 
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}

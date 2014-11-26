@@ -156,6 +156,9 @@ $(function(){
     $('.rate-it').exists(function(){
         new RateIt(this);
     })
+    $('#location-auto-complete').exists(function(){
+        autocomplete = new LocationAutoComplete(this);
+    })
 
 
 });

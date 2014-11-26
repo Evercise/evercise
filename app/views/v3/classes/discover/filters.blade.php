@@ -11,7 +11,7 @@
                 <div class="col-sm-4">
                     <div class="input-group with-addon">
                         <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
-                        {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location...']) }}
+                        {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location...', 'id' => 'location-auto-complete']) }}
                     </div>
                 </div>
                 <div class="col-sm-4">
