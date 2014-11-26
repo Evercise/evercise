@@ -7,7 +7,7 @@
            @if(isset($sessions) ? (count($sessions) ? true : false ) : false )
                @foreach($sessions as $session)
                     <div class="col-md-6 masonry-item">
-                        @include('v3.classes.class_panel',['show'=>($session->sessionmembers[0]->rating ? 'user-rating' : 'rate-it')])
+                        @include('v3.classes.class_panel')
                     </div>
                @endforeach
           @else

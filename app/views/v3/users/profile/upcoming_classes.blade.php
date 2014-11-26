@@ -7,7 +7,7 @@
            @if(isset($sessions) ? (count($sessions) ? true : false ) : false )
                @foreach($sessions as $session)
                     <div class="col-md-6 masonry-item">
-                        @include('v3.classes.class_panel', ['show' => 'upcoming-session'])
+                        @include('v3.classes.class_panel')
                     </div>
                 @endforeach
             @else

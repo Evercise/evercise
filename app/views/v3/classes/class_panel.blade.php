@@ -1,6 +1,5 @@
 <div id="panel-{{$session->id}}" class="class-panel center-block">
     <div class="row">
-    {{ var_dump($session) }}
 
         <div class="class-image-wrapper col-xs-4">
             {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
@@ -86,21 +85,21 @@
     @endif
 
     <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper">
-            <div class=" col-sm-7">
-                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
-            </div>
-            <div class=" col-sm-7">
-                <span>Tickets purchased: {{ count($session->userSessionmembers($data['user_id'])) }}</span>
-             </div>
-            <div class=" col-sm-5">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <strong class="text-primary">&pound;{{ $session->price }}</strong>
-                    </div>
-                    <div class="col-xs-8">
-                        <button class="btn btn-default btn-block">Cancel</button>
-                    </div>
+        <div class=" col-sm-7">
+            <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+        </div>
+        <div class=" col-sm-7">
+            <span>Tickets purchased: {{ count($session->userSessionmembers($data['user_id'])) }}</span>
+         </div>
+        <div class=" col-sm-5">
+            <div class="row">
+                <div class="col-xs-4">
+                    <strong class="text-primary">&pound;{{ $session->price }}</strong>
+                </div>
+                <div class="col-xs-8">
+                    <button class="btn btn-default btn-block">Cancel</button>
                 </div>
             </div>
         </div>
+    </div>
 </div>
