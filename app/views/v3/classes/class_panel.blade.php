@@ -5,7 +5,7 @@
             {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
         </div>
          <div class="class-title-wrapper col-xs-8">
-             <a href="#"><h3>{{ $session->evercisegroup->name }}</h3></a>
+             <a href="/class/{{$session->evercisegroup->id}}"><h3>{{ $session->evercisegroup->name }}</h3></a>
              <div class="mt20">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
              </div>
@@ -61,37 +61,41 @@
     @endif
 
 
-    @if($session->sessionmembers[0]->rating) {{-- If there is a future session of this group, not signed up to--}}
-        <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
-            <div class=" col-sm-7">
-                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
-            </div>
-            <div class=" col-sm-5">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <strong class="text-primary">&pound;16</strong>
-                    </div>
-                    <div class="col-xs-8">
-                        <button class="btn btn-default btn-block">Join Class</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @elseif(true) {{-- User has signed up to a future session of this group --}}
+
+    @if(isset($data['next_sessions'][$session->id])) {{-- User has signed up to a future session of this group --}}
         <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper">
             <div class=" col-sm-7">
-                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+                <span><span class="icon icon-clock"></span> {{ $data['future_sessions'][$data['next_sessions'][$session->id]]->formattedDate().', '.$data['future_sessions'][$data['next_sessions'][$session->id]]->formattedTime() }}</span>
             </div>
             <div class=" col-sm-7">
-                <span>Tickets purchased: {{ count($session->userSessionmembers($data['user_id'])) }}</span>
+                <span>Tickets purchased: {{ count($data['future_sessions'][$data['next_sessions'][$session->id]]->userSessionmembers($data['user_id'])) }}</span>
              </div>
             <div class=" col-sm-5">
                 <div class="row">
                     <div class="col-xs-4">
-                        <strong class="text-primary">&pound;{{ $session->price }}</strong>
+                        <strong class="text-primary">&pound;{{ $data['future_sessions'][$data['next_sessions'][$session->id]]->price }}</strong>
                     </div>
                     <div class="col-xs-8">
                         <button class="btn btn-default btn-block">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @elseif($session->evercisegroup->nextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
+        <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
+            <div class=" col-sm-7">
+                <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->nextFutureSession()->formattedDate().', '.$session->evercisegroup->nextFutureSession()->formattedTime() }}</span>
+            </div>
+            <div class=" col-sm-5">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <strong class="text-primary">&pound;{{$session->evercisegroup->nextFutureSession()->price}}</strong>
+                    </div>
+                    <div class="col-xs-8">
+                        {{ Form::open(['id' => 'add-to-cart', 'url' => route('cart.add'), 'method' => 'post', 'class' => '']) }}
+                            {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
+                            {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
+                        {{ Form::close() }}
                     </div>
                 </div>
             </div>
