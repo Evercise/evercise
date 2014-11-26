@@ -141,4 +141,12 @@ class SessionsController extends AjaxBaseController{
 
 
     }
+
+
+    public function getParticipants() {
+        $sessionId = Input::get('session_id');
+        $participants = Evercisesession::getMembers($sessionId);
+        return view('v3.sessions.participants', compact('participants'));
+    }
+
 }

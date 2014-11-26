@@ -59,11 +59,14 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('sessions/store', [ 'as' => 'sessions.store', 'uses' => 'ajax\SessionsController@store' ]);
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
 
+    Route::post('/sessions/getparticipants', ['as'=>'sessions.get.participants', 'uses'=>'ajax\SessionsController@getParticipants'] );
+
+
     // venue
     Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
 
     // evercise groups
-    Route::post( 'evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
+    Route::post('evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
     Route::post('publish', ['as' => 'evercisegroups.publish','before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
@@ -293,6 +296,8 @@ Route::get('/sessions/{sessionId}/mail_trainer/{trainerId}',
 Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
+
+
 
 
 
