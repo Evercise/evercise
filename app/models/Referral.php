@@ -24,13 +24,11 @@ class Referral extends \Eloquent
      */
     public static function checkReferralCode($rc)
     {
-        $referralCode = 0;
+        $referral = null;
         if (!is_null($rc)) {
-            if (!is_null(Referral::where('code', $rc)->first())) {
-                $referralCode = $rc;
-            }
+            $referral = Referral::where('code', $rc)->first();
         }
-        return $referralCode;
+        return $referral;
     }
 
     /**
@@ -47,5 +45,17 @@ class Referral extends \Eloquent
             $referral->update(['code' => '', 'referee_id' => $user_id]);
         }
         return $referral;
+    }
+
+    public static function validateEmail($inputs)
+    {
+
+        $validator = Validator::make(
+            $inputs,
+            [
+                'referee_email' => 'required|email|unique:users,email',
+            ]
+        );
+        return $validator;
     }
 }

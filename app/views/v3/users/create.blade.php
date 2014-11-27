@@ -1,6 +1,11 @@
 @extends('v3.layouts.master')
 @section('body')
     <div class="container first-container">
+        @if($referralCode)
+             <div class="referral-wrapper">
+                <p>Your referral code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['referral_signup'] }} credited to your account!</p>
+            </div>
+         @endif
         <div class="row text-center">
             <div class="underline">
                 <h1>Register</h1>
@@ -51,7 +56,7 @@
                             <div class="col-sm-6">
                                <div class="form-group mb50">
                                  {{ Form::label('email', 'Email Address', ['class' => 'mb15'] )  }}
-                                 {{ Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Enter your current email address']) }}
+                                 {{ Form::email('email', isset($email) ? $email : '', ['class' => 'form-control', 'placeholder' => 'Enter your current email address']) }}
                                </div>
                             </div>
                         </div>

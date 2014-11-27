@@ -8553,6 +8553,55 @@ fieldset[disabled] .btn-blank.active {
   right: 0;
   z-index: 1;
 }
+.stripe-button-el {
+  color: #ffffff;
+  background-color: #1c557e;
+  border-color: #174769;
+}
+.stripe-button-el:hover,
+.stripe-button-el:focus,
+.stripe-button-el:active,
+.stripe-button-el.active,
+.open > .dropdown-toggle.stripe-button-el {
+  color: #ffffff;
+  background-color: #133954;
+  border-color: #0c2537;
+}
+.stripe-button-el:active,
+.stripe-button-el.active,
+.open > .dropdown-toggle.stripe-button-el {
+  background-image: none;
+}
+.stripe-button-el.disabled,
+.stripe-button-el[disabled],
+fieldset[disabled] .stripe-button-el,
+.stripe-button-el.disabled:hover,
+.stripe-button-el[disabled]:hover,
+fieldset[disabled] .stripe-button-el:hover,
+.stripe-button-el.disabled:focus,
+.stripe-button-el[disabled]:focus,
+fieldset[disabled] .stripe-button-el:focus,
+.stripe-button-el.disabled:active,
+.stripe-button-el[disabled]:active,
+fieldset[disabled] .stripe-button-el:active,
+.stripe-button-el.disabled.active,
+.stripe-button-el[disabled].active,
+fieldset[disabled] .stripe-button-el.active {
+  background-color: #1c557e;
+  border-color: #174769;
+}
+.stripe-button-el .badge {
+  color: #1c557e;
+  background-color: #ffffff;
+}
+.stripe-button-el.btn {
+  padding: 5px 12px;
+}
+.stripe-button-el.btn span {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
 .btn-group.btn-block .btn {
   width: 80%;
   padding-left: 0px;
@@ -10202,6 +10251,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   position: fixed;
   top: 100px;
   right: 80px;
+  z-index: 9999;
 }
 .alert.absolute {
   position: absolute;

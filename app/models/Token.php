@@ -50,4 +50,26 @@ class Token extends \Eloquent
         ];
         return $facebookTokenArray;
     }
+
+    public function hasValidFacebookToken()
+    {
+        return $this->facebook ? true : false;
+    }
+
+    public function hasValidTwitterToken()
+    {
+        return $this->twitter ? true : false;
+    }
+
+    public static function createIfDoesntExist($user_id)
+    {
+        if (static::where('user_id', $user_id)->first())
+            return false;
+
+        $token = static::firstOrCreate([
+            'user_id'=>$user_id,
+        ]);
+
+        return $token;
+    }
 }

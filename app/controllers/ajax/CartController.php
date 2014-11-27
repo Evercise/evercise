@@ -99,8 +99,8 @@ class CartController extends AjaxBaseController
                     }
                 }
             }
-        }
 
+        }
         return $this->getCart();
     }
 

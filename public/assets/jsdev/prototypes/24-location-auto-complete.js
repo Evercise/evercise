@@ -9,9 +9,18 @@ LocationAutoComplete.prototype = {
     constructor: LocationAutoComplete,
     init: function(){
         var self = this;
-        if (window['google'])
+        //check if we are using angular as angualr ois loading google masp api
+        if (typeof angular != 'undefined')
         {
-            this.load();
+            if( window['google'] ){
+                this.load();
+            }
+            else{
+                setTimeout(function() {
+                    self.init();
+                }, 500);
+            }
+
         }
         else {
             if(!self.addScript){

@@ -11,6 +11,7 @@
                     <div class="col-sm-8 mt20">
                         <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
                     </div>
+                    <a href="/auth/logout">Log out</a>
                 </div>
 
             </div>

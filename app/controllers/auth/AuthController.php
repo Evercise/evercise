@@ -23,9 +23,7 @@ class AuthController extends \BaseController {
 	{
 		Sentry::logout();
 
-		
-
-		return Redirect::route('auth.login');
+		return Redirect::route('home');
 	}
 
 	/**

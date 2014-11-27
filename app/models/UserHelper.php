@@ -14,9 +14,9 @@ class UserHelper
             return false;
         }
 
-        Evercoin::create(['user_id' => $user_id, 'balance' => 0]);
-        Milestone::create(['user_id' => $user_id]);
-        Token::create(['user_id' => $user_id]);
+        Wallet::createIfDoesntExist($user_id);
+        Milestone::createIfDoesntExist($user_id);
+        Token::createIfDoesntExist($user_id);
     }
 
     /**
@@ -25,7 +25,7 @@ class UserHelper
      * @param bool $referal_code
      * @param int $user_id
      */
-    public static function checkReferalCode($referral_code = false, $user_id = 0)
+    public static function checkReferralCode($referral_code = false, $user_id = 0)
     {
 
         if ($referral = Referral::useReferralCode($referral_code, $user_id)) {
