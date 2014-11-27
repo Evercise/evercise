@@ -5,18 +5,11 @@
     <div class="container mt30">
         <h2>Confirmation</h2>
     </div>
-
-    <ul>
-        @foreach($data['cartData']['cartRows'] as $row)
-            <li>{{ $row->name . ' : ' . $row->options->date_time . ' : £' . $row->price }}</li>
-            <strong class="text-primary">x{{$row->qty}} . subtotal: &pound;{{ $row->price * $row->qty }}</strong>
-        @endforeach
-    </ul>
-
-    <strong>Total: £{{ $data['cartData']['total'] }}</strong>
-    <strong>Paid from wallet: £{{ $data['walletPayment'] }}</strong>
-    <strong>Total: £{{ $data['cartData']['total'] }}</strong>
-
-
+    {{ d($confirm, false) }}
+    {{ d($cart, false) }}
+    {{ d($payment_type, false) }}
+    {{ d($coupon', false) }}
+    {{ d($transaction, false) }}
+    {{ d($user, false) }}
 
 @stop

@@ -83,9 +83,11 @@ return [
         ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer'],
         ['class.index.single' => 'Indexer@indexSingle'],
         ['class.index.all' => 'Indexer@indexAll'],
-        ['stats.class.counter' => 'Stats@classViewed']
+        ['stats.class.counter' => 'Stats@classViewed'],
+
+        ['user.package.used' => 'Tracking@userChangePassword']
     ],
-    '20' => [
+    '5' => [
         ['activity.class.payed' => 'Activity@payedClass'],  // $class, $user
         ['activity.class.canceled' => 'Activity@canceledClass'],  // $class, $user
         ['activity.class.create' => 'Activity@createdClass'],  // $class, $user
@@ -101,11 +103,13 @@ return [
 
         ['activity.wallet.topup' => 'Activity@walletToppup'],  // $user, $amount
         ['activity.wallet.withdraw' => 'Activity@walletWithdraw'],  // $user, $amount
+        ['activity.user.coupon' => 'Activity@usedCoupon'],  // $user, $amount
 
         ['activity.user.editprofile' => 'Activity@userEditProfile'],  // $user
         ['activity.user.facebook' => 'Activity@linkFacebook'],  // $user
         ['activity.user.twitter' => 'Activity@linkTwitter'],  // $user
         ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
+        ['activity.user.package.used' => 'Activity@packageUsed'],  // $user, $userpackage, $session
 
     ]
 ];
