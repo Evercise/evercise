@@ -182,10 +182,10 @@
                                 <strong><span class="text-primary">&pound;5</span> FREE when you link to Facebook</strong>
                             </div>
                             <div class="col-sm-5">
-                                {{ HTML::decode(HTML::linkRoute('tokens.fbtoken', '<span class="icon icon-white-fb"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
+                                {{ HTML::decode(HTML::linkRoute('tokens.fbtoken', '<span class="icon icon-fb-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
                             </div>
                         @else
-                            <div class="col-sm-7 mt10">
+                            <div class="col-sm-12 mt10">
                                 <strong>Thanks for linking you Facebook account</strong>
                             </div>
                         @endif
@@ -198,10 +198,10 @@
                               <strong><span class="text-primary">&pound;5</span> FREE when you link to Twitter</strong>
                           </div>
                           <div class="col-sm-5">
-                              {{ HTML::decode(HTML::linkRoute('twitter', '<span class="icon icon-white-twitter"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}
+                              {{ HTML::decode(HTML::linkRoute('twitter', '<span class="icon icon-twitter-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}
                           </div>
                         @else
-                            <div class="col-sm-7 mt10">
+                            <div class="col-sm-12 mt10">
                                 <strong>Thanks for linking you Twitter account</strong>
                             </div>
                         @endif
