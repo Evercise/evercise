@@ -3,6 +3,8 @@ if(typeof angular != 'undefined') {
 
         $scope.everciseGroups = laracasts.mapResults;
 
+        $scope.results = $scope.everciseGroups.length;
+        
         $scope.view = 'mapview';
 
         $scope.sort = 'id';
@@ -14,6 +16,51 @@ if(typeof angular != 'undefined') {
 
         $scope.active = {};
         $scope.distance = 10;
+
+        // watch the scope for map loaded
+
+        $scope.$watch(function () {
+            return $scope.map.bounds;
+        }, function () {
+            for (var i = 0; i < $scope.initialLoad; i++) {
+                $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
+            }
+            $scope.markers = $scope.myMarkers;
+
+        }, true);
+
+        // create the markers
+        var createMarker = function (data) {
+            var result = {
+                id: data.id,
+                name: data.name,
+                directory: data.user.directory,
+                image: data.image,
+                latitude: data.venue.lat,
+                longitude: data.venue.lng,
+                coords : {
+                    latitude: data.venue.lat,
+                    longitude: data.venue.lng
+                },
+
+                icon: '/assets/img/icon_default_small_pin.png',
+                price: data.default_price,
+                rating: data.ratings.length,
+                reviews: data.ratings,
+                description: data.description,
+                stars: $scope.getStars(data.ratings),
+                capacity: data.capacity,
+                sessions: data.futuresessions,
+                distance : data.distance,
+                nextClassDate: new Date(data.futuresessions[0].date_time.replace(/-/g, '/')),
+                nextClassDuration: data.futuresessions[0].duration,
+                link: '/class/' + data.id,
+                click: function () {
+                    $scope.clicked(this.model);
+                }
+            }
+            return result;
+        }
 
         $scope.distanceFilter = function (marker) {
             if( marker.distance <= $scope.distance || marker == $scope.active){
@@ -51,12 +98,14 @@ if(typeof angular != 'undefined') {
 
         $scope.isPreviewOpen = false;
 
+        $scope.currentCenter = {
+            latitude: 50,
+            longitude: -0.2
+        }
+
         $scope.map = {
-            center: {
-                latitude: 50,
-                longitude: -1
-            },
-            pann: {},
+            center: $scope.currentCenter,
+            pan: {},
             options: {
                 streetViewControl: false,
                 maxZoom: 20,
@@ -64,6 +113,7 @@ if(typeof angular != 'undefined') {
             },
             zoom: 12
         };
+
 
         $scope.results = $scope.everciseGroups.length;
 
@@ -106,39 +156,6 @@ if(typeof angular != 'undefined') {
         $scope.markers = [];
 
 
-        var createMarker = function (data) {
-            var result = {
-                id: data.id,
-                name: data.name,
-                directory: data.user.directory,
-                image: data.image,
-                latitude: data.venue.lat,
-                longitude: data.venue.lng,
-                coords : {
-                    latitude: data.venue.lat,
-                    longitude: data.venue.lng
-                },
-
-                icon: '/assets/img/icon_default_small_pin.png',
-                price: data.default_price,
-                rating: data.ratings.length,
-                reviews: data.ratings,
-                description: data.description,
-                stars: $scope.getStars(data.ratings),
-                capacity: data.capacity,
-                sessions: data.futuresessions,
-                distance : data.distance,
-                nextClassDate: new Date(data.futuresessions[0].date_time.replace(/-/g, '/')),
-                nextClassDuration: data.futuresessions[0].duration,
-                link: '/class/' + data.id,
-                click: function () {
-                    $scope.clicked(this.model);
-                }
-            }
-            return result;
-        }
-
-
         $scope.clusterEvents = {
             click: function (cluster, clusterModels) {
                 angular.forEach(clusterModels, function (value, key) {
@@ -155,9 +172,16 @@ if(typeof angular != 'undefined') {
 
 
         $scope.clicked = function (marker) {
+            // zoom out
+            $scope.map.zoom = 15;
+
+            $scope.currentCenter = {
+                latitude: marker.latitude,
+                longitude: marker.longitude
+            }
+
             $scope.active = marker;
             $scope.distanceFilter(marker);
-            $scope.isPreviewOpen = true;
 
             // change preview
             $scope.preview.id = 'preview-' + marker.id;
@@ -175,19 +199,20 @@ if(typeof angular != 'undefined') {
             $scope.lastActiveMarker = marker;
             marker.icon = '/assets/img/icon_default_large_pin.png';
 
-            //pan map
-            $scope.map.center = {
-                latitude: marker.latitude,
-                longitude: marker.longitude
-            };
-            $scope.map.zoom = 15;
-
             $scope.mask = true;
-            // find in side bar ands scroll
 
+            if($scope.isPreviewOpen){
+                google.maps.event.trigger($scope.map, "resize");
+                $scope.map.zoom = 15;
+                $scope.map.center = $scope.currentCenter;
+            }
 
             scrollToSnippet('#' + marker.id);
+
+            $scope.isPreviewOpen = true;
+
         }
+
 
         function scrollToSnippet(id) {
             $('.class-snippet').addClass('fade-out');
@@ -197,6 +222,7 @@ if(typeof angular != 'undefined') {
                 scrollInertia: 500,
                 timeout: 10
             });
+
         }
 
         $scope.getStars = function (ratings) {
@@ -222,17 +248,33 @@ if(typeof angular != 'undefined') {
             capacity: '',
             link: ''
         }
-        // watch the scope for map loaded
 
-        $scope.$watch(function () {
-            return $scope.map.bounds;
-        }, function () {
-            for (var i = 0; i < $scope.initialLoad; i++) {
-                $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
+        $(window).resize(function(){
+            $scope.$apply(function(){
+                google.maps.event.trigger($scope.map, 'resize');
+                $scope.map.center = $scope.currentCenter;
+            });
+        });
+
+
+        $scope.$watch('isPreviewOpen',function(open){
+            if(open){
+                $(".map-wrapper").animate({
+                    left: '820px'
+                }, 100, function () {
+                    google.maps.event.trigger($scope.map, 'resize');
+                    $scope.map.center = $scope.currentCenter;
+                });
+            }else{
+                $(".map-wrapper").animate({
+                    left: '410px'
+                }, 100, function () {
+                    google.maps.event.trigger($scope.map, 'resize');
+                    $scope.map.center = $scope.currentCenter;
+                });
             }
-            $scope.markers = $scope.myMarkers;
+        });
 
-        }, true);
 
     }]);
 }

@@ -30,8 +30,7 @@
             <div ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter"
                  id = {[{marker.id}]}
                  class="class-snippet"
-                 ng-click="clicked(marker)"
-                 infinite-scroll-container="'#snippets'">
+                 ng-click="clicked(marker)">
                 <div class="class-image-wrapper col-sm-4">
                     {{ image('{[{marker.directory}]}/search_{[{ marker.image}]}', '{[{ marker.name}]}') }}
                 </div>
@@ -59,8 +58,8 @@
 
     @include('v3.angular.class-preview-template')
 
-    <div class="map-wrapper" ng-class="{ open : isPreviewOpen}">
-        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" refresh="{mapResize}">
+    <div class="map-wrapper" ng-class="{ opened : isPreviewOpen}">
+        <ui-gmap-google-map center="map.center" zoom="map.zoom"  draggable="true">
             <ui-gmap-markers
                 models="markers"
                 coords="'self'"
@@ -73,7 +72,6 @@
                 clusterOptions = "clusterOptions"
                 clusterEvents="clusterEvents"
                 >
-
             </ui-gmap-markers>
         </ui-gmap-google-map>
     </div>
