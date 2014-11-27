@@ -6,7 +6,9 @@
         <h2>checkout</h2>
     </div>
 
-    <ul>
+    <ul><?php
+    d($data);
+    ?>
         @foreach($data['cart']['cartRows'] as $row)
             <li>{{ $row->name . ' : ' . $row->options->date_time . ' : £' . $row->price }}</li>
             <strong class="text-primary">x{{$row->qty}} . subtotal: &pound;{{ $row->price * $row->qty }}</strong>

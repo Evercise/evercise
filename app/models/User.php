@@ -692,4 +692,12 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->token->hasValidFacebookToken();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function packages()
+    {
+        return $this->hasMany('UserPackages', 'user_id');
+    }
+
 }
