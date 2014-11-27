@@ -682,4 +682,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->gender ? ($this->gender == 1 ? 'male' : 'female') : '' ;
     }
 
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function packages()
+    {
+        return $this->hasMany('UserPackages', 'user_id');
+    }
+
 }

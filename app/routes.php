@@ -14,6 +14,7 @@
 
 // temporary routes for new layouts
 
+
 Route::get('/popular', [
         'as' => 'popular',
         function () {
@@ -297,7 +298,7 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
 
-
+Route::get('/packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
 
 
 
