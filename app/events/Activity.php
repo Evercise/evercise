@@ -203,4 +203,15 @@ class Activity
     }
 
 
+    public function usedCoupon($coupon, $user){
+        $this->activities->create([
+            'description' => 'You used the coupon code: ' . $coupon->coupon,
+            'type' => 'couponused',
+            'user_id' => $user->id,
+            'type_id' => $coupon->id
+        ]);
+
+
+    }
+
 }
