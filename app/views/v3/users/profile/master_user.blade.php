@@ -1,5 +1,20 @@
 @extends('v3.layouts.master')
 @section('body')
+    <div class="container first-container mt20">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row mb50">
+                    <div class="col-sm-4">
+                        {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
+                    </div>
+                    <div class="col-sm-8 mt20">
+                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     @include('v3.users.profile.nav')
 
     <div class="">

@@ -682,4 +682,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->gender ? ($this->gender == 1 ? 'male' : 'female') : '' ;
     }
 
+    public function hasTwitter()
+    {
+        return $this->token->hasValidTwitterToken();
+    }
+
+    public function hasFacebook()
+    {
+        return $this->token->hasValidFacebookToken();
+    }
+
 }
