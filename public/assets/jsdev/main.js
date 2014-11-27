@@ -156,9 +156,11 @@ $(function(){
     $('.rate-it').exists(function(){
         new RateIt(this);
     })
+    $('#add-topup').exists(function(){
+        new topUp(this);
+    })
     $('#location-auto-complete').exists(function(){
         autocomplete = new LocationAutoComplete(this);
     })
-
 
 });

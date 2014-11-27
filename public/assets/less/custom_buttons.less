@@ -84,6 +84,18 @@
   z-index: 1;
 }
 
+.stripe-button-el{
+  .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
+  &.btn{
+    padding: 5px 12px;
+    span{
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
+
 .btn-group{
   &.btn-block{
     .btn{
