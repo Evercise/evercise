@@ -25,7 +25,7 @@ class UserHelper
      * @param bool $referal_code
      * @param int $user_id
      */
-    public static function checkReferalCode($referral_code = false, $user_id = 0)
+    public static function checkReferralCode($referral_code = false, $user_id = 0)
     {
 
         if ($referral = Referral::useReferralCode($referral_code, $user_id)) {

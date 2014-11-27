@@ -81,7 +81,7 @@ class CartController extends AjaxBaseController
             EverciseCart::clearTopup();
             EverciseCart::instance('topup')->add( $idArray['id'], 'top up', 1, $amount, []);
 
-            return Response::json([ 'amount' => $amount ]);
+            return Response::json([ 'amount' => ($amount * 100) ]);
         }
         else if( $idArray['type'] == 'wallet_payment')
         {

@@ -22,17 +22,18 @@ class UsersController extends \BaseController
      */
     public function create($redirect = null)
     {
+        // If a user is already logged in, kick em out so they can create a new account.
+        Sentry::logout();
 
-
-        $referralCode = Referral::checkReferralCode(Session::get('referralCode'));
+        $referral = Referral::checkReferralCode(Session::get('referralCode'));
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
-        $email = Session::get('email');
+
 
         return View::make('v3.users.create')
-            ->with('referralCode', $referralCode)
+            ->with('referralCode', $referral->code)
             ->with('redirect', $redirect)
             ->with('ppcCode', $ppcCode)
-            ->with('email', $email);
+            ->with('email', $referral ? $referral->email : '');
 
     }
 
@@ -78,7 +79,7 @@ class UsersController extends \BaseController
 
                 UserHelper::generateUserDefaults($user->id);
 
-                UserHelper::checkReferalCode(Session::get('referralCode'), $user->id);
+                UserHelper::checkReferralCode(Session::get('referralCode'), $user->id);
 
                 UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
 
