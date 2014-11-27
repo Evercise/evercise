@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet, Trainer, Request, Redirect;
+use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet, Trainer, Request, Redirect, Milestone;
 
 class UsersController extends AjaxBaseController{
 
@@ -28,7 +28,6 @@ class UsersController extends AjaxBaseController{
             UserHelper::generateUserDefaults($user->id);
 
             UserHelper::checkReferalCode(Session::get('referralCode'), $user->id);
-
             UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
 
             Session::forget('email');
@@ -47,20 +46,16 @@ class UsersController extends AjaxBaseController{
                 $first_name = Input::get('first_name');
                 $last_name = Input::get('last_name');
                 if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(                        Config::get('mailchimp')['newsletter'],
+                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
                         $email_address,
                         $first_name,
                         $last_name
                     );
                 }
 
-                Wallet::createIfDoesntExist($user->id);
-
                 Sentry::login($user, true);
 
                 Event::fire('user.registered', [$user]);
-
-
 
                 if (Input::has('redirect')) {
                     return Response::json(
