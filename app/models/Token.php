@@ -50,4 +50,14 @@ class Token extends \Eloquent
         ];
         return $facebookTokenArray;
     }
+
+    public function hasValidFacebookToken()
+    {
+        return $this->facebook ? true : false;
+    }
+
+    public function hasValidTwitterToken()
+    {
+        return $this->twitter ? true : false;
+    }
 }

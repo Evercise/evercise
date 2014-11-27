@@ -48,4 +48,16 @@ class Referral extends \Eloquent
         }
         return $referral;
     }
+
+    public static function validateEmail($inputs)
+    {
+
+        $validator = Validator::make(
+            $inputs,
+            [
+                'referee_email' => 'required|email|unique:users,email',
+            ]
+        );
+        return $validator;
+    }
 }

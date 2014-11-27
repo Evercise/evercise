@@ -156,7 +156,7 @@
                             <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral
                             </p>
                             <div class="form-group row mt20">
-                                {{ Form::open(['url' => 'referral', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
+                                {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
                                     {{ Form::label('email', 'Email' , ['class' => 'mt5 col-sm-2 control-label'])  }}
                                     <div class="col-sm-7">
                                         {{ Form::text('referee_email', null, ['class' => 'form-control', 'placeholder' => 'Enter Friends Email Address']) }}
@@ -177,22 +177,34 @@
                   </li>
                   <li class="list-group-item ">
                     <div class="row">
-                        <div class="col-sm-7 mt10">
-                            <strong><span class="text-primary">&pound;5</span> FREE when you link to Facebook</strong>
-                        </div>
-                        <div class="col-sm-5">
-                            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
-                        </div>
-                    </div>
+                      @if(! $data['user']->hasFacebook())
+                            <div class="col-sm-7 mt10">
+                                <strong><span class="text-primary">&pound;5</span> FREE when you link to Facebook</strong>
+                            </div>
+                            <div class="col-sm-5">
+                                {{ HTML::decode(HTML::linkRoute('tokens.fbtoken', '<span class="icon icon-white-fb"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
+                            </div>
+                        @else
+                            <div class="col-sm-7 mt10">
+                                <strong>Thanks for linking you Facebook account</strong>
+                            </div>
+                        @endif
+                     </div>
                   </li>
                   <li class="list-group-item ">
                       <div class="row">
+                      @if(! $data['user']->hasTwitter())
                           <div class="col-sm-7 mt10">
                               <strong><span class="text-primary">&pound;5</span> FREE when you link to Twitter</strong>
                           </div>
                           <div class="col-sm-5">
-                              {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-twitter"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}
+                              {{ HTML::decode(HTML::linkRoute('twitter', '<span class="icon icon-white-twitter"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}
                           </div>
+                        @else
+                            <div class="col-sm-7 mt10">
+                                <strong>Thanks for linking you Twitter account</strong>
+                            </div>
+                        @endif
                       </div>
                   </li>
 

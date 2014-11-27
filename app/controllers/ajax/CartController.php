@@ -1,5 +1,6 @@
 <?php namespace ajax;
 use Input, EverciseCart, Evercisesession, Response, View;
+use Packages;
 
 class CartController extends AjaxBaseController
 {
@@ -53,6 +54,26 @@ class CartController extends AjaxBaseController
         else if( $idArray['type'] == 'package')
         {
             // Package has been added
+            $packageId = $idArray['id'];
+
+            $package = Packages::find($packageId);
+
+            $rowIds = EverciseCart::search(['id' => $productCode]);
+
+            if($rowIds[0]) // If product ID already exists in cart, then add to quantity.
+            {
+                $rowId = $rowIds[0];
+                $row = EverciseCart::get($rowId);
+                $currentQuantity = $row->qty;
+                $newQuantity = $currentQuantity + $quantity;
+                EverciseCart::update($rowId, $newQuantity);
+            }
+            else // Make a new entry in the cart, and link it to the session.
+            {
+                EverciseCart::associate('Packages')->add( $productCode, $package->name, $quantity, $package->price,[]);
+            }
+
+
         }
         else if( $idArray['type'] == 'topup')
         {

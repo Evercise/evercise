@@ -1,8 +1,14 @@
 <?php namespace ajax;
 
-use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet;
+use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet, Trainer, Request, Redirect;
 
 class UsersController extends AjaxBaseController{
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->user = Sentry::getUser();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -95,7 +101,6 @@ class UsersController extends AjaxBaseController{
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
      * @return Response
      */
     public function update()
@@ -116,9 +121,9 @@ class UsersController extends AjaxBaseController{
             $image = Input::get('thumbFilename');
             $area_code = Input::get('areacode');
             $phone = Input::get('phone');
+            $password = Input::get('password');
 
-
-            $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone);
+            $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password);
 
             $this->user->checkProfileMilestones();
 
@@ -127,8 +132,7 @@ class UsersController extends AjaxBaseController{
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn(
-                        ) ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
+                    'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
                 ]
             );
         } else {

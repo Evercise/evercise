@@ -14,6 +14,7 @@
 
 // temporary routes for new layouts
 
+
 Route::get('/popular', [
         'as' => 'popular',
         function () {
@@ -297,7 +298,7 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     array('as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer')
 );
 
-
+Route::get('/packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
 
 
 
@@ -335,15 +336,18 @@ Route::post('/postPdf', array('as' => 'postPdf', 'uses' => 'PdfController@postPd
 Route::get('video/create', array('as' => 'video', 'uses' => 'VideoController@create'));
 
 // marketing
-Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
-Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
-Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
+Route::get('refer_a_friend/{code}', ['as' => 'referral', 'uses' => 'ReferralsController@submitCode']);
+Route::get('ppc/{category}/{code}', ['as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc']);
+Route::get('ppc_fb/{category}', ['as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc']);
 
-Route::post('referral', array('as' => 'referral', 'uses' => 'ReferralsController@store'));
+Route::post('new_referral', ['as' => 'new_referral', 'uses' => 'ReferralsController@store']);
 
 
-Route::get('tokens/fb', array('as' => 'tokens.fbtoken', 'uses' => 'TokensController@fb'));
-Route::get('/tokens/tw', array('as' => 'tokens.twtoken', 'uses' => 'TokensController@tw'));
+Route::group(['prefix' => 'tokens'], function () {
+    Route::get('/fb', ['as' => 'tokens.fbtoken', 'uses' => 'TokensController@fb']);
+    Route::get('/tw', ['as' => 'tokens.twtoken', 'uses' => 'TokensController@tw']);
+});
+
 Route::get(
     '/twitter',
     array(
@@ -363,15 +367,6 @@ Route::get(
 
 $pagesController = App::make('PagesController');
 $pagesController->generateRoutes();
-
-
-// working on
-
-Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
-Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
-Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
-
-
 
 $landings = ['dance', 'pilates','martialarts', 'yoga', 'bootcamp', 'personaltrainer'];
 
