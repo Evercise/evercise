@@ -14,9 +14,9 @@ class UserHelper
             return false;
         }
 
-        Evercoin::create(['user_id' => $user_id, 'balance' => 0]);
-        Milestone::create(['user_id' => $user_id]);
-        Token::create(['user_id' => $user_id]);
+        Wallet::createIfDoesntExist($user_id);
+        Milestone::createIfDoesntExist($user_id);
+        Token::createIfDoesntExist($user_id);
     }
 
     /**

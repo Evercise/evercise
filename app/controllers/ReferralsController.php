@@ -40,7 +40,7 @@ class ReferralsController extends \BaseController {
 	{
 		Session::put('referralCode', $code);
 
-		return Redirect::to('users/create');
+		return Redirect::to('register');
 	}
 
 }

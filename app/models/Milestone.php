@@ -68,4 +68,21 @@ class Milestone extends \Eloquent
             );
         }
     }
+
+    public static function createIfDoesntExist($user_id)
+    {
+        if (static::where('user_id', $user_id)->first())
+            return false;
+
+        $milestone = static::firstOrCreate([
+            'user_id'=>$user_id,
+            'referrals'=>0,
+            'profile'=>0,
+            'facebook'=>0,
+            'twitter'=>0,
+            'reviews'=>0,
+        ]);
+
+        return $milestone;
+    }
 }

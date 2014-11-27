@@ -60,4 +60,16 @@ class Token extends \Eloquent
     {
         return $this->twitter ? true : false;
     }
+
+    public static function createIfDoesntExist($user_id)
+    {
+        if (static::where('user_id', $user_id)->first())
+            return false;
+
+        $token = static::firstOrCreate([
+            'user_id'=>$user_id,
+        ]);
+
+        return $token;
+    }
 }

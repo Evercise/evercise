@@ -160,8 +160,16 @@ class Wallet extends \Eloquent
 
     public static function createIfDoesntExist($user_id)
     {
-        // Use firstOrCreate just in case to make sure no duplicates are made
-        static::firstOrCreate(['user_id'=>$user_id, 'balance'=>0, 'previous_balance'=>0]);
+        if (static::where('user_id', $user_id)->first())
+            return false;
+
+        $wallet = static::firstOrCreate([
+            'user_id'=>$user_id,
+            'balance'=>0,
+            'previous_balance'=>0
+        ]);
+
+        return $wallet;
     }
 
 }
