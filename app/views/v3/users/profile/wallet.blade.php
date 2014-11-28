@@ -162,7 +162,7 @@
                     <div class="row">
                       @if(! $data['user']->hasFacebook())
                             <div class="col-sm-7 mt10">
-                                <strong><span class="text-primary">&pound;5</span> FREE when you link to Facebook</strong>
+                                <strong><span class="text-primary">£{{ number_format(Config::get('values.milestones.facebook.reward'),2) }}</span> FREE when you link to Facebook</strong>
                             </div>
                             <div class="col-sm-5">
                                 {{ HTML::decode(HTML::linkRoute('tokens.fbtoken', '<span class="icon icon-fb-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
@@ -178,7 +178,7 @@
                       <div class="row">
                       @if(! $data['user']->hasTwitter())
                           <div class="col-sm-7 mt10">
-                              <strong><span class="text-primary">&pound;5</span> FREE when you link to Twitter</strong>
+                              <strong><span class="text-primary">£{{ number_format(Config::get('values.milestones.twitter.reward'),2) }}</span> FREE when you link to Twitter</strong>
                           </div>
                           <div class="col-sm-5">
                               {{ HTML::decode(HTML::linkRoute('twitter', '<span class="icon icon-twitter-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}

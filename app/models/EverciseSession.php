@@ -382,6 +382,8 @@ class Evercisesession extends \Eloquent
         self::sendSessionJoinedEmail($evercisegroup, $userTrainer, $transactionId);
 
         Event::fire('session.payed', [$user, $evercisegroup]);
+
+        Event::fire('class.index.single', ['id' => $evercisegroup->id]);
         Log::info('User '.$user->display_name.' has paid for sessions '.implode(',', $sessionIds).' of group '.$evercisegroupId);
 
         self::newMemberAnalytics($transactionId, $amount, $evercisegroup, $sessionIds);

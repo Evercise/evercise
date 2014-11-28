@@ -36,7 +36,7 @@
                     <div class="header_user_actions dropdown">
                         <div data-toggle="dropdown" class="dropdown-toggle user_dropdown">
                             <div class="user_avatar">
-                                <img src="{{ (!empty($user->image) ? asset($user->directory.'/'.$user->image) : '/admin/assets/img/avatars/avatar03@2x.png') }}" alt="" title="{{ $user->first_name or "" }}" width="38" height="38">
+                                <img src="{{ (!empty($user->image) ? asset($user->directory.'/small_'.$user->image) : '/admin/assets/img/avatars/avatar03@2x.png') }}" alt="" title="{{ $user->first_name or "" }}" width="38" height="38">
                             </div>
                             <span class="caret"></span>
                         </div>

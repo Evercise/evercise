@@ -1200,6 +1200,9 @@ class Evercisegroup extends \Eloquent
                 $evercisegroupForDeletion = Evercisegroup::find($this->id);
                 $evercisegroupForDeletion->delete();
 
+
+                Event::fire('class.index.single', ['id' => $this->id]);
+
                 Trainerhistory::create(
                     array(
                         'user_id' => $user->id,

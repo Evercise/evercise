@@ -15,7 +15,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @var array
      */
 
-    protected $fillable = array(
+    protected $fillable = [
         'display_name',
         'password',
         'first_name',
@@ -35,7 +35,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'directory',
         'image',
         'custom_commission'
-    );
+    ];
 
     /**
      * The database table used by the model.
@@ -49,7 +49,160 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      *
      * @var array
      */
-    protected $hidden = array('password');
+    protected $hidden = ['password'];
+
+
+
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function packages()
+    {
+        return $this->hasMany('UserPackages', 'user_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function trainer()
+    {
+        return $this->hasOne('Trainer');
+    }
+
+
+    /* public function user_has_marketingpreference()
+     {
+         return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');
+     }
+
+
+     public function Marketingpreferences()
+     {
+         return $this->belongsToMany('MarketingPreference', 'user_has_marketingpreferences', 'marketingpreferences_id', 'user_id');
+     }*/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function marketingpreferences()
+    {
+        return $this->belongsToMany(
+            'Marketingpreference',
+            'user_marketingpreferences',
+            'user_id',
+            'marketingpreference_id'
+        )->withTimestamps();
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pastsessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
+            ->where('date_time', '<', DB::raw('NOW()'))
+            ->orderBy('date_time', 'asc')
+            ->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function futuresessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
+            ->where('date_time', '>=', DB::raw('NOW()'))
+            ->orderBy('date_time', 'asc')
+            ->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function evercisegroups()
+    {
+        return $this->hasMany('Evercisegroup');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function wallet()
+    {
+        return $this->hasOne('Wallet');
+    }
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function wallethistory()
+    {
+        return $this->hasMany('Wallethistory');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function evercoin()
+    {
+        return $this->hasOne('Evercoin');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function milestone()
+    {
+        return $this->hasOne('Milestone');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function token()
+    {
+        return $this->hasOne('Token');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany('Referral');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @param $trainer_id
@@ -76,7 +229,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $dt = new DateTime();
         $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
         $dateAfter = $after->format('Y-m-d');
-        return array($dateBefore, $dateAfter);
+        return [$dateBefore, $dateAfter];
     }
 
     /**
@@ -151,13 +304,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         $validator = Validator::make(
             $inputs,
-            array(
+            [
                 'first_name' => 'required|max:15|min:2',
                 'last_name' => 'required|max:15|min:2',
                 'dob' => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 'phone' => 'numeric',
                 'password' => 'confirmed|min:6|max:32',
-            )
+            ]
         );
         return $validator;
     }
@@ -262,11 +415,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         Event::fire(
             'user.fb_signup',
-            array(
+            [
                 'email' => $user->email,
                 'display_name' => $user->display_name,
                 'password' => $inputs['password']
-            )
+            ]
         );
     }
 
@@ -276,22 +429,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function grabFacebookImage($user, $me)
     {
-        $path = public_path() . '/profiles/' . date('Y-m');
-        $img_filename = 'facebook-image-' . $user->display_name . '-' . date('d-m') . '.jpg';
-        $url = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=200&height=200';
-
+        $image = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=300&height=300';
         try {
-            $img = file_get_contents($url);
-            file_put_contents($path . '/' . $user->id . '_' . $user->display_name . '/' . $img_filename, $img);
+            $img = file_get_contents($image);
+            return self::createImage($user, $image);
         } catch (Exception $e) {
             // This exception will happen from localhost, as pulling the file from facebook will not work
             Log::error('no facebook image :' . $e);
-            $img_filename = '';
+            return self::createImage($user);
         }
-
-        $user->image = $img_filename;
-
-        $user->save();
     }
 
     /**
@@ -452,11 +598,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public function sendForgotPasswordEmail($reset_code)
     {
 
-        \Event::fire('user.forgot', array(
+        \Event::fire('user.forgot', [
             'email' => $this->email,
             'displayName' => $this->display_name,
             'resetCode' => $reset_code
-        ));
+        ]);
     }
 
     /**
@@ -521,91 +667,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $user->first_name . ' ' . $user->last_name;
     }
 
-    /* foreign keys */
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function trainer()
-    {
-        return $this->hasOne('Trainer');
-    }
-
-
-    /* public function user_has_marketingpreference()
-     {
-         return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');
-     }
-
-
-     public function Marketingpreferences()
-     {
-         return $this->belongsToMany('MarketingPreference', 'user_has_marketingpreferences', 'marketingpreferences_id', 'user_id');
-     }*/
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function marketingpreferences()
-    {
-        return $this->belongsToMany(
-            'Marketingpreference',
-            'user_marketingpreferences',
-            'user_id',
-            'marketingpreference_id'
-        )->withTimestamps();
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function sessions()
-    {
-        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
-            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function pastsessions()
-    {
-        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
-            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
-            ->where('date_time', '<', DB::raw('NOW()'))
-            ->orderBy('date_time', 'asc')
-            ->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function futuresessions()
-    {
-        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
-            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
-            ->where('date_time', '>=', DB::raw('NOW()'))
-            ->orderBy('date_time', 'asc')
-            ->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function evercisegroups()
-    {
-        return $this->hasMany('Evercisegroup');
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function wallet()
-    {
-        return $this->hasOne('Wallet');
-    }
 
     public function getWallet()
     {
@@ -615,46 +677,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         }
         return $this->wallet;
     }
+    /* foreign keys */
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function wallethistory()
-    {
-        return $this->hasMany('Wallethistory');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function evercoin()
-    {
-        return $this->hasOne('Evercoin');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function milestone()
-    {
-        return $this->hasOne('Milestone');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function token()
-    {
-        return $this->hasOne('Token');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function referrals()
-    {
-        return $this->hasMany('Referral');
-    }
 
 
     /**
@@ -663,6 +687,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function makeUserDir($user)
     {
         $dir = hashDir($user->id, 'u');
+
+        Log::info('User dir '.$dir);
         $user->directory = $dir;
         $user->save();
 
@@ -692,12 +718,41 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->token->hasValidFacebookToken();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function packages()
-    {
-        return $this->hasMany('UserPackages', 'user_id');
+
+
+    public static function createImage($user, $image = false) {
+
+        $sizes = Config::get('evercise.user_images');
+
+        $dir = hashDir($user->id, 'u');
+
+        if(!$image) {
+            $image = Image::make(file_get_contents('http://robohash.org/' . slugIt($user->display_name) . '/bgset_bg1/2.2' . slugIt($user->display_name) . '.png?size=300x300'));
+        } else {
+            $image = Image::make(file_get_contents($image));
+        }
+
+
+        $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)])).'.png';
+
+
+
+        foreach ($sizes as $s) {
+            $file_name = $s['prefix'] . '_' . $user_file_name;
+            try {
+                $image->fit($s['width'], $s['height'])->save($dir . '/' . $file_name);
+
+            } catch (Exception $e) {
+                continue;
+            }
+        }
+
+
+        $user->image = $user_file_name;
+        $user->save();
+
+        return $user;
+
     }
 
 }
