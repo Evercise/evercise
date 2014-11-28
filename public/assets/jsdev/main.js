@@ -165,6 +165,9 @@ $(function(){
     $('#checkout').exists(function(){
         new checkout(this);
     })
+    $('#voucher').exists(function(){
+        new voucher(this);
+    })
 
     $('#hero-carousel').exists(function() {
         $(this).carousel({

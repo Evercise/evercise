@@ -4,7 +4,7 @@
 <script>
     var viewPrice = '{{ isset($total['subtotal']) ? SessionPayment::poundsToPennies($total['final_cost'])  : null }}';
 </script>
-<div class="container-fluid bg-grey">
+<div id="checkout" class="container-fluid bg-grey">
     <div class="container first-container">
         <div class="underline text-center">
             <h1>Checkout</h1>
@@ -66,16 +66,28 @@
 
                     </li>
                     -->
-                    <li class="list-group-item ">
-                        <div class="row">
+                    <li id="voucher" class="list-group-item ">
+                        <div class="row mb20">
                             <div class="col-sm-11">
                                 <strong class="list-group-item-heading">I have a Voucher Code</strong>
                             </div>
                             <div class="col-sm-1">
-                                <span class="icon icon-radio"></span>
+                                <span id="have-voucher" class="icon icon-radio"></span>
                             </div>
                         </div>
-
+                        {{ var_dump($coupon) }}
+                        <div id="have-voucher-block" class="hidden">
+                            {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        {{ Form::text('coupon', null, ['class' => 'form-control', 'placeholder' => 'Enter your voucher']) }}
+                                    </div>
+                                    <div class="col-sm-4">
+                                        {{ Form::submit('Add Voucher', ['class' => 'btn btn-primary btn-block']) }}
+                                    </div>
+                                </div>
+                            {{ Form::close() }}
+                        </div>
                     </li>
 
                     <li class="list-group-item list-group-item-success">
@@ -187,7 +199,7 @@
                             </div>
                         </div>
                     </li>
-                    <li id="checkout" class="list-group-item">
+                    <li  class="list-group-item">
                         <div class="row">
                             <div class="col-sm-5">
                                 <button id="fb-pay" class="btn btn-info btn-block">Pay with paypal</button>

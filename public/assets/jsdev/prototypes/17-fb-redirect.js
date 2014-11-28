@@ -12,7 +12,7 @@ facebookRedirect.prototype = {
     changeFbUrl : function(e){
         var trainer = $(e.target).val();
         if(trainer == 'yes'){
-            this.redirect = '/trainer';
+            this.redirect = '/trainers/me';
         }
         else{
             this.redirect = '';
