@@ -82,6 +82,10 @@ class Elastic
 
         if( !isset($params['all'])) {
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => true];
+            $searchParams['body']['query']['filtered']['filter']['bool']['must_not']['missing'] = [
+                            'field' => 'futuresessions.members',
+                            'existence' => true,
+                            'null_value' => true];
         }
 
 

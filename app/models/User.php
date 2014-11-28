@@ -51,6 +51,159 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     protected $hidden = array('password');
 
+
+
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function packages()
+    {
+        return $this->hasMany('UserPackages', 'user_id');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function trainer()
+    {
+        return $this->hasOne('Trainer');
+    }
+
+
+    /* public function user_has_marketingpreference()
+     {
+         return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');
+     }
+
+
+     public function Marketingpreferences()
+     {
+         return $this->belongsToMany('MarketingPreference', 'user_has_marketingpreferences', 'marketingpreferences_id', 'user_id');
+     }*/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function marketingpreferences()
+    {
+        return $this->belongsToMany(
+            'Marketingpreference',
+            'user_marketingpreferences',
+            'user_id',
+            'marketingpreference_id'
+        )->withTimestamps();
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function sessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pastsessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
+            ->where('date_time', '<', DB::raw('NOW()'))
+            ->orderBy('date_time', 'asc')
+            ->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function futuresessions()
+    {
+        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
+            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
+            ->where('date_time', '>=', DB::raw('NOW()'))
+            ->orderBy('date_time', 'asc')
+            ->withTimestamps();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function evercisegroups()
+    {
+        return $this->hasMany('Evercisegroup');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function wallet()
+    {
+        return $this->hasOne('Wallet');
+    }
+
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function wallethistory()
+    {
+        return $this->hasMany('Wallethistory');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function evercoin()
+    {
+        return $this->hasOne('Evercoin');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function milestone()
+    {
+        return $this->hasOne('Milestone');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function token()
+    {
+        return $this->hasOne('Token');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany('Referral');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * @param $trainer_id
      * @return \Illuminate\Database\Eloquent\Model|null|static
@@ -521,91 +674,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $user->first_name . ' ' . $user->last_name;
     }
 
-    /* foreign keys */
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function trainer()
-    {
-        return $this->hasOne('Trainer');
-    }
-
-
-    /* public function user_has_marketingpreference()
-     {
-         return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');
-     }
-
-
-     public function Marketingpreferences()
-     {
-         return $this->belongsToMany('MarketingPreference', 'user_has_marketingpreferences', 'marketingpreferences_id', 'user_id');
-     }*/
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function marketingpreferences()
-    {
-        return $this->belongsToMany(
-            'Marketingpreference',
-            'user_marketingpreferences',
-            'user_id',
-            'marketingpreference_id'
-        )->withTimestamps();
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function sessions()
-    {
-        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
-            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function pastsessions()
-    {
-        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
-            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
-            ->where('date_time', '<', DB::raw('NOW()'))
-            ->orderBy('date_time', 'asc')
-            ->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function futuresessions()
-    {
-        return $this->belongsToMany('Evercisesession', 'sessionmembers', 'user_id', 'evercisesession_id')
-            ->withPivot('token', 'transaction_id', 'payer_id', 'payment_method')
-            ->where('date_time', '>=', DB::raw('NOW()'))
-            ->orderBy('date_time', 'asc')
-            ->withTimestamps();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function evercisegroups()
-    {
-        return $this->hasMany('Evercisegroup');
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function wallet()
-    {
-        return $this->hasOne('Wallet');
-    }
 
     public function getWallet()
     {
@@ -615,46 +684,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         }
         return $this->wallet;
     }
+    /* foreign keys */
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function wallethistory()
-    {
-        return $this->hasMany('Wallethistory');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function evercoin()
-    {
-        return $this->hasOne('Evercoin');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function milestone()
-    {
-        return $this->hasOne('Milestone');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function token()
-    {
-        return $this->hasOne('Token');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function referrals()
-    {
-        return $this->hasMany('Referral');
-    }
 
 
     /**
@@ -692,12 +723,36 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->token->hasValidFacebookToken();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function packages()
-    {
-        return $this->hasMany('UserPackages', 'user_id');
+
+
+    public static function createImage($user) {
+
+        $sizes = Config::get('evercise.user_images');
+
+        $dir = hashDir($user->id, 'u');
+
+        $image = Image::make(file_get_contents('http://robohash.org/'.slugIt($user->display_name).'/bgset_bg1/2.2'.slugIt($user->display_name).'.png?size=300x300'));
+
+
+
+        $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)])).'.png';
+
+
+
+        foreach ($sizes as $s) {
+            $file_name = $s['prefix'] . '_' . $user_file_name;
+            try {
+                $image->fit($s['width'], $s['height'])->save($dir . '/' . $file_name);
+
+            } catch (Exception $e) {
+                continue;
+            }
+        }
+
+
+        $user->image = $user_file_name;
+        $user->save();
+
     }
 
 }

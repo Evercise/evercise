@@ -138,6 +138,8 @@ class EvercisegroupsController extends \BaseController
 
         Event::fire('evecisegroup.delete', [$this->user, $evercisegroup]);
 
+
+
         return $evercisegroup->deleteGroup($this->user);
     }
 

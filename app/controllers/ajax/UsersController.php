@@ -37,6 +37,8 @@ class UsersController extends AjaxBaseController{
 
                 User::makeUserDir($user);
 
+                User::createImage($user);
+
                 $user->save();
 
                 // check for newsletter and if so add to mailchimp

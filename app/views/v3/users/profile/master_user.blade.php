@@ -5,7 +5,11 @@
             <div class="col-sm-6">
                 <div class="row mb50">
                     <div class="col-sm-4">
-                        {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
+                        @if(!empty($data['user']->image))
+                            {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
+                        @else
+                            {{ image( 'assets/img/'.($data['user']->gender == 1 ? 'male.png':'female.png') , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
+                        @endif
                     </div>
                     <div class="col-sm-8 mt20">
                         <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>

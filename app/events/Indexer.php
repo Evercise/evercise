@@ -34,7 +34,9 @@ class Indexer
 
         $time = microtime(true) - $time_start;
 
-        Log::info('Index a total of ' . $total_indexed . ' Classes in ' . round($time, 2) . ' seconds');
+
+
+        Log::info('Indexed Classes id '.$id.' in ' . round($time, 2) . ' seconds');
 
     }
 
