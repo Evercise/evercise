@@ -2,6 +2,16 @@
 
 class HomeController extends BaseController {
 
+
+    /**
+     * @var Slider
+     */
+    private $slider;
+
+    public function __construct(Slider $slider){
+
+        $this->slider = $slider;
+    }
 	/*
 	|--------------------------------------------------------------------------
 	| Default Home Controller
@@ -17,6 +27,8 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
+        $slider = $this->slider->getItems(5);
+
 
         $searchController = App::make('SearchController');
         $featured = $searchController->getClasses([
@@ -26,8 +38,6 @@ class HomeController extends BaseController {
             'location' => 'London'
         ]);
 
-
-        $slider = Slider::where('active', 1)->limit(5)->get();
 
         /**
          * foreach($slider as $slide)
