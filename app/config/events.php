@@ -87,13 +87,15 @@
 
             ['activity.wallet.topup' => 'Activity@walletToppup'],  // $user, $amount
             ['activity.wallet.withdraw' => 'Activity@walletWithdraw'],  // $user, $amount
-            ['activity.user.coupon' => 'Activity@usedCoupon'],  // $user, $amount
+            ['activity.user.coupon' => 'Activity@usedCoupon'],  // $coupon, $user
 
             ['activity.user.editprofile' => 'Activity@userEditProfile'],  // $user
             ['activity.user.facebook' => 'Activity@linkFacebook'],  // $user
             ['activity.user.twitter' => 'Activity@linkTwitter'],  // $user
             ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
             ['activity.user.package.used' => 'Activity@packageUsed'],  // $user, $userpackage, $session
+            ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction
+            ['activity.user.reviewed.class' => 'Activity@usedReviewedClass'],  // $user, $class
 
         ],
         '10' => [

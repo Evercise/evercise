@@ -1,25 +1,50 @@
 <?php
 
 
-if (!function_exists('d')) {
+    if (!function_exists('d')) {
 
-    /*
-     * nice print of vardump without the xdebug
-     *
-     */
+        /*
+         * nice print of vardump without the xdebug
+         *
+         */
 
-    function d($var, $die = true)
-    {
-        echo "<pre>";
-        print_r($var);
-        echo "</pre>";
-        if ($die) {
-            die();
+        function d($var, $die = true)
+        {
+            echo "<pre>";
+            print_r($var);
+            echo "</pre>";
+            if ($die) {
+                die();
+            }
         }
     }
-}
 
-if (!function_exists('image')) {
+    if (!function_exists('returnPlural')) {
+
+        /*
+         * nice print of vardump without the xdebug
+         *
+         */
+
+        function returnPlural($string, $count = 1)
+        {
+            if(is_array($count)) {
+                $count = count($count);
+            }
+            if($count == 1) {
+                return str_singular($string);
+            }
+
+            return str_plural($string);
+        }
+    }
+
+
+
+
+
+
+    if (!function_exists('image')) {
 
     /*
      * nice print of vardump without the xdebug
