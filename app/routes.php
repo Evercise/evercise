@@ -194,6 +194,7 @@
 // trainers
     Route::group(['prefix' => 'trainers'], function () {
         Route::get('/create', ['as' => 'trainers.create', 'uses' => 'TrainersController@create']);
+        Route::get('/me', ['as' => 'trainer', 'uses' => 'TrainersController@show']);
         Route::get('/{id}/edit', ['as' => 'trainers.edit', 'uses' => 'TrainersController@edit']);
         Route::get('/{id}', ['as' => 'trainers.show', 'uses' => 'TrainersController@show']);
         Route::get('/{id}/edit/{tab}', ['as' => 'trainers.edit.tab', 'uses' => 'TrainersController@edit']);

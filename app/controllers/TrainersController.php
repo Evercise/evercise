@@ -72,6 +72,11 @@ class TrainersController extends \BaseController {
 	 */
 	public function show($id)
 	{
+        if($id == 'me') {
+            $user = Sentry::getUser();
+            $id = $user->id;
+        }
+
 		$trainer=Trainer::with('user')
 					//->with('speciality')
 					->where('user_id', $id)
