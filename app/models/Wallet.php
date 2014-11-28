@@ -147,6 +147,67 @@ class Wallet extends \Eloquent
         $this->save();
     }
 
+    public function giveAmount($user_id = 0, $amount = 0, $type = false) {
+
+        if(!$type || $amount == 0) return false;
+
+        $user = Sentry::findUserById($user_id);
+
+        if(!$user) return false;
+
+        switch($type) {
+            case 'referral_signup':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for referral sign up';
+                break;
+            case 'ppc_signup':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for ppc sign up';
+                break;
+            case 'referral':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for referring a friend';
+                break;
+            case 'profile':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for completing your profile';
+                break;
+            case 'facebook':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for connecting your Facebook account';
+                break;
+            case 'twitter':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for connecting your Twitter account';
+                break;
+            case 'review':
+                $title = 'Milestone Completed';
+                $description = 'You received £'.$amount.' for writing a review';
+                break;
+
+            default:
+                return false;
+
+        }
+
+        $wallet = $user->getWallet();
+
+        $wallet->deposit($amount, $description, 0);
+
+
+        Activities::create([
+            'title'       => $title,
+            'type'        => 'milestone'.$type,
+            'description' => $description,
+            'user_id'     => $user_id,
+            'type_id'     => $user_id,
+            'link'        => '',
+            'link_title'  => '',
+            'image'       => 'milestone'.$type.'.png',
+        ]);
+
+    }
+
 
     public static function userWallet($user_id)
     {
@@ -171,5 +232,6 @@ class Wallet extends \Eloquent
 
         return $wallet;
     }
+
 
 }
