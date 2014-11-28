@@ -15,7 +15,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @var array
      */
 
-    protected $fillable = array(
+    protected $fillable = [
         'display_name',
         'password',
         'first_name',
@@ -35,7 +35,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'directory',
         'image',
         'custom_commission'
-    );
+    ];
 
     /**
      * The database table used by the model.
@@ -49,7 +49,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      *
      * @var array
      */
-    protected $hidden = array('password');
+    protected $hidden = ['password'];
 
 
 
@@ -229,7 +229,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $dt = new DateTime();
         $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
         $dateAfter = $after->format('Y-m-d');
-        return array($dateBefore, $dateAfter);
+        return [$dateBefore, $dateAfter];
     }
 
     /**
@@ -304,13 +304,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         $validator = Validator::make(
             $inputs,
-            array(
+            [
                 'first_name' => 'required|max:15|min:2',
                 'last_name' => 'required|max:15|min:2',
                 'dob' => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 'phone' => 'numeric',
                 'password' => 'confirmed|min:6|max:32',
-            )
+            ]
         );
         return $validator;
     }
@@ -415,11 +415,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         Event::fire(
             'user.fb_signup',
-            array(
+            [
                 'email' => $user->email,
                 'display_name' => $user->display_name,
                 'password' => $inputs['password']
-            )
+            ]
         );
     }
 
@@ -429,22 +429,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function grabFacebookImage($user, $me)
     {
-        $path = public_path() . '/profiles/' . date('Y-m');
-        $img_filename = 'facebook-image-' . $user->display_name . '-' . date('d-m') . '.jpg';
-        $url = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=200&height=200';
-
+        $image = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=300&height=300';
         try {
             $img = file_get_contents($url);
-            file_put_contents($path . '/' . $user->id . '_' . $user->display_name . '/' . $img_filename, $img);
+            return self::createImage($user, $image);
         } catch (Exception $e) {
             // This exception will happen from localhost, as pulling the file from facebook will not work
             Log::error('no facebook image :' . $e);
-            $img_filename = '';
+            return self::createImage($user);
         }
-
-        $user->image = $img_filename;
-
-        $user->save();
     }
 
     /**
@@ -605,11 +598,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public function sendForgotPasswordEmail($reset_code)
     {
 
-        \Event::fire('user.forgot', array(
+        \Event::fire('user.forgot', [
             'email' => $this->email,
             'displayName' => $this->display_name,
             'resetCode' => $reset_code
-        ));
+        ]);
     }
 
     /**
@@ -725,14 +718,17 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
 
 
-    public static function createImage($user) {
+    public static function createImage($user, $image = false) {
 
         $sizes = Config::get('evercise.user_images');
 
         $dir = hashDir($user->id, 'u');
 
-        $image = Image::make(file_get_contents('http://robohash.org/'.slugIt($user->display_name).'/bgset_bg1/2.2'.slugIt($user->display_name).'.png?size=300x300'));
-
+        if(!$image) {
+            $image = Image::make(file_get_contents('http://robohash.org/' . slugIt($user->display_name) . '/bgset_bg1/2.2' . slugIt($user->display_name) . '.png?size=300x300'));
+        } else {
+            $image = Image::make(file_get_contents($image));
+        }
 
 
         $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)])).'.png';
@@ -752,6 +748,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
         $user->image = $user_file_name;
         $user->save();
+
+        return $user;
 
     }
 
