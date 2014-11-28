@@ -32,6 +32,7 @@
             $data['wallet_payment'] = EverciseCart::getWalletPayment();
             $data['user']           = $this->user;
 
+            //JavaScript::put(['viewPrice' => SessionPayment::poundsToPennies($data['total']['final_cost']) ]);
 
             return View::make('v3.cart.checkout', $data);
 

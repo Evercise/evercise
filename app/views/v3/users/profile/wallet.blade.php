@@ -1,5 +1,5 @@
 <div class="container-fluid bg-grey">
-    @include('v3.layouts.stripe_setup')
+    @include('v3.layouts.stripe_setup', ['route' => 'stripe.topup'])
     <div class="container">
         <div class="underline text-center">
             <h1>Wallet</h1>

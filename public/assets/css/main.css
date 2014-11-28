@@ -9070,6 +9070,26 @@ label {
   border: 0;
   border-left: 1px solid #ffffff;
 }
+.custom-btn-dropdown-select:after {
+  position: absolute;
+  content: '';
+  top: 10px;
+  right: 6px;
+  height: 20px;
+  width: 20px;
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -50px -330px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.custom-btn-dropdown-select:after.active {
+  background-position: -50px -370px;
+}
+.custom-btn-dropdown-select:after.hover:hover,
+.custom-btn-dropdown-select:after.active:hover {
+  cursor: pointer;
+  background-position: -50px -370px;
+}
 .form-no-gap .input-group {
   display: block;
   margin-bottom: 10px;
@@ -10468,7 +10488,6 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .list-group-item {
   padding: 20px 15px;
 }
-.list-group-item strong,
 .list-group-item th {
   color: #383d48;
 }

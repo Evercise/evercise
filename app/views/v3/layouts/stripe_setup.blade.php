@@ -12,6 +12,6 @@
   });
 
 </script>
-{{ Form::open(['id' => 'stripe-form', 'url' => 'stripe/topup', 'method' => 'post', 'class' => '']) }}
+{{ Form::open(['id' => 'stripe-form', 'route' => $route , 'method' => 'post', 'class' => '']) }}
     {{ Form::hidden('stripeToken', null) }}
 {{ Form::close() }}
