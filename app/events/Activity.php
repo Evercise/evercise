@@ -174,12 +174,13 @@ class Activity
 
     public function deletedClass($class, $user)
     {
-        $this->activities->create([
+        $activity = $this->activities->create([
             'description' => 'Deleted Class ' . $class->name,
             'type' => 'deletedclass',
             'user_id' => $user->id,
             'type_id' => $class->id
         ]);
+        Log::info($activiti->id);
     }
 
     public function deletedVenue($venue, $user)

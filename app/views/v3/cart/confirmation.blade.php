@@ -5,11 +5,13 @@
     <div class="container mt30">
         <h2>Confirmation</h2>
     </div>
-    {{ d($confirm, false) }}
-    {{ d($cart, false) }}
-    {{ d($payment_type, false) }}
-    {{ d($coupon', false) }}
-    {{ d($transaction, false) }}
-    {{ d($user, false) }}
+    <?php
+    d($confirm, false); 
+    d($cart, false); 
+    d($payment_type, false); 
+    d($coupon, false);
+    d($transaction, false); 
+    d($user, false);
+    ?>
 
 @stop

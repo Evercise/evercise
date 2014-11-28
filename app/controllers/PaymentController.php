@@ -58,12 +58,12 @@
 
             $transactionId = $charge['id'];
             $res           = [
-                'confirm' => $this->paid($token, $transactionId, 'stripe', $cart, $coupon),
-                'cart'    => $cart,
+                'confirm'      => $this->paid($token, $transactionId, 'stripe', $cart, $coupon),
+                'cart'         => $cart,
                 'payment_type' => 'stripe',
-                'coupon' => $coupon,
-                'transaction' => $transactionId,
-                'user' => $this->user
+                'coupon'       => $coupon,
+                'transaction'  => $transactionId,
+                'user'         => $this->user
             ];
 
             return View::make('v3.cart.confirmation', $res);
@@ -222,16 +222,19 @@
         public function paid($token, $transactionId, $paymentMethod, $cart = [], $coupon = 0)
         {
 
+
+            $commission = ($this->user->custom_commission > 0 ? $this->user->custom_commission : Config::get('evercise.commission'));
+
             $transaction = Transactions::create(
                 [
-                    'user_id' => $this->user->id,
-                    'total' => $cart['total']['final_cost'],
-                    'total_after_fees' => $cart['total']['final_cost'],
-                    'coupon_id' => $coupon,
-                    'commission' => 0,
-                    'token' => $token,
-                    'transaction' => $transactionId,
-                    'payment_method' => $paymentMethod
+                    'user_id'          => $this->user->id,
+                    'total'            => $cart['total']['final_cost'],
+                    'total_after_fees' => (($cart['total']['final_cost'] / 100) * (100 - $commission)),
+                    'coupon_id'        => $coupon,
+                    'commission'       => $commission,
+                    'token'            => $token,
+                    'transaction'      => $transactionId,
+                    'payment_method'   => $paymentMethod
                 ]);
 
             /** Add Packages to DB */
@@ -245,8 +248,8 @@
 
 
                 $item = new TransactionItems([
-                    'user_id' => $this->user->id,
-                    'type' => 'package',
+                    'user_id'    => $this->user->id,
+                    'type'       => 'package',
                     'package_id' => $package->id
                 ]);
 
@@ -259,10 +262,11 @@
                 try {
                     $check = UserPackages::check($evercisesession, $this->user);
 
-                    $packageClass = new UserPackageClasses(['user_id'            => $this->user->id,
-                                                            'evercisesession_id' => $session['id'],
-                                                            'status'             => 1
-                        ]);
+                    $packageClass = new UserPackageClasses([
+                        'user_id'            => $this->user->id,
+                        'evercisesession_id' => $session['id'],
+                        'status'             => 1
+                    ]);
 
                     $check->package()->save($packageClass);
 
@@ -277,21 +281,34 @@
                 $created = Sessionmember::create(
                     [
                         'user_id'            => $this->user->id,
-                        'evercisesession_id' => $session['id']
+                        'evercisesession_id' => $session['id'],
+                        'token'              => $transaction->token,
+                        'transaction_id'     => $transaction->transaction,
+                        'payment_method'     => 'stripe'
                     ]
                 );
 
 
+                $session_payment = Sessionpayment::create(
+                    [
+                        'user_id'            => $this->user->id,
+                        'evercisesession_id' => $session['id'],
+                        'total'              => $session['price'],
+                        'total_after_fees'   => (($session['price'] / 100) * (100 - $commission)),
+                        'commission'         => round($commission, 3),
+                        'processed'          => 0
+                    ]
+                );
+
 
                 $item = new TransactionItems([
-                    'user_id' => $this->user->id,
-                    'type' => 'session',
+                    'user_id'            => $this->user->id,
+                    'type'               => 'session',
                     'evercisesession_id' => $created->id
                 ]);
 
                 $transaction->items()->save($item);
 
-                Event::fire('salesforce.user.joined', [$this->user, $created]);
 
 
                 $trainer = $evercisesession->evercisegroup()->first()->user()->first();
@@ -303,24 +320,25 @@
             }
 
 
-
             Event::fire('user.cart.completed', [$this->user, $cart, $transaction]);
 
             /* Empty cart */
-            EverciseCart::clearCart();
-            EverciseCart::clearWalletPayment();
+       //     EverciseCart::clearCart();
+       //     EverciseCart::clearWalletPayment();
 
             return TRUE;
         }
 
+
+
         public function conftest()
         {
             $this->user->sessions()->attach(['304', '305'], [
-                    'token'          => 'double',
-                    'transaction_id' => 'action',
-                    'payer_id'       => $this->user->id,
-                    'payment_method' => 'fake'
-                ]);
+                'token'          => 'double',
+                'transaction_id' => 'action',
+                'payer_id'       => $this->user->id,
+                'payment_method' => 'fake'
+            ]);
 
             $cartData      = EverciseCart::getCart();
             $walletPayment = Session::get('walletPayment');
