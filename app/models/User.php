@@ -431,7 +431,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         $image = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=300&height=300';
         try {
-            $img = file_get_contents($url);
+            $img = file_get_contents($image);
             return self::createImage($user, $image);
         } catch (Exception $e) {
             // This exception will happen from localhost, as pulling the file from facebook will not work
