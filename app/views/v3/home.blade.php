@@ -1,28 +1,43 @@
 @extends('v3.layouts.master')
 @section('body')
-    <div class="hero hero-nav-change">
-        <div class="jumbotron">
-          <div class="container text-center">
-            <h1 class="text-white">spin class in king&apos;s cross</h1>
-            <h1 class="text-primary">only &pound;5</h1>
-            <div class="row mt50">
-                <div class="col-md-2 col-md-offset-4">
-                    <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-white-clock"></span></button>
-                </div>
-                <div class="col-md-2">
-                    <div class="btn-group">
-                        <button class="btn btn-primary">Join Class</button>
-                        <button type="button" class="btn btn-primary btn-aside" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
+
+    <div id="hero-carousel" class="carousel slide">
+          <div class="carousel-inner">
+            @foreach($slider as $index => $sl)
+                 <div class="item {{ $index == 0 ? 'active': null }}">
+                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/'. $sl->image}}')">
+                        <div class="jumbotron">
+                          <div class="container text-center">
+                            <h1 class="text-white"> {{ $sl->evercisegroup_id }}???????</h1>
+                            <h1 class="text-primary">only &pound; ??</h1>
+                            <div class="row mt50 text-center">
+                            {{ Html::linkRoute('evercisegroups.show', 'View Class', $sl->evercisegroup_id ,['class' => 'btn btn-primary']) }}
+                            <!--
+                                <div class="col-md-2 col-md-offset-4">
+                                    <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-white-clock"></span></button>
+                                </div>
+
+                                <div class="col-md-3">
+
+
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary">Join Class</button>
+                                        <button type="button" class="btn btn-primary btn-aside" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                -->
+                            </div>
+                          </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-
+                 </div>
+            @endforeach
           </div>
-        </div>
     </div>
+
     <div class="container-fluid panel-body bg-dark-grey">
         <div class="container">
             <div class="row no-gutter">
@@ -101,9 +116,13 @@
                 <div id="image-carousel" class="carousel slide" data-interval="false">
                     <!-- Indicators -->
                       <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        @if(count($featured->hits) > 3)
+                            @foreach($featured->hits as $index => $featured_class)
+                                @if($index % 3 === 0)
+                                    <li data-target="#carousel-example-generic" data-slide-to="{{$index}}" class="{{ $index == 0 ? 'active' : null }}"></li>
+                                @endif
+                            @endforeach
+                        @endif
                       </ol>
                       <div class="carousel-inner mb50">
                             @foreach($featured->hits as $index => $featured_class)
@@ -122,14 +141,16 @@
                                 @endif
                             @endforeach
                       </div>
-                      <!--/carousel-inner-->
-                      <a class="left carousel-control" href="#image-carousel" data-slide="prev">
-                         <span class="icon icon-left-triangle"></span>
-                      </a>
+                      @if(count($featured->hits) > 3)
+                          <!--/carousel-inner-->
+                          <a class="left carousel-control" href="#image-carousel" data-slide="prev">
+                             <span class="icon icon-left-triangle"></span>
+                          </a>
 
-                      <a class="right carousel-control" href="#image-carousel" data-slide="next">
-                         <span class="icon icon-right-triangle"></span>
-                      </a>
+                          <a class="right carousel-control" href="#image-carousel" data-slide="next">
+                             <span class="icon icon-right-triangle"></span>
+                          </a>
+                      @endif
                 </div>
             </div>
         </div>

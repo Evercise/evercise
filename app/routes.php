@@ -42,39 +42,62 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('/trainers/store', array('as' => 'trainers.store', 'uses' => 'ajax\TrainersController@store'));
 
     // Location
-    Route::post('/users/getLocation', array('as' => 'users.location.get', 'uses' => 'ajax\UsersController@getLocation'));
-    Route::post('/users/setLocation', array('as' => 'users.location.set', 'uses' => 'ajax\UsersController@setLocation'));
+    Route::post('/users/getLocation',
+        array('as' => 'users.location.get', 'uses' => 'ajax\UsersController@getLocation'));
+    Route::post('/users/setLocation',
+        array('as' => 'users.location.set', 'uses' => 'ajax\UsersController@setLocation'));
 
     // login
     Route::post('/auth/login', array('as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin'));
 
     // cart
-    Route::post('cart/add', array('as' => 'cart.add', 'uses' => 'ajax\CartController@add'));
-    Route::post('cart/remove', array('as' => 'cart.remove', 'uses' => 'ajax\CartController@remove'));
-    Route::post('cart/delete', array('as' => 'cart.delete', 'uses' => 'ajax\CartController@delete'));
-    Route::post('cart/empty', array('as' => 'cart.emptyCart', 'uses' => 'ajax\CartController@emptyCart'));
-    Route::post('cart/wallet_payment', ['as' => 'cart.wallet.payment', 'uses' => 'CartController@walletPayment']);
+
+// ajax prefix
+    Route::group(['prefix' => 'cart'], function () {
+
+        Route::post('add',
+            ['as' => 'cart.add', 'uses' => 'ajax\CartController@add']);
+        Route::post('remove',
+            ['as' => 'cart.remove', 'uses' => 'ajax\CartController@remove']);
+        Route::post('delete',
+            ['as' => 'cart.delete', 'uses' => 'ajax\CartController@delete']);
+        Route::post('empty',
+            ['as' => 'cart.emptyCart', 'uses' => 'ajax\CartController@emptyCart']);
+        Route::post('coupon',
+            ['as' => 'cart.coupon', 'uses' => 'ajax\CartController@applyCoupon']);
+        Route::post('wallet_payment',
+            ['as' => 'cart.wallet.payment', 'uses' => 'CartController@walletPayment']);
+
+    });
+
+
     // sessions
-    Route::post('/sessions/inline', ['as'=>'sessions.inline.groupId', 'uses'=>'ajax\SessionsController@getSessionsInline'] );
-    Route::put('/sessions/update', ['as'=>'sessions.update', 'uses'=>'ajax\SessionsController@update']);
-    Route::post('sessions/store', [ 'as' => 'sessions.store', 'uses' => 'ajax\SessionsController@store' ]);
+    Route::post('/sessions/inline',
+        ['as' => 'sessions.inline.groupId', 'uses' => 'ajax\SessionsController@getSessionsInline']);
+    Route::put('/sessions/update', ['as' => 'sessions.update', 'uses' => 'ajax\SessionsController@update']);
+    Route::post('sessions/store', ['as' => 'sessions.store', 'uses' => 'ajax\SessionsController@store']);
     Route::post('sessions/remove', array('as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy'));
 
-    Route::post('/sessions/getparticipants', ['as'=>'sessions.get.participants', 'uses'=>'ajax\SessionsController@getParticipants'] );
+    Route::post('/sessions/getparticipants',
+        ['as' => 'sessions.get.participants', 'uses' => 'ajax\SessionsController@getParticipants']);
 
 
     // venue
     Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
 
     // evercise groups
-    Route::post('evercisegroups', ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store'] );
-    Route::post('publish', ['as' => 'evercisegroups.publish','before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
+    Route::post('evercisegroups',
+        ['as' => 'evercisegroups.store', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@store']);
+    Route::post('publish',
+        ['as' => 'evercisegroups.publish', 'before' => 'trainer', 'uses' => 'ajax\EvercisegroupsController@publish']);
     // uploads
     Route::post('upload/cover', array('as' => 'ajax.upload.cover', 'uses' => 'ajax\UploadController@uploadCover'));
-    Route::post('upload/profile', array('as' => 'ajax.upload.profile', 'uses' => 'ajax\UploadController@uploadProfilePicture'));
+    Route::post('upload/profile',
+        array('as' => 'ajax.upload.profile', 'uses' => 'ajax\UploadController@uploadProfilePicture'));
 
     //Gallery
-    Route::post('gallery/getDefaults', array('as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults'));
+    Route::post('gallery/getDefaults',
+        array('as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults'));
 
     //Ratings
     Route::post('ratings/store', ['as' => 'ratings.store', 'uses' => 'ajax\RatingsController@store']);
@@ -135,7 +158,7 @@ Route::get('/finished-user', [
     ]
 );
 
-Route::get('/profile/{id}/{tab?}', [ 'as' => 'users.edit', 'uses' => 'UsersController@edit'] );
+Route::get('/profile/{id}/{tab?}', ['as' => 'users.edit', 'uses' => 'UsersController@edit']);
 
 
 Route::get(
@@ -215,10 +238,20 @@ Route::post('venues/update/{id}', 'VenuesController@update');
 
 
 // Cart
-Route::get('cart/checkout', array('as' => 'cart.checkout', 'uses' => 'CartController@getCart'));
-Route::get('cartrow', array('as' => 'cart.row', function () {
-    return View::make('v3.cart.cartrow');
-}));
+Route::group(['prefix' => 'cart'], function () {
+    Route::get('checkout',
+        ['as' => 'cart.checkout', 'uses' => 'CartController@checkout']);
+    Route::get('confirm',
+        ['as' => 'cart.confirm', 'uses' => 'CartController@confirm']);
+    Route::get('payment.error',
+        ['as' => 'payment.error', 'uses' => 'CartController@paymentError']);
+    Route::get('cartrow', [
+        'as' => 'cart.row',
+        function () {
+            return View::make('v3.cart.cartrow');
+        }
+    ]);
+});
 
 
 // sessions
@@ -242,7 +275,8 @@ Route::post(
 );
 
 /* New Stripe payment */
-Route::post('stripe/sessions', array('as' => 'stripe.sessions', 'uses' => 'PaymentController@processStripePaymentSessions'));
+Route::post('stripe/sessions',
+    array('as' => 'stripe.sessions', 'uses' => 'PaymentController@processStripePaymentSessions'));
 Route::post('stripe/topup', array('as' => 'stripe.topup', 'uses' => 'PaymentController@processStripePaymentTopup'));
 Route::get('payment_confirmation', ['as' => 'payment_confirmation', 'uses' => 'PaymentController@sessionConfirmation']);
 Route::get('topup_confirmation', ['as' => 'topup_confirmation', 'uses' => 'PaymentController@topupConfirmation']);
@@ -285,7 +319,7 @@ Route::post(
     '/sessions/{id}/mail_all',
     array('as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll')
 );
-Route::get( '/sessions/{sessionId}/mail_one/{userId}',
+Route::get('/sessions/{sessionId}/mail_one/{userId}',
     array('as' => 'sessions.mail_one', 'uses' => 'SessionsController@getMailOne')
 );
 Route::post('/sessions/{sessionId}/mail_one/{userId}',
@@ -299,8 +333,6 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
 );
 
 Route::get('/packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
-
-
 
 
 // widgets
@@ -319,8 +351,6 @@ Route::post(
 
 // layouts and static pages
 Route::get('blog', array('as' => 'blog', 'uses' => 'PagesController@showBlog'));
-
-
 
 
 Route::get('about', array('as' => 'static.about', 'uses' => 'StaticController@show'));
@@ -368,14 +398,25 @@ Route::get(
 $pagesController = App::make('PagesController');
 $pagesController->generateRoutes();
 
-$landings = ['dance', 'pilates','martialarts', 'yoga', 'bootcamp', 'personaltrainer'];
 
-foreach($landings as $land) {
-    Route::get($land,['as' => 'landing.bootcamp', 'uses' => function () use ($land) {
-        return (new LandingsController)->landCategory($land);
-    }]);
+
+// working on
+
+Route::get('refer_a_friend/{code}', array('as' => 'referral', 'uses' => 'ReferralsController@submitCode'));
+Route::get('ppc/{category}/{code}', array('as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc'));
+Route::get('ppc_fb/{category}', array('as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc'));
+
+
+$landings = ['dance', 'pilates', 'martialarts', 'yoga', 'bootcamp', 'personaltrainer'];
+
+foreach ($landings as $land) {
+    Route::get($land, [
+        'as' => 'landing.bootcamp',
+        'uses' => function () use ($land) {
+            return (new LandingsController)->landCategory($land);
+        }
+    ]);
 }
-
 
 
 // layout page
@@ -383,8 +424,6 @@ foreach($landings as $land) {
 Route::get('/layouts', function () {
     return View::make('layouts.layouts');
 });
-
-
 
 
 // -------------  ADMIN SECTION ---------------
@@ -417,7 +456,6 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
         ['as' => 'admin.ajax.searchstats', 'uses' => 'AdminAjaxController@searchStats']);
 
 
-
     Route::post('galleryImageUpload',
         ['as' => 'admin.ajax.gallery_upload', 'uses' => 'AdminAjaxController@galleryUploadFile']);
     Route::post('saveTags',
@@ -437,14 +475,14 @@ Route::group(array('prefix' => 'ajax/admin', 'before' => 'admin'), function () {
 });
 
 
-Route::get('/iggy_login', function() {
+Route::get('/iggy_login', function () {
     Sentry::logout();
     $user = Sentry::findUserById(323);
     Sentry::login($user);
 
     return Redirect::route('admin.dashboard');
 });
-Route::get('/tris_login', function() {
+Route::get('/tris_login', function () {
     Sentry::logout();
     $user = Sentry::findUserById(169);
     Sentry::login($user);
@@ -480,7 +518,6 @@ Route::group(
             ['as' => 'admin.pending_withdrawal', 'uses' => 'MainController@pendingWithdrawal']);
         Route::post('/process_withdrawal',
             ['as' => 'admin.process_withdrawal', 'uses' => 'MainController@processWithdrawal']);
-
 
 
         Route::get('/categories',
@@ -523,7 +560,7 @@ Route::group(
         Route::post('/edit_classes/{id}',
             ['as' => 'admin.edit_classes', 'uses' => 'MainController@editClasses']);
         Route::post('/groups',
-            ['as' => 'admin.groups.addcat','uses' => 'MainController@addCategory']);
+            ['as' => 'admin.groups.addcat', 'uses' => 'MainController@addCategory']);
         Route::get('/fakeratings',
             ['as' => 'admin.fakeratings', 'uses' => 'MainController@showGroupRatings']);
 
@@ -535,51 +572,62 @@ Route::group(
 
 );
 
-Route::get('newvenue', function(){
-    $venue = Venue::validateAndStore(['venue_name' => 'name2', 'street' => 'street2', 'city' => 'city2', 'postcode' => 'postcode2'], '169');
+Route::get('newvenue', function () {
+    $venue = Venue::validateAndStore([
+            'venue_name' => 'name2',
+            'street' => 'street2',
+            'city' => 'city2',
+            'postcode' => 'postcode2'
+        ], '169');
     return var_dump($venue);
 });
-Route::get('updatevenue/{id}', function($id){
-    $venue = Venue::find($id)->validateAndUpdate(['venue_name' => 'edited1', 'street' => 'edited1', 'city' => 'edited1', 'postcode' => 'edited1', 'facilities_array' => ['4', '5']]);
+Route::get('updatevenue/{id}', function ($id) {
+    $venue = Venue::find($id)->validateAndUpdate([
+            'venue_name' => 'edited1',
+            'street' => 'edited1',
+            'city' => 'edited1',
+            'postcode' => 'edited1',
+            'facilities_array' => ['4', '5']
+        ]);
     return var_dump($venue);
 });
 
-Route::get('updategroup/{id}', function($id){
+Route::get('updategroup/{id}', function ($id) {
     $result = Evercisegroup::find($id)->validateAndUpdate([
-        'class_name'=>'Running or something',
-        'venue_select'=>'28',
-        'class_description'=>'changed2 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1updategroupupdategroup ',
-        'image'=>'changed1',
-        'category_array'=>['1', '2'],
+        'class_name' => 'Running or something',
+        'venue_select' => '28',
+        'class_description' => 'changed2 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1updategroupupdategroup ',
+        'image' => 'changed1',
+        'category_array' => ['1', '2'],
     ], Sentry::getUser());
     return var_dump($result);
 });
 
-Route::get('creategroup', function(){
+Route::get('creategroup', function () {
     $result = Evercisegroup::validateAndStore([
-        'class_name'=>'Fancy shit',
-        'venue_select'=>'28',
-        'class_description'=>'new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one ',
-        'image'=>'image.jpg',
-        'category_array'=>['4'],
+        'class_name' => 'Fancy shit',
+        'venue_select' => '28',
+        'class_description' => 'new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one ',
+        'image' => 'image.jpg',
+        'category_array' => ['4'],
     ], Sentry::getUser());
     return var_dump($result);
 });
 
-Route::get('show_amenities/{venueId}', function($id){
+Route::get('show_amenities/{venueId}', function ($id) {
         return Venue::find($id)->getAmenities($id);
     }
 );
-Route::get('show_facilities/{venueId}', function($id){
+Route::get('show_facilities/{venueId}', function ($id) {
         return Venue::find($id)->getFacilities($id);
     }
 );
 
 
-Route::get('paytest', function(){
+Route::get('paytest', function () {
         $pc = new PaymentController;
         return $pc->paid('bollocks', 'more bollocks', 'paytest');
         //return 'yeah';
     }
 );
-Route::get('conftest',['uses' => 'PaymentController@conftest'] );
+Route::get('conftest', ['uses' => 'PaymentController@conftest']);

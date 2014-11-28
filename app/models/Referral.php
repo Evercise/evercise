@@ -24,13 +24,11 @@ class Referral extends \Eloquent
      */
     public static function checkReferralCode($rc)
     {
-        $referralCode = 0;
+        $referral = 0;
         if (!is_null($rc)) {
-            if (!is_null(Referral::where('code', $rc)->first())) {
-                $referralCode = $rc;
-            }
+            $referral = Referral::where('code', $rc)->first();
         }
-        return $referralCode;
+        return $referral;
     }
 
     /**

@@ -1,6 +1,9 @@
 <?php namespace ajax;
+
+use Coupons;
 use Input, EverciseCart, Evercisesession, Response, View;
 use Packages;
+use Session;
 
 class CartController extends AjaxBaseController
 {
@@ -15,94 +18,92 @@ class CartController extends AjaxBaseController
      */
     public function add()
     {
-        $productCode = Input::get('product-id', false);
-        $quantity = Input::get('quantity', 1);
+        $productCode = Input::get('product-id', FALSE);
+        $quantity    = Input::get('quantity', 1);
+        $force       = Input::get('force', FALSE);
 
         $idArray = EverciseCart::fromProductCode($productCode);
 
 
-        if( $idArray['type'] == 'session')
-        {
+        if ($idArray['type'] == 'session') {
             $sessionId = $idArray['id'];
 
             // needs fixing - this is grabbing the first class, couls of thought you need find in as the id is in a array
-            $session = Evercisesession::find($sessionId);
+            $session         = Evercisesession::find($sessionId);
             $evercisegroupId = $session->evercisegroup_id;
 
             $rowIds = EverciseCart::search(['id' => $productCode]);
 
-            if($rowIds[0]) // If product ID already exists in cart, then add to quantity.
+            if ($rowIds[0]) // If product ID already exists in cart, then add to quantity.
             {
-                $rowId = $rowIds[0];
-                $row = EverciseCart::get($rowId);
+                $rowId           = $rowIds[0];
+                $row             = EverciseCart::get($rowId);
                 $currentQuantity = $row->qty;
-                $newQuantity = $currentQuantity + $quantity;
+
+                $newQuantity = (!$force ? $currentQuantity + $quantity : $quantity);
                 EverciseCart::update($rowId, $newQuantity);
-            }
-            else // Make a new entry in the cart, and link it to the session.
+            } else // Make a new entry in the cart, and link it to the session.
             {
-                EverciseCart::associate('Evercisesession')->add( $productCode, $session->evercisegroup->name, $quantity, $session->price,
+                EverciseCart::associate('Evercisesession')->add($productCode, $session->evercisegroup->name, $quantity,
+                    $session->price,
                     [
                         'evercisegroupId' => $evercisegroupId,
-                        'sessionId' => $sessionId,
-                        'date_time' => $session->date_time,
-                        'available' => $session->remainingTickets()
+                        'sessionId'       => $sessionId,
+                        'date_time'       => $session->date_time,
+                        'available'       => $session->remainingTickets()
                     ]
                 );
             }
-        }
-        else if( $idArray['type'] == 'package')
-        {
-            // Package has been added
-            $packageId = $idArray['id'];
+        } else {
+            if ($idArray['type'] == 'package') {
+                // Package has been added
+                $packageId = $idArray['id'];
 
-            $package = Packages::find($packageId);
+                $package = Packages::find($packageId);
 
-            $rowIds = EverciseCart::search(['id' => $productCode]);
+                $rowIds = EverciseCart::search(['id' => $productCode]);
 
-            if($rowIds[0]) // If product ID already exists in cart, then add to quantity.
-            {
-                $rowId = $rowIds[0];
-                $row = EverciseCart::get($rowId);
-                $currentQuantity = $row->qty;
-                $newQuantity = $currentQuantity + $quantity;
-                EverciseCart::update($rowId, $newQuantity);
+                if ($rowIds[0]) // If product ID already exists in cart, then add to quantity.
+                {
+                    $rowId           = $rowIds[0];
+                    $row             = EverciseCart::get($rowId);
+                    $currentQuantity = $row->qty;
+                    $newQuantity     = $currentQuantity + $quantity;
+                    EverciseCart::update($rowId, $newQuantity);
+                } else // Make a new entry in the cart, and link it to the session.
+                {
+                    EverciseCart::associate('Packages')->add($productCode, $package->name, $quantity, $package->price,
+                        []);
+                }
+
+
+            } else {
+                if ($idArray['type'] == 'topup') {
+                    $amount = Input::get('amount', 0);
+                    EverciseCart::clearTopup();
+                    EverciseCart::instance('topup')->add($idArray['id'], 'top up', 1, $amount, []);
+                } else {
+                    if ($idArray['type'] == 'wallet_payment') {
+                        $amount = Input::get('amount', 0);
+
+                        if ($amount > \Sentry::getUser()->wallet->balance) {
+                            // Not enough credit in wallet.
+
+                        }
+
+                        EverciseCart::clearWalletPayment();
+                        EverciseCart::instance('topup')->add($idArray['id'], 'top up', 1, $amount, []);
+                    } else {
+                        return 'code does not exist :' . $productCode;
+                        // Product code type does not exist
+                    }
+                }
             }
-            else // Make a new entry in the cart, and link it to the session.
-            {
-                EverciseCart::associate('Packages')->add( $productCode, $package->name, $quantity, $package->price,[]);
-            }
 
-
-        }
-        else if( $idArray['type'] == 'topup')
-        {
-            $amount = Input::get('amount', 0);
-            EverciseCart::clearTopup();
-            EverciseCart::instance('topup')->add( $idArray['id'], 'top up', 1, $amount, []);
-
-            return Response::json([ 'amount' => $amount ]);
-        }
-        else if( $idArray['type'] == 'wallet_payment')
-        {
-            $amount = Input::get('amount', 0);
-
-            if ($amount > \Sentry::getUser()->wallet->balance)
-            {
-                // Not enough credit in wallet.
-
-            }
-
-            EverciseCart::clearWalletPayment();
-            EverciseCart::instance('topup')->add( $idArray['id'], 'top up', 1, $amount, []);
-        }
-        else
-        {
-            return 'code does not exist :'.$productCode;
-            // Product code type does not exist
         }
         return $this->getCart();
     }
+
 
     /**
      * @return $this
@@ -112,18 +113,18 @@ class CartController extends AjaxBaseController
      */
     public function remove()
     {
-        $productCode = Input::get('product-id', false);
-        $rowId = EverciseCart::search(['id' => $productCode]);
-        if ($rowId)
-        {
+        $productCode = Input::get('product-id', FALSE);
+        $rowId       = EverciseCart::search(['id' => $productCode]);
+        if ($rowId) {
             $quantity = Input::get('quantity', 1);
 
             $currentQuantity = EverciseCart::get($rowId[0])->qty;
-            $newQuantity = $currentQuantity - $quantity;
-            if ($newQuantity > 0)
+            $newQuantity     = $currentQuantity - $quantity;
+            if ($newQuantity > 0) {
                 EverciseCart::update($rowId[0], $newQuantity);
-            else
+            } else {
                 EverciseCart::remove($rowId[0]);
+            }
         }
 
         return $this->getCart();
@@ -137,11 +138,12 @@ class CartController extends AjaxBaseController
      */
     public function delete()
     {
-        $productCode = Input::get('product-id', false);
-        $rowId = EverciseCart::search(['id' => $productCode]);
+        $productCode = Input::get('product-id', FALSE);
+        $rowId       = EverciseCart::search(['id' => $productCode]);
 
-        if ($rowId)
+        if ($rowId) {
             EverciseCart::remove($rowId[0]);
+        }
 
         return $this->getCart();
     }
@@ -167,9 +169,29 @@ class CartController extends AjaxBaseController
     {
         $data = EverciseCart::getCart();
 
-        return Response::json([ 'view' => View::make('v3.cart.dropdown')->with($data)->render() ]);
+        return Response::json(['view' => View::make('v3.cart.dropdown')->with($data)->render()]);
     }
 
+
+    public function applyCoupon()
+    {
+        $coupon = Coupons::check(Input::get('coupon', FALSE));
+        $res    = ['cart' => EverciseCart::getCart(), 'success' => FALSE];
+        if ($coupon) {
+            Session::put('coupon', $coupon->coupon);
+            $res['success'] = TRUE;
+            $res['coupon']  = [
+                'coupon'      => $coupon->coupon,
+                'type'        => $coupon->type,
+                'amount'      => $coupon->amount,
+                'percentage'  => $coupon->percentage,
+                'description' => $coupon->description
+            ];
+        }
+
+        return Response::json($res);
+
+    }
 
 
 }

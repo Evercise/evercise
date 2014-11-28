@@ -31,7 +31,9 @@
         "toin0u/geotools-laravel": "0.2.*",
         "pingpong/shortcode": "1.0.*",
         "gloudemans/shoppingcart": "~1.2",
-        "igormatkovic/laravel-livelogger": "~1.0"
+        "igormatkovic/laravel-livelogger": "~1.0",
+        "davispeixoto/laravel-salesforce": "1.*"
+
 
     },
     "require-dev": {

@@ -174,12 +174,13 @@ class Activity
 
     public function deletedClass($class, $user)
     {
-        $this->activities->create([
+        $activity = $this->activities->create([
             'description' => 'Deleted Class ' . $class->name,
             'type' => 'deletedclass',
             'user_id' => $user->id,
             'type_id' => $class->id
         ]);
+        Log::info($activiti->id);
     }
 
     public function deletedVenue($venue, $user)
@@ -202,5 +203,16 @@ class Activity
         ]);
     }
 
+
+    public function usedCoupon($coupon, $user){
+        $this->activities->create([
+            'description' => 'You used the coupon code: ' . $coupon->coupon,
+            'type' => 'couponused',
+            'user_id' => $user->id,
+            'type_id' => $coupon->id
+        ]);
+
+
+    }
 
 }

@@ -163,4 +163,10 @@ $(function(){
         autocomplete = new LocationAutoComplete(this);
     })
 
+    $('#hero-carousel').exists(function() {
+        $(this).carousel({
+            interval: 5000
+        })
+    })
+
 });

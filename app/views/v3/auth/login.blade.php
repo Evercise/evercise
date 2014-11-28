@@ -21,7 +21,7 @@
 
     <div class="col-sm-12">
         <div class="form-group">
-            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb"></span>Log in with facebook', null , ['class' => 'btn btn-fb btn-block']) )}}
+            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb-white"></span>Log in with facebook', null , ['class' => 'btn btn-fb btn-block']) )}}
         </div>
     </div>
 
