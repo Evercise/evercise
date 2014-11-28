@@ -111,7 +111,7 @@
                                             </span>
 
                                             <div class="btn-group pull-right">
-                                                {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
+                                                {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                                                 {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
 
                                                   <select name="quantity" id="quantity" class="btn btn-primary btn-select">
