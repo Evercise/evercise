@@ -191,7 +191,7 @@
     );
     Route::get('/users/{display_name}/logout', ['as' => 'users.logout', 'uses' => 'UsersController@logout']);
 
-// trainers
+    // trainers
     Route::group(['prefix' => 'trainers'], function () {
         Route::get('/create', ['as' => 'trainers.create', 'uses' => 'TrainersController@create']);
         Route::get('/me', ['as' => 'trainer', 'uses' => 'TrainersController@show']);
@@ -201,7 +201,7 @@
         Route::put('/update/{id}', ['as' => 'trainers.update', 'uses' => 'TrainersController@update']);
     });
 
-// evercisegroups (classes)
+    // evercisegroups (classes)
     Route::get(
         'evercisegroups',
         ['as' => 'evercisegroups.index', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@index']

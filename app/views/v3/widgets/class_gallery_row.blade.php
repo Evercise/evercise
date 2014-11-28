@@ -24,7 +24,7 @@
                     @endif
                                  <div class="col-sm-4">
                                     <div class="holder gallery-img-wrapper">
-                                        <img src="/img/gallery/thumb_{{$gal['image']}}" alt="{{ $gal['keywords'] }}" class="img-responsive gallery-option" id="gallery-option-{{ $index }}">
+                                        <img src="/files/gallery_defaults/thumb_{{$gal['image']}}" alt="{{ $gal['keywords'] }}" class="img-responsive gallery-option" id="gallery-option-{{ $index }}">
                                     </div>
                                  </div>
 
