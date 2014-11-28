@@ -687,6 +687,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function makeUserDir($user)
     {
         $dir = hashDir($user->id, 'u');
+
+        Log::info('User dir '.$dir);
         $user->directory = $dir;
         $user->save();
 
