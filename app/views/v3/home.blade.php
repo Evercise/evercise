@@ -5,13 +5,13 @@
           <div class="carousel-inner">
             @foreach($slider as $index => $sl)
                  <div class="item {{ $index == 0 ? 'active': null }}">
-                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/'. $sl->image}}')">
+                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}')">
                         <div class="jumbotron">
                           <div class="container text-center">
-                            <h1 class="text-white"> {{ $sl->evercisegroup_id }}???????</h1>
-                            <h1 class="text-primary">only &pound; ??</h1>
+                            <h1 class="text-white"> {{ $sl['name'] }}</h1>
+                            <h1 class="text-primary">only &pound; {{ round($sl['price'], 0) }}</h1>
                             <div class="row mt50 text-center">
-                            {{ Html::linkRoute('evercisegroups.show', 'View Class', $sl->evercisegroup_id ,['class' => 'btn btn-primary']) }}
+                            {{ Html::linkRoute('evercisegroups.show', 'View Class', $sl['evercisegroup_id'] ,['class' => 'btn btn-primary']) }}
                             <!--
                                 <div class="col-md-2 col-md-offset-4">
                                     <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-white-clock"></span></button>

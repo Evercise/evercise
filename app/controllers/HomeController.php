@@ -29,7 +29,6 @@ class HomeController extends BaseController {
 	{
         $slider = $this->slider->getItems(5);
 
-
         $searchController = App::make('SearchController');
         $featured = $searchController->getClasses([
             'size' => 9,
@@ -37,6 +36,10 @@ class HomeController extends BaseController {
             'featured' => true,
             'location' => 'London'
         ]);
+
+        if(count($featured) < 6) {
+            Log::error('Add More featured Classes');
+        }
 
 
         /**
