@@ -39,7 +39,7 @@ voucher.prototype = {
 
                 }
                 else{
-                    alert('your voucher is not correct')
+                    self.elem.after('<div class="mt10 alert alert-danger alert-dismissible fixed" role="alert">your voucher is not correct<button type="button" class="close" data-dismiss="alert"></button></div>');
                 }
             },
 
