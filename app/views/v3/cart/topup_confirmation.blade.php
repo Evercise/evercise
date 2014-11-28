@@ -1,17 +1,16 @@
 @extends('v3.layouts.master')
 @section('body')
-
-    <br>
-    <div class="container mt30">
-        <h2>Topup Confirmation</h2>
+    <div class="container first-container">
+        <h2 class="text-center">Topup Confirmation</h2>
+        <ul class="col-sm-6 col-sm-offset-3 list-grou mt30">
+          <li class="list-group-item">
+            <span class="badge">{{$data['amount']}}</span>
+            <strong class="text-primary">Topup successful:</strong>
+          </li>
+          <li class="list-group-item">
+            <span class="badge">{{$data['transactionId']}}</span>
+            <strong>Transaction id:</strong>
+          </li>
+        </ul>
     </div>
-
-    <strong class="text-primary">Topup successful: {{$data['amount']}}</strong>
-    <br>
-    <strong>Total: £{{ $data['amount'] }}</strong>
-    <strong>Token: {{ $data['token'] }}</strong>
-    <strong>Transaction id:{{ $data['transactionId'] }}</strong>
-
-
-
 @stop

@@ -135,7 +135,7 @@ class PaymentController extends BaseController {
         }
         catch(Stripe_CardError $e)
         {
-            return 'card error';
+            return $e;
         }
 
         $transactionId = $charge['id'];

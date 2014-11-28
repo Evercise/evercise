@@ -1,4 +1,5 @@
 <div class="container-fluid bg-grey">
+    @include('v3.layouts.stripe_setup')
     <div class="container">
         <div class="underline text-center">
             <h1>Wallet</h1>
@@ -51,18 +52,7 @@
                                 Or
                             </div>
                             <div class="col-sm-5">
-                                {{ Form::open(array('id' => 'join-sessions-stripe', 'url' => 'stripe/topup', 'method' => 'post', 'class' => '')) }}
-                                    <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-                                      data-key="@stripeKey"
-                                      data-image="{{url()}}/img/evercoin.png"
-                                      data-name="Evercise"
-                                      data-currency="gbp"
-                                      data-email="{{ $user->email}}"
-                                      data-address="true"
-                                      data-description=""
-                                      data-amount="1000">
-                                      </script>
-                                {{ Form::close() }}
+                                <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
                             </div>
                         </div>
                       </li>

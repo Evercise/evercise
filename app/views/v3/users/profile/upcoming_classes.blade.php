@@ -11,7 +11,9 @@
                     </div>
                 @endforeach
             @else
-              No Classes
+              <div class="col-sm-12">
+                  <div class="well  text-center">You currently have no upcoming classes</div>
+              </div>
             @endif
         </div>
     </div>

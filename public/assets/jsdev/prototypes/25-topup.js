@@ -1,12 +1,14 @@
 function topUp(form){
     this.form = form;
     this.amount = 0;
+    this.payAmount = 0
+    this.stripe = {};
     this.init();
 }
 topUp.prototype = {
     constructor: topUp,
     init: function(){
-        $('.stripe-button-el').prop('disabled', true).addClass('btn');
+        $('#stripe-button').prop('disabled', true);
         $('#fb-pay').prop('disabled', true);
         this.addListeners();
     },
@@ -15,6 +17,8 @@ topUp.prototype = {
         this.form.find('input[name="custom"]').on('keyup change', $.proxy(this.topUpAmount, this))
         this.form.find('#cancel-btn').on('click', $.proxy(this.cancelTopUp, this))
         this.form.find('input[name="amount"]').on('change', $.proxy(this.amountChanged, this))
+        this.form.find('#stripe-button').on('click', $.proxy(this.openStripe, this))
+        $(window).on('popstate', $.proxy(this.closeStripe, this));
         this.form.on('submit', $.proxy(this.submitForm, this))
     },
     topUpAmount: function(e){
@@ -36,7 +40,7 @@ topUp.prototype = {
         this.form.find('input[name="amount"]').val( this.amount).trigger('change');
     },
     amountChanged: function(){
-        $('.stripe-button-el').prop('disabled', true)
+        $('#stripe-button').prop('disabled', true)
         $('#fb-pay').prop('disabled', true)
         if( this.amount > 0 ){
             var oldValue = this.amount;
@@ -49,6 +53,19 @@ topUp.prototype = {
                 }
             },1000);
         }
+    },
+    openStripe: function(e){
+        var self = this;
+        // Open Checkout with further options
+        handler.open({
+            name: 'Evercise',
+            description: 'Top up',
+            amount: self.payAmount
+        });
+        e.preventDefault();
+    },
+    closeStripe: function(e){
+        handler.close();
     },
     submitForm: function(e){
         e.preventDefault();
@@ -67,9 +84,9 @@ topUp.prototype = {
             },
 
             success: function (data) {
-                $('.stripe-button-el').prop('disabled', false);
+                $('#stripe-button').prop('disabled', false);
                 $('#fb-pay').prop('disabled', false);
-               console.log(data);
+                self.payAmount = data.amount;
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -164,9 +164,12 @@ class UsersController extends \BaseController
             return Redirect::route('home');
         }
 
+        $activity = Activities::where('user_id', $this->user->id)->get();
+
         $user = $this->user;
         $data = [
             'user' => $user,
+            'activity' => $activity
         ];
 
         // if user is trainer lob hub into data
@@ -185,6 +188,9 @@ class UsersController extends \BaseController
 
             $view = 'v3.users.profile.master_user';
         }
+
+
+
 
         return View::make( $view )
             ->with('data', $data)

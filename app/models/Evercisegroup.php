@@ -240,6 +240,7 @@ class Evercisegroup extends \Eloquent
 
         }
 
+
         $data = [
             'past_sessions' => $pastSessions,
             'future_sessions' => $futureSessions,
