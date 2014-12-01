@@ -105,23 +105,33 @@
                                     <td><span class="icon icon-ticket mr10"></span><span>x {{ $futuresession->tickets -  $data['members'][$futuresession->id] }} tickets left</span></td>
                                     <td><span class="icon icon-watch mr5"></span><span>{{ $futuresession->formattedDuration() }}</span></td>
                                     <td>
-                                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
+                                        @if($futuresession->tickets - $data['members'][$futuresession->id] > 0)
+                                            {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
+                                                <span>
+                                                    <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
+                                                </span>
+
+                                                <div class="btn-group pull-right">
+                                                    {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
+                                                    {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
+
+                                                      <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                                        @for($i=1; $i<($futuresession->tickets - $data['members'][$futuresession->id] + 1 ); $i++)
+                                                        <option value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                      </select>
+
+                                                </div>
+                                            {{ Form::close() }}
+                                        @else
                                             <span>
                                                 <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
                                             </span>
-
                                             <div class="btn-group pull-right">
-                                                {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
-                                                {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
-
-                                                  <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-                                                    @for($i=1; $i<($futuresession->tickets - $data['members'][$futuresession->id] + 1 ); $i++)
-                                                    <option value="{{$i}}">{{$i}}</option>
-                                                    @endfor
-                                                  </select>
-
+                                                <button class="btn btn-danger disabled">Class Full</button>
                                             </div>
-                                        {{ Form::close() }}
+                                        @endif
+
                                     </td>
                                 </tr>
                             @endforeach

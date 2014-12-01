@@ -66,31 +66,37 @@
 
                     </li>
                     -->
-                    <li id="voucher" class="list-group-item ">
-                        <div class="row mb20">
-                            <div class="col-sm-11">
-                                <strong class="list-group-item-heading">I have a Voucher Code</strong>
-                            </div>
-                            <div class="col-sm-1">
-                                <span id="have-voucher" class="icon icon-radio"></span>
-                            </div>
-                        </div>
-                        {{ var_dump($coupon) }}
-                        <div id="have-voucher-block" class="hidden">
-                            {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        {{ Form::text('coupon', null, ['class' => 'form-control', 'placeholder' => 'Enter your voucher']) }}
-                                    </div>
-                                    <div class="col-sm-4">
-                                        {{ Form::submit('Add Voucher', ['class' => 'btn btn-primary btn-block']) }}
-                                    </div>
+                    @if($coupon)
+                        <li class="list-group-item list-group-item-success">
+                            <span class="text-white">Your voucher has been successfully applied</span>
+                        </li>
+                    @else
+                        <li id="voucher" class="list-group-item ">
+                            <div class="row mb20">
+                                <div class="col-sm-11">
+                                    <strong class="list-group-item-heading">I have a Voucher Code</strong>
                                 </div>
-                            {{ Form::close() }}
-                        </div>
-                    </li>
+                                <div class="col-sm-1">
+                                    <span id="have-voucher" class="icon icon-radio"></span>
+                                </div>
+                            </div>
 
-                    <li class="list-group-item list-group-item-success">
+                            <div id="have-voucher-block" class="hidden">
+                                {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            {{ Form::text('coupon', null, ['class' => 'form-control', 'placeholder' => 'Enter your voucher']) }}
+                                        </div>
+                                        <div class="col-sm-4">
+                                            {{ Form::submit('Add Voucher', ['class' => 'btn btn-primary btn-block']) }}
+                                        </div>
+                                    </div>
+                                {{ Form::close() }}
+                            </div>
+                        </li>
+                    @endif
+
+                    <li class="list-group-item">
                         <div class="row">
                             <strong class="list-group-item-heading col-sm-3">Quantity</strong>
                             <strong class="list-group-item-heading col-sm-7">Description of Purchase</strong>
@@ -135,20 +141,6 @@
                                                 @endfor
                                             </select>
                                         </div>
-                                        <!--
-                                        <div class="btn-group">
-                                          <button type="submit" class="btn btn-primary">{{ $row['qty'] }}</button>
-                                          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                          </button>
-                                          <ul class="dropdown-menu" role="menu">
-                                            @for($i = 1; $i < 10; $i++)
-                                                <li><a href="#{{$i}}">purchase {{$i}} of this class</a></li>
-                                            @endfor
-                                          </ul>
-                                        </div>
-                                        -->
                                     {{ Form::close() }}
                                 </div>
                                 <div class="col-sm-7">
@@ -173,15 +165,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="row text-right">
-                                    <div class="col-sm-5">
-                                        <strong>Discount</strong>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <strong class="text-primary">{{ $discount['amount'] or 0 }}%</strong>
-                                    </div>
-                                </div>
+                            <div class="col-sm-6 text-right">
+                                @if($total['package_deduct'] > 0)
+                                    <strong>Package deduct: <span class="text-primary"> £{{ $total['package_deduct']  }}</span></strong>
+                                    <br>
+                                @endif
+                                @if($total['from_wallet'] > 0)
+                                    <strong>From Wallet: <span class="text-primary">£{{ $total['from_wallet']  }}</span></strong>
+                                    <br>
+                                @endif
+                                @if(!empty($discount['amount']) && $discount['amount'] > 0)
+                                    <strong>
+                                        Voucher discount: <span class="text-primary">- £{{ $discount['amount'] }}</span>
+                                         @if($discount['type'] == 'percentage')
+                                             <span class="text-primary">{{ $discount['percentage']}}%</span>
+                                         @endif
+                                    </strong>
+                                @endif
                             </div>
                         </div>
                     </li>
@@ -202,7 +202,7 @@
                     <li  class="list-group-item">
                         <div class="row">
                             <div class="col-sm-5">
-                                <button id="fb-pay" class="btn btn-info btn-block">Pay with paypal</button>
+                                <button disabled id="fb-pay" class="btn btn-info btn-block">Pay with paypal</button>
                             </div>
                             <div class="col-sm-2 text-center mt5">
                                 Or
@@ -218,105 +218,4 @@
     </div>
 
 </div>
-
-    <br>
-    <div class="container mt30">
-        <h2>Checkout</h2>
-    </div>
-    <ul>
-        @foreach($packages as $row)
-            <li>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</li>
-            <strong class="text-primary">Total:£{{ $row['price'] }}</strong>
-        @endforeach
-
-
-        @foreach($sessions_grouped as $row)
-        <?php
-        $date = new \Carbon\Carbon($row['date_time']);
-        ?>
-            <li>{{ $row['name']}} {{ $date->toDayDateTimeString() }}</li>
-            <strong>QTY: {{ $row['qty'] }}</strong>
-
-            <strong class="text-primary">
-            {{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : $row['grouped_price']) }}
-            </strong>
-        @endforeach
-    </ul>
-
-    <div class="btn-group col-sm-2">
-        {{ Form::open(array('id' => 'add-coupon', 'url' => 'ajax/cart/add', 'method' => 'post', 'class' => '')) }}
-            {{ Form::hidden( 'product-id' , 'W', array('id' => 'product-id')) }}
-            {{ Form::hidden( 'amount' , '10', array('id' => 'amount')) }}
-            {{ Form::submit('pay with wallet (&pound;10)' , array('class'=>'btn btn-primary btn-sm btn-block', 'id' => '')) }}
-        {{ Form::close() }}
-    </div>
-
-
-    <div class="col-xs-3">
-        <strong>Sub-total</strong>
-    </div>
-    <div class="col-xs-5">
-        <strong class="text-primary">&pound;<span id="cart-sub-total">{{ $total['subtotal'] }}</span></strong>
-    </div>
-    <div class="col-xs-2">
-        <strong>Discount</strong>
-    </div>
-    <div class="col-xs-2">
-        <strong class="text-primary"><span id="cart-discount">{{ $discount['amount'] or 0 }}</span>%</strong>
-    </div>
-    <li class="divider col-xs-12"></li>
-
-    <div class="col-xs-3">
-        <strong>Total</strong>
-    </div>
-    <div class="col-xs-5">
-        <strong class="text-primary">&pound;<span id="cart-total">{{ $total['final_cost'] }}</span></strong>
-
-
-
-
-        <strong>Total: £{{ $total['subtotal']  }}</strong>
-        <br>
-    @if($total['package_deduct'] > 0)
-        <strong>Package deduct: - £{{ $total['package_deduct']  }}</strong>
-        <br>
-    @endif
-    @if($total['from_wallet'] > 0)
-        <strong>From Wallet: - £{{ $total['from_wallet']  }}</strong>
-        <br>
-    @endif
-    @if(!empty($discount['amount']) && $discount['amount'] > 0)
-        <strong>Coupon discount:
-            - £{{ $discount['amount'] }}
-        @if($discount['type'] == 'percentage')
-            {{ $discount['percentage']}}%
-        @endif
-
-    @endif
-    </strong>
-    <br>
-    <br>
-    <strong>To Pay: £{{ $total['final_cost'] }}</strong>
-
-    <br/>
-    <br/>
-    <strong>PAYPAL</strong>
-
-    <br/>
-    <br/>
-    <strong>STRIPE</strong>
-    {{ Form::open(array('id' => 'join-sessions-stripe', 'route' => 'stripe.sessions', 'method' => 'post', 'class' => '')) }}
-        <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-          data-key="@stripeKey"
-          data-image="{{url()}}/img/evercoin.png"
-          data-name="Evercise"
-          data-currency="gbp"
-          data-email="{{ $user->email}}"
-          data-address="true"
-          data-description=""
-          data-amount="{{( SessionPayment::poundsToPennies($total['final_cost']) )}}">
-          </script>
-    {{ Form::close() }}
-
-
 @stop

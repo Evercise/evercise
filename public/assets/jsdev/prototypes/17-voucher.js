@@ -31,15 +31,15 @@ voucher.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-
+                self.form.find('input[type="submit"]').prop('disabled', true)
             },
 
             success: function (data) {
                 if(data.success){
-
+                    location.reload();
                 }
                 else{
-                    self.elem.after('<div class="mt10 alert alert-danger alert-dismissible fixed" role="alert">your voucher is not correct<button type="button" class="close" data-dismiss="alert"></button></div>');
+                    self.elem.after('<div class="mt10 alert alert-danger alert-dismissible fixed" role="alert">your voucher is not correct<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button></div>');
                 }
             },
 

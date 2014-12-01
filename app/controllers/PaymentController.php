@@ -326,8 +326,8 @@
             Event::fire('activity.user.cart.completed', [$this->user, $cart, $transaction]);
 
             /* Empty cart */
-       //     EverciseCart::clearCart();
-       //     EverciseCart::clearWalletPayment();
+            EverciseCart::clearCart();
+            EverciseCart::clearWalletPayment();
 
             return TRUE;
         }

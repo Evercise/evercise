@@ -265,7 +265,7 @@
                     }
 
 
-                    $cart['total']['final'] = ($cart['discount']['new_total']);
+                    $cart['total']['final_cost'] = ($cart['discount']['new_total']);
                 }
 
             }
