@@ -1,31 +1,37 @@
 @extends('v3.layouts.master')
 @section('body')
-
-
-    <div class="col-lg-12" style="margin-top:80px">
-        <div class="col-lg-4">
-            <ul>
-                @foreach($categories as $c)
-                    <li><a href="{{ url($c->permalink) }}">{{ $c->title }}</a></li>
-                @endforeach
-            </ul>
-
-        </div>
-        <div class="col-lg-8">
+<div class="container first-container">
+    <div class="row text-center">
+        <div class="underline">
             <h1>{{ $title }}</h1>
-
-            @foreach($articles as $a)
-
-                   <div class="row" style="border-bottom:3px solid #cc6633; margin-bottom: 10px">
-
-                       <img src="{{asset($a->main_image)}}" style="float:left; margin-right:10px; width:300px"/>
-                            <h3>{{ $a->title }}</h3>
-                            <p>{{ $a->intro }}</p>
-
-                            <li><a href="{{ url(Articles::createUrl($a)) }}">Read More</a></li>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="list-group">
+                @foreach($categories as $c)
+                    {{ Html::link(url($c->permalink), $c->title, ['class'=>'list-group-item']) }}
+                @endforeach
+            </div>
+        </div>
+        <div class="col-sm-8">
+             @foreach($articles as $a)
+                <div class="row" >
+                    <div class="col-sm-4">
+                        {{ image($a->main_image, $a->main_image, ['class' => 'img-responsive']) }}
                     </div>
+                    <div class="col-sm-8">
 
+                        <h3>{{ $a->title }}</h3>
+                        <p>{{ $a->intro }}</p>
+                        <small>published on : {{ strtotime($a->published_on) != '-62169984000' ?  date('D dS Y',strtotime($a->published_on) ) :  date('D dS Y',strtotime($a->created_at) ) }}</small>
+                        <br>
+                        {{ Html::link(url(Articles::createUrl($a)), 'Read More...', ['class' => 'text-primary']) }}
+                    </div>
+                </div>
+                <hr>
             @endforeach
         </div>
     </div>
+</div>
 @stop

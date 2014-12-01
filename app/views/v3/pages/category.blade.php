@@ -3,65 +3,34 @@
 
 
 @section('body')
-
-{--
-|| ARTICLE DATA ||
-id
-page
-category_id
-title
-main_image
-description
-intro
-keywords
-content
-permalink
-template
-status
-published_on
-created_at
-updated_at
-
-
-|| CATEGORY DATA ||
-id
-page
-category_id
-title
-main_image
-description
-intro
-keywords
-content
-permalink
-template
-status
-published_on
-created_at
-updated_at
-
---}
-
-
-    <h1>{{ $category->title }}</h1>
-
-
-
-    @foreach($articles as $article)
-        <div class="">
-            <h2>{{ $article->title }}</h2>
-
-            <img src="{{ URL::to($article->main_image)}}"/>
-
-
-            {{ $article->intro }}
-
-            {{  link_to(Articles::createUrl($article), 'Read More....', ['style' => 'color:#c00']) }}
-
-
+<div class="container first-container">
+    <div class="row text-center">
+        <div class="underline">
+            <h1>{{ $category->title}}</h1>
         </div>
-        <hr/>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+           we should put the category list here
+        </div>
+        <div class="col-sm-8">
+             @foreach($articles as $a)
+                <div class="row" >
+                    <div class="col-sm-4">
+                        {{ image($a->main_image, $a->main_image, ['class' => 'img-responsive']) }}
+                    </div>
+                    <div class="col-sm-8">
+                        <h3>{{ $a->title }}</h3>
+                        <p>{{ $a->intro }}</p>
+                        <small>published on : {{ strtotime($a->published_on) != '-62169984000' ?  date('D dS Y',strtotime($a->published_on) ) :  date('D dS Y',strtotime($a->created_at) ) }}</small>
+                        <br>
+                        {{ Html::link(url(Articles::createUrl($a)), 'Read More...', ['class' => 'text-primary']) }}
 
+                    </div>
 
-    @endforeach
-@stop
+                </div>
+                <hr>
+            @endforeach
+        </div>
+    </div>
+</div>
