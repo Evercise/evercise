@@ -33,12 +33,6 @@ class GalleryController extends AjaxBaseController
     public function selectImage($image_id)
     {
 
-        $image = $this->gallery->find($image_id);
-
-        $image->update(['counter' => ($image->counter - 1)]);
-
-        return $image->image;
-
     }
 
     public function getDefaults()
