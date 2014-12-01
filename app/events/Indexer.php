@@ -5,12 +5,12 @@ use Log, Geotools,Evercisegroup, Elastic;
 
 class Indexer
 {
-    protected $elastic_index;
+    protected $elastic;
 
     public function load()
     {
 
-        if (!isset($this->elastic_index)) {
+        if (!isset($this->elastic)) {
             /** Load a partial instance of the Elastic thingy... no need for everything to be injected!*/
             $this->elastic = new Elastic(
                 Geotools::getFacadeRoot(),

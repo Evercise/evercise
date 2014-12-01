@@ -41,6 +41,7 @@ class Activity
 
     public function payedClass($class, $user)
     {
+
         $this->activities->create([
             'title'       => 'Joined class',
             'description' => $class->name,
@@ -57,7 +58,7 @@ class Activity
     public function canceledClass($class, $user)
     {
         $this->activities->create([
-            'title' => 'Canceled class',
+            'title'       => 'Canceled class',
             'description' => $class->name,
             'type'        => 'canceledclass',
             'image'       => 'canceledclass.png',
@@ -152,12 +153,19 @@ class Activity
 
     public function createdClass($class, $user)
     {
+
         $this->activities->create([
-            'description' => 'Created Class ' . $class->name,
-            'type'        => 'createdclass',
+            'title'       => 'You created a class',
+            'type'        => 'createclass',
+            'description' => $class->name,
             'user_id'     => $user->id,
-            'type_id'     => $class->id
+            'type_id'     => $class->id,
+            'link'        => 'class/' . $class->id,
+            'link_title'  => 'View',
+            'image'       => 'createclass.png',
         ]);
+
+
     }
 
     public function createdVenue($venue, $user)
@@ -267,7 +275,8 @@ class Activity
         $this->activities->create([
             'title'       => 'You used the coupon code: ' . $coupon->coupon,
             'type'        => 'couponused',
-            'description' => ($coupon->type == 'amount' ? 'Worth £' . round($coupon->amount,2) : 'With ' . $coupon->percentage . '% discount'),
+            'description' => ($coupon->type == 'amount' ? 'Worth £' . round($coupon->amount,
+                    2) : 'With ' . $coupon->percentage . '% discount'),
             'user_id'     => $user->id,
             'type_id'     => $coupon->id,
             'link'        => '',
@@ -340,13 +349,13 @@ class Activity
         $amountUsed = $session->amountUsed($userpackage->id);
 
         $this->activities->create([
-            'title'       => $class->name .' deducted from package',
+            'title'       => $class->name . ' deducted from package',
             'type'        => 'packageused',
-            'description' => ($amountUsed > $package->classes  ? 'You have '.($package->classes - $amountUsed).' left with this package' : 'You have used up all classes on this package'),
+            'description' => ($amountUsed > $package->classes ? 'You have ' . ($package->classes - $amountUsed) . ' left with this package' : 'You have used up all classes on this package'),
             'user_id'     => $user->id,
             'type_id'     => $userpackage->id,
-            'link'        => ($amountUsed > $package->classes  ? 'packages/' : ''),
-            'link_title'  => ($amountUsed > $package->classes  ? 'Buy more' : ''),
+            'link'        => ($amountUsed > $package->classes ? 'packages/' : ''),
+            'link_title'  => ($amountUsed > $package->classes ? 'Buy more' : ''),
             'image'       => 'packageused.png',
         ]);
     }

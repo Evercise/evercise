@@ -114,8 +114,7 @@ class Evercisegroup extends \Eloquent
                 ]
             );
 
-            event('class.index.single', ['id' => $evercisegroup->id]);
-            event('evecisegroup.created', [$user, $evercisegroup]);
+            event('class.created', [$evercisegroup, $user]);
 
             return Response::json(
                 [
