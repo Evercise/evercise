@@ -21,7 +21,14 @@ class ReferralsController extends \BaseController {
 			$refereeEmail = Input::get('referee_email');
 			$referralCode = Functions::randomPassword(20);
 
-			$referral = Referral::create(['user_id'=>$this->user->id, 'email'=>$refereeEmail, 'code'=>$referralCode]);
+			try {
+				$referral = Referral::create(['user_id' => $this->user->id, 'email' => $refereeEmail, 'code' => $referralCode]);
+			}catch(Exception $e){
+				return Response::json([
+					'validation_failed' => 1,
+					'errors' =>  ['referee_email' => 'Email address already registered for referral']
+				]);
+			}
 
 			if ($referral)
 			{
@@ -32,7 +39,7 @@ class ReferralsController extends \BaseController {
 		        ));
 			}
 		}
-		return Response::json(['success'=>'true']);
+		return Response::json(['validation_failed'=>0]);
 	}
 
 	// Accept a code from a friend referral
