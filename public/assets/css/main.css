@@ -7764,31 +7764,31 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -1180px -290px;
 }
-.icon-filter {
+.icon-sort {
   background-image: url("../img/ev_site_icons.png");
   background-position: -1130px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-filter.active {
+.icon-sort.active {
   background-position: -1130px -290px;
 }
-.icon-filter.hover:hover,
-.icon-filter.active:hover {
+.icon-sort.hover:hover,
+.icon-sort.active:hover {
   cursor: pointer;
   background-position: -1130px -290px;
 }
-.icon-sort {
+.icon-filter {
   background-image: url("../img/ev_site_icons.png");
   background-position: -1170px -250px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.icon-sort.active {
+.icon-filter.active {
   background-position: -1170px -290px;
 }
-.icon-sort.hover:hover,
-.icon-sort.active:hover {
+.icon-filter.hover:hover,
+.icon-filter.active:hover {
   cursor: pointer;
   background-position: -1170px -290px;
 }
@@ -8865,6 +8865,10 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-preview.open {
   margin-left: 0;
+}
+.class-preview .preview-row {
+  border-bottom: 1px solid #e8ebec;
+  padding: 20px 10px;
 }
 .class-snippet {
   width: 100%;

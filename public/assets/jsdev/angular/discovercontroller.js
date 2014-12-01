@@ -192,6 +192,7 @@ if(typeof angular != 'undefined') {
             $scope.preview.capacity = marker.capacity;
             $scope.preview.link = marker.link;
             $scope.preview.sessions = marker.sessions;
+            //futuresessionDate(marker.sessions);
             $scope.preview.reviews = marker.reviews;
 
             // topggle markers
@@ -211,6 +212,14 @@ if(typeof angular != 'undefined') {
 
             $scope.isPreviewOpen = true;
 
+        }
+
+        function futuresessionDate(futuresessions){
+            $.each(futuresessions, function(index, value) {
+                $scope.preview.sessions[index] = new Date(value.date_time);
+            });
+
+            console.log(futuresessions);
         }
 
 

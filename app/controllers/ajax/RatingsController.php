@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Response, Sentry, Evercisegroup, Validator, Request, Redirect, Sessionmember, Evercisesession, Rating, Trainerhistory, Milestone, Event;
+use Input, Response, Sentry, Evercisegroup, Validator, View, Redirect, Sessionmember, Evercisesession, Rating, Trainerhistory, Milestone, Event;
 
 
 class RatingsController extends AjaxBaseController{

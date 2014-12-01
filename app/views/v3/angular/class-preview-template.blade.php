@@ -32,12 +32,12 @@
                 </div>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane list-group" id="schedule">
+        <div role="tabpanel" class="tab-pane" id="schedule">
             <div class="underline text-center">
                 <h3>Schedule</h3>
             </div>
 
-            <div class="list-group-item row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse">
+            <div class="row preview-row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse">
                 <div class="col-sm-6 mt5">
                     <span class="icon icon-clock"></span>
                     {[{ session.date_time | date : 'MMM d, h:mma'  }]}
@@ -59,16 +59,23 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="reviews">
             <div ng-repeat="review in preview.reviews" >
-            {[{ review }]}
-
-                <div class="well" >
-                    <div class="class-rating-wrapper">
-                        <span class="icon icon-full-star" ng-repeat="n in [] | repeat:review.stars"></span>
-                        <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - review.stars"></span>
+                <div class="row">
+                    <div class="col-sm-3">
                     </div>
-                    <p>{[{ review.comment }]}</p>
+                    <div class="col-sm-9 mt15">
+                        <div class="condensed">
+                            <strong>lewis</strong>
+                        </div>
+                        <i>date</i>
+                        <div class="mb25">
+                            <div class="class-rating-wrapper">
+                                <span class="icon icon-full-star" ng-repeat="n in [] | repeat:review.stars"></span>
+                                <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - review.stars"></span>
+                            </div>
+                        </div>
+                        <p>{[{ review.comment }]}</p>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
