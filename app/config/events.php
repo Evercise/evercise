@@ -66,12 +66,39 @@
 
     return [
 
-       '0'  => [
+       '10'  => [
 // ∑          ['trainer.class.joined' => 'User@trainerClassJoined'],
 // ∑          ['user.cart.completed' => 'User@cartCompleted'] // $user, $cart, $transaction
 
+
+
+           ['class.created' => 'Classes@classCreated'],  // $class, $user
         ],
         '5'  => [
+
+        ],
+        '0' => [
+            //All Tracking is Low Priority
+            ['stats.class.counter' => 'Stats@classViewed'],
+            ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer'],
+            ['class.index.single' => 'Indexer@indexSingle'],
+            ['class.index.all' => 'Indexer@indexAll'],
+
+
+
+//            ['user.registered' => 'Tracking@userRegistered'],
+//            ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'],
+//            ['trainer.registered' => 'Tracking@trainerRegistered'],
+//            ['user.login' => 'Tracking@userLogin'],
+//            ['user.loginFacebook' => 'Tracking@userFacebookLogin'],
+//            ['user.edit' => 'Tracking@userEdit'],
+//            ['trainer.edit' => 'Tracking@trainerEdit'],
+//            ['user.changedPassword' => 'Tracking@userChangePassword'],
+//            ['user.package.used' => 'Tracking@userChangePassword'],
+//            ['session.create' => 'Tracking@registerSessionTracking'],
+//            ['user.class.joined' => 'Tracking@registerUserSessionTracking']
+
+
             ['activity.class.payed' => 'Activity@payedClass'],  // $class, $user
             ['activity.class.canceled' => 'Activity@canceledClass'],  // $class, $user
             ['activity.class.create' => 'Activity@createdClass'],  // $class, $user
@@ -97,24 +124,6 @@
             ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction  √
             ['activity.user.reviewed.class' => 'Activity@usedReviewedClass'],  // $user, $class
 
-        ],
-        '10' => [
-            //All Tracking is Low Priority
-            ['stats.class.counter' => 'Stats@classViewed'],
-            ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer'],
-            ['class.index.single' => 'Indexer@indexSingle'],
-            ['class.index.all' => 'Indexer@indexAll'],
-//            ['user.registered' => 'Tracking@userRegistered'],
-//            ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'],
-//            ['trainer.registered' => 'Tracking@trainerRegistered'],
-//            ['user.login' => 'Tracking@userLogin'],
-//            ['user.loginFacebook' => 'Tracking@userFacebookLogin'],
-//            ['user.edit' => 'Tracking@userEdit'],
-//            ['trainer.edit' => 'Tracking@trainerEdit'],
-//            ['user.changedPassword' => 'Tracking@userChangePassword'],
-//            ['user.package.used' => 'Tracking@userChangePassword'],
-//            ['session.create' => 'Tracking@registerSessionTracking'],
-//            ['user.class.joined' => 'Tracking@registerUserSessionTracking']
         ]
     ];
 

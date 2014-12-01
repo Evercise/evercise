@@ -14,6 +14,48 @@
 
 // temporary routes for new layouts
 
+Route::get('/ig', [
+        'as' => 'aaa',
+        function () {
+
+            $class = Evercisegroup::find(721);
+            $user = Sentry::getUser();
+            $session = Evercisesession::find(5594);
+
+            /**
+             *
+            ['activity.class.payed' => 'Activity@payedClass'],  // $class, $user √
+            ['activity.class.canceled' => 'Activity@canceledClass'],  // $class, $user
+            ['activity.class.create' => 'Activity@createdClass'],  // $class, $user
+            ['activity.class.update' => 'Activity@updatedClass'],  // $class, $user
+            ['activity.class.delete' => 'Activity@deletedClass'],  // $class, $user
+            ['activity.venue.create' => 'Activity@createdVenue'],  // $venue, $user
+            ['activity.venue.update' => 'Activity@updatedVenue'],  // $venue, $user
+            ['activity.venue.delete' => 'Activity@deletedVenue'],  // $venue, $user
+
+            ['activity.session.create' => 'Activity@createdSessions'],  // $class, $user
+            ['activity.session.update' => 'Activity@updatedSessions'],  // $class, $user
+            ['activity.session.delete' => 'Activity@deletedSessions'],  // $class, $user
+
+            ['activity.wallet.topup' => 'Activity@walletToppup'],  // $user, $amount
+            ['activity.wallet.withdraw' => 'Activity@walletWithdraw'],  // $user, $amount
+            ['activity.user.coupon' => 'Activity@usedCoupon'],  // $coupon, $user
+
+            ['activity.user.editprofile' => 'Activity@userEditProfile'],  // $user
+            ['activity.user.facebook' => 'Activity@linkFacebook'],  // $user
+            ['activity.user.twitter' => 'Activity@linkTwitter'],  // $user
+            ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
+            ['activity.user.package.used' => 'Activity@packageUsed'],  //   $user, $userpackage, $package,  $session   √
+            ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction  √
+            ['activity.user.reviewed.class' => 'Activity@usedReviewedClass'],  // $user, $class
+             */
+            event('class.created', [$class, $user]);
+
+
+            die('done');
+        }
+    ]
+);
 
     Route::get('/popular', [
             'as' => 'popular',

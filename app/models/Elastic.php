@@ -64,7 +64,7 @@ class Elastic
 
         /** Are we going to Search Something? */
 
-        $search = false;
+        $search = FALSE;
 
 
         if (!empty($params['search'])) {
@@ -77,32 +77,33 @@ class Elastic
                 ],
 
             ];
-            $search = true;
+            $search = TRUE;
         }
 
-        if( !isset($params['all'])) {
-            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => true];
+        if (!isset($params['all'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => TRUE];
             $searchParams['body']['query']['filtered']['filter']['bool']['must_not']['missing'] = [
-                            'field' => 'futuresessions.members',
-                            'existence' => true,
-                            'null_value' => true];
-            $search = true;
+                'field'      => 'futuresessions.members',
+                'existence'  => TRUE,
+                'null_value' => TRUE
+            ];
+            $search = TRUE;
         }
 
 
-        if (!empty($params['featured'])){
-            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['featured' => true];
-            $search = true;
+        if (!empty($params['featured'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['featured' => TRUE];
+            $search = TRUE;
         }
 
 
-        if(!$search) {
+        if (!$search) {
             /** Guess not! */
             $searchParams['body']['query']['filtered']['query']['match_all'] = [];
         }
 
 
-        if(!empty($params['sort'])) {
+        if (!empty($params['sort'])) {
             $searchParams['body']['sort'] = $params['sort'];
         }
 
@@ -143,13 +144,11 @@ class Elastic
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
-        $result_object = json_decode(json_encode($result), false);
+        $result_object = json_decode(json_encode($result), FALSE);
 
         return $result_object;
 
     }
-
-
 
 
     /**
@@ -187,7 +186,7 @@ class Elastic
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
-        $result_object = json_decode(json_encode($result), false);
+        $result_object = json_decode(json_encode($result), FALSE);
 
 
         return $result_object;
@@ -222,7 +221,7 @@ class Elastic
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
-        $result_object = json_decode(json_encode($result), false);
+        $result_object = json_decode(json_encode($result), FALSE);
 
 
         return $result_object;
@@ -237,11 +236,12 @@ class Elastic
      * @param bool $lon
      * @throws Exception
      */
-    public function getLocationHash($lat = false, $lon = false)
+    public function getLocationHash($lat = FALSE, $lon = FALSE)
     {
         try {
             $geohash = $this->geotools->coordinate($lat . ',' . $lon);
             $encoded = $this->geotools->geohash()->encode($geohash);
+
             return $encoded->getGeohash();
         } catch (Exception $e) {
             throw new Exception('Cant GeoHash ' . $lat . ', ' . $lon);
@@ -255,10 +255,11 @@ class Elastic
      * @param bool $geohash
      * @throws Exception
      */
-    public function decodeLocationHash($geohash = false)
+    public function decodeLocationHash($geohash = FALSE)
     {
         try {
             $decoded = $this->geotools->geohash()->decode($geohash);
+
             return [
                 'latitude'   => $decoded->getCoordinate()->getLatitude(),
                 'longtitude' => $decoded->getCoordinate()->getLongitude()
@@ -311,22 +312,22 @@ class Elastic
             }
 
             $index = [
-                'id'               => (int) $a->id,
-                'user_id'          => (int) $a->user_id,
-                'venue_id'         => (int) $a->venue_id,
-                'counter'          => (int) $a->counter,
+                'id'               => (int)$a->id,
+                'user_id'          => (int)$a->user_id,
+                'venue_id'         => (int)$a->venue_id,
+                'counter'          => (int)$a->counter,
                 'name'             => $a->name,
                 'title'            => $a->title,
                 'gender'           => $a->gender,
                 'description'      => $a->description,
                 'image'            => $a->image,
-                'capacity'         => (int) $a->capacity,
-                'default_duration' => (int) $a->default_duration,
-                'default_price'    => (double) $a->default_price,
-                'published'        => ($a->published == 0 ? false : true),
-                'featured'         => ($a->isfeatured() ? true : false),
+                'capacity'         => (int)$a->capacity,
+                'default_duration' => (int)$a->default_duration,
+                'default_price'    => (double)$a->default_price,
+                'published'        => ($a->published == 0 ? FALSE : TRUE),
+                'featured'         => ($a->isfeatured() ? TRUE : FALSE),
                 'user'             => [
-                    'id'           => (int) $a->user->id,
+                    'id'           => (int)$a->user->id,
                     'email'        => $a->user->email,
                     'first_name'   => $a->user->first_name,
                     'last_name'    => $a->user->last_name,
@@ -336,7 +337,7 @@ class Elastic
                     'phone'        => $a->user->phone,
                 ],
                 'venue'            => [
-                    'id'       => (int) $a->venue->id,
+                    'id'       => (int)$a->venue->id,
                     'name'     => $a->venue->name,
                     'address'  => $a->venue->address,
                     'postcode' => $a->venue->postcode,
@@ -352,9 +353,12 @@ class Elastic
 
             foreach ($a->ratings as $s) {
 
+                $user = $s->user;
                 $index['ratings'][] = [
-                    'user_id' => (int) $s->user_id,
-                    'stars'   => (int) $s->stars,
+                    'user_id' => (int)$s->user_id,
+                    'image'   => $user->directory . '/' . $user->image,
+                    'name'    => $user->first_name . ' ' . $user->last_name,
+                    'stars'   => (int)$s->stars,
                     'comment' => $s->comment
                 ];
 
@@ -363,19 +367,19 @@ class Elastic
             foreach ($a->futuresessions as $s) {
 
                 $index['futuresessions'][] = [
-                    'id'              => (int) $s->id,
-                    'members'         => (int) $s->members,
+                    'id'              => (int)$s->id,
+                    'members'         => (int)$s->members,
                     'date_time'       => $s->date_time,
-                    'price'           => (double) $s->price,
-                    'duration'        => (int) $s->duration,
-                    'members_emailed' => (int) $s->members_emailed,
-                    'tickets'         => (int) $s->tickets,
-                    'remaining'       => (int) $s->remainingTickets()
+                    'price'           => (double)$s->price,
+                    'duration'        => (int)$s->duration,
+                    'members_emailed' => (int)$s->members_emailed,
+                    'tickets'         => (int)$s->tickets,
+                    'remaining'       => (int)$s->remainingTickets()
                 ];
-                $with_session ++;
+                $with_session++;
             }
 
-            $params = array();
+            $params = [];
             $params['body'] = $index;
 
             $params['index'] = $this->elastic_index;
@@ -384,7 +388,7 @@ class Elastic
 
             try {
                 $this->elasticsearch->index($params);
-                $total_indexed ++;
+                $total_indexed++;
             } catch (Exception $e) {
                 $this->log->error('Cant Index Elasticgroup::id(' . $a->id . ') row. Got error: ' . $e->getMessage());
             }
@@ -398,8 +402,6 @@ class Elastic
     }
 
 
-
-
     /**
      * Save Search Stats to elastic.. we will use this later
      * @param $user_id
@@ -408,7 +410,7 @@ class Elastic
      * @param array $params
      * @param int $results
      */
-    public function saveStats($user_id=0, $user_ip=0, Place $area, $params = [], $results = 0)
+    public function saveStats($user_id = 0, $user_ip = 0, Place $area, $params = [], $results = 0)
     {
 
 
@@ -446,7 +448,6 @@ class Elastic
     }
 
 
-
     /**
      * @param $id
      * @return array
@@ -463,7 +464,7 @@ class Elastic
      * @param string $type
      * @return array|bool
      */
-    public function resetIndex($index = false, $type = false)
+    public function resetIndex($index = FALSE, $type = FALSE)
     {
 
         $mapping = [];
@@ -475,41 +476,41 @@ class Elastic
         switch ($type) {
             case 'evercise':
                 $mapping = [
-                    '_source'    => ['enabled' => true],
+                    '_source'    => ['enabled' => TRUE],
                     'properties' => [
 
-                        '_all'             => ['enabled' => true],
+                        '_all'             => ['enabled' => TRUE],
                         'id'               => [
                             'type'           => 'string',
                             'index'          => 'not_analyzed',
-                            'include_in_all' => false
+                            'include_in_all' => FALSE
                         ],
-                        'slug'             => ['type' => 'string', 'include_in_all' => false],
-                        'name'             => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
-                        'counter'          => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
-                        'title'            => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
-                        'venue_id'         => ['type' => 'integer', 'include_in_all' => true],
-                        'user_id'          => ['type' => 'integer', 'include_in_all' => true],
+                        'slug'             => ['type' => 'string', 'include_in_all' => FALSE],
+                        'name'             => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                        'counter'          => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                        'title'            => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                        'venue_id'         => ['type' => 'integer', 'include_in_all' => TRUE],
+                        'user_id'          => ['type' => 'integer', 'include_in_all' => TRUE],
                         'gender'           => ['type' => 'integer'],
                         'default_price'    => ['type' => 'integer'],
                         'capacity'         => ['type' => 'integer'],
                         'default_duration' => ['type' => 'integer'],
                         'published'        => ['type' => 'integer'],
                         'published'        => ['type' => 'boolean'],
-                        'description'      => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => true],
+                        'description'      => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                         'image'            => ['type' => 'string'],
                         'venue'            => [
-                            'dynamic'    => true,
+                            'dynamic'    => TRUE,
                             'properties' => [
                                 'id'       => ['type' => 'integer'],
-                                'name'     => ['type' => 'string', 'include_in_all' => true],
-                                'address'  => ['type' => 'string', 'include_in_all' => true],
-                                'postcode' => ['type' => 'string', 'include_in_all' => true],
-                                'town'     => ['type' => 'string', 'include_in_all' => true],
+                                'name'     => ['type' => 'string', 'include_in_all' => TRUE],
+                                'address'  => ['type' => 'string', 'include_in_all' => TRUE],
+                                'postcode' => ['type' => 'string', 'include_in_all' => TRUE],
+                                'town'     => ['type' => 'string', 'include_in_all' => TRUE],
                                 'location' => [
                                     'type'      => 'geo_point',
-                                    'geohash'   => true,
-                                    'lat_lon'   => true,
+                                    'geohash'   => TRUE,
+                                    'lat_lon'   => TRUE,
                                     'fielddata' => [
                                         'format' => 'compressed'
                                     ]
@@ -517,41 +518,41 @@ class Elastic
                             ]
                         ],
                         'user'             => [
-                            'dynamic'    => true,
+                            'dynamic'    => TRUE,
                             'properties' => [
                                 'id'           => ['type' => 'integer'],
-                                'email'        => ['type' => 'string', 'include_in_all' => true],
-                                'first_name'   => ['type' => 'string', 'include_in_all' => true],
-                                'last_name'    => ['type' => 'string', 'include_in_all' => true],
-                                'display_name' => ['type' => 'string', 'include_in_all' => true],
+                                'email'        => ['type' => 'string', 'include_in_all' => TRUE],
+                                'first_name'   => ['type' => 'string', 'include_in_all' => TRUE],
+                                'last_name'    => ['type' => 'string', 'include_in_all' => TRUE],
+                                'display_name' => ['type' => 'string', 'include_in_all' => TRUE],
                                 'phone'        => ['type' => 'string'],
                                 'image'        => ['type' => 'string'],
                                 'directory'    => ['type' => 'string'],
                             ]
                         ],
                         'ratings'          => [
-                            'dynamic'    => true,
+                            'dynamic'    => TRUE,
                             'properties' => [
                                 'user_id' => ['type' => 'integer'],
-                                'stars'   => ['type' => 'integer', 'include_in_all' => true],
-                                'comment' => ['type' => 'string', 'include_in_all' => true]
+                                'stars'   => ['type' => 'integer', 'include_in_all' => TRUE],
+                                'comment' => ['type' => 'string', 'include_in_all' => TRUE]
                             ]
                         ],
                         'futuresessions'   => [
-                            'dynamic'    => true,
+                            'dynamic'    => TRUE,
                             'properties' => [
-                                'id'           => ['type' => 'integer'],
+                                'id'        => ['type' => 'integer'],
                                 'members'   => ['type' => 'integer'],
                                 'price'     => ['type' => 'double'],
                                 'duration'  => ['type' => 'integer'],
-                                'tickets'  => ['type' => 'integer'],
-                                'remaining'  => ['type' => 'integer'],
+                                'tickets'   => ['type' => 'integer'],
+                                'remaining' => ['type' => 'integer'],
                                 'date_time' => [
                                     'type'           => 'date',
                                     'format'         => 'yyyy-MM-dd HH:mm:ss',
-                                    'include_in_all' => true
+                                    'include_in_all' => TRUE
                                 ],
-                                'comment'   => ['type' => 'string', 'include_in_all' => true]
+                                'comment'   => ['type' => 'string', 'include_in_all' => TRUE]
                             ]
                         ],
                     ],
@@ -560,26 +561,26 @@ class Elastic
 
             case 'search':
                 $mapping = [
-                    '_source'    => ['enabled' => true],
+                    '_source'    => ['enabled' => TRUE],
                     'properties' => [
 
-                        '_all'     => ['enabled' => true],
+                        '_all'     => ['enabled' => TRUE],
                         'id'       => [
                             'type'           => 'string',
                             'index'          => 'not_analyzed',
-                            'include_in_all' => false
+                            'include_in_all' => FALSE
                         ],
-                        'search'   => ['type' => 'string', 'include_in_all' => true],
-                        'size'     => ['type' => 'string', 'include_in_all' => true],
-                        'radius'   => ['type' => 'string', 'include_in_all' => true],
-                        'search'   => ['type' => 'string', 'include_in_all' => true],
-                        'url'      => ['type' => 'string', 'include_in_all' => true],
-                        'url_type' => ['type' => 'string', 'include_in_all' => true],
-                        'user_ip'  => ['type' => 'string', 'include_in_all' => true],
-                        'user_id'  => ['type' => 'string', 'include_in_all' => true],
-                        'name'     => ['type' => 'string', 'include_in_all' => true],
-                        'lat'      => ['type' => 'string', 'include_in_all' => true],
-                        'lng'      => ['type' => 'string', 'include_in_all' => true],
+                        'search'   => ['type' => 'string', 'include_in_all' => TRUE],
+                        'size'     => ['type' => 'string', 'include_in_all' => TRUE],
+                        'radius'   => ['type' => 'string', 'include_in_all' => TRUE],
+                        'search'   => ['type' => 'string', 'include_in_all' => TRUE],
+                        'url'      => ['type' => 'string', 'include_in_all' => TRUE],
+                        'url_type' => ['type' => 'string', 'include_in_all' => TRUE],
+                        'user_ip'  => ['type' => 'string', 'include_in_all' => TRUE],
+                        'user_id'  => ['type' => 'string', 'include_in_all' => TRUE],
+                        'name'     => ['type' => 'string', 'include_in_all' => TRUE],
+                        'lat'      => ['type' => 'string', 'include_in_all' => TRUE],
+                        'lng'      => ['type' => 'string', 'include_in_all' => TRUE],
                         'results'  => ['type' => 'integer'],
                         'date'     => ['type' => 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
 
@@ -593,9 +594,10 @@ class Elastic
         if (count($mapping) > 0) {
 
             $params['body'] = $mapping;
+
             return $this->elasticsearch->indices()->putMapping($params);
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -604,7 +606,7 @@ class Elastic
      * @param bool $index
      * @return bool
      */
-    public function deleteIndex($index = false)
+    public function deleteIndex($index = FALSE)
     {
         $params['index'] = ($index ?: $this->elastic_index);
         try {
@@ -612,16 +614,16 @@ class Elastic
         } catch (Exception $e) {
             // There is no Index.. so we dont really care!
         }
-        return true;
-    }
 
+        return TRUE;
+    }
 
 
     /**
      * @param bool $index
      * @return bool
      */
-    public function createIndex($index = false)
+    public function createIndex($index = FALSE)
     {
 
         $params['index'] = ($index ?: $this->elastic_index);
@@ -631,7 +633,8 @@ class Elastic
         } catch (Exception $e) {
             dd($e->getMessage());
         }
-        return true;
+
+        return TRUE;
     }
 }
 
