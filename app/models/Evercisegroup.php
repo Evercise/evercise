@@ -48,10 +48,10 @@ class Evercisegroup extends \Eloquent
         $validator = Validator::make(
             $inputs,
             [
-                'class_name' => 'required|max:100|min:5',
+                'class_name'        => 'required|max:100|min:5',
                 'class_description' => 'required|max:5000|min:100',
-                'image' => 'required',
-                'venue_select' => 'required',
+                'image'             => 'required',
+                'venue_select'      => 'required',
             ]
         );
 
@@ -69,10 +69,11 @@ class Evercisegroup extends \Eloquent
 
 
         if ($validator->fails()) {
-            $result = array(
+            $result = [
                 'validation_failed' => 1,
-                'errors' => $validator->errors()->toArray()
-            );
+                'errors'            => $validator->errors()->toArray()
+            ];
+
             return Response::json($result);
         } else {
 
@@ -93,12 +94,12 @@ class Evercisegroup extends \Eloquent
 
             $evercisegroup = static::create(
                 [
-                    'name' => $classname,
-                    'user_id' => $user->id,
-                    'venue_id' => $venueId,
+                    'name'        => $classname,
+                    'user_id'     => $user->id,
+                    'venue_id'    => $venueId,
                     'description' => $description,
-                    'image' => $image,
-                    'venue_id' => $venueId,
+                    'image'       => $image,
+                    'venue_id'    => $venueId,
                 ]
             );
 
@@ -106,21 +107,21 @@ class Evercisegroup extends \Eloquent
 
             Trainerhistory::create(
                 [
-                    'user_id' => $user->id,
-                    'type' => 'created_evercisegroup',
+                    'user_id'      => $user->id,
+                    'type'         => 'created_evercisegroup',
                     'display_name' => $user->display_name,
-                    'name' => $evercisegroup->name
+                    'name'         => $evercisegroup->name
                 ]
             );
 
-            Event::fire('class.index.single', ['id' => $evercisegroup->id]);
-            Event::fire('evecisegroup.created', [$user, $evercisegroup]);
+            event('class.index.single', ['id' => $evercisegroup->id]);
+            event('evecisegroup.created', [$user, $evercisegroup]);
 
             return Response::json(
                 [
-                    'url' => route('sessions.add', $evercisegroup->id),
+                    'url'     => route('sessions.add', $evercisegroup->id),
                     'success' => 'true',
-                    'id' => $evercisegroup->id
+                    'id'      => $evercisegroup->id
                 ]
             );
         }
@@ -129,12 +130,16 @@ class Evercisegroup extends \Eloquent
     private static function categoriesToArray($inputs)
     {
         $categories = [];
-        if (isset($inputs['category1']) != '')
+        if (isset($inputs['category1']) != '') {
             array_push($categories, $inputs['category1']);
-        if (isset($inputs['category2']) != '')
+        }
+        if (isset($inputs['category2']) != '') {
             array_push($categories, $inputs['category2']);
-        if (isset($inputs['category3']) != '')
+        }
+        if (isset($inputs['category3']) != '') {
             array_push($categories, $inputs['category3']);
+        }
+
         return $categories;
     }
 
@@ -145,19 +150,17 @@ class Evercisegroup extends \Eloquent
         if ($validator->fails()) {
             return Response::json([
                 'validation_failed' => 1,
-                'errors' => $validator->errors()->toArray()
+                'errors'            => $validator->errors()->toArray()
             ]);
-        }
-        else
-        {
-/*            foreach ($inputs as $name => $value) {
-                if (!in_array($name, $this->editable)) {
-                    return Response::json([
-                        'validation_failed' => 1,
-                        'errors' => ['classname' => 'Trying to edit uneditable/non-existant field: ' . $name]
-                    ]);
-                }
-            }*/
+        } else {
+            /*            foreach ($inputs as $name => $value) {
+                            if (!in_array($name, $this->editable)) {
+                                return Response::json([
+                                    'validation_failed' => 1,
+                                    'errors' => ['classname' => 'Trying to edit uneditable/non-existant field: ' . $name]
+                                ]);
+                            }
+                        }*/
 
             $classname = $inputs['class_name'];
             $description = $inputs['class_description'];
@@ -169,10 +172,10 @@ class Evercisegroup extends \Eloquent
             $categories = $inputs['category_array'];
 
             $this->update([
-                'name' => $classname,
-                'venue_id' => $venueId,
+                'name'        => $classname,
+                'venue_id'    => $venueId,
                 'description' => $description,
-                'image' => $image,
+                'image'       => $image,
             ]);
 
 
@@ -182,18 +185,19 @@ class Evercisegroup extends \Eloquent
 
             Trainerhistory::create(
                 [
-                    'user_id' => $user->id,
-                    'type' => 'edited_evercisegroup',
+                    'user_id'      => $user->id,
+                    'type'         => 'edited_evercisegroup',
                     'display_name' => $user->display_name,
-                    'name' => $this->name
+                    'name'         => $this->name
                 ]
             );
 
-            Event::fire('evecisegroup.created', [$user, $this]);
+            event('evecisegroup.created', [$user, $this]);
 
 
         }
-        return true;
+
+        return TRUE;
 
     }
 
@@ -213,26 +217,24 @@ class Evercisegroup extends \Eloquent
         $nextSessions = []; // Links past session with the next Future session (of the same group) which this member has signed up for
 
         $pastSessionsAwaitingFutureBuddy = [];
-        foreach ($user->sessions as $key => $session)
-        {
+        foreach ($user->sessions as $key => $session) {
             // Past sessions
-            if (new DateTime($session->date_time) < $currentDate)
-            {
-                if (! array_key_exists($session->id, $futureSessions))
+            if (new DateTime($session->date_time) < $currentDate) {
+                if (!array_key_exists($session->id, $futureSessions)) {
                     $pastSessions[$session->id] = $session;
-                foreach($session->sessionmembers as $sessionmember)
+                }
+                foreach ($session->sessionmembers as $sessionmember) {
                     $sessionmember_ids[$session->id] = $sessionmember->id;
+                }
 
                 $pastSessionsAwaitingFutureBuddy[$session->evercisegroup->id] = $session->id;
-            }
-            // Future sessions
-            else
-            {
-                if (! array_key_exists($session->id, $futureSessions))
+            } // Future sessions
+            else {
+                if (!array_key_exists($session->id, $futureSessions)) {
                     $futureSessions[$session->id] = $session;
+                }
 
-                if(array_key_exists($session->evercisegroup->id, $pastSessionsAwaitingFutureBuddy))
-                {
+                if (array_key_exists($session->evercisegroup->id, $pastSessionsAwaitingFutureBuddy)) {
                     $nextSessions[$pastSessionsAwaitingFutureBuddy[$session->evercisegroup->id]] = $session->id;
                 }
 
@@ -242,11 +244,11 @@ class Evercisegroup extends \Eloquent
 
 
         $data = [
-            'past_sessions' => $pastSessions,
-            'future_sessions' => $futureSessions,
+            'past_sessions'     => $pastSessions,
+            'future_sessions'   => $futureSessions,
             'sessionmember_ids' => $sessionmember_ids,
-            'user_id' => $user->id,
-            'next_sessions' => $nextSessions,
+            'user_id'           => $user->id,
+            'next_sessions'     => $nextSessions,
         ];
 
         return $data;
@@ -321,7 +323,7 @@ class Evercisegroup extends \Eloquent
         $page = Input::get('page', 1);
 
         $testers = Sentry::findGroupById(5);
-        $testerLoggedIn = $user ? $user->inGroup($testers) : false;
+        $testerLoggedIn = $user ? $user->inGroup($testers) : FALSE;
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
 
@@ -335,7 +337,7 @@ class Evercisegroup extends \Eloquent
             ->where(
                 'venue',
                 function ($query) use (&$haversine, &$radius) {
-                    $query->select(array(DB::raw($haversine . ' as distance')))
+                    $query->select([DB::raw($haversine . ' as distance')])
                         ->having('distance', '<', $radius);
                 }
             )
@@ -360,7 +362,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -394,7 +396,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -414,7 +416,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -434,7 +436,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -521,7 +523,7 @@ class Evercisegroup extends \Eloquent
         $page = Input::get('page', 1);
 
         $testers = Sentry::findGroupById(5);
-        $testerLoggedIn = $user ? $user->inGroup($testers) : false;
+        $testerLoggedIn = $user ? $user->inGroup($testers) : FALSE;
 
         $haversine = '(3959 * acos(cos(radians(' . $latitude . ')) * cos(radians(lat)) * cos(radians(lng) - radians(' . $longitude . ')) + sin(radians(' . $latitude . ')) * sin(radians(lat))))';
 
@@ -535,7 +537,7 @@ class Evercisegroup extends \Eloquent
             ->whereHas(
                 'venue',
                 function ($query) use (&$haversine, &$radius) {
-                    $query->select(array(DB::raw($haversine . ' as distance')))
+                    $query->select([DB::raw($haversine . ' as distance')])
                         ->having('distance', '<', $radius);
                 }
             )
@@ -560,7 +562,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -594,7 +596,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -614,7 +616,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -634,7 +636,7 @@ class Evercisegroup extends \Eloquent
                 ->whereHas(
                     'venue',
                     function ($query) use (&$haversine, &$radius) {
-                        $query->select(array(DB::raw($haversine . ' as distance')))
+                        $query->select([DB::raw($haversine . ' as distance')])
                             ->having('distance', '<', $radius);
                     }
                 )
@@ -717,11 +719,13 @@ class Evercisegroup extends \Eloquent
      */
     public function adminMakeClassFeatured($featured)
     {
-        if ($featured)
+        if ($featured) {
             FeaturedClasses::firstOrCreate(['evercisegroup_id' => $this->id]);
-        else {
+        } else {
             $id = FeaturedClasses::where('evercisegroup_id', $this->id)->pluck('id');
-            if ($id) FeaturedClasses::destroy($id);
+            if ($id) {
+                FeaturedClasses::destroy($id);
+            }
         }
     }
 
@@ -935,7 +939,9 @@ class Evercisegroup extends \Eloquent
      */
     public function getStars()
     {
-        if (isset($this->classStats['stars'])) return $this->classStats['stars'];
+        if (isset($this->classStats['stars'])) {
+            return $this->classStats['stars'];
+        }
 
         $stars = 0;
         foreach ($this->ratings as $key => $rating) {
@@ -944,6 +950,7 @@ class Evercisegroup extends \Eloquent
         $stars = count($this->ratings) ? $stars / count($this->ratings) : 0;
 
         $this->classStats['stars'] = $stars;
+
         return $stars;
     }
 
@@ -953,6 +960,7 @@ class Evercisegroup extends \Eloquent
         foreach ($this->futuresessions as $evercisesession) {
             $members[] = count($evercisesession->sessionmembers);
         }
+
         return array_sum($members);
     }
 
@@ -962,10 +970,9 @@ class Evercisegroup extends \Eloquent
         foreach ($this->evercisesession as $evercisesession) {
             $members[] = count($evercisesession->sessionmembers);
         }
-        if( count($members) > 0){
+        if (count($members) > 0) {
             $average = round(array_sum($members) / count($members));
-        }
-        else{
+        } else {
             $average = 0;
         }
 
@@ -975,9 +982,9 @@ class Evercisegroup extends \Eloquent
     public function checkIfUserOwnsClass($user)
     {
         if ($this->user_id != $user->id) {
-            return false;
+            return FALSE;
         } else {
-            return true;
+            return TRUE;
         }
     }
 
@@ -1053,6 +1060,7 @@ class Evercisegroup extends \Eloquent
         }
 
         JavaScript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
+
         return View::make('evercisegroups.show')
             ->with('evercisegroup', $this); // change to trainer show view
     }
@@ -1077,12 +1085,12 @@ class Evercisegroup extends \Eloquent
 
         $testers = Sentry::findGroupById(5); // get the tester group
 
-        $testerLoggedIn = $user ? $user->inGroup($testers) : false; // see if user is a tester
+        $testerLoggedIn = $user ? $user->inGroup($testers) : FALSE; // see if user is a tester
 
         $userTrainer = Sentry::findUserById($this->user_id); // create a sentry user object
 
         // test to see if trainer is a tester and the user is not
-        if ($userTrainer->inGroup($testers) && $testerLoggedIn == false) {
+        if ($userTrainer->inGroup($testers) && $testerLoggedIn == FALSE) {
             return Redirect::route('evercisegroups.search');
         }
 
@@ -1143,7 +1151,7 @@ class Evercisegroup extends \Eloquent
                 ->image(
                     url() . '/profiles/' . $trainer->user->directory . '/' . $this->image,
                     [
-                        'width' => 400,
+                        'width'  => 400,
                         'height' => 200
                     ]
                 )
@@ -1164,14 +1172,14 @@ class Evercisegroup extends \Eloquent
 
         return [
             'evercisegroup' => $this,
-            'trainer' => $trainer,
-            'members' => $members,
-            'membersIds' => $membersIds,
-            'memberUsers' => $memberUsersArray,
-            'venue' => $venue,
-            'allRatings' => $allRatings,
-            'fakeUsers' => $fakeUsers,
-            'og' => $og,
+            'trainer'       => $trainer,
+            'members'       => $members,
+            'membersIds'    => $membersIds,
+            'memberUsers'   => $memberUsersArray,
+            'venue'         => $venue,
+            'allRatings'    => $allRatings,
+            'fakeUsers'     => $fakeUsers,
+            'og'            => $og,
         ];
     }
 
@@ -1201,18 +1209,19 @@ class Evercisegroup extends \Eloquent
                 $evercisegroupForDeletion->delete();
 
 
-                Event::fire('class.index.single', ['id' => $this->id]);
+                event('class.index.single', ['id' => $this->id]);
 
                 Trainerhistory::create(
-                    array(
-                        'user_id' => $user->id,
-                        'type' => 'deleted_evercisegroup',
+                    [
+                        'user_id'      => $user->id,
+                        'type'         => 'deleted_evercisegroup',
                         'display_name' => $user->display_name,
-                        'name' => $this->name
-                    )
+                        'name'         => $this->name
+                    ]
                 );
             }
         }
+
         return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
     }
 
@@ -1220,13 +1229,13 @@ class Evercisegroup extends \Eloquent
     public static function getGroupWithSpecificSessions($evercisegroupId, $sessionIds)
     {
         return static::with(
-            array(
+            [
                 'evercisesession' => function ($query) use (&$sessionIds) {
 
                     $query->whereIn('id', $sessionIds);
 
                 }
-            ),
+            ],
             'evercisesession'
         )
             ->find($evercisegroupId);
@@ -1254,7 +1263,7 @@ class Evercisegroup extends \Eloquent
             }
         }
 
-        return true;
+        return TRUE;
     }
 
     public function publish($publish)

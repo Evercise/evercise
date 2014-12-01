@@ -41,6 +41,11 @@ class UserPackages extends \Eloquent
     }
 
 
+    public function amountUsed($userpackage_id = 0) {
+        return static::where('package_id', $userpackage_id)->where('status', 1)->count();
+    }
+
+
     /**
      * Check if there is a User Package that can be used for the $session
      * @param $class

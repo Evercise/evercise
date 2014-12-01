@@ -25,11 +25,11 @@ class Activity
         Activities $activities,
         Evercisesession $evercisesession
     ) {
-        $this->config          = $config;
-        $this->log             = $log;
-        $this->event           = $event;
-        $this->activities      = $activities;
-        $this->activities      = $activities;
+        $this->config = $config;
+        $this->log = $log;
+        $this->event = $event;
+        $this->activities = $activities;
+        $this->activities = $activities;
         $this->evercisesession = $evercisesession;
     }
 
@@ -42,8 +42,12 @@ class Activity
     public function payedClass($class, $user)
     {
         $this->activities->create([
-            'description' => 'Joined class ' . $class->name,
+            'title'       => 'Joined class',
+            'description' => $class->name,
+            'link'        => 'class/' . $class->id,
+            'link_title'  => 'View class',
             'type'        => 'payedclass',
+            'image'       => 'payedclass.png',
             'user_id'     => $user->id,
             'type_id'     => $class->id
         ]);
@@ -53,11 +57,16 @@ class Activity
     public function canceledClass($class, $user)
     {
         $this->activities->create([
-            'description' => 'Canceled class ' . $class->name,
+            'title' => 'Canceled class',
+            'description' => $class->name,
             'type'        => 'canceledclass',
+            'image'       => 'canceledclass.png',
+            'link'        => 'class/' . $class->id,
             'user_id'     => $user->id,
-            'type_id'     => $class->id
+            'type_id'     => $class->id,
         ]);
+
+
     }
 
 
@@ -65,19 +74,12 @@ class Activity
     {
 
         $this->activities->create([
-            'description' => '£' . $amount . ' Topped up Wallet',
+            'title'       => 'Top Up',
             'type'        => 'wallettoppup',
-            'user_id'     => $user->id
-        ]);
-
-
-        $this->activities->create([
-            'title' => 'Top Up',
-            'type'        => 'wallettoppup',
-            'description' => '£'.$transaction->total.' credit to your account on '.date('d/m/y'),
+            'description' => '£' . $transaction->total . ' credit to your account on ' . date('d/m/y'),
             'user_id'     => $user->id,
             'type_id'     => $transaction->id,
-            'link'        => 'transactions/'.$transaction->id,
+            'link'        => 'transactions/' . $transaction->id,
             'link_title'  => 'View',
             'image'       => 'wallettoppup.png',
         ]);
@@ -91,6 +93,17 @@ class Activity
             'description' => '£' . $amount . ' amount Withdrawn',
             'type'        => 'walletwithdraw',
             'user_id'     => $user->id
+        ]);
+
+        $this->activities->create([
+            'title'       => 'Wallet Withdraw',
+            'type'        => 'wallettoppup',
+            'description' => '£' . $amount . ' amount Withdrawn',
+            'user_id'     => $user->id,
+            'type_id'     => $transaction->id,
+            'link'        => 'transactions/' . $transaction->id,
+            'link_title'  => 'View',
+            'image'       => 'wallettoppup.png',
         ]);
     }
 
@@ -235,12 +248,12 @@ class Activity
     {
 
         $this->activities->create([
-            'title' => 'You recently reviewed',
+            'title'       => 'You recently reviewed',
             'type'        => 'classreviewed',
             'description' => $class->name,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
-            'link'        => 'class/'.$class->id,
+            'link'        => 'class/' . $class->id,
             'link_title'  => 'View',
             'image'       => 'classreviewed.png',
         ]);
@@ -252,9 +265,9 @@ class Activity
     {
 
         $this->activities->create([
-            'title' => 'You used the coupon code: ' . $coupon->coupon,
+            'title'       => 'You used the coupon code: ' . $coupon->coupon,
             'type'        => 'couponused',
-            'description' => ($coupon->type == 'amount' ? 'Worth £'.$coupon->amount : 'With '.$coupon->percentage.'% discount'),
+            'description' => ($coupon->type == 'amount' ? 'Worth £' . round($coupon->amount,2) : 'With ' . $coupon->percentage . '% discount'),
             'user_id'     => $user->id,
             'type_id'     => $coupon->id,
             'link'        => '',
@@ -265,10 +278,17 @@ class Activity
 
     }
 
+    /**
+     *
+     * Mark the purchase completed
+     * @param $user
+     * @param $cart
+     * @param $transaction
+     */
     public function userCartCompleted($user, $cart, $transaction)
     {
 
-        $title       = 'You recently made a purchase';
+        $title = 'You recently made a purchase';
         $description = '';
         if (count($cart['sessions']) > 0 && count($cart['packages']) > 0) {
             $description = 'Bought a total of ' . count($cart['sessions']) . ' ' . returnPlural('session',
@@ -285,7 +305,7 @@ class Activity
 
         $description .= ' for £' . $cart['total']['final_cost'];
 
-        $data     = [
+        $data = [
             'description' => $description,
             'title'       => $title,
             'link'        => 'transaction/' . $transaction->id,
@@ -302,5 +322,34 @@ class Activity
 
 
     }
+
+
+    /** PACKAGES
+     *
+     * Deduct a item from a package
+     * @param $user
+     * @param $userpackage
+     * @param $package
+     * @param $session
+     */
+    public function packageUsed($user, $userpackage, $package, $session)
+    {
+
+        $class = $session->evercisegroup()->first();
+
+        $amountUsed = $session->amountUsed($userpackage->id);
+
+        $this->activities->create([
+            'title'       => $class->name .' deducted from package',
+            'type'        => 'packageused',
+            'description' => ($amountUsed > $package->classes  ? 'You have '.($package->classes - $amountUsed).' left with this package' : 'You have used up all classes on this package'),
+            'user_id'     => $user->id,
+            'type_id'     => $userpackage->id,
+            'link'        => ($amountUsed > $package->classes  ? 'packages/' : ''),
+            'link_title'  => ($amountUsed > $package->classes  ? 'Buy more' : ''),
+            'image'       => 'packageused.png',
+        ]);
+    }
+
 
 }

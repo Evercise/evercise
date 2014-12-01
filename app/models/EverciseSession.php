@@ -19,6 +19,51 @@ class Evercisesession extends \Eloquent
      */
     protected $table = 'evercisesessions';
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sessionmembers()
+    {
+        return $this->hasMany('Sessionmember');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userSessionmembers($user_id)
+    {
+        return $this->hasMany('Sessionmember')
+            ->where('user_id', $user_id)->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function evercisegroup()
+    {
+        return $this->belongsTo('Evercisegroup');
+    }
+
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function sessionpayment()
+    {
+        return $this->hasOne('Sessionpayment');
+    }
+
+
+
     /**
      * @param $inputs
      * @return \Illuminate\View\View
@@ -619,47 +664,6 @@ class Evercisesession extends \Eloquent
         ];
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function sessionmembers()
-    {
-        return $this->hasMany('Sessionmember');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function userSessionmembers($user_id)
-    {
-        return $this->hasMany('Sessionmember')
-            ->where('user_id', $user_id)->get();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function evercisegroup()
-    {
-        return $this->belongsTo('Evercisegroup');
-    }
-
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function users()
-    {
-        return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function sessionpayment()
-    {
-        return $this->hasOne('Sessionpayment');
-    }
 
     public function formattedDuration()
     {

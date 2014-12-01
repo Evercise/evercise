@@ -165,13 +165,20 @@ class UsersController extends \BaseController
             return Redirect::route('home');
         }
 
-        $activity = Activities::where('user_id', $this->user->id)->get();
+        $activity = Activities::getAll($this->user->id, Config::get('evercise.user.activities', 100));
+
+        $activity_group = [];
+
+        foreach($activity as $a) {
+            $activity_group[$a->format_date][] = $a;
+        }
 
         $user = $this->user;
         $data = [
             'user' => $user,
-            'activity' => $activity
+            'activity' => $activity_group
         ];
+
 
         // if user is trainer lob hub into data
 

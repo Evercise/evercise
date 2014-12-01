@@ -86,6 +86,7 @@ class Elastic
                             'field' => 'futuresessions.members',
                             'existence' => true,
                             'null_value' => true];
+            $search = true;
         }
 
 
@@ -362,6 +363,7 @@ class Elastic
             foreach ($a->futuresessions as $s) {
 
                 $index['futuresessions'][] = [
+                    'id'              => (int) $s->id,
                     'members'         => (int) $s->members,
                     'date_time'       => $s->date_time,
                     'price'           => (double) $s->price,
@@ -538,6 +540,7 @@ class Elastic
                         'futuresessions'   => [
                             'dynamic'    => true,
                             'properties' => [
+                                'id'           => ['type' => 'integer'],
                                 'members'   => ['type' => 'integer'],
                                 'price'     => ['type' => 'double'],
                                 'duration'  => ['type' => 'integer'],

@@ -23,5 +23,9 @@ class User
 
         Log::info('User '.$user->id.' cart completed');
 
+        /** SEND EMAIL */
+
+
+
     }
 } 

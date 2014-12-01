@@ -70,95 +70,6 @@
         }
 
 
-        public function processStripePaymentSessionsOLD()
-        {
-
-
-            /* get Cart data */
-            $cartData = EverciseCart::getCart();
-            $cartRows = $cartData['cartRows'];
-
-            /* get session ids from Cart*/
-            $sessionIds    = [];
-            $sessionPrices = [];
-            foreach ($cartRows as $row) {
-                array_push($sessionIds, $row->options->sessionId);
-                $sessionPrices[$row->options->sessionId] = ['price' => $row->price, 'qty' => $row->qty];
-            }
-
-            //return $cartRows;
-
-            /* verify price */
-            $sessions           = Evercisesession::whereIn('id', $sessionIds)->get();
-            $sumOfSessionPrices = 0;
-            foreach ($sessions as $session) {
-                if ($sessionPrices[$session->id]['price'] != $session->price) {
-                    throw new \Exception('Price of row does not match');
-                }
-
-                $sumOfSessionPrices += ($session->price * $sessionPrices[$session->id]['qty']);
-            }
-            if ((string)$sumOfSessionPrices != (string)$cartData['total']) {
-                throw new \Exception('Total price does not match: ' . $sumOfSessionPrices . ' != ' . $cartData['total']);
-            }
-
-            /* Make sure there is not already a matching entry in sessionmembers */
-            /*
-             * Actually, we will allow multiple entries in sessionmembers, as a user can buy more than one ticket.
-                     if(Sessionmember::where('user_id', $this->user->id)->whereIn('evercisesession_id', $sessionIds)->count())
-                        throw new \Exception('User has already joined session');
-            */
-
-
-            $token = '';
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                if (isset($_POST['stripeToken'])) {
-                    $token = $_POST['stripeToken'];
-                } else {
-
-                    throw new \Exception('Could not find token');
-                }
-            }
-
-            $walletPayment = EverciseCart::getWalletPayment();
-
-            $totalToPay = $cartData['total'] - $walletPayment;
-
-            /* Convert amount to pennies to be sent to Stripe */
-            $amountInPennies = SessionPayment::poundsToPennies($totalToPay);
-
-            try {
-                $customer = Stripe_Customer::create([
-                    'email' => $this->user->email,
-                    'card'  => $token
-                ]);
-
-                $charge = Stripe_Charge::create([
-                    'customer' => $customer->id,
-                    'amount'   => $amountInPennies,
-                    'currency' => 'gbp'
-                ]);
-            } catch (Stripe_CardError $e) {
-                return 'card error';
-            }
-
-            if ($walletPayment) {
-                $this->user->wallet->withdraw($walletPayment,
-                    'Part payment for classes'/*, implode( ',', $sessionIds )*/);
-            }
-
-            $transactionId = $charge['id'];
-            $this->paid($token, $transactionId, 'stripe');
-
-
-            return Redirect::to('payment_confirmation')
-                ->with('cartData', $cartData)
-                ->with('walletPayment', $walletPayment);
-            /*            ->with('token',$token )
-                        ->with('transactionId', $charge['id'] )
-                        ->with('payerId',$customer->id )
-                        ->with('paymentMethod', 'stripe' )*/
-        }
 
         public function processStripePaymentTopup()
         {
@@ -271,7 +182,7 @@
 
                     $check->package()->save($packageClass);
 
-                    Event::fire('activity.user.package.used', [$this->user, $check, $evercisesession]);
+                    event('activity.user.package.used', [$this->user, $check, $package, $evercisesession]);
 
 
                 } catch (Exception $e) {
@@ -313,45 +224,20 @@
 
 
                 $trainer = $evercisesession->evercisegroup()->first()->user()->first();
-                Event::fire('trainer.class.joined', [$this->user, $trainer, $evercisesession]);
-
-
-                Event::fire('user.class.joined', [$this->user, $evercisesession]);
+                event('trainer.class.joined', [$this->user, $trainer, $evercisesession]);
+                event('user.class.joined', [$this->user, $evercisesession]);
 
             }
 
 
-            Event::fire('user.cart.completed', [$this->user, $cart, $transaction]);
-
-            Event::fire('activity.user.cart.completed', [$this->user, $cart, $transaction]);
+            event('user.cart.completed', [$this->user, $cart, $transaction]);
+            event('activity.user.cart.completed', [$this->user, $cart, $transaction]);
 
             /* Empty cart */
             EverciseCart::clearCart();
             EverciseCart::clearWalletPayment();
 
             return TRUE;
-        }
-
-
-
-        public function conftest()
-        {
-            $this->user->sessions()->attach(['304', '305'], [
-                'token'          => 'double',
-                'transaction_id' => 'action',
-                'payer_id'       => $this->user->id,
-                'payment_method' => 'fake'
-            ]);
-
-            $cartData      = EverciseCart::getCart();
-            $walletPayment = Session::get('walletPayment');
-
-            return View::make('v3.cart.confirmation')
-                ->with('data', [
-                    'cartData'      => $cartData,
-                    'walletPayment' => $walletPayment,
-                ]);
-
         }
 
         public function sessionConfirmation()

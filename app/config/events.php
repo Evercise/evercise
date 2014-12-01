@@ -67,8 +67,8 @@
     return [
 
        '0'  => [
-//            ['trainer.class.joined' => 'User@trainerClassJoined'],
-//            ['user.cart.completed' => 'User@cartCompleted'] // $user, $cart, $transaction
+// ∑          ['trainer.class.joined' => 'User@trainerClassJoined'],
+// ∑          ['user.cart.completed' => 'User@cartCompleted'] // $user, $cart, $transaction
 
         ],
         '5'  => [
@@ -93,8 +93,8 @@
             ['activity.user.facebook' => 'Activity@linkFacebook'],  // $user
             ['activity.user.twitter' => 'Activity@linkTwitter'],  // $user
             ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
-            ['activity.user.package.used' => 'Activity@packageUsed'],  // $user, $userpackage, $session
-            ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction
+            ['activity.user.package.used' => 'Activity@packageUsed'],  //   $user, $userpackage, $package,  $session   √
+            ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction  √
             ['activity.user.reviewed.class' => 'Activity@usedReviewedClass'],  // $user, $class
 
         ],

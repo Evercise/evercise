@@ -54,6 +54,10 @@ return [
         'width' => 600,
         'height' => 284
     ],
+
+    'user' => [
+        'activities' => 100, // Limit
+    ],
     'article_category_main_image' => [
         'width' => 600,
         'height' => 284

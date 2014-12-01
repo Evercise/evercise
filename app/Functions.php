@@ -1,5 +1,18 @@
 <?php
 
+    if (!function_exists('event')) {
+
+        /*
+         * Wrap event class
+         *
+         */
+
+        function event($name, $params = [])
+        {
+            Event::fire($name, $params);
+        }
+    }
+
 
     if (!function_exists('d')) {
 
