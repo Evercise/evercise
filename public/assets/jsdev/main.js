@@ -169,6 +169,10 @@ $(function(){
         new voucher(this);
     })
 
+    $('#refer-a-friend').exists(function(){
+        new Referral(this);
+    })
+
     $('#hero-carousel').exists(function() {
         $(this).carousel({
             interval: 5000

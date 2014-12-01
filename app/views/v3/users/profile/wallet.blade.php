@@ -61,12 +61,13 @@
             </div>
             <div class="col-md-6 masonry-item">
                 <ul class="list-group">
-                    {{ Form::open(['url' => '', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
+
                       <li class="list-group-item ">
                         <div class="row">
                             <div class="col-sm-8">
                                 <h3>Transactions</h3>
                             </div>
+                            <!--
                             <div class="col-sm-4">
                                 <div class="input-group">
                                    <span class="input-group-addon">
@@ -82,6 +83,7 @@
                                    </div>
                                 </div>
                             </div>
+                            -->
                         </div>
                       </li>
                       <li class="list-group-item ">
@@ -114,11 +116,13 @@
                             </table>
                         </div>
                       </li>
+
                       <li class="list-group-item text-right">
-                        <strong>Show More </strong>
-                        <span class="pull-right ml5 icon icon-grey-down-arrow"></span>
+                        <!-- <strong>Show More </strong>
+                        <span class="pull-right ml5 icon icon-grey-down-arrow"></span> -->
                       </li>
-                    {{ Form::close() }}
+
+
                 </ul>
             </div>
 
@@ -139,13 +143,13 @@
                             <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral
                             </p>
                             <div class="form-group row mt20">
-                                {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form'] ) }}
+                                {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form', 'id' => 'refer-a-friend'] ) }}
                                     {{ Form::label('email', 'Email' , ['class' => 'mt5 col-sm-2 control-label'])  }}
                                     <div class="col-sm-7">
                                         {{ Form::text('referee_email', null, ['class' => 'form-control', 'placeholder' => 'Enter Friends Email Address']) }}
                                     </div>
                                     <div class="col-sm-3">
-                                        <button class="btn btn-primary btn-block">Invite</button>
+                                        {{ Form::submit('Invite', ['class' => 'btn btn-primary btn-block']) }}
                                     </div>
                                 {{ Form::close() }}
                             </div>
