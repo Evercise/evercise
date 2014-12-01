@@ -25,12 +25,13 @@ class UserHelper
      * @param bool $referal_code
      * @param int $user_id
      */
-    public static function checkReferralCode($referral_code = false, $user_id = 0)
+    public static function checkAndUseReferralCode($referral_code = false, $user_id = 0)
     {
 
         if ($referral = Referral::useReferralCode($referral_code, $user_id)) {
+            Log::info('using referral code: ' . $referral_code. ' user id: '.$user_id);
             Milestone::where('user_id', $referral->user_id)->first()->add('referral');
-            Milestone::where('user_id', $user_id)->first()->freeCoin('referral_signup');
+            Milestone::where('user_id', $user_id)->first()->referralComplete('referral_signup');
 
             Session::forget('referralCode');
         }

@@ -147,13 +147,9 @@ class Wallet extends \Eloquent
         $this->save();
     }
 
-    public function giveAmount($user_id = 0, $amount = 0, $type = false) {
-
+    public function giveAmount($amount = 0, $type = false) {
+        Log::info('giveAmount '.$amount. ' : '.$type. ' : '.$this->user_id);
         if(!$type || $amount == 0) return false;
-
-        $user = Sentry::findUserById($user_id);
-
-        if(!$user) return false;
 
         switch($type) {
             case 'referral_signup':
@@ -166,7 +162,7 @@ class Wallet extends \Eloquent
                 break;
             case 'referral':
                 $title = 'Milestone Completed';
-                $description = 'You received £'.$amount.' for referring a friend';
+                $description = 'You received £'.$amount.' for referring your friends';
                 break;
             case 'profile':
                 $title = 'Milestone Completed';
@@ -187,20 +183,16 @@ class Wallet extends \Eloquent
 
             default:
                 return false;
-
         }
 
-        $wallet = $user->getWallet();
-
-        $wallet->deposit($amount, $description, 0);
-
+        $this->deposit($amount, $description, 0);
 
         Activities::create([
             'title'       => $title,
             'type'        => 'milestone'.$type,
             'description' => $description,
-            'user_id'     => $user_id,
-            'type_id'     => $user_id,
+            'user_id'     => $this->user_id,
+            'type_id'     => $this->user_id,
             'link'        => '',
             'link_title'  => '',
             'image'       => 'milestone'.$type.'.png',

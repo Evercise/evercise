@@ -49,21 +49,19 @@ class Milestone extends \Eloquent
             if ($this->attributes[$column] == 0) {
                 $this->attributes[$column] = 1;
 
-                $wallet->giveAmount($user->id, $milestones[$type]['reward'], $type);
+                $wallet->giveAmount($milestones[$type]['reward'], $type);
                 $this->save();
+                Log::info('User ' .$user->id. ' has been awarded '. $milestones[$type]['reward']. 'for referring friends');
             }
         } else {
             if ($milestones[$type]['recur'] > 1) {
                 $this->attributes[$column] = $this->attributes[$column] + 1;
-
                 if ($this->attributes[$column] <= ($milestones[$type]['recur'] * $milestones[$type]['count'])) {
                     if (!($this->attributes[$column] % $milestones[$type]['count'])) {
-
-                        $wallet->giveAmount($user->id, $milestones[$type]['reward'], $type);
-
+                        $wallet->giveAmount($milestones[$type]['reward'], $type);
+                        Log::info('User ' .$user->id. ' has been awarded '. $milestones[$type]['reward']. 'for referring friends');
                     }
                 }
-
                 $this->save();
             }
         }
@@ -73,13 +71,13 @@ class Milestone extends \Eloquent
      * Assign Free coins to User
      * @param $type
      */
-    public function referral($type)
+    public function referralComplete($type)
     {
         $freeCoins = Config::get('values')['freeCoins'];
-
         if (isset($freeCoins[$type])) {
-
-            $wallet->giveAmount($user->id, $freeCoins[$type], $type);
+            $user = User::find($this->user_id);
+            $wallet = $user->getWallet();
+            $wallet->giveAmount($freeCoins[$type], $type);
         }
     }
 

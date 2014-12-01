@@ -79,7 +79,7 @@ class UsersController extends \BaseController
 
                 UserHelper::generateUserDefaults($user->id);
 
-                UserHelper::checkReferralCode(Session::get('referralCode'), $user->id);
+                UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
 
                 UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
 

@@ -24,7 +24,6 @@ class ReferralsController extends \BaseController {
 			try {
 				$referral = Referral::create(['user_id' => $this->user->id, 'email' => $refereeEmail, 'code' => $referralCode]);
 			}catch(Exception $e){
-				return $e;
 				return Response::json([
 					'validation_failed' => 1,
 					'errors' =>  ['referee_email' => 'Email address already registered for referral']
