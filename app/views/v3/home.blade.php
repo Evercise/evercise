@@ -68,42 +68,23 @@
     </div>
     <div class="container">
         <div class="row mt10">
-            <div class="col-sm-4 text-center">
-                <div class="panel-body">
-                    <div class="underline">
-                        <h2>What is evercise</h2>
-                    </div>
 
-                    <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
-                    <div class="caption">
-                        <p>Evercise is the exciting new Pay As You Go fitness community that&apos;s flexible enough to fit in with your modern lifestyle. Evercise unites talented trainers with an active community who want more fun and flexibility from their fitness routine.</p>
+
+            @foreach($articles as $a)
+                <div class="col-sm-4 text-center">
+                    <div class="panel-body">
+                        <div class="underline">
+                            <h2>{{ $a->title }}</h2>
+                        </div>
+
+                        {{ image($a->main_image, $a->title, ['class' => 'img-responsive']) }}
+                        <div class="caption">
+                            <p>{{ $a->intro }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <div class="panel-body">
-                    <div class="underline">
-                        <h2>Why join evercise</h2>
-                    </div>
+            @endforeach
 
-                    <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
-                    <div class="caption">
-                        <p>We want fitness to be fun and flexible rather than routine and restricted. By bringing together trainers and a keen community of fitness enthusiasts Evercise really does benefit everyone. Evercise makes fitness fun again, emphasising social, group-exercise that fits in with your life.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4 text-center">
-                <div class="panel-body">
-                    <div class="underline">
-                        <h2>How does it work</h2>
-                    </div>
-
-                    <img class="img-responsive" src="/assets/img/hero.jpg" alt="what is evercise">
-                    <div class="caption">
-                      <p>Whether you&apos;re a trainer or a participant Evercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="container-fluid bg-grey">

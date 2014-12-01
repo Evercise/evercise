@@ -15,6 +15,7 @@ class Articles extends Eloquent
         'page',
         'title',
         'main_image',
+        'onmain',
         'description',
         'intro',
         'keywords',
@@ -59,6 +60,13 @@ class Articles extends Eloquent
         }
 
         return $url;
+    }
+
+
+    public function getMainPageArticles($limit = 3) {
+
+        return static::where('onmain', 1)->limit($limit)->get();
+
     }
 
 }

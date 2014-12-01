@@ -54,9 +54,14 @@
     <div class="form-group form-inline">
 
     <label style="display:inline-block" title="A single page is a main page. Like the about us. A single page can be without a category. If no category is selected the page is automaticly marked as a Single page">Is this a single page?</label>
-
-
         {{ Form::checkbox('page', 1, (!empty($article->page) && $article->page == 1 ? true : false) , ['id'=>'is_page']) }}
+    </div>
+    </div>
+    <div class="form-inline">
+    <div class="form-group form-inline">
+
+    <label style="display:inline-block" title="Display on FrontPage">Display on Front page?</label>
+        {{ Form::checkbox('onmain', 1, (!empty($article->onmain) && $article->onmain == 1 ? true : false) , ['id'=>'onmain']) }}
     </div>
     </div>
 

@@ -7,10 +7,15 @@ class HomeController extends BaseController {
      * @var Slider
      */
     private $slider;
+    /**
+     * @var Articles
+     */
+    private $articles;
 
-    public function __construct(Slider $slider){
+    public function __construct(Slider $slider, Articles $articles){
 
         $this->slider = $slider;
+        $this->articles = $articles;
     }
 	/*
 	|--------------------------------------------------------------------------
@@ -28,6 +33,8 @@ class HomeController extends BaseController {
 	public function showWelcome()
 	{
         $slider = $this->slider->getItems(5);
+
+        $articles = $this->articles->getMainPageArticles(3);
 
         $searchController = App::make('SearchController');
         $featured = $searchController->getClasses([
@@ -50,7 +57,7 @@ class HomeController extends BaseController {
          */
 
 
-		return View::make('v3.home', compact('featured', 'slider'));
+		return View::make('v3.home', compact('featured', 'slider', 'articles'));
 	}
 
 }
