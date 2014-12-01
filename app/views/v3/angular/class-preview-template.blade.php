@@ -32,15 +32,34 @@
                 </div>
             </div>
         </div>
-        <div role="tabpanel" class="tab-pane" id="schedule">
-            <div ng-repeat="session in preview.sessions | orderBy: date_time:reverse">
-                <div class="well" >
-                    {[{ session.date_time }]}
+        <div role="tabpanel" class="tab-pane list-group" id="schedule">
+            <div class="underline text-center">
+                <h3>Schedule</h3>
+            </div>
+
+            <div class="list-group-item row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse">
+                <div class="col-sm-6 mt5">
+                    <span class="icon icon-clock"></span>
+                    {[{ session.date_time | date : 'MMM d, h:mma'  }]}
+                </div>
+                <div class="col-sm-6">
+                    {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ session.id  }]}', 'class' => 'add-to-class']) }}
+                        <div class="btn-group pull-right">
+                            {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
+                            {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
+                            <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                 <option ng-repeat="n in [] | repeat:session.tickets - session.members" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                            </select>
+
+                        </div>
+                    {{ Form::close() }}
+
                 </div>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="reviews">
             <div ng-repeat="review in preview.reviews" >
+            {[{ review }]}
 
                 <div class="well" >
                     <div class="class-rating-wrapper">
