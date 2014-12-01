@@ -73,6 +73,8 @@
 
 
            ['class.created' => 'Classes@classCreated'],  // $class, $user
+
+
         ],
         '5'  => [
 
