@@ -73,7 +73,7 @@ class Milestone extends \Eloquent
      * Assign Free coins to User
      * @param $type
      */
-    public function freeCoin($type)
+    public function referral($type)
     {
         $freeCoins = Config::get('values')['freeCoins'];
 
