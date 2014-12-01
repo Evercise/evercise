@@ -33,14 +33,16 @@
                             --}}
                         @foreach($activities as $a)
                         <li class="list-group-item clearfix activity_{{$a->cartcompleted}}">
-                          {{ image( $user->directory.'/medium_'.$user->image, $user->display_name.'s image', ['class' => 'img-resposive list-group-item-img']) }}
+                          {{ image($a->image, $a->type, ['class'=>'img-responsive list-group-item-img'])}}
                           <div class="pull-left">
                               <strong class="list-group-item-heading">{{ $a->title }}</strong>
                               <p class="list-group-item-text">{{ $a->description }}</p>
                           </div>
                           <div class="pull-right">
-                           {{-- THis should not be a button since we need a link --}}
-                            <button type="button" href="{{ URL::to($a->link)}}" class="btn btn-primary">{{ $a->link_title }}</button>
+                           <!-- needs a route -->
+                           @if($a->link)
+                            {{ Html::link( $a->link, $a->link_title, ['class' => 'btn btn-primary']) }}
+                           @endif
                           </div>
 
 
@@ -59,7 +61,7 @@
                     <strong class="list-group-item-heading">September 27th 2014</strong>
                   </li>
                   <li class="list-group-item clearfix">
-                      {{ image( $user->directory.'/medium_'.$user->image, $user->display_name.'s image', ['class' => 'img-resposive list-group-item-img']) }}
+                      {{ image( $user->directory.'/medium_'.$user->image, $user->display_name.'s image', ['class' => 'img-responsive list-group-item-img']) }}
                       <div class="pull-left">
                           <strong class="list-group-item-heading">You recently joined</strong>
                           <p class="list-group-item-text">A really shiiity class</p>
