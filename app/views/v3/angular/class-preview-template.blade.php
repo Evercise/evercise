@@ -61,12 +61,13 @@
             <div ng-repeat="review in preview.reviews" >
                 <div class="row">
                     <div class="col-sm-3">
+                        {{ image('{[{ review.image }]}', '{[{ review.name }]})', ['class' => 'img-responsive img-circle']) }}
                     </div>
                     <div class="col-sm-9 mt15">
                         <div class="condensed">
-                            <strong>lewis</strong>
+                            <strong>{[{ review.name }]}</strong>
                         </div>
-                        <i>date</i>
+                        <i>{[{ review.date_left | date : 'MMM d, h:mma'  }]}</i>
                         <div class="mb25">
                             <div class="class-rating-wrapper">
                                 <span class="icon icon-full-star" ng-repeat="n in [] | repeat:review.stars"></span>

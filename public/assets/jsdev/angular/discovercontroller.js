@@ -202,11 +202,16 @@ if(typeof angular != 'undefined') {
 
             $scope.mask = true;
 
+            google.maps.event.trigger($scope.map, "resize");
+            $scope.map.zoom = 15;
+            $scope.map.center = $scope.currentCenter;
+            /*
             if($scope.isPreviewOpen){
                 google.maps.event.trigger($scope.map, "resize");
                 $scope.map.zoom = 15;
                 $scope.map.center = $scope.currentCenter;
             }
+            */
 
             scrollToSnippet('#' + marker.id);
 
@@ -257,15 +262,15 @@ if(typeof angular != 'undefined') {
             capacity: '',
             link: ''
         }
-
+        /*
         $(window).resize(function(){
             $scope.$apply(function(){
                 google.maps.event.trigger($scope.map, 'resize');
                 $scope.map.center = $scope.currentCenter;
             });
         });
-
-
+        */
+        /*
         $scope.$watch('isPreviewOpen',function(open){
             if(open){
                 $(".map-wrapper").animate({
@@ -283,6 +288,7 @@ if(typeof angular != 'undefined') {
                 });
             }
         });
+        */
 
 
     }]);

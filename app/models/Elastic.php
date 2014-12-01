@@ -356,10 +356,11 @@ class Elastic
                 $user = $s->user;
                 $index['ratings'][] = [
                     'user_id' => (int)$s->user_id,
-                    'image'   => $user->directory . '/' . $user->image,
+                    'image'   => $user->directory . '/small_' . $user->image,
                     'name'    => $user->first_name . ' ' . $user->last_name,
                     'stars'   => (int)$s->stars,
-                    'comment' => $s->comment
+                    'comment' => $s->comment,
+                    'date_left'    => $s->created_at
                 ];
 
             }

@@ -13,6 +13,7 @@ if(typeof angular != 'undefined') {
         });
     }]);
 
+
     app.filter('truncate', function () {
         return function (text, length, end) {
             if (isNaN(length))

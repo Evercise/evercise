@@ -58,7 +58,7 @@
 
     @include('v3.angular.class-preview-template')
 
-    <div class="map-wrapper" ng-class="{ opened : isPreviewOpen}">
+    <div class="map-wrapper" ng-class="{ open : isPreviewOpen}">
         <ui-gmap-google-map center="map.center" zoom="map.zoom"  draggable="true">
             <ui-gmap-markers
                 models="markers"

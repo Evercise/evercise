@@ -33,9 +33,8 @@ Cart.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                var text = self.form.find("input[type='submit']").text();
                 if(self.form.find('input[type="submit"]').hasClass('add-btn') ){
-                    self.form.find("input[type='submit']").prop('disabled', true).text('<span id="cart-loading" class="icon icon-loading ml10"></span>');
+                    self.form.find("input[type='submit']").prop('disabled', true);;
                 }
                 else{
                     self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading ml10"></span>');
@@ -58,7 +57,6 @@ Cart.prototype = {
 
             complete: function () {
                 self.form.find("input[type=submit]").prop('disabled', false);
-                self.form.find("input[type=submit]").text(text);
                 $('#cart-loading').remove();
             }
         });

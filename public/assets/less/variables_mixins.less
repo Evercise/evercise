@@ -136,3 +136,32 @@
   }
 }
 
+.package-block-module(@color){
+  .package-title{
+    background-color: @color;
+    padding: 50px 0;
+    h3{
+      color: @white;
+    }
+  }
+  .package-list{
+    ul{
+      padding: 0;
+      li{
+        list-style: none;
+      }
+    }
+
+  }
+  .package-pay{
+    strong{
+      font-size: 16px;
+      display: block;
+      line-height: 19px;
+      color: @color;
+    }
+    .btn{
+      .button-variant(@white; @color; @color);
+    }
+  }
+}
