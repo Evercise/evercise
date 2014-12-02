@@ -140,5 +140,6 @@ return [
             ['prefix' => 'thumb', 'width' => 205, 'height' => 87]
         ]
 
-    ]
+    ],
+    'article_no_img' => '/files/article/no-img.jpg'
 ];

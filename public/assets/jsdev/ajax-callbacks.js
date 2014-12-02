@@ -17,7 +17,6 @@ function updateHubRow(data){
 
 function newSessionAdded(data){
     $('#'+ data.id).html(data.view);
-    addSession();
     datepick();
 }
 

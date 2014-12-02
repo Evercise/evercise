@@ -15,6 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     {{ HTML::style('assets/css/main.css') }}
     {{ HTML::style('assets/css/cropper.min.css') }}
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
     <!-- load jquery -->
     <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.1.min.js"></script>
     <!-- if jquery not loaded, load locally -->
@@ -45,11 +47,16 @@
     </script>
 
 
+
+
+
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/cropper.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
 
 
      @yield('script')

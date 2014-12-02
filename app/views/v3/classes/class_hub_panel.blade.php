@@ -25,7 +25,7 @@
                 {{ Form::open(['route' => 'sessions.inline.groupId', 'method' => 'post', 'class'=> 'edit-class-inline']) }}
                     {{  Form::hidden('groupId',$evercisegroup->id ) }}
                     {{  Form::hidden('id',  isset($data['trainer']->user->id) ? $data['trainer']->user->id : $data['user']->id ) }}
-                    {{ Html::linkRoute('clone_class', 'Clone Class', $evercisegroup->id, ['class' => 'btn btn-default mr15', 'id'=> $evercisegroup->id]) }}
+                    {{ Html::linkRoute('clone_class', 'Clone Class', $evercisegroup->id, ['class' => 'btn btn-default mr15']) }}
                     <!-- need to use html button as btn-toggle class does not work with input field -->
                     <button type="submit" id="submit-{{$evercisegroup->id}}" class="btn btn-default btn-toggle-down">Edit</button>
                     {{ HTML::link('#myClassInfo-'.$evercisegroup->id , 'Done editing', [ 'class' => 'btn btn-default btn-toggle-up hide toggle-switch' , 'data-toggle' =>'collapse', 'id' => 'infoToggle-'.$evercisegroup->id , 'data-removeclass'=>'btn-toggle-up' ,  'data-switchclass' => 'btn-toggle-down' , 'data-switchtext' => 'Edit']) }}
@@ -33,4 +33,5 @@
             @endif
         </div>
     </div>
+
 </div>

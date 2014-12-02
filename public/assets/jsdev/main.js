@@ -86,11 +86,8 @@ $(function(){
         })
     })
     $('.edit-class-inline').exists(function(){
-        $(document).on('submit', '.edit-class-inline', function(e){
-            e.preventDefault();
-            $(e.target).find('.btn-toggle-down').addClass('loading');
-            new AjaxRequest($(e.target), editClass);
-        })
+        new EditClass(this);
+
         $(document).on('submit', '.add-session', function(e){
             e.preventDefault();
             new AjaxRequest($(e.target), newSessionAdded);
@@ -104,6 +101,7 @@ $(function(){
             e.preventDefault();
             new AjaxRequest($(e.target), removeSessionRow);
         })
+
     })
 
     $(document).on('submit', '.remove-session', function(e){
