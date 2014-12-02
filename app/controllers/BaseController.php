@@ -16,6 +16,8 @@ class BaseController extends Controller
 
         $this->beforeFilter('csrf', array('on' => 'post'));
 
+        $this->user = false;
+
         if (Sentry::check()) {
             $this->user = Sentry::getUser();
             $userImage = $this->user->image ? (Config::get('evercise.upload_dir') . 'profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';

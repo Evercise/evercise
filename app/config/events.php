@@ -83,6 +83,7 @@
         '0' => [
             //All Tracking is Low Priority
             ['stats.class.counter' => 'Stats@classViewed'],
+            ['class.viewed' => 'Classes@classViewed'], // $class, $user = false
             ['user.admin.trainerCreate' => 'Admin@hasCreatedTrainer'],
             ['class.index.single' => 'Indexer@indexSingle'],
             ['class.index.all' => 'Indexer@indexAll'],

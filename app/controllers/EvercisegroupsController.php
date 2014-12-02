@@ -77,24 +77,24 @@ class EvercisegroupsController extends \BaseController
 
 
         if ($evercisegroup){
-        $data = $evercisegroup->showAsNonOwner($this->user);
+            $data = $evercisegroup->showAsNonOwner($this->user);
 
-        event('stats.class.counter', ['class' => $evercisegroup]);
+            event('class.viewed', [$evercisegroup, $this->user]);
 
-        if (Sentry::check() && $evercisegroup->user_id == $this->user->id
-        ) // This Group belongs to this User/Trainer
-        {
-            return View::make('v3.classes.class_page')
-                ->with('preview', 'preview')
-                ->with('data', $data);
-        } else // This group does not belong to this user
-        {
-            return View::make('v3.classes.class_page')
-                ->with('data', $data);
+            if (Sentry::check() && $evercisegroup->user_id == $this->user->id)
+            // This Group belongs to this User/Trainer
+            {
+                return View::make('v3.classes.class_page')
+                    ->with('preview', 'preview')
+                    ->with('data', $data);
+            } else // This group does not belong to this user
+            {
+                return View::make('v3.classes.class_page')
+                    ->with('data', $data);
+            }
+        } else {
+            return View::make('errors.missing');
         }
-    } else {
-        return View::make('errors.missing');
-    }
 
     }
 

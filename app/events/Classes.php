@@ -9,12 +9,17 @@ class Classes
 
     protected $activity;
     protected $indexer;
+    /**
+     * @var Stats
+     */
+    private $stats;
 
-    public function __construct(Activity $activity, Indexer $indexer, Mail $mail) {
+    public function __construct(Activity $activity, Indexer $indexer, Mail $mail, Stats $stats) {
 
         $this->activity = $activity;
         $this->indexer = $indexer;
         $this->mail = $mail;
+        $this->stats = $stats;
     }
 
 
@@ -44,10 +49,16 @@ class Classes
 
 
         /** Mail And other shit Go here */
-
-
         $this->indexer->indexSingle($class->id);
 
+    }
+
+
+    public function classViewed($class, $user = false){
+
+        $this->stats->classViewed($class);
+
+        $this->indexer->indexSingle($class->id);
     }
 
 }
