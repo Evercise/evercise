@@ -28,7 +28,7 @@ class RatingsController extends AjaxBaseController{
         );
         if($validator->fails())
         {
-            $result = [ 'validation_failed' => 1, 'errors' =>  $validator->errors()->toArray() ];
+            $result = [ 'validation_failed' => 1,'sessionmember_id' => Input::get('sessionmember_id'), 'errors' =>  $validator->errors()->toArray() ];
             return Response::json($result);
         }
         else

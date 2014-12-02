@@ -13,7 +13,7 @@
          </div>
     </div>
     @if($session->isInPast())
-        @if( empty($session->sessionmembers[0]->rating))
+        @if( ! ($session->sessionmembers[0]->rating))
             <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center">
                 <div class=" col-sm-12">
                     <span>Rate it</span>
