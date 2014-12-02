@@ -18,24 +18,31 @@
                 </div>
 
             </div>
+            <div class="col-sm-6 text-right mt50">
+                {{ HTML::linkRoute('trainers.create', 'Become a trainer', null, ['class' => 'btn btn-info']) }}
+            </div>
         </div>
     </div>
     @include('v3.users.profile.nav')
 
     <div class="">
 
-        <div id="attended" class="profile-panels">
+        <div id="attended" class="{{ $tab === 'attended' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.attended_classes', ['sessions' => $data['past_sessions']])
         </div>
-        <div id="upcoming" class="hidden profile-panels">
+        <div id="upcoming" class="{{ $tab === 'upcoming' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.upcoming_classes', ['sessions' => $data['future_sessions']])
         </div>
-        <div id="wallet" class="hidden profile-panels">
+        <div id="activity" class="{{ $tab === 'activity' ? 'profile-panels' : 'hidden profile-panels' }}">
+            @include('v3.users.profile.activity')
+        </div>
+        <div id="wallet" class="{{ $tab === 'wallet' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.wallet')
         </div>
-        <div id="edit" class="hidden profile-panels">
+        <div id="edit" class="{{ $tab === 'edit' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.edit')
         </div>
+
 
     </div>
 @stop

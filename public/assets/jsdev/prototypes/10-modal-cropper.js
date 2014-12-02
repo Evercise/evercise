@@ -122,6 +122,9 @@ imageCropper.prototype = {
                     $('#first-img').html(self.galleryImage);
                     $('#first-img').append('<div class="holder-add-more"><span class="image-select icon-lg icon-md-camera hover"></span>');
                 }
+                if($('input[name="gallery_image"]').length){
+                    $('input[name="gallery_image"]').val(false);
+                }
                 $('input[name="image"]').val(self.galleryValue).trigger('change');
             },
 
@@ -136,9 +139,12 @@ imageCropper.prototype = {
         });
     },
     clickGalleryOption: function(e){
-        this.galleryValue = $(e.target).attr("src")
-        this.uploadForm.append('<img src="'+this.galleryValue+'" alt="cover image" class="img-responsive">');
+        this.galleryValue = $(e.target).data("id");
+        this.uploadForm.append('<img src="'+$(e.target).data("large")+'" alt="cover image" class="img-responsive">');
         $('input[name="image"]').val(this.galleryValue).trigger('change');
+        if($('input[name="gallery_image"]').length){
+            $('input[name="gallery_image"]').val(true);
+        }
     },
     updatedRow: function(){
         if(this.galleryImage != '')

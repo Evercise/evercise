@@ -13,7 +13,7 @@
                 </div>
 
                <div class="form-group mb50">
-                    @include('v3.widgets.profile_image_upload')
+                    @include('v3.widgets.profile_image_upload', ['image' => $user->directory.'/medium_'.$user->image])
                </div>
                 {{ Form::open(['url' => 'ajax/trainers/store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-trainer'] ) }}
                    <div class="form-group mb50">
@@ -37,7 +37,7 @@
 
 
                     <div class="text-center mt50">
-                        {{ Form::hidden('image', null, ['id' => 'image']) }}
+                        {{ Form::hidden('image', isset($user->image) ? $user->image : null, ['id' => 'image']) }}
                         {{ Form::submit('Finish Up', ['class' => 'btn btn-primary'] )  }}
                     </div>
 
