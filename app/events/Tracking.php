@@ -25,12 +25,15 @@ class Tracking
     /**
      * @param Writer $log
      * @param Repository $config
+     * @param Request $request
      */
     public function __construct(Writer $log, Repository $config, Request $request)
     {
         $this->config = $config;
         $this->log = $log;
         $this->request = $request;
+
+        $this->enabled  = getenv('SALESFORCE_ENABLED', false);
 
     }
 
@@ -134,26 +137,26 @@ class Tracking
             }
         }
 
+        if($this->enabled) {
+            switch ($func) {
+                case "REGISTER":
+                    $res = Salesforce::create([$user_object], 'Contact');
+                    $user->salesforce_id = $res[0]->id;
+                    $user->save();
+                case "EDIT":
+                    $user_object->id = $user->salesforce_id;
+                    $res = Salesforce::update([$user_object], 'Contact');
 
-        switch ($func) {
-            case "REGISTER":
-                $res = Salesforce::create([$user_object], 'Contact');
-                $user->salesforce_id = $res[0]->id;
-                $user->save();
-            case "EDIT":
-                $user_object->id = $user->salesforce_id;
-                $res = Salesforce::update([$user_object], 'Contact');
-
-                $this->log->info($res);
-                break;
-            case "LOGIN":
-                $obj = new \stdClass();
-                $obj->id = $user->salesforce_id;
-                $obj->Last_Login__c = gmdate("Y-m-d\TH:i:s\Z", time());
-                $res = Salesforce::update([$obj], 'Contact');
-                break;
+                    $this->log->info($res);
+                    break;
+                case "LOGIN":
+                    $obj = new \stdClass();
+                    $obj->id = $user->salesforce_id;
+                    $obj->Last_Login__c = gmdate("Y-m-d\TH:i:s\Z", time());
+                    $res = Salesforce::update([$obj], 'Contact');
+                    break;
+            }
         }
-
         $this->log->info($type . ' ' . $user->id . ' ' . $user->salesforce_id . ' ' . $func . ' in SalesForce');
 
         return $user;
@@ -182,8 +185,9 @@ class Tracking
         $relation->Class__c = $session->salesforce_id;
         $relation->Registrant__c = $user->salesforce_id;
 
-        $res = Salesforce::create([$relation], 'Class_Registrant__c');
-
+        if($this->enabled) {
+            $res = Salesforce::create([$relation], 'Class_Registrant__c');
+        }
         $this->log->info('Relation Created in SalesForce ' . (implode(',', array_values((array)$relation))));
     }
 
@@ -196,64 +200,17 @@ class Tracking
     {
         $class_obj = $this->formatSessionClass($session);
 
-        $res = Salesforce::create([$class_obj], 'Class__c');
+        if($this->enabled) {
+            $res = Salesforce::create([$class_obj], 'Class__c');
 
-        $session->salesforce_id = $res[0]->id;
-        $session->save();
-
+            $session->salesforce_id = $res[0]->id;
+            $session->save();
+        }
         $this->log->info('New Session ' . $session->id . '  in SalesForce '.$session->salesforce_id);
 
         return $session;
     }
 
-
-    /**
-     * @param $user
-     * @param string $type
-     * @param string $func
-     */
-    public function registerTrackingOld($user, $type = 'USER', $func = 'REGISTER')
-    {
-
-        $user_arr = $user->toArray();
-
-        $exclude = [
-            'id',
-            'password',
-            'permissions',
-            'activated',
-            'activation_code',
-            'created_at',
-            'updated_at',
-            'directory',
-            'image',
-            'remember_token',
-            'categories'
-        ];
-
-        foreach ($exclude as $e) {
-            if (isset($user_arr[$e])) {
-                unset($user_arr[$e]);
-            }
-        }
-
-        foreach ($user_arr as $key => $val) {
-            $user_arr['$' . $key] = $val;
-            unset($user_arr[$key]);
-        }
-
-
-        $user_arr['$type'] = $type;
-        $user_arr['$evercoins'] = (is_null($user->evecoin) ? '0' : $user->evecoin->balance);
-        $user_arr['$ip'] = $this->request->getClientIp();
-
-
-        $this->mixpanel->people->set($user->id, $user_arr);
-        $this->mixpanel->identify($user->id);
-        $this->mixpanel->track($func, ['type' => $type]);
-
-        $this->log->info($type . ' ' . $user->id . ' ' . $func . ' in MixPanel');
-    }
 
     /**
      * @param $user
