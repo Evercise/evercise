@@ -125,7 +125,6 @@ class PaymentController extends BaseController
 
     public function processPaypalPaymentSessions()
     {
-        $token = Input::get('token');
         $coupon = Session::get('coupon', FALSE);
         $cart = EverciseCart::getCart($coupon);
 
@@ -289,6 +288,9 @@ class PaymentController extends BaseController
             $transaction->items()->save($item);
         }
 
+
+        $trainer_notify = [];
+
         foreach ($cart['sessions'] as $session) {
             $evercisesession = Evercisesession::find($session['id']);
 
@@ -344,11 +346,24 @@ class PaymentController extends BaseController
 
 
             $trainer = $evercisesession->evercisegroup()->first()->user()->first();
-            event('trainer.session.joined', [$this->user, $trainer, $evercisesession]);
+
+           /**
+            * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
+            */
+
             event('user.session.joined', [$this->user, $evercisesession]);
 
         }
 
+        /**
+         * We should do something like this soon!!
+         * Group all Trainer sessions that a single user has joined and send him a email
+
+        foreach($trainer_notify as $trainer_id => $params) {
+            event('trainer.session.joined', [$params]);
+        }
+
+       */
 
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 

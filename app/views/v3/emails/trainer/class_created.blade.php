@@ -4,6 +4,5 @@
 
 @section('body')
 
-    Im a dam email
-
+    TRAINER CLASS CREATED
 @stop

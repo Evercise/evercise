@@ -4,6 +4,7 @@
 
 @section('body')
 
-    Im a dam email
+
+    TRAINER USER JOINED SESSION
 
 @stop

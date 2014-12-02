@@ -37,5 +37,9 @@ class Trainer
 
     public function sessionJoined($user, $trainer, $session){
 
+        $this->log->info('User ' . $user->id . ' has joined trainer '. $trainer->id.' session '. $session->id);
+
+
+        $this->mail->userJoinedTrainersSession($user, $trainer, $session);
     }
 }

@@ -33,7 +33,7 @@ class Tracking
         $this->log = $log;
         $this->request = $request;
 
-        $this->enabled  = getenv('SALESFORCE_ENABLED', false);
+        $this->enabled  = (getenv('SALESFORCE_ENABLED') ?: false);
 
     }
 

@@ -4,6 +4,6 @@
 
 @section('body')
 
-    Im a dam email
+    CART COMPLETED
 
 @stop
