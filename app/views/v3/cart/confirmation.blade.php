@@ -1,31 +1,5 @@
 @extends('v3.layouts.master')
 @section('body')
-<!--
-[sessions_grouped] => Array
-        (
-            [687] => Array
-                (
-                    [id] => 687
-                    [evercisegroup_id] => 62
-                    [date_time] => 2014-12-18 20:00:00
-                    [tickets] => 13
-                    [price] => 10.00
-                    [duration] => 45
-                    [members_emailed] => 0
-                    [created_at] => 2014-08-07 15:17:21
-                    [updated_at] => 2014-10-09 13:10:46
-                    [salesforce_id] =>
-                    [package] => 1
-                    [cart_id] => 687
-                    [name] => StrikeLab Fitness
-                    [qty] => 1
-                    [grouped_price] => 10.00
-                    [grouped_price_discount] => 0
-                )
-
-        )
-
--->
 
     <div class="container first-container">
         <div class="row">
@@ -70,7 +44,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-9">
                                             <div class="pull-left">
                                                 <span class="icon icon-clock"></span>{{ $date->toDayDateTimeString() }}
                                             </div>
@@ -78,16 +52,16 @@
                                             <div class="pull-left ml20"><span class="icon icon-watch"></span> {{$row['duration']}} mins</div>
                                             <div class="pull-left ml20"><span class="icon icon-ticket"></span> x {{$row['qty']}}</div>
                                         </div>
-                                        <div class="col-sm-4 text-right">
+                                        <div class="col-sm-3 text-right">
                                             <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</strong>
                                         </div>
                                     </div>
                                     <div class="row mt20">
                                         <div class="col-sm-12">
                                             <span>
-                                                <a href="{{ Share::load(Request::url() , $row['evercisegroup_id'])->facebook()  }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>
-                                                <a href="{{ Share::load(Request::url() , $row['evercisegroup_id'])->twitter()  }}" target="_blank"><span class="icon icon-twitter mr20 hover"></span> </a>
-                                                <a href="{{ Share::load(Request::url() , $row['evercisegroup_id'])->gplus()  }}" target="_blank"><span class="icon icon-google hover"></span> </a>
+                                                <a href="{{ Share::load(URL::to('class/'.$row['evercisegroup_id'])  , $row['evercisegroup_id'])->facebook()  }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>
+                                                <a href="{{ Share::load(URL::to('class/'.$row['evercisegroup_id'])  , $row['evercisegroup_id'])->twitter()  }}" target="_blank"><span class="icon icon-twitter mr20 hover"></span> </a>
+                                                <a href="{{ Share::load(URL::to('class/'.$row['evercisegroup_id'])  , $row['evercisegroup_id'])->gplus()  }}" target="_blank"><span class="icon icon-google hover"></span> </a>
                                             </span>
                                         </div>
                                     </div>
@@ -109,10 +83,10 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 {{ $row['classes'] }} classes
                                             </div>
-                                            <div class="col-sm-4 text-right">
+                                            <div class="col-sm-3 text-right">
                                                 <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
                                             </div>
                                         </div>
@@ -129,11 +103,11 @@
                             </div>
                             <div class="col-sm-6 text-right">
                                 @if($cart['total']['package_deduct'] > 0)
-                                    <strong>Package deduct: <span class="text-primary"> £{{ $total['package_deduct']  }}</span></strong>
+                                    <strong>Package deduct: <span class="text-primary"> £{{ $cart['total']['package_deduct']  }}</span></strong>
                                     <br>
                                 @endif
                                 @if($cart['total']['from_wallet'] > 0)
-                                    <strong>From Wallet: <span class="text-primary">£{{ $total['from_wallet']  }}</span></strong>
+                                    <strong>From Wallet: <span class="text-primary">£{{ $cart['total']['from_wallet']  }}</span></strong>
                                     <br>
                                 @endif
                                 @if(!empty($cart['discount']['amount']) && $cart['discount']['amount'] > 0)
@@ -167,16 +141,6 @@
                 </ul>
             </div>
         </div>
-
-
-        <?php
-            d($confirm, false);
-            d($cart, false);
-            d($payment_type, false);
-            d($coupon, false);
-            d($transaction, false);
-            d($user, false);
-            ?>
     </div>
 
 

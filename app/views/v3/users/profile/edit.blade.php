@@ -4,6 +4,9 @@
     </div>
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
+            <div class="form-group mb50">
+                @include('v3.widgets.profile_image_upload', ['image' => $user->directory.'/medium_'. $user->image])
+           </div>
             {{ Form::open(['route' => 'users.update', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'update-user-form'] ) }}
                 <div class="row  mt10">
                     <div class="col-sm-6">
@@ -79,6 +82,7 @@
 
                 </div>
                 <div class="text-center form-group mt40">
+                    {{ Form::hidden('image', isset($user->image) ? $user->image : null) }}
                     {{ Form::submit('Save', ['class' => 'btn btn-primary'] )  }}
                 </div>
 

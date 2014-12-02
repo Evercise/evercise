@@ -18,6 +18,7 @@ function imageCropper(elem){
     this.bhInput = this.modal.find("input[name='box_height']");
     this.originalData = {};
     this.ratio = ( this.modal.data('ratio')) ? this.modal.data('ratio') :  2.35;
+    this.imageType = (this.ratio == 2.35 )? '/cover_' : '/medium_';
     this.x = 0;
     this.y = 0;
     this.w = 0;
@@ -114,7 +115,7 @@ imageCropper.prototype = {
 
             success: function (data) {
                 self.galleryValue = data.filename;
-                self.galleryImage = '<img src="/'+data.folder + '/cover_' +data.filename +'" alt="cover photo" class="img-responsive">';
+                self.galleryImage = '<img src="/'+data.folder + self.imageType +data.filename +'" alt="cover photo" class="img-responsive">';
                 self.croppedForm.find("input[type=submit]").prop('disabled', false);
                 self.uploadForm.append(self.galleryImage);
                 if( $('#first-img')){

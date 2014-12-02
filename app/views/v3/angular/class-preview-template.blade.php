@@ -37,23 +37,28 @@
                 <h3>Schedule</h3>
             </div>
 
-            <div class="row preview-row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse">
+            <div class="row preview-row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse | limitTo:4">
                 <div class="col-sm-6 mt5">
                     <span class="icon icon-clock"></span>
                     {[{ session.date_time | date : 'MMM d, h:mma'  }]}
                 </div>
-                <div class="col-sm-6">
+                <div ng-if="session.remaining > 0" class="col-sm-6">
                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ session.id  }]}', 'class' => 'add-to-class']) }}
                         <div class="btn-group pull-right">
                             {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-                                 <option ng-repeat="n in [] | repeat:session.tickets - session.members" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                 <option ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
                             </select>
 
                         </div>
                     {{ Form::close() }}
 
+                </div>
+            </div>
+            <div class="row mt20">
+                <div class="col-sm-12 mb20 text-center">
+                    <a href="{[{ preview.link }]}" class="btn btn-grey btn-transparent">See More</a>
                 </div>
             </div>
         </div>

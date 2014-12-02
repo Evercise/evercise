@@ -5,6 +5,9 @@
     <div class="col-sm-3">
         <div class="row mb20" id="image-cropper">
             <div class="holder profile" id="cover_image">
+                @if(isset($image))
+                    {{ image( $image , 'profile image', ['class' => 'img-responsive', 'id' => 'uploaded-image']) }}
+                @endif
                 {{ Form::open(['method' => 'post', 'id' => 'image-upload-form' ]) }}
                 {{ Form::close() }}
             </div>
@@ -17,6 +20,7 @@
                       </div>
                       <div class="modal-body">
                         <div class="bootstrap-modal-cropper">
+
                             <img src="" id="uploaded-image" class="img-responsive">
                         </div>
                       </div>
