@@ -182,4 +182,5 @@ class EvercisegroupsController extends \BaseController
         return Evercisegroup::doSearch(['address' => $location], $category, $radius, $this->user);
     }
 
+
 }

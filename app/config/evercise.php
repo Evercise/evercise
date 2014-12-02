@@ -83,12 +83,16 @@ return [
         ]
     ],
     'class_images' => [
-        ['prefix' => 'cover', 'width' => 1000, 'height' => 400],
-        ['prefix' => 'search', 'width' => 125, 'height' => 120],
+        ['prefix' => 'cover', 'width' => 1920, 'height' => 820],
         [
-            'prefix' => 'thumb',
-            'width' => 150,
-            'height' => 166
+            'prefix' => 'preview',
+            'width' => 409,
+            'height' =>308
+        ],
+        [
+            'prefix' => 'preview',
+            'width' => 409,
+            'height' =>308
         ],
         [
             'prefix' => 'module',
@@ -96,15 +100,10 @@ return [
             'height' =>311
         ],
         [
-            'prefix' => 'preview',
-            'width' => 409,
-            'height' =>308
-        ],
-        [
-            'prefix' => 'preview',
-            'width' => 409,
-            'height' =>308
-        ],
+            'prefix' => 'thumb',
+            'width' => 150,
+            'height' => 166
+        ]
     ],
     'user_images' => [
         ['prefix' => 'large', 'width' => 300, 'height' => 300],

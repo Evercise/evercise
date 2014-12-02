@@ -102,15 +102,22 @@
                                 <tr class="{{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
                                     <td><span class="icon icon-calendar mr5"></span><span>{{ date('dS-M-y' , strtotime($futuresession->date_time))}}</span></td>
                                     <td><span class="icon icon-clock mr5"></span><span>{{ (date('h:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
-                                    <td><span class="icon icon-ticket mr10"></span><span>x {{ $futuresession->tickets -  $data['members'][$futuresession->id] }} tickets left</span></td>
+                                    <td>
+                                        @if($futuresession->tickets - $data['members'][$futuresession->id] > 0)
+                                            <span class="icon icon-ticket mr10"></span><span>x {{ $futuresession->tickets -  $data['members'][$futuresession->id] }} tickets left</span>
+                                        @else
+                                            <span class="text-danger">Class Full</span>
+                                        @endif
+                                    </td>
                                     <td><span class="icon icon-watch mr5"></span><span>{{ $futuresession->formattedDuration() }}</span></td>
+                                    <td>
+                                        <span>
+                                            <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
+                                        </span>
+                                    </td>
                                     <td>
                                         @if($futuresession->tickets - $data['members'][$futuresession->id] > 0)
                                             {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
-                                                <span>
-                                                    <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
-                                                </span>
-
                                                 <div class="btn-group pull-right">
                                                     {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                                                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
@@ -124,12 +131,8 @@
                                                 </div>
                                             {{ Form::close() }}
                                         @else
-                                            <span>
-                                                <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
-                                            </span>
-                                            <div class="btn-group pull-right">
-                                                <button class="btn btn-danger disabled">Class Full</button>
-                                            </div>
+                                            <span class="text-danger">Class Full</span>
+
                                         @endif
 
                                     </td>
