@@ -28,7 +28,7 @@ class Facility extends Eloquent
         $amenities =  Facility::where('category', 'amenity')->lists('name', 'id' );
         $facilities = Facility::where('category', 'facility')->lists('name', 'id');
 
-        return ['facilities'=>$facilities, 'amenities' => $amenities];
+        return ['facilities' => $facilities, 'amenities' => $amenities];
     }
 
 }

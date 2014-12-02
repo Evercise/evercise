@@ -58,4 +58,11 @@ class Referral extends \Eloquent
         );
         return $validator;
     }
+
+    public static function checkAndStore($user_id, $email, $code)
+    {
+        $referral = Referral::create(['user_id' => $user_id, 'email' => $email, 'code' => $code]);
+
+        return $referral;
+    }
 }

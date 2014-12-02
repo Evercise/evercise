@@ -72,7 +72,10 @@
                     'amount'    => $amountToPay,
                     'currency'  => 'GBP'
                 ]
-            )->send();
+            )->setItems([
+                ['name' => 'item1', 'quantity' => 2, 'price' => '10.00'],
+                ['name' => 'item2', 'quantity' => 1, 'price' => '50.00']
+            ])->send();
 
             $response->redirect();
 

@@ -72,7 +72,7 @@ class Search
 
         $results = $this->elastic->getSingle($id);
 
-        return $this->formatResults($results);
+        return $this->formatResults($results, false);
     }
 
 
@@ -81,7 +81,7 @@ class Search
      * @param $results
      * @return mixed
      */
-    public function formatResults($results, $area)
+    public function formatResults($results, $area = false)
     {
         $all_results = [];
 
@@ -104,7 +104,7 @@ class Search
     {
 
         /** Add Lat and Lon to the venue */
-        if (!empty($row->_source->venue->location->geohash)) {
+        if (!empty($row->_source->venue->location->geohash) && $area) {
             try {
                 $decoded = $this->elastic->decodeLocationHash($row->_source->venue->location->geohash);
 

@@ -22,7 +22,7 @@ class ReferralsController extends \BaseController {
 			$referralCode = Functions::randomPassword(20);
 
 			try {
-				$referral = Referral::create(['user_id' => $this->user->id, 'email' => $refereeEmail, 'code' => $referralCode]);
+				$referral = Referral::checkAndStore($this->user->id, $refereeEmail, $referralCode);
 			}catch(Exception $e){
 				return Response::json([
 					'validation_failed' => 1,
