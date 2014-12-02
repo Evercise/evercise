@@ -41,6 +41,23 @@ class Mail
     }
 
     /**
+     * USER EMAIL's
+     */
+
+    public function userCartCompleted($user, $cart, $transaction)
+    {
+        $params = [
+            'subject'     => 'Congratulations',
+            'view'        => 'v3.emails.user.cart_completed',
+            'user'        => $user,
+            'cart'        => $cart,
+            'transaction' => $transaction
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+    /**
      * TRAINER EMAIL's
      */
 
@@ -50,7 +67,21 @@ class Mail
             'subject' => 'Class created',
             'view'    => 'v3.emails.trainer.class_created',
             'trainer' => $trainer,
-            'class' => $class
+            'class'   => $class
+        ];
+
+        $this->send($trainer->email, $params);
+
+    }
+
+    public function userJoinedTrainersSession($user, $trainer, $session)
+    {
+        $params = [
+            'subject' => 'User Joined Your Class',
+            'view'    => 'v3.emails.trainer.user_joined_session',
+            'trainer' => $trainer,
+            'session' => $session,
+            'user'    => $user
         ];
 
         $this->send($trainer->email, $params);
@@ -87,16 +118,15 @@ class Mail
          * ]
          *
          *
-        $trace = debug_backtrace();
-        $name = $this->formatName([get_called_class(), next($trace)['function']]);
-        **/
+         * $trace = debug_backtrace();
+         * $name = $this->formatName([get_called_class(), next($trace)['function']]);
+         **/
 
 
         $this->data = array_merge($this->data, $params);
 
         $subject = $this->data['subject'];
         $attachments = $this->data['attachments'];
-
 
 
         try {
@@ -110,7 +140,7 @@ class Mail
                     }
                 });
         } catch (Exception $e) {
-            $this->log->error('Email could not be sent '.$e->getMessage());
+            $this->log->error('Email could not be sent ' . $e->getMessage());
             /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
 
         }
@@ -118,11 +148,12 @@ class Mail
 
     /**
      * Format from: events\Mail, classCreated
-     To: mail.classcreated
+     * To: mail.classcreated
      */
-    private function formatName($class, $function) {
+    private function formatName($class, $function)
+    {
 
-        return  strtolower(str_replace('\\', '.', implode('.', [str_replace('events\\', '', $class), $function])));
+        return strtolower(str_replace('\\', '.', implode('.', [str_replace('events\\', '', $class), $function])));
     }
 
 }
