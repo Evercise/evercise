@@ -14,6 +14,9 @@
                             <p>Formats: JPG, JPEG, PNG or GIF</p>
                         </div>
                     </div>
+                    @if(isset($cloneGroup->image))
+                        {{ image($cloneGroup->user->directory.'/cover_'.$cloneGroup->image, 'cover photo', ['class' => 'img-responsive']) }}
+                    @endif
                 {{ Form::close() }}
                 </div>
                 <div class="modal modal-cropper" id="create-image" data-backdrop="static">

@@ -31,6 +31,9 @@ imageCropper.prototype = {
     constructor: imageCropper,
     init: function(){
         this.addListener();
+        if($('input[name="cloned"]').val() != ''){
+            this.galleryImage = '<img src="/'+$('input[name="cloned"]').val()+'"  alt="cover photo" class="img-responsive">';
+        }
     },
     addListener: function () {
         $(document).on("click", '.image-select' ,$.proxy(this.upload, this));

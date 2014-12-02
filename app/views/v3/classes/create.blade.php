@@ -17,9 +17,7 @@
                     {{ Form::close() }}
                 </div>
                 <div class="form-group mb50">
-                {{'PUT THIS CHAP IN THE IMAGE UPLOAD THINGY '. (isset($cloneGroup) ? image($cloneGroup->user->directory.'/search_'.$cloneGroup->image, $cloneGroup->name) : '') }}
                     @include('v3.widgets.class_image_upload')
-
                 </div>
                 {{ Form::open(['route' => 'evercisegroups.store', 'method' => 'post', 'role' => 'form', 'id' => 'create-class'] ) }}
                     <div class="form-group mb50">
@@ -47,7 +45,7 @@
 
                     <div class="row">
                         <div class="col-sm-6 text-right"><button class="btn btn-default">Cancel</button> </div>
-                        {{ Form::hidden('image', null) }}
+                        {{ Form::hidden('image', isset($cloneGroup->image) ? $cloneGroup->image : null) }}
                         {{ Form::hidden('gallery_image', false) }}
                         {{ Form::hidden('category_array[]',null ) }}
                         <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>

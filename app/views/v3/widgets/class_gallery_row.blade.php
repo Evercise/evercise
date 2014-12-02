@@ -17,6 +17,7 @@
                                             <div class="text-center col-sm-12 mt10">
                                                 <span class="image-select icon-lg icon-md-camera hover"></span>
                                                 <p>Add an image</p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -38,14 +39,25 @@
             <div class="item active">
                 <div class="row">
                      <div class="col-sm-4">
-                        <div class="holder gallery-img-wrapper" id="first-img">
-                            <div class="row">
-                                <div class="text-center col-sm-12 mt10">
+                        @if(isset($cloneGroup->image))
+                            <div class="holder gallery-img-wrapper" id="first-img">
+                                {{ Form::hidden('cloned', $cloneGroup->user->directory.'/cover_'.$cloneGroup->image) }}
+                                {{ image($cloneGroup->user->directory.'/cover_'.$cloneGroup->image, 'cover photo', ['class' => 'img-responsive']) }}
+                                <div class="holder-add-more">
                                     <span class="image-select icon-lg icon-md-camera hover"></span>
-                                    <p>Add an image</p>
+                                </div>
+                           </div>
+
+                        @else
+                            <div class="holder gallery-img-wrapper" id="first-img">
+                                <div class="row">
+                                    <div class="text-center col-sm-12 mt10">
+                                        <span class="image-select icon-lg icon-md-camera hover"></span>
+                                        <p>Add an image</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                      </div>
                      <div class="col-sm-4">
                         <div class="holder gallery-img-wrapper">
