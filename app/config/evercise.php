@@ -89,11 +89,7 @@ return [
             'width' => 409,
             'height' =>308
         ],
-        [
-            'prefix' => 'preview',
-            'width' => 409,
-            'height' =>308
-        ],
+
         [
             'prefix' => 'module',
             'width' => 250,
@@ -103,6 +99,11 @@ return [
             'prefix' => 'thumb',
             'width' => 150,
             'height' => 166
+        ],
+        [
+            'prefix' => 'search',
+            'width' => 125,
+            'height' =>120
         ]
     ],
     'user_images' => [

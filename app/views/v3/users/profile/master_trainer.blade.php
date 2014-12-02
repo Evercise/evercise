@@ -29,11 +29,11 @@
             @if( !$data['trainer_groups']->isEmpty() )
                 @include('v3.users.profile.class_hub', ['groups' => $data['trainer_groups']])
             @else
-                <div class="container">
+                <div class="container text-center">
                     <div class="underline text-center">
                         <h1>Class Hub</h1>
                     </div>
-                    <div class="well text-center">You currently have no classes, click the create a class button above to get started</div>
+                    <strong>Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no classes, click the create a class button above to get started!</strong>
                 </div>
             @endif
         </div>

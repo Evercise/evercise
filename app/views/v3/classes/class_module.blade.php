@@ -45,11 +45,11 @@
     <li class="list-group-item bg-light-grey">
         <div class="class-info-wrapper  row">
             <div class="pull-left">
-                <span class="icon icon-clock"></span>{{ date('M dS, h:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}
+                <span class="icon icon-clock"></span>{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}
             </div>
 
             <div class="pull-left ml20"><span class="icon icon-watch"></span> {{$class->futuresessions[0]->duration}} mins</div>
-            <div class="pull-right"><span class="icon icon-ticket"></span> x 5</div>
+            <div class="pull-right"><span class="icon icon-ticket"></span> x {{$class->futuresessions[0]->remaining}}</div>
 
         </div>
     </li>

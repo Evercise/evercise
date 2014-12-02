@@ -101,10 +101,10 @@
                             @foreach($data['evercisegroup']->futuresessions as $futuresession)
                                 <tr class="{{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
                                     <td><span class="icon icon-calendar mr5"></span><span>{{ date('dS-M-y' , strtotime($futuresession->date_time))}}</span></td>
-                                    <td><span class="icon icon-clock mr5"></span><span>{{ (date('h:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
+                                    <td><span class="icon icon-clock mr5"></span><span>{{ (date('j:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
                                     <td>
-                                        @if($futuresession->tickets - $data['members'][$futuresession->id] > 0)
-                                            <span class="icon icon-ticket mr10"></span><span>x {{ $futuresession->tickets -  $data['members'][$futuresession->id] }} tickets left</span>
+                                        @if($futuresession->remainingTickets()  > 0)
+                                            <span class="icon icon-ticket mr10"></span><span>x {{$futuresession->remainingTickets()  }} tickets left</span>
                                         @else
                                             <span class="text-danger">Class Full</span>
                                         @endif
@@ -116,25 +116,22 @@
                                         </span>
                                     </td>
                                     <td>
-                                        @if($futuresession->tickets - $data['members'][$futuresession->id] > 0)
+                                        @if($futuresession->remainingTickets()  > 0)
                                             {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
                                                 <div class="btn-group pull-right">
                                                     {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                                                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
 
                                                       <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-                                                        @for($i=1; $i<($futuresession->tickets - $data['members'][$futuresession->id] + 1 ); $i++)
+                                                        @for($i=1; $i<($futuresession->remainingTickets()  + 1 ); $i++)
                                                         <option value="{{$i}}">{{$i}}</option>
                                                         @endfor
                                                       </select>
-
                                                 </div>
                                             {{ Form::close() }}
                                         @else
                                             <span class="text-danger">Class Full</span>
-
                                         @endif
-
                                     </td>
                                 </tr>
                             @endforeach

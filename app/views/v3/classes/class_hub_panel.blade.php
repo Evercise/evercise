@@ -1,9 +1,9 @@
 <div class="class-hub-panel center-block">
     <div class="row">
-        <div class="class-image-wrapper col-xs-6">
-            {{ image( $evercisegroup->user->directory.'/search_'.$evercisegroup->image) }}
+        <div class="class-image-wrapper pull-left">
+            {{ image( $evercisegroup->user->directory.'/preview_'.$evercisegroup->image) }}
         </div>
-        <div class="class-title-wrapper col-xs-6">
+        <div class="class-title-wrapper pull-left">
             <a href="{{ URL::route('class.show', [$evercisegroup->slug]) }}"><h3>{{ $evercisegroup->name }}</h3></a>
             <div class="class-rating-wrapper">
                 @for($i=0; $i<5; $i++)
@@ -22,8 +22,14 @@
                 </div>
 
             @else
-                <a class="btn btn-default mr15" href={{route('clone_class', ['id' => $evercisegroup->id])}}>Clone Class</a>
-                <button id="edit-{{$evercisegroup->id}}" class="btn btn-default toggle-switch disabled" data-toggle="collapse" data-target=".hub-table-row" data-removeclass="btn-default" data-switchclass="btn-transparent-grey" data-switchtext="Done Editing">Edit Class</button>
+                {{ Form::open(['route' => 'sessions.inline.groupId', 'method' => 'post', 'class'=> 'edit-class-inline']) }}
+                    {{  Form::hidden('groupId',$evercisegroup->id ) }}
+                    {{  Form::hidden('id',  isset($data['trainer']->user->id) ? $data['trainer']->user->id : $data['user']->id ) }}
+                    {{ Html::linkRoute('clone_class', 'Clone Class', $evercisegroup->id, ['class' => 'btn btn-default mr15', 'id'=> $evercisegroup->id]) }}
+                    <!-- need to use html button as btn-toggle class does not work with input field -->
+                    <button type="submit" id="submit-{{$evercisegroup->id}}" class="btn btn-default btn-toggle-down">Edit</button>
+                    {{ HTML::link('#myClassInfo-'.$evercisegroup->id , 'Done editing', [ 'class' => 'btn btn-default btn-toggle-up hide toggle-switch' , 'data-toggle' =>'collapse', 'id' => 'infoToggle-'.$evercisegroup->id , 'data-removeclass'=>'btn-toggle-up' ,  'data-switchclass' => 'btn-toggle-down' , 'data-switchtext' => 'Edit']) }}
+                {{ Form::close() }}
             @endif
         </div>
     </div>

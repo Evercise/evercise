@@ -11,8 +11,8 @@
                     </div>
                 @endforeach
             @else
-              <div class="col-sm-12">
-                  <div class="well  text-center">You currently have no upcoming classes</div>
+              <div class="col-sm-12 text-center">
+                  <strong>Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no attended classes blah blah blah!</strong>
               </div>
             @endif
         </div>

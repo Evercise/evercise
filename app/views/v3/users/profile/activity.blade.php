@@ -9,8 +9,10 @@
 
 
                   @if(count($data['activity']) == 0)
+                    <div class="text-center">
+                        <strong class="text-center">Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no attended classes blah blah blah!</strong>
+                    </div>
 
-                    NO activity
                   @else
                     @foreach($data['activity'] as $date => $activities)
                         <li class="list-group-item">
