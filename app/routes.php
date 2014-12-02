@@ -249,7 +249,7 @@ Route::get('/ig', [
         ['as' => 'evercisegroups.index', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@index']
     );
     Route::get(
-        'evercisegroups/create',
+        'evercisegroups/create/{clone_id?}',
         ['as' => 'evercisegroups.create', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@create']
     );
 

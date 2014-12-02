@@ -839,6 +839,11 @@ class Evercisegroup extends \Eloquent
         )->withTimestamps();
     }
 
+    public function getSubcategoryIds()
+    {
+        return $this->subcategories->lists('id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */

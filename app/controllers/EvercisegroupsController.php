@@ -20,7 +20,7 @@ class EvercisegroupsController extends \BaseController
      *
      * @return Response
      */
-    public function create()
+    public function create($clone_id = null)
     {
         // Get names of subcategories and sort alphabetically
         $subcategories = Subcategory::lists('name');
@@ -29,10 +29,19 @@ class EvercisegroupsController extends \BaseController
         $venues = Venue::usersVenues($this->user->id);
         $facilities = Facility::getLists();
 
+        if ($clone_id) {
+            $cloneGroup = Evercisegroup::find($clone_id);
+
+            if (!$cloneGroup->checkIfUserOwnsClass($this->user)) {
+                return Redirect::route('evercisegroups.index')->with('errorNotification', 'You do not own this class');
+            }
+        }
+
         return View::make('v3.classes.create')
             ->with('venues', $venues)
             ->with('facilities', $facilities)
-            ->with('subcategories', $subcategories);
+            ->with('subcategories', $subcategories)
+            ->with('cloneGroup', isset($cloneGroup) ? $cloneGroup : null);
         //return View::make('evercisegroups.create')->with('subcategories', $subcategories);
     }
 
@@ -42,18 +51,7 @@ class EvercisegroupsController extends \BaseController
      */
     public function cloneEG($id)
     {
-        $evercisegroup = Evercisegroup::getById($id);
-
-        if (!$evercisegroup->checkIfUserOwnsClass($this->user)) {
-            return Redirect::route('evercisegroups.index')->with('errorNotification', 'You do not own this class');
-        }
-
-        $data = [
-            'categories' => $evercisegroup->subcategories
-        ];
-
-        return Redirect::route('evercisegroups.create')
-            ->with('data', $data);
+        return Redirect::route('evercisegroups.create', [$id]);
     }
 
     /**
