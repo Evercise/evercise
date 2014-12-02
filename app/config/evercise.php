@@ -84,11 +84,26 @@ return [
     ],
     'class_images' => [
         ['prefix' => 'cover', 'width' => 1000, 'height' => 400],
-        ['prefix' => 'search', 'width' => 315, 'height' => 205],
+        ['prefix' => 'search', 'width' => 125, 'height' => 120],
         [
             'prefix' => 'thumb',
-            'width' => 200,
-            'height' => 80
+            'width' => 150,
+            'height' => 166
+        ],
+        [
+            'prefix' => 'module',
+            'width' => 250,
+            'height' =>311
+        ],
+        [
+            'prefix' => 'preview',
+            'width' => 409,
+            'height' =>308
+        ],
+        [
+            'prefix' => 'preview',
+            'width' => 409,
+            'height' =>308
         ],
     ],
     'user_images' => [

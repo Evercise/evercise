@@ -8632,6 +8632,9 @@ fieldset[disabled] .stripe-button-el.active {
   cursor: pointer;
   background-position: -120px -655px;
 }
+.img-full-width {
+  width: 100%;
+}
 .modal .close {
   float: left;
 }

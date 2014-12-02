@@ -101,7 +101,6 @@ createClass.prototype = {
 
             complete: function () {
                 $('#class-loading').remove();
-                console.log('complete');
             }
         });
     },
