@@ -48,12 +48,6 @@ class User
 
     }
 
-    public function trainerClassJoined($user, $trainer, $session)
-    {
-
-        $this->log->info('User ' . $user->id . ' has registered a class with trainer ' . $trainer->id . ' for class ' . $session->id);
-    }
-
 
     public function cartCompleted($user, $cart, $transaction)
     {

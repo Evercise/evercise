@@ -138,7 +138,16 @@
 
                     case 'session':
                         for ($i = 0; $i < $row->qty; $i++) {
-                            $sessions[] = Evercisesession::find($code['id'])->toArray();
+
+                            $session = Evercisesession::find($code['id']);
+
+                            $remaining_tickets = $session->remainingTickets();
+
+                            $session = $session->toArray();
+                            $session['tickets'] = $remaining_tickets;
+
+                            unset($session['sessionmembers']);
+                            $sessions[] = $session;
                         }
                         break;
                 }
@@ -191,6 +200,7 @@
             foreach ($sessions as $s) {
                 if (!empty($cart['sessions_grouped'][$s['id']]['qty'])) {
                     $cart['sessions_grouped'][$s['id']]['qty']++;
+                    $cart['sessions_grouped'][$s['id']]['tickets_left']--;
                     $cart['sessions_grouped'][$s['id']]['grouped_price'] += $s['price'];
                     if ($s['package'] == 0) {
                         $cart['sessions_grouped'][$s['id']]['grouped_price_discount'] += $s['price'];
@@ -198,6 +208,7 @@
                 } else {
                     $cart['sessions_grouped'][$s['id']]                           = $s;
                     $cart['sessions_grouped'][$s['id']]['qty']                    = 1;
+                    $cart['sessions_grouped'][$s['id']]['tickets_left']           = $s['tickets'] - 1;
                     $cart['sessions_grouped'][$s['id']]['grouped_price']          = $s['price'];
                     $cart['sessions_grouped'][$s['id']]['grouped_price_discount'] = 0;
                     if ($s['package'] == 0) {
@@ -205,7 +216,6 @@
                     }
                 }
             }
-
 
             /** Combine Back the Cart and figure things out */
 
@@ -270,37 +280,8 @@
 
             }
 
-
-            return $cart;
-
-
-        }
-
-
-        public static function confirm($transaction_id = 0, $coupon = FALSE)
-        {
-
-            $cart = self::getCart($coupon);
-
-
-            /** Get All Packages and Insert Them */
-
-            /** Loop Tru the old packages and new ones and deduct values */
-
-            /** Insert Sessions into DB */
-
-            /** Insert Other stuff into DB */
-
-            /** Trigger Event for Sales Force or Other Stats */
-
-            /** Trigger Event for Trainer (if needed) */
-
-            /** Trigger Event for User  */
-
-            /** Empty Cart  */
-
-            /** Show Success Page */
             d($cart);
+            return $cart;
 
 
         }

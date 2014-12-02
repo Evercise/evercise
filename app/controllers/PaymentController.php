@@ -303,7 +303,7 @@ class PaymentController extends BaseController
 
                 $check->package()->save($packageClass);
 
-                event('activity.user.package.used', [$this->user, $check, $package, $evercisesession]);
+                event('activity.user.package.used', [$this->user, $check, $evercisesession]);
 
 
             } catch (Exception $e) {

@@ -340,8 +340,9 @@ class Activity
      * @param $package
      * @param $session
      */
-    public function packageUsed($user, $userpackage, $package, $session)
+    public function packageUsed($user, $userpackage, $session)
     {
+        $package = $userpackage->package()->first();
 
         $class = $session->evercisegroup()->first();
 

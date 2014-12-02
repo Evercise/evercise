@@ -67,7 +67,6 @@
     return [
 
        '10'  => [
-// ∑          ['trainer.class.joined' => 'User@trainerClassJoined'],
            ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
            ['user.session.joined' => 'User@sessionJoined'],
 
