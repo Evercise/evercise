@@ -344,14 +344,13 @@ class PaymentController extends BaseController
 
 
             $trainer = $evercisesession->evercisegroup()->first()->user()->first();
-            event('trainer.class.joined', [$this->user, $trainer, $evercisesession]);
-            event('user.class.joined', [$this->user, $evercisesession]);
+            event('trainer.session.joined', [$this->user, $trainer, $evercisesession]);
+            event('user.session.joined', [$this->user, $evercisesession]);
 
         }
 
 
         event('user.cart.completed', [$this->user, $cart, $transaction]);
-        event('activity.user.cart.completed', [$this->user, $cart, $transaction]);
 
         /* Empty cart */
         EverciseCart::clearCart();

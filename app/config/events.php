@@ -68,9 +68,11 @@
 
        '10'  => [
 // ∑          ['trainer.class.joined' => 'User@trainerClassJoined'],
-// ∑          ['user.cart.completed' => 'User@cartCompleted'] // $user, $cart, $transaction
+           ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
+           ['user.session.joined' => 'User@sessionJoined'],
 
 
+           ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
            ['class.created' => 'Classes@classCreated'],  // $class, $user
 
@@ -99,6 +101,24 @@
 //            ['user.package.used' => 'Tracking@userChangePassword'],
 //            ['session.create' => 'Tracking@registerSessionTracking'],
 //            ['user.class.joined' => 'Tracking@registerUserSessionTracking']
+
+
+
+
+
+
+
+
+
+
+
+
+            /**
+             * THIS IS REALLY LOW PRIORITY
+             * MOST OF THE FUNCTIONS HERE ARE ALREADY TRIGGERED BY OTHER EVENTS
+             * BUT JUST IN CASE WE NEED THEM
+             */
+
 
 
             ['activity.class.payed' => 'Activity@payedClass'],  // $class, $user

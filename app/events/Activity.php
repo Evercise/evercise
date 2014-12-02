@@ -29,7 +29,6 @@ class Activity
         $this->log = $log;
         $this->event = $event;
         $this->activities = $activities;
-        $this->activities = $activities;
         $this->evercisesession = $evercisesession;
     }
 
