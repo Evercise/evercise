@@ -65,6 +65,15 @@ Route::get('/ig', [
         ]
     );
 
+
+
+
+/** SEO URLS */
+Route::get('/instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
+Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EverciseGroupsController@show']);
+
+
+
     /* end tempary routes for new styles */
 
 

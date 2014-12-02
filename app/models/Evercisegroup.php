@@ -16,6 +16,7 @@ class Evercisegroup extends \Eloquent
         'venue_id',
         'name',
         'title',
+        'slug',
         'description',
         'image',
         'gender',
@@ -100,6 +101,7 @@ class Evercisegroup extends \Eloquent
                     'description' => $description,
                     'image'       => $image,
                     'venue_id'    => $venueId,
+                    'slug'        => str_random(10),
                 ]
             );
 

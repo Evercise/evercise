@@ -20,6 +20,7 @@ Artisan::add(new IndexerIndex);
 Artisan::add(new IndexerImport);
 Artisan::add(new IndexerGeo);
 Artisan::add(new ConvertImages);
+Artisan::add(new GenerateUrls);
 
 
 

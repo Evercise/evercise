@@ -4,7 +4,7 @@
             {{ image( $evercisegroup->user->directory.'/search_'.$evercisegroup->image) }}
         </div>
         <div class="class-title-wrapper col-xs-6">
-            <a href="#"><h3>{{ $evercisegroup->name }}</h3></a>
+            <a href="{{ URL::route('class.show', [$evercisegroup->slug]) }}"><h3>{{ $evercisegroup->name }}</h3></a>
             <div class="class-rating-wrapper">
                 @for($i=0; $i<5; $i++)
                     <span class="icon icon-{{ $i < $evercisegroup->getStars() ? 'full' : 'empty'  }}-star"></span>

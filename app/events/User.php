@@ -49,6 +49,8 @@ class User
     }
 
 
+
+
     public function cartCompleted($user, $cart, $transaction)
     {
 

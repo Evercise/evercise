@@ -639,7 +639,7 @@
          *
          */
 
-        function slugIt($str, $slug = true)
+        function slugIt($str, $slug = true, $separator = '-')
         {
             $foreign_chars = Config::get('foreign_chars');
 
@@ -653,7 +653,7 @@
             $str = preg_replace($array_from, $array_to, $str);
 
             if ($slug) {
-                return Str::slug($str);
+                return Str::slug($str, $separator);
             }
 
             return $str;

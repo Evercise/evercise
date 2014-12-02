@@ -20,7 +20,7 @@ class EvercisegroupsController extends \BaseController
      *
      * @return Response
      */
-    public function create($clone_id = null)
+    public function create($clone_id = NULL)
     {
         // Get names of subcategories and sort alphabetically
         $subcategories = Subcategory::lists('name');
@@ -41,7 +41,7 @@ class EvercisegroupsController extends \BaseController
             ->with('venues', $venues)
             ->with('facilities', $facilities)
             ->with('subcategories', $subcategories)
-            ->with('cloneGroup', isset($cloneGroup) ? $cloneGroup : null);
+            ->with('cloneGroup', isset($cloneGroup) ? $cloneGroup : NULL);
         //return View::make('evercisegroups.create')->with('subcategories', $subcategories);
     }
 
@@ -60,31 +60,41 @@ class EvercisegroupsController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function show($id, $preview = null)
+    public function show($id, $preview = NULL)
     {
-        if ($evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
-            ->with('evercisesession.sessionpayment')
-            ->with('subcategories.categories')
-            ->find($id)
-        ) {
-            $data = $evercisegroup->showAsNonOwner($this->user);
-
-            Event::fire('stats.class.counter', ['class' => $evercisegroup]);
-
-            if (Sentry::check() && $evercisegroup->user_id == $this->user->id
-            ) // This Group belongs to this User/Trainer
-            {
-                return View::make('v3.classes.class_page')
-                    ->with('preview', 'preview')
-                    ->with('data', $data);
-            } else // This group does not belong to this user
-            {
-                return View::make('v3.classes.class_page')
-                    ->with('data', $data);
-            }
+        if (is_numeric($id)) {
+            $evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
+                ->with('evercisesession.sessionpayment')
+                ->with('subcategories.categories')
+                ->find($id);
         } else {
-            return View::make('errors.missing');
+
+            $evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
+                ->with('evercisesession.sessionpayment')
+                ->with('subcategories.categories')
+                ->where('slug', $id)->first();
         }
+
+
+        if ($evercisegroup){
+        $data = $evercisegroup->showAsNonOwner($this->user);
+
+        event('stats.class.counter', ['class' => $evercisegroup]);
+
+        if (Sentry::check() && $evercisegroup->user_id == $this->user->id
+        ) // This Group belongs to this User/Trainer
+        {
+            return View::make('v3.classes.class_page')
+                ->with('preview', 'preview')
+                ->with('data', $data);
+        } else // This group does not belong to this user
+        {
+            return View::make('v3.classes.class_page')
+                ->with('data', $data);
+        }
+    } else {
+        return View::make('errors.missing');
+    }
 
     }
 
@@ -125,7 +135,6 @@ class EvercisegroupsController extends \BaseController
         Event::fire('evecisegroup.delete', [$this->user, $evercisegroup]);
 
 
-
         return $evercisegroup->deleteGroup($this->user);
     }
 
@@ -141,8 +150,8 @@ class EvercisegroupsController extends \BaseController
         $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
 
         $deletableStatus = 0;
-        $deletableStatus = count($evercisegroup->sessionmember) ? 3 : ($evercisegroup->evercisesession->isEmpty(
-        ) ? 1 : 2);
+        $deletableStatus = count($evercisegroup->sessionmember) ? 3 : ($evercisegroup->evercisesession->isEmpty() ? 1 : 2);
+
         return $deletableStatus ? View::make('evercisegroups.delete')->with('id', $id)->with(
             'name',
             $evercisegroup->name
@@ -177,6 +186,7 @@ class EvercisegroupsController extends \BaseController
         $location = $country;
         $radius = 25;
         $category = '';
+
         return Evercisegroup::doSearch(['address' => $location], $category, $radius, $this->user);
     }
 
