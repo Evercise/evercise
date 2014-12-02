@@ -62,4 +62,16 @@ class User
         $this->activity->userCartCompleted($user, $cart, $transaction);
 
     }
+
+    public function topupCompleted($user, $transaction)
+    {
+
+
+        $this->log->info('User ' . $user->id . ' topup completed');
+
+        //$this->mail->userCartCompleted($user, $transaction);
+
+        $this->activity->userTopupCompleted($user, $transaction);
+
+    }
 } 

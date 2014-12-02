@@ -331,6 +331,27 @@ class Activity
 
     }
 
+    public function userTopupCompleted($user, $transaction)
+    {
+        $title = 'You topped up your account';
+        $description = 'You topped up your account with £' . $transaction->total;
+
+        $data = [
+            'description' => $description,
+            'title'       => $title,
+            'link'        => 'transaction/' . $transaction->id,
+            'link_title'  => 'View transaction',
+            'image'       => 'topupcompleted.png',
+            'type'        => 'topupcompleted',
+            'user_id'     => $user->id,
+            'type_id'     => $transaction->id
+        ];
+        $activity = $this->activities->create($data);
+
+        $this->log->info(implode(', ', $data));
+        $this->log->info($activity->toJson());
+    }
+
 
     /** PACKAGES
      *

@@ -72,7 +72,7 @@ class RatingsController extends AjaxBaseController{
             Trainerhistory::create(array('user_id'=> $user_id, 'type'=>'rated_session', 'display_name'=>$this->user->display_name, 'name'=>$group->name, 'time'=>$niceTime, 'date'=>$niceDate));
             Milestone::where('user_id', $this->user->id)->first()->add('review');
 
-            Event::fire('rating.create', [$this->user,$group, $session ]);
+            event('rating.create', [$this->user, $group, $session]);
 
         }
         return View::make('v3.classes.class_panel')->with($session);
