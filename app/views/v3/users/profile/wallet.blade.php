@@ -155,7 +155,7 @@
                             </div>
                             <div class="form-group row mt20">
                                 <div class="col-sm-12">
-                                    <strong>Friends referred: <span class="text-primary">{{$data['user']->milestone->referrals}}/3</span></strong>
+                                    <strong>Friends referred: <span class="text-primary">{{$data['user']->milestone->showReferrals()}}</span></strong>
                                </div>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                             </div>
                         @else
                             <div class="col-sm-12 mt10">
-                                <strong>Thanks for linking you Facebook account</strong>
+                                <strong>Thanks for linking your Facebook account</strong>
                             </div>
                         @endif
                      </div>
@@ -189,7 +189,7 @@
                           </div>
                         @else
                             <div class="col-sm-12 mt10">
-                                <strong>Thanks for linking you Twitter account</strong>
+                                <strong>Thanks for linking your Twitter account</strong>
                             </div>
                         @endif
                       </div>

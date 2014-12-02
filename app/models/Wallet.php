@@ -148,7 +148,6 @@ class Wallet extends \Eloquent
     }
 
     public function giveAmount($amount = 0, $type = false) {
-        Log::info('giveAmount '.$amount. ' : '.$type. ' : '.$this->user_id);
         if(!$type || $amount == 0) return false;
 
         switch($type) {

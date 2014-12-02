@@ -144,35 +144,31 @@
         <hr>
         <div id="facilities" class="row">
             <div class="col-sm-12">
-                @if(count($data['venue']->facilities) > 0)
-                <div class="page-header">
-                    <h1>Venue Facilities</h1>
-                </div>
+                @if(count($facilities = $data['venue']->getFacilities()))
+                    <div class="page-header">
+                        <h1>Venue Facilities</h1>
+                    </div>
 
-                <ul class="row custom-list">
-                    @foreach($data['venue']->facilities as $key => $facility)
-                        @if ($facility->category == 'facility')
+                    <ul class="row custom-list">
+                        @foreach($facilities as $facility)
                             <div class="col-sm-3">
                                 <li>{{ $facility->name}}</li>
                             </div>
-                        @endif
-					@endforeach
-                </ul>
+                        @endforeach
+                    </ul>
                 @endif
 
-                @if(count($data['venue']->facilities) > 0)
-                <div class="page-header">
-                    <h1>Venue Amenties</h1>
-                </div>
-                <ul class="row custom-list">
-					@foreach($data['venue']->facilities as $key => $facility)
-					        @if ($facility->category == 'amenity')
-					            <div class="col-sm-3">
-                                    <li>{{ $facility->name}}</li>
-                                </div>
-                            @endif
-					@endforeach
-                </ul>
+                @if(count($amenities = $data['venue']->getAmenities()))
+                    <div class="page-header">
+                        <h1>Venue Amenties</h1>
+                    </div>
+                    <ul class="row custom-list">
+                        @foreach($amenities as $amenity)
+                            <div class="col-sm-3">
+                                <li>{{ $amenity->name}}</li>
+                            </div>
+                        @endforeach
+                    </ul>
                 @endif
             </div>
         </div>

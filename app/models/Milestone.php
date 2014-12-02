@@ -97,4 +97,11 @@ class Milestone extends \Eloquent
 
         return $milestone;
     }
+
+    public function showReferrals()
+    {
+        $total = ceil($this->referrals / Config::get('values')['milestones']['referral']['count']) * Config::get('values')['milestones']['referral']['count'];
+
+        return $this->referrals .'/'. $total;
+    }
 }

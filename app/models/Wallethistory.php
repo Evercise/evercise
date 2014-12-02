@@ -7,7 +7,7 @@ class Wallethistory extends \Eloquent {
 
 	public function getTransactionAmount()
 	{
-		return '-&pound;' . sprintf('%0.2f', $this->transaction_amount);
+		return '&pound;' . sprintf('%0.2f', $this->transaction_amount);
 	}
 
 }

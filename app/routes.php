@@ -260,8 +260,8 @@ Route::get('/ig', [
     );
 
     Route::get(
-        '/evercisegroups/clone_evercisegroups/{id}',
-        ['as' => 'evercisegroups.clone_evercisegroups', 'uses' => 'EvercisegroupsController@cloneEG']
+        '/clone_class/{id}',
+        ['as' => 'clone_class', 'uses' => 'EvercisegroupsController@cloneEG']
     );
     Route::post(
         '/evercisegroups/delete/{id}',

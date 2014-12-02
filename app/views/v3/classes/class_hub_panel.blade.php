@@ -22,7 +22,7 @@
                 </div>
 
             @else
-                <button class="btn btn-default mr15">Clone Class</button>
+                <a class="btn btn-default mr15" href={{route('clone_class', ['id' => $evercisegroup->id])}}>Clone Class</a>
                 <button id="edit-{{$evercisegroup->id}}" class="btn btn-default toggle-switch disabled" data-toggle="collapse" data-target=".hub-table-row" data-removeclass="btn-default" data-switchclass="btn-transparent-grey" data-switchtext="Done Editing">Edit Class</button>
             @endif
         </div>
