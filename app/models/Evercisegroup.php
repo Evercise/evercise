@@ -48,8 +48,8 @@ class Evercisegroup extends \Eloquent
         $validator = Validator::make(
             $inputs,
             [
-                'class_name'        => 'required|max:100|min:5',
-                'class_description' => 'required|max:5000|min:100',
+                'class_name'        => 'required|max:50|min:3',
+                'class_description' => 'required|max:500|min:50',
                 'image'             => 'required',
                 'venue_select'      => 'required',
             ]
