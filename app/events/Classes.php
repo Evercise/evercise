@@ -39,13 +39,12 @@ class Classes
 
     public function classDeleted($class, $user){
 
-        Log::info('User '.$user->id.' created class '.$class->name);
+        Log::info('User '.$user->id.' DELETED class '.$class->name);
 
 
 
         /** Mail And other shit Go here */
 
-        $this->activity->createdClass($class, $user);
 
         $this->indexer->indexSingle($class->id);
 

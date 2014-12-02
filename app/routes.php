@@ -331,7 +331,20 @@ Route::get('/ig', [
     Route::get('topup', ['as' => 'topup', 'uses' => 'PaymentController@topup']);
     /* ------------------ */
 
-// payment (old)
+
+    Route::get('payment/error',
+        ['as' => 'payment.error', 'uses' => 'PaymentController@paymentError']);
+
+    Route::get('payment/proccess/paypal',
+        ['as' => 'payment.process.paypal', 'uses' => 'PaymentController@processPaypalPaymentSessions']);
+
+    Route::get('payment/request/paypal',
+        ['as' => 'payment.request.paypal', 'uses' => 'PaymentController@requestPaypalPaymentSessions']);
+
+    Route::get('payment/cancelled',
+        ['as' => 'payment.cancelled', 'uses' => 'PaymentController@cancelled']);
+
+    // payment (old)
     Route::get(
         'sessions/{evercisegroupId}/paywithstripe',
         ['as' => 'sessions.pay.stripe', 'uses' => 'SessionsController@payForSessionsStripe']
