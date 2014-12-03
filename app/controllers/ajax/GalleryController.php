@@ -30,10 +30,6 @@ class GalleryController extends AjaxBaseController
     }
 
 
-    public function selectImage($image_id)
-    {
-
-    }
 
     public function getDefaults()
     {

@@ -130,15 +130,17 @@ class Evercisesession extends \Eloquent
             return false;
         }
         else {
+
             $date_time = $sessionData['date'] . ' ' . $sessionData['time'];
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
-                'date_time' => $date_time,
+                'date_time' => new \Carbon\Carbon($date_time),
                 'price' => $sessionData['price'],
                 'duration' => $sessionData['duration'],
                 'tickets' => $sessionData['tickets'],
             ])->evercisegroup->name;
+
 
             $timestamp = strtotime($date_time);
             $niceTime = date('h:ia', $timestamp);
@@ -183,7 +185,7 @@ class Evercisesession extends \Eloquent
             $date_time_str = $date_str . ' ' . $sessionData['time'];
 
             $this->update([
-                'date_time' => $date_time_str,
+                'date_time' => new \Carbon\Carbon($date_time_str),
                 'price' => $sessionData['price'],
                 'duration' => $sessionData['duration'],
                 'tickets' => $sessionData['tickets'],
@@ -224,7 +226,7 @@ class Evercisesession extends \Eloquent
 
             $evercisesession = Evercisesession::create(array(
                 'evercisegroup_id' => $undoDetails->evercisegroup_id,
-                'date_time' => $undoDetails->date_time,
+                'date_time' => new \Carbon\Carbon($undoDetails->date_time),
                 'price' => $undoDetails->price,
                 'duration' => $undoDetails->duration
             ));

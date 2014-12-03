@@ -1,7 +1,6 @@
 <?php
 use Carbon\Carbon;
 
-
 /**
  * Class Evercisegroup
  */
@@ -82,6 +81,12 @@ class Evercisegroup extends \Eloquent
             $classname = $inputs['class_name'];
             $description = $inputs['class_description'];
             $image = $inputs['image'];
+
+            if($inputs['gallery_image']) {
+                $image = Gallery::selectImage($image, $user, $classname);
+            }
+
+
             $venueId = $inputs['venue_select'];
 
             // Push categories into an array, and fail if there are none.
