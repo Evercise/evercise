@@ -20,6 +20,9 @@ class Evercisesession extends \Eloquent
     protected $table = 'evercisesessions';
 
 
+    protected $dates = ['date_time'];
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

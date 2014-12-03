@@ -9,7 +9,7 @@ class UserPackageClasses extends \Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['id', 'user_id', 'user_package_id', 'status'];
+    protected $fillable = ['id', 'user_id', 'package_id', 'status', 'evercisesession_id'];
 
     /**
      * @var string

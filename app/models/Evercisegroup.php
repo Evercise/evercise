@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 
 
 /**
@@ -743,7 +744,7 @@ class Evercisegroup extends \Eloquent
      */
     public function futuresessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '>=', DB::raw('NOW()'))->orderBy(
+        return $this->hasMany('Evercisesession')->where('date_time', '>=', Carbon::now())->orderBy(
             'date_time',
             'asc'
         );
@@ -755,7 +756,7 @@ class Evercisegroup extends \Eloquent
     public function getNextFutureSession()
     {
         return $this->hasMany('Evercisesession')
-            ->where('date_time', '>=', DB::raw('NOW()'))
+            ->where('date_time', '>=', Carbon::now())
             ->first();
     }
 
@@ -764,7 +765,7 @@ class Evercisegroup extends \Eloquent
      */
     public function pastsessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '<', DB::raw('NOW()'))->orderBy(
+        return $this->hasMany('Evercisesession')->where('date_time', '<', Carbon::now())->orderBy(
             'date_time',
             'asc'
         );

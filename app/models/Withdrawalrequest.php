@@ -30,7 +30,7 @@ class Withdrawalrequest extends \Eloquent
 
         if ($withdrawal) {
 
-            $wallet->withdraw($withdrawalAmount);
+            $wallet->withdraw($withdrawalAmount, 'Withdrawal request', Sentry::getUser());
 
             $result =
                 [

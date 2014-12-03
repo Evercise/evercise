@@ -191,6 +191,21 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->hasMany('Referral');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function transactions()
+    {
+        return $this->hasMany('Transaction');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function activities()
+    {
+        return $this->hasMany('Activities');
+    }
 
 
 
