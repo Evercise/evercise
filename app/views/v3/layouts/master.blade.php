@@ -13,7 +13,7 @@
     <meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    {{ HTML::style('assets/css/main.css') }}
+    {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
     {{ HTML::style('assets/css/cropper.min.css') }}
     <!-- load jquery -->
     <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.1.min.js"></script>
@@ -52,7 +52,7 @@
     {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/cropper.min.js') }}
-    {{ HTML::script('/assets/js/main.min.js') }}
+    {{ HTML::script('/assets/js/main.min.js?vs='.$version) }}
     <!-- Latest compiled and minified JavaScript of jasny bootstrap -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
 

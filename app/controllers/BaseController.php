@@ -34,6 +34,10 @@ class BaseController extends Controller
 
         View::share('header', $header);
 
+        $version = include('../.version.php');
+
+        View::share('version', $version);
+
     }
 
 
