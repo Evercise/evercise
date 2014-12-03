@@ -14,7 +14,7 @@ class PdfHelper
      */
     public static function pdfView($evercisegroup, $evercisesession, $sessionmembers)
     {
-        $pdfPage = View::make('pdf.session_members')
+        $pdfPage = View::make('v3.pdf.session_members')
             ->with('evercisegroup', $evercisegroup)
             ->with('evercisesession', $evercisesession)
             ->with('sessionmembers', $sessionmembers);

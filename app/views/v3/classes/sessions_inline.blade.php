@@ -94,7 +94,7 @@
                                     {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
                                 {{ Form::close() }}
                                 {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session']) }}
-                                    <span class="icon icon-download mr15 hover"></span>
+                                    <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
                                     <span class="icon icon-people mr15 hover"></span>
 
                                     {{ Form::hidden('id', $session->id) }}

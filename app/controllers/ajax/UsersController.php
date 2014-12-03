@@ -115,7 +115,7 @@ class UsersController extends AjaxBaseController{
             $last_name = Input::get('last_name');
             $dob = Input::get('dob');
             $gender = Input::get('gender');
-            $image = Input::get('thumbFilename');
+            $image = Input::get('image');
             $area_code = Input::get('areacode');
             $phone = Input::get('phone');
             $password = Input::get('password');

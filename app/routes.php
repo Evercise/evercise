@@ -433,6 +433,7 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
     Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
     Route::get('test', ['as' => 'static.test', 'uses' => 'StaticController@show']);
     Route::post('/postPdf', ['as' => 'postPdf', 'uses' => 'PdfController@postPdf']);
+    Route::get('/getPdf/{session_id}', ['as' => 'getPdf', 'uses' => 'PdfController@getPdf']);
     Route::get('video/create', ['as' => 'video', 'uses' => 'VideoController@create']);
 
 // marketing
