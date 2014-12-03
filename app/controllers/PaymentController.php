@@ -49,7 +49,7 @@ class PaymentController extends BaseController
 
         if ($cart['total']['from_wallet'] > 0) {
             $wallet = $this->user->getWallet();
-            $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes');
+            $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', $this->user);
         }
 
 
@@ -227,7 +227,7 @@ class PaymentController extends BaseController
         }
 
         $transactionId = $charge['id'];
-        $this->user->wallet->deposit($amount, 'top up with Stripe', 0, $token, $transactionId, 'stripe', 0);
+        $this->user->wallet->deposit($amount, 'top up with Stripe', $this->user, 0, $token, $transactionId, 'stripe', 0);
         EverciseCart::clearTopup();
 
 

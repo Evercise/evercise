@@ -68,6 +68,7 @@
 
        '10'  => [
            ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
+           ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
            ['user.session.joined' => 'User@sessionJoined'],
 
 

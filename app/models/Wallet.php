@@ -94,14 +94,14 @@ class Wallet extends \Eloquent
         return $result;
     }
 
-    public function deposit($amount, $description, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
+    public function deposit($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction($amount, $description, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        $this->transaction($amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
     }
 
-    public function withdraw($amount, $description, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
+    public function withdraw($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction(-$amount, $description, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        $this->transaction(-$amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
     }
 
     public function recordedSave(array $params)
@@ -122,11 +122,11 @@ class Wallet extends \Eloquent
 
     }
 
-    protected function transaction($amount, $description, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0 )
+    protected function transaction($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0 )
     {
         $transaction = Transactions::create(
             [
-                'user_id'          => Sentry::getUser()->id,
+                'user_id'          => $user->id,
                 'total'            => $amount,
                 'total_after_fees' => $amount,
                 'coupon_id'        => 0,
@@ -137,7 +137,7 @@ class Wallet extends \Eloquent
                 'payer_id'         => $payer_id
             ]);
 
-        event('user.topup.completed', [$this->user, $transaction]);
+        event('user.topup.completed', [$user, $transaction]);
 
         $user_id = $this->attributes['user_id'];
         $this->attributes['balance'] = $this->attributes['balance'] + $amount;

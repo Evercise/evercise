@@ -105,11 +105,11 @@
                                     </tr>
 
                                <tbody>
-                                   @foreach($data['user']->wallethistory as $wh)
+                                   @foreach($data['user']->activities as $act)
                                         <tr>
-                                            <td class="transparent-border-top">{{$wh->created_at}}</td>
-                                            <td>{{$wh->description}}</td>
-                                            <td class="text-right">{{$wh->getTransactionAmount()}}</td>
+                                            <td class="transparent-border-top">{{$act->created_at}}</td>
+                                            <td>{{$act->description}}</td>
+                                            <td class="text-right">{{isset($act->transaction) ? $act->transaction->total : 0}}</td>
                                         </tr>
                                     @endforeach
                                </tbody>
