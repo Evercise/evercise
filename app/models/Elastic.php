@@ -300,6 +300,7 @@ class Elastic
                 ->get();
         }
 
+
         $this->log->info('Get all Indexing data ' . date('d H:i:s'));
         foreach ($all as $a) {
 
@@ -370,7 +371,7 @@ class Elastic
                 $index['futuresessions'][] = [
                     'id'              => (int)$s->id,
                     'members'         => (int)$s->members,
-                    'date_time'       => $s->date_time,
+                    'date_time'       => $s->date_time->toDateTimeString(),
                     'price'           => (double)$s->price,
                     'duration'        => (int)$s->duration,
                     'members_emailed' => (int)$s->members_emailed,
@@ -386,6 +387,8 @@ class Elastic
             $params['index'] = $this->elastic_index;
             $params['type'] = $this->elastic_type;
             $params['id'] = $a->id;
+
+
 
             try {
                 $this->elasticsearch->index($params);

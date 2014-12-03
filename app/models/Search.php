@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 
 
 /**
@@ -91,7 +92,6 @@ class Search
 
         $results->hits = $all_results;
 
-
         return $results;
     }
 
@@ -102,6 +102,15 @@ class Search
      */
     public function formatSingle($row, $area)
     {
+
+
+        $i = 0;
+
+        foreach($row->_source->futuresessions as $s) {
+            $row->_source->futuresessions[$i]->date_time = (new Carbon($s->date_time))->format('M jS, g:ia');
+
+            $i++;
+        }
 
         /** Add Lat and Lon to the venue */
         if (!empty($row->_source->venue->location->geohash) && $area) {
