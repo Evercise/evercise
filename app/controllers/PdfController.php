@@ -27,16 +27,11 @@ class PdfController extends \BaseController
 
         $sessionmembers = $evercisesession->getSessionmembers();
 
-
         $timestamp = date("d-m-Y");
 
         $pdfPage = PdfHelper::pdfView($evercisegroup, $evercisesession, $sessionmembers);
 
-        //return $pdfPage;
-
-        $pdfPage = 'someshit';
-
-        return PDF::load($pdfPage, 'A4', 'portrait')->download($evercisegroup.'-'.$timestamp);
+        return PDF::load($pdfPage, 'A4', 'portrait')->download($evercisegroup->id.'-'.$timestamp);
 
     }
 

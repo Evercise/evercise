@@ -1,4 +1,4 @@
-@extends('pdf.master')
+@extends('v3.pdf.master')
 
 @section('content')
 
