@@ -250,7 +250,7 @@ class UsersController extends AjaxBaseController{
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url'      => Request::root() . '/' . (Trainer::isTrainerLoggedIn() ? 'trainers' : 'users') . '/' . $this->user->id . '/edit/profile'
+                    'url' => route('users.edit', [ $this->user->id, 'edit'])
                 ]
             );
         } else {

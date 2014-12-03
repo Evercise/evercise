@@ -170,6 +170,9 @@ $(function(){
     $('#refer-a-friend').exists(function(){
         new Referral(this);
     })
+    $('#update-user-form').exists(function(){
+        new updateProfile(this);
+    })
 
     $('#hero-carousel').exists(function() {
         $(this).carousel({
