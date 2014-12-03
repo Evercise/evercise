@@ -32,7 +32,7 @@ class UserPackages extends \Eloquent
     public function classes()
     {
 
-        return $this->hasMany('UserPackageClasses', 'id', 'user_package_id');
+        return $this->hasMany('UserPackageClasses', 'package_id');
     }
 
     public static function addTemp($package_id, $user_id)
@@ -54,26 +54,28 @@ class UserPackages extends \Eloquent
     public static function check(Evercisesession $session, $user)
     {
 
-
-
        $res = DB::table('packages')
-            ->select(DB::raw('count(user_packages.id) as classes_count, user_packages.id as up_id, *'))
+            ->select(DB::raw('*, count(user_packages.id) as classes_count, user_packages.id as up_id'))
             ->join('user_packages', 'packages.id', '=', 'user_packages.package_id')
-            ->join('user_package_classes', 'user_packages.id', '=', 'user_package_classes.package_id')
+            ->leftJoin('user_package_classes', 'user_packages.id', '=', 'user_package_classes.package_id')
             ->where('user_packages.user_id', '=', $user->id)
             ->where('packages.max_class_price', '>=', $session->price)
             ->groupBy('user_packages.id')
             ->orderBy('packages.max_class_price', 'asc')
             ->get();
 
+
+
+
         foreach($res as $row) {
-            if($row->classes_count > $row->classes) {
-                return UserPackages::find($row->up_id);
+            if($row->classes > $row->classes_count) {
+                $package = static::find($row->up_id);
+                return $package;
             }
         }
 
 
-        throw new \Exception('No Packages Found for User');
+        throw new \Exception('No Packages Found for User ');
 
     }
 

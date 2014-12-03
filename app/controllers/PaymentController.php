@@ -272,7 +272,7 @@ class PaymentController extends BaseController
         /** Add Packages to DB */
         foreach ($cart['packages'] as $package) {
 
-            $package = UserPackages::create([
+            $p = UserPackages::create([
                 'status'     => 1,
                 'package_id' => $package['id'],
                 'user_id'    => $this->user->id
@@ -282,7 +282,7 @@ class PaymentController extends BaseController
             $item = new TransactionItems([
                 'user_id'    => $this->user->id,
                 'type'       => 'package',
-                'package_id' => $package->id
+                'package_id' => $p->id
             ]);
 
             $transaction->items()->save($item);
@@ -297,19 +297,22 @@ class PaymentController extends BaseController
             try {
                 $check = UserPackages::check($evercisesession, $this->user);
 
-                $packageClass = new UserPackageClasses([
+
+
+                $packageClass = UserPackageClasses::create([
                     'user_id'            => $this->user->id,
                     'evercisesession_id' => $session['id'],
+                    'package_id'         => $check->id,
                     'status'             => 1
                 ]);
 
-                $check->package()->save($packageClass);
 
                 event('activity.user.package.used', [$this->user, $check, $evercisesession]);
 
 
             } catch (Exception $e) {
                 /** No package available */
+                Log::info($e->getMessage());
             }
 
 
@@ -367,9 +370,10 @@ class PaymentController extends BaseController
 
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
+
         /* Empty cart */
-        EverciseCart::clearCart();
-        EverciseCart::clearWalletPayment();
+        //EverciseCart::clearCart();
+        //EverciseCart::clearWalletPayment();
 
         return TRUE;
     }

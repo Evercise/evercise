@@ -367,7 +367,7 @@ class Activity
 
         $class = $session->evercisegroup()->first();
 
-        $amountUsed = $session->amountUsed($userpackage->id);
+        $amountUsed = $userpackage->amountUsed($userpackage->id);
 
         $this->activities->create([
             'title'       => $class->name . ' deducted from package',
