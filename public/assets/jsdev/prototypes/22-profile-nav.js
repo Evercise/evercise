@@ -34,6 +34,8 @@ profileNav.prototype = {
         $('.profile-panels').css({'margin-top':0 })
     },
     changeTabs: function(e){
-        e.preventDefault();
+        e.preventDefault()
+        var history = $(e.target).attr('href').substring(1);
+        window.history.pushState(null, history,history);
     }
 }

@@ -1,6 +1,6 @@
 <!-- Tab panes -->
 <div class="tab-content">
-    <div role="tabpanel fade" class="tab-pane tab-pane-sort" id="filter">
+    <div role="tabpanel" class="tab-pane tab-pane-sort fade" id="filter">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Distance</li>
             <li  class="list-group-item"><a ng-click="distance = '1' ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#1" >Less than 1 mile<span ng-class="{ active : distance == '1' }" class="pull-right icon icon-checkbox hover"></span></a></li>

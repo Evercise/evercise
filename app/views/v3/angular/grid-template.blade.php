@@ -43,7 +43,7 @@
                         </div>
                         <div class="class-info-wrapper panel-body bg-light-grey row">
                             <div class="col-xs-6">
-                                <span class="icon icon-clock"></span> {[{ marker.nextClassDate | date : 'MMM d, h:mma'  }]}
+                                <span class="icon icon-clock"></span> {[{ marker.nextClassDate  }]}
                             </div>
                             <div class="col-xs-6">
                                 <div class="row no-gutter">

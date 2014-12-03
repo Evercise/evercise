@@ -34,7 +34,7 @@
     <li class="list-group-item">
 
         <div class="class-title-wrapper text-center">
-            <a href="#"><h3>{{ $class->name }}</h3></a>
+            <a href="{{ URL::route('class.show', [$class->slug]) }}"><h3>{{ $class->name }}</h3></a>
             <div class="class-rating-wrapper">
                 @if (isset($class->ratings))
                     @include('v3.classes.ratings.stars', array('rating' => $class->ratings))

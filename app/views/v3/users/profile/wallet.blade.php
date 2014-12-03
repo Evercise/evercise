@@ -86,6 +86,7 @@
                             -->
                         </div>
                       </li>
+                      <!--
                       <li class="list-group-item ">
                         <ul class="nav nav-pills nav-justified">
                           <li class="active"><a href="#">All</a></li>
@@ -93,7 +94,7 @@
                           <li><a href="#">Transactions Out</a></li>
                         </ul>
                       </li>
-
+                        -->
                       <li class="list-group-item">
                         <div class="row">
                             <table class="table table-condensed mb0">

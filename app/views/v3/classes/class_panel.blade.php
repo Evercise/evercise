@@ -5,7 +5,7 @@
             {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
         </div>
          <div class="class-title-wrapper col-xs-8">
-             <a href="/class/{{$session->evercisegroup->id}}"><h3>{{ $session->evercisegroup->name }}</h3></a>
+             <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3>{{ $session->evercisegroup->name }}</h3></a>
              <div class="mt20">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
              </div>
@@ -34,7 +34,7 @@
                             {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '8', 'placeholder' => 'Add your review about the class...'])}}
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-default" type="button">Cancel</button>
+                            <!--<button class="btn btn-default" type="button">Cancel</button>-->
                             {{ Form::submit('Add Review', ['class' => 'btn btn-primary'] )  }}
                         </div>
                     {{ Form::close() }}
@@ -68,20 +68,12 @@
         @if(isset($data['next_sessions'][$session->id])) {{-- User has signed up to a future session of this group --}}
             <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper">
                 <div class=" col-sm-7">
-                    <span><span class="icon icon-clock"></span> {{ $data['future_sessions'][$data['next_sessions'][$session->id]]->formattedDate().', '.$data['future_sessions'][$data['next_sessions'][$session->id]]->formattedTime() }}</span>
+                    <span><span class="icon icon-clock"></span> {{ $data['future_sessions'][$data['next_sessions'][$session->id]]->formattedDate().', '.$data['future_sessions'][$data['next_sessions'][$session->id]]->formattedTime() }}</span><br>
+                    <span><span class="icon icon-ticket"></span> Tickets purchased: {{ count($data['future_sessions'][$data['next_sessions'][$session->id]]->userSessionmembers($data['user_id'])) }}</span>
                 </div>
-                <div class=" col-sm-7">
-                    <span>Tickets purchased: {{ count($data['future_sessions'][$data['next_sessions'][$session->id]]->userSessionmembers($data['user_id'])) }}</span>
-                 </div>
-                <div class=" col-sm-5">
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <strong class="text-primary">&pound;{{ $data['future_sessions'][$data['next_sessions'][$session->id]]->price }}</strong>
-                        </div>
-                        <div class="col-xs-8">
-                            <button class="btn btn-default btn-block">Cancel</button>
-                        </div>
-                    </div>
+
+                <div class=" col-sm-5 text-right">
+                    <strong class="text-primary">&pound;{{ $data['future_sessions'][$data['next_sessions'][$session->id]]->price }}</strong>
                 </div>
             </div>
         @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}

@@ -52,7 +52,7 @@ if(typeof angular != 'undefined') {
                 capacity: data.capacity,
                 sessions: data.futuresessions,
                 distance : data.distance,
-                nextClassDate: new Date(data.futuresessions[0].date_time.replace(/-/g, '/')),
+                nextClassDate: data.futuresessions[0].date_time,
                 nextClassDuration: data.futuresessions[0].duration,
                 link: '/class/' + data.id,
                 click: function () {
@@ -193,7 +193,7 @@ if(typeof angular != 'undefined') {
             $scope.preview.id = 'preview-' + marker.id;
             $scope.preview.image = marker.directory+ "/search_"+ marker.image;
             $scope.preview.description = marker.description;
-            $scope.preview.nextClassDate = new Date(marker.sessions[0].date_time.replace(/-/g, '/'));
+            $scope.preview.nextClassDate = marker.sessions[0].date_time;
             $scope.preview.nextClassDuration = marker.sessions[0].duration;
             $scope.preview.capacity = marker.capacity;
             $scope.preview.link = marker.link;
@@ -215,12 +215,6 @@ if(typeof angular != 'undefined') {
 
             $scope.isPreviewOpen = true;
 
-        }
-
-        function futuresessionDate(futuresessions){
-            $.each(futuresessions, function(index, value) {
-                $scope.preview.sessions[index] = new Date(value.date_time);
-            });
         }
 
 

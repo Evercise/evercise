@@ -17,7 +17,7 @@
                 <h3>About the class</h3>
             </div>
             <div class="row text-center mb30">
-                <div class="col-sm-5"><span class="icon icon-clock"></span>{[{ preview.nextClassDate | date : 'MMM d, h:mma'  }]}</div>
+                <div class="col-sm-5"><span class="icon icon-clock"></span>{[{ preview.nextClassDate }]}</div>
                 <div class="col-sm-4"><span class="icon icon-watch"></span> {[{ preview.nextClassDuration}]} mins</div>
                 <div class="col-sm-3"><span class="icon icon-ticket"></span> x {[{ preview.capacity }]}</div>
             </div>
@@ -40,7 +40,7 @@
             <div class="row preview-row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse | limitTo:4">
                 <div class="col-sm-6 mt5">
                     <span class="icon icon-clock"></span>
-                    {[{ session.date_time | date : 'MMM d, h:mma'  }]}
+                    {[{ session.date_time }]}
                 </div>
                 <div ng-if="session.remaining > 0" class="col-sm-6">
                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ session.id  }]}', 'class' => 'add-to-class']) }}

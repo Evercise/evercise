@@ -65,7 +65,7 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-       <li class="dropdown">
+       <li id="cart-dropdown" class="dropdown">
            <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
            {{ isset($cart) ? $cart : '' }}
        </li>

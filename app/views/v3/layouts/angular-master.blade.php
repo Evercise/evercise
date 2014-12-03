@@ -14,6 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     {{ HTML::style('assets/css/main.css') }}
+
     <!-- load jquery -->
     <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.1.min.js"></script>
     <!-- if jquery not loaded, load locally -->
@@ -50,6 +51,8 @@
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/main.min.js') }}
+    <!-- Latest compiled and minified JavaScript of jasny bootstrap -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
 
 </head>
 <body>

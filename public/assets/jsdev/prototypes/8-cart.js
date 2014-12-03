@@ -62,7 +62,7 @@ Cart.prototype = {
         });
     },
     updateCart: function(data){
-        $('.dropdown ').addClass('open');
-        $('.dropdown-cart').replaceWith(data.view);
+        $('#cart-dropdown').addClass('open');
+        $('#cart-dropdown .dropdown-cart').replaceWith(data.view);
     }
 }

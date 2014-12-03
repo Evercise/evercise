@@ -127,11 +127,12 @@ RateIt.prototype = {
             },
 
             success: function (data) {
-                console.log(data);
-                $('#panel-'+data.notification).find('#user-rating').addClass('hidden');
-                $('#panel-'+data.notification).find('#user-rating').removeClass('hidden');
-                // re masonry
-                new Masonry($('.masonry'));
+                if( data.validation_failed == 1 ){
+                    self.failedValidation(data);
+                }
+                else{
+                    window.location.href = data.url;
+                }
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -143,5 +144,16 @@ RateIt.prototype = {
                 $('#rating-loading').remove();
             }
         });
+    },
+    failedValidation: function(data){
+        self = this;
+        var arr = data.errors;
+
+        $.each(arr, function(index, value)
+        {
+            self.form.find('input[name="' + index+ '"]').parent().addClass('has-error');
+            self.form.find('input[name="' + index+ '"]').parent().find('.glyphicon-ok').remove();
+            self.form.find('input[name="' + index+ '"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
+        })
     }
 }

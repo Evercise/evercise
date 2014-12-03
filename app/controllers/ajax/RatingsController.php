@@ -75,6 +75,10 @@ class RatingsController extends AjaxBaseController{
             event('rating.create', [$this->user, $group, $session]);
 
         }
-        return Response::json( ['url' => route('users.edit', ['tab' => 'attended'])] );
+        return Response::json(
+            [
+                'url' => route('users.edit', [ $this->user->id, 'attended'])
+            ]
+        );
     }
 } 

@@ -39,7 +39,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <span class="icon icon-clock"></span> {[{ marker.nextClassDate | date : 'MMM d, h:mma'  }]}
+                                    <span class="icon icon-clock"></span> {[{ marker.nextClassDate }]}
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="row">
