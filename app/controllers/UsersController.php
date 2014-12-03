@@ -39,6 +39,25 @@ class UsersController extends \BaseController
 
 
 
+
+    public function guestCheckout() {
+
+
+
+        $referral = Referral::checkReferralCode(Session::get('referralCode'));
+        $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
+
+
+        return View::make('v3.users.guest')
+            ->with('referralCode', $referral ? $referral->code : null)
+            ->with('redirect', 'cart/checkout')
+            ->with('ppcCode', $ppcCode)
+            ->with('email', $referral ? $referral->email : '');
+
+
+    }
+
+
     public function fb_login($redirect_url = null)
     {
 

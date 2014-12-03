@@ -10,15 +10,15 @@
         </div>
      @endif
 
-       
-   
+
+
     <div class="center-btn-wrapper">
          @if(isset($type))
             {{ HTML::linkRoute('users.fb', 'Sign up with facebook', $type, ['class' => 'btn btn-fb btn-large']) }}
         @else
             {{ HTML::linkRoute('users.fb', 'Sign up with facebook', null, ['class' => 'btn btn-fb btn-large']) }}
         @endif
-        
+
          <br>
         <br>
     </div>
@@ -34,12 +34,12 @@
 
 
     @if(isset($typeId))
-        {{ Form::open(array('id' => 'user_create_'.$typeId.'', 'url' => 'users', 'method' => 'post', 'class' => 'create-form')) }} 
+        {{ Form::open(array('id' => 'user_create_'.$typeId.'', 'url' => 'users', 'method' => 'post', 'class' => 'create-form')) }}
     @else
-        {{ Form::open(array('id' => 'user_create', 'url' => 'users', 'method' => 'post', 'class' => 'create-form')) }}  
+        {{ Form::open(array('id' => 'user_create', 'url' => 'users', 'method' => 'post', 'class' => 'create-form')) }}
     @endif
-    
-    
+
+
 
         <div class="col9 push2">
 
@@ -90,5 +90,5 @@
         <div class="success_msg">Success, We are now directing you to you user dashboard.</div>
 
     {{ Form::close() }}
-    
+
 

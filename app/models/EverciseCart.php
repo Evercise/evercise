@@ -113,8 +113,6 @@ class EverciseCart extends Cart
                 $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
                 $package['package_id'] = $package['id'];
                 $package['id'] = $p->id;
-
-
                 $packages[] = $package;
             };
 

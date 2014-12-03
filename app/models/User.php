@@ -599,9 +599,23 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @param $user
      */
+    public static function sendGuestWelcomeEmail($user)
+    {
+        $resetCode = $user->getResetPasswordCode();
+        event(
+            'user.guest.signup',
+            [
+                'email' => $user->email,
+                'display_name' => $user->display_name,
+                'link' => URL::to('users/'.$user->display_name.'/resetpassword/'.urlencode($resetCode))
+            ]
+        );
+    }
+
+
     public static function sendWelcomeEmail($user)
     {
-        Event::fire(
+        event(
             'user.signup',
             [
                 'email' => $user->email,
@@ -609,6 +623,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             ]
         );
     }
+
+
 
     public function sendForgotPasswordEmail($reset_code)
     {
@@ -770,4 +786,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     }
 
+
+    public static function uniqueDisplayName($display_name){
+        $next_display_name = $display_name;
+        do {
+            $unique = static::where('display_name', $next_display_name)->first();
+            $next_display_name = $display_name . rand(1, 10);
+        } while(!is_null($unique));
+        return $next_display_name;
+
+    }
 }

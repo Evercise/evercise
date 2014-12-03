@@ -1,6 +1,7 @@
 <?php namespace ajax;
 
-use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet, Trainer, Request, Redirect, Milestone;
+use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet, Trainer, Request, Redirect, Milestone, Log, Validator;
+
 
 class UsersController extends AjaxBaseController{
 
@@ -83,6 +84,126 @@ class UsersController extends AjaxBaseController{
                         [
                             'callback' => 'gotoUrl',
                             'url'      => route('finished.user.registration')
+                        ]
+                    );
+
+                }
+            }
+        } else {
+            return Response::json($valid_user);
+        }
+
+
+    }
+
+    public function storeGuest()
+    {
+        $inputs =  Input::except(['_token']);
+        $validator = Validator::make(
+            $inputs,
+            [
+                'first_name' => 'required|max:15|min:2',
+                'last_name' => 'required|max:15|min:2',
+                'email' => 'required|email|unique:users',
+                'phone' => 'numeric',
+            ]
+        );
+        // check user passes validation
+        if ($validator->fails()) {
+            $valid_user =
+                [
+                    'callback' => 'error',
+                    'validation_failed' => 1,
+                    'errors' => $validator->errors()->toArray()
+                ];
+            // log errors
+            Log::notice($validator->errors()->toArray());
+
+        } elseif ($inputs['phone'] != '' && $inputs['areacode'] == '') {
+            // is user has filled in the area code but no number fail validation
+            $valid_user =
+                [
+                    'callback' => 'error',
+                    'validation_failed' => 1,
+                    'errors' => ['areacode' => 'Please select a country']
+                ];
+            Log::notice('Please select a country');
+        } else {
+            // if validation passes return validation_failed false
+            $valid_user = [
+                'validation_failed' => 0
+            ];
+        }
+
+        if ($valid_user['validation_failed'] == 0) {
+
+            $inputs['password'] = str_random(12);
+            $inputs['display_name'] = User::uniqueDisplayName(slugIt($inputs['first_name'].' '.$inputs['last_name']));
+            $inputs['activated'] = true;
+            $inputs['gender'] = 0;
+
+
+            // register user and add to user group
+            $user = User::registerUser($inputs);
+
+            UserHelper::generateUserDefaults($user->id);
+
+            UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
+            UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
+
+            Session::forget('email');
+
+
+            if ($user) {
+
+                User::makeUserDir($user);
+
+                User::createImage($user);
+
+                $user->save();
+
+                // check for newsletter and if so add to mailchimp
+
+                $newsletter = Input::get('userNewsletter');
+                $email_address = Input::get('email');
+                $first_name = Input::get('first_name');
+                $last_name = Input::get('last_name');
+                if (!empty($newsletter)) {
+                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                        $email_address,
+                        $first_name,
+                        $last_name
+                    );
+                }
+
+                Sentry::login($user, true);
+
+                Event::fire('user.registered', [$user]);
+
+                if (Input::has('redirect')) {
+                    return Response::json(
+                        [
+                            'callback' => 'gotoUrl',
+                            'url'      => route(Input::get('redirect'))
+                        ]
+                    );
+                }
+                else if (Input::get('trainer', 'no') == 'yes' ) {
+                    return Response::json(
+                        [
+                            'callback' => 'gotoUrl',
+                            'url'      => route('trainer')
+                        ]
+                    );
+                } else {
+
+                    User::sendGuestWelcomeEmail($user);
+
+
+                    return Response::json(
+                        [
+                            'callback' => 'gotoUrl',
+                            'url'      => route('cart.checkout')
                         ]
                     );
 

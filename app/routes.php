@@ -12,6 +12,7 @@
     */
 //
 
+
 // temporary routes for new layouts
 
 Route::get('/ig', [
@@ -89,6 +90,7 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
     Route::group(['prefix' => 'ajax'], function () {
         // register
         Route::post('/users-store', ['as' => 'users.store', 'uses' => 'ajax\UsersController@store']);
+        Route::post('/users-guest-store', ['as' => 'users.guest.store', 'uses' => 'ajax\UsersController@storeGuest']);
         Route::post('/users-update', ['as' => 'users.update', 'uses' => 'ajax\UsersController@update']);
         Route::post('/trainers/store', ['as' => 'trainers.store', 'uses' => 'ajax\TrainersController@store']);
 
@@ -194,6 +196,7 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
        return $redirect;
     }]);*/
     Route::get('login/fb/{redirect?}', ['as' => 'users.fb', 'uses' => 'UsersController@fb_login']);
+
     Route::post('auth/checkout', ['as' => 'auth.checkout', 'uses' => 'SessionsController@checkout']);
 
 
@@ -201,8 +204,10 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
     Route::get('auth/forgot', ['as' => 'auth.forgot', 'uses' => 'auth\AuthController@getForgot']);
     Route::post('auth/forgot', ['as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot']);
 
-//  Users
+    //  Users
     Route::get('/register', ['as' => 'register', 'uses' => 'UsersController@create']);
+    Route::get('/register', ['as' => 'register', 'uses' => 'UsersController@create']);
+
     Route::get('/finished-user', [
             'as' => 'finished.user.registration',
             function () {
@@ -299,6 +304,10 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
             ['as' => 'cart.checkout', 'uses' => 'CartController@checkout']);
         Route::get('confirm',
             ['as' => 'cart.confirm', 'uses' => 'CartController@confirm']);
+        Route::get('guest',
+            ['as' => 'cart.guest', 'uses' => 'UsersController@guestCheckout']);
+
+
         Route::get('payment.error',
             ['as' => 'payment.error', 'uses' => 'CartController@paymentError']);
         Route::get('cartrow', [
