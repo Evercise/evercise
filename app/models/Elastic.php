@@ -319,6 +319,7 @@ class Elastic
                 'counter'          => (int)$a->counter,
                 'name'             => $a->name,
                 'title'            => $a->title,
+                'slug'             => $a->slug,
                 'gender'           => $a->gender,
                 'description'      => $a->description,
                 'image'            => $a->image,
