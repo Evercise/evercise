@@ -100,8 +100,8 @@
                         <tbody>
                             @foreach($data['evercisegroup']->futuresessions as $futuresession)
                                 <tr class="{{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
-                                    <td><span class="icon icon-calendar mr5"></span><span>{{ date('dS-M-y' , strtotime($futuresession->date_time))}}</span></td>
-                                    <td><span class="icon icon-clock mr5"></span><span>{{ (date('j:ia' , strtotime($futuresession->date_time))) .' - '. (date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
+                                    <td><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($futuresession->date_time))}}</span></td>
+                                    <td><span class="icon icon-clock mr5"></span><span>{{ (date('g:ia' , strtotime($futuresession->date_time))) .' - '. (date('G:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
                                     <td>
                                         @if($futuresession->remainingTickets()  > 0)
                                             <span class="icon icon-ticket mr10"></span><span>x {{$futuresession->remainingTickets()  }} tickets left</span>

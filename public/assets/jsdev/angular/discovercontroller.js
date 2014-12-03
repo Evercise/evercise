@@ -86,9 +86,15 @@ if(typeof angular != 'undefined') {
 
         $scope.closeDropdown = function(toggle){
             window.setTimeout(function(){
-                $('.tab-pane').removeClass('active');
+                $('.tab-pane-sort').removeClass('active');
                 $('.'+toggle+'-btn').removeClass('active');
             },1);
+            window.setTimeout(function(){
+                $('.mb-scroll').mCustomScrollbar("scrollTo", '#'+$scope.lastActiveMarker.id, {
+                    scrollInertia: 500,
+                    timeout: 10
+                });
+            },100);
         }
 
         $scope.changeView = function (view) {
@@ -205,14 +211,6 @@ if(typeof angular != 'undefined') {
             google.maps.event.trigger($scope.map, "resize");
             $scope.map.zoom = 15;
             $scope.map.center = $scope.currentCenter;
-            /*
-            if($scope.isPreviewOpen){
-                google.maps.event.trigger($scope.map, "resize");
-                $scope.map.zoom = 15;
-                $scope.map.center = $scope.currentCenter;
-            }
-            */
-
             scrollToSnippet('#' + marker.id);
 
             $scope.isPreviewOpen = true;
@@ -223,12 +221,11 @@ if(typeof angular != 'undefined') {
             $.each(futuresessions, function(index, value) {
                 $scope.preview.sessions[index] = new Date(value.date_time);
             });
-
-            console.log(futuresessions);
         }
 
 
         function scrollToSnippet(id) {
+            console.log(id);
             $('.class-snippet').addClass('fade-out');
             $('.class-snippet').removeClass('active');
             $(id).addClass('active');

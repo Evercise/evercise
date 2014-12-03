@@ -675,12 +675,12 @@ class Evercisesession extends \Eloquent
 
     public function formattedDate()
     {
-        return  date('D M dS Y', strtotime($this->date_time));
+        return  date('M jS Y', strtotime($this->date_time));
     }
 
     public function formattedTime()
     {
-        return  date('H:i', strtotime($this->date_time));
+        return  date('g:ia', strtotime($this->date_time));
     }
 
     public function remainingTickets()

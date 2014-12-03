@@ -41,17 +41,8 @@
        <li class="list-group-item">{{HTML::linkRoute('evercisegroups.search', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.search' ? 'nav-list active' : 'nav-list'])}}</li>
        <li class="list-group-item">{{HTML::linkRoute('packages', 'Packages' , null , ['class' => Route::currentRouteName() == 'packages' ? 'nav-list active' : 'nav-list'])}}</li>
        <li class="list-group-item">{{HTML::linkRoute('blog', 'Blog' , null , ['class' => Route::currentRouteName() == 'blog' ? 'nav-list active' : 'nav-list'])}}</li>
+       <li class="list-group-item">{{HTML::linkRoute('cart.checkout', 'Checkout' , null , ['class' => Route::currentRouteName() == 'cart.checkout' ? 'nav-list active' : 'nav-list'])}}</li>
      </ul>
-
-
-      <li class="list-group-item">
-          <div class="dropdown">
-            <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span>Cart</a>
-            {{ isset($cart) ? $cart : '' }}
-          </div>
-
-      </li>
-
 
 </nav>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation"  id="nav">

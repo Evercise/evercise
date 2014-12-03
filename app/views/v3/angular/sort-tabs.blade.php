@@ -1,6 +1,6 @@
 <!-- Tab panes -->
 <div class="tab-content">
-    <div role="tabpanel fade" class="tab-pane" id="filter">
+    <div role="tabpanel fade" class="tab-pane tab-pane-sort" id="filter">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Distance</li>
             <li  class="list-group-item"><a ng-click="distance = '1' ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#1" >Less than 1 mile<span ng-class="{ active : distance == '1' }" class="pull-right icon icon-checkbox hover"></span></a></li>
@@ -9,7 +9,7 @@
             <li  class="list-group-item"><a ng-click="distance = '10' ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#10" >10 miles<span  ng-class="{ active : distance == '10' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
         </ul>
     </div>
-    <div role="tabpanel fade" class="tab-pane" id="sort">
+    <div role="tabpanel" class="tab-pane tab-pane-sort fade" id="sort">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Sort by</li>
             <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = 'distance'; reverse=false ; closeDropdown('sort')">Distance - Closest First<span ng-class="{ active : sort == 'distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
