@@ -198,7 +198,7 @@ class Wallet extends \Eloquent
                 return false;
         }
 
-        $this->deposit($amount, $description, 0);
+        $this->deposit($amount, $description, Sentry::getUser());
 
         Activities::create([
             'title'       => $title,
