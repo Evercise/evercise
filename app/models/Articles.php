@@ -36,13 +36,9 @@ class Articles extends Eloquent
     protected $table = 'articles';
 
 
-
-
-
-
     public function category()
     {
-        return $this->hasOne('ArticleCategories', 'id');
+        return $this->hasOne('ArticleCategories', 'id', 'category_id');
     }
 
     public static function createUrl($article, $full = false)
