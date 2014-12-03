@@ -34,7 +34,6 @@
                             {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '8', 'placeholder' => 'Add your review about the class...'])}}
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-default" type="button">Cancel</button>
                             {{ Form::submit('Add Review', ['class' => 'btn btn-primary'] )  }}
                         </div>
                     {{ Form::close() }}

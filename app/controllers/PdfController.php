@@ -20,4 +20,24 @@ class PdfController extends \BaseController
 
     }
 
+    public function getPdf($session_id)
+    {
+        $evercisesession = Evercisesession::find($session_id);
+        $evercisegroup = Evercisegroup::find($evercisesession->evercisegroup_id);
+
+        $sessionmembers = $evercisesession->getSessionmembers();
+
+
+        $timestamp = date("d-m-Y");
+
+        $pdfPage = PdfHelper::pdfView($evercisegroup, $evercisesession, $sessionmembers);
+
+        //return $pdfPage;
+
+        $pdfPage = 'someshit';
+
+        return PDF::load($pdfPage, 'A4', 'portrait')->download($evercisegroup.'-'.$timestamp);
+
+    }
+
 }
