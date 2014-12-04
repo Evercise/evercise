@@ -54,7 +54,7 @@ if(typeof angular != 'undefined') {
                 distance : data.distance,
                 nextClassDate: data.futuresessions[0].date_time,
                 nextClassDuration: data.futuresessions[0].duration,
-                link: '/class/' + data.id,
+                link: '/classes/' + data.id,
                 click: function () {
                     $scope.clicked(this.model);
                 }
