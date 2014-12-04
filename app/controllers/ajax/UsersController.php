@@ -58,7 +58,7 @@ class UsersController extends AjaxBaseController{
 
                 Sentry::login($user, true);
 
-                Event::fire('user.registered', [$user]);
+                event('user.registered', [$user]);
 
                 if (Input::has('redirect')) {
                     return Response::json(
@@ -178,7 +178,7 @@ class UsersController extends AjaxBaseController{
 
                 Sentry::login($user, true);
 
-                Event::fire('user.registered', [$user]);
+                event('user.registered', [$user]);
 
                 if (Input::has('redirect')) {
                     return Response::json(
@@ -245,7 +245,7 @@ class UsersController extends AjaxBaseController{
 
             $this->user->checkProfileMilestones();
 
-            Event::fire(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
+            event(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
 
             return Response::json(
                 [
