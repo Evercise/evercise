@@ -74,7 +74,6 @@
 
 
                 <div class="text-center">
-                    {{ $user->newsletter }}
                     <label class="custom-checkbox">
                         {{ Form::checkbox('newsletter', 'yes', ($user->newsletter[0] == 'yes' ? true : false) ) }}
 

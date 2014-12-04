@@ -110,6 +110,7 @@
                         @endif
                       </ol>
                       <div class="carousel-inner mb50">
+                            <?php $i = 0 ?>
                             @foreach($featured->hits as $index => $featured_class)
                                 @if($index % 3 === 0)
                                     {{ $index > 0 ? '</div></div>' : null }}
