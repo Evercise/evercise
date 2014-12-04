@@ -98,6 +98,21 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         )->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function newsletter()
+    {
+        return $this->belongsToMany(
+            'Marketingpreference',
+            'user_marketingpreferences',
+            'user_id',
+            'marketingpreference_id'
+        )
+            ->where('name', 'newsletter')
+            ->withTimestamps();
+    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -646,6 +661,25 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         try {
             MailchimpWrapper::lists()->subscribe($list_id, ['email' => $email_address], ['FNAME' => $first_name, 'LNAME' => $last_name]);
             Log::info('user added to mailchimp');
+        } catch (Mailchimp_Error $e) {
+            if ($e->getMessage()) {
+                $error = 'Code:' . $e->getCode() . ': ' . $e->getMessage();
+                Log::error($error);
+            }
+        }
+
+    }
+
+    /**
+     * @param $newsletter
+     * @param $list_id
+     * @param $email_address
+     */
+    public static function unSubscribeMailchimpNewsletter($list_id, $email_address)
+    {
+        try {
+            MailchimpWrapper::lists()->unsubscribe($list_id, ['email' => $email_address]);
+            Log::info('user removed from mailchimp');
         } catch (Mailchimp_Error $e) {
             if ($e->getMessage()) {
                 $error = 'Code:' . $e->getCode() . ': ' . $e->getMessage();

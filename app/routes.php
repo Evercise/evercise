@@ -660,7 +660,7 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
             'street'     => 'street2',
             'city'       => 'city2',
             'postcode'   => 'postcode2'
-        ], '169');
+        ], '169', [0,0]);
 
         return var_dump($venue);
     });
