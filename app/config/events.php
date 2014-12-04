@@ -67,6 +67,10 @@
     return [
 
        '10'  => [
+
+           ['user.registered' => 'User@hasRegistered'], // $user  // ∑
+           ['user.registeredFacebook' => 'Tracking@userFacebookRegistered'], // $user  // ∑
+
            ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
            ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
            ['user.session.joined' => 'User@sessionJoined'],
@@ -74,7 +78,9 @@
 
            ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
-           ['class.created' => 'Classes@classCreated'],  // $class, $user
+
+
+           ['class.created' => 'Classes@classCreated'],  // $class, $trainer
 
 
         ],
@@ -101,7 +107,6 @@
 //            ['user.changedPassword' => 'Tracking@userChangePassword'],
 //            ['user.package.used' => 'Tracking@userChangePassword'],
 //            ['session.create' => 'Tracking@registerSessionTracking'],
-//            ['user.class.joined' => 'Tracking@registerUserSessionTracking']
 
 
 

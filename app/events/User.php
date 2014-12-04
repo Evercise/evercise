@@ -38,6 +38,8 @@ class User
     public function hasRegistered($user)
     {
         $this->log->info('User ' . $user->id . ' has registered');
+
+        $this->track->userRegistered($user);
     }
 
     public function sessionJoined($user, $session)

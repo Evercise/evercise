@@ -124,7 +124,7 @@ class UsersController extends \BaseController
 
                 $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'));
 
-                Event::fire('user.registeredFacebook', [$user]);
+                event('user.registeredFacebook', [$user]);
 
             }
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
@@ -137,14 +137,14 @@ class UsersController extends \BaseController
 
 
                 if (Sentry::check()) {
-                    Event::fire('user.loginFacebook', [$user]);
+                    event('user.loginFacebook', [$user]);
                 }
 
                 //$result = User::facebookRedirectHandler($redirect_url, $user);
                 $result = Redirect::route('users.edit', ['id'=>$user->id]);
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-                Log::error($e);
+                Log::error($e->getMessage());
             }
         }
 
@@ -299,7 +299,7 @@ class UsersController extends \BaseController
                 $this->user->password = $newPassword;
                 $this->user->save();
 
-                Event::fire('user.changedPassword', [ $this->user ]);
+                event('user.changedPassword', [ $this->user ]);
 
                 return Response::json(['result' => 'changed', 'callback' => 'successAndRefresh']);
             }
@@ -386,13 +386,13 @@ class UsersController extends \BaseController
                 return Response::json(route('home'));
             }
             if ($success) {
-                Event::fire(
+                event(
                     'user.newpassword',
                     [
                         'email' => $email
                     ]
                 );
-                Event::fire('user.changedPassword', [$user]);
+                event('user.changedPassword', [$user]);
 
                 Session::flash('notification', 'Password reset successful');
                 return Response::json(
@@ -436,7 +436,7 @@ class UsersController extends \BaseController
         $user = Sentry::getUser();
 
         if (!empty($user->id)) {
-            Event::fire('user.logout', [$user]);
+            event('user.logout', [$user]);
         }
         Sentry::logout();
 
