@@ -9,15 +9,40 @@ use Illuminate\Mail\Mailer;
 use Exception;
 
 
+/**
+ * Class Mail
+ * @package events
+ */
 class Mail
 {
 
+    /**
+     * @var Mailer
+     */
     private $email;
+    /**
+     * @var Writer
+     */
     private $log;
+    /**
+     * @var Repository
+     */
     private $config;
+    /**
+     * @var Dispatcher
+     */
     private $event;
+    /**
+     * @var array
+     */
     private $data;
 
+    /**
+     * @param Writer $log
+     * @param Repository $config
+     * @param Dispatcher $event
+     * @param Mailer $email
+     */
     public function __construct(
         Writer $log,
         Repository $config,
@@ -40,8 +65,11 @@ class Mail
 
     }
 
+
     /**
-     * USER EMAIL's
+     * ########################################################################################
+     * #####            USER EMAIL's          #################################################
+     * ########################################################################################
      */
 
     public function userCartCompleted($user, $cart, $transaction)
@@ -58,9 +86,179 @@ class Mail
     }
 
     /**
-     * TRAINER EMAIL's
+     * @param $user
+     */
+    public function welcome($user)
+    {
+
+
+        $params = [
+            'subject' => 'Welcome to Evercise',
+            'view'    => 'v3.emails.user.welcome',
+            'user'    => $user
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+
+    /**
+     * @param $user
+     * @param string $link
+     */
+    public function welcomeGuest($user, $link = '')
+    {
+
+
+        $params = [
+            'subject' => 'Welcome to Evercise',
+            'view'    => 'v3.emails.user.welcome_guest',
+            'user'    => $user,
+            'link'    => $link
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+
+    /**
+     * @param $user
+     * @param string $link
+     */
+    public function welcomeFacebook($user, $link = '')
+    {
+
+
+        $params = [
+            'subject' => 'Welcome to Evercise',
+            'view'    => 'v3.emails.user.welcome_facebook',
+            'user'    => $user,
+            'link'    => $link
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+    /**
+     * @param $user
+     * @param string $link
+     */
+    public function userForgotPassword($user, $link = '')
+    {
+
+
+        $params = [
+            'subject' => 'Reset Password',
+            'view'    => 'v3.emails.user.forgot_password',
+            'user'    => $user,
+            'link'    => $link
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+    /**
+     * @param $user
+     */
+    public function userChangedPassword($user)
+    {
+        $params = [
+            'subject' => 'Evercise password reset confirmation',
+            'view'    => 'v3.emails.user.changed_password',
+            'user'    => $user
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+    /**
+     * @param $user
+     */
+    public function userUpgrade($user)
+    {
+
+
+        $params = [
+            'subject' => 'Welcome! Start selling classes on Evercise.',
+            'view'    => 'v3.emails.user.upgrade',
+            'user'    => $user
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    /**
+     * @param $email
+     * @param $referralCode
+     * @param $referrerName
+     */
+    public function invite($email, $referralCode, $referrerName)
+    {
+
+
+        $params = [
+            'subject'      => $referrerName . ' thinks you should join Evercise!',
+            'view'         => 'v3.emails.user.invite',
+            'email'        => $email,
+            'referralCode' => $referralCode,
+            'referrerName' => $referrerName
+        ];
+
+        $this->send($email, $params);
+
+    }
+
+    /**
+     * @param $email
+     * @param $categoryId
+     * @param $ppcCode
+     */
+    public function ppc($email, $categoryId, $ppcCode)
+    {
+
+
+        $params = [
+            'subject'    => 'Pay as you go fitness!',
+            'view'       => 'v3.emails.user.ppc',
+            'email'      => $email,
+            'categoryId' => $categoryId,
+            'ppcCode'    => $ppcCode
+        ];
+
+        $this->send($email, $params);
+
+    }
+
+
+    /**
+     * ########################################################################################
+     * #####          TRAINER EMAIL's         #################################################
+     * ########################################################################################
      */
 
+
+
+    /**
+     * @param $trainer
+     */
+    public function trainerRegistered($trainer)
+    {
+        $params = [
+            'subject' => 'Evercise trainer verification',
+            'view'    => 'v3.emails.trainer.registered',
+            'trainer' => $trainer
+        ];
+
+        $this->send($trainer->email, $params);
+
+
+    }
+
+    /**
+     * @param $class
+     * @param $trainer
+     */
     public function classCreated($class, $trainer)
     {
         $params = [
@@ -74,6 +272,11 @@ class Mail
 
     }
 
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $session
+     */
     public function userJoinedTrainersSession($user, $trainer, $session)
     {
         $params = [
@@ -95,16 +298,19 @@ class Mail
 
 
 
-    /**  DEFAULT STUFF */
+
+
 
 
     /**
-     * Default Email Send Class
+     * ########################################################################################
+     * #####          DEFAULT STUFF           #################################################
+     * ########################################################################################
+     */
+
+    /**
      * @param $email
-     * @param $subject
-     * @param $view
      * @param array $params
-     * @param array $attachments
      */
 
     public function send($email, $params = [])

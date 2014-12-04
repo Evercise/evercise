@@ -33,17 +33,14 @@ class Trainer extends \Eloquent
     {
         try
         {
-            Event::fire('user.upgrade', array(
-                'email' => $user->email,
-                'display_name' => $user->display_name
-            ));
+            event('user.upgrade', [$user]);
         }
         catch(Exception $e)
         {
             return 'Cannot send email. Trainer NOT approved' . $e;
         }
 
-        Static::where('user_id', $user->id)->update(['confirmed' => 1]);
+        static::where('user_id', $user->id)->update(['confirmed' => 1]);
 
     }
 

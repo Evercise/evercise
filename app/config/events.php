@@ -68,8 +68,15 @@ return [
 
     '10' => [
 
-        ['user.registered' => 'User@hasRegistered'], // $user  // ∑
+        ['user.registered' => 'User@hasRegistered'], // $user
         ['user.registeredFacebook' => 'User@facebookRegistered'], // $user  // ∑
+
+        ['user.signup' => 'User@welcome'], // $user   // ∑
+        ['user.guest.signup' => 'User@welcomeGuest'], // $user   // ∑
+        ['user.facebook.signup' => 'User@facebookWelcome'], // $user   // ∑
+        ['user.forgot.password' => 'User@facebookWelcome'], // $user   // ∑
+        ['user.changedPassword' => 'User@userChangedPassword'], // $user, $link   // ∑
+        ['user.upgrade' => 'User@userUpgrade'], // $user   // ∑
 
         ['user.login' => 'User@login'], // $user
         ['user.logout' => 'User@loogout'], // $user
@@ -78,17 +85,23 @@ return [
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
         ['user.session.joined' => 'User@sessionJoined'],
+
+
         ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
 
-        ['class.created' => 'Classes@classCreated'],  // $class, $trainer
+        ['class.created' => 'Classes@classCreated'],  // $class, $trainer// ∑
+
+
+
 
 
     ],
     '5'  => [
-
+        ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName // ∑
+        ['landing.ppc' => 'User@ppc'] // $email, $categoryId, $ppcCode
     ],
     '0'  => [
         //All Tracking is Low Priority

@@ -75,6 +75,8 @@ class Trainer
     public function registered($trainer)
     {
         $this->log->info('Trainer ' . $trainer->id . ' has registered');
+
+
         $this->mail->trainerRegistered($trainer);
     }
 

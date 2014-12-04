@@ -98,7 +98,7 @@ class Tracking
     /**
      * @param $user
      */
-    public function userChangePassword($user)
+    public function userChangedPassword($user)
     {
 
     }

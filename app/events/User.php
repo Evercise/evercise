@@ -4,6 +4,7 @@
 use Illuminate\Config\Repository;
 use Illuminate\Log\Writer;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Routing\UrlGenerator;
 
 /**
  * Class User
@@ -39,6 +40,10 @@ class User
      * @var Tracking
      */
     protected $track;
+    /**
+     * @var UrlGenerator
+     */
+    private $url;
 
     /**
      * @param Activity $activity
@@ -48,6 +53,7 @@ class User
      * @param Repository $config
      * @param Dispatcher $event
      * @param Tracking $track
+     * @param UrlGenerator $url
      */
     public function __construct(
         Activity $activity,
@@ -56,7 +62,8 @@ class User
         Writer $log,
         Repository $config,
         Dispatcher $event,
-        Tracking $track
+        Tracking $track,
+        UrlGenerator $url
     ) {
         $this->config = $config;
         $this->log = $log;
@@ -66,6 +73,7 @@ class User
         $this->activity = $activity;
         $this->indexer = $indexer;
         $this->mail = $mail;
+        $this->url = $url;
     }
 
     /**
@@ -178,4 +186,115 @@ class User
         $this->activity->userTopupCompleted($user, $transaction);
 
     }
-} 
+
+
+    /** MOVED FROM UserMailer */
+
+
+    public function welcome($user)
+    {
+
+        $this->log->info('Sending welcome email to ' . $user->id);
+
+
+        $this->mail->welcome($user);
+
+    }
+
+    /**
+     * @param $user
+     */
+    public function guestWelcome($user)
+    {
+
+        $this->log->info('Sending welcome email with reset password to ' . $user->id);
+
+        /** @var Forgotten Password Code Generate $resetCode */
+        $resetCode = $user->getResetPasswordCode();
+        $link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . urlencode($resetCode));
+
+        $this->mail->welcomeGuest($user, $link);
+    }
+
+    /**
+     * @param $user
+     */
+    public function facebookWelcome($user)
+    {
+
+        $this->log->info('Sending welcome email to FB ' . $user->id);
+
+        /** @var Forgotten Password Code Generate $resetCode */
+        $resetCode = $user->getResetPasswordCode();
+        $link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . urlencode($resetCode));
+
+
+        $this->mail->welcomeFacebook($user, $link);
+    }
+
+
+    /**
+     * @param $user
+     */
+    public function forgotPassword($user)
+    {
+
+        $this->log->info('Sending forgoten password ' . $user->id);
+
+        /** @var Forgotten Password Code Generate $resetCode */
+        $resetCode = $user->getResetPasswordCode();
+        $link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . urlencode($resetCode));
+
+
+        $this->mail->userForgotPassword($user, $link);
+    }
+
+
+    /**
+     * @param $user
+     */
+    public function userChangedPassword($user)
+    {
+
+        $this->log->info('User changed password ' . $user->id);
+
+        $this->mail->userChangedPassword($user);
+        $this->track->userChangedPassword($user);
+
+    }
+
+
+    /**
+     * @param $user
+     */
+    public function userUpgrade($user)
+    {
+        $this->log->info('User upgraded to Trainer ' . $user->id);
+
+        $this->mail->userUpgrade($user);
+    }
+
+    /**
+     * @param $email
+     * @param $referralCode
+     * @param $referrerName
+     */
+    public function invite($email, $referralCode, $referrerName)
+    {
+        $this->log->info('User Invite ' . $email);
+
+        $this->mail->invite($email, $referralCode, $referrerName);
+    }
+
+    /**
+     * @param $email
+     * @param $categoryId
+     * @param $ppcCode
+     */
+    public function ppc($email, $categoryId, $ppcCode)
+    {
+        $this->log->info('PPC ' . $email);
+
+        $this->mail->ppc($email, $categoryId, $ppcCode);
+    }
+}

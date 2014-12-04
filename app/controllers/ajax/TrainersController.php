@@ -2,7 +2,8 @@
 
 use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Trainer, Wallet;
 
-class TrainersController extends AjaxBaseController{
+class TrainersController extends AjaxBaseController
+{
 
     public function __construct()
     {
@@ -17,7 +18,7 @@ class TrainersController extends AjaxBaseController{
      */
     public function store()
     {
-        $valid_trainer = Trainer::validTrainerSignup( Input::all() );
+        $valid_trainer = Trainer::validTrainerSignup(Input::all());
 
         if ($valid_trainer['validation_failed'] == 0) {
 
@@ -27,10 +28,16 @@ class TrainersController extends AjaxBaseController{
             $bio = Input::get('bio');
 
 
-            $trainer = Trainer::createOrFail(['user_id'=>$this->user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
+            $trainer = Trainer::createOrFail(['user_id'    => $this->user->id,
+                                              'bio'        => $bio,
+                                              'website'    => $website,
+                                              'profession' => $profession
+                ]);
 
             // Duck out if record already exists
-            if (!$trainer) return Response::json(['result' => 'User is already a Trainer']);
+            if (!$trainer) {
+                return Response::json(['result' => 'User is already a Trainer']);
+            }
 
             // Should have already been made by user.create, but leave this to catch old accounts.
             Wallet::createIfDoesntExist($this->user->id);
@@ -45,18 +52,12 @@ class TrainersController extends AjaxBaseController{
             $userGroup = Sentry::findGroupById(3);
             $this->user->addGroup($userGroup);
 
-            // welcome email
+            event('trainer.registered', [$this->user]);
 
-            Event::fire('user.confirm', array(
-                'email' => $this->user->email,
-                'display_name' => $this->user->display_name
-            ));
-
-            Event::fire('trainer.registered', [$this->user]);
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url'      => route('users.edit', $this->user->id )
+                    'url'      => route('users.edit', $this->user->id)
                 ]
             );
         } else {

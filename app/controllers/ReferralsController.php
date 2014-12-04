@@ -32,11 +32,11 @@ class ReferralsController extends \BaseController {
 
 			if ($referral)
 			{
-				Event::fire('referral.invite', array(
+				event('referral.invite', [
 		        	'email' => $refereeEmail,
 		            'referralCode' => $referralCode,
 		            'referrerName' => $this->user->first_name.' '.$this->user->last_name
-		        ));
+                ]);
 			}
 		}
 		return Response::json(['url' => Route('users.edit', [$this->user->id.'/wallet'])]);

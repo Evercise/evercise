@@ -443,14 +443,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function sendFacebookWelcomEmail($user, $inputs)
     {
-        Event::fire(
-            'user.fb_signup',
-            [
-                'email' => $user->email,
-                'display_name' => $user->display_name,
-                'password' => $inputs['password']
-            ]
-        );
+        event('user.facebook.signup', [$user]);
     }
 
     /**
@@ -616,39 +609,21 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function sendGuestWelcomeEmail($user)
     {
-        $resetCode = $user->getResetPasswordCode();
-        event(
-            'user.guest.signup',
-            [
-                'email' => $user->email,
-                'display_name' => $user->display_name,
-                'link' => URL::to('users/'.$user->display_name.'/resetpassword/'.urlencode($resetCode))
-            ]
-        );
+        event('user.guest.signup', [$user]);
     }
 
 
     public static function sendWelcomeEmail($user)
     {
-        event(
-            'user.signup',
-            [
-                'email' => $user->email,
-                'display_name' => $user->display_name
-            ]
-        );
+        event('user.signup', [$user]);
     }
 
 
 
-    public function sendForgotPasswordEmail($reset_code)
+    public function sendForgotPasswordEmail($user, $reset_code)
     {
 
-        \Event::fire('user.forgot', [
-            'email' => $this->email,
-            'displayName' => $this->display_name,
-            'resetCode' => $reset_code
-        ]);
+        event('user.forgot.password', [$user, $reset_code]);
     }
 
     /**

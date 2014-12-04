@@ -386,12 +386,6 @@ class UsersController extends \BaseController
                 return Response::json(route('home'));
             }
             if ($success) {
-                event(
-                    'user.newpassword',
-                    [
-                        'email' => $email
-                    ]
-                );
                 event('user.changedPassword', [$user]);
 
                 Session::flash('notification', 'Password reset successful');
