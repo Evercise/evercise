@@ -9,7 +9,6 @@
 
             $data = [
                 'cart'           => EverciseCart::getCart($coupon),
-                'wallet_payment' => EverciseCart::getWalletPayment(),
             ];
 
 
@@ -32,7 +31,6 @@
             $data   = EverciseCart::getCart($coupon);
 
             $data['coupon']         = $coupon;
-            $data['wallet_payment'] = EverciseCart::getWalletPayment();
             $data['user']           = $this->user;
 
             return View::make('v3.cart.checkout', $data);

@@ -93,7 +93,6 @@ class CartController extends AjaxBaseController
 
                         }
 
-                        EverciseCart::clearWalletPayment();
                         EverciseCart::instance('topup')->add($idArray['id'], 'top up', 1, $amount, []);
                     } else {
                         return 'code does not exist :' . $productCode;
@@ -101,7 +100,6 @@ class CartController extends AjaxBaseController
                     }
                 }
             }
-
         }
 
         if( $refreshPage ){

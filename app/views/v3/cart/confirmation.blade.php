@@ -20,7 +20,7 @@
 
                             </div>
                             <div class="col-sm-6 text-right mt20">
-                                <h3>current balance: <span class="text-primary">£18</span> </h3>
+                                <h3>current balance: <span class="text-primary">£{{$balance}}</span> </h3>
                             </div>
                         </div>
                     </li>
@@ -121,13 +121,15 @@
                             </div>
                         </div>
                     </li>
-                    <li class="list-group-item bg-light-grey">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <strong>Total <span class="text-primary ml15">£29.99</span></strong>
+                    @if($cart['total']['final_cost'] > 0)
+                        <li class="list-group-item bg-light-grey">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <strong>Total <span class="text-primary ml15">£{{$cart['total']['final_cost']}}</span></strong>
+                                </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    @endif
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-sm-3 col-sm-offset-6">

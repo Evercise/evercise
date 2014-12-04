@@ -201,15 +201,21 @@
                     </li>
                     <li  class="list-group-item">
                         <div class="row">
-                            <div class="col-sm-5">
-                                <button  id="fb-pay" class="btn btn-info btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button>
-                            </div>
-                            <div class="col-sm-2 text-center mt5">
-                                Or
-                            </div>
-                            <div class="col-sm-5">
-                                <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
-                            </div>
+                            @if($total['final_cost'] > 0)
+                                <div class="col-sm-5">
+                                    <button  id="fb-pay" class="btn btn-info btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button>
+                                </div>
+                                <div class="col-sm-2 text-center mt5">
+                                    Or
+                                </div>
+                                <div class="col-sm-5">
+                                    <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
+                                </div>
+                            @else
+                                <div class="col-sm-5">
+                                    {{ Html::linkRoute('wallet.sessions', 'Pay with wallet', ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                </div>
+                            @endif
                         </div>
                     </li>
                 </ul>

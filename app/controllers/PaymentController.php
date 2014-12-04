@@ -63,10 +63,12 @@ class PaymentController extends BaseController
             'payment_type' => 'stripe',
             'coupon'       => $coupon,
             'transaction'  => $transactionId,
-            'user'         => $this->user
+            'user'         => $this->user,
+            'balance'      => ($wallet ? $wallet->balance : 0),
         ];
 
-        return View::make('v3.cart.confirmation', $res);
+        return Redirect::route('checkout.confirmation')->with('res', $res);
+        //return View::make('v3.cart.confirmation', $res);
     }
 
     /**
@@ -152,6 +154,10 @@ class PaymentController extends BaseController
         if ($response->isSuccessful()) {
             $data = $response->getData(); // this is the raw response object
 
+            if ($cart['total']['from_wallet'] > 0) {
+                $wallet = $this->user->getWallet();
+                $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', $this->user);
+            }
 
             $coupon = Coupons::processCoupon($coupon, $this->user);
 
@@ -164,15 +170,42 @@ class PaymentController extends BaseController
                 'payment_type' => 'paypal',
                 'coupon'       => $coupon,
                 'transaction'  => $transactionId,
-                'user'         => $this->user
+                'user'         => $this->user,
+                'balance'      => ($wallet ? $wallet->balance : 0),
             ];
 
-            return View::make('v3.cart.confirmation', $res);
+            return Redirect::route('checkout.confirmation')->with('res', $res);
 
         } else {
             Log::info($response->getMessagE());
             return Redirect::route('payment.error')->with('error', $response->getMessage());
         }
+    }
+
+    public function processWalletPaymentSessions()
+    {
+        $coupon = Session::get('coupon', FALSE);
+        $cart = EverciseCart::getCart($coupon);
+        $token = 'w'.Functions::randomPassword(8);
+        $transactionId = $token;
+
+        $wallet = $this->user->getWallet();
+        $wallet->withdraw($cart['total']['from_wallet'], 'Full payment for classes', $this->user);
+
+        $coupon = Coupons::processCoupon($coupon, $this->user);
+
+        $res = [
+            'confirm'      => $this->paid($token, $transactionId, 'stripe', $cart, $coupon),
+            'cart'         => $cart,
+            'payment_type' => 'stripe',
+            'coupon'       => $coupon,
+            'transaction'  => $transactionId,
+            'user'         => $this->user,
+            'balance'      => $wallet->balance,
+        ];
+
+        return Redirect::route('checkout.confirmation')->with('res', $res);
+        //return View::make('v3.cart.confirmation', $res);
     }
 
 
@@ -370,6 +403,7 @@ class PaymentController extends BaseController
 
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
+        EverciseCart::clearCart();
 
         /* Empty cart */
         //EverciseCart::clearCart();
@@ -378,20 +412,13 @@ class PaymentController extends BaseController
         return TRUE;
     }
 
-    public function sessionConfirmation()
+    public function showConfirmation()
     {
-        /* Get cart data sent with redirect, as Cart has now been cleared */
-        $cartData = Session::get('cartData');
-        $walletPayment = Session::get('walletPayment');
-
-        $data = [
-            'cartData'      => $cartData,
-            'walletPayment' => $walletPayment,
-        ];
-
-        return View::make('v3.cart.confirmation')
-            ->with('data', $data);
-
+        $res = Session::get('res');
+        if ($res)
+            return View::make('v3.cart.confirmation', $res);
+        else
+            return Redirect::route('home');
     }
 
     public function topupConfirmation()

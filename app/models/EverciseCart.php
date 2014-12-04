@@ -302,33 +302,10 @@ class EverciseCart extends Cart
         }
     }
 
-    public static function clearWalletPayment()
-    {
-        $cartRowIds = EverciseCart::instance('topup')->search(['id' => 'WALLET']);
-        if ($cartRowIds) {
-            foreach ($cartRowIds as $cartRowId) {
-                EverciseCart::instance('topup')->remove($cartRowId);
-            }
-        }
-    }
-
     public static function clearCart()
     {
         EverciseCart::instance('main')->destroy();
     }
 
-    public static function getWalletPayment()
-    {
-        $walletPaymentIds = EverciseCart::instance('topup')->search(['id' => 'WALLET']);
-
-        if (count($walletPaymentIds) > 0) {
-            $cartRow = EverciseCart::instance('topup')->get($walletPaymentIds[0]);
-            if ($cartRow) {
-                return $cartRow->price;
-            }
-        }
-
-        return 0;
-    }
 
 }

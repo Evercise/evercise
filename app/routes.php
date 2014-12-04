@@ -347,12 +347,19 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
     Route::post('stripe/sessions',
         ['as' => 'stripe.sessions', 'uses' => 'PaymentController@processStripePaymentSessions']);
     Route::post('stripe/topup', ['as' => 'stripe.topup', 'uses' => 'PaymentController@processStripePaymentTopup']);
-    Route::get('payment_confirmation',
-        ['as' => 'payment_confirmation', 'uses' => 'PaymentController@sessionConfirmation']);
     Route::get('topup_confirmation', ['as' => 'topup_confirmation', 'uses' => 'PaymentController@topupConfirmation']);
     Route::get('topup', ['as' => 'topup', 'uses' => 'PaymentController@topup']);
     /* ------------------ */
 
+    /* Wallet only payment */
+    Route::get('wallet/sessions',
+        ['as' => 'wallet.sessions', 'uses' => 'PaymentController@processWalletPaymentSessions']);
+    /* ------------------ */
+
+    /* Show payment confirmation */
+    Route::get('checkout/confirmation',
+        ['as' => 'checkout.confirmation', 'uses' => 'PaymentController@showConfirmation']);
+    /* ------------------ */
 
     Route::get('payment/error',
         ['as' => 'payment.error', 'uses' => 'PaymentController@paymentError']);
