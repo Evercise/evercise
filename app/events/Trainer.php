@@ -90,14 +90,4 @@ class Trainer
         $this->track->trainerEdit($trainer);
     }
 
-    /**
-     * @param $user
-     * @param $trainer
-     * @param $session
-     */
-    public function sessionJoined($user, $trainer, $session)
-    {
-        $this->log->info('User ' . $user->id . ' has joined trainer ' . $trainer->id . ' session ' . $session->id);
-        $this->mail->userJoinedTrainersSession($user, $trainer, $session);
-    }
 }

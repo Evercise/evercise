@@ -7,8 +7,8 @@ class SessionsController extends \BaseController
      */
     public function setCheckoutSessionData()
     {
-        $sessionIds = json_decode(Input::get('session-ids'), true);
-        $evercisegroupId = json_decode(Input::get('evercisegroup-id'), true);
+        $sessionIds = json_decode(Input::get('session-ids'), TRUE);
+        $evercisegroupId = json_decode(Input::get('evercisegroup-id'), TRUE);
         Session::put('sessionIds', $sessionIds);
         Session::put('evercisegroupId', $evercisegroupId);
 
@@ -37,9 +37,9 @@ class SessionsController extends \BaseController
         $data = [
             'evercisegroup_id' => $class_id
         ];
+
         return View::make('v3.classes.add_sessions')->with('data', $data)->with('sessions', $sessions);
     }
-
 
 
     /**
@@ -155,7 +155,7 @@ class SessionsController extends \BaseController
         $redirect_after_login_url = 'sessions.join.get';
 
         if (!Sentry::getUser()) {
-            return View::make('auth.login')->with('redirect_after_login', true)->with(
+            return View::make('auth.login')->with('redirect_after_login', TRUE)->with(
                 'redirect_after_login_url',
                 $redirect_after_login_url
             );
@@ -171,10 +171,10 @@ class SessionsController extends \BaseController
      */
     public function joinSessions()
     {
-        $sessionIds = Session::get('sessionIds', false);
-        $evercisegroupId = Session::get('evercisegroupId', false);
+        $sessionIds = Session::get('sessionIds', FALSE);
+        $evercisegroupId = Session::get('evercisegroupId', FALSE);
         if (!$sessionIds) {
-            $sessionIds = json_decode(Input::get('session-ids'), true);
+            $sessionIds = json_decode(Input::get('session-ids'), TRUE);
         }
         if (!$evercisegroupId) {
             $evercisegroupId = Input::get('evercisegroup-id');
@@ -200,7 +200,6 @@ class SessionsController extends \BaseController
             return Response::json('USER HAS ALREADY JOINED SESSION');
         }
     }
-
 
 
     /**
@@ -242,7 +241,7 @@ class SessionsController extends \BaseController
             return Response::json(
                 [
                     'callback' => 'openPopup',
-                    'popup'    => (string) View::make('sessions.checkoutwithevercoins')
+                    'popup'    => (string)View::make('sessions.checkoutwithevercoins')
                         ->with('evercisegroupId', $evercisegroupId)
                         ->with('priceInEvercoins', $evercoinParams['priceInEvercoins'])
                         ->with('evercoinBalance', $evercoinParams['evercoinBalance'])
@@ -330,17 +329,17 @@ class SessionsController extends \BaseController
 
         $validator = Validator::make(
             Input::all(),
-            array(
+            [
                 'mail_subject' => 'required',
                 'mail_body'    => 'required',
-            )
+            ]
         );
         if ($validator->fails()) {
 
-            $result = array(
+            $result = [
                 'validation_failed' => 1,
                 'errors'            => $validator->errors()->toArray()
-            );
+            ];
 
             return Response::json($result);
 
@@ -354,7 +353,7 @@ class SessionsController extends \BaseController
 
             Event::fire(
                 'session.refund',
-                array(
+                [
 
                     'email'     => $contact,
                     'userName'  => Sentry::getUser()->display_name,
@@ -362,13 +361,12 @@ class SessionsController extends \BaseController
                     'groupName' => $groupName,
                     'subject'   => $subject,
                     'body'      => $body
-                )
+                ]
             );
         }
 
         return Response::json(['callback' => 'successAndRefresh']);
     }
-
 
 
 }

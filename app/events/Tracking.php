@@ -33,7 +33,7 @@ class Tracking
         $this->log = $log;
         $this->request = $request;
 
-        $this->enabled  = (getenv('SALESFORCE_ENABLED') ?: false);
+        $this->enabled = (getenv('SALESFORCE_ENABLED') ?: FALSE);
 
     }
 
@@ -112,6 +112,10 @@ class Tracking
     }
 
 
+    /**
+     * @param $user
+     * @param $session
+     */
     public function userClassSignup($user, $session)
     {
         return $this->registerUserSessionTracking($user, $session);
@@ -125,9 +129,6 @@ class Tracking
      */
     public function registerUserTracking($user, $type = 'USER', $func = 'REGISTER')
     {
-
-        $user_arr = $user->toArray();
-
         $user_object = $this->formatUser($user, $type);
 
 
@@ -137,7 +138,7 @@ class Tracking
             }
         }
 
-        if($this->enabled) {
+        if ($this->enabled) {
             switch ($func) {
                 case "REGISTER":
                     $res = Salesforce::create([$user_object], 'Contact');
@@ -165,8 +166,7 @@ class Tracking
 
     /**
      * @param $user
-     * @param string $type
-     * @param string $func
+     * @param $session
      */
     public function registerUserSessionTracking($user, $session)
     {
@@ -185,7 +185,7 @@ class Tracking
         $relation->Class__c = $session->salesforce_id;
         $relation->Registrant__c = $user->salesforce_id;
 
-        if($this->enabled) {
+        if ($this->enabled) {
             $res = Salesforce::create([$relation], 'Class_Registrant__c');
         }
         $this->log->info('Relation Created in SalesForce ' . (implode(',', array_values((array)$relation))));
@@ -200,13 +200,13 @@ class Tracking
     {
         $class_obj = $this->formatSessionClass($session);
 
-        if($this->enabled) {
+        if ($this->enabled) {
             $res = Salesforce::create([$class_obj], 'Class__c');
 
             $session->salesforce_id = $res[0]->id;
             $session->save();
         }
-        $this->log->info('New Session ' . $session->id . '  in SalesForce '.$session->salesforce_id);
+        $this->log->info('New Session ' . $session->id . '  in SalesForce ' . $session->salesforce_id);
 
         return $session;
     }
@@ -236,10 +236,10 @@ class Tracking
 
 
         $map = [
-            'email' => 'Email',
+            'email'      => 'Email',
             'first_name' => 'FirstName',
-            'last_name' => 'LastName',
-            'phone' => 'Phone'
+            'last_name'  => 'LastName',
+            'phone'      => 'Phone'
         ];
 
         foreach ($map as $key => $val) {
@@ -254,12 +254,16 @@ class Tracking
         }
 
 
-        $user_data['MailingCountry']    = 'United Kingdom';
+        $user_data['MailingCountry'] = 'United Kingdom';
 
 
         return (object)$user_data;
     }
 
+    /**
+     * @param $session
+     * @return \stdClass
+     */
     public static function formatSessionClass($session)
     {
 
@@ -280,9 +284,9 @@ class Tracking
 
             $first = $cat->categories()->first();
 
-            if(!empty($first->name)) {
+            if (!empty($first->name)) {
 
-                $main_categories[$first->name] = true;
+                $main_categories[$first->name] = TRUE;
             }
 
         }
@@ -322,7 +326,6 @@ class Tracking
 
 
         $class_obj->Date_Time__c = gmdate("Y-m-d\TH:i:s\Z", strtotime($session->date_time));
-
 
 
         return $class_obj;

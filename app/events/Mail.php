@@ -189,6 +189,59 @@ class Mail
     }
 
     /**
+     * @param $userList
+     * @param $group
+     * @param $location
+     * @param $dateTime
+     * @param $trainerName
+     * @param $trainerEmail
+     * @param $classId
+     */
+    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    {
+        foreach ($userList as $name => $email) {
+
+            $params = [
+                'subject'      => 'Evercise class reminder',
+                'view'         => 'v3.emails.user.session_remind',
+                'userList'     => $userList,
+                'group'        => $group,
+                'location'     => $location,
+                'name'         => $name,
+                'email'        => $email,
+                'dateTime'     => $dateTime,
+                'trainerName'  => $trainerName,
+                'trainerEmail' => $trainerEmail,
+                'classId'      => $classId
+            ];
+
+            $this->send($email, $params);
+        }
+    }
+
+
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $everciseGroup
+     * @param $sessionDate
+     */
+    public function userLeaveSession($user, $trainer, $everciseGroup, $sessionDate)
+    {
+        $params = [
+            'subject'       => 'Sorry to see you leave',
+            'view'          => 'v3.emails.user.session_left',
+            'user'          => $user,
+            'trainer'       => $trainer,
+            'everciseGroup' => $everciseGroup,
+            'sessionDate'   => $sessionDate,
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    /**
      * @param $email
      * @param $referralCode
      * @param $referrerName
@@ -232,11 +285,35 @@ class Mail
 
 
     /**
+     * @param $email
+     * @param $userName
+     * @param $userEmail
+     * @param $group
+     * @param $messageSubject
+     * @param $messageBody
+     */
+    public function userRequestRefund($email, $userName, $userEmail, $group, $messageSubject, $messageBody)
+    {
+        $params = [
+            'subject'        => 'Evercise refund request',
+            'view'           => 'v3.emails.user.request_refund',
+            'email'          => $email,
+            'userName'       => $userName,
+            'userEmail'      => $userEmail,
+            'group'          => $group,
+            'messageSubject' => $messageSubject,
+            'messageBody'    => $messageBody
+        ];
+
+        $this->send($email, $params);
+    }
+
+
+    /**
      * ########################################################################################
      * #####          TRAINER EMAIL's         #################################################
      * ########################################################################################
      */
-
 
 
     /**
@@ -277,14 +354,14 @@ class Mail
      * @param $trainer
      * @param $session
      */
-    public function userJoinedTrainersSession($user, $trainer, $session)
+    public function userJoinedTrainersSession($user, $trainer, $evercisegroup)
     {
         $params = [
-            'subject' => 'User Joined Your Class',
-            'view'    => 'v3.emails.trainer.user_joined_session',
-            'trainer' => $trainer,
-            'session' => $session,
-            'user'    => $user
+            'subject'       => 'User Joined Your Class',
+            'view'          => 'v3.emails.trainer.user_joined_session',
+            'trainer'       => $trainer,
+            'evercisegroup' => $evercisegroup,
+            'user'          => $user
         ];
 
         $this->send($trainer->email, $params);
@@ -292,14 +369,131 @@ class Mail
     }
 
 
+    /**
+     * @param $userList
+     * @param $group
+     * @param $location
+     * @param $dateTime
+     * @param $trainerName
+     * @param $trainerEmail
+     * @param $classId
+     */
+    public function trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    {
+        $params = [
+            'subject'      => 'Class reminder & participant list',
+            'view'         => 'v3.emails.trainer.session_remind',
+            'userList'     => $userList,
+            'group'        => $group,
+            'location'     => $location,
+            'dateTime'     => $dateTime,
+            'trainerName'  => $trainerName,
+            'trainerEmail' => $trainerEmail,
+            'classId'      => $classId
+        ];
+
+        $this->send($trainerEmail, $params);
+    }
+
+    /**
+     * @param $trainer
+     * @param $userList
+     * @param $group
+     * @param $messageSubject
+     * @param $messageBody
+     */
+    public function trainerMailAll($trainer, $userList, $group, $messageSubject, $messageBody)
+    {
+
+        foreach ($userList as $name => $email) {
+            $params = [
+                'subject'        => 'You have a new message',
+                'view'           => 'v3.emails.trainer.mail_all',
+                'trainer'        => $trainer,
+                'name'           => $name,
+                'email'          => $email,
+                'userList'       => $userList,
+                'group'          => $group,
+                'messageSubject' => $messageSubject,
+                'messageBody'    => $messageBody
+            ];
+
+            $this->send($email, $params);
+        }
+
+    }
 
 
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $everciseGroup
+     * @param $sessionDate
+     */
+    public function trainerLeaveSession($user, $trainer, $everciseGroup, $sessionDate)
+    {
+        $params = [
+            'subject'       => 'Someone has left your class',
+            'view'          => 'v3.emails.trainer.session_left',
+            'user'          => $user,
+            'trainer'       => $trainer,
+            'everciseGroup' => $everciseGroup,
+            'sessionDate'   => $sessionDate,
+        ];
+
+        $this->send($user->email, $params);
+
+    }
 
 
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $evercisegroup
+     */
+    public function trainerJoinSession($user, $trainer, $evercisegroup)
+    {
+
+        $params = [
+            'subject'       => 'A User just Joined your Class',
+            'view'          => 'v3.emails.trainer.user_joined_class',
+            'user'          => $user,
+            'trainer'       => $trainer,
+            'evercisegroup' => $evercisegroup
+        ];
+
+        $this->send($user->email, $params);
+
+    }
 
 
+    /**
+     * @param $trainer
+     * @param $user
+     * @param $group
+     * @param $dateTime
+     * @param $messageSubject
+     * @param $messageBody
+     */
+    public function mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody)
+    {
+        foreach ($userList as $name => $email) {
+            $params = [
+                'subject'        => 'You have a new message',
+                'view'           => 'v3.emails.trainer.mail_trainer',
+                'trainer'        => $trainer,
+                'user'           => $user,
+                'dateTime'       => $dateTime,
+                'name'           => $name,
+                'email'          => $email,
+                'group'          => $group,
+                'messageSubject' => $messageSubject,
+                'messageBody'    => $messageBody
+            ];
 
-
+            $this->send($email, $params);
+        }
+    }
 
 
     /**
@@ -313,8 +507,10 @@ class Mail
      * @param array $params
      */
 
-    public function send($email, $params = [])
-    {
+    public function send(
+        $email,
+        $params = []
+    ) {
 
         /** This part will be needed when we assign Functions to Pardot API
          * example config would be:
@@ -356,8 +552,10 @@ class Mail
      * Format from: events\Mail, classCreated
      * To: mail.classcreated
      */
-    private function formatName($class, $function)
-    {
+    private function formatName(
+        $class,
+        $function
+    ) {
 
         return strtolower(str_replace('\\', '.', implode('.', [str_replace('events\\', '', $class), $function])));
     }

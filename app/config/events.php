@@ -29,7 +29,7 @@
  * evecisegroup.delete => trainer deleted a class
  * session.create => Trainer added a nnew session to a class
  * session.delete => Trainer removed a session
- * session.payed => User joined a class
+ * session.joined => User joined a class
  * session.left => User left a class
  * rating.create => User left a rating for a class
  * wallet.request => Trainer has requested a withdrawel from there wallet
@@ -84,18 +84,21 @@ return [
         ['user.edit' => 'User@edit'],
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
-        ['user.session.joined' => 'User@sessionJoined'],
-
-
+        ['session.joined' => 'User@sessionJoined'],
         ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
 
         ['class.created' => 'Classes@classCreated'],  // $class, $trainer// ∑
-
-
-
+        ['session.joined' => 'User@sessionJoined'],
+        ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $everciseGroup, $transactionId
+        ['session.upcoming_session' => 'Sessions@upcommingSessions'],
+        ['session.mail_all' => 'Sessions@mailAll'],
+        ['session.mail_trainer' => 'Sessions@mailTrainer'],
+        ['session.userLeft' => 'Sessions@userLeaveSession'],
+        ['session.trainerLeft' => 'Sessions@trainerLeaveSession'],
+        ['session.refund' => 'Sessions@refundRequest'],
 
 
     ],

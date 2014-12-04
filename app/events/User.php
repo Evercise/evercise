@@ -145,11 +145,15 @@ class User
      * @param $user
      * @param $session
      */
-    public function sessionJoined($user, $session)
+    public function sessionJoined($user, $trainer, $session)
     {
         $this->log->info('User ' . $user->id . ' joined session ' . $session->id);
 
+        $this->
+
         $this->track->registerUserSessionTracking($user, $session);
+
+
 
     }
 

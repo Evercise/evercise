@@ -148,7 +148,7 @@ class Evercisesession extends \Eloquent
             Trainerhistory::create(array('user_id' => Sentry::getUser()->id, 'type' => 'created_session', 'display_name' => Sentry::getUser()->display_name, 'name' => $evercisegroupName, 'time' => $niceTime, 'date' => $niceDate));
 
             /* callback */
-            Event::fire('session.create', [Sentry::getUser() ]);
+            event('session.create', [Sentry::getUser() ]);
             return true;
         }
     }
@@ -217,7 +217,7 @@ class Evercisesession extends \Eloquent
             $undoDetails = ['mode' => 'delete', 'id' => $id,  'evercisegroup_id' => $evercisegroupId, 'date_time' => $dateTime, 'price' => $price, 'duration' => $duration, 'user_id' => $user_id];
 
             Evercisesession::destroy($id);
-            Event::fire('session.delete', [Sentry::getUser(), $evercisesession ]);
+            event('session.delete', [Sentry::getUser(), $evercisesession ]);
             return Response::json($undoDetails);
         }
         catch (Exception $e)
@@ -231,7 +231,7 @@ class Evercisesession extends \Eloquent
                 'duration' => $undoDetails->duration
             ));
 
-            Event::fire('session.create', [Sentry::getUser(), $evercisesession ]);
+            event('session.create', [Sentry::getUser(), $evercisesession ]);
             return Response::json(['mode' => 'undo', 'session_id' => $evercisesession->id]);
         }
 
@@ -260,7 +260,7 @@ class Evercisesession extends \Eloquent
         $groupName = $group->name;
         $trainerName = $group->user->first_name . ' ' . $group->user->last_name;
 
-        Event::fire('session.mail_all', array(
+        event('session.mail_all', array(
             'trainer' => $trainerName,
             'email' => $userList,
             'name' => $groupName,
@@ -334,7 +334,7 @@ class Evercisesession extends \Eloquent
 
         $userName = User::getName(Sentry::getUser());
 
-        Event::fire('session.mail_trainer', array(
+        event('session.mail_trainer', array(
             'email' => $userList,
             'user' => $userName,
             'groupName' => $groupName,
@@ -437,9 +437,9 @@ class Evercisesession extends \Eloquent
 
         self::sendSessionJoinedEmail($evercisegroup, $userTrainer, $transactionId);
 
-        Event::fire('session.payed', [$user, $evercisegroup]);
+        event('session.payed', [$user, $evercisegroup]);
 
-        Event::fire('class.index.single', ['id' => $evercisegroup->id]);
+        event('class.index.single', ['id' => $evercisegroup->id]);
         Log::info('User '.$user->display_name.' has paid for sessions '.implode(',', $sessionIds).' of group '.$evercisegroupId);
 
         self::newMemberAnalytics($transactionId, $amount, $evercisegroup, $sessionIds);
@@ -481,15 +481,9 @@ class Evercisesession extends \Eloquent
      * @param $userTrainer
      * @param $transactionId
      */
-    public static function sendSessionJoinedEmail($evercisegroup, $userTrainer, $transactionId)
+    public static function sendSessionJoinedEmail($evercisegroup, $trainer, $transactionId)
     {
-        Event::fire('session.joined', array(
-            'email' => Sentry::getUser()->email,
-            'display_name' => Sentry::getUser()->display_name,
-            'evercisegroup' => $evercisegroup,
-            'userTrainer' => $userTrainer,
-            'transactionId' => $transactionId,
-        ));
+        event('session.joined',[Sentry::getUser(), $trainer, $evercisegroup, $transactionId]);
     }
 
     /**
@@ -585,7 +579,7 @@ class Evercisesession extends \Eloquent
 
             self::sendLeavingEmails($trainer, $evercisegroup, date('dS M y', strtotime($session->date_time)));
 
-            Event::fire('session.left', [Sentry::getUser(), $evercisegroup, $session]);
+            event('session.left', [Sentry::getUser(), $evercisegroup, $session]);
             return Response::json(['message' => ' session: ' . $evercisesessionId, 'callback' => 'leftSession']);
         } else {
             return Response::json(['message' => ' Cannot leave session ']);
@@ -599,20 +593,8 @@ class Evercisesession extends \Eloquent
      */
     public static function sendLeavingEmails($trainer, $evercisegroup, $sessionDate)
     {
-        Event::fire('session.userLeft', array(
-            'email' => Sentry::getUser()->email,
-            'display_name' => Sentry::getUser()->display_name,
-            'everciseGroup' => $evercisegroup->name,
-            'everciseSession' => $sessionDate,
-        ));
+        event('session.userLeft', [Sentry::getUser(), $trainer, $evercisegroup, $sessionDate]);
 
-        Event::fire('session.trainerLeft', array(
-            'email' => $trainer->email,
-            'display_name' => $trainer->display_name,
-            'user_name' => Sentry::getUser()->display_name,
-            'everciseGroup' => $evercisegroup->name,
-            'everciseSession' => $sessionDate,
-        ));
     }
 
     /**

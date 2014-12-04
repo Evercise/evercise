@@ -354,7 +354,7 @@ class PaymentController extends BaseController
             * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
             */
 
-            event('user.session.joined', [$this->user, $evercisesession]);
+            event('session.joined', [$this->user, $trainer, $evercisesession]);
 
         }
 
