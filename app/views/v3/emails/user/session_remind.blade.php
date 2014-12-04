@@ -1,3 +1,24 @@
+@extends('v3.emails.template')
+
+ $params = [
+                'subject'      => 'Evercise class reminder',
+                'view'         => 'v3.emails.user.session_remind',
+                'userList'     => $userList,
+                'group'        => $group,
+                'location'     => $location,
+                'name'         => $name,
+                'email'        => $email,
+                'dateTime'     => $dateTime,
+                'trainerName'  => $trainerName,
+                'trainerEmail' => $trainerEmail,
+                'classId'      => $classId
+            ];
+
+
+
+@section('body')
+
+
 
 
 
@@ -32,3 +53,7 @@ $data['linkLabel'] = 'Visit your class page: ';
 
 $data['name'] = $name;
 $this->sendTo($email, $subject, $view, $data);
+
+@stop
+
+
