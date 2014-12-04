@@ -98,6 +98,21 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         )->withTimestamps();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function newsletter()
+    {
+        return $this->belongsToMany(
+            'Marketingpreference',
+            'user_marketingpreferences',
+            'user_id',
+            'marketingpreference_id'
+        )
+            ->where('name', 'newsletter')
+            ->withTimestamps();
+    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

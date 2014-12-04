@@ -74,8 +74,9 @@
 
 
                 <div class="text-center">
+                    {{ $user->newsletter }}
                     <label class="custom-checkbox">
-                        {{ Form::checkbox('newsletter', 'yes', true ) }}
+                        {{ Form::checkbox('newsletter', 'yes', ($user->newsletter[0] == 'yes' ? true : false) ) }}
 
                          Get all the latest deals and news info by signing up to our newsletter
                     </label>

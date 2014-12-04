@@ -56,6 +56,7 @@ class UsersController extends AjaxBaseController{
                     );
                 }
 
+
                 Sentry::login($user, true);
 
                 event('user.registered', [$user]);
@@ -240,10 +241,31 @@ class UsersController extends AjaxBaseController{
             $area_code = Input::get('areacode');
             $phone = Input::get('phone');
             $password = Input::get('password');
+            $newsletter = Input::get('newsletter');
 
             $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password);
 
             $this->user->checkProfileMilestones();
+
+            if(!empty($newsletter)) {
+                if ($this->user->newsletter[0]->option != 'yes') {
+                    $this->user->marketingpreferences()->sync([1]);
+                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                        $this->user->email,
+                        $first_name,
+                        $last_name
+                    );
+                }
+            }else{
+                if ($this->user->newsletter[0]->option == 'yes') {
+                    $this->user->marketingpreferences()->sync([2]);
+                    User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                        $this->user->email
+                    );
+                }
+            }
+
+
 
             event(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
 
