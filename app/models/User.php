@@ -656,6 +656,25 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
     /**
+     * @param $newsletter
+     * @param $list_id
+     * @param $email_address
+     */
+    public static function unSubscribeMailchimpNewsletter($list_id, $email_address)
+    {
+        try {
+            MailchimpWrapper::lists()->unsubscribe($list_id, ['email' => $email_address]);
+            Log::info('user removed from mailchimp');
+        } catch (Mailchimp_Error $e) {
+            if ($e->getMessage()) {
+                $error = 'Code:' . $e->getCode() . ': ' . $e->getMessage();
+                Log::error($error);
+            }
+        }
+
+    }
+
+    /**
      * Get full name from either User object or a user id
      *
      * @param $id
