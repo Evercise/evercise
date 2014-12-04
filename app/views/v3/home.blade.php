@@ -98,10 +98,14 @@
                     <!-- Indicators -->
                       <ol class="carousel-indicators">
                         @if(count($featured->hits) > 3)
+                            <?php $i = 0 ?>
                             @foreach($featured->hits as $index => $featured_class)
+
                                 @if($index % 3 === 0)
-                                    <li data-target="#carousel-example-generic" data-slide-to="{{$index}}" class="{{ $index == 0 ? 'active' : null }}"></li>
+                                    <li data-target="#image-carousel" data-slide-to="{{$i}}" class="{{ $index == 0 ? 'active' : null }}"></li>
+                                    <?php $i++ ?>
                                 @endif
+
                             @endforeach
                         @endif
                       </ol>
@@ -110,9 +114,10 @@
                                 @if($index % 3 === 0)
                                     {{ $index > 0 ? '</div></div>' : null }}
                                     <div class="item {{ $index === 0 ? 'active' : null }}">
+                                    <?php $i++ ?>
                                     <div class="row">
                                 @endif
-                                      <div class="col-sm-4">
+                                      <div class="col-md-4">
                                          @include('v3.classes.class_module', ['class' => $featured_class])
                                      </div>
 
@@ -124,11 +129,11 @@
                       </div>
                       @if(count($featured->hits) > 3)
                           <!--/carousel-inner-->
-                          <a class="left carousel-control" href="#image-carousel" data-slide="prev">
+                          <a class="hidden-sm left carousel-control" href="#image-carousel" data-slide="prev">
                              <span class="icon icon-left-triangle"></span>
                           </a>
 
-                          <a class="right carousel-control" href="#image-carousel" data-slide="next">
+                          <a class="hidden-sm right carousel-control" href="#image-carousel" data-slide="next">
                              <span class="icon icon-right-triangle"></span>
                           </a>
                       @endif

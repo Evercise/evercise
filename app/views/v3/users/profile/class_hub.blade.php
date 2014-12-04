@@ -1,5 +1,5 @@
-@foreach($groups as $evercisegroup)
-    <div class="container hub-row" >
+@foreach($groups as $index => $evercisegroup)
+    <div class="container hub-row {{ $index + 1 == count($evercisegroup) ? 'last' : null }}" >
             <div class="row mt40">
                 <div class="col-sm-8">
                     @include('v3.classes.class_hub_panel', ['type' => 's'])

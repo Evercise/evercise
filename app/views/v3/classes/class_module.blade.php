@@ -27,14 +27,14 @@
 </div>
 -->
 
-<ul class="list-group class-block-module ">
+<ul class="list-group class-module">
     <div class="class-image-wrapper">
          {{ HTML::decode( HTML::linkRoute('evercisegroups.show', image($class->user->directory. '/module_'. $class->image,  $class->name . ' cover image', ['class' => 'img-responsive img-full-width']) , $class->id)  )}}
     </div>
     <li class="list-group-item">
 
         <div class="class-title-wrapper text-center">
-            <a href="{{ URL::route('class.show', [$class->slug]) }}"><h3>{{ $class->name }}</h3></a>
+            <a href="{{ URL::route('class.show', [$class->id]) }}"><h3>{{ $class->name }}</h3></a>
             <div class="class-rating-wrapper">
                 @if (isset($class->ratings))
                     @include('v3.classes.ratings.stars', array('rating' => $class->ratings))

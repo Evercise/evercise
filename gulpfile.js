@@ -45,9 +45,9 @@ gulp.task('compress', function() {
 
 gulp.task('watch', function () {
 
-    gulp.watch('public/assets/less/**/*.less', ['less']);
-    gulp.watch('public/assets/jsdev/**/**/*.js', ['compress']);
-
+    gulp.watch('public/assets/less/**/*.less', ['less', 'version']);
+    gulp.watch('public/assets/jsdev/**/**/*.js', ['compress', 'version']);
+    gulp.watch('public/assets/css/main.css', ['minifycss']);
 });
 
 gulp.task('version', function () {
@@ -70,5 +70,5 @@ function makeid()
 
 /* Default Task */
 
-gulp.task('default', ['less', 'watch', 'minifycss', 'version', 'compress']);
+gulp.task('default', ['less', 'watch', 'minifycss', 'compress', 'version']);
 

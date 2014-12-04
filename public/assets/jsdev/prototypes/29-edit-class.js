@@ -21,7 +21,7 @@ EditClass.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
-                self.form.find(".btn-toggle-down").addClass('loading');
+                self.form.find(".btn-toggle-down").prop('disabled', true).addClass('loading');
             },
 
             success: function (data) {

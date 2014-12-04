@@ -8914,9 +8914,10 @@ fieldset[disabled] .btn-blank.active {
   background-position: -370px -290px;
 }
 .btn-toggle-up.loading:after {
-  background: url("../img/spinner.gif");
+  background: url("../img/spinner_grey.gif");
   background-repeat: no-repeat;
   background-position: center center;
+  opacity: 0.65;
 }
 .btn-toggle-down {
   position: relative;
@@ -8944,9 +8945,10 @@ fieldset[disabled] .btn-blank.active {
   background-position: -410px -290px;
 }
 .btn-toggle-down.loading:after {
-  background: url("../img/spinner.gif");
+  background: url("../img/spinner_grey.gif");
   background-repeat: no-repeat;
   background-position: center center;
+  opacity: 0.65;
 }
 .btn-aside {
   padding-left: 9px;
@@ -9051,50 +9053,15 @@ fieldset[disabled] .stripe-button-el.active {
   background-color: #f2f2f2;
 }
 .class-module {
-  width: 100%;
-  background-color: #ffffff;
-  height: auto;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
-  margin-bottom: 25px;
-  overflow: hidden;
-  color: #768690;
+  max-width: 325px;
+  margin: 0 auto 30px;
+  /*
+  .class-box(auto, 250px, 12.5px);
   max-width: 311px;
-}
-.class-module .class-image-wrapper {
-  height: 250px;
-  overflow: hidden;
-}
-.class-module .class-image-wrapper img {
-  height: 100%;
-}
-.class-module .class-title-wrapper {
-  padding: 0 20px;
-}
-.class-module .class-title-wrapper .class-rating-wrapper {
-  margin: 5px 0 15px;
-}
-.class-module .class-title-wrapper h3 {
-  margin-bottom: 12.5px;
-}
-.class-module .class-title-wrapper .btn {
-  margin-top: 20px;
-}
-.class-module strong.text-primary {
-  font-size: 20px;
-}
-.class-module .class-info-wrapper {
-  border-top: 1px solid #e8ebec;
-  font-size: 12px;
-  font-weight: 700;
-}
-.class-module .class-info-wrapper span {
-  margin-top: -4px;
-}
-.class-module .class-info-wrapper form {
-  padding: 0 15px;
-}
-.class-module .class-rating-wrapper {
-  height: 27px;
+  .class-rating-wrapper{
+    height: 27px;
+  }
+  */
 }
 .class-list {
   width: 100%;
@@ -9869,8 +9836,11 @@ label {
   margin-left: -20px;
   z-index: -1;
 }
-.hub-row {
+div.hub-row {
   border-bottom: 1px solid #e8ebec;
+}
+div.hub-row.last {
+  border-bottom: 0;
 }
 .hub-table-row td.text-left {
   padding-right: 0;
