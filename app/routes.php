@@ -323,7 +323,6 @@ Route::group(['prefix' => 'cart'], function () {
 
 // sessions
 
-<<<<<<< Updated upstream
     Route::get(
         'sessions/{evercisegroup_id}/index',
         ['as' => 'evercisegroups.trainer_show', 'uses' => 'SessionsController@index']
@@ -401,78 +400,7 @@ Route::group(['prefix' => 'cart'], function () {
         '/sessions/{sessionId}/refund',
         ['as' => 'sessions.refund.post', 'uses' => 'SessionsController@postRefund']
     );
-=======
-Route::get(
-    'sessions/{evercisegroup_id}/index',
-    ['as' => 'evercisegroups.trainer_show', 'uses' => 'SessionsController@index']
-);
-Route::get('sessions/add/{id}', ['as' => 'sessions.add', 'uses' => 'SessionsController@create']);
-Route::get('sessions/date_list', ['as' => 'sessions.date_list']);
-Route::post('sessions/join', ['as' => 'sessions.join', 'uses' => 'SessionsController@joinSessions']);
-Route::get('sessions/join/class', ['as' => 'sessions.join.get', 'uses' => 'SessionsController@joinSessions']);
-Route::get('/sessions/{id}', ['as' => 'sessions.show', 'uses' => 'SessionsController@show']);
-Route::get(
-    '/sessions/{sessionId}/leave',
-    ['as' => 'sessions.leave', 'uses' => 'SessionsController@getLeaveSession']
-);
-Route::post(
-    '/sessions/{sessionId}/leave',
-    ['as' => 'sessions.leave.post', 'uses' => 'SessionsController@postLeaveSession']
-);
 
-/* New Stripe payment */
-Route::post('stripe/sessions',
-    ['as' => 'stripe.sessions', 'uses' => 'PaymentController@processStripePaymentSessions']);
-Route::post('stripe/topup', ['as' => 'stripe.topup', 'uses' => 'PaymentController@processStripePaymentTopup']);
-Route::get('payment_confirmation',
-    ['as' => 'payment_confirmation', 'uses' => 'PaymentController@sessionConfirmation']);
-Route::get('topup_confirmation', ['as' => 'topup_confirmation', 'uses' => 'PaymentController@topupConfirmation']);
-Route::get('topup', ['as' => 'topup', 'uses' => 'PaymentController@topup']);
-/* ------------------ */
-
-
-Route::get('payment/error',
-    ['as' => 'payment.error', 'uses' => 'PaymentController@paymentError']);
-
-Route::get('payment/proccess/paypal',
-    ['as' => 'payment.process.paypal', 'uses' => 'PaymentController@processPaypalPaymentSessions']);
-
-Route::get('payment/request/paypal',
-    ['as' => 'payment.request.paypal', 'uses' => 'PaymentController@requestPaypalPaymentSessions']);
-
-Route::get('payment/cancelled',
-    ['as' => 'payment.cancelled', 'uses' => 'PaymentController@cancelled']);
-
-// payment (old)
-Route::get(
-    'sessions/{evercisegroupId}/paywithstripe',
-    ['as' => 'sessions.pay.stripe', 'uses' => 'SessionsController@payForSessionsStripe']
-);
-
-Route::post(
-    'wallets/{userId}/update_paypal',
-    ['as' => 'wallets.updatepaypal', 'uses' => 'WalletsController@updatePaypal']
-);
-Route::post(
-    '/sessions/{evercisegroupId}/redeemEvercoins',
-    ['as' => 'sessions.redeemEvercoins.post', 'uses' => 'SessionsController@redeemEvercoins']
-);
-Route::get(
-    '/sessions/{evercisegroupId}/paywithevercoins',
-    function ($evercisegroupId) {
-        return Redirect::to('evercisegroups/' . $evercisegroupId);
-    }
-);
-Route::post(
-    '/sessions/{evercisegroupId}/paywithevercoins',
-    ['as' => 'sessions.paywithevercoins.post', 'uses' => 'SessionsController@postPayWithEvercoins']
-);
-Route::get('/sessions/{sessionId}/refund', ['as' => 'sessions.refund', 'uses' => 'SessionsController@getRefund']);
-Route::post(
-    '/sessions/{sessionId}/refund',
-    ['as' => 'sessions.refund.post', 'uses' => 'SessionsController@postRefund']
-);
->>>>>>> Stashed changes
 
 // mail
 Route::get('/sessions/{id}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
