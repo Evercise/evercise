@@ -15,9 +15,6 @@ class AuthController extends AjaxBaseController
             'password' => Input::get('password')
         );
 
-        $redirect = Input::get('redirect', false);
-
-        $redirect = ($redirect ? route($redirect) : route('users.edit', $user->display_name))
 
         $redirect_after_login = Input::get('redirect_after_login');
         $redirect_after_login_url = Input::get('redirect_after_login_url');
@@ -37,7 +34,7 @@ class AuthController extends AjaxBaseController
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => $redirect
+                            'url'      => route('users.edit', $user->display_name))
                         ]
                     );
                 }

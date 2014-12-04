@@ -6,7 +6,9 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="row">
                     {{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10', 'role' => 'form'] ) }}
-                    {{ Form::hidden('redirect', 'cart.checkout') }}
+                    {{ Form::hidden('redirect_after_login', 'true') }}
+                    {{ Form::hidden('redirect_after_login_url', 'cart.checkout') }}
+
                         <div class="col-sm-12">
                             <li role="presentation" class="dropdown-header">Login</li>
                             <div class="form-group">
