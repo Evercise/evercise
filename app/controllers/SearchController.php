@@ -182,7 +182,7 @@ class SearchController extends \BaseController
 
 
         if (!empty($area->min_radius) && str_replace('mi', '', $area->min_radius) > str_replace('mi', '', $radius)) {
-            $radius = $area->min_radius;
+          //  $radius = $area->min_radius;
         }
 
         $page = $this->input->get('page', 1);

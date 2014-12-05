@@ -49,10 +49,16 @@ return [
     'duration' => $durationArray,
     'tickets' => $ticketArray,
     'price' => $priceArray,
-    'default_radius' => '0.5mi',
+    'default_radius' => '10mi',
     'article_main_image' => [
-        'width' => 600,
-        'height' => 284
+        'regular' => [
+            'width' => 600,
+            'height' => 284
+        ],
+        'thumb' => [
+            'width' => 200,
+            'height' => 200
+        ]
     ],
 
     'user' => [

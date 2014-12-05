@@ -17,7 +17,7 @@
              @foreach($articles as $a)
                 <div class="row" >
                     <div class="col-sm-4">
-                        {{ image($a->main_image, $a->main_image, ['class' => 'img-responsive']) }}
+                        {{ (!empty($a->thumb_image) ? image($a->thumb_image, $a->thumb_image, ['class' => 'img-responsive']) : image('files/articles/default_thumb.jpg', 'Image soon', ['class' => 'img-responsive'])) }}
                     </div>
                     <div class="col-sm-8">
                         <h3>{{ $a->title }}</h3>

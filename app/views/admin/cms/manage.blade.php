@@ -27,7 +27,7 @@
            <img src="/{{ $article->main_image or "img/default_article.jpg" }}" style="float:left;width:100px !important;margin-right:10px" width="100" heigh="100"/>
            @endif
             {{ Form::file('main_image', ['placeholder'=> 'Upload main image', 'class' => 'form-control', 'id'=>'file', 'style' => 'width:60%']) }}
-           The image will be auto resized to: {{ Config::get('evercise.article_main_image.width') }}x{{ Config::get('evercise.article_main_image.height')}}
+           The image will be auto resized to: {{ Config::get('evercise.article_main_image.regular.width') }}x{{ Config::get('evercise.article_main_image.regular.height')}} and {{ Config::get('evercise.article_main_image.thumb.width') }}x{{ Config::get('evercise.article_main_image.thumb.height')}}
     </div><br style="clear:both"/>
 
 

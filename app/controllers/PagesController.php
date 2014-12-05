@@ -175,7 +175,7 @@ class PagesController extends \BaseController
 
 
         /** Articles */
-        $articles = $this->articles->where('status', 1)->orderBy('id', 'desc')->limit(5)->get();
+        $articles = $this->articles->where('status', 1)->where('page', 0)->orderBy('id', 'desc')->limit(5)->get();
 
         /** Categories */
         $categories = $this->articleCategories->where('status', 1)->get();
