@@ -211,9 +211,13 @@
                                 <div class="col-sm-5">
                                     <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
                                 </div>
+                            @elseif($total['subtotal'] == $total['package_deduct'])
+                                <div class="col-sm-5">
+                                    {{ Html::linkRoute('wallet.sessions', 'Pay with package',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                </div>
                             @else
                                 <div class="col-sm-5">
-                                    {{ Html::linkRoute('wallet.sessions', 'Pay with wallet', ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                    {{ Html::linkRoute('wallet.sessions', 'Pay with wallet',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
                                 </div>
                             @endif
                         </div>

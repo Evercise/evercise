@@ -40,7 +40,7 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-12 mb5">
-                                            <h3>{{ $row['name'] }}</h3>
+                                            <h3>{{ Html::linkRoute('class.show', $row['name'], [$row['evercisegroup_id']]) }}</h3>
                                         </div>
                                     </div>
                                     <div class="row">
