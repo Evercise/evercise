@@ -1,5 +1,6 @@
 function UpdateSession(form){
     this.form = form;
+    this.id ='';
     this.addListeners();
 }
 
@@ -10,7 +11,11 @@ UpdateSession.prototype = {
         this.form.on('submit', $.proxy(this.submit, this));
     },
     sessionChanged: function(e){
-
+        var form = $(e.target).attr('form');
+        this.form = $('#'+form);
+        this.id = this.form.find('input[name="id"]').val();
+        console.log('id'+this.id );
+        this.form.trigger('submit');
     },
     submit: function(e){
         e.preventDefault();
@@ -26,7 +31,7 @@ UpdateSession.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
-                self.form.find(".btn-toggle-down").prop('disabled', true).addClass('loading');
+                $('#hub-edit-row-'+self.id).addClass('bg-info');
             },
 
             success: function (data) {
@@ -38,11 +43,12 @@ UpdateSession.prototype = {
             },
 
             complete: function () {
-                self.form.find("input[type='submit']").prop('disabled', false)
+                self.form.find("input[type='submit']").prop('disabled', false);
+                $('#hub-edit-row-'+self.id).removeClass('bg-info');
             }
         });
     },
     update: function(data){
-
+        $('#hub-edit-row-'+data.id).after(data.view);
     }
 }

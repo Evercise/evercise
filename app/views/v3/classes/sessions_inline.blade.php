@@ -89,7 +89,7 @@
                                 </div>
                             </td>
                             <td class="text-right">
-                                 {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session pull-left ml20']) }}
+                                 {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session pull-right ml20']) }}
                                     {{ Form::hidden('id', $session->id) }}
                                     {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
                                 {{ Form::close() }}
