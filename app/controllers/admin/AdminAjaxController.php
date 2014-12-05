@@ -314,8 +314,9 @@ class AdminAjaxController extends AdminController
 
 
         if ($class->isFeatured()) {
-            FeaturedClasses::where('id', $id)->delete();
+            FeaturedClasses::where('evercisegroup_id', $id)->delete();
 
+            event('class.index.single', [$id]);
             return Response::json(['featured' => FALSE]);
         }
 

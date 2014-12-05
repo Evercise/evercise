@@ -164,7 +164,7 @@ var currentRequest;
                         </td>
 
                         <?php
-                        $featured_count = $a->featuredClasses()->count();
+                        $featured_count = count($a->featuredClasses);
                         ?>
                         <td data-value="{{ $featured_count }}">
 
