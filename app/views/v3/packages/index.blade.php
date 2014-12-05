@@ -4,53 +4,112 @@
 
 @section('body')
 <div class="container first-container">
-    <div class="row text-center">
+    <div class="row text-center mb50">
         <div class="underline">
-            <h1>Evercise class packages</h1>
+            <h1>High Five</h1>
         </div>
+        <strong>Get fit and stay active with an Evercise 5 class package</strong>
+        <br>
+        <strong>Grab a five-class package to save money, speed up your booking process and stay active</strong>
+    </div>
+    <div class="row mb30">
+        @foreach($packages as $index => $p)
+            @if($p->classes == 5)
+                <div class="col-sm-4 text-left">
+                    <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
+                        <li class="list-group-item package-title">
+                            <h1>{{ $p->name }}</h1>
+                        </li>
+                        <li class="list-group-item package-description">
+                            <h4>{{ $p->classes }} Class Package</h4>
+                            <p>{{ $p->description }}</p>
+                        </li>
+                        <li class="list-group-item package-list">
+                            @if(!empty($p->bullets))
+                                <div>
+                                    <ul>
+                                        <li></span>Any <span class="colour">{{$p->classes }}</span> classes up to <span class="colour">£{{ round($p->max_class_price,2) }}</span> </li>
+                                        <li></span>Save <span class="colour">{{$p->savings()}}%</span> on standard price</li>
+                                        <li>Up to <span class="colour">{{ $p->availableClasses()}}</span> classes to choose from</li>
+                                        @foreach(explode('|', $p->bullets) as $b)
+                                            <li>{{ $b }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                             @endif
+                        </li>
+                        <li class="list-group-item package-pay">
+                            <div class="row">
+                                <div class="col-sm-5 text-left">
+                                    <strong>£{{round($p->price,2)}}</strong>
+                                    <small>Savings of {{$p->savings()}}%</small>
+                                </div>
+                                <div class="col-sm-7">
+                                    {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $p->id, 'class' => 'add-to-class']) }}
+                                        {{ Form::submit('Buy Package', ['class'=> 'btn btn-block add-btn']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $p->id)) }}
+                                        {{ Form::hidden('quantity', 1) }}
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            @endif
+        @endforeach
+    </div>
+    <div class="row text-center mb50">
+        <div class="underline">
+            <h1>Perfect Ten</h1>
+        </div>
+        <strong>Feel the burn! Become an Evercise fitness VIP with a 10 class package</strong>
+        <br>
+        <strong>Serious about getting fit? Save up to 50% and ennjoy the VIP treatment with one of our 10 class packages</strong>
     </div>
     <div class="row">
         @foreach($packages as $index => $p)
-            <div class="col-sm-4 text-left">
-                <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
-                    <li class="list-group-item package-title">
-                        <h1>{{ $p->name }}</h1>
-                    </li>
-                    <li class="list-group-item package-description">
-                        <h4>{{ $p->classes }} Class Package</h4>
-                        <p>{{ $p->description }}</p>
-                    </li>
-                    <li class="list-group-item package-list">
-                        @if(!empty($p->bullets))
-                            <div>
-                                <ul>
-                                    <li><span class="icon icon-point"></span>Any <span class="colour">{{$p->classes }}</span> classes up to <span class="color">{{ round($p->max_class_price,2) }}</span> </li>
-                                    <li><span class="icon icon-point"></span>Save {{$p->savings()}}% on standard price</li>
-                                    <li><span class="icon icon-point"></span>Up to {{ $p->availableClasses()}} classes to choose from</li>
-                                    @foreach(explode('|', $p->bullets) as $b)
-                                        <li><span class="icon icon-point"></span>{{ $b }}</li>
-                                    @endforeach
-                                </ul>
+            @if($p->classes == 10)
+                <div class="col-sm-4 text-left">
+                    <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
+                        <li class="list-group-item package-title">
+                            <h1>{{ $p->name }}</h1>
+                        </li>
+                        <li class="list-group-item package-description">
+                            <h4>{{ $p->classes }} Class Package</h4>
+                            <p>{{ $p->description }}</p>
+                        </li>
+                        <li class="list-group-item package-list">
+                            @if(!empty($p->bullets))
+                                <div>
+                                    <ul>
+                                        <li></span>Any <span class="colour">{{$p->classes }}</span> classes up to <span class="colour">£{{ round($p->max_class_price,2) }}</span> </li>
+                                        <li></span>Save <span class="colour">{{$p->savings()}}%</span> on standard price</li>
+                                        <li>Up to <span class="colour">{{ $p->availableClasses()}}</span> classes to choose from</li>
+                                        @foreach(explode('|', $p->bullets) as $b)
+                                            <li>{{ $b }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                             @endif
+                        </li>
+                        <li class="list-group-item package-pay">
+                            <div class="row">
+                                <div class="col-sm-5 text-left">
+                                    <strong>£{{round($p->price,2)}}</strong>
+                                    <small>Savings of {{$p->savings()}}%</small>
+                                </div>
+                                <div class="col-sm-7">
+                                    {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $p->id, 'class' => 'add-to-class']) }}
+                                        {{ Form::submit('Buy Package', ['class'=> 'btn btn-block add-btn']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $p->id)) }}
+                                        {{ Form::hidden('quantity', 1) }}
+                                    {{ Form::close() }}
+                                </div>
                             </div>
-                         @endif
-                    </li>
-                    <li class="list-group-item package-pay">
-                        <div class="row">
-                            <div class="col-sm-5 text-left">
-                                <strong>£{{round($p->price,2)}}</strong>
-                                <small>Savings of {{$p->savings()}}%</small>
-                            </div>
-                            <div class="col-sm-7">
-                                {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $p->id, 'class' => 'add-to-class']) }}
-                                    {{ Form::submit('Buy Package', ['class'=> 'btn btn-block add-btn']) }}
-                                    {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $p->id)) }}
-                                    {{ Form::hidden('quantity', 1) }}
-                                {{ Form::close() }}
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                        </li>
+                    </ul>
+                </div>
+            @endif
         @endforeach
     </div>
 </div>

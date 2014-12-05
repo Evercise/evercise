@@ -10902,30 +10902,41 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .package-green .package-title {
   background-color: #7ed321;
   background-image: url("../img/ev_site_icons.png");
-  background-position: -442px -691px;
+  background-position: -214px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 60px 20px 0;
 }
 .package-green .package-title.active {
-  background-position: -442px -771px;
+  background-position: -214px -813px;
 }
 .package-green .package-title.hover:hover,
 .package-green .package-title.active:hover {
   cursor: pointer;
-  background-position: -442px -771px;
+  background-position: -214px -813px;
 }
 .package-green .package-title h1 {
   color: #ffffff;
+  margin-bottom: 9px;
 }
 .package-green .package-description {
   height: 210px;
 }
+.package-green .package-list {
+  height: 200px;
+}
 .package-green .package-list ul {
   padding: 0;
+  list-style: none;
 }
 .package-green .package-list ul li {
-  list-style: none;
+  padding-left: 15px;
+  text-indent: -14px;
+}
+.package-green .package-list ul li:before {
+  content: "•";
+  color: #7ed321;
+  padding-right: 7px;
 }
 .package-green span.colour {
   color: #7ed321;
@@ -10980,30 +10991,41 @@ fieldset[disabled] .package-green .package-pay .btn.active {
 .package-blue .package-title {
   background-color: #50c3e2;
   background-image: url("../img/ev_site_icons.png");
-  background-position: -442px -691px;
+  background-position: -214px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 60px 20px 0;
 }
 .package-blue .package-title.active {
-  background-position: -442px -771px;
+  background-position: -214px -813px;
 }
 .package-blue .package-title.hover:hover,
 .package-blue .package-title.active:hover {
   cursor: pointer;
-  background-position: -442px -771px;
+  background-position: -214px -813px;
 }
 .package-blue .package-title h1 {
   color: #ffffff;
+  margin-bottom: 9px;
 }
 .package-blue .package-description {
   height: 210px;
 }
+.package-blue .package-list {
+  height: 200px;
+}
 .package-blue .package-list ul {
   padding: 0;
+  list-style: none;
 }
 .package-blue .package-list ul li {
-  list-style: none;
+  padding-left: 15px;
+  text-indent: -14px;
+}
+.package-blue .package-list ul li:before {
+  content: "•";
+  color: #50c3e2;
+  padding-right: 7px;
 }
 .package-blue span.colour {
   color: #50c3e2;
@@ -11058,30 +11080,41 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
 .package-pink .package-title {
   background-color: #ff1b7e;
   background-image: url("../img/ev_site_icons.png");
-  background-position: -442px -691px;
+  background-position: -214px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 60px 20px 0;
 }
 .package-pink .package-title.active {
-  background-position: -442px -771px;
+  background-position: -214px -813px;
 }
 .package-pink .package-title.hover:hover,
 .package-pink .package-title.active:hover {
   cursor: pointer;
-  background-position: -442px -771px;
+  background-position: -214px -813px;
 }
 .package-pink .package-title h1 {
   color: #ffffff;
+  margin-bottom: 9px;
 }
 .package-pink .package-description {
   height: 210px;
 }
+.package-pink .package-list {
+  height: 200px;
+}
 .package-pink .package-list ul {
   padding: 0;
+  list-style: none;
 }
 .package-pink .package-list ul li {
-  list-style: none;
+  padding-left: 15px;
+  text-indent: -14px;
+}
+.package-pink .package-list ul li:before {
+  content: "•";
+  color: #ff1b7e;
+  padding-right: 7px;
 }
 .package-pink span.colour {
   color: #ff1b7e;

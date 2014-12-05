@@ -140,20 +140,29 @@
 .package-block-module(@color){
   .package-title{
     background-color: @color;
-    .sprite(-442px, -691px, 80);
+    .sprite(-214px, -733px, 80);
     padding: 60px 20px 0;
     h1{
       color: @white;
+      margin-bottom: 9px;
     }
   }
   .package-description{
     height: 210px;
   }
   .package-list{
+    height: 200px;
     ul{
       padding: 0;
+      list-style: none;
       li{
-        list-style: none;
+        padding-left: 15px;
+        text-indent: -14px;
+        &:before {
+          content: "•";
+          color: @color;
+          padding-right: 7px;
+        }
       }
     }
 
