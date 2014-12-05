@@ -73,7 +73,7 @@ Route::get('/popular', [
 
 /** SEO URLS */
 Route::get('/instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
-Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EverciseGroupsController@show']);
+Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
 
 
 /* end tempary routes for new styles */

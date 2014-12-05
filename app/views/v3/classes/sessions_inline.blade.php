@@ -115,7 +115,7 @@
                         <td><div class="hub-add-td collapse">{{ Form::select('members', Config::get('evercise.tickets'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
                         <td><div class="hub-add-td collapse">{{ Form::select('price', Config::get('evercise.price'), '10', ['class' => 'form-control input-sm', 'form' => 'add-new-session'] ) }}</div></td>
                         <td class="text-right">
-                            {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.add', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
+                            {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.store', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
 
                                 {{ Form::hidden('evercisegroupId', $evercisegroup_id) }}
                                 {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}
