@@ -102,7 +102,7 @@
                                     <tr>
                                         <th>Date</th>
                                         <th>Description of Transaction</th>
-                                        <th class="text-right">Cost</th>
+                                        <th class="text-right">Amount</th>
                                     </tr>
 
                                <tbody>
@@ -110,7 +110,7 @@
                                         <tr>
                                             <td class="transparent-border-top">{{$act->created_at}}</td>
                                             <td>{{$act->description}}</td>
-                                            <td class="text-right">{{isset($act->transaction) ? $act->transaction->total : 0}}</td>
+                                            <td class="text-right">{{($act->transaction) ? $act->transaction['total'] : '0.00'}}</td>
                                         </tr>
                                     @endforeach
                                </tbody>

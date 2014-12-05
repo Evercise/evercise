@@ -117,7 +117,7 @@
                         <td class="text-right">
                             {{ Form::open(['id' => 'add-new-session', 'route' => 'sessions.add', 'method' => 'post', 'class' => 'add-session collapse hub-add-td pull-right']) }}
 
-                                {{ Form::hidden('evercisegroupId', $session->evercisegroup->id) }}
+                                {{ Form::hidden('evercisegroupId', $evercisegroup_id) }}
                                 {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' ]) }}
                             {{ Form::close() }}
                             <button class="btn btn-icon icon icon-plus ml20 hover toggle-switch" data-switchclass="icon-cross" data-removeclass="icon-plus" data-toggle="collapse" data-target=".hub-add-td"></button>
