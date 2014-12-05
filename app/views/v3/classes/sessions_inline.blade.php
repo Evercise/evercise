@@ -64,7 +64,6 @@
                 </thead>
                 <tbody>
                     @foreach($sessions as $session)
-
                         <tr class="text-center" id="hub-edit-row-{{$session->id}}">
 
                             <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>

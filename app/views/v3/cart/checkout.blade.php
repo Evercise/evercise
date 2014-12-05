@@ -99,7 +99,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <strong class="list-group-item-heading col-sm-3">Quantity</strong>
-                            <strong class="list-group-item-heading col-sm-7">Description of Purchase</strong>
+                            <strong class="list-group-item-heading col-sm-6">Description of Purchase</strong>
                             <strong class="list-group-item-heading col-sm-2 text-right">Cost</strong>
                         </div>
                     </li>
@@ -115,6 +115,12 @@
                                 <div class="col-sm-2 text-right">
                                     <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
                                 </div>
+                                <div class="col-sm-1">
+                                    {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                        {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
+                                    {{Form::close()}}
+                                </div>
                             </div>
                         </li>
                     @endforeach
@@ -125,6 +131,7 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
                                 <div class="col-sm-3">
+
                                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                                         {{ Form::hidden('force', true) }}
@@ -142,12 +149,19 @@
 
                                     {{ Form::close() }}
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-6">
                                     <strong>{{ $row['name']}}</strong><br>
                                     {{ $date->toDayDateTimeString() }}
                                 </div>
                                 <div class="col-sm-2 text-right">
                                     <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</strong>
+                                </div>
+                                <div class="col-sm-1">
+                                    {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                        {{ Form::hidden('refresh-page', true) }}
+                                        {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
+                                    {{Form::close()}}
                                 </div>
                             </div>
                         </li>

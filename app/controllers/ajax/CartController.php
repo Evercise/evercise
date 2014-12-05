@@ -134,6 +134,7 @@ class CartController extends AjaxBaseController
     {
         $productCode = Input::get('product-id', FALSE);
         $rowId       = EverciseCart::search(['id' => $productCode]);
+        $refreshPage       = Input::get('refresh-page', FALSE);
         if ($rowId) {
             $quantity = Input::get('quantity', 1);
 
@@ -146,7 +147,16 @@ class CartController extends AjaxBaseController
             }
         }
 
-        return $this->getCart();
+        if( $refreshPage ){
+            return Response::json(
+                [
+                    'refresh' => true
+                ]
+            );
+        }
+        else{
+            return $this->getCart();
+        }
     }
 
     /**
@@ -159,12 +169,22 @@ class CartController extends AjaxBaseController
     {
         $productCode = Input::get('product-id', FALSE);
         $rowId       = EverciseCart::search(['id' => $productCode]);
+        $refreshPage       = Input::get('refresh-page', FALSE);
 
         if ($rowId) {
             EverciseCart::remove($rowId[0]);
         }
 
-        return $this->getCart();
+        if( $refreshPage ){
+            return Response::json(
+                [
+                    'refresh' => true
+                ]
+            );
+        }
+        else{
+            return $this->getCart();
+        }
     }
 
     /**

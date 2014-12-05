@@ -8,7 +8,7 @@
             </div>
             <div class="col-sm-4">
                 <h3>About Evercise</h3>
-                <li>{{HTML::linkRoute('static.about', 'What is Evercise' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
+                <li>{{HTML::linkRoute('general.about', 'What is Evercise' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
                 <li>{{HTML::linkRoute('static.class_guidelines', 'Evercise Class Guidelines' , null , ['class' => Route::currentRouteName() == 'static.class_guidelines' ? 'active' : ''])}}</li>
                 <li>{{HTML::linkRoute('static.faq', 'Need Help' , null , ['class' => Route::currentRouteName() == 'static.faq' ? 'active' : ''])}}</li>
                 <li>{{HTML::linkRoute('static.the_team', 'Meet the Evercise Team' , null , ['class' => Route::currentRouteName() == 'static.the_team' ? 'active' : ''])}}</li>

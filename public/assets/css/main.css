@@ -8229,6 +8229,34 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -1250px -290px;
 }
+.icon-pink-left-arrow {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -210px -290px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-pink-left-arrow.active {
+  background-position: -210px -330px;
+}
+.icon-pink-left-arrow.hover:hover,
+.icon-pink-left-arrow.active:hover {
+  cursor: pointer;
+  background-position: -210px -330px;
+}
+.icon-pink-right-arrow {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -250px -290px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-pink-right-arrow.active {
+  background-position: -250px -330px;
+}
+.icon-pink-right-arrow.hover:hover,
+.icon-pink-right-arrow.active:hover {
+  cursor: pointer;
+  background-position: -250px -330px;
+}
 .icon-white-clock {
   background-image: url("../img/ev_site_icons.png");
   background-position: -290px -330px;
@@ -10898,6 +10926,17 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   margin: -20px 20px -20px -15px;
   width: 110px;
   float: left;
+}
+.list-group-no-border .list-group-item {
+  border-left-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 0;
+}
+.list-group-no-border .list-group-item:first-of-type {
+  border-top-width: 0px ;
+}
+.list-group-no-border .list-group-item:last-of-type {
+  border-bottom-width: 1px ;
 }
 .package-green .package-title {
   background-color: #7ed321;
