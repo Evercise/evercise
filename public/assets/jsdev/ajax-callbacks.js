@@ -21,6 +21,5 @@ function newSessionAdded(data){
 }
 
 function removeSessionRow(data){
-    $('#update-row-'+data.id).remove();
-    $('#update-id-'+data.id).remove();
+    $('#hub-edit-row-'+data.id).fadeOut(400);
 }

@@ -1,15 +1,18 @@
-function EditClass(form){
+function RemoveSession(form){
     this.form = form;
+    this.id ='';
     this.addListeners();
 }
-EditClass.prototype = {
-    constructor: EditClass,
+
+RemoveSession.prototype = {
+    constructor : RemoveSession,
     addListeners: function(){
         this.form.on('submit', $.proxy(this.submit, this));
     },
     submit: function(e){
         e.preventDefault();
         this.form = $(e.target);
+        this.id = this.form.find('input[name="id"]').val();
         this.ajax();
     },
     ajax: function(){
@@ -21,11 +24,11 @@ EditClass.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
-                self.form.find(".btn-toggle-down").prop('disabled', true).addClass('loading');
+                $('#hub-edit-row-'+self.id).addClass('bg-danger');
             },
 
             success: function (data) {
-                self.edit(data);
+                self.remove(data);
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -33,18 +36,12 @@ EditClass.prototype = {
             },
 
             complete: function () {
-                self.form.find("input[type='submit']").prop('disabled', false)
+                self.form.find("input[type='submit']").prop('disabled', false);
+                $('#hub-edit-row-'+self.id).removeClass('bg-info');
             }
         });
     },
-    edit: function(data){
-        $('#'+ data.id).html(data.view);
-        $('#edit-'+ data.id).removeClass('disabled');
-        $('#submit-'+ data.id).hide();
-        $('#'+ data.id).parent().collapse('show');
-        $('#infoToggle-'+data.id).removeClass('hide');
-        datepick();
-        new UpdateSession($('.update-session'));
-        new RemoveSession($('.remove-session'));
+    remove: function(data){
+        $('#hub-edit-row-'+data.id).fadeOut(400);
     }
 }
