@@ -21,7 +21,7 @@
                             <h1>{{ $p->name }}</h1>
                         </li>
                         <li class="list-group-item package-description">
-                            <h4>{{ $p->classes }} Class Package</h4>
+                            <h4>£{{ round($p->max_class_price,2) }} {{ $p->classes }} Class Package</h4>
                             <p>{{ $p->description }}</p>
                         </li>
                         <li class="list-group-item package-list">
