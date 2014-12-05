@@ -142,13 +142,16 @@ class EverciseCart extends Cart
 
                         $session = Evercisesession::find($code['id']);
 
-                        $remaining_tickets = $session->remainingTickets();
 
-                        $session = $session->toArray();
-                        $session['tickets'] = $remaining_tickets;
+                        if(!empty($session->id)) {
+                            $remaining_tickets = $session->remainingTickets();
 
-                        unset($session['sessionmembers']);
-                        $sessions[] = $session;
+                            $session = $session->toArray();
+                            $session['tickets'] = $remaining_tickets;
+
+                            unset($session['sessionmembers']);
+                            $sessions[] = $session;
+                        }
                     }
                     break;
             }
