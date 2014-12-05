@@ -24,7 +24,7 @@
 
                     </div>
                     <div class="col-xs-7">
-                        <strong>{{ $row['name'] }}</strong>
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['id']]) }}
                         <br>
                         <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
                     </div>
@@ -59,7 +59,7 @@
 
                     </div>
                     <div class="col-xs-7">
-                        <strong>{{ $row['name'] }}</strong>
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['evercisegroup_id']]) }}
                         <br>
                         <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : $row['grouped_price']) }}</strong>
                     </div>

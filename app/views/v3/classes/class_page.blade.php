@@ -63,7 +63,7 @@
                                 <div class="condensed">
                                     <strong>This class is presented by</strong>
                                 </div>
-                                <span>{{ Html::linkRoute('trainers.show', $data['trainer']->user->display_name, $data['trainer']->user->id) }}</span>
+                                <span>{{ Html::linkRoute('trainer.show', $data['trainer']->user->display_name, $data['trainer']->user->id) }}</span>
                             </div>
                         </div>
 
