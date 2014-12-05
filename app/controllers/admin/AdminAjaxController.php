@@ -27,6 +27,9 @@ class AdminAjaxController extends AdminController
      * @var Geotools
      */
     private $geotools;
+    /**
+     * @var
+     */
     private $elastic;
 
     /**
@@ -49,6 +52,9 @@ class AdminAjaxController extends AdminController
         $this->geotools = $geotools;
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function searchStats()
     {
 
@@ -85,6 +91,7 @@ class AdminAjaxController extends AdminController
             ];
 
         }
+
         return Response::json($response);
     }
 
@@ -100,7 +107,7 @@ class AdminAjaxController extends AdminController
 
         return Response::json([
             'callback' => 'adminPopupMessage',
-            'message' => 'Password reset.  Email:' . $user->email
+            'message'  => 'Password reset.  Email:' . $user->email
         ]);
     }
 
@@ -111,7 +118,7 @@ class AdminAjaxController extends AdminController
     public function ajaxCheckUrl()
     {
 
-        $this->beforeFilter('csrf', array('on' => 'post'));
+        $this->beforeFilter('csrf', ['on' => 'post']);
 
         $url = $this->request->get('url');
 
@@ -119,18 +126,18 @@ class AdminAjaxController extends AdminController
         $check = Articles::where('permalink', $url)->count();
 
         if ($check > 0) {
-            return Response::json(['error' => true]);
+            return Response::json(['error' => TRUE]);
         }
 
         /** CHeck if the URL is in the ArticleCategories */
         $check = ArticleCategories::where('permalink', $url)->count();
 
         if ($check > 0) {
-            return Response::json(['error' => true]);
+            return Response::json(['error' => TRUE]);
         }
 
 
-        return Response::json(['error' => false]);
+        return Response::json(['error' => FALSE]);
     }
 
 
@@ -220,6 +227,9 @@ class AdminAjaxController extends AdminController
         return Response::json(['callback' => 'successAndRefresh']);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function saveTags()
     {
         $tags = implode(',', Input::get('tags'));
@@ -227,10 +237,13 @@ class AdminAjaxController extends AdminController
 
         Gallery::where('id', $id)->update(['keywords' => $tags]);
 
-        return Response::json(['saved' => true]);
+        return Response::json(['saved' => TRUE]);
     }
 
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteGalleryImage()
     {
         $id = Input::get('id');
@@ -244,6 +257,9 @@ class AdminAjaxController extends AdminController
     }
 
 
+    /**
+     * @return bool|string
+     */
     public function galleryUploadFile()
     {
         if ($file = Request::file('file')) {
@@ -256,7 +272,7 @@ class AdminAjaxController extends AdminController
             $name = $file->getClientOriginalName();
             /** Save the image name without the Prefix to the DB */
 
-            $save = false;
+            $save = FALSE;
             foreach (Config::get('evercise.gallery.sizes') as $img) {
 
                 $file_name = $img['prefix'] . '_' . $name;
@@ -268,23 +284,28 @@ class AdminAjaxController extends AdminController
 
 
                 if ($image) {
-                    $save = true;
+                    $save = TRUE;
                 }
 
             }
 
             if ($save) {
                 Gallery::create(['image' => $name, 'counter' => Config::get('evercise.gallery.image_counter', 3)]);
+
                 return '/files/gallery_defaults/thumb_' . $name;
             }
         }
 
-        return false;
+        return FALSE;
 
 
     }
 
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     * @throws Exception
+     */
     public function featureClass()
     {
         $id = $this->input->get('id');
@@ -294,16 +315,24 @@ class AdminAjaxController extends AdminController
 
         if ($class->isFeatured()) {
             FeaturedClasses::where('id', $id)->delete();
-            return Response::json(['featured' => false]);
+
+            return Response::json(['featured' => FALSE]);
         }
 
 
-        FeaturedClasses::create(array('evercisegroup_id' => $id));
-        return Response::json(['featured' =>  true]);
+        FeaturedClasses::create(['evercisegroup_id' => $id]);
+
+        event('class.index.single', [$id]);
+
+        return Response::json(['featured' => TRUE]);
 
     }
 
-    public function sliderStatus() {
+    /**
+     *
+     */
+    public function sliderStatus()
+    {
         $id = Input::get('id');
         $checked = Input::get('checked');
 
@@ -312,6 +341,9 @@ class AdminAjaxController extends AdminController
         $slider->save();
     }
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function sliderUpload()
     {
 
@@ -324,10 +356,10 @@ class AdminAjaxController extends AdminController
             }
             $image = Image::make($_FILES['file']['tmp_name']);
             $ext = $file->getClientOriginalExtension();
-            $name = slugIt([$class->id, $class->name]).'.'.$ext;
+            $name = slugIt([$class->id, $class->name]) . '.' . $ext;
             /** Save the image name without the Prefix to the DB */
 
-            $save = false;
+            $save = FALSE;
             foreach (Config::get('evercise.slider_images') as $img) {
 
                 $file_name = $img['prefix'] . '_' . $name;
@@ -339,7 +371,7 @@ class AdminAjaxController extends AdminController
 
 
                 if ($image) {
-                    $save = true;
+                    $save = TRUE;
                 }
 
             }

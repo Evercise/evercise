@@ -1217,11 +1217,10 @@ class Evercisegroup extends \Eloquent
                 }
 
                 // Now, delete actual Evercisegroup too.
+
                 $evercisegroupForDeletion = Evercisegroup::find($this->id);
                 $evercisegroupForDeletion->delete();
 
-
-                event('class.index.single', ['id' => $this->id]);
 
                 Trainerhistory::create(
                     [
@@ -1234,7 +1233,7 @@ class Evercisegroup extends \Eloquent
             }
         }
 
-        return Response::json(['mode' => 'redirect', 'url' => Route('evercisegroups.index')]);
+        return Response::json(['mode' => 'redirect', 'url' => route('evercisegroups.index')]);
     }
 
 
