@@ -199,7 +199,7 @@ class Evercisegroup extends \Eloquent
                 ]
             );
 
-            event('evecisegroup.created', [$user, $this]);
+            event('class.updated', [$user, $this]);
 
 
         }

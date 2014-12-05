@@ -7,17 +7,40 @@ use Illuminate\Config\Repository;
 use Illuminate\Log\Writer;
 use Illuminate\Events\Dispatcher;
 
+/**
+ * Class Activity
+ * @package events
+ */
 class Activity
 {
     /**
      * @var Dispatcher
      */
     private $config;
+    /**
+     * @var Writer
+     */
     private $log;
+    /**
+     * @var Dispatcher
+     */
     private $event;
+    /**
+     * @var Activities
+     */
     private $activities;
+    /**
+     * @var Evercisesession
+     */
     private $evercisesession;
 
+    /**
+     * @param Writer $log
+     * @param Repository $config
+     * @param Dispatcher $event
+     * @param Activities $activities
+     * @param Evercisesession $evercisesession
+     */
     public function __construct(
         Writer $log,
         Repository $config,
@@ -32,12 +55,19 @@ class Activity
         $this->evercisesession = $evercisesession;
     }
 
+    /**
+     * @param $id
+     */
     private function getSession($id)
     {
-        $session = $this->evercisesession->find($id);
+        return $this->evercisesession->find($id);
     }
 
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function payedClass($class, $user)
     {
 
@@ -54,6 +84,10 @@ class Activity
     }
 
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function canceledClass($class, $user)
     {
         $this->activities->create([
@@ -70,6 +104,10 @@ class Activity
     }
 
 
+    /**
+     * @param $user
+     * @param $transaction
+     */
     public function walletToppup($user, $transaction)
     {
 
@@ -86,70 +124,91 @@ class Activity
 
     }
 
+    /**
+     * @param $user
+     * @param int $amount
+     */
     public function walletWithdraw($user, $amount = 0)
     {
 
-        $this->activities->create([
-            'description' => '£' . $amount . ' amount Withdrawn',
-            'type'        => 'walletwithdraw',
-            'user_id'     => $user->id
-        ]);
+//        $this->activities->create([
+//            'description' => '£' . $amount . ' amount Withdrawn',
+//            'type'        => 'walletwithdraw',
+//            'user_id'     => $user->id
+//        ]);
 
         $this->activities->create([
             'title'       => 'Wallet Withdraw',
             'type'        => 'wallettoppup',
             'description' => '£' . $amount . ' amount Withdrawn',
             'user_id'     => $user->id,
-            'type_id'     => $transaction->id,
-            'link'        => 'transactions/' . $transaction->id,
+            'type_id'     => $user->id,
+            'link'        => 'profile/'.$user->id.'/wallet',
             'link_title'  => 'View',
             'image'       => 'wallettoppup.png',
         ]);
     }
 
+    /**
+     * @param $user
+     */
     public function userEditProfile($user)
     {
 
-        $this->activities->create([
-            'description' => 'Edited your profile',
-            'type'        => 'editprofile',
-            'user_id'     => $user->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Edited your profile',
+//            'type'        => 'editprofile',
+//            'user_id'     => $user->id
+//        ]);
     }
 
+    /**
+     * @param $user
+     */
     public function linkFacebook($user)
     {
 
-        $this->activities->create([
-            'description' => 'Linked Facebook account',
-            'type'        => 'linkfacebook',
-            'user_id'     => $user->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Linked Facebook account',
+//            'type'        => 'linkfacebook',
+//            'user_id'     => $user->id
+//        ]);
     }
 
+    /**
+     * @param $user
+     */
     public function linkTwitter($user)
     {
 
-        $this->activities->create([
-            'description' => 'Linked Twitter account',
-            'type'        => 'linktwitter',
-            'user_id'     => $user->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Linked Twitter account',
+//            'type'        => 'linktwitter',
+//            'user_id'     => $user->id
+//        ]);
     }
 
+    /**
+     * @param $user
+     * @param string $email
+     */
     public function invitedEmail($user, $email = '')
     {
 
         if ($email != '') {
-
-            $this->activities->create([
-                'description' => 'Invited ' . $email . ' to join Evercise',
-                'type'        => 'invitedemail',
-                'user_id'     => $user->id
-            ]);
+//
+//            $this->activities->create([
+//                'description' => 'Invited ' . $email . ' to join Evercise',
+//                'type'        => 'invitedemail',
+//                'user_id'     => $user->id
+//            ]);
         }
     }
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function createdClass($class, $user)
     {
 
@@ -167,69 +226,104 @@ class Activity
 
     }
 
+    /**
+     * @param $venue
+     * @param $user
+     */
     public function createdVenue($venue, $user)
     {
 
-        $this->activities->create([
-            'description' => 'Created Venue ' . $venue->name,
-            'type'        => 'createdvenue',
-            'user_id'     => $user->id,
-            'type_id'     => $venue->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Created Venue ' . $venue->name,
+//            'type'        => 'createdvenue',
+//            'user_id'     => $user->id,
+//            'type_id'     => $venue->id
+//        ]);
     }
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function createdSessions($class, $user)
     {
 
-        $this->activities->create([
-            'description' => 'Created Multiple sessions for ' . $class->name,
-            'type'        => 'createdsessions',
-            'user_id'     => $user->id,
-            'type_id'     => $class->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Created Multiple sessions for ' . $class->name,
+//            'type'        => 'createdsessions',
+//            'user_id'     => $user->id,
+//            'type_id'     => $class->id
+//        ]);
     }
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function updatedClass($class, $user)
     {
         $this->activities->create([
-            'description' => 'Updated Class ' . $class->name,
+            'title'       => 'Updated a Class',
             'type'        => 'updatedclass',
+            'description' => $class->name,
             'user_id'     => $user->id,
-            'type_id'     => $class->id
+            'type_id'     => $class->id,
+            'link'        => 'class/' . $class->id,
+            'link_title'  => 'View',
+            'image'       => 'updatedclass.png',
         ]);
     }
 
+    /**
+     * @param $venue
+     * @param $user
+     */
     public function updatedVenue($venue, $user)
     {
-        $this->activities->create([
-            'description' => 'Updated Venue ' . $venue->name,
-            'type'        => 'updatedvenue',
-            'user_id'     => $user->id,
-            'type_id'     => $venue->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Updated Venue ' . $venue->name,
+//            'type'        => 'updatedvenue',
+//            'user_id'     => $user->id,
+//            'type_id'     => $venue->id
+//        ]);
     }
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function updatedSessions($class, $user)
     {
-        $this->activities->create([
-            'description' => 'Created Sessions for ' . $class->name,
-            'type'        => 'updatedsessions',
-            'user_id'     => $user->id,
-            'type_id'     => $class->id
-        ]);
+//        $this->activities->create([
+//            'description' => 'Created Sessions for ' . $class->name,
+//            'type'        => 'updatedsessions',
+//            'user_id'     => $user->id,
+//            'type_id'     => $class->id
+//        ]);
     }
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function deletedClass($class, $user)
     {
-        $activity = $this->activities->create([
-            'description' => 'Deleted Class ' . $class->name,
+        $this->activities->create([
+            'title'       => 'Deleted a Class',
             'type'        => 'deletedclass',
+            'description' => $class->name,
             'user_id'     => $user->id,
-            'type_id'     => $class->id
+            'type_id'     => $class->id,
+            'link'        => 'class/' . $class->id,
+            'link_title'  => 'View',
+            'image'       => 'deleteclass.png',
         ]);
-        Log::info($activiti->id);
     }
 
+    /**
+     * @param $venue
+     * @param $user
+     */
     public function deletedVenue($venue, $user)
     {
         $this->activities->create([
@@ -240,17 +334,25 @@ class Activity
         ]);
     }
 
+    /**
+     * @param $class
+     * @param $user
+     */
     public function deletedSessions($class, $user)
     {
-        $this->activities->create([
-            'description' => 'Deleted Sessions ' . $class->name,
-            'type'        => 'deletedsessions',
-            'user_id'     => $user->id,
-            'type_id'     => $class->id
-        ]);
+//        $this->activities->create([
+        //            'description' => 'Deleted Sessions ' . $class->name,
+        //            'type'        => 'deletedsessions',
+        //            'user_id'     => $user->id,
+        //            'type_id'     => $class->id
+        //        ]);
     }
 
 
+    /**
+     * @param $user
+     * @param $class
+     */
     public function usedReviewedClass($user, $class)
     {
 
@@ -268,6 +370,10 @@ class Activity
 
     }
 
+    /**
+     * @param $coupon
+     * @param $user
+     */
     public function usedCoupon($coupon, $user)
     {
 
@@ -331,6 +437,10 @@ class Activity
 
     }
 
+    /**
+     * @param $user
+     * @param $transaction
+     */
     public function userTopupCompleted($user, $transaction)
     {
         $title = 'You topped up your account';

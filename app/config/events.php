@@ -90,8 +90,9 @@ return [
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
 
-        ['class.created' => 'Classes@classCreated'],  // $class, $trainer// ∑
-        ['class.deleted' => 'Classes@classDeleted'],  // $class, $trainer// ∑
+        ['class.created' => 'Classes@classCreated'],  // $class, $trainer
+        ['class.deleted' => 'Classes@classDeleted'],  // $class, $trainer
+        ['class.updated' => 'Classes@classUpdated'],  // $class, $trainer
         ['session.joined' => 'User@sessionJoined'],
         ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $everciseGroup, $transactionId
         ['session.upcoming_session' => 'Sessions@upcommingSessions'],
