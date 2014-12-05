@@ -13,7 +13,6 @@
         @foreach($packages as $index => $p)
             <div class="col-sm-4 text-center">
                 <ul class="list-group package-block-module 'package-{{ $p->style }}">
-
                     <li class="list-group-item package-title">
                         <h3>{{ $p->name }}</h3>
                     </li>
