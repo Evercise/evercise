@@ -45,7 +45,7 @@ class Search
     {
         /**  Set Defaults */
         $defaults = [
-            'radius' => '1mi',
+            'radius' => '10mi',
             'size' => 24,
             'from' => 0
         ];

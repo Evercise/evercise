@@ -148,13 +148,20 @@ class ArticlesController extends \BaseController
 
             if ($this->request->file('main_image')) {
 
-                $file = $dir . '/' . Str::slug($data['title']).'.'.$this->request->file('main_image')->getClientOriginalExtension();
+                $file = $dir . '/' . slugIt($data['title']).'.'.$this->request->file('main_image')->getClientOriginalExtension();
                 $image = Image::make($this->request->file('main_image')->getRealPath())->fit(
-                    $this->config->get('evercise.article_main_image.width'),
-                    $this->config->get('evercise.article_main_image.height')
+                    $this->config->get('evercise.article_main_image.regular.width'),
+                    $this->config->get('evercise.article_main_image.regular.height')
+                )->save($file);
+                $data['main_image'] = str_replace(public_path() . '/', '', $file);
+
+                $file = $dir . '/thumb_' . slugIt($data['title']).'.'.$this->request->file('main_image')->getClientOriginalExtension();
+                $image = Image::make($this->request->file('main_image')->getRealPath())->resize(
+                    $this->config->get('evercise.article_main_image.thumb.width'),
+                    $this->config->get('evercise.article_main_image.thumb.height')
                 )->save($file);
 
-                $data['main_image'] = str_replace(public_path() . '/', '', $file);
+                $data['thumb_image'] = str_replace(public_path() . '/', '', $file);
             }
 
             if(is_null($data['main_image'])) {

@@ -109,11 +109,13 @@ class EverciseCart extends Cart
 
         if (!empty($user->id)) {
             foreach ($user->packages as $p) {
-                $package = $p->package->toArray();
-                $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
-                $package['package_id'] = $package['id'];
-                $package['id'] = $p->id;
-                $packages[] = $package;
+                if(!empty($p->package)) {
+                    $package = $p->package->toArray();
+                    $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
+                    $package['package_id'] = $package['id'];
+                    $package['id'] = $p->id;
+                    $packages[] = $package;
+                }
             };
 
             $cart['wallet'] = $user->getWallet()->getBalance();
