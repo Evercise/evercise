@@ -118,9 +118,14 @@ class UpdatePackages extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('packages', function(Blueprint $table) {
-			
-		});
+
+
+        Schema::table('packages', function(Blueprint $table) {
+            $table->dropColumn('style');
+            $table->string('savings');
+        });
+
+        Packages::limit(10)->delete();
 	}
 
 }
