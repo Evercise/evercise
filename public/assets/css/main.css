@@ -10905,7 +10905,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   background-position: -442px -691px;
   background-repeat: no-repeat;
   overflow: hidden;
-  padding: 50px 0;
+  padding: 60px 20px 0;
 }
 .package-green .package-title.active {
   background-position: -442px -771px;
@@ -10915,14 +10915,20 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   cursor: pointer;
   background-position: -442px -771px;
 }
-.package-green .package-title h3 {
+.package-green .package-title h1 {
   color: #ffffff;
+}
+.package-green .package-description {
+  height: 210px;
 }
 .package-green .package-list ul {
   padding: 0;
 }
 .package-green .package-list ul li {
   list-style: none;
+}
+.package-green span.colour {
+  color: #7ed321;
 }
 .package-green .package-pay strong {
   font-size: 16px;
@@ -10977,7 +10983,7 @@ fieldset[disabled] .package-green .package-pay .btn.active {
   background-position: -442px -691px;
   background-repeat: no-repeat;
   overflow: hidden;
-  padding: 50px 0;
+  padding: 60px 20px 0;
 }
 .package-blue .package-title.active {
   background-position: -442px -771px;
@@ -10987,14 +10993,20 @@ fieldset[disabled] .package-green .package-pay .btn.active {
   cursor: pointer;
   background-position: -442px -771px;
 }
-.package-blue .package-title h3 {
+.package-blue .package-title h1 {
   color: #ffffff;
+}
+.package-blue .package-description {
+  height: 210px;
 }
 .package-blue .package-list ul {
   padding: 0;
 }
 .package-blue .package-list ul li {
   list-style: none;
+}
+.package-blue span.colour {
+  color: #50c3e2;
 }
 .package-blue .package-pay strong {
   font-size: 16px;
@@ -11049,7 +11061,7 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
   background-position: -442px -691px;
   background-repeat: no-repeat;
   overflow: hidden;
-  padding: 50px 0;
+  padding: 60px 20px 0;
 }
 .package-pink .package-title.active {
   background-position: -442px -771px;
@@ -11059,14 +11071,20 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
   cursor: pointer;
   background-position: -442px -771px;
 }
-.package-pink .package-title h3 {
+.package-pink .package-title h1 {
   color: #ffffff;
+}
+.package-pink .package-description {
+  height: 210px;
 }
 .package-pink .package-list ul {
   padding: 0;
 }
 .package-pink .package-list ul li {
   list-style: none;
+}
+.package-pink span.colour {
+  color: #ff1b7e;
 }
 .package-pink .package-pay strong {
   font-size: 16px;

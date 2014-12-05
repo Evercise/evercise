@@ -11,10 +11,10 @@
     </div>
     <div class="row">
         @foreach($packages as $index => $p)
-            <div class="col-sm-4 text-center">
-                <ul class="list-group package-block-module 'package-{{ $p->style }}">
+            <div class="col-sm-4 text-left">
+                <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                     <li class="list-group-item package-title">
-                        <h3>{{ $p->name }}</h3>
+                        <h1>{{ $p->name }}</h1>
                     </li>
                     <li class="list-group-item package-description">
                         <h4>{{ $p->classes }} Class Package</h4>
@@ -24,7 +24,7 @@
                         @if(!empty($p->bullets))
                             <div>
                                 <ul>
-                                    <li><span class="icon icon-point"></span>Any {{$p->classes }} classes up to £{{ round($p->max_class_price,2) }}</li>
+                                    <li><span class="icon icon-point"></span>Any <span class="colour">{{$p->classes }}</span> classes up to <span class="color">{{ round($p->max_class_price,2) }}</span> </li>
                                     <li><span class="icon icon-point"></span>Save {{$p->savings()}}% on standard price</li>
                                     <li><span class="icon icon-point"></span>Up to {{ $p->availableClasses()}} classes to choose from</li>
                                     @foreach(explode('|', $p->bullets) as $b)
