@@ -64,6 +64,15 @@ class Activity
     }
 
 
+    private function fixAmountDisplay($amount) {
+        if(strpos($amount, '-') !== false) {
+            return str_replace('-', '-£', $amount);
+        }
+
+        return '£'.$amount;
+    }
+
+
     /**
      * @param $class
      * @param $user
@@ -115,7 +124,7 @@ class Activity
         $this->activities->create([
             'title'       => 'Top Up',
             'type'        => 'wallettoppup',
-            'description' => '£' . $transaction->total . ' credit to your account on ' . date('d/m/y'),
+            'description' => $this->fixAmountDisplay($transaction->total) . ' credit to your account on ' . date('d/m/y'),
             'user_id'     => $user->id,
             'type_id'     => $transaction->id,
             'link'        => 'transactions/' . $transaction->id,
@@ -141,7 +150,7 @@ class Activity
         $this->activities->create([
             'title'       => 'Wallet Withdraw',
             'type'        => 'wallettoppup',
-            'description' => '£' . $amount . ' amount Withdrawn',
+            'description' => $this->fixAmountDisplay($amount) . ' amount Withdrawn',
             'user_id'     => $user->id,
             'type_id'     => $user->id,
             'link'        => 'profile/'.$user->id.'/wallet',
@@ -418,7 +427,7 @@ class Activity
         }
 
 
-        $description .= ' for £' . $cart['total']['final_cost'];
+        $description .= ' for '.$this->fixAmountDisplay($cart['total']['final_cost']);
 
         $data = [
             'description' => $description,
@@ -445,7 +454,7 @@ class Activity
     public function userTopupCompleted($user, $transaction)
     {
         $title = 'You topped up your account';
-        $description = 'You topped up your account with £' . $transaction->total;
+        $description = 'You topped up your account with '.$this->fixAmountDisplay($transaction->total);
 
         $data = [
             'description' => $description,

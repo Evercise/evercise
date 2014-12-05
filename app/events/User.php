@@ -141,17 +141,6 @@ class User
         $this->track->userFacebookRegistered($user);
     }
 
-    /**
-     * @param $user
-     * @param $session
-     */
-    public function sessionJoined($user, $session)
-    {
-        $this->log->info('User ' . $user->id . ' joined session ' . $session->id);
-
-        $this->track->registerUserSessionTracking($user, $session);
-
-    }
 
 
     /**

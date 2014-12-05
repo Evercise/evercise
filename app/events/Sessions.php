@@ -141,10 +141,13 @@ class Sessions
     /**
      * @param $user
      * @param $trainer
+     * @param $session
      * @param $everciseGroup
      * @param $transactionId
      */
-    public function joinedClass($user, $trainer, $everciseGroup, $transactionId) {
+    public function joinedClass($user, $trainer, $session, $everciseGroup, $transactionId) {
+
+        $this->track->registerUserSessionTracking($user, $session);
 
         $this->mail->userJoinedTrainersSession($user, $trainer, $everciseGroup, $transactionId);
         $this->mail->trainerJoinSession($user, $trainer, $everciseGroup, $transactionId);
