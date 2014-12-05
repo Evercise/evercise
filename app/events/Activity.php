@@ -94,7 +94,7 @@ class Activity
             'title'       => 'Canceled class',
             'description' => $class->name,
             'type'        => 'canceledclass',
-            'image'       => 'canceledclass.png',
+            'image'       => $user->directory.'/'.$class->image,
             'link'        => 'class/' . $class->id,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
@@ -220,7 +220,7 @@ class Activity
             'type_id'     => $class->id,
             'link'        => 'class/' . $class->id,
             'link_title'  => 'View',
-            'image'       => 'createclass.png',
+            'image'       => $user->directory.'/'.$class->image,
         ]);
 
 
@@ -316,7 +316,7 @@ class Activity
             'type_id'     => $class->id,
             'link'        => 'class/' . $class->id,
             'link_title'  => 'View',
-            'image'       => 'deleteclass.png',
+            'image'       => $user->directory.'/'.$class->image,
         ]);
     }
 
