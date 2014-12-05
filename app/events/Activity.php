@@ -71,13 +71,14 @@ class Activity
     public function payedClass($class, $user)
     {
 
+        $trainer = $class->user()->first();
         $this->activities->create([
             'title'       => 'Joined class',
             'description' => $class->name,
             'link'        => 'class/' . $class->id,
             'link_title'  => 'View class',
             'type'        => 'payedclass',
-            'image'       => 'payedclass.png',
+            'image'       => $trainer->directory.'/'.$class->image,
             'user_id'     => $user->id,
             'type_id'     => $class->id
         ]);
