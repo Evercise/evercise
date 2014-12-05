@@ -108,7 +108,7 @@
                                <tbody>
                                    @foreach($data['user']->activities as $act)
                                         <tr>
-                                            <td class="transparent-border-top">{{$act->created_at}}</td>
+                                            <td><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($act->created_at))}}</span></td>
                                             <td>{{$act->description}}</td>
                                             <td class="text-right">{{($act->transaction) ? $act->transaction['total'] : '0.00'}}</td>
                                         </tr>
