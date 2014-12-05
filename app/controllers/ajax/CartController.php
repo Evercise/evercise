@@ -82,6 +82,14 @@ class CartController extends AjaxBaseController
             } else {
                 if ($idArray['type'] == 'topup') {
                     $amount = Input::get('amount', 0);
+
+                    if ($amount < 1) {
+                        return Response::json([
+                            'validation_failed' => 1,
+                            'errors' => ['custom' => 'Amount too small']
+                        ]);
+                    }
+
                     EverciseCart::clearTopup();
                     EverciseCart::instance('topup')->add($idArray['id'], 'top up', 1, $amount, []);
                 } else {

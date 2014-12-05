@@ -6,9 +6,9 @@ class SessionsController extends AjaxBaseController{
 
     public function getSessionsInline()
     {
-        $groupId = Input::get('groupId');
+        $evercisegroupId = Input::get('groupId');
         $id = Input::get('id');
-        $sessions = Evercisegroup::find($groupId)->Futuresessions;
+        $sessions = Evercisegroup::find($evercisegroupId)->Futuresessions;
         $userId = \Sentry::getUser()->id;
 
         if($id != $userId){
@@ -21,8 +21,9 @@ class SessionsController extends AjaxBaseController{
         return Response::json([
             'view' => View::make('v3.classes.sessions_inline')
                 ->with('sessions', $sessions)
+                ->with('evercisegroup_id', $evercisegroupId)
                 ->with('mode', $type)->render(),
-            'id'   => $groupId
+            'id'   => $evercisegroupId
         ]);
     }
 

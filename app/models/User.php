@@ -219,7 +219,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public function activities()
     {
-        return $this->hasMany('Activities');
+        return $this->hasMany('Activities')
+            ->orderBy('created_at', 'desc');
     }
 
 
