@@ -4,8 +4,8 @@ function profileNav(nav){
     this.top = $('#nav').height();
     this.stickyTop = (this.nav.offset().top - this.nav.height());
     this.url = document.URL;
+    this.lastOfUrl = '';
     this.addListeners();
-    console.log( this.url);
 }
 
 profileNav.prototype = {
@@ -35,7 +35,21 @@ profileNav.prototype = {
     },
     changeTabs: function(e){
         e.preventDefault()
-        var history = $(e.target).attr('href').substring(1);
-        window.history.pushState(null, history,history);
+        var target = $(e.target).attr('href').substring(1);
+        this.getUrl();
+
+        if(Math.floor(this.lastOfUrl) == this.lastOfUrl && $.isNumeric(this.lastOfUrl))
+        {
+            window.history.pushState(null, this.lastOfUrl+'/'+target,this.lastOfUrl+'/'+target);
+        }
+        else{
+            window.history.pushState(null, target,target);
+        }
+    },
+    getUrl: function(){
+        var url = window.location.pathname;
+        var array = url.split("/");
+        array.reverse();
+        this.lastOfUrl = array[0] != '' ? array[0] : array[1];
     }
 }

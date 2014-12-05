@@ -44,9 +44,23 @@ class Classes
 
     public function classDeleted($class, $user){
 
-        Log::info('User '.$user->id.' DELETED class '.$class->name);
+        Log::info('User '.$user->id.' Updated class '.$class->name);
 
 
+        $this->activity->deletedClass($class, $user);
+
+        /** Mail And other shit Go here */
+        $this->indexer->indexSingle($class->id);
+
+    }
+
+
+    public function classUpdated($class, $user){
+
+        Log::info('User '.$user->id.' Updated class '.$class->name);
+
+
+        $this->activity->updatedClass($class, $user);
 
         /** Mail And other shit Go here */
         $this->indexer->indexSingle($class->id);

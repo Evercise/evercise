@@ -7,7 +7,7 @@
             <ul class="nav navbar-nav nav-justified nav-no-float">
                 <li class="active"><a href="#about" data-toggle="tab">About</a></li>
                 <li><a href="#schedule" data-toggle="tab">Schedule</a></li>
-                <li><a href="#reviews" data-toggle="tab">Reviews</a></li>
+                <li ng-class="preview.reviews.length > 0 ? '' : 'disabled'"><a  href="#reviews" data-toggle="tab">Reviews</a></li>
             </ul>
         </nav>
     </div>
@@ -37,7 +37,7 @@
                 <h3>Schedule</h3>
             </div>
 
-            <div class="row preview-row" ng-repeat="session in preview.sessions | orderBy: date_time:reverse | limitTo:4">
+            <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets | orderBy: date_time:reverse | limitTo:4">
                 <div class="col-sm-6 mt5">
                     <span class="icon icon-clock"></span>
                     {[{ session.date_time }]}
@@ -63,6 +63,7 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="reviews">
+
             <div ng-repeat="review in preview.reviews" >
                 <div class="row">
                     <div class="col-sm-3">

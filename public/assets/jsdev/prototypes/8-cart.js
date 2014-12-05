@@ -14,9 +14,11 @@ Cart.prototype = {
     changeSelectDropdown: function(e){
         if( $(e.target).val() ){
             $(e.target).css('z-index', 1);
+            $(e.target).closest('.add-to-class').trigger('submit');
         }else{
             $(e.target).css('z-index', 0);
         }
+
     },
     submit: function(e){
         e.preventDefault();

@@ -107,7 +107,7 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
                                 <div class="col-sm-3 text-center">
-                                    <strong>1</strong>
+                                    {{ HTML::linkRoute('packages', 'More', null, ['class' => 'btn btn-info btn-block btn-package']) }}
                                 </div>
                                 <div class="col-sm-7">
                                     <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong><br>
@@ -125,22 +125,21 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
                                 <div class="col-sm-3">
-
                                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                                         {{ Form::hidden('force', true) }}
                                         {{ Form::hidden('refresh-page', true) }}
-
                                         <div class="btn-group pull-right custom-btn-dropdown-select">
                                             {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
 
                                             <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
                                                 <option value=""></option>
-                                                @for($i = 1; $i < 10; $i++)
+                                                @for($i = 1; $i < ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
                                                     <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
                                             </select>
                                         </div>
+
                                     {{ Form::close() }}
                                 </div>
                                 <div class="col-sm-7">
@@ -211,9 +210,13 @@
                                 <div class="col-sm-5">
                                     <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
                                 </div>
+                            @elseif($total['subtotal'] == $total['package_deduct'])
+                                <div class="col-sm-5">
+                                    {{ Html::linkRoute('wallet.sessions', 'Pay with package',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                </div>
                             @else
                                 <div class="col-sm-5">
-                                    {{ Html::linkRoute('wallet.sessions', 'Pay with wallet', ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                    {{ Html::linkRoute('wallet.sessions', 'Pay with wallet',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
                                 </div>
                             @endif
                         </div>

@@ -381,13 +381,15 @@ class PaymentController extends BaseController
             $transaction->items()->save($item);
 
 
-            $trainer = $evercisesession->evercisegroup()->first()->user()->first();
+            $evercisegroup = $evercisesession->evercisegroup()->first();
+
+            $trainer = $evercisegroup->user()->first();
 
            /**
             * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
             */
 
-            event('session.joined', [$this->user, $trainer, $evercisesession]);
+            event('session.joined', [$this->user, $trainer, $evercisesession, $evercisegroup, $transaction->id]);
 
         }
 

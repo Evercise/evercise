@@ -15,6 +15,7 @@
                 h3 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; text-align: left; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
                 p { font-family: helvetica, arial, sans-serif; font-size: 26px; text-align: left; line-height: 38px; font-weight: normal; color:#768690; }
                 b { font-weight: bold; color:#768690; }
+                img { max-width: 640px; width: 100%}
                 .footer { font-size: 13px; text-align: left;}
         	}
 
@@ -22,6 +23,7 @@
                 h3 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; text-align: left; line-height: 42px; font-weight: normal; color:#768690; }
                 p { font-family: helvetica, arial, sans-serif; font-size: 26px; text-align: left; line-height: 38px; font-weight: normal; color:#768690; }
                 b { font-weight: bold; color:#768690; }
+                img { max-width: 640px; width: 100%}
                 .footer { font-size: 13px; text-align: left;}
         	}
 
@@ -39,9 +41,7 @@
                                 <table width="640" height="434" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td>
-                                            <a href="http://www.evercise.com/joinus">
-                                                <img src="http://dev.evercise.com/assets/img/email/3 - Welcome from referral.png" width="640" height="434" border="0" alt="Evercise Badminton">
-                                            </a>
+                                            @yield('image')
                                         </td>
                                     </tr>
                                 </table>
@@ -67,25 +67,22 @@
                                 <table width="640" height="auto" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
-                                            <h3>Hi Mewisio</h3>
+                                            @yield('title')
                                         </td>
                                     </tr>
                                     <tr>
                                         <td align="left">
-                                            <p>Join <span style="color: #50c3e2">Bobb</span> and discover Evercise - the flexible new Pay As You Go fitness community that fits in with you lifestyle and doesn&apos;t tie you down to an expensive gym membership.</p>
-                                            <p>some other gump.</p>
-                                            <p>some other gump.</p>
-                                            <p>some other gump.</p>
+                                            @yield('body')
 
                                         </td>
                                     </tr>
                                 </table>
 
 
-                                <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="640" height="93" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
-                                            <a href="http://www.evercise.com/joinus"><img src="http://dev.evercise.com/assets/img/email/upsell welcome.png" width="640" height="auto" border="0" alt="Claim account" align="center"></a>
+                                            @yield('upsell')
                                         </td>
                                     </tr>
                                 </table>

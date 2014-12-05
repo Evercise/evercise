@@ -1,11 +1,16 @@
-function EditClass(form){
+function UpdateSession(form){
     this.form = form;
     this.addListeners();
 }
-EditClass.prototype = {
-    constructor: EditClass,
+
+UpdateSession.prototype = {
+    constructor : UpdateSession,
     addListeners: function(){
+        $('.update-session-select').on('change', $.proxy(this.sessionChanged, this));
         this.form.on('submit', $.proxy(this.submit, this));
+    },
+    sessionChanged: function(e){
+
     },
     submit: function(e){
         e.preventDefault();
@@ -25,7 +30,7 @@ EditClass.prototype = {
             },
 
             success: function (data) {
-                self.edit(data);
+                self.update(data);
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -37,13 +42,7 @@ EditClass.prototype = {
             }
         });
     },
-    edit: function(data){
-        $('#'+ data.id).html(data.view);
-        $('#edit-'+ data.id).removeClass('disabled');
-        $('#submit-'+ data.id).hide();
-        $('#'+ data.id).parent().collapse('show');
-        $('#infoToggle-'+data.id).removeClass('hide');
-        datepick();
-        new UpdateSession($('.update-session'));
+    update: function(data){
+
     }
 }

@@ -84,15 +84,15 @@ return [
         ['user.edit' => 'User@edit'],
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
-        ['session.joined' => 'User@sessionJoined'],
         ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
 
-        ['class.created' => 'Classes@classCreated'],  // $class, $trainer// ∑
-        ['session.joined' => 'User@sessionJoined'],
-        ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $everciseGroup, $transactionId
+        ['class.created' => 'Classes@classCreated'],  // $class, $trainer
+        ['class.deleted' => 'Classes@classDeleted'],  // $class, $trainer
+        ['class.updated' => 'Classes@classUpdated'],  // $class, $trainer
+        ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $session, $everciseGroup, $transactionId
         ['session.upcoming_session' => 'Sessions@upcommingSessions'],
         ['session.mail_all' => 'Sessions@mailAll'],
         ['session.mail_trainer' => 'Sessions@mailTrainer'],

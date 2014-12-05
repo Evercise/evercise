@@ -31,7 +31,7 @@
                     <div class="class-module center-block">
                         <div class="class-image-wrapper">
                             <a href="{[{ marker.link }]}">
-                                {{ image('{[{marker.directory}]}/search_{[{ marker.image}]}', '{[{ marker.name}]}') }}
+                                {{ image('{[{marker.directory}]}/module_{[{ marker.image}]}', '{[{ marker.name}]}') }}
                             </a>
                         </div>
                         <div class="class-title-wrapper text-center">

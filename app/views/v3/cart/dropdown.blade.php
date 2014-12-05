@@ -15,16 +15,10 @@
             @foreach($packages as $row)
                 <div class="cart-row">
                     <div class="col-xs-3">
-                        <div class="btn-group btn-block">
-                            <button class="btn btn-primary">1</button>
-                            <button type="button" class="btn btn-primary btn-aside" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                        </div>
-
+                        {{ HTML::linkRoute('packages', 'More', null, ['class' => 'btn btn-info btn-block btn-package']) }}
                     </div>
                     <div class="col-xs-7">
-                        <strong>{{ $row['name'] }}</strong>
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['id']]) }}
                         <br>
                         <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
                     </div>
@@ -50,7 +44,7 @@
 
                                 <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
                                     <option value=""></option>
-                                    @for($i = 1; $i < 10; $i++)
+                                    @for($i = 1; $i < ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
                                         <option value="{{$i}}">{{$i}}</option>
                                     @endfor
                                 </select>
@@ -59,7 +53,7 @@
 
                     </div>
                     <div class="col-xs-7">
-                        <strong>{{ $row['name'] }}</strong>
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['evercisegroup_id']]) }}
                         <br>
                         <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : $row['grouped_price']) }}</strong>
                     </div>

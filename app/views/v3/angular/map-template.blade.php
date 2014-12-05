@@ -32,7 +32,7 @@
                  class="class-snippet"
                  ng-click="clicked(marker)">
                 <div class="class-image-wrapper col-sm-4">
-                    {{ image('{[{marker.directory}]}/search_{[{ marker.image}]}', '{[{ marker.name}]}') }}
+                    <img class="lazy" data-original="/{[{marker.directory}]}/search_{[{ marker.image}]}" alt="{[{ marker.name}]}">
                 </div>
                 <div class="class-title-wrapper panel-body col-sm-8">
                     <div class="ml10">

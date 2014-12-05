@@ -70,22 +70,22 @@
                             <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
                             <td>
                                 <div class="custom-select">
-                                    {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
                                 </div>
                             </td>
                             <td>
                                 <div class="custom-select">
-                                    {{ Form::select('duration',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    {{ Form::select('duration',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
                                 </div>
                             </td>
                             <td>
                                 <div class="custom-select">
-                                    {{ Form::select('tickets',Config::get('evercise.tickets'), $session->tickets , ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    {{ Form::select('tickets',Config::get('evercise.tickets'), $session->tickets , ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
                                 </div>
                             </td>
                             <td>
                                 <div class="custom-select">
-                                    {{ Form::select('price',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    {{ Form::select('price',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
                                 </div>
                             </td>
                             <td class="text-right">
@@ -93,10 +93,10 @@
                                     {{ Form::hidden('id', $session->id) }}
                                     {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
                                 {{ Form::close() }}
-                                {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session']) }}
+
                                     <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
                                     <span class="icon icon-people mr15 hover"></span>
-
+                                {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session hidden']) }}
                                     {{ Form::hidden('id', $session->id) }}
                                     {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' , 'form' => 'update-sessions-'.$session->id]) }}
                                 {{ Form::close() }}

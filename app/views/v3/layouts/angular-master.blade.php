@@ -45,6 +45,7 @@
     {{ HTML::script('https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js') }}
     {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js') }}
     {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js') }}
+    {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js') }}
 
     {{ HTML::script('/assets/js/angular-google-maps.min.js') }}
 

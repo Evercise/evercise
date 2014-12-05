@@ -26,6 +26,9 @@ if(typeof angular != 'undefined') {
                 $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
             }
             $scope.markers = $scope.myMarkers;
+            $("img.lazy").lazyload({
+                container: $(".snippet-body")
+            });
 
         }, true);
 
@@ -114,7 +117,7 @@ if(typeof angular != 'undefined') {
             pan: {},
             options: {
                 streetViewControl: false,
-                maxZoom: 20,
+                maxZoom: 19,
                 minZoom: 3
             },
             zoom: 12
@@ -133,13 +136,6 @@ if(typeof angular != 'undefined') {
                 height: 43,
                 width: 33,
                 anchorText: [-14,9]
-            },
-            {
-                textColor: 'white',
-                url: '/assets/img/icon_default_large_pin_number.png',
-                height: 66,
-                width: 51,
-                anchorText: [-22,14]
             }
         ];
 
@@ -204,7 +200,7 @@ if(typeof angular != 'undefined') {
             // topggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
             $scope.lastActiveMarker = marker;
-            marker.icon = '/assets/img/icon_default_large_pin.png';
+            marker.icon = '/assets/img/icon_default_small_pin_grey.png';
 
             $scope.mask = true;
 
@@ -223,6 +219,7 @@ if(typeof angular != 'undefined') {
             $('.class-snippet').addClass('fade-out');
             $('.class-snippet').removeClass('active');
             $(id).addClass('active');
+
             $('.mb-scroll').mCustomScrollbar("scrollTo", id, {
                 scrollInertia: 500,
                 timeout: 10
@@ -252,6 +249,16 @@ if(typeof angular != 'undefined') {
             nextClassDuration: '',
             capacity: '',
             link: ''
+        }
+
+        // test to see if has sessions
+        $scope.hasTickets = function(session){
+            if(session.remaining > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         /*
         $(window).resize(function(){
@@ -283,4 +290,4 @@ if(typeof angular != 'undefined') {
 
 
     }]);
-}
+};

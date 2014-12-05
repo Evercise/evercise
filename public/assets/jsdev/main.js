@@ -31,13 +31,25 @@ $(function(){
     $('.map_canvas').exists(function() {
         map = new Map(this);
     });
+    $('.lazy').exists(function() {
+        $("img.lazy").lazyload();
+    });
 
 
     $('.mb-scroll').exists(function(){
         $(this).mCustomScrollbar({
-            scrollSpeed: 10,
-            autoHideScrollbar: true
+            scrollSpeed: 50,
+            mouseWheelPixels: 50,
+            autoHideScrollbar: true,
+            scrollInertia: 0,
+            callbacks:{
+                onScroll:function(){ WhileScrolling(); }
+            }
         });
+
+        function WhileScrolling(){
+            $("img.lazy").lazyload();
+        }
     })
 
     $('.holder').exists(function(){
@@ -92,10 +104,12 @@ $(function(){
             e.preventDefault();
             new AjaxRequest($(e.target), newSessionAdded);
         })
+        /*
         $(document).on('submit', '.update-session', function(e){
             e.preventDefault();
             new AjaxRequest($(e.target), updateHubRow);
         })
+        */
 
         $(document).on('submit', '.remove-session', function(e){
             e.preventDefault();
