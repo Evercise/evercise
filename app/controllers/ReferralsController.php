@@ -39,7 +39,7 @@ class ReferralsController extends \BaseController {
                 ]);
 			}
 		}
-		return Response::json(['url' => Route('users.edit', [$this->user->id.'/wallet'])]);
+		return Response::json(['url' => Route('users.edit', [$this->user->display_name.'/wallet'])]);
 	}
 
 	// Accept a code from a friend referral

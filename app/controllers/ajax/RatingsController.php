@@ -77,7 +77,7 @@ class RatingsController extends AjaxBaseController{
         }
         return Response::json(
             [
-                'url' => route('users.edit', [ $this->user->id, 'attended'])
+                'url' => route('users.edit', [ $this->user->display_name, 'attended'])
             ]
         );
     }

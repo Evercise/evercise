@@ -173,4 +173,8 @@ class SessionsController extends AjaxBaseController{
         return view('v3.sessions.participants', compact('participants'));
     }
 
+    public function getSlug(){
+        return $this->evercisegroup->slug;
+    }
+
 }

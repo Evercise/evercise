@@ -57,7 +57,7 @@ class TrainersController extends AjaxBaseController
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url'      => route('users.edit', $this->user->id)
+                    'url'      => route('users.edit', $this->user->display_name)
                 ]
             );
         } else {

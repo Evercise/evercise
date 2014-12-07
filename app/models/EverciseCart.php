@@ -148,8 +148,10 @@ class EverciseCart extends Cart
                         if(!empty($session->id)) {
                             $remaining_tickets = $session->remainingTickets();
 
+                            $slug = $session->evercisegroup->slug;
                             $session = $session->toArray();
                             $session['tickets'] = $remaining_tickets;
+                            $session['slug'] = $slug;
 
                             unset($session['sessionmembers']);
                             $sessions[] = $session;

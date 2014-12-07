@@ -50,10 +50,9 @@
                                 </select>
                             </div>
                         {{ Form::close() }}
-
                     </div>
                     <div class="col-xs-7">
-                        {{ Html::linkRoute('class.show', $row['name'], [$row['evercisegroup_id']]) }}
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['slug']]) }}
                         <br>
                         <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : $row['grouped_price']) }}</strong>
                     </div>

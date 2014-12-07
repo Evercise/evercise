@@ -141,7 +141,7 @@ class UsersController extends \BaseController
                 }
 
                 //$result = User::facebookRedirectHandler($redirect_url, $user);
-                $result = Redirect::route('users.edit', ['id'=>$user->id]);
+                $result = Redirect::route('users.edit', ['id'=>$user->display_name]);
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
                 Log::error($e->getMessage());

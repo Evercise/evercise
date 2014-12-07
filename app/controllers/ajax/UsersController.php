@@ -272,7 +272,7 @@ class UsersController extends AjaxBaseController{
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url' => route('users.edit', [ $this->user->id, 'edit'])
+                    'url' => route('users.edit', [ $this->user->display_name, 'edit'])
                 ]
             );
         } else {
