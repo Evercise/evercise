@@ -10938,6 +10938,10 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .list-group-no-border .list-group-item:last-of-type {
   border-bottom-width: 1px ;
 }
+.list-group-accordion .list-group-item {
+  border: 0;
+  border-radius: 0;
+}
 .package-green .package-title {
   background-color: #7ed321;
   background-image: url("../img/ev_site_icons.png");
