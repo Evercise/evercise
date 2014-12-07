@@ -188,6 +188,9 @@ $(function(){
     $('#update-user-form').exists(function(){
         new updateProfile(this);
     })
+    $('#list-accordion').exists(function(){
+        new listAccordion(this);
+    })
 
     $('#hero-carousel').exists(function() {
         $(this).carousel({

@@ -7,7 +7,7 @@
                         <strong>Your search return <span class="text-primary">{[{ results }]}</span> results</strong>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-md-6">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li role="presentation" class="filter-btn">
                                 <a href="#filter" aria-controls="filter" role="tab" data-toggle="tab" ng-click="toggle($event,'filter')">
@@ -26,7 +26,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-4"  ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter" id = {[{marker.id}]}>
+                <div class="col-md-4"  ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter" id = {[{marker.id}]}>
 
                     <div class="class-module center-block">
                         <div class="class-image-wrapper">

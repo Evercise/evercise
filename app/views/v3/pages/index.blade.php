@@ -9,13 +9,13 @@
     <div class="row">
         <div class="col-sm-4">
 
-            <div class="list-group-accordion" id="accordion">
+            <div class="list-group-accordion" id="list-accordion">
 
-                <div class="panel panel-default">
-                  <div class="list-group-item">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#categories" class="">Categories</a>
+                <div class="list-group-accordion-body">
+                  <div class="list-group-accordion-title">
+                      <a data-toggle="collapse" data-parent="#list-accordion" href="#categories" class="">Categories</a>
                   </div>
-                  <div id="categories" class="panel-collapse collapse in">
+                  <div id="categories" class="panel-collapse collapse">
                     <div class="list-group">
                         <li class="list-group-item bg-grey"><a href="#">cat 1</a> </li>
                         <li class="list-group-item bg-grey"><a href="#">cat 2</a> </li>
@@ -24,9 +24,9 @@
                         <li class="list-group-item bg-grey"><a href="#">cat 5</a> </li>
                   </div>
                 </div>
-                <div class="panel panel-default">
-                  <div class="list-group-item">
-                      <a data-toggle="collapse" data-parent="#accordion" href="#posts" class="">posts</a>
+                <div class="list-group-accordion-body">
+                  <div class="list-group-accordion-title">
+                      <a data-toggle="collapse" data-parent="#list-accordion" href="#posts" class="">Posts</a>
                   </div>
                   <div id="posts" class="panel-collapse collapse">
                     <div class="list-group">

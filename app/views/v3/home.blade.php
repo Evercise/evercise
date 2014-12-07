@@ -40,7 +40,7 @@
 
     <div class="container-fluid panel-body bg-dark-grey">
         <div class="container">
-            <div class="row no-gutter">
+            <div class="row no-gutter visible-lg-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-12">
                         <div class="input-group with-addon">
@@ -58,6 +58,33 @@
                                 </button>
                             </span>
                         </div>
+
+
+                    </div>
+
+                {{ Form::close() }}
+            </div>
+            <div class="row no-gutter hidden-lg">
+                {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
+                    <div class="col-sm-12">
+                        <div class="input-group with-addon mb10">
+                            <div class="input-group-addon first"><span class="icon icon-search"></span></div>
+                            {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...']) }}
+                        </div>
+                        <div class="input-group with-addon mb10">
+                            <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
+                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
+                        </div>
+                        <div class="input-group with-addon mb10">
+                            <div class="input-group-addon"><span class="icon icon-distance"></span></div>
+                            {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
+                        </div>
+
+                                <button class="btn btn-primary center-block" type="submit">
+                                     Find a Class
+                                </button>
+
+
 
 
                     </div>
@@ -169,11 +196,11 @@
                       </div>
                       @if(count($featured->hits) > 3)
                           <!--/carousel-inner-->
-                          <a class="hidden-sm left carousel-control" href="#image-carousel" data-slide="prev">
+                          <a class="visible-lg-block left carousel-control" href="#image-carousel" data-slide="prev">
                              <span class="icon icon-left-triangle"></span>
                           </a>
 
-                          <a class="hidden-sm right carousel-control" href="#image-carousel" data-slide="next">
+                          <a class="visible-lg-block right carousel-control" href="#image-carousel" data-slide="next">
                              <span class="icon icon-right-triangle"></span>
                           </a>
                       @endif

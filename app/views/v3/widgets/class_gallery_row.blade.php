@@ -11,7 +11,7 @@
                         {{ $index > 0 ? '</div></div>' : null }}
                         <div class="item {{ $index === 0 ? 'active' : null }}">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-xs-4">
                                     <div class="holder gallery-img-wrapper" id="first-img">
                                         <div class="row">
                                             <div class="text-center col-sm-12 mt10">
@@ -23,7 +23,7 @@
                                     </div>
                                 </div>
                     @endif
-                                 <div class="col-sm-4">
+                                 <div class="col-xs-4">
                                     <div class="holder gallery-img-wrapper">
                                         <img src="/files/gallery_defaults/thumb_{{$gal['image']}}" alt="{{ $gal['keywords'] }}"  data-large='/files/gallery_defaults/main_{{$gal['image']}}'  data-id='{{$gal['id']}}' class="img-responsive gallery-option" id="gallery-option-{{ $index }}">
                                     </div>
@@ -38,7 +38,7 @@
             @else
             <div class="item active">
                 <div class="row">
-                     <div class="col-sm-4">
+                     <div class="col-xs-4">
                         @if(isset($cloneGroup->image))
                             <div class="holder gallery-img-wrapper" id="first-img">
                                 {{ Form::hidden('cloned', $cloneGroup->user->directory.'/cover_'.$cloneGroup->image) }}
@@ -59,11 +59,11 @@
                             </div>
                         @endif
                      </div>
-                     <div class="col-sm-4">
+                     <div class="col-xs-4">
                         <div class="holder gallery-img-wrapper">
                         </div>
                      </div>
-                     <div class="col-sm-4">
+                     <div class="col-xs-4">
                         <div class="holder gallery-img-wrapper">
                         </div>
                      </div>

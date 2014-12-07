@@ -15,7 +15,7 @@
     <div class="row mb30">
         @foreach($packages as $index => $p)
             @if($p->classes == 5)
-                <div class="col-sm-4 text-left">
+                <div class="col-md-4 text-left">
                     <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                         <li class="list-group-item package-title">
                             <h1>{{ $p->name }}</h1>
@@ -69,7 +69,7 @@
     <div class="row">
         @foreach($packages as $index => $p)
             @if($p->classes == 10)
-                <div class="col-sm-4 text-left">
+                <div class="col-md-4 text-left">
                     <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                         <li class="list-group-item package-title">
                             <h1>{{ $p->name }}</h1>
