@@ -93,7 +93,8 @@ class EvercisegroupsController extends \BaseController
                     ->with('data', $data);
             }
         } else {
-            return View::make('errors.missing');
+            //return View::make('errors.missing');
+            return Redirect::route('home')->with('notification', 'this class does not exist');
         }
 
     }
