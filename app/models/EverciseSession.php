@@ -170,15 +170,15 @@ class Evercisesession extends \Eloquent
                 'tickets' => 'required',
                 'time' => 'required',
                 'price' => 'required|numeric|between:1,'.Config::get('values')['max_price'],
-                'duration' => 'required|numeric|between:10,240',
+                'duration' => 'required|numeric',
             ]
         );
         if ($validator->fails()) {
-            return false;
+            return ['validation_failed' => 1, 'errors' => $validator->errors()->toArray()];
         }
         else {
             if (! $this->evercisegroup->user_id == $userId)
-                return false;
+                return ['validation_failed' => 1, 'errors' => ['user' => 'user ids do not match']];
 
             $currentDate = strtotime($this->date_time);
             $date_str = date("Y-m-d", $currentDate);
@@ -187,11 +187,11 @@ class Evercisesession extends \Eloquent
             $this->update([
                 'date_time' => new \Carbon\Carbon($date_time_str),
                 'price' => $sessionData['price'],
-                'duration' => $sessionData['duration'],
+                'duration' => ($sessionData['duration'] >= 10) ? $sessionData['duration'] : 10,
                 'tickets' => $sessionData['tickets'],
             ]);
 
-            return true;
+            return ['validation_failed' => 0];
         }
     }
 
