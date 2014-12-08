@@ -109,7 +109,7 @@ class EverciseCart extends Cart
 
         if (!empty($user->id)) {
             foreach ($user->packages as $p) {
-                if(!empty($p->package)) {
+                if(count($p->package)) {
                     $package = $p->package->toArray();
                     $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
                     $package['package_id'] = $package['id'];
