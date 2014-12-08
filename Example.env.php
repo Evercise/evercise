@@ -41,6 +41,15 @@ return [
     //ELASTIC SEARCH
     'ELASTIC_HOST'          => 'ec2-54-72-203-163.eu-west-1.compute.amazonaws.com:9200',
     'ELASTIC_INDEX'         => 'evercise_CHANGE_ME_TO_SOMETHING_UNIQUE',
-    'ELASTIC_TYPE'          => 'evercise'
+    'ELASTIC_TYPE'          => 'evercise',
 
+
+// Pardot Example
+
+        'PARDOT_ACTIVE'         => true,
+        'PARDOT_EMAIL'          => 'fan@evercise.com',
+        'PARDOT_KEY'            => '85d82e88f97a0159f312d6a6be6a19f4',
+        'PARDOT_PASSWORD'       => 'Fanliqiang0709!',
+        'PARDOT_FORMAT'         => 'json',
+        'PARDOT_OUTPUT'         => 'full'
 ];
