@@ -77,7 +77,7 @@ class Venue extends \Eloquent
             {
                 $result = [
                     'validation_failed' => 1,
-                    'errors' => ['address' => 'not found']
+                    'errors' => ['address' => 'Address not found', 'town' => '', 'postcode' => '', ]
                 ];
             }
             else

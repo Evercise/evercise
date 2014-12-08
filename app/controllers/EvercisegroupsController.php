@@ -87,7 +87,8 @@ class EvercisegroupsController extends \BaseController
                 return View::make('v3.classes.class_page')
                     ->with('preview', 'preview')
                     ->with('data', $data);
-            } else // This group does not belong to this user
+            }
+            else // This group does not belong to this user
             {
                 return View::make('v3.classes.class_page')
                     ->with('data', $data);
