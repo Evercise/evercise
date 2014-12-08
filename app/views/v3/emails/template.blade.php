@@ -93,6 +93,7 @@
                                         <td width="30" height="85"></td>
                                         <td width="330" height="50">
                                             <p class="footer">&copy; Copyright 2014 Evercise</p>
+                                            <a style="color:#50c3e2" href="{{ $unsubscribe }}">Unsubscribe</a>
                                         </td>
                                         <td width="100" height="40">
                                            <p>Follow us on</p>
