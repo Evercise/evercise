@@ -1089,7 +1089,7 @@ class Evercisegroup extends \Eloquent
                 ->first();
         } catch (Exception $e) {
             /* if there is not a trainer then return to discover page */
-            return Redirect::route('evercisegroups.search');
+            return ['error' => 'not trainer'];
         }
 
         /* if trainer is tester and user is not redirect */
@@ -1102,12 +1102,12 @@ class Evercisegroup extends \Eloquent
 
         // test to see if trainer is a tester and the user is not
         if ($userTrainer->inGroup($testers) && $testerLoggedIn == FALSE) {
-            return Redirect::route('evercisegroups.search');
+            return ['error' => 'trainer is tester, user is not'];
         }
 
         /* if no upcoming sessions then redirect to discover page */
         if (count($this->evercisesession) == 0) {
-            return Redirect::route('evercisegroups.search');
+            //return ['error' => 'no sessions'];
         }
 
 
@@ -1169,7 +1169,7 @@ class Evercisegroup extends \Eloquent
                 ->description($this->description)
                 ->url();
         } catch (Exception $e) {
-            return Redirect::route('evercisegroups.search');
+            return ['error' => 'not trainer'];
         }
 
 
