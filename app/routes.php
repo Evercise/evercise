@@ -207,7 +207,7 @@ Route::get('login/fb/{redirect?}', ['as' => 'users.fb', 'uses' => 'UsersControll
 Route::post('auth/checkout', ['as' => 'auth.checkout', 'uses' => 'SessionsController@checkout']);
 
 
-Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'auth\AuthController@getLogout']);
+Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UsersController@logout']);
 Route::get('auth/forgot', ['as' => 'auth.forgot', 'uses' => 'auth\AuthController@getForgot']);
 Route::post('auth/forgot', ['as' => 'auth.forgot.post', 'uses' => 'auth\AuthController@postForgot']);
 
