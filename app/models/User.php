@@ -76,7 +76,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function isTrainer()
     {
-        return count($this->trainer) == 1;
+        return (count($this->trainer) == 1);
     }
 
 

@@ -56,17 +56,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $user)
+                    @foreach(User::all() as $user)
                     <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->first_name }} {{ $user->last_name }}</td>
                             <td>{{ $user->created_at->format('d/m/Y') }}</td>
                             <td>
-                            @if($user->inGroup($trainerGroup) )
-                            <span class="label label-success status-trainer status-all" title="Active">Trainer</span></td>
-                            @else
-                            <span class="label label-warning status-user  status-all" title="Active">User</span></td>
-                            @endif
+                                <span class="label status-
+                                {{ ($user->isTrainer() ? 'trainer label-success ':'user label-warning') }} status-all" title="Active">
+                                {{ ($user->isTrainer() ? 'Trainer':'User') }}</span></td>
+
                             </td>
 
                             <td>

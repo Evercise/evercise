@@ -136,7 +136,8 @@ class MainController extends \BaseController
     public function users()
     {
 
-        $users = Sentry::findAllUsers();
+        $users = User::all();
+
 
         $trainerGroup = Sentry::findGroupByName('Trainer');
 
