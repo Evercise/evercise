@@ -38,7 +38,7 @@ class Venue extends \Eloquent
         $validator = Validator::make(
             $inputs,
             [
-                'name' => 'required|max:45',
+                'name' => 'required|max:50',
                 'address' => 'required|min:2',
                 'town' => 'required|min:2',
                 'postcode' => 'required|has_not:special|has:letter,num|min:4',
