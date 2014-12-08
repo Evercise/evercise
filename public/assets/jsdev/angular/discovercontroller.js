@@ -8,7 +8,7 @@ if(typeof angular != 'undefined') {
         $scope.results = $scope.everciseGroups.length;
 
         // set initial view depending on screen size
-        if(window.innerWidth >= 1200) {
+        if(window.innerWidth >= 992) {
             $scope.view = 'mapview';
         }else {
             $scope.view = 'gridview';
@@ -281,7 +281,7 @@ if(typeof angular != 'undefined') {
         // only display grid view on smaller screens
         $(window).resize(function(){
 
-            if(window.innerWidth < 1200)
+            if(window.innerWidth < 992)
             {
                 $scope.$apply(function(){
                     $scope.view = 'gridview';
