@@ -1,13 +1,13 @@
 @extends('v3.layouts.master')
 @section('body')
 
-
+    <div class="container first-container">
         <div class="row">
-            <div class="col-sm-8 col-sm-offset-2">
+            <div class="col-sm-6 col-sm-offset-3">
                 <div class="row">
-                    {{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10', 'role' => 'form'] ) }}
-                    {{ Form::hidden('redirect_after_login', 'true') }}
-                    {{ Form::hidden('redirect_after_login_url', 'cart.checkout') }}
+                    {{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10 login-form', 'role' => 'form'] ) }}
+                        {{ Form::hidden('redirect_after_login', 'true') }}
+                        {{ Form::hidden('redirect_after_login_url', 'cart.checkout') }}
 
                         <div class="col-sm-12">
                             <li role="presentation" class="dropdown-header">Login</li>
@@ -17,11 +17,9 @@
                             <div class="form-group">
                                 {{ Form::password('password', ['class' => 'form-control', 'placeholder' => 'Password']) }}
                             </div>
-                            <div class="form-group">
-                                {{  Form::submit('Login', ['class' => 'btn btn-primary btn-block'] ) }}
-                                <div class="col-sm-6 text-center mb15 mt5">
-                                    {{ HTML::linkRoute('auth.forgot', 'Forgot password?' ) }}
-                                </div>
+                            <div class="form-group text-center">
+                                {{  Form::submit('Login', ['class' => 'btn btn-primary mr15'] ) }}
+                                {{ HTML::linkRoute('auth.forgot', 'Forgot password?' ) }}
                             </div>
                         </div>
 
@@ -30,14 +28,6 @@
                 </div>
             </div>
         </div>
-        <div class="row text-center">
-            <div class="underline">
-                <h1>Your Details</h1>
-            </div>
-        </div>
-
-
-
 
         <div class="row text-center">
             <div class="underline">

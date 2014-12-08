@@ -1,4 +1,4 @@
-<div id="profile-nav" class="sticky-wrapper">
+<div id="profile-nav" class="sticky-wrapper" data-name="{{$user->display_name}}">
     <nav id="user-nav-bar" class="navbar navbar-default mb0 sticky-fixed-nav" role="navigation">
         <div class="container">
             <ul class="nav nav-pills nav-justified">

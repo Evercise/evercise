@@ -1,4 +1,4 @@
-{{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10', 'role' => 'form'] ) }}
+{{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10 login-form', 'role' => 'form'] ) }}
 
     <div class="col-sm-12">
         <li role="presentation" class="dropdown-header">Login</li>

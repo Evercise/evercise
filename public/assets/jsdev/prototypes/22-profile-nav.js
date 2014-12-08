@@ -38,7 +38,7 @@ profileNav.prototype = {
         var target = $(e.target).attr('href').substring(1);
         this.getUrl();
 
-        if(Math.floor(this.lastOfUrl) == this.lastOfUrl && $.isNumeric(this.lastOfUrl))
+        if(this.nav.data('name') == this.lastOfUrl)
         {
             window.history.pushState(null, this.lastOfUrl+'/'+target,this.lastOfUrl+'/'+target);
         }
