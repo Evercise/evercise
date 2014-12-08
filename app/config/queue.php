@@ -48,12 +48,13 @@ return array(
 			'region' => 'us-east-1',
 		),
 
-		'iron' => array(
-			'driver'  => 'iron',
-			'project' => 'your-project-id',
-			'token'   => 'your-token',
-			'queue'   => 'your-queue-name',
-		),
+
+        'iron' => array(
+            'driver'  => 'iron',
+            'project' => '54858e6cb8a38d0005000058',
+            'token'   => 'RiBsUJ3Em35O-6-SUJC3r8mYPaA',
+            'queue'   => 'EverMain',
+        ),
 
 		'redis' => array(
 			'driver' => 'redis',

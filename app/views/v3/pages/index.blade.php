@@ -7,48 +7,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
 
-            <div class="list-group-accordion" id="list-accordion">
+        @include('v3.pages.sidebar')
 
-                <div class="list-group-accordion-body">
-                  <div class="list-group-accordion-title">
-                      <a data-toggle="collapse" data-parent="#list-accordion" href="#categories" class="">Categories</a>
-                  </div>
-                  <div id="categories" class="panel-collapse collapse">
-                    <div class="list-group">
-                        @foreach($categories as $c)
-                            <li class="list-group-item bg-grey">
-                                {{ Html::link(url($c->permalink), $c->title) }}
-                            </li>
-
-                        @endforeach
-                  </div>
-                </div>
-                <div class="list-group-accordion-body">
-                  <div class="list-group-accordion-title">
-                      <a data-toggle="collapse" data-parent="#list-accordion" href="#posts" class="">Posts</a>
-                  </div>
-                  <div id="posts" class="panel-collapse collapse">
-                    <div class="list-group">
-                        <li class="list-group-item bg-grey"><a href="#">cat 1</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 2</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 3</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 4</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 5</a> </li>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <!--
-            <div class="list-group">
-                @foreach($categories as $c)
-                    {{ Html::link(url($c->permalink), $c->title, ['class'=>'list-group-item']) }}
-                @endforeach
-            </div>
-            -->
-        </div>
         <div class="col-sm-8">
              @foreach($articles as $a)
                 <div class="row" >

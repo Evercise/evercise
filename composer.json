@@ -32,9 +32,8 @@
         "pingpong/shortcode": "1.0.*",
         "gloudemans/shoppingcart": "~1.2",
         "igormatkovic/laravel-livelogger": "~1.0",
-        "davispeixoto/laravel-salesforce": "1.*"
-
-
+        "davispeixoto/laravel-salesforce": "1.*",
+        "hgg/pardot": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",

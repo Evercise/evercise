@@ -6,6 +6,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Log\Writer;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Mail\Mailer;
+use Illuminate\View\Factory as View;
 use Exception;
 
 
@@ -36,31 +37,34 @@ class Mail
      * @var array
      */
     private $data;
+    /**
+     * @var View
+     */
+    private $view;
 
     /**
      * @param Writer $log
      * @param Repository $config
      * @param Dispatcher $event
      * @param Mailer $email
+     * @param View $view
      */
-    public function __construct(
-        Writer $log,
-        Repository $config,
-        Dispatcher $event,
-        Mailer $email
-    ) {
+    public function __construct(Writer $log, Repository $config, Dispatcher $event, Mailer $email, View $view)
+    {
 
         $this->log = $log;
         $this->config = $config;
         $this->event = $event;
         $this->email = $email;
+        $this->view = $view;
 
 
         $this->data = [
             'config'      => $this->config->get('evercise'),
             'subject'     => 'Evercise',
             'view'        => 'v3.emails.default',
-            'attachments' => []
+            'attachments' => [],
+            'unsubscribe' =>  '%%unsubscribe%%'
         ];
 
     }
@@ -352,7 +356,8 @@ class Mail
     /**
      * @param $user
      * @param $trainer
-     * @param $session
+     * @param $evercisegroup
+     * @internal param $session
      */
     public function userJoinedTrainersSession($user, $trainer, $evercisegroup)
     {
@@ -477,22 +482,23 @@ class Mail
      */
     public function mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody)
     {
-        foreach ($userList as $name => $email) {
-            $params = [
-                'subject'        => 'You have a new message',
-                'view'           => 'v3.emails.trainer.mail_trainer',
-                'trainer'        => $trainer,
-                'user'           => $user,
-                'dateTime'       => $dateTime,
-                'name'           => $name,
-                'email'          => $email,
-                'group'          => $group,
-                'messageSubject' => $messageSubject,
-                'messageBody'    => $messageBody
-            ];
+        Log::error("TO DO");
 
-            $this->send($email, $params);
-        }
+        return;
+        $params = [
+            'subject'        => 'You have a new message',
+            'view'           => 'v3.emails.trainer.mail_trainer',
+            'trainer'        => $trainer,
+            'user'           => $user,
+            'dateTime'       => $dateTime,
+            'name'           => $name,
+            'email'          => $email,
+            'group'          => $group,
+            'messageSubject' => $messageSubject,
+            'messageBody'    => $messageBody
+        ];
+
+        $this->send($email, $params);
     }
 
 
@@ -507,58 +513,84 @@ class Mail
      * @param array $params
      */
 
-    public function send(
-        $email,
-        $params = []
-    ) {
+    public function send($email,$params = []) {
 
         /** This part will be needed when we assign Functions to Pardot API
          * example config would be:
          *
          * return [
-         *      'mail.classcreated' => $pardot->campayn_id
+         *  'campayns' = [
+         *      'mail.mailwelcome' =>3598
+         * ]
          * ]
          *
          *
-         * $trace = debug_backtrace();
-         * $name = $this->formatName([get_called_class(), next($trace)['function']]);
          **/
-
-
-        $this->data = array_merge($this->data, $params);
 
         $subject = $this->data['subject'];
         $attachments = $this->data['attachments'];
 
+        $this->data = array_merge($this->data, $params);
 
-        try {
-            $this->email->send($this->data['view'], $this->data,
-                function ($message) use ($email, $subject, $attachments) {
-                    $message->to($email)->subject($subject);
-                    if (count($attachments) > 0) {
-                        foreach ($attachments as $attachment) {
-                            $message->attach($attachment);
-                        }
-                    }
-                });
-        } catch (Exception $e) {
-            $this->log->error('Email could not be sent ' . $e->getMessage());
-            /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
+        if ($this->config->get('pardot.active')) {
 
+            $trace = debug_backtrace();
+            $name = $this->formatName(get_called_class(), next($trace)['function']);
+
+            $config_name = 'pardot.campayns.' . $name;
+
+            $campayn_id = $this->config->get($config_name);
         }
+
+        if (!empty($campayn_id)) {
+            $pardotEmail = new \PardotEmail([
+                'subject' => $subject,
+                'content' => $this->view->make($this->data['view'], $this->data)->render()
+            ]);
+
+            $pardot = new \Pardot();
+
+            try {
+                $pardot->send($email, $campayn_id, $pardotEmail);
+            } catch (Exception $e) {
+                $this->log->error('Pardot Email could not be sent ' . $e->getMessage());
+                d($e);
+                /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
+
+            }
+
+        } else {
+            try {
+                $this->email->send($this->data['view'], $this->data,
+                    function ($message) use ($email, $subject, $attachments) {
+                        $message->to($email)->subject($subject);
+                        if (count($attachments) > 0) {
+                            foreach ($attachments as $attachment) {
+                                $message->attach($attachment);
+                            }
+                        }
+                    });
+            } catch (Exception $e) {
+                $this->log->error('Email could not be sent ' . $e->getMessage());
+
+                d($e);
+                /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
+
+            }
+        }
+
     }
 
     /**
      * Format from: events\Mail, classCreated
      * To: mail.classcreated
+     * @param $class
+     * @param $function
+     * @return string
      */
-    private function formatName(
-        $class,
-        $function
-    ) {
-
+    private function formatName($class, $function)
+    {
         return strtolower(str_replace('\\', '.', implode('.', [str_replace('events\\', '', $class), $function])));
     }
-
 }
 

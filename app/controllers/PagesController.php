@@ -172,10 +172,15 @@ class PagesController extends \BaseController
     public function showBlog() {
 
 
+        $page = Input::get('page', 1);
+
 
 
         /** Articles */
-        $articles = $this->articles->where('status', 1)->where('page', 0)->orderBy('id', 'desc')->limit(5)->get();
+        $articles = $this->articles->where('status', 1)->where('page', 0)->orderBy('id', 'desc')->paginate(5);
+
+        /** Articles Latest*/
+        $articles_latest = $this->articles->where('status', 1)->where('page', 0)->orderBy('id', 'desc')->limit(5)->get();
 
         /** Categories */
         $categories = $this->articleCategories->where('status', 1)->get();
@@ -186,7 +191,7 @@ class PagesController extends \BaseController
         $keywords = $this->config->get('evercise.blog.keywords');
 
 
-        return $this->view->make('v3.pages.index', compact('articles', 'categories', 'metaDescription', 'title', 'keywords'));
+        return $this->view->make('v3.pages.index', compact('articles', 'categories', 'metaDescription', 'title', 'keywords', 'articles_latest'))->render();
 
     }
 
@@ -204,7 +209,14 @@ class PagesController extends \BaseController
 
         $articles = $this->articles->where('category_id', $category->id)->get();
 
-        return $this->view->make('v3.pages.category', compact('articles', 'category'));
+
+        /** Articles Latest*/
+        $articles_latest = $this->articles->where('status', 1)->where('page', 0)->orderBy('id', 'desc')->limit(5)->get();
+
+        /** Categories */
+        $categories = $this->articleCategories->where('status', 1)->get();
+
+        return $this->view->make('v3.pages.category', compact('articles', 'category', 'articles_latest', 'categories'));
     }
 
     /**
@@ -223,15 +235,17 @@ class PagesController extends \BaseController
         $article->content = Shortcode::compile($article->content);
 
 
-
-        /** Categories */
-        $categories = $this->articleCategories->where('status', 1)->get();
-
         $view = 'v3.pages.single';
 
         if(!empty($article->template)) {
             $view = 'v3.pages.'.$article->template;
         }
+
+        /** Articles Latest*/
+        $articles_latest = $this->articles->where('status', 1)->where('page', 0)->orderBy('id', 'desc')->limit(5)->get();
+
+        /** Categories */
+        $categories = $this->articleCategories->where('status', 1)->get();
 
 
         $metaDescription = $article->description;
@@ -239,6 +253,6 @@ class PagesController extends \BaseController
         $keywords = $article->keywords;
 
 
-        return $this->view->make($view, compact('article', 'categories', 'metaDescription', 'title', 'keywords'));
+        return $this->view->make($view, compact('article', 'categories', 'metaDescription', 'title', 'keywords', 'articles_latest', 'categories'));
     }
 }

@@ -10,7 +10,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-//
 
 // temporary routes for new layouts
 
@@ -24,6 +23,11 @@ Route::get('/ig', [
 
             $class = Evercisegroup::find(721);
             $user = Sentry::getUser();
+
+
+            event('user.signup', [$user]);
+
+            die('done');
             $session = Evercisesession::find(5594);
 
             /**
