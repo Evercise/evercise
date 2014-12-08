@@ -62,8 +62,8 @@ function updateProfile(form){
 updateProfile.prototype = {
     constructor : updateProfile,
     init: function(){
-        this.form.find("input[type='submit']").prop('disabled', true);
         this.validation();
+        this.form.find("input[type='submit']").prop('disabled', false);
     },
     validation: function(){
         var self = this;
