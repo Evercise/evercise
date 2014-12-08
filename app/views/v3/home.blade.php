@@ -40,7 +40,7 @@
 
     <div class="container-fluid panel-body bg-dark-grey">
         <div class="container">
-            <div class="row no-gutter">
+            <div class="row no-gutter visible-lg-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-12">
                         <div class="input-group with-addon">
@@ -64,12 +64,78 @@
 
                 {{ Form::close() }}
             </div>
+            <div class="row no-gutter hidden-lg">
+                {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
+                    <div class="col-sm-12">
+                        <div class="input-group with-addon mb10">
+                            <div class="input-group-addon first"><span class="icon icon-search"></span></div>
+                            {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...']) }}
+                        </div>
+                        <div class="input-group with-addon mb10">
+                            <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
+                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
+                        </div>
+                        <div class="input-group with-addon mb10">
+                            <div class="input-group-addon"><span class="icon icon-distance"></span></div>
+                            {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
+                        </div>
+
+                                <button class="btn btn-primary center-block" type="submit">
+                                     Find a Class
+                                </button>
+
+
+
+
+                    </div>
+
+                {{ Form::close() }}
+            </div>
         </div>
     </div>
     <div class="container">
         <div class="row mt10">
+            <div class="col-md-4 text-center">
+                <div class="panel-body">
+                    <div class="underline">
+                        <h2>What is Evercise</h2>
+                    </div>
 
+                    {{ image('img/home/what-is-evercise.png', 'what is evercise', ['class' => 'img-responsive center-block']) }}
+                    <div class="caption">
+                        <p>Evercise is the exciting new Pay As You Go fitness community that’s flexible enough to fit in with your modern lifestyle. Evercise unites talented trainers with an active community who want more fun and freedom from their fitness routine. </p>
+                    </div>
+                </div>
 
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="panel-body">
+                    <div class="underline">
+                        <h2>Why join Evercise</h2>
+                    </div>
+
+                    {{ image('img/home/why-join-evercise.png', 'why join evercise', ['class' => 'img-responsive center-block']) }}
+                    <div class="caption">
+                         <p>We want fitness to be fun and flexible rather than routine and restricted. By bringing together trainers and a keen community of fitness enthusiasts Evercise really does benefit everyone. Evercise makes fitness fun again, emphasising social, group exercise that fits in with your life</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="panel-body">
+                    <div class="underline">
+                        <h2>How it works</h2>
+                    </div>
+
+                    {{ image('img/home/how-it-works.png', 'how it works', ['class' => 'img-responsive center-block']) }}
+                    <div class="caption">
+                         <p>Whether you’re a trainer or a participant Evcercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        <!--
             @foreach($articles as $a)
                 <div class="col-sm-4 text-center">
                     <div class="panel-body">
@@ -84,7 +150,7 @@
                     </div>
                 </div>
             @endforeach
-
+        -->
         </div>
     </div>
     <div class="container-fluid bg-grey">
@@ -130,11 +196,11 @@
                       </div>
                       @if(count($featured->hits) > 3)
                           <!--/carousel-inner-->
-                          <a class="hidden-sm left carousel-control" href="#image-carousel" data-slide="prev">
+                          <a class="visible-lg-block left carousel-control" href="#image-carousel" data-slide="prev">
                              <span class="icon icon-left-triangle"></span>
                           </a>
 
-                          <a class="hidden-sm right carousel-control" href="#image-carousel" data-slide="next">
+                          <a class="visible-lg-block right carousel-control" href="#image-carousel" data-slide="next">
                              <span class="icon icon-right-triangle"></span>
                           </a>
                       @endif

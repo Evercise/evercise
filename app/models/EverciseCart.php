@@ -109,7 +109,7 @@ class EverciseCart extends Cart
 
         if (!empty($user->id)) {
             foreach ($user->packages as $p) {
-                if(!empty($p->package)) {
+                if(count($p->package)) {
                     $package = $p->package->toArray();
                     $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
                     $package['package_id'] = $package['id'];
@@ -148,8 +148,10 @@ class EverciseCart extends Cart
                         if(!empty($session->id)) {
                             $remaining_tickets = $session->remainingTickets();
 
+                            $slug = $session->evercisegroup->slug;
                             $session = $session->toArray();
                             $session['tickets'] = $remaining_tickets;
+                            $session['slug'] = $slug;
 
                             unset($session['sessionmembers']);
                             $sessions[] = $session;

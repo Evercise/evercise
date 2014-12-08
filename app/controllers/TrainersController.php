@@ -78,8 +78,15 @@ class TrainersController extends \BaseController
 
         }
 
-        $trainer = $user->trainer()->first();
-
+        if($user) {
+            try {
+                $trainer = $user->trainer()->first();
+            } catch (Exception $e) {
+                return Redirect::route('home')->with('notification', 'this trainer does not exist');
+            }
+        }else{
+            return Redirect::route('home')->with('notification', 'this trainer does not exist');
+        }
 
         // check if trainer has classes else redirect them home
         try {

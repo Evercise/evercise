@@ -1283,5 +1283,10 @@ class Evercisegroup extends \Eloquent
         $this->save();
     }
 
+    public static function getSlug($id)
+    {
+        return static::find($id)->slug;
+    }
+
 
 }

@@ -32,7 +32,7 @@ class TokensController extends \BaseController
 			$token = Token::where('user_id', $this->user->id)->first();
 			$token->addToken('facebook', Token::makeFacebookToken($getUser));
 		}
-		return Redirect::route('users.edit', [$this->user->id, 'wallet'])->with('success', 'Your facebook account has been linked successfully.');
+		return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your facebook account has been linked successfully.');
 	}
 	public function tw()
 	{
@@ -62,6 +62,6 @@ class TokensController extends \BaseController
 			return View::make('users/tokens')->with('accessToken', $accessToken);
 		}
 
-        return Redirect::route('users.edit', [$this->user->id, 'wallet'])->with('success', 'Your twitter account has been linked successfully.');
+        return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your twitter account has been linked successfully.');
 	}
 }

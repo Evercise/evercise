@@ -47,8 +47,8 @@ class PaymentController extends BaseController
             $charge = ['id' => Str::random()];
         }
 
+        $wallet = $this->user->getWallet();
         if ($cart['total']['from_wallet'] > 0) {
-            $wallet = $this->user->getWallet();
             $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', $this->user);
         }
 
@@ -186,7 +186,7 @@ class PaymentController extends BaseController
     {
         $coupon = Session::get('coupon', FALSE);
         $cart = EverciseCart::getCart($coupon);
-        $token = 'w'.Functions::randomPassword(8);
+        $token = 'w_'.Functions::randomPassword(8);
         $transactionId = $token;
 
         $wallet = $this->user->getWallet();
@@ -197,7 +197,7 @@ class PaymentController extends BaseController
         $res = [
             'confirm'      => $this->paid($token, $transactionId, 'stripe', $cart, $coupon),
             'cart'         => $cart,
-            'payment_type' => 'stripe',
+            'payment_type' => 'wallet',
             'coupon'       => $coupon,
             'transaction'  => $transactionId,
             'user'         => $this->user,
@@ -406,7 +406,7 @@ class PaymentController extends BaseController
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
         EverciseCart::clearCart();
-        EverciseCart::clearWalletPayment();
+        //EverciseCart::clearWalletPayment();
 
         Session::forget('coupon');
 

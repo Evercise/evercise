@@ -39,12 +39,13 @@ Cart.prototype = {
                     self.form.find("input[type='submit']").prop('disabled', true);;
                 }
                 else{
-                    self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading ml10"></span>');
+                    self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading"></span>');
                 }
 
             },
 
             success: function (data) {
+                console.log(data);
                 if(data.view){
                     self.updateCart(data);
                 }

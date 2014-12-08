@@ -97,26 +97,34 @@
                         -->
                       <li class="list-group-item">
                         <div class="row">
-                            <table class="table table-condensed mb0">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Description of Transaction</th>
-                                        <th class="text-right">Amount</th>
-                                    </tr>
-
-                               <tbody>
-                                   @foreach($data['user']->activities as $act)
-                                        <tr>
-                                            <td><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($act->created_at))}}</span></td>
-                                            <td>{{$act->description}}</td>
-                                            <td class="text-right">{{($act->transaction) ? $act->transaction['total'] : '0.00'}}</td>
-                                        </tr>
-                                    @endforeach
-                               </tbody>
-                            </table>
+                            <div class="col-sm-4">
+                                <strong>Date</strong>
+                            </div>
+                            <div class="col-sm-6">
+                                <strong>Description of Transaction</strong>
+                            </div>
+                            <div class="col-sm-2 text-right">
+                                <strong>Amount</strong>
+                            </div>
                         </div>
                       </li>
+
+                      @foreach($data['user']->activities as $act)
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($act->created_at))}}</span>
+                                </div>
+                                <div class="col-sm-6">
+                                    {{$act->description}}
+                                </div>
+                                <div class="col-sm-2 text-right">
+                                    {{($act->transaction) ? $act->transaction['total'] : '0.00'}}
+                                </div>
+                            </div>
+                        </li>
+                      @endforeach
+
 
                       <li class="list-group-item text-right">
                         <!-- <strong>Show More </strong>

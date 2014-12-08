@@ -118,12 +118,24 @@ class SessionsController extends AjaxBaseController{
     public function store()
     {
         $inputs = Input::all();
-        $sessionArray = explode(',', $inputs['session_array']);
-        $evercisegroupId = $inputs['evercisegroup_id'];
+        $evercisegroupId = isset($inputs['evercisegroup_id']) ?: $inputs['evercisegroupId'];
         $time = $inputs['time'];
         $duration = $inputs['duration'];
-        $tickets = $inputs['tickets'];
+        $tickets = isset($inputs['tickets']) ?: $inputs['members'];
         $price = $inputs['price'];
+
+        if (Input::get('session_array', false))
+        {
+            $sessionArray = explode(',', $inputs['session_array']);
+        }
+        elseif (Input::get('date', false))
+        {
+            $sessionArray = [$inputs['date']];
+        }
+        else
+        {
+            return Response::json(['view' => View::make('v3.layouts.negative-alert')->with('message', 'No sessions specified')->with('fixed', true)->render()]);
+        }
 
         //return $sessionArray;
 
@@ -159,6 +171,10 @@ class SessionsController extends AjaxBaseController{
         $sessionId = Input::get('session_id');
         $participants = Evercisesession::getMembers($sessionId);
         return view('v3.sessions.participants', compact('participants'));
+    }
+
+    public function getSlug(){
+        return $this->evercisegroup->slug;
     }
 
 }

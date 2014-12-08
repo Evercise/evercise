@@ -10,10 +10,10 @@
             <h1>Checkout</h1>
         </div>
         <div id="masonry" class="row masonry">
-            <div class="col-md-6 masonry-item">
+            <div class="col-md-6 masonry-item sm-mb20">
                 <li class="list-group-item ">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-xs-8">
                             <h3>Current Balance: <span class="text-primary">£{{round($user->getWallet()->getBalance(), 2)}}</span> </h3>
                         </div>
                         <!--
@@ -28,10 +28,10 @@
                 <ul class="list-group">
                     <li class="list-group-item ">
                         <div class="row">
-                            <div class="col-sm-11">
+                            <div class="col-xs-11">
                                 <h3>Class cart </h3>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-xs-1">
                             <!--
                                 {{ Form::open(['route' =>'cart.emptyCart', 'method' => 'post', 'id' => 'empty-cart']) }}
                                     {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-bin hover mt10']) )}}
@@ -73,10 +73,10 @@
                     @else
                         <li id="voucher" class="list-group-item ">
                             <div class="row mb20">
-                                <div class="col-sm-11">
+                                <div class="col-xs-11">
                                     <strong class="list-group-item-heading">I have a Voucher Code</strong>
                                 </div>
-                                <div class="col-sm-1">
+                                <div class="col-xs-1">
                                     <span id="have-voucher" class="icon icon-radio"></span>
                                 </div>
                             </div>
@@ -84,10 +84,10 @@
                             <div id="have-voucher-block" class="hidden">
                                 {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
                                     <div class="row">
-                                        <div class="col-sm-8">
+                                        <div class="col-xs-8">
                                             {{ Form::text('coupon', null, ['class' => 'form-control', 'placeholder' => 'Enter your voucher']) }}
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-xs-4">
                                             {{ Form::submit('Add Voucher', ['class' => 'btn btn-primary btn-block']) }}
                                         </div>
                                     </div>
@@ -98,22 +98,28 @@
 
                     <li class="list-group-item">
                         <div class="row">
-                            <strong class="list-group-item-heading col-sm-3">Quantity</strong>
-                            <strong class="list-group-item-heading col-sm-7">Description of Purchase</strong>
-                            <strong class="list-group-item-heading col-sm-2 text-right">Cost</strong>
+                            <strong class="list-group-item-heading col-xs-3">Quantity</strong>
+                            <strong class="list-group-item-heading col-xs-6">Description of Purchase</strong>
+                            <strong class="list-group-item-heading col-xs-2 text-right">Cost</strong>
                         </div>
                     </li>
                     @foreach($packages as $row)
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
-                                <div class="col-sm-3 text-center">
+                                <div class="col-xs-3 text-center">
                                     {{ HTML::linkRoute('packages', 'More', null, ['class' => 'btn btn-info btn-block btn-package']) }}
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-xs-7">
                                     <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong><br>
                                 </div>
-                                <div class="col-sm-2 text-right">
+                                <div class="col-xs-2 text-right">
                                     <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
+                                </div>
+                                <div class="col-xs-1">
+                                    {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                        {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
+                                    {{Form::close()}}
                                 </div>
                             </div>
                         </li>
@@ -124,12 +130,13 @@
                         ?>
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
+
                                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                                         {{ Form::hidden('force', true) }}
                                         {{ Form::hidden('refresh-page', true) }}
-                                        <div class="btn-group pull-right custom-btn-dropdown-select">
+                                        <div class="btn-group custom-btn-dropdown-select">
                                             {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
 
                                             <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
@@ -142,29 +149,36 @@
 
                                     {{ Form::close() }}
                                 </div>
-                                <div class="col-sm-7">
+                                <div class="col-xs-6">
                                     <strong>{{ $row['name']}}</strong><br>
                                     {{ $date->toDayDateTimeString() }}
                                 </div>
-                                <div class="col-sm-2 text-right">
+                                <div class="col-xs-2 text-right">
                                     <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</strong>
+                                </div>
+                                <div class="col-xs-1">
+                                    {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                        {{ Form::hidden('refresh-page', true) }}
+                                        {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
+                                    {{Form::close()}}
                                 </div>
                             </div>
                         </li>
                     @endforeach
                     <li class="list-group-item bg-light-grey">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="row">
-                                    <div class="col-sm-5">
+                                    <div class="col-xs-5">
                                         <strong>Sub-total</strong>
                                     </div>
-                                    <div class="col-sm-7">
+                                    <div class="col-xs-7">
                                         <strong class="text-primary">&pound{{ $total['subtotal'] }}</strong>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 text-right">
+                            <div class="col-xs-6 text-right">
                                 @if($total['package_deduct'] > 0)
                                     <strong>Package deduct: <span class="text-primary"> £{{ $total['package_deduct']  }}</span></strong>
                                     <br>
@@ -186,12 +200,12 @@
                     </li>
                     <li class="list-group-item bg-light-grey">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-xs-6">
                                 <div class="row">
-                                    <div class="col-sm-5">
+                                    <div class="col-xs-5">
                                         <strong>Total</strong>
                                     </div>
-                                    <div class="col-sm-7">
+                                    <div class="col-xs-7">
                                         <strong class="text-primary">&pound{{ $total['final_cost'] }}</strong>
                                     </div>
                                 </div>
@@ -201,21 +215,21 @@
                     <li  class="list-group-item">
                         <div class="row">
                             @if($total['final_cost'] > 0)
-                                <div class="col-sm-5">
+                                <div class="col-xs-5">
                                     <button  id="fb-pay" class="btn btn-info btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button>
                                 </div>
-                                <div class="col-sm-2 text-center mt5">
+                                <div class="col-xs-2 text-center mt5">
                                     Or
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-xs-5">
                                     <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
                                 </div>
                             @elseif($total['subtotal'] == $total['package_deduct'])
-                                <div class="col-sm-5">
+                                <div class="col-xs-5">
                                     {{ Html::linkRoute('wallet.sessions', 'Pay with package',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
                                 </div>
                             @else
-                                <div class="col-sm-5">
+                                <div class="col-xs-5">
                                     {{ Html::linkRoute('wallet.sessions', 'Pay with wallet',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
                                 </div>
                             @endif

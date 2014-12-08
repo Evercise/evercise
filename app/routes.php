@@ -10,18 +10,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-//
-
-
-Route::get('test2', function() {
-
-    $pardot = new Pardot();
-
-    $user = Sentry::findUserById(323);
-
-    d($pardot->getUser($user));
-
-});
 
 // temporary routes for new layouts
 
@@ -457,6 +445,9 @@ Route::post(
 Route::get('blog', ['as' => 'blog', 'uses' => 'PagesController@showBlog']);
 
 
+Route::get('about_evercise', ['as' => 'general.about', function(){
+    return View::make('v3.pages.about');
+}]);
 Route::get('about', ['as' => 'static.about', 'uses' => 'StaticController@show']);
 Route::get('terms_of_use', ['as' => 'static.terms_of_use', 'uses' => 'StaticController@show']);
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);

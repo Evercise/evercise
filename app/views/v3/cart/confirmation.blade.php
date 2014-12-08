@@ -40,7 +40,7 @@
                                 <div class="col-sm-8">
                                     <div class="row">
                                         <div class="col-sm-12 mb5">
-                                            <h3>{{ Html::linkRoute('class.show', $row['name'], [$row['evercisegroup_id']]) }}</h3>
+                                            <h3>{{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ] ) }}</h3>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -136,7 +136,7 @@
                                 {{ Html::linkRoute('home', 'Print', null, ['class' => 'btn btn-default btn-block']) }}
                             </div>
                             <div class="col-sm-3">
-                                {{ Html::linkRoute('users.edit', 'View My Profile', [$user->id, 'wallet'], ['class' => 'btn btn-primary btn-block']) }}
+                                {{ Html::linkRoute('users.edit', 'View My Profile', [$user->display_name, 'wallet'], ['class' => 'btn btn-primary btn-block']) }}
                             </div>
                         </div>
                     </li>

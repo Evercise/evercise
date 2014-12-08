@@ -98,8 +98,8 @@ return [
 
         [
             'prefix' => 'module',
-            'width' => 250,
-            'height' =>311
+            'width' => 315,
+            'height' =>250
         ],
         [
             'prefix' => 'thumb',
