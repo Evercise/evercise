@@ -43,8 +43,14 @@
                      {{ Form::label('facilities', 'What Facilities does this venue have?', ['class' => 'mb15'] )  }}
                      <div class="row">
                         @foreach($facilities['facilities'] as $key => $facility)
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 custom-checkbox">
+
+                                    {{ Form::checkbox('facilities_array[]', $key, false, ['id' => $key.'-id'] ) }}
+                                    <label for="{{$key}}-id" class="text-grey">{{ $facility }}</label>
+
+                                <!--
                                 <label class="custom-checkbox text-grey">{{ Form::checkbox('facilities_array[]', $key, false ) }}{{ $facility }}</label>
+                                -->
                             </div>
                         @endforeach
                      </div>
@@ -58,8 +64,12 @@
                  {{ Form::label('amenities', 'What Amenities does this venue have?', ['class' => 'mb15'] )  }}
                  <div class="row">
                     @foreach($facilities['amenities'] as $key => $amenities)
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 custom-checkbox">
+                            {{ Form::checkbox('facilities_array[]', $key, false, ['id' => $key.'-id'] ) }}
+                            <label for="{{$key}}-id" class="text-grey">{{ $amenities }}</label>
+                        <!--
                             <label class="custom-checkbox text-grey">{{ Form::checkbox('facilities_array[]', $key, false ) }}{{ $amenities }}</label>
+                        -->
                         </div>
                     @endforeach
                  </div>
