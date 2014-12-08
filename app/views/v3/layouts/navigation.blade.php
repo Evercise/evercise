@@ -48,7 +48,7 @@
          <li class="list-group-item">{{HTML::linkRoute('cart.checkout', 'Checkout' , null , ['class' => Route::currentRouteName() == 'cart.checkout' ? 'nav-list active' : 'nav-list'])}}</li>
          <li class="list-group-item">
               <a href="#" data-toggle="collapse" data-target="#login"  class="nav-list">Login</a>
-              <div id="login" class="collapse">
+              <div id="login" class="collapse mt30 pull-left">
                   @include('v3.auth.login')
               </div>
          </li>

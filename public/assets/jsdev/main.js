@@ -92,13 +92,6 @@ $(function(){
 
     $('.login-form').exists(function(){
         new Login(this);
-        /*
-        login = this;
-        $(document).on('submit', '.login-form', function(e){
-            e.preventDefault();
-            new AjaxRequest(login, redirectTo);
-        })
-        */
     })
     $('.edit-class-inline').exists(function(){
         new EditClass(this);
