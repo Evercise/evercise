@@ -79,7 +79,7 @@ return [
         ['user.upgrade' => 'User@userUpgrade'], // $user   // ∑
 
         ['user.login' => 'User@login'], // $user
-        ['user.logout' => 'User@loogout'], // $user
+        ['user.logout' => 'User@logout'], // $user
         ['user.loginFacebook' => 'User@facebookLogin'],
         ['user.edit' => 'User@edit'],
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
