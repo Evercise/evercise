@@ -142,36 +142,38 @@
         </div>
 
         <hr>
-        <div id="facilities" class="row">
-            <div class="col-sm-12">
-                @if(count($facilities = $data['venue']->getFacilities()))
-                    <div class="page-header">
-                        <h1>Venue Facilities</h1>
-                    </div>
+        @if(count($facilities = $data['venue']->getFacilities()) || count($amenities = $data['venue']->getAmenities()))
+            <div id="facilities" class="row">
+                <div class="col-sm-12">
+                    @if(count($facilities = $data['venue']->getFacilities()))
+                        <div class="page-header">
+                            <h1>Venue Facilities</h1>
+                        </div>
 
-                    <ul class="row custom-list">
-                        @foreach($facilities as $facility)
-                            <div class="col-sm-3">
-                                <li>{{ $facility->name}}</li>
-                            </div>
-                        @endforeach
-                    </ul>
-                @endif
+                        <ul class="row custom-list">
+                            @foreach($facilities as $facility)
+                                <div class="col-sm-3">
+                                    <li>{{ $facility->name}}</li>
+                                </div>
+                            @endforeach
+                        </ul>
+                    @endif
 
-                @if(count($amenities = $data['venue']->getAmenities()))
-                    <div class="page-header">
-                        <h1>Venue Amenties</h1>
-                    </div>
-                    <ul class="row custom-list">
-                        @foreach($amenities as $amenity)
-                            <div class="col-sm-3">
-                                <li>{{ $amenity->name}}</li>
-                            </div>
-                        @endforeach
-                    </ul>
-                @endif
+                    @if(count($amenities = $data['venue']->getAmenities()))
+                        <div class="page-header">
+                            <h1>Venue Amenties</h1>
+                        </div>
+                        <ul class="row custom-list">
+                            @foreach($amenities as $amenity)
+                                <div class="col-sm-3">
+                                    <li>{{ $amenity->name}}</li>
+                                </div>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
             </div>
-        </div>
+        @endif
         @if(count($data['allRatings']) > 0)
         <hr>
         <div id="ratings" class="row">
