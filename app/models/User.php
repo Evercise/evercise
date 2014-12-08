@@ -74,6 +74,12 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
+    public function isTrainer()
+    {
+        return count($this->trainer) == 1;
+    }
+
+
     /* public function user_has_marketingpreference()
      {
          return $this->hasManyThrough('User_has_marketingpreference', 'Marketingpreference');

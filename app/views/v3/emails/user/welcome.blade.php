@@ -4,7 +4,7 @@ object $user;
 
 @section('body')
 
-
+        {{ HTML::linkRoute('evercisegroups.search', 'Discover classes') }}
 
         $body = '
 			<p>You now have access to a huge range of fitness classes and trainers operating at multiple locations!</p>

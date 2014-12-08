@@ -13,6 +13,16 @@
 //
 
 
+Route::get('test2', function() {
+
+    $pardot = new Pardot();
+
+    $user = Sentry::findUserById(323);
+
+    d($pardot->getUser($user));
+
+});
+
 // temporary routes for new layouts
 
 Route::get('/test', function () {
@@ -25,6 +35,11 @@ Route::get('/ig', [
 
             $class = Evercisegroup::find(721);
             $user = Sentry::getUser();
+
+
+            event('user.signup', [$user]);
+
+            die('done');
             $session = Evercisesession::find(5594);
 
             /**
