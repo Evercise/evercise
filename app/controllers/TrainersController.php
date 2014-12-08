@@ -68,15 +68,14 @@ class TrainersController extends \BaseController
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show($id = 'me')
     {
         if ($id == 'me') {
             $user = Sentry::getUser();
             $id = $user->id;
-        } else {
-            $user = User::where((is_numeric($id) ? 'id' : 'display_name'), $id)->first();
-
         }
+
+        $user = User::where((is_numeric($id) ? 'id' : 'display_name'), $id)->first();
 
         if($user) {
             try {
