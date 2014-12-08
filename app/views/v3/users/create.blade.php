@@ -18,6 +18,15 @@
                         <div>
                            {{ Form::label('trainer-question', 'Are you a trainer?', ['class' => 'col-sm-3 col-sm-offset-3 control-label text-right'])  }}
                            <div class="col-sm-6 mb20">
+                               <div class="custom-checkbox pull-left">
+                                   {{ Form::radio('trainer', 'yes', false, ['id' => 'yes']) }}
+                                   <label for="yes" class="text-grey">Yes</label>
+                               </div>
+                               <div class="custom-checkbox">
+                                  {{ Form::radio('trainer', 'no', true, ['id' => 'no']) }}
+                                  <label for="no" class="text-grey">No</label>
+                               </div>
+                               <!--
                                <label class="custom-checkbox">
                                  {{ Form::radio('trainer', 'yes') }}
                                  Yes
@@ -26,6 +35,7 @@
                                  {{ Form::radio('trainer', 'no', true) }}
                                  No
                                </label>
+                               -->
                            </div>
                         </div>
                         <div class="mb20 text-center">
@@ -117,12 +127,10 @@
 
 
                         <div class="text-center">
-                            <label class="custom-checkbox">
-                                {{ Form::checkbox('newsletter', 'yes', true ) }}
-
-                                 Get all the latest deals and news info by signing up to our newsletter
-                            </label>
-
+                            <div class="custom-checkbox">
+                                {{ Form::checkbox('newsletter', 'yes', true , ['id'=> 'newsletter']) }}
+                                <label for="newsletter" class="text-grey"> Get all the latest deals and news info by signing up to our newsletter</label>
+                            </div>
                         </div>
                         <div class="text-center form-group mt40">
                             {{ Form::submit('Create My Account', ['class' => 'btn btn-primary'] )  }}

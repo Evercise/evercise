@@ -9456,20 +9456,20 @@ label {
   cursor: pointer;
   background-position: -970px -290px;
 }
-.custom-checkbox input[type=checkbox] {
+.custom-checkbox input {
   display: none;
 }
-.custom-checkbox input[type=checkbox]:checked + label:before {
+.custom-checkbox input:checked + label:before {
   background-image: url("../img/ev_site_icons.png");
   background-position: -970px -290px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-checkbox input[type=checkbox]:checked + label:before.active {
+.custom-checkbox input:checked + label:before.active {
   background-position: -970px -330px;
 }
-.custom-checkbox input[type=checkbox]:checked + label:before.hover:hover,
-.custom-checkbox input[type=checkbox]:checked + label:before.active:hover {
+.custom-checkbox input:checked + label:before.hover:hover,
+.custom-checkbox input:checked + label:before.active:hover {
   cursor: pointer;
   background-position: -970px -330px;
 }
