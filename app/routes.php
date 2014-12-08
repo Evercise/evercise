@@ -726,3 +726,9 @@ Route::get('paytest', function () {
     }
 );
 Route::get('conftest', ['uses' => 'PaymentController@conftest']);
+
+Route::get('packages', function () {
+        $packages = Sentry::getUser()->packages;
+        return $packages;
+    }
+);
