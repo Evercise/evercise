@@ -27,9 +27,13 @@
                     {{  Form::hidden('id',  isset($data['trainer']->user->id) ? $data['trainer']->user->id : $data['user']->id ) }}
                     {{ Html::linkRoute('clone_class', 'Clone Class', $evercisegroup->id, ['class' => 'btn btn-default']) }}
                     <!-- need to use html button as btn-toggle class does not work with input field -->
-                    <button type="submit" id="submit-{{$evercisegroup->id}}" class="btn btn-default btn-toggle-down {{ count($evercisegroup->futuresessions) == 0 ? 'disabled' : null }}">Edit</button>
-                    {{ HTML::link('#myClassInfo-'.$evercisegroup->id , 'Done editing', [ 'class' => 'btn btn-default btn-toggle-up hide toggle-switch' , 'data-toggle' =>'collapse', 'id' => 'infoToggle-'.$evercisegroup->id , 'data-removeclass'=>'btn-toggle-up' ,  'data-switchclass' => 'btn-toggle-down' , 'data-switchtext' => 'Edit']) }}
-                    <a class="btn btn-info" href="{{ URL::route('class.show', [$evercisegroup->slug]) }}">Preview</a>
+                    @if(count($evercisegroup->futuresessions) == 0)
+                        {{ Html::linkRoute('sessions.add', 'Add Dates', $evercisegroup->id ,['class' => 'btn btn-primary']) }}
+                    @else
+                        <button type="submit" id="submit-{{$evercisegroup->id}}" class="btn btn-default btn-toggle-down">Edit</button>
+                        {{ HTML::link('#myClassInfo-'.$evercisegroup->id , 'Done editing', [ 'class' => 'btn btn-default btn-toggle-up hide toggle-switch' , 'data-toggle' =>'collapse', 'id' => 'infoToggle-'.$evercisegroup->id , 'data-removeclass'=>'btn-toggle-up' ,  'data-switchclass' => 'btn-toggle-down' , 'data-switchtext' => 'Edit']) }}
+                        <a class="btn btn-info" href="{{ URL::route('class.show', [$evercisegroup->slug]) }}">Preview</a>
+                    @endif
                 {{ Form::close() }}
             @endif
         </div>
