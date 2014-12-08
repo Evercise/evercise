@@ -122,7 +122,7 @@ class SessionsController extends AjaxBaseController{
     public function store()
     {
         $inputs = Input::all();
-        $evercisegroupId = isset($inputs['evercisegroup_id']) ?: $inputs['evercisegroupId'];
+        $evercisegroupId = isset($inputs['evercisegroup_id']) ? $inputs['evercisegroup_id'] : $inputs['evercisegroupId'];
         $time = $inputs['time'];
         $duration = $inputs['duration'];
         $tickets = isset($inputs['tickets']) ?: $inputs['members'];
