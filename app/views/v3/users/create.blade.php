@@ -29,7 +29,7 @@
                            </div>
                         </div>
                         <div class="mb20 text-center">
-                            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb"></span>Log in with facebook', null , ['class' => 'btn btn-lg btn-fb', 'id' => 'register-fb']) )}}
+                            {{ HTML::decode(HTML::linkRoute('users.fb', '<span class="icon icon-fb-white"></span>Log in with facebook', null , ['class' => 'btn btn-lg btn-fb', 'id' => 'register-fb']) )}}
                         </div>
                         <div class="row  mt10">
                             <div class="col-sm-6">
@@ -75,6 +75,18 @@
                             </div>
                         </div>
                         <div class="row  mt10">
+                            <div class="form-group col-sm-6">
+                                <label class="mb15" for="phone">Phone Number<small> (Get alerts about classes)</small></label>
+                                <div class="input-group">
+                                    <div class="input-group-addon custom-select">
+                                       {{ Form::select('areacode', Config::get('countrycodes.pretty')
+
+                                        , '+44', ['class' => 'select-addon'] ) }}
+                                    </div>
+                                    {{ Form::text('phone', null, ['class' => 'form-control']) }}
+                                </div>
+                            </div>
+                            <!--
                             <div class="col-sm-6">
                                 <label class="mb15" for="phone">Phone Number<small> (Get alerts about classes)</small></label>
 
@@ -87,6 +99,7 @@
                                     {{ Form::text('phone', null, ['class' => 'form-control']) }}
                                 </div>
                             </div>
+                            -->
                             <div class="col-sm-6">
                                <div class="form-group mb50">
                                    <label class="mb15" for="forename">Gender</label>

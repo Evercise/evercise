@@ -4,7 +4,7 @@
             <div class="col-sm-4">
                 <h3>Evercise Classes</h3>
                 <li>{{HTML::linkRoute('evercisegroups.search', 'Discover Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.serach' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('popular', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'popular' ? 'active' : ''])}}</li>
+                <!--<li>{{HTML::linkRoute('popular', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'popular' ? 'active' : ''])}}</li>-->
             </div>
             <div class="col-sm-4">
                 <h3>About Evercise</h3>
