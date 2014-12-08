@@ -44,11 +44,11 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6 text-right"><button class="btn btn-default">Cancel</button> </div>
+                        <div class="col-sm-6 text-right sm-text-center"><button class="btn btn-default">Cancel</button> </div>
                         {{ Form::hidden('image', isset($cloneGroup->image) ? $cloneGroup->image : null) }}
                         {{ Form::hidden('gallery_image', false) }}
                         {{ Form::hidden('category_array[]',null ) }}
-                        <div class="col-sm-6">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>
+                        <div class="col-sm-6 sm-text-center">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>
                     </div>
                 {{Form::close()}}
 

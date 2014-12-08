@@ -3,19 +3,20 @@
 
     <div class="container first-container mt20">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6 ">
                 <div class="row mb50">
-                    <div class="col-sm-4">
-                        {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
+                    <div class="col-md-4">
+                        {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle center-block']) }}
                     </div>
-                    <div class="col-sm-8 mt20">
+                    <div class="col-md-8 mt20 md-text-center">
                         <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
+                        <a href="/auth/logout">Log out</a>
                     </div>
-                    <a href="/auth/logout">Log out</a>
+
                 </div>
 
             </div>
-            <div class="col-sm-6 text-right mt50">
+            <div class="col-md-6 text-right mt50 md-text-center sm-mb20">
                 {{ HTML::linkRoute('evercisegroups.create', 'Create a new class', null, ['class' => 'btn btn-primary']) }}
             </div>
         </div>

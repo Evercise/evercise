@@ -29,8 +29,52 @@
 }
 
 .list-group-accordion{
-  .list-group-item{
-    border: 0;
-    border-radius: 0;
+  font-weight: 600;
+  .list-group-accordion-title{
+    border-bottom: 1px solid @gray-light;
+    padding: 22px 27px;
+    position: relative;
+
+    &:after{
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 20px;
+      .sprite(-409px, -250px);
+      right: 30px;
+      top: 50%;
+      margin-top: -10px;
+    }
+    &.active{
+      a{
+        color: @brand-primary;
+      }
+      &:after{
+        content: '';
+        position: absolute;
+        width: 22px;
+        height: 20px;
+        .sprite(-369px, -290px);
+        right: 30px;
+        top: 50%;
+        margin-top: -10px;
+      }
+    }
+  }
+  .list-group{
+    margin: 0;
+    .list-group-item{
+      padding-left: 57px;
+      border-left-width: 0;
+      border-right-width: 0;
+      border-bottom-width: 0;
+      &:first-of-type{
+        border-top-width: 0px ;
+      }
+      &:last-of-type{
+        border-bottom-width: 1px ;
+      }
+
+    }
   }
 }

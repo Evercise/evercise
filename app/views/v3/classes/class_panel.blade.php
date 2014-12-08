@@ -30,7 +30,7 @@
                     {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating-'.$session->id] ) }}
                         {{ Form::hidden('stars', null, ['id' => 'stars']) }}
                         {{ Form::hidden('sessionmember_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
-                        <div class="form-group pull-left">
+                        <div class="form-group">
                             {{Form::textarea('feedback_text', null, ['class' => 'form-control', 'rows' => '8', 'placeholder' => 'Add your review about the class...'])}}
                         </div>
                         <div class="form-group">
@@ -67,26 +67,26 @@
     @if($session->isInPast())
         @if(isset($data['next_sessions'][$session->id])) {{-- User has signed up to a future session of this group --}}
             <div id="upcoming-session" class="row panel-body bg-light-grey class-info-wrapper">
-                <div class=" col-sm-7">
+                <div class=" col-sm-7 sm-text-center">
                     <span><span class="icon icon-clock"></span> {{ $data['future_sessions'][$data['next_sessions'][$session->id]]->formattedDate().', '.$data['future_sessions'][$data['next_sessions'][$session->id]]->formattedTime() }}</span><br>
                     <span><span class="icon icon-ticket"></span> Tickets purchased: {{ count($data['future_sessions'][$data['next_sessions'][$session->id]]->userSessionmembers($data['user_id'])) }}</span>
                 </div>
 
-                <div class=" col-sm-5 text-right">
+                <div class=" col-sm-5 text-right sm-text-center">
                     <strong class="text-primary">&pound;{{ $data['future_sessions'][$data['next_sessions'][$session->id]]->price }}</strong>
                 </div>
             </div>
         @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
             <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
-                <div class=" col-sm-7">
+                <div class=" col-sm-7 sm-text-center">
                     <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->getNextFutureSession()->formattedDate().', '.$session->evercisegroup->getNextFutureSession()->formattedTime() }}</span>
                 </div>
                 <div class=" col-sm-5">
                     <div class="row">
-                        <div class="col-xs-4">
+                        <div class="col-sm-4 sm-text-center">
                             <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
                         </div>
-                        <div class="col-xs-8">
+                        <div class="col-sm-8 sm-text-center">
                             {{ Form::open(['id' => 'add-to-cart', 'url' => route('cart.add'), 'method' => 'post', 'class' => '']) }}
                                 {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
                                 {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
