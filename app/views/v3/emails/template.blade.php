@@ -41,16 +41,15 @@
                                 <table width="640" height="434" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td>
-                                            @yield('image')
+                                            <a href="{{ URL::to($link_url) }}">
+                                            {{ image($image) }}
+                                            </a>
                                         </td>
                                     </tr>
                                 </table>
                             </tr>
                         </td>
                     </table>
-
-
-
 
                     <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
                         <tr>
@@ -65,21 +64,22 @@
                                     </tr>
                                 </table>
                                 <table width="640" height="auto" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+                                    @if($title)
                                     <tr>
                                         <td>
-                                            @yield('title')
+                                            <h1>{{ $title or "" }}</h1>
                                         </td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <td align="left">
                                             @yield('body')
-
                                         </td>
                                     </tr>
                                 </table>
 
 
-                                <table width="640" height="93" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
                                             @yield('upsell')
