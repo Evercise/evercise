@@ -1160,11 +1160,7 @@ class Evercisegroup extends \Eloquent
             $og->title($this->name)
                 ->type('article')
                 ->image(
-                    url() . '/profiles/' . $trainer->user->directory . '/' . $this->image,
-                    [
-                        'width'  => 400,
-                        'height' => 200
-                    ]
+                    url() . $trainer->user->directory . '/thumb_' . $this->image
                 )
                 ->description($this->description)
                 ->url();
