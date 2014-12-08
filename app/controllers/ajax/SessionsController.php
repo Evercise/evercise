@@ -52,24 +52,28 @@ class SessionsController extends AjaxBaseController{
 
         $userId = \Sentry::getUser()->id;
 
-        foreach($sessionIds as $key => $id)
+        if($sessionIds)
         {
-            $inputs = [
-                'time' => $time_array[$key],
-                'duration' => $duration_array[$key],
-                'tickets' => $tickets_array[$key],
-                'price' => $price_array[$key],
-            ];
+            foreach($sessionIds as $key => $id) {
+                $inputs = [
+                    'time' => $time_array[$key],
+                    'duration' => $duration_array[$key],
+                    'tickets' => $tickets_array[$key],
+                    'price' => $price_array[$key],
+                ];
 
-            $session = Evercisesession::find($id);
-            //return $session->validateAndUpdate($inputs, $userId);
-            if(!$session->validateAndUpdate($inputs, $userId))
-                return Response::json(
-                    [
-                        'view' => View::make('v3.layouts.negative-alert')->with('message', 'Sessions could not be updated')->with('fixed', true)->render(),
-                        'id'       => $id
-                    ]
-                );
+                $session = Evercisesession::find($id);
+                //return $session->validateAndUpdate($inputs, $userId);
+                $updateResponse = $session->validateAndUpdate($inputs, $userId);
+                if ($updateResponse['validation_failed'])
+                    return Response::json(
+                        [
+                            'view' => View::make('v3.layouts.negative-alert')->with('message', 'Sessions could not be updated')->with('fixed', true)->render(),
+                            'errors' => $updateResponse,
+                            'id' => $id
+                        ]
+                    );
+            }
         }
 
 
@@ -77,7 +81,7 @@ class SessionsController extends AjaxBaseController{
         if(isset($preview) && $preview == 'yes'){
             return Response::json(
                 [
-                    'url' => route('evercisegroups.show',[$evercisegoupId,'preview'] )
+                    'url' => route('class.show',[Evercisegroup::getSlug($evercisegoupId),'preview'] )
                 ]
             );
         }

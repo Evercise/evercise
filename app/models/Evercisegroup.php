@@ -82,7 +82,7 @@ class Evercisegroup extends \Eloquent
             $description = $inputs['class_description'];
             $image = $inputs['image'];
 
-            if($inputs['gallery_image']) {
+            if($inputs['gallery_image'] == 'true') {
                 $image = Gallery::selectImage($image, $user, $classname);
             }
 

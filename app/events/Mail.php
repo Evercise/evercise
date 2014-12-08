@@ -7,6 +7,7 @@ use Illuminate\Log\Writer;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Mail\Mailer;
 use Illuminate\View\Factory as View;
+use Illuminate\Routing\UrlGenerator;
 use Exception;
 
 
@@ -49,22 +50,32 @@ class Mail
      * @param Mailer $email
      * @param View $view
      */
-    public function __construct(Writer $log, Repository $config, Dispatcher $event, Mailer $email, View $view)
-    {
+    public function __construct(
+        Writer $log,
+        Repository $config,
+        Dispatcher $event,
+        Mailer $email,
+        View $view,
+        UrlGenerator $url
+    ) {
 
         $this->log = $log;
         $this->config = $config;
         $this->event = $event;
         $this->email = $email;
         $this->view = $view;
+        $this->url = $url;
 
 
         $this->data = [
             'config'      => $this->config->get('evercise'),
             'subject'     => 'Evercise',
+            'title'       => FALSE,
             'view'        => 'v3.emails.default',
             'attachments' => [],
-            'unsubscribe' =>  '%%unsubscribe%%'
+            'unsubscribe' => '%%unsubscribe%%',
+            'link_url'    => $this->url->to('/'),
+            'image'       => 'http://evertest.evercise.com/assets/img/default_email.jpg'
         ];
 
     }
@@ -98,6 +109,7 @@ class Mail
 
         $params = [
             'subject' => 'Welcome to Evercise',
+            'title'   => 'Welcome to Evercise!',
             'view'    => 'v3.emails.user.welcome',
             'user'    => $user
         ];
@@ -513,7 +525,8 @@ class Mail
      * @param array $params
      */
 
-    public function send($email,$params = []) {
+    public function send($email, $params = [])
+    {
 
         /** This part will be needed when we assign Functions to Pardot API
          * example config would be:
