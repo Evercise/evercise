@@ -7329,8 +7329,8 @@ a.bg-light-grey:hover {
   width: 100%;
 }
 .discover-nav {
-  top: 62px;
-  height: 70px;
+  height: 170px;
+  top: 61px;
   padding: 15px 0;
   border-bottom: 1px solid #e8ebec;
   position: fixed;
@@ -7338,8 +7338,18 @@ a.bg-light-grey:hover {
   background: #ffffff;
   z-index: 10;
 }
+@media (min-width: 768px) {
+  .discover-nav {
+    height: 70px;
+  }
+}
 .discover-nav-spacer {
-  margin-top: 132px;
+  margin-top: 231px;
+}
+@media (min-width: 768px) {
+  .discover-nav-spacer {
+    margin-top: 131px;
+  }
 }
 @media (min-width: 1200px) {
   .nav-no-float li {
@@ -9101,14 +9111,10 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-module {
   max-width: 325px;
-  margin: 0 auto 30px;
-  /*
-  .class-box(auto, 250px, 12.5px);
-  max-width: 311px;
-  .class-rating-wrapper{
-    height: 27px;
-  }
-  */
+  margin: 0 auto 25px;
+}
+.class-module .class-image-wrapper img {
+  width: 100%;
 }
 .class-list {
   width: 100%;
@@ -9245,7 +9251,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-snippet-wrapper {
   box-shadow: 3px 0 2px -2px rgba(56, 61, 72, 0.5);
-  top: 132px;
+  top: 131px;
   overflow: hidden;
 }
 .class-snippet-wrapper .snippet-header {
@@ -9277,7 +9283,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-preview {
   left: 410px;
-  top: 132px;
+  top: 131px;
   margin-left: -410px;
   z-index: 1;
   border-left: 1px solid #e8ebec;
@@ -9956,7 +9962,7 @@ label {
 }
 .map-wrapper {
   position: absolute;
-  top: 132px;
+  top: 131px;
   left: 410px;
   right: 0;
   bottom: 0;

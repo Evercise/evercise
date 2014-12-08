@@ -1,24 +1,37 @@
 if(typeof angular != 'undefined') {
     app.controller('DiscoverController', ["$scope", "$q", function ($scope, $q) {
 
+        // grab classes fromn elastic
         $scope.everciseGroups = laracasts.mapResults;
 
+        // the number of results returned
         $scope.results = $scope.everciseGroups.length;
-        
-        $scope.view = 'mapview';
 
+        // set initial view depending on screen size
+        if(window.innerWidth >= 1200) {
+            $scope.view = 'mapview';
+        }else {
+            $scope.view = 'gridview';
+        }
+
+        // set initial sort
         $scope.sort = 'id';
 
+        // set initial dropdown styling
         $scope.dropwdownStyle = {
             top : 0,
             left : 0
         }
 
+        // to store the current active class
         $scope.active = {};
+
+        // default distance for filter
         $scope.distance = 10;
 
         // watch the scope for map loaded
-
+        $scope.myMarkers = [];
+        $scope.markers = [];
         $scope.$watch(function () {
             return $scope.map.bounds;
         }, function () {
@@ -33,6 +46,8 @@ if(typeof angular != 'undefined') {
         }, true);
 
         // create the markers
+
+
         var createMarker = function (data) {
             var result = {
                 id: data.id,
@@ -65,12 +80,14 @@ if(typeof angular != 'undefined') {
             return result;
         }
 
+        // used for distance filter
         $scope.distanceFilter = function (marker) {
             if( marker.distance <= $scope.distance || marker == $scope.active){
                 return marker;
             }
         };
 
+        // toggle sorting dropdowns
         $scope.toggle = function(e,toggle){
             var offset = $(e.target).offset();
             var height = ( $(e.target).height() * 1.5 );
@@ -87,6 +104,7 @@ if(typeof angular != 'undefined') {
             }
         };
 
+        // when dropdown is closed
         $scope.closeDropdown = function(toggle){
             window.setTimeout(function(){
                 $('.tab-pane-sort').removeClass('active');
@@ -100,18 +118,24 @@ if(typeof angular != 'undefined') {
             },100);
         }
 
+        //change view
         $scope.changeView = function (view) {
             $scope.view = view;
         };
 
-
+        //is previiew box visable
         $scope.isPreviewOpen = false;
+        $scope.returnPreview = function () {
+            $scope.isPreviewOpen = false;
+        }
 
+        // current map cennter
         $scope.currentCenter = {
             latitude: 50,
             longitude: -0.2
         }
 
+        // google map
         $scope.map = {
             center: $scope.currentCenter,
             pan: {},
@@ -124,11 +148,8 @@ if(typeof angular != 'undefined') {
         };
 
 
-        $scope.results = $scope.everciseGroups.length;
 
-        $scope.myMarkers = [];
-
-
+        // used for marker clusters
         $scope.clusterStyles = [
             {
                 textColor: 'white',
@@ -138,26 +159,12 @@ if(typeof angular != 'undefined') {
                 anchorText: [-14,9]
             }
         ];
-
         $scope.clusterOptions = {
             gridSize: 8,
             maxZoom: 20,
             zoom: 15,
             styles: $scope.clusterStyles
-        }
-
-        $scope.mask = false;
-
-        if ($scope.everciseGroups.length < 200) {
-            $scope.initialLoad = $scope.everciseGroups.length;
-        }
-        else {
-            $scope.initialLoad = 200;
-        }
-
-        $scope.markers = [];
-
-
+        };
         $scope.clusterEvents = {
             click: function (cluster, clusterModels) {
                 angular.forEach(clusterModels, function (value, key) {
@@ -166,9 +173,19 @@ if(typeof angular != 'undefined') {
             }
         };
 
-        $scope.returnPreview = function () {
-            $scope.isPreviewOpen = false;
+        // window mask
+        $scope.mask = false;
+
+        // number of classes to load
+        if ($scope.everciseGroups.length < 200) {
+            $scope.initialLoad = $scope.everciseGroups.length;
         }
+        else {
+            $scope.initialLoad = 200;
+        }
+
+
+
 
         $scope.lastActiveMarker = '';
 
@@ -260,6 +277,18 @@ if(typeof angular != 'undefined') {
                 return false;
             }
         }
+
+        // only display grid view on smaller screens
+        $(window).resize(function(){
+
+            if(window.innerWidth < 1200)
+            {
+                $scope.$apply(function(){
+                    $scope.view = 'gridview';
+                })
+            }
+
+        });
         /*
         $(window).resize(function(){
             $scope.$apply(function(){

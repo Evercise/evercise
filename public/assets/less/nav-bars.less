@@ -84,18 +84,24 @@
 }
 
 .discover-nav{
+  height: 170px;
   top: @navbar-height-outer;
-  height: @discover-navbar-height;
   padding: @discover-navbar-padding;
   border-bottom: 1px solid @gray-light;
   position: fixed;
   width: 100%;
   background: @white;
   z-index: 10;
+  @media (min-width: @screen-sm-min) {
+    height: @discover-navbar-height;
+  }
 }
 
 .discover-nav-spacer{
-  margin-top: @navbar-height-outer + @discover-navbar-height;
+  margin-top: @navbar-height-outer + @discover-navbar-height + 100;
+  @media (min-width: @screen-sm-min) {
+    margin-top: @navbar-height-outer + @discover-navbar-height;
+  }
 }
 
 @media (min-width: @grid-float-breakpoint){

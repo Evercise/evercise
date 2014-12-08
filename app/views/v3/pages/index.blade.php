@@ -17,11 +17,12 @@
                   </div>
                   <div id="categories" class="panel-collapse collapse">
                     <div class="list-group">
-                        <li class="list-group-item bg-grey"><a href="#">cat 1</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 2</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 3</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 4</a> </li>
-                        <li class="list-group-item bg-grey"><a href="#">cat 5</a> </li>
+                        @foreach($categories as $c)
+                            <li class="list-group-item bg-grey">
+                                {{ Html::link(url($c->permalink), $c->title) }}
+                            </li>
+
+                        @endforeach
                   </div>
                 </div>
                 <div class="list-group-accordion-body">

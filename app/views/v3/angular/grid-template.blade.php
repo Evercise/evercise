@@ -1,8 +1,8 @@
 <div id="gridview" ng-show="view == 'gridview'" class="discover-nav-spacer">
-    <div class="container-fluid bg-light-grey">
+    <div class="container-fluid bg-grey">
         <div class="container">
             <div class="row">
-                <div class="mt15 mb20 pull-left">
+                <div class="mt15 mb20 pull-left visible-lg-block">
                     <div class="col-sm-6 mt5">
                         <strong>Your search return <span class="text-primary">{[{ results }]}</span> results</strong>
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="col-md-4"  ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter" id = {[{marker.id}]}>
-
+                    <!--
                     <div class="class-module center-block">
                         <div class="class-image-wrapper">
                             <a href="{[{ marker.link }]}">
@@ -59,7 +59,41 @@
                             <div class="col-xs-6"> <a href="{[{ marker.link }]}" class="btn btn-default pull-right">Join Class</a></div>
                         </div>
                     </div>
+                    -->
+                    <ul class="list-group class-module">
+                        <div class="class-image-wrapper">
+                             <a href="{[{ marker.link }]}">
+                                 {{ image('{[{marker.directory}]}/module_{[{ marker.image}]}', '{[{ marker.name}]}', ['class' => 'img-responsive']) }}
+                             </a>
+                        </div>
+                        <li class="list-group-item">
 
+                            <div class="class-title-wrapper text-center">
+                                <a href="{[{ marker.link }]}"><h3>{[{ marker.name  }]}</h3></a>
+                                <div class="class-rating-wrapper">
+                                    <span class="icon icon-full-star" ng-repeat="n in [] | repeat:marker.stars"></span>
+                                    <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item bg-light-grey">
+                            <div class="class-info-wrapper  row">
+                                <div class="pull-left">
+                                    <span class="icon icon-clock"></span> {[{ marker.nextClassDate  }]}
+                                </div>
+
+                                <div class="pull-left ml20"><span class="icon icon-watch"></span> {[{ marker.nextClassDuration}]} mins</div>
+                                <div class="pull-right"><span class="icon icon-ticket"></span> x {[{ marker.capacity }]}</div>
+
+                            </div>
+                        </li>
+                        <li class="list-group-item bg-light-grey">
+                            <div class="class-info-wrapper  row">
+                                <div class="col-xs-6" ><strong class="text-primary">&pound;{[{ marker.price }]}</strong></div>
+                                <div class="col-xs-6"><a href="{[{ marker.link }]}" class="btn btn-default pull-right">Join Class</a></div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
             </div>
