@@ -10,9 +10,10 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
-           we should put the category list here
-        </div>
+
+
+        @include('v3.pages.sidebar')
+
         <div class="col-sm-8">
              @foreach($articles as $a)
                 <div class="row" >
