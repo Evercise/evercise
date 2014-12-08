@@ -7,6 +7,10 @@ Login.prototype = {
     constructor: Login,
     addListeners : function(){
         this.form.on('submit', $.proxy(this.submit, this));
+        this.form.find('input').on('input', $.proxy(this.removeError, this));
+    },
+    removeError: function(){
+        this.form.find('.alert').remove();
     },
     submit: function(e){
         e.preventDefault();
@@ -22,6 +26,7 @@ Login.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
+                self.removeError();
             },
 
             success: function (data) {

@@ -125,7 +125,8 @@ updateProfile.prototype = {
         $.each(arr, function(index, value)
         {
             self.form.find('input[name="' + index+ '"]').parent().addClass('has-error');
-            self.form.find('input[name="' + index+ '"]').parent().find('.glyphicon-ok').remove();
+            self.form.find('input[name="' + index+ '"]').parent().find('.glyphicon').remove();
+            self.form.find('input[name="' + index + '"]').parent().find('.help-block:visible').remove();
             self.form.find('input[name="' + index+ '"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
             self.form.find('input[name="' + index+ '"]').after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="'+index+'"></i>');
         })

@@ -59,7 +59,8 @@ AjaxRequest.prototype = {
                     self.validationscroll = true;
                 }
                 self.form.find('#' + index).parent().addClass('has-error');
-                self.form.find('#' + index).parent().find('.glyphicon-ok').remove();
+                self.form.find('#' + index).parent().find('.glyphicon').remove();
+                self.form.find('input[name="' + index + '"]').parent().find('.help-block:visible').remove();
                 self.form.find('#' + index).after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
                 self.form.find('#' + index).after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="'+index+'" style="display: block;"></i>');
             })
