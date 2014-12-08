@@ -19,9 +19,9 @@
                 <li><a href="#">+44 (0)203 322 216</a></li>
                 {{ HTML::mailto('hello@evercise.com') }}
                 <ul class="list-inline">
-                    <li><a href="https://www.facebook.com/evercise"><span class="icon-lg icon-lg-fb hover"></span></a></li>
-                    <li><a href="https://twitter.com/Evercise"><span class="icon-lg icon-lg-tweeter hover"></span></a></li>
-                    <li><a href="https://plus.google.com/+Evercisefitness"><span class="icon-lg icon-lg-google hover"></span></a></li>
+                    <li><a target="_blank" href="https://www.facebook.com/evercise"><span class="icon-lg icon-lg-fb hover"></span></a></li>
+                    <li><a target="_blank" href="https://twitter.com/Evercise"><span class="icon-lg icon-lg-tweeter hover"></span></a></li>
+                    <li><a target="_blank" href="https://plus.google.com/+Evercisefitness"><span class="icon-lg icon-lg-google hover"></span></a></li>
                 </ul>
             </div>
         </div>
