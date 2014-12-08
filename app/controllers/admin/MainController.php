@@ -116,7 +116,7 @@ class MainController extends \BaseController
         $date = $date . ' 00:00:00';
 
         $expired = DB::table('evercisesessions')
-            ->select(DB::raw('evercisesessions.id, evercisesessions.date_time, evercisesessions.members, evercisesessions.price, evercisegroups.user_id, evercisegroups.name, users.email, users.first_name, users.last_name, users.phone'))
+            ->select(DB::raw('evercisesessions.id, evercisesessions.date_time, evercisesessions.tickets as members, evercisesessions.price, evercisegroups.user_id, evercisegroups.name, users.email, users.first_name, users.last_name, users.phone'))
             ->leftJoin('evercisegroups', 'evercisegroups.id', '=', 'evercisesessions.evercisegroup_id')
             ->leftJoin('users', 'users.id', '=', 'evercisegroups.user_id')
             ->where('evercisesessions.date_time', '>', $date)
@@ -137,7 +137,6 @@ class MainController extends \BaseController
     {
 
         $users = User::all();
-
 
         $trainerGroup = Sentry::findGroupByName('Trainer');
 
