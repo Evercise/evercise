@@ -9103,6 +9103,10 @@ fieldset[disabled] .stripe-button-el.active {
 .img-full-width {
   width: 100%;
 }
+.home-assets {
+  height: 220px;
+  margin-top: 20px;
+}
 .modal .close {
   float: left;
 }
@@ -9467,6 +9471,7 @@ label {
   background-position: -50px -280px;
 }
 .custom-select:hover:after {
+  z-index: -1;
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -280px;
   background-repeat: no-repeat;

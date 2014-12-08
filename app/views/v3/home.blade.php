@@ -100,8 +100,10 @@
                     <div class="underline">
                         <h2>What is Evercise</h2>
                     </div>
+                    <div class="home-assets">
+                        {{ image('img/home/wie.png', 'what is evercise', ['class' => 'img-responsive center-block']) }}
+                    </div>
 
-                    {{ image('img/home/wie.png', 'what is evercise', ['class' => 'img-responsive center-block']) }}
                     <div class="caption">
                         <p>Evercise is the exciting new Pay As You Go fitness community that’s flexible enough to fit in with your modern lifestyle. Evercise unites talented trainers with an active community who want more fun and freedom from their fitness routine. </p>
                     </div>
@@ -113,8 +115,9 @@
                     <div class="underline">
                         <h2>Why join Evercise</h2>
                     </div>
-
-                    {{ image('img/home/wje.png', 'why join evercise', ['class' => 'img-responsive center-block']) }}
+                    <div class="home-assets">
+                        {{ image('img/home/wje.png', 'why join evercise', ['class' => 'img-responsive center-block']) }}
+                    </div>
                     <div class="caption">
                          <p>We want fitness to be fun and flexible rather than routine and restricted. By bringing together trainers and a keen community of fitness enthusiasts Evercise really does benefit everyone. Evercise makes fitness fun again, emphasising social, group exercise that fits in with your life</p>
                     </div>
@@ -126,8 +129,9 @@
                     <div class="underline">
                         <h2>How it works</h2>
                     </div>
-
-                    {{ image('img/home/hiw.png', 'how it works', ['class' => 'img-responsive center-block']) }}
+                    <div class="home-assets">
+                        {{ image('img/home/hiw.png', 'how it works', ['class' => 'img-responsive center-block']) }}
+                    </div>
                     <div class="caption">
                          <p>Whether you’re a trainer or a participant Evcercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
                     </div>
