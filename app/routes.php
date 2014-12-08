@@ -21,16 +21,10 @@ Route::get('/ig', [
         'as' => 'aaa',
         function () {
 
-            $class = Evercisegroup::find(721);
-            $user = Sentry::findUserById(693);
-
-            dd($user->isTrainer());
-
-
+            $user = Sentry::findUserById(323);
             event('user.signup', [$user]);
 
             die('done');
-            $session = Evercisesession::find(5594);
 
             /**
              *
