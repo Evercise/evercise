@@ -53,7 +53,7 @@
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                             <span class="input-group-btn">
-                                <button class="btn btn-primary btn-block" type="submit">
+                                <button class="btn btn-primary" type="submit">
                                      Find a Class
                                 </button>
                             </span>
