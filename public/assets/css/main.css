@@ -9398,6 +9398,10 @@ label {
   padding: 5px 10px;
   border-right: none;
 }
+.with-addon select {
+  -webkit-appearance: menulist-button;
+  line-height: 34px;
+}
 .help-block {
   color: #768690;
   margin-bottom: -31px;
