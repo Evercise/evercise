@@ -2,8 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <style>
-
-
             h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 26px;  line-height: 30px; font-weight: 500; color:#768690; margin: 0}
             h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
         	p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
@@ -11,11 +9,14 @@
         	.container{ padding: 30px}
         	.pink-text{ color: #ff1b7e}
         	.white-text{ color: #ffffff}
-        	.image-left{ float: left; margin-right: 20px}
-        	.image-right{ float: right; margin-left: 20px}
+        	.text-right{ text-align: right}
+        	.text-center{ text-align: center}
+        	.image-left{ float: left; margin-right: 25px}
+        	.image-right{ float: right; margin-left: 25px}
         	.footer { font-size: 12px; text-align: left;}
             .mb30{ width: 100%; margin-bottom: 30px; float: left;}
-
+            .btn{ display: inline-block; padding: 11px 18px;  border-radius: 4px; text-decoration: none; color: #ffffff ; text-transform: uppercase; font-family: helvetica, arial, sans-serif; font-weight:600;  }
+            .btn-blue{ background: #5ecde8}
 
         	@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
                 h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
@@ -32,8 +33,8 @@
                 img { max-width: 640px; width: 100%}
                 .footer { font-size: 13px; text-align: left;}
         	}
+        </style>
 
-        	</style>
     </head>
     <body width="100%" height="auto" bgcolor="#bfbfbf" style="margin:0; padding:0;">
     	<!-- Opening main -->
@@ -87,6 +88,11 @@
 
                                 <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ff1b7e">
                                     <tr>
+                                        <td align="center">
+                                            <h1 class="white-text">How to use Evercise</h1>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
                                             <div class="container">
                                                 <div class="mb30">
@@ -110,6 +116,11 @@
                                                     </div>
                                                     <h3 class="white-text">Manage your account.</h3>
                                                     <p class="white-text">Once you’re up and running Evercise makes it easy to manage your account manage bookings, gain insights into the progress and success of your classes and withdraw money quickly and easily.</p>
+                                                </div>
+                                                <br>
+                                                <br>
+                                                <div class="text-center mb30">
+                                                    {{ Html::linkRoute('evercisegroups.search', 'Get Started', null, ['class' => 'btn btn-blue']) }}
                                                 </div>
                                             </div>
 

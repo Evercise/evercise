@@ -359,9 +359,12 @@ class Mail
     public function trainerRegistered($trainer)
     {
         $params = [
-            'subject' => 'Evercise trainer verification',
+            'subject' => 'Welcome to Evercise!',
+            'title'   => 'Welcome to Evercise!',
             'view'    => 'v3.emails.trainer.registered',
-            'trainer' => $trainer
+            'banner'   => 'upsell_signup',
+            'image'    => 'http://evercise.com/some_image.jpg',
+            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
         ];
 
         $this->send($trainer->email, $params);
