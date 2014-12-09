@@ -37,7 +37,7 @@ Route::get('/ig', [
         'as' => 'aaa',
         function () {
 
-            $user = Sentry::findUserById(323);
+            $user = Sentry::findUserById(151);
             event('user.signup', [$user]);
 
             die('done');

@@ -583,7 +583,7 @@ class Mail
             $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
 
-        if (!empty($campayn_id) && FALSE) {
+        if (!empty($campayn_id) ) {
             $pardotEmail = new \PardotEmail([
                 'subject' => $subject,
                 'content' => $content
