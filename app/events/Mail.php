@@ -379,7 +379,7 @@ class Mail
             'view'    => 'v3.emails.trainer.complete_profile',
             'trainer'    => $trainer,
             'banner'   => null,
-            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'image'    => image('/assets/img/email/trainer_finish_profile.png', 'finish profile'),
             'link_url' => $this->url->to('/profile/'.$trainer->display_name)
         ];
 
