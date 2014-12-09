@@ -13,11 +13,9 @@
 
 // temporary routes for new layouts
 
-Route::get('/tester', function () {
+Route::get('/tester', function () { return Response::view('v3.emails.tester'); });
+Route::get('/tester2', function () { return Response::view('v3.emails.tester2'); });
 
-    return Response::view('v3.emails.tester');
-
-});
 Route::get('/test', function () {
     $data = [
         'config'      => Config::get('evercise'),

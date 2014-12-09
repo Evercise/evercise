@@ -1,7 +1,5 @@
 @extends('v3.emails.template')
 
-object $user
-
 
 @section('body')
 

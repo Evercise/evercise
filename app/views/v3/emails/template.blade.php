@@ -61,16 +61,16 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table width="640" height="auto" align="{{ $align or left }}" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="640" height="auto" align="{{ $align or 'left' }}" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
                                     @if($title)
                                     <tr>
-                                        <td align="{{ $align or left }}">
+                                        <td align="{{ $align or 'left' }}">
                                             <h1>{{ $title or "" }}</h1>
                                         </td>
                                     </tr>
                                     @endif
                                     <tr>
-                                        <td align="{{ $align or left }}">
+                                        <td align="{{ $align or 'left' }}">
                                             @yield('body')
                                         </td>
                                     </tr>
