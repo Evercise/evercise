@@ -52,23 +52,23 @@
 
                                 @yield('extra')
 
+                                <?php if($banner) {
+                                        $banner = $banner_types[$banner];
+                                ?>
                                 <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
 
-                                        <?php if($banner) {
-                                        $banner = $banner_types[$banner];
-                                        ?>
 
                                             <a href="{{ URL::to($banner['url']) }}" title="{{ $banner['title'] }}">
                                             {{ image($banner['image'], $banner['title'] ) }}
                                             </a>
 
-                                        <?php } ?>
 
                                         </td>
                                     </tr>
                                 </table>
+                                <?php } ?>
 
                                 <!-- Footer -->
                                 <table width="640" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
