@@ -90,4 +90,14 @@ class Trainer
         $this->track->trainerEdit($trainer);
     }
 
+
+    /**
+     * @param $trainer
+     */
+    public function whyNotCompleteProfile($trainer)
+    {
+        $this->log->info('Trainer ' . $trainer->id . ' has been reminded to complete their profile');
+        $this->mail->trainerWhyNotCompleteProfile($trainer);
+    }
+
 }

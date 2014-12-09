@@ -11,11 +11,6 @@
 @section('extra')
 <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ff1b7e">
     <tr>
-        <td align="center">
-            <h1 class="white-text">How to use Evercise</h1>
-        </td>
-    </tr>
-    <tr>
         <td>
             <div class="container">
                 <br>

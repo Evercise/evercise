@@ -84,10 +84,11 @@ return [
         ['user.edit' => 'User@edit'],
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
-
-        ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
+
+        ['trainer.registered' => 'Trainer@registered'], //$trainer
+        ['trainer.complete_profile' => 'Trainer@whyNotCompleteProfile'], //$trainer
 
 
         ['class.created' => 'Classes@classCreated'],  // $class, $trainer

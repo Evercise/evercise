@@ -371,7 +371,7 @@ class Mail
         $this->send($trainer->email, $params);
     }
 
-    public function whyNotCompleteProfile()
+    public function trainerWhyNotCompleteProfile($trainer)
     {
         $params = [
             'subject' => 'BOOST YOUR EVERCISE SALES BY 50%',
