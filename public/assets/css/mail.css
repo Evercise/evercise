@@ -2,17 +2,18 @@ h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-s
 h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
 p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
 b { font-weight: bold; color:#768690; }
-table{ width: 640px; table-layout: fixed}
+table{ max-width: 640px; width: 100%; table-layout: fixed}
 .container{ }
 .pink-text{ color: #ff1b7e}
 .white-text{ color: #ffffff}
 .text-right{ text-align: right}
 .text-center{ text-align: center}
+img{ width: 100%}
 .image-left{ float: left; margin-right: 25px}
 .image-right{ float: right; margin-left: 25px}
 .footer { font-size: 12px; text-align: left;}
 .mb30{ width: 100%; margin-bottom: 30px; float: left;}
-.btn{ display: inline-block; padding: 11px 18px;  border-radius: 4px; text-decoration: none; color: #ffffff ; text-transform: uppercase; font-family: helvetica, arial, sans-serif; font-weight:600;  }
+.btn{border-radius:4px;color:#ffffff;display:inline-block;font-family:helvetica, arial, sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;  }
 .btn-blue{ background: #5ecde8}
 
 @media only screen and (max-device-width: 320px) and (max-device-height: 568px) {

@@ -42,13 +42,11 @@
         </tr>
     </table>
     <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
-        <tr width="100%">
-            <td width="100%">
+        <tr>
+            <td>
                 <br>
                 <br>
-                <div class="text-center mb30">
-                    {{ Html::linkRoute('evercisegroups.search', 'Get Started', null, ['class' => 'btn btn-blue']) }}
-                </div>
+                {{ Html::decode(Html::linkRoute('evercisegroups.search', image('/assets/img/email/btns/btn_sign_up.png'), null, ['class' => 'btn btn-blue'])) }}
             </td>
         </tr>
     </table>
