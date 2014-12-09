@@ -14,7 +14,7 @@
 // temporary routes for new layouts
 
 Route::get('/test', function () {
-    return Response::view('v3.emails.template');
+    return Response::view('v3.emails.tester');
 });
 
 Route::get('/ig', [

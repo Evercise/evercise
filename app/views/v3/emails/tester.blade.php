@@ -4,24 +4,30 @@
         <style>
 
 
-            h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px; text-align: left; line-height: 30px; font-weight: 500; color:#768690; margin: 0}
-        	p { font-family: helvetica, arial, sans-serif; font-size: 14px; text-align: left; line-height: 26px; font-weight: normal; color:#768690; }
+            h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 26px;  line-height: 30px; font-weight: 500; color:#768690; margin: 0}
+            h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
+        	p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
         	b { font-weight: bold; color:#768690; }
+        	.container{ padding: 30px}
+        	.pink-text{ color: #ff1b7e}
+        	.white-text{ color: #ffffff}
+        	.image-left{ float: left; margin-right: 20px}
+        	.image-left{ float: right; margin-left: 20px}
         	.footer { font-size: 12px; text-align: left;}
 
 
 
         	@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
-                h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; text-align: left; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
-                p { font-family: helvetica, arial, sans-serif; font-size: 26px; text-align: left; line-height: 38px; font-weight: normal; color:#768690; }
+                h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
+                p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
                 b { font-weight: bold; color:#768690; }
                 img { max-width: 640px; width: 100%}
                 .footer { font-size: 13px; text-align: left;}
         	}
 
         	@media screen and (max-device-width: 375px) and (max-device-height: 667px) {
-                h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; text-align: left; line-height: 42px; font-weight: normal; color:#768690; }
-                p { font-family: helvetica, arial, sans-serif; font-size: 26px; text-align: left; line-height: 38px; font-weight: normal; color:#768690; }
+                h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: normal; color:#768690; }
+                p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
                 b { font-weight: bold; color:#768690; }
                 img { max-width: 640px; width: 100%}
                 .footer { font-size: 13px; text-align: left;}
@@ -38,11 +44,11 @@
                         <tr>
                             <td>
                                 <!-- Main image -->
-                                <table width="640" height="434" border="0" cellspacing="0" cellpadding="0">
+                                <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to($link_url) }}">
-                                            {{ image($image) }}
+                                            <a href="#">
+                                            {{ image('/assets/img/email/evercise-welcome.jpg') }}
                                             </a>
                                         </td>
                                     </tr>
@@ -61,26 +67,41 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table width="640" height="auto" align="{{ $align or left }}" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
-                                    @if($title)
+                                <table width="640" height="auto" align="center" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+
                                     <tr>
-                                        <td align="{{ $align or left }}">
-                                            <h1>{{ $title or "" }}</h1>
+                                        <td align="center">
+                                            <h1 class="pink-text">Welcome To Evercise</h1>
                                         </td>
                                     </tr>
-                                    @endif
+
                                     <tr>
-                                        <td align="{{ $align or left }}">
-                                            @yield('body')
+                                        <td align="center">
+                                            <p>Evercise is the exciting new <span class="pink-text">Pay As You Go</span> fitness community that’s flexible enough to fit in with your lifestyle and doesn&apos;t tie you down to an expensive gym membership.</p>
+                                            <p>The Evercise network gives you access to a huge array of fun and flexible fitness classes wherever you are and our simple three-step process means it’s quick and easy to <span class="pink-text">sign up</span> and get involved.</p>
+
                                         </td>
                                     </tr>
                                 </table>
 
 
-                                <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ff1b7e">
                                     <tr>
                                         <td>
-                                            @yield('upsell')
+                                            <div class="container white-text">
+                                                <div class="image-left">
+                                                    {{ image('/img/home/wie.png') }}
+                                                </div>
+                                                <h3>Search</h3>
+                                                <p>Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
+                                                <div class="image-right">
+                                                    {{ image('/img/home/wie.png') }}
+                                                </div>
+                                                <h3>Select</h3>
+                                                <p>You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
+
+                                            </div>
+
                                         </td>
                                     </tr>
                                 </table>
@@ -91,7 +112,7 @@
                                         <td width="30" height="85"></td>
                                         <td width="330" height="50">
                                             <p class="footer">&copy; Copyright 2014 Evercise</p>
-                                            <a style="color:#50c3e2" href="{{ $unsubscribe }}">Unsubscribe</a>
+                                            <a style="color:#50c3e2" href="%%unsuscride%%">Unsubscribe</a>
                                         </td>
                                         <td width="100" height="40">
                                            <p>Follow us on</p>
