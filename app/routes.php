@@ -13,8 +13,10 @@
 
 // temporary routes for new layouts
 
-Route::get('/test', function () {
+Route::get('/tester', function () { return Response::view('v3.emails.tester'); });
+Route::get('/tester2', function () { return Response::view('v3.emails.tester2'); });
 
+Route::get('/test', function () {
     $data = [
         'config'      => Config::get('evercise'),
         'subject'     => 'Evercise',
@@ -28,6 +30,7 @@ Route::get('/test', function () {
 
 
     return Response::view('v3.emails.template', $data);
+
 });
 
 Route::get('/ig', [

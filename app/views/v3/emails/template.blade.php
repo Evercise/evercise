@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-
         <style>{{ $css }}</style>
     </head>
     <body width="100%" height="auto" bgcolor="#bfbfbf" style="margin:0; padding:0;">
@@ -17,7 +16,7 @@
                                     <tr>
                                         <td>
                                             <a href="{{ URL::to($link_url) }}" title="{{ $subject }}">
-                                            {{ image($image, $subject) }}
+                                            {{ $image }}
                                             </a>
                                         </td>
                                     </tr>
@@ -29,8 +28,6 @@
                     <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
                         <tr>
                             <td>
-
-
                                 <!-- Messaging -->
                                 <table width="640" height="20" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
@@ -38,21 +35,22 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <table width="640" height="auto" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="640" height="auto" align="{{ $align or 'left' }}" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
                                     @if($title)
                                     <tr>
-                                        <td>
+                                        <td align="{{ $align or 'left' }}">
                                             <h1>{{ $title or "" }}</h1>
                                         </td>
                                     </tr>
                                     @endif
                                     <tr>
-                                        <td align="left">
+                                        <td align="{{ $align or 'left' }}">
                                             @yield('body')
                                         </td>
                                     </tr>
                                 </table>
 
+                                @yield('extra');
 
                                 <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
