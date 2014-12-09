@@ -66,6 +66,14 @@ class Mail
         $this->view = $view;
         $this->url = $url;
 
+        $this->upsells = [
+            'upsell_signup' => [
+                'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
+                'url'   => $this->url->to('/'),
+                'title' => 'SignUp Today and Receive £5'
+            ],
+
+        ];
 
         $this->data = [
             'config'      => $this->config->get('evercise'),
@@ -107,11 +115,14 @@ class Mail
     {
 
 
+
+
         $params = [
             'subject'  => 'Welcome to Evercise',
             'title'    => 'Welcome to Evercise!',
             'view'     => 'v3.emails.user.welcome',
             'user'     => $user,
+            'banner'      => 'upsell_signup',
             'image'    => 'http://evercise.com/some_image.jpg',
             'link_url' => $this->url->to('/')
         ];
@@ -552,9 +563,7 @@ class Mail
             $trace = debug_backtrace();
             $name = $this->formatName(get_called_class(), next($trace)['function']);
 
-            $config_name = 'pardot.campayns.' . $name;
-
-            $campayn_id = $this->config->get($config_name);
+            $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
 
         if (!empty($campayn_id)) {
@@ -569,7 +578,6 @@ class Mail
                 $pardot->send($email, $campayn_id, $pardotEmail);
             } catch (Exception $e) {
                 $this->log->error('Pardot Email could not be sent ' . $e->getMessage());
-                d($e);
                 /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
 
             }
@@ -588,7 +596,6 @@ class Mail
             } catch (Exception $e) {
                 $this->log->error('Email could not be sent ' . $e->getMessage());
 
-                d($e);
                 /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
 
             }
