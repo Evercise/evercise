@@ -108,10 +108,12 @@ class Mail
 
 
         $params = [
-            'subject' => 'Welcome to Evercise',
-            'title'   => 'Welcome to Evercise!',
-            'view'    => 'v3.emails.user.welcome',
-            'user'    => $user
+            'subject'  => 'Welcome to Evercise',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.user.welcome',
+            'user'     => $user,
+            'image'    => 'http://evercise.com/some_image.jpg',
+            'link_url' => $this->url->to('/')
         ];
 
         $this->send($user->email, $params);

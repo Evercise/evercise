@@ -14,7 +14,20 @@
 // temporary routes for new layouts
 
 Route::get('/test', function () {
-    return Response::view('v3.emails.template');
+
+    $data = [
+        'config'      => Config::get('evercise'),
+        'subject'     => 'Evercise',
+        'title'       => FALSE,
+        'view'        => 'v3.emails.default',
+        'attachments' => [],
+        'unsubscribe' => '%%unsubscribe%%',
+        'link_url'    => URL::to('/'),
+        'image'       => 'http://evertest.evercise.com/assets/img/default_email.jpg'
+    ];
+
+
+    return Response::view('v3.emails.template', $data);
 });
 
 Route::get('/ig', [

@@ -41,8 +41,8 @@
                                 <table width="640" height="434" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to($link_url) }}">
-                                            {{ image($image) }}
+                                            <a href="{{ URL::to($link_url) }}" title="{{ $subject }}">
+                                            {{ image($image, $subject) }}
                                             </a>
                                         </td>
                                     </tr>
