@@ -46,7 +46,10 @@
             <td>
                 <br>
                 <br>
-                {{ Html::decode(Html::linkRoute('evercisegroups.search', image('/assets/img/email/btns/btn_sign_up.png'), null, ['class' => 'btn btn-blue'])) }}
+                <div class="text-center mb30">
+
+                    {{ Html::decode(Html::linkRoute('evercisegroups.search', image('/assets/img/email/btns/btn_get_started.png', 'Get Started'), null, ['class' => 'btn btn-blue'])) }}
+                </div>
             </td>
         </tr>
     </table>

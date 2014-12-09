@@ -73,30 +73,38 @@
                                 <!-- Footer -->
                                 <table width="100%" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
                                     <tr>
-                                        <td width="30" height="85"></td>
+                                        <td class="sm-hidden" width="30"  height="85"></td>
 
-                                        <td width="100" height="50">
-                                            <a style="color:#50c3e2" href="{{ $unsubscribe }}">Unsubscribe</a>
-                                        </td>
-                                        <td width="230" height="50">
+                                        <td class="sm-hidden"  height="50">
+
                                             <p class="footer">&copy; Copyright 2014 Evercise</p>
+
                                         </td>
-                                        <td width="100" height="40">
-                                           <p>Follow us on</p>
+                                        <td width="100"  height="40" align="center">
+                                            <p>Follow us on</p>
                                         </td>
-                                        <td width="50" height="40" align="center">
+                                        <td width="40"  height="40" align="center">
                                             <a href="http://facebook.com/evercise"><img src="http://evercise.com/img/email-campaign/Facebook.png" width="40" height="40" border="0" alt="Facebook"></a>
                                         </td>
-                                        <td width="50" height="40" align="center">
+                                        <td width="40" height="40" align="center">
                                             <a href="http://twitter.com/evercise"><img src="http://evercise.com/img/email-campaign/Twitter.png" width="40" height="40" border="0" alt="Twitter"></a>
                                         </td>
-                                        <td width="50" height="40" align="center">
+                                        <td width="40" height="40" align="center">
                                             <a href="http://instagram.com/evercisefitness"><img src="http://evercise.com/img/email-campaign/Instagram.png" width="40" height="40" border="0" alt="Instagram"></a>
                                         </td>
 
-                                        <td width="30" height="85"></td>
+                                        <td class="sm-hidden" width="30" height="85"></td>
                                     </tr>
                                 </table>
+                                <table width="100%" height="20" cellspacing="0" cellpadding="30" bgcolor="#ffffff">
+                                    <tr>
+                                        <td>
+                                            <a style="color:#50c3e2" href="{{ $unsubscribe }}">Unsubscribe</a>
+                                        </td>
+                                    </tr>
+                                </table>
+
+
 
                             <!-- Closing main -->
                             </td>

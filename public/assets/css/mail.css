@@ -13,7 +13,7 @@ img{ width: 100%}
 .image-right{ float: right; margin-left: 25px}
 .footer { font-size: 12px; text-align: left;}
 .mb30{ width: 100%; margin-bottom: 30px; float: left;}
-.btn{border-radius:4px;color:#ffffff;display:inline-block;font-family:helvetica, arial, sans-serif;font-size:13px;font-weight:bold;line-height:40px;text-align:center;text-decoration:none;width:200px;-webkit-text-size-adjust:none;  }
+.btn{line-height: 5px; border-radius:4px;color:#ffffff;display:inline-block;font-family:helvetica, arial, sans-serif;font-size:14px;font-weight:bold;text-align:center;text-decoration:none;-webkit-text-size-adjust:none;  }
 .btn-blue{ background: #5ecde8}
 
 @media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
@@ -23,6 +23,7 @@ img{ width: 100%}
     b { font-weight: bold; color:#768690; }
     img { max-width: 640px; width: 100%}
     .footer { font-size: 13px; text-align: left;}
+    .sm-hidden{ display: none}
 }
 
 @media screen and (max-device-width: 375px) and (max-device-height: 667px) {
@@ -32,4 +33,5 @@ img{ width: 100%}
     b { font-weight: bold; color:#768690; }
     img { max-width: 640px; width: 100%}
     .footer { font-size: 13px; text-align: left;}
+    .sm-hidden{ display: none}
 }
