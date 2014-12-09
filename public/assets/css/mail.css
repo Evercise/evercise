@@ -2,6 +2,7 @@ h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-s
 h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
 p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
 b { font-weight: bold; color:#768690; }
+table{ max-width: 640px}
 .container{ padding: 30px}
 .pink-text{ color: #ff1b7e}
 .white-text{ color: #ffffff}

@@ -5,14 +5,14 @@
     </head>
     <body width="100%" height="auto" bgcolor="#bfbfbf" style="margin:0; padding:0;">
     	<!-- Opening main -->
-    	<table width="640" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
+    	<table width="100%" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
     		<tr>
     			<td>
-                    <table width="640" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
+                    <table width="100%" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
                         <tr>
                             <td>
                                 <!-- Main image -->
-                                <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0">
+                                <table width="100%" height="auto" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td>
                                             <a href="{{ URL::to($link_url) }}" title="{{ $subject }}">
@@ -25,17 +25,17 @@
                         </td>
                     </table>
 
-                    <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
+                    <table width="100%" height="auto" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
                         <tr>
                             <td>
                                 <!-- Messaging -->
-                                <table width="640" height="20" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="100%" height="20" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
                                         </td>
                                     </tr>
                                 </table>
-                                <table width="640" height="auto" align="{{ $align or 'left' }}" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="100%" height="auto" align="{{ $align or 'left' }}" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
                                     @if($title)
                                     <tr>
                                         <td align="{{ $align or 'left' }}">
@@ -55,7 +55,7 @@
                                 <?php if($banner) {
                                         $banner = $banner_types[$banner];
                                 ?>
-                                <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+                                <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
 
@@ -71,7 +71,7 @@
                                 <?php } ?>
 
                                 <!-- Footer -->
-                                <table width="640" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+                                <table width="100%" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
                                     <tr>
                                         <td width="30" height="85"></td>
 
