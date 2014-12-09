@@ -85,7 +85,7 @@ class Activity
         $this->activities->create([
             'title'       => 'Joined class',
             'description' => $class->name,
-            'link'        => 'class/' . $class->id,
+            'link'        => 'classes/' . $class->id,
             'link_title'  => 'View class',
             'type'        => 'payedclass',
             'image'       => $trainer->directory . '/' . $class->image,
@@ -106,12 +106,48 @@ class Activity
             'description' => $class->name,
             'type'        => 'canceledclass',
             'image'       => $user->directory . '/' . $class->image,
-            'link'        => 'class/' . $class->id,
+            'link'        => 'classes/' . $class->id,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
         ]);
+    }
 
 
+    /**
+     * @param $class
+     * @param $user
+     */
+    public function unPublishedClass($class, $trainer)
+    {
+        $this->activities->create([
+            'title'       => 'Class unpublished',
+            'description' => $class->name,
+            'type'        => 'classunpublished',
+            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
+            'link'        => 'classes/' . $class->slug,
+            'link_title'  => 'View',
+            'user_id'     => $trainer->id,
+            'type_id'     => $class->id,
+        ]);
+    }
+
+
+    /**
+     * @param $class
+     * @param $user
+     */
+    public function publishedClass($class, $trainer)
+    {
+        $this->activities->create([
+            'title'       => 'Class Published',
+            'description' => $class->name,
+            'type'        => 'classpublished',
+            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
+            'link'        => 'classes/' . $class->slug,
+            'link_title'  => 'View',
+            'user_id'     => $trainer->id,
+            'type_id'     => $class->id,
+        ]);
     }
 
 
@@ -249,7 +285,7 @@ class Activity
             'description' => $class->name,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
-            'link'        => 'class/' . $class->id,
+            'link'        => 'classes/' . $class->id,
             'link_title'  => 'View',
             'image'       => $user->directory . '/search_' . $class->image,
         ]);
@@ -301,7 +337,7 @@ class Activity
             'description' => $class->name,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
-            'link'        => 'class/' . $class->id,
+            'link'        => 'classes/' . $class->id,
             'link_title'  => 'View',
             'image'       => 'updatedclass.png',
         ]);
@@ -351,7 +387,7 @@ class Activity
             'description' => $class->name,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
-            'link'        => 'class/' . $class->id,
+            'link'        => 'classes/' . $class->id,
             'link_title'  => 'View',
             'image'       => $user->directory . '/' . $class->image,
         ]);
@@ -399,7 +435,7 @@ class Activity
             'description' => $class->name,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
-            'link'        => 'class/' . $class->id,
+            'link'        => 'classes/' . $class->id,
             'link_title'  => 'View',
             'image'       => 'classreviewed.png',
         ]);
@@ -480,7 +516,7 @@ class Activity
      */
     public function userTopupCompleted($user, $transaction)
     {
-        $title = 'You topped up your account';
+        $title = 'Account TopUp';
         $description = 'You topped up your account with ' . $this->fixAmountDisplay($transaction->total);
 
         $data = [
@@ -488,7 +524,7 @@ class Activity
             'title'       => $title,
             'link'        => 'transaction/' . $transaction->id,
             'link_title'  => 'View transaction',
-            'image'       => 'topupcompleted.png',
+            'image'       => 'assets/img/activity/Activity_Topped_Up.png',
             'type'        => 'topupcompleted',
             'user_id'     => $user->id,
             'type_id'     => $transaction->id

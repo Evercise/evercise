@@ -93,6 +93,9 @@ return [
         ['class.created' => 'Classes@classCreated'],  // $class, $trainer
         ['class.deleted' => 'Classes@classDeleted'],  // $class, $trainer
         ['class.updated' => 'Classes@classUpdated'],  // $class, $trainer
+        ['class.published' => 'Classes@classPublished'],  // $class, $trainer
+        ['class.unpublished' => 'Classes@classUnPublished'],  // $class, $trainer
+
         ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $session, $everciseGroup, $transactionId
         ['session.upcoming_session' => 'Sessions@upcommingSessions'],
         ['session.mail_all' => 'Sessions@mailAll'],

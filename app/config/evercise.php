@@ -17,12 +17,8 @@ for ($mins = 0; $mins < 125; $mins += 5) {
     $durationArray[str_pad($mins, 2, '0', STR_PAD_LEFT)] = str_pad($mins, 2, '0', STR_PAD_LEFT) . ' mins';
 }
 
-for ($tickets = 0; $tickets < 50; $tickets += 1) {
-    $ticketArray[str_pad($tickets, 2, '0', STR_PAD_LEFT)] = str_pad($tickets, 2, '0', STR_PAD_LEFT);
-}
-
 for ($pounds = 0; $pounds < 100; $pounds++) {
-    for ($pence = 0; $pence < 100; $pence += 5) {
+    for ($pence = 0; $pence < 100; $pence += 50) {
         $priceArray[str_pad($pounds, 2, '0', STR_PAD_LEFT) . '.'
         . str_pad($pence, 2, '0', STR_PAD_LEFT)] = '£' . $pounds . '.'
             . str_pad($pence, 2, '0', STR_PAD_LEFT);
@@ -31,6 +27,10 @@ for ($pounds = 0; $pounds < 100; $pounds++) {
 
 
 return [
+
+    'activity_exclude' => [
+        'topupcompleted'
+    ],
     'commission' => 10, //Default commission
     'upload_dir' => 'files/',
     'testing_ips' => ['188.39.12.12', '192.168', '127.0.0'],
@@ -47,7 +47,7 @@ return [
     ],
     'time' => $timeArray,
     'duration' => $durationArray,
-    'tickets' => $ticketArray,
+    'tickets' => array_combine(range(1, 120), range(1, 120)),
     'price' => $priceArray,
     'default_radius' => '10mi',
     'article_main_image' => [
