@@ -6,28 +6,14 @@ object $user
 @section('body')
 
 
+<h1>Welcome to Evercise!</h1>
 
-      Trainer Welcome Email
+<p>We’re delighted you’ve decided to join the Evercise Pay As You Go Fitness revolution and we reckon you’ll be just as thrilled with what Evercise can do for you.</p>
+<p>Trainers are the heart and soul of Evercise. We know there’s a huge variety of talented trainers and inspirational fitness programs out there and we want everyone to discover just how many unique, fun and fabulous fitness opportunities are on their doorstep. Especially yours!</p>
+<p>All you need to do now is set up your profile and start enjoying the benefits of Evercise.</p>
 
+<p></p>
 
-      $body = '
-      			<p>Hi '.$display_name.'</p>
-      			<p>We are delighted you have decided to become an Evercise trainer! You can start creating classes straight away, but these will only become visible to the public once your application has been processed. This should take no longer than 48 hours.
-      			</p>
-      			<p>
-      				Thanks for your patience
-      			</p>
-      		';
-
-
-      		$subject = 'Evercise trainer verification';
-      		$view = 'emails.template';
-      		$data['title'] = 'Evercise trainer verification';
-      		$data['mainHeader'] = 'Great to have you on board!';
-      		$data['subHeader'] = 'Your application is being processed';
-      		$data['body'] = $body;
-      		$data['link'] = HTML::linkRoute('home', 'evercise');
-      		$data['linkLabel'] = 'Start creating classes:';
 
 
 
