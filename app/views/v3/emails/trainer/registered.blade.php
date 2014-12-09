@@ -1,7 +1,7 @@
 @extends('v3.emails.template')
+<?php View::share('align', 'center') ?>
 
 @section('body')
-<h1>Welcome to Evercise!</h1>
 <p>We’re delighted you’ve decided to join the Evercise Pay As You Go Fitness revolution and we reckon you’ll be just as thrilled with what Evercise can do for you.</p>
 <p>Trainers are the heart and soul of Evercise. We know there’s a huge variety of talented trainers and inspirational fitness programs out there and we want everyone to discover just how many unique, fun and fabulous fitness opportunities are on their doorstep. Especially yours!</p>
 <p>All you need to do now is set up your profile and start enjoying the benefits of Evercise.</p>
@@ -21,7 +21,7 @@
                         {{ image('/img/home/wie.png') }}
                     </div>
                     <h3 class="white-text">Set up your Profile.</h3>
-                    <p class="white-text">Just click on the Get Started button below and we’ll guide you through the process of setting up your unique Evercise Profile.</p>
+                    <p class="white-text">Just click on the Get Started button below and we&apos;ll guide you through the process of setting up your unique Evercise Profile.</p>
                 </div>
                 <div class="mb30">
                     <div class="image-right">
@@ -29,19 +29,19 @@
                     </div>
 
                     <h3 class="white-text">Add classes.</h3>
-                    <p class="white-text">Once you’ve set up your profile you can start to list your classes.</p>
+                    <p class="white-text">Once you&apos;ve set up your profile you can start to list your classes.</p>
                 </div>
                 <div class="mb30">
                     <div class="image-left">
                         {{ image('/img/home/wie.png') }}
                     </div>
                     <h3 class="white-text">Manage your account.</h3>
-                    <p class="white-text">Once you’re up and running Evercise makes it easy to manage your account manage bookings, gain insights into the progress and success of your classes and withdraw money quickly and easily.</p>
+                    <p class="white-text">Once you&apos;re up and running Evercise makes it easy to manage your account manage bookings, gain insights into the progress and success of your classes and withdraw money quickly and easily.</p>
                 </div>
                 <br>
                 <br>
                 <div class="text-center mb30">
-                    {{ Html::linkRoute('evercisegroups.search', 'Get Started', null, ['class' => 'btn btn-blue']) }}
+                    {{ Html::linkRoute('users.edit', 'Get Started', [$trainer->display_name], ['class' => 'btn btn-blue']) }}
                 </div>
             </div>
 

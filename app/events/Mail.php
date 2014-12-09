@@ -362,14 +362,28 @@ class Mail
             'subject' => 'Welcome to Evercise!',
             'title'   => 'Welcome to Evercise!',
             'view'    => 'v3.emails.trainer.registered',
-            'banner'   => 'upsell_signup',
-            'image'    => 'http://evercise.com/some_image.jpg',
+            'trainer'    => $trainer,
+            'banner'   => null,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
             'link_url' => $this->url->to('/profile/'.$trainer->display_name)
         ];
 
         $this->send($trainer->email, $params);
+    }
 
+    public function whyNotCompleteProfile()
+    {
+        $params = [
+            'subject' => 'BOOST YOUR EVERCISE SALES BY 50%',
+            'title'   => 'BOOST YOUR EVERCISE SALES BY 50%',
+            'view'    => 'v3.emails.trainer.complete_profile',
+            'trainer'    => $trainer,
+            'banner'   => null,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
+        ];
 
+        $this->send($trainer->email, $params);
     }
 
     /**
