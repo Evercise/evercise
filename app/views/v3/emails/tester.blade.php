@@ -12,9 +12,9 @@
         	.pink-text{ color: #ff1b7e}
         	.white-text{ color: #ffffff}
         	.image-left{ float: left; margin-right: 20px}
-        	.image-left{ float: right; margin-left: 20px}
+        	.image-right{ float: right; margin-left: 20px}
         	.footer { font-size: 12px; text-align: left;}
-
+            .mb30{ width: 100%; margin-bottom: 30px; float: left;}
 
 
         	@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
@@ -88,18 +88,29 @@
                                 <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ff1b7e">
                                     <tr>
                                         <td>
-                                            <div class="container white-text">
-                                                <div class="image-left">
-                                                    {{ image('/img/home/wie.png') }}
+                                            <div class="container">
+                                                <div class="mb30">
+                                                    <div class="image-left">
+                                                        {{ image('/img/home/wie.png') }}
+                                                    </div>
+                                                    <h3 class="white-text">Search</h3>
+                                                    <p class="white-text">Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
                                                 </div>
-                                                <h3>Search</h3>
-                                                <p>Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
-                                                <div class="image-right">
-                                                    {{ image('/img/home/wie.png') }}
-                                                </div>
-                                                <h3>Select</h3>
-                                                <p>You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
+                                                <div class="mb30">
+                                                    <div class="image-right">
+                                                        {{ image('/img/home/wie.png') }}
+                                                    </div>
 
+                                                    <h3 class="white-text">Select</h3>
+                                                    <p class="white-text">You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
+                                                </div>
+                                                <div class="mb30">
+                                                    <div class="image-left">
+                                                        {{ image('/img/home/wie.png') }}
+                                                    </div>
+                                                    <h3 class="white-text">Sign up</h3>
+                                                    <p class="white-text">When you’ve found a class you like the look of our simple Pay As You Go booking system ensures that joining your class is as quick and easy as ordering a pizza! </p>
+                                                </div>
                                             </div>
 
                                         </td>
