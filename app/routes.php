@@ -38,7 +38,7 @@ Route::get('/ig', [
         function () {
 
             $user = Sentry::findUserById(151);
-            event('trainer.complete_profile', [$user]);
+            event('trainer.create_first_class', [$user]);
 
             die('done');
 

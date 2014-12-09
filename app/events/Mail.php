@@ -394,8 +394,8 @@ class Mail
             'view'    => 'v3.emails.trainer.create_first_class',
             'trainer'    => $trainer,
             'banner'   => null,
-            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
-            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
+            'image'    => image('/assets/img/email/trainer_create_first.png', 'why not create your first class'),
+            'link_url' => $this->url->to('/evercisegroups/create')
         ];
 
         $this->send($trainer->email, $params);

@@ -8,17 +8,16 @@
 <p>We&apos;ve made the class creation process as simple and user-friendly as possible, just add classes to the calendar then edit details like time, price and duration and you&apos;re good to go!</p>
 @stop
 @section('extra')
-<table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ff1b7e">
-    <tr>
-        <td>
-            <div class="container">
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+        <tr>
+            <td>
+                <br>
                 <br>
                 <div class="text-center mb30">
-                    {{ Html::linkRoute('evercisegroups.create', 'CREATE YOUR FIRST CLASS', [$trainer->display_name], ['class' => 'btn btn-blue']) }}
-                </div>
-            </div>
 
-        </td>
-    </tr>
-</table>
+                    {{ Html::decode(Html::linkRoute('evercisegroups.create', image('/assets/img/email/btns/btn_create_blue.png', 'Create your first class'), null, ['class' => 'btn btn-blue'])) }}
+                </div>
+            </td>
+        </tr>
+    </table>
 @stop
