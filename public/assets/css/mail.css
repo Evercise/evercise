@@ -2,7 +2,7 @@ h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-s
 h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
 p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
 b { font-weight: bold; color:#768690; }
-table{ max-width: 640px}
+table{ width: 640px}
 .container{ padding: 30px}
 .pink-text{ color: #ff1b7e}
 .white-text{ color: #ffffff}
@@ -16,6 +16,7 @@ table{ max-width: 640px}
 .btn-blue{ background: #5ecde8}
 
 @media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
+    table{ width: 100%}
     h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
     p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
     b { font-weight: bold; color:#768690; }
@@ -24,6 +25,7 @@ table{ max-width: 640px}
 }
 
 @media screen and (max-device-width: 375px) and (max-device-height: 667px) {
+    table{ width: 100%}
     h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: normal; color:#768690; }
     p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
     b { font-weight: bold; color:#768690; }

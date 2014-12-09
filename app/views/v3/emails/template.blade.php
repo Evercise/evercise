@@ -3,9 +3,9 @@
     <head>
         <style>{{ $css }}</style>
     </head>
-    <body width="100%" height="auto" bgcolor="#bfbfbf" style="margin:0; padding:0;">
+    <body  bgcolor="#bfbfbf">
     	<!-- Opening main -->
-    	<table width="100%" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
+    	<table  bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
     		<tr>
     			<td>
                     <table width="100%" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
