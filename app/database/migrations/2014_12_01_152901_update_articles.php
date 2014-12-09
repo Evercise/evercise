@@ -14,6 +14,7 @@ class UpdateArticles extends Migration {
 	{
 		Schema::table('articles', function(Blueprint $table) {
 			$table->tinyInteger('onmain')->default(0);
+            $table->string('thumb_image');
 		});
 	}
 
@@ -27,6 +28,7 @@ class UpdateArticles extends Migration {
 	{
 		Schema::table('articles', function(Blueprint $table) {
 			$table->dropColumn('onmain');
+            $table->dropColumn('thumb_image');
 		});
 	}
 
