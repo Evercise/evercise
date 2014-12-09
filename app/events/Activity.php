@@ -130,7 +130,7 @@ class Activity
             'type_id'     => $transaction->id,
             'link'        => 'transactions/' . $transaction->id,
             'link_title'  => 'View',
-            'image'       => 'wallettoppup.png',
+            'image'       => 'assets/img/activity/Activity_Topped_Up.png',
         ]);
 
     }
@@ -156,7 +156,26 @@ class Activity
             'type_id'     => $user->id,
             'link'        => 'profile/' . $user->id . '/wallet',
             'link_title'  => 'View',
-            'image'       => 'wallettoppup.png',
+            'image'       => 'assets/img/activity/Activity_Withdawal.png',
+        ]);
+    }
+
+
+    /**
+     * @param $user
+     * @param int $amount
+     */
+    public function userRegistered($user)
+    {
+        $this->activities->create([
+            'title'       => 'Joined Evercise',
+            'type'        => 'userregistered',
+            'description' => 'Welcome',
+            'user_id'     => $user->id,
+            'type_id'     => $user->id,
+            'link'        => 'profile/' . $user->display_name,
+            'link_title'  => 'Profile',
+            'image'       => 'assets/img/activity/Activity_Joined_Evercise.png',
         ]);
     }
 
@@ -251,14 +270,8 @@ class Activity
             'type_id'     => $venue->id,
             'link'        => FALSE,
             'link_title'  => FALSE,
-            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=100x100&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
+            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=105x85&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
         ]);
-        //        $this->activities->create([
-        //            'description' => 'Created Venue ' . $venue->name,
-        //            'type'        => 'createdvenue',
-        //            'user_id'     => $user->id,
-        //            'type_id'     => $venue->id
-        //        ]);
     }
 
     /**
@@ -304,12 +317,11 @@ class Activity
             'title'       => 'You Updated a Venue',
             'description' => $venue->name,
             'type'        => 'updatevenue',
-            'description' => $venue->name,
             'user_id'     => $user->id,
             'type_id'     => $venue->id,
             'link'        => FALSE,
             'link_title'  => FALSE,
-            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=100x100&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
+            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=105x85&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
         ]);
     }
 
@@ -411,7 +423,7 @@ class Activity
             'type_id'     => $coupon->id,
             'link'        => '',
             'link_title'  => '',
-            'image'       => 'couponused.png',
+            'image'       => 'assets/img/activity/Activity_Coupon.png',
         ]);
 
 

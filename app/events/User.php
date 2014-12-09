@@ -188,6 +188,8 @@ class User
 
         $this->mail->welcome($user);
 
+        $this->activity->userRegistered($user);
+
     }
 
     /**
