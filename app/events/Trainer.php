@@ -99,5 +99,13 @@ class Trainer
         $this->log->info('Trainer ' . $trainer->id . ' has been reminded to complete their profile');
         $this->mail->trainerWhyNotCompleteProfile($trainer);
     }
+    /**
+     * @param $trainer
+     */
+    public function whyNotCreateFirstClass($trainer)
+    {
+        $this->log->info('Trainer ' . $trainer->id . ' has been reminded to create their first class');
+        $this->mail->trainerWhyNotCreateFirstClass($trainer);
+    }
 
 }
