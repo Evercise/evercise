@@ -37,8 +37,10 @@ Route::get('/ig', [
         'as' => 'aaa',
         function () {
 
+
             $user = Sentry::findUserById(151);
             event('user.facebook.signup', [$user]);
+
 
             die('done');
 

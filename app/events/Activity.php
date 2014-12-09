@@ -306,7 +306,7 @@ class Activity
             'type_id'     => $venue->id,
             'link'        => FALSE,
             'link_title'  => FALSE,
-            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=105x85&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
+            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=105x85&maptype=roadmap&markers=color:pink%7Clabel:e%7C' . $venue->lat . ',' . $venue->lng
         ]);
     }
 
@@ -357,7 +357,7 @@ class Activity
             'type_id'     => $venue->id,
             'link'        => FALSE,
             'link_title'  => FALSE,
-            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=105x85&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
+            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=105x85&maptype=roadmap&markers=color:pink%7Clabel:e%7C' . $venue->lat . ',' . $venue->lng
         ]);
     }
 

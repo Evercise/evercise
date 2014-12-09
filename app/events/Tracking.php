@@ -1,9 +1,9 @@
 <?php  namespace events;
 
-use Davispeixoto\LaravelSalesforce\Facades\Salesforce;
 use Illuminate\Config\Repository;
 use Illuminate\Log\Writer;
 use Illuminate\Http\Request;
+
 
 
 /**
@@ -141,12 +141,12 @@ class Tracking
         if ($this->enabled) {
             switch ($func) {
                 case "REGISTER":
-                    $res = Salesforce::create([$user_object], 'Contact');
+                    $res = \Salesforce::create([$user_object], 'Contact');
                     $user->salesforce_id = $res[0]->id;
                     $user->save();
                 case "EDIT":
                     $user_object->id = $user->salesforce_id;
-                    $res = Salesforce::update([$user_object], 'Contact');
+                    $res = \Salesforce::update([$user_object], 'Contact');
 
                     $this->log->info($res);
                     break;
@@ -154,7 +154,7 @@ class Tracking
                     $obj = new \stdClass();
                     $obj->id = $user->salesforce_id;
                     $obj->Last_Login__c = gmdate("Y-m-d\TH:i:s\Z", time());
-                    $res = Salesforce::update([$obj], 'Contact');
+                    $res = \Salesforce::update([$obj], 'Contact');
                     break;
             }
         }
@@ -186,7 +186,7 @@ class Tracking
         $relation->Registrant__c = $user->salesforce_id;
 
         if ($this->enabled) {
-            $res = Salesforce::create([$relation], 'Class_Registrant__c');
+            $res = \Salesforce::create([$relation], 'Class_Registrant__c');
         }
         $this->log->info('Relation Created in SalesForce ' . (implode(',', array_values((array)$relation))));
     }
@@ -201,7 +201,7 @@ class Tracking
         $class_obj = $this->formatSessionClass($session);
 
         if ($this->enabled) {
-            $res = Salesforce::create([$class_obj], 'Class__c');
+            $res = \Salesforce::create([$class_obj], 'Class__c');
 
             $session->salesforce_id = $res[0]->id;
             $session->save();
