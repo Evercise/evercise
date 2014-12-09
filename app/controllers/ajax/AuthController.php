@@ -1,6 +1,10 @@
 <?php namespace ajax;
 
 use  Input,  Sentry, Event, Response, Exception, Trainer;
+use Cartalyst\Sentry\Users\UserNotActivatedException;
+use Cartalyst\Sentry\Users\UserNotFoundException;
+use Cartalyst\Sentry\Users\WrongPasswordException;
+use Cartalyst\Sentry\Throttling\UserSuspendedException;
 
 class AuthController extends AjaxBaseController
 {
@@ -19,6 +23,7 @@ class AuthController extends AjaxBaseController
         $redirect_after_login = Input::get('redirect_after_login');
         $redirect_after_login_url = Input::get('redirect_after_login_url');
 
+        $result = '';
         try
         {
             $user = Sentry::authenticate($credentials, false);
@@ -42,14 +47,31 @@ class AuthController extends AjaxBaseController
 
             }
         }
+        catch(WrongPasswordException $e)
+        {
+            $result = 'Incorrect email or password';
+        }
+        catch(UserNotFoundException $e)
+        {
+            $result =  'Incorrect email or password';
+        }
+        catch(UserNotActivatedException $e)
+        {
+            $result = 'Your account has not been activated';
+        }
+        catch(UserSuspendedException $e)
+        {
+            $result = 'Your account has been suspended';
+        }
         catch(Exception $e)
         {
-            $result = array(
-                'callback' => 'error',
-                'validation_failed' => 1,
-                'errors' => $e->getMessage()
-            );
-            return Response::json($result);
+            $result = $e->getMessage();
         }
+
+        return Response::json([
+            'callback' => 'error',
+            'validation_failed' => 1,
+            'errors' => $result
+        ]);
     }
 }
