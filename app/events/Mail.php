@@ -165,11 +165,14 @@ class Mail
     public function welcomeFacebook($user, $link = '')
     {
 
-
         $params = [
-            'subject' => 'Welcome to Evercise',
-            'view'    => 'v3.emails.user.welcome_facebook',
-            'user'    => $user,
+            'subject'  => 'Welcome to Evercise',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.user.welcome_facebook',
+            'user'     => $user,
+            'banner'   => false,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/uk/'),
             'link'    => $link
         ];
 
@@ -185,10 +188,13 @@ class Mail
 
 
         $params = [
-            'subject' => 'Reset Password',
-            'view'    => 'v3.emails.user.forgot_password',
-            'user'    => $user,
-            'link'    => $link
+            'subject'  => 'Reset Password',
+            'title'    => 'Password escaped you?',
+            'view'     => 'v3.emails.user.forgot_password',
+            'user'     => $user,
+            'banner'   => false,
+            'image'    => image('/assets/img/email/user_default.jpg', 'reset your password'),
+            'link_url' => $link
         ];
 
         $this->send($user->email, $params);

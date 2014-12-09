@@ -27,7 +27,7 @@
                          <span class="icon icon-empty-star"></span>
                      </div>
 
-                    {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'rating-'.$session->id] ) }}
+                    {{ Form::open(['route' => 'ratings.store', 'method' => 'post', 'class'=>'mb50 pull-left', 'role' => 'form', 'id' => 'rating-'.$session->id] ) }}
                         {{ Form::hidden('stars', null, ['id' => 'stars']) }}
                         {{ Form::hidden('sessionmember_id', array_key_exists($session->id, $data['sessionmember_ids']) ? $data['sessionmember_ids'][$session->id] : '', ['id' => 'sessionmember_id']) }}
                         <div class="form-group">
