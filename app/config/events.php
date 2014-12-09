@@ -89,6 +89,7 @@ return [
 
         ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.complete_profile' => 'Trainer@whyNotCompleteProfile'], //$trainer
+        ['trainer.create_first_class' => 'Trainer@whyNotCreateFirstClass'], //$trainer
 
 
         ['class.created' => 'Classes@classCreated'],  // $class, $trainer

@@ -386,6 +386,21 @@ class Mail
         $this->send($trainer->email, $params);
     }
 
+    public function trainerWhyNotCreateFirstClass($trainer)
+    {
+        $params = [
+            'subject' => 'Why not create your first class',
+            'title'   => 'Why not create your first class',
+            'view'    => 'v3.emails.trainer.create_first_class',
+            'trainer'    => $trainer,
+            'banner'   => null,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
+        ];
+
+        $this->send($trainer->email, $params);
+    }
+
     /**
      * @param $class
      * @param $trainer
