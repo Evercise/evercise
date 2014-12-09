@@ -72,6 +72,11 @@ class Mail
                 'url'   => $this->url->to('/'),
                 'title' => 'SignUp Today and Receive £5'
             ],
+            'welcome' => [
+                'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
+                'url'   => $this->url->to('/'),
+                'title' => 'SignUp Today and Receive £5'
+            ],
 
         ];
 
@@ -122,8 +127,8 @@ class Mail
             'title'    => 'Welcome to Evercise!',
             'view'     => 'v3.emails.user.welcome',
             'user'     => $user,
-            'banner'   => 'upsell_signup',
-            'image'    => 'http://evercise.com/some_image.jpg',
+            'banner'   => false,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
             'link_url' => $this->url->to('/')
         ];
 

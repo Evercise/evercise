@@ -2,8 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <style>
-
-
             h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 26px;  line-height: 30px; font-weight: 500; color:#768690; margin: 0}
             h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
         	p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
@@ -11,11 +9,14 @@
         	.container{ padding: 30px}
         	.pink-text{ color: #ff1b7e}
         	.white-text{ color: #ffffff}
-        	.image-left{ float: left; margin-right: 20px}
-        	.image-right{ float: right; margin-left: 20px}
+        	.text-right{ text-align: right}
+        	.text-center{ text-align: center}
+        	.image-left{ float: left; margin-right: 25px}
+        	.image-right{ float: right; margin-left: 25px}
         	.footer { font-size: 12px; text-align: left;}
             .mb30{ width: 100%; margin-bottom: 30px; float: left;}
-
+            .btn{ display: inline-block; padding: 11px 18px;  border-radius: 4px; text-decoration: none; color: #ffffff ; text-transform: uppercase; font-family: helvetica, arial, sans-serif; font-weight:600;  }
+            .btn-blue{ background: #5ecde8}
 
         	@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
                 h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
@@ -93,14 +94,15 @@
                                                     <div class="image-left">
                                                         {{ image('/img/home/wie.png') }}
                                                     </div>
+                                                    <br>
                                                     <h3 class="white-text">Search</h3>
                                                     <p class="white-text">Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
                                                 </div>
-                                                <div class="mb30">
+                                                <div class="mb30 text-right">
                                                     <div class="image-right">
                                                         {{ image('/img/home/wie.png') }}
                                                     </div>
-
+                                                    <br>
                                                     <h3 class="white-text">Select</h3>
                                                     <p class="white-text">You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
                                                 </div>
@@ -108,9 +110,16 @@
                                                     <div class="image-left">
                                                         {{ image('/img/home/wie.png') }}
                                                     </div>
+                                                    <br>
                                                     <h3 class="white-text">Sign up</h3>
                                                     <p class="white-text">When you’ve found a class you like the look of our simple Pay As You Go booking system ensures that joining your class is as quick and easy as ordering a pizza! </p>
                                                 </div>
+                                                <br>
+                                                <br>
+                                                <div class="text-center mb30">
+                                                    <a href="#" class="btn btn-blue">Get Started</a>
+                                                </div>
+
                                             </div>
 
                                         </td>
