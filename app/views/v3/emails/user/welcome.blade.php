@@ -37,7 +37,7 @@
                     <br>
                     <br>
                     <div class="text-center mb30">
-                        <a href="#" class="btn btn-blue">Get Started</a>
+                        {{ Html::linkRoute('evercisegroups.search', 'Get Started', null, ['class' => 'btn btn-blue']) }}
                     </div>
 
                 </div>

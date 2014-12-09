@@ -129,7 +129,7 @@ class Mail
             'user'     => $user,
             'banner'   => false,
             'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
-            'link_url' => $this->url->to('/')
+            'link_url' => $this->url->to('/uk/')
         ];
 
         $this->send($user->email, $params);
