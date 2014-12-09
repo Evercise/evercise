@@ -41,8 +41,8 @@
                                 <table width="640" height="434" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td>
-                                            <a href="{{ URL::to($link_url) }}">
-                                            {{ image($image) }}
+                                            <a href="{{ URL::to($link_url) }}" title="{{ $subject }}">
+                                            {{ image($image, $subject) }}
                                             </a>
                                         </td>
                                     </tr>
@@ -80,7 +80,17 @@
                                 <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                                     <tr>
                                         <td>
-                                            @yield('upsell')
+
+                                        <?php if($banner) {
+                                        $banner = $banner_types[$banner];
+                                        ?>
+
+                                            <a href="{{ URL::to($banner['url']) }}" title="{{ $banner['title'] }}">
+                                            {{ image($banner['image'], $banner['title'] ) }}
+                                            </a>
+
+                                        <?php } ?>
+
                                         </td>
                                     </tr>
                                 </table>

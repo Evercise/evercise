@@ -64,7 +64,7 @@
         </div>
         <strong>Feel the burn! Become an Evercise fitness VIP with a 10 class package</strong>
         <br>
-        <strong>Serious about getting fit? Save up to 50% and ennjoy the VIP treatment with one of our 10 class packages</strong>
+        <strong>Serious about getting fit? Save up to 50% and enjoy the VIP treatment with one of our 10 class packages</strong>
     </div>
     <div class="row">
         @foreach($packages as $index => $p)
