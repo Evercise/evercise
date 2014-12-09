@@ -31,7 +31,7 @@ class VenuesController extends AjaxBaseController{
 
         $geo = LocationController::addressToGeo([ $address, $town, $postcode ]);
 
-        $result = Venue::validateAndStore( $this->user->id, $inputs, $geo );
+        $result = Venue::validateAndStore( $this->user->id, $inputs, $geo, $this->user );
         return Response::json($result);
     }
 
@@ -48,7 +48,7 @@ class VenuesController extends AjaxBaseController{
      */
     public function update($id)
     {
-        $result = Venue::find($id)->validateAndUpdate( Input::all() );
+        $result = Venue::find($id)->validateAndUpdate( Input::all() , $this->user );
 
         return Response::json($result);
     }

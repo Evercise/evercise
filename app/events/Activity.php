@@ -64,12 +64,13 @@ class Activity
     }
 
 
-    private function fixAmountDisplay($amount) {
-        if(strpos($amount, '-') !== false) {
+    private function fixAmountDisplay($amount)
+    {
+        if (strpos($amount, '-') !== FALSE) {
             return str_replace('-', '-£', $amount);
         }
 
-        return '£'.$amount;
+        return '£' . $amount;
     }
 
 
@@ -87,7 +88,7 @@ class Activity
             'link'        => 'class/' . $class->id,
             'link_title'  => 'View class',
             'type'        => 'payedclass',
-            'image'       => $trainer->directory.'/'.$class->image,
+            'image'       => $trainer->directory . '/' . $class->image,
             'user_id'     => $user->id,
             'type_id'     => $class->id
         ]);
@@ -104,7 +105,7 @@ class Activity
             'title'       => 'Canceled class',
             'description' => $class->name,
             'type'        => 'canceledclass',
-            'image'       => $user->directory.'/'.$class->image,
+            'image'       => $user->directory . '/' . $class->image,
             'link'        => 'class/' . $class->id,
             'user_id'     => $user->id,
             'type_id'     => $class->id,
@@ -141,11 +142,11 @@ class Activity
     public function walletWithdraw($user, $amount = 0)
     {
 
-//        $this->activities->create([
-//            'description' => '£' . $amount . ' amount Withdrawn',
-//            'type'        => 'walletwithdraw',
-//            'user_id'     => $user->id
-//        ]);
+        //        $this->activities->create([
+        //            'description' => '£' . $amount . ' amount Withdrawn',
+        //            'type'        => 'walletwithdraw',
+        //            'user_id'     => $user->id
+        //        ]);
 
         $this->activities->create([
             'title'       => 'Wallet Withdraw',
@@ -153,7 +154,7 @@ class Activity
             'description' => $this->fixAmountDisplay($amount) . ' amount Withdrawn',
             'user_id'     => $user->id,
             'type_id'     => $user->id,
-            'link'        => 'profile/'.$user->id.'/wallet',
+            'link'        => 'profile/' . $user->id . '/wallet',
             'link_title'  => 'View',
             'image'       => 'wallettoppup.png',
         ]);
@@ -165,11 +166,11 @@ class Activity
     public function userEditProfile($user)
     {
 
-//        $this->activities->create([
-//            'description' => 'Edited your profile',
-//            'type'        => 'editprofile',
-//            'user_id'     => $user->id
-//        ]);
+        //        $this->activities->create([
+        //            'description' => 'Edited your profile',
+        //            'type'        => 'editprofile',
+        //            'user_id'     => $user->id
+        //        ]);
     }
 
     /**
@@ -178,11 +179,11 @@ class Activity
     public function linkFacebook($user)
     {
 
-//        $this->activities->create([
-//            'description' => 'Linked Facebook account',
-//            'type'        => 'linkfacebook',
-//            'user_id'     => $user->id
-//        ]);
+        //        $this->activities->create([
+        //            'description' => 'Linked Facebook account',
+        //            'type'        => 'linkfacebook',
+        //            'user_id'     => $user->id
+        //        ]);
     }
 
     /**
@@ -191,11 +192,11 @@ class Activity
     public function linkTwitter($user)
     {
 
-//        $this->activities->create([
-//            'description' => 'Linked Twitter account',
-//            'type'        => 'linktwitter',
-//            'user_id'     => $user->id
-//        ]);
+        //        $this->activities->create([
+        //            'description' => 'Linked Twitter account',
+        //            'type'        => 'linktwitter',
+        //            'user_id'     => $user->id
+        //        ]);
     }
 
     /**
@@ -206,14 +207,15 @@ class Activity
     {
 
         if ($email != '') {
-//
-//            $this->activities->create([
-//                'description' => 'Invited ' . $email . ' to join Evercise',
-//                'type'        => 'invitedemail',
-//                'user_id'     => $user->id
-//            ]);
+            //
+            //            $this->activities->create([
+            //                'description' => 'Invited ' . $email . ' to join Evercise',
+            //                'type'        => 'invitedemail',
+            //                'user_id'     => $user->id
+            //            ]);
         }
     }
+
 
     /**
      * @param $class
@@ -230,10 +232,8 @@ class Activity
             'type_id'     => $class->id,
             'link'        => 'class/' . $class->id,
             'link_title'  => 'View',
-            'image'       => $user->directory.'/'.$class->image,
+            'image'       => $user->directory . '/search_' . $class->image,
         ]);
-
-
     }
 
     /**
@@ -242,13 +242,23 @@ class Activity
      */
     public function createdVenue($venue, $user)
     {
-
-//        $this->activities->create([
-//            'description' => 'Created Venue ' . $venue->name,
-//            'type'        => 'createdvenue',
-//            'user_id'     => $user->id,
-//            'type_id'     => $venue->id
-//        ]);
+        $this->activities->create([
+            'title'       => 'You created a Venue',
+            'description' => $venue->name,
+            'type'        => 'createvenue',
+            'description' => $venue->name,
+            'user_id'     => $user->id,
+            'type_id'     => $venue->id,
+            'link'        => FALSE,
+            'link_title'  => FALSE,
+            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=100x100&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
+        ]);
+        //        $this->activities->create([
+        //            'description' => 'Created Venue ' . $venue->name,
+        //            'type'        => 'createdvenue',
+        //            'user_id'     => $user->id,
+        //            'type_id'     => $venue->id
+        //        ]);
     }
 
     /**
@@ -258,12 +268,12 @@ class Activity
     public function createdSessions($class, $user)
     {
 
-//        $this->activities->create([
-//            'description' => 'Created Multiple sessions for ' . $class->name,
-//            'type'        => 'createdsessions',
-//            'user_id'     => $user->id,
-//            'type_id'     => $class->id
-//        ]);
+        //        $this->activities->create([
+        //            'description' => 'Created Multiple sessions for ' . $class->name,
+        //            'type'        => 'createdsessions',
+        //            'user_id'     => $user->id,
+        //            'type_id'     => $class->id
+        //        ]);
     }
 
     /**
@@ -290,12 +300,17 @@ class Activity
      */
     public function updatedVenue($venue, $user)
     {
-//        $this->activities->create([
-//            'description' => 'Updated Venue ' . $venue->name,
-//            'type'        => 'updatedvenue',
-//            'user_id'     => $user->id,
-//            'type_id'     => $venue->id
-//        ]);
+        $this->activities->create([
+            'title'       => 'You Updated a Venue',
+            'description' => $venue->name,
+            'type'        => 'updatevenue',
+            'description' => $venue->name,
+            'user_id'     => $user->id,
+            'type_id'     => $venue->id,
+            'link'        => FALSE,
+            'link_title'  => FALSE,
+            'image'       => 'https://maps.googleapis.com/maps/api/staticmap?zoom=11&size=100x100&maptype=roadmap&markers=color:red%7Clabel:C%7C' . $venue->lat . ',' . $venue->lng
+        ]);
     }
 
     /**
@@ -304,12 +319,12 @@ class Activity
      */
     public function updatedSessions($class, $user)
     {
-//        $this->activities->create([
-//            'description' => 'Created Sessions for ' . $class->name,
-//            'type'        => 'updatedsessions',
-//            'user_id'     => $user->id,
-//            'type_id'     => $class->id
-//        ]);
+        //        $this->activities->create([
+        //            'description' => 'Created Sessions for ' . $class->name,
+        //            'type'        => 'updatedsessions',
+        //            'user_id'     => $user->id,
+        //            'type_id'     => $class->id
+        //        ]);
     }
 
     /**
@@ -326,7 +341,7 @@ class Activity
             'type_id'     => $class->id,
             'link'        => 'class/' . $class->id,
             'link_title'  => 'View',
-            'image'       => $user->directory.'/'.$class->image,
+            'image'       => $user->directory . '/' . $class->image,
         ]);
     }
 
@@ -350,7 +365,7 @@ class Activity
      */
     public function deletedSessions($class, $user)
     {
-//        $this->activities->create([
+        //        $this->activities->create([
         //            'description' => 'Deleted Sessions ' . $class->name,
         //            'type'        => 'deletedsessions',
         //            'user_id'     => $user->id,
@@ -427,7 +442,7 @@ class Activity
         }
 
 
-        $description .= ' for '.$this->fixAmountDisplay($cart['total']['final_cost']);
+        $description .= ' for ' . $this->fixAmountDisplay($cart['total']['final_cost']);
 
         $data = [
             'description' => $description,
@@ -454,7 +469,7 @@ class Activity
     public function userTopupCompleted($user, $transaction)
     {
         $title = 'You topped up your account';
-        $description = 'You topped up your account with '.$this->fixAmountDisplay($transaction->total);
+        $description = 'You topped up your account with ' . $this->fixAmountDisplay($transaction->total);
 
         $data = [
             'description' => $description,

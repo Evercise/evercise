@@ -12,6 +12,37 @@ class Venue extends \Eloquent
      */
     protected $table = 'venues';
 
+
+    public function evercisegroup()
+    {
+        return $this->hasMany('Evercisegroup');
+    }
+
+    public function images()
+    {
+        return $this->hasMany('VenueImages');
+    }
+
+
+    public function Facilities()
+    {
+        return $this->belongsToMany('Facility', 'venue_facilities', 'venue_id', 'facility_id')->withTimestamps();
+    }
+
+    public function evercisesessions()
+    {
+        return $this->hasManyThrough('Evercisesession', 'Evercisegroup');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
+
+
     /**
      * @return VenuesController|\Illuminate\View\View
      */
@@ -21,6 +52,7 @@ class Venue extends \Eloquent
         $venues = static::where('user_id', $id)->lists('name', 'id');
         return $venues;
     }
+
 
     private static function validateInputs($inputs)
     {
@@ -55,7 +87,7 @@ class Venue extends \Eloquent
     /**
      * @return array
      */
-    public static function validateAndStore($userId, $inputs, $geo)
+    public static function validateAndStore($userId, $inputs, $geo, $user)
     {
         $validator = static::validateInputs($inputs);
 
@@ -98,13 +130,15 @@ class Venue extends \Eloquent
                     'venue_id' => $venue->id,
                     'venue_name' => $venue->name
                 ];
+
+                event('venue.create', [$venue, $user]);
             }
 
         }
         return $result;
     }
 
-    public function validateAndUpdate($inputs)
+    public function validateAndUpdate($inputs, $user)
     {
         $validator = static::validateInputs($inputs);
 
@@ -135,38 +169,13 @@ class Venue extends \Eloquent
                 'venue_id' => $this->id
             ];
 
+
+            event('venue.update', [$this, $user]);
+
         }
         return $result;
     }
 
-    public function evercisegroup()
-    {
-        return $this->hasMany('Evercisegroup');
-    }
-
-    public function images()
-    {
-        return $this->hasMany('VenueImages');
-    }
-
-
-    public function Facilities()
-    {
-        return $this->belongsToMany('Facility', 'venue_facilities', 'venue_id', 'facility_id')->withTimestamps();
-    }
-
-    public function evercisesessions()
-    {
-        return $this->hasManyThrough('Evercisesession', 'Evercisegroup');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo('User');
-    }
 
     public function getAmenities()
     {

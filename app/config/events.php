@@ -101,6 +101,10 @@ return [
         ['session.refund' => 'Sessions@refundRequest'],
 
 
+        ['venue.create' => 'Classes@venueCreated'],
+        ['venue.update' => 'Classes@venueUpdated'],
+
+
     ],
     '5'  => [
         ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName // ∑

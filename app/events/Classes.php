@@ -75,4 +75,19 @@ class Classes
         $this->indexer->indexSingle($class->id);
     }
 
+
+    public function venueCreated($venue, $user) {
+
+        Log::info('User '.$user->id.' Created Venue '.$venue->name);
+
+        $this->activity->createdVenue($venue,$user);
+    }
+
+    public function venueUpdated($venue, $user) {
+
+        Log::info('User '.$user->id.' Updated Venue '.$venue->name);
+
+        $this->activity->updatedVenue($venue,$user);
+    }
+
 }
