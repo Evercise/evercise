@@ -39,7 +39,7 @@ Route::get('/ig', [
 
 
             $user = Sentry::findUserById(151);
-            event('user.facebook.signup', [$user]);
+            event('user.forgot.password', [$user]);
 
             die('done');
 

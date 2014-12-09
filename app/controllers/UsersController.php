@@ -282,7 +282,7 @@ class UsersController extends \BaseController
             if (Request::ajax()) {
                 return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
             } else {
-                return Redirect::route('users.resetpassword')
+                return Redirect::route('v3.auth.resetpassword')
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -320,10 +320,10 @@ class UsersController extends \BaseController
         try {
             $user = Sentry::findUserByResetPasswordCode($code);
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return View::make('users.resetpassword')->with('message', 'Cannot find user');
+            return View::make('v3.auth.resetpassword')->with('message', 'Cannot find user');
         }
 
-        return View::make('users.resetpassword')->with('code', $code);
+        return View::make('v3.auth.resetpassword')->with('code', $code);
     }
 
     /**
@@ -364,7 +364,7 @@ class UsersController extends \BaseController
 
                 return Response::json($result);
             } else {
-                return Redirect::route('users.resetpassword')
+                return Redirect::route('v3.auth.resetpassword')
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -378,7 +378,7 @@ class UsersController extends \BaseController
 
                 }
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                //return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
+                //return View::make('v3.auth.resetpassword')->with('message', 'Could not find user. Please check your email address');
                 Session::flash(
                     'errorNotification',
                     'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com'
