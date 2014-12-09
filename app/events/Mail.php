@@ -10,6 +10,8 @@ use Illuminate\View\Factory as View;
 use Illuminate\Routing\UrlGenerator;
 use Exception;
 
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
 
 /**
  * Class Mail
@@ -85,7 +87,8 @@ class Mail
             'link_url'     => $this->url->to('/'),
             'image'        => 'http://evertest.evercise.com/assets/img/default_email.jpg',
             'banner'       => FALSE,
-            'banner_types' => $this->banner_types
+            'banner_types' => $this->banner_types,
+            'css' => file_get_contents('./assets/css/mail.css')
         ];
 
     }
@@ -553,10 +556,19 @@ class Mail
          *
          **/
 
+        $this->data = array_merge($this->data, $params);
+
         $subject = $this->data['subject'];
         $attachments = $this->data['attachments'];
 
-        $this->data = array_merge($this->data, $params);
+        $view = $this->view->make($this->data['view'], $this->data)->render();
+
+        // Parse it all Inline
+        $parse = new CssToInlineStyles($view, $this->data['css']);
+
+        $content = $parse->convert();
+
+
 
         if ($this->config->get('pardot.active')) {
 
@@ -566,10 +578,10 @@ class Mail
             $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
 
-        if (!empty($campayn_id)) {
+        if (!empty($campayn_id) && FALSE) {
             $pardotEmail = new \PardotEmail([
                 'subject' => $subject,
-                'content' => $this->view->make($this->data['view'], $this->data)->render()
+                'content' => $content
             ]);
 
             $pardot = new \Pardot();
@@ -584,7 +596,7 @@ class Mail
 
         } else {
             try {
-                $this->email->send($this->data['view'], $this->data,
+                $this->email->send('v3.emails.blank', ['content' => $content],
                     function ($message) use ($email, $subject, $attachments) {
                         $message->to($email)->subject($subject);
                         if (count($attachments) > 0) {

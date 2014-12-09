@@ -1,33 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <style>
 
-
-            h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px; text-align: left; line-height: 30px; font-weight: 500; color:#768690; margin: 0}
-        	p { font-family: helvetica, arial, sans-serif; font-size: 14px; text-align: left; line-height: 26px; font-weight: normal; color:#768690; }
-        	b { font-weight: bold; color:#768690; }
-        	.footer { font-size: 12px; text-align: left;}
-
-
-
-        	@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
-                h3 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; text-align: left; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
-                p { font-family: helvetica, arial, sans-serif; font-size: 26px; text-align: left; line-height: 38px; font-weight: normal; color:#768690; }
-                b { font-weight: bold; color:#768690; }
-                img { max-width: 640px; width: 100%}
-                .footer { font-size: 13px; text-align: left;}
-        	}
-
-        	@media screen and (max-device-width: 375px) and (max-device-height: 667px) {
-                h3 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; text-align: left; line-height: 42px; font-weight: normal; color:#768690; }
-                p { font-family: helvetica, arial, sans-serif; font-size: 26px; text-align: left; line-height: 38px; font-weight: normal; color:#768690; }
-                b { font-weight: bold; color:#768690; }
-                img { max-width: 640px; width: 100%}
-                .footer { font-size: 13px; text-align: left;}
-        	}
-
-        	</style>
+        <style>{{ $css }}</style>
     </head>
     <body width="100%" height="auto" bgcolor="#bfbfbf" style="margin:0; padding:0;">
     	<!-- Opening main -->

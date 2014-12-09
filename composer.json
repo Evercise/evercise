@@ -33,7 +33,8 @@
         "gloudemans/shoppingcart": "~1.2",
         "igormatkovic/laravel-livelogger": "~1.0",
         "davispeixoto/laravel-salesforce": "1.*",
-        "hgg/pardot": "dev-master"
+        "hgg/pardot": "dev-master",
+        "tijsverkoyen/css-to-inline-styles": "~1.5"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
