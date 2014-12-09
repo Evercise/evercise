@@ -66,7 +66,7 @@ class Mail
         $this->view = $view;
         $this->url = $url;
 
-        $this->upsells = [
+        $this->banner_types = [
             'upsell_signup' => [
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
                 'url'   => $this->url->to('/'),
@@ -76,14 +76,16 @@ class Mail
         ];
 
         $this->data = [
-            'config'      => $this->config->get('evercise'),
-            'subject'     => 'Evercise',
-            'title'       => FALSE,
-            'view'        => 'v3.emails.default',
-            'attachments' => [],
-            'unsubscribe' => '%%unsubscribe%%',
-            'link_url'    => $this->url->to('/'),
-            'image'       => 'http://evertest.evercise.com/assets/img/default_email.jpg'
+            'config'       => $this->config->get('evercise'),
+            'subject'      => 'Evercise',
+            'title'        => FALSE,
+            'view'         => 'v3.emails.default',
+            'attachments'  => [],
+            'unsubscribe'  => '%%unsubscribe%%',
+            'link_url'     => $this->url->to('/'),
+            'image'        => 'http://evertest.evercise.com/assets/img/default_email.jpg',
+            'banner'       => FALSE,
+            'banner_types' => $this->banner_types
         ];
 
     }
@@ -115,14 +117,12 @@ class Mail
     {
 
 
-
-
         $params = [
             'subject'  => 'Welcome to Evercise',
             'title'    => 'Welcome to Evercise!',
             'view'     => 'v3.emails.user.welcome',
             'user'     => $user,
-            'banner'      => 'upsell_signup',
+            'banner'   => 'upsell_signup',
             'image'    => 'http://evercise.com/some_image.jpg',
             'link_url' => $this->url->to('/')
         ];
