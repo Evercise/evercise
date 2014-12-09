@@ -37,8 +37,8 @@ Route::get('/ig', [
         'as' => 'aaa',
         function () {
 
-            $user = Sentry::findUserById(151);
-            event('trainer.complete_profile', [$user]);
+            $user = Sentry::findUserById(585);
+            event('user.signup', [$user]);
 
             die('done');
 
