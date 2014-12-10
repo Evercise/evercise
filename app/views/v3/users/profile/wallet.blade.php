@@ -4,9 +4,9 @@
         <div class="underline text-center">
             <h1>Wallet</h1>
         </div>
-        <div id="masonry" class="row masonry">
-            <div class="col-md-6 masonry-item">
-                <ul class="list-group">
+        <div id="" class="row">
+            <div class="col-md-6">
+                <ul class="list-group mb20">
                   {{ Form::open(['id' => 'add-topup', 'route' => 'cart.add', 'method' => 'post', 'class' => '']) }}
                       <li class="list-group-item ">
                         <div class="row">
@@ -58,8 +58,77 @@
                       </li>
                   {{ Form::close() }}
                 </ul>
+                <ul class="list-group">
+
+                  <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Add to your balance</h3>
+                        </div>
+                    </div>
+                  </li>
+                  <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <strong>Refer a friend</strong>
+                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your grabbing your £5.00 reward.
+                            </p>
+                            <div class="form-group row mt20">
+                                {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form', 'id' => 'refer-a-friend'] ) }}
+                                    {{ Form::label('email', 'Email' , ['class' => 'mt5 col-sm-2 control-label'])  }}
+                                    <div class="col-sm-7">
+                                        {{ Form::text('referee_email', null, ['class' => 'form-control', 'placeholder' => 'Enter Friends Email Address']) }}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ Form::submit('Invite', ['class' => 'btn btn-primary btn-block']) }}
+                                    </div>
+                                {{ Form::close() }}
+                            </div>
+                            <div class="form-group row mt20">
+                                <div class="col-sm-12">
+                                    <strong>Friends referred: <span id="referral-amount" class="text-primary">{{$data['user']->milestone->showReferrals()}}</span></strong>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+
+                  </li>
+                  <li class="list-group-item ">
+                    <div class="row">
+                      @if(! $data['user']->hasFacebook())
+                            <div class="col-sm-7 mt10">
+                                <strong><span class="text-primary">£{{ number_format(Config::get('values.milestones.facebook.reward'),2) }}</span> FREE when you link to Facebook</strong>
+                            </div>
+                            <div class="col-sm-5">
+                                {{ HTML::decode(HTML::linkRoute('tokens.fbtoken', '<span class="icon icon-fb-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
+                            </div>
+                        @else
+                            <div class="col-sm-12 mt10">
+                                <strong>Thanks for linking your Facebook account</strong>
+                            </div>
+                        @endif
+                     </div>
+                  </li>
+                  <li class="list-group-item ">
+                      <div class="row">
+                      @if(! $data['user']->hasTwitter())
+                          <div class="col-sm-7 mt10">
+                              <strong><span class="text-primary">£{{ number_format(Config::get('values.milestones.twitter.reward'),2) }}</span> FREE when you link to Twitter</strong>
+                          </div>
+                          <div class="col-sm-5">
+                              {{ HTML::decode(HTML::linkRoute('twitter', '<span class="icon icon-twitter-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}
+                          </div>
+                        @else
+                            <div class="col-sm-12 mt10">
+                                <strong>Thanks for linking your Twitter account</strong>
+                            </div>
+                        @endif
+                      </div>
+                  </li>
+
+                </ul>
             </div>
-            <div class="col-md-6 masonry-item">
+            <div class="col-md-6">
                 <ul class="list-group">
 
                       <li class="list-group-item ">
@@ -135,76 +204,8 @@
                 </ul>
             </div>
 
-            <div class="col-md-6 masonry-item">
-                <ul class="list-group">
+            <div class="col-md-6">
 
-                  <li class="list-group-item ">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>Add to your balance</h3>
-                        </div>
-                    </div>
-                  </li>
-                  <li class="list-group-item ">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <strong>Refer a friend</strong>
-                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your grabbing your £5.00 reward.
-                            </p>
-                            <div class="form-group row mt20">
-                                {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form', 'id' => 'refer-a-friend'] ) }}
-                                    {{ Form::label('email', 'Email' , ['class' => 'mt5 col-sm-2 control-label'])  }}
-                                    <div class="col-sm-7">
-                                        {{ Form::text('referee_email', null, ['class' => 'form-control', 'placeholder' => 'Enter Friends Email Address']) }}
-                                    </div>
-                                    <div class="col-sm-3">
-                                        {{ Form::submit('Invite', ['class' => 'btn btn-primary btn-block']) }}
-                                    </div>
-                                {{ Form::close() }}
-                            </div>
-                            <div class="form-group row mt20">
-                                <div class="col-sm-12">
-                                    <strong>Friends referred: <span id="referral-amount" class="text-primary">{{$data['user']->milestone->showReferrals()}}</span></strong>
-                               </div>
-                            </div>
-                        </div>
-                    </div>
-
-                  </li>
-                  <li class="list-group-item ">
-                    <div class="row">
-                      @if(! $data['user']->hasFacebook())
-                            <div class="col-sm-7 mt10">
-                                <strong><span class="text-primary">£{{ number_format(Config::get('values.milestones.facebook.reward'),2) }}</span> FREE when you link to Facebook</strong>
-                            </div>
-                            <div class="col-sm-5">
-                                {{ HTML::decode(HTML::linkRoute('tokens.fbtoken', '<span class="icon icon-fb-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-fb btn-block']) )}}
-                            </div>
-                        @else
-                            <div class="col-sm-12 mt10">
-                                <strong>Thanks for linking your Facebook account</strong>
-                            </div>
-                        @endif
-                     </div>
-                  </li>
-                  <li class="list-group-item ">
-                      <div class="row">
-                      @if(! $data['user']->hasTwitter())
-                          <div class="col-sm-7 mt10">
-                              <strong><span class="text-primary">£{{ number_format(Config::get('values.milestones.twitter.reward'),2) }}</span> FREE when you link to Twitter</strong>
-                          </div>
-                          <div class="col-sm-5">
-                              {{ HTML::decode(HTML::linkRoute('twitter', '<span class="icon icon-twitter-white"></span>Link Account', null , ['class' => 'btn btn-lg btn-twitter btn-block']) )}}
-                          </div>
-                        @else
-                            <div class="col-sm-12 mt10">
-                                <strong>Thanks for linking your Twitter account</strong>
-                            </div>
-                        @endif
-                      </div>
-                  </li>
-
-                </ul>
             </div>
         </div>
     </div>
