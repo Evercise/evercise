@@ -8,6 +8,8 @@
              <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3>{{ $session->evercisegroup->name }}</h3></a>
              <div class="mt20">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
+                <span>{{ HTML::decode(HTML::linkRoute('sessions.mail_trainer', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id), array('class'=>'mail_trainer session-icon '))) }} Mail Trainer</span>
+
              </div>
 
          </div>

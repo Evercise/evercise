@@ -90,7 +90,7 @@ class Mail
             'attachments'  => [],
             'unsubscribe'  => '%%unsubscribe%%',
             'link_url'     => $this->url->to('/'),
-            'image'        => 'http://evertest.evercise.com/assets/img/default_email.jpg',
+            'image'        => image('assets/img/email/user_default.jpg', 'Evercise'),
             'banner'       => FALSE,
             'banner_types' => $this->banner_types,
             'css'          => file_get_contents('./assets/css/mail.css')
@@ -113,8 +113,8 @@ class Mail
             'user'        => $user,
             'cart'        => $cart,
             'transaction' => $transaction,
-            'image'    => image('/assets/img/email/user_booking_confirmation.jpg', 'welcome to evercise'),
-            'link_url' => $this->url->to('/uk/')
+            'image'       => image('/assets/img/email/user_booking_confirmation.jpg', 'welcome to evercise'),
+            'link_url'    => $this->url->to('/uk/')
         ];
 
         $this->send($user->email, $params);
@@ -172,10 +172,10 @@ class Mail
             'title'    => 'Welcome to Evercise!',
             'view'     => 'v3.emails.user.welcome_facebook',
             'user'     => $user,
-            'banner'   => false,
+            'banner'   => FALSE,
             'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
             'link_url' => $this->url->to('/uk/'),
-            'link'    => $link
+            'link'     => $link
         ];
 
         $this->send($user->email, $params);
@@ -194,7 +194,7 @@ class Mail
             'title'    => 'Password escaped you?',
             'view'     => 'v3.emails.user.forgot_password',
             'user'     => $user,
-            'banner'   => false,
+            'banner'   => FALSE,
             'image'    => image('/assets/img/email/user_default.jpg', 'reset your password'),
             'link_url' => $link
         ];
@@ -397,11 +397,11 @@ class Mail
     public function trainerWhyNotCreateFirstClass($trainer)
     {
         $params = [
-            'subject' => 'Why not create your first class',
-            'title'   => 'Why not create your first class',
-            'view'    => 'v3.emails.trainer.create_first_class',
-            'trainer'    => $trainer,
-            'banner'   => null,
+            'subject'  => 'Why not create your first class',
+            'title'    => 'Why not create your first class',
+            'view'     => 'v3.emails.trainer.create_first_class',
+            'trainer'  => $trainer,
+            'banner'   => NULL,
             'image'    => image('/assets/img/email/trainer_create_first.png', 'why not create your first class'),
             'link_url' => $this->url->to('/evercisegroups/create')
         ];
@@ -553,25 +553,20 @@ class Mail
      * @param $messageSubject
      * @param $messageBody
      */
-    public function mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody)
+    public function mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body)
     {
-        Log::error("TO DO");
-
-        return;
         $params = [
             'subject'        => 'You have a new message',
             'view'           => 'v3.emails.trainer.mail_trainer',
             'trainer'        => $trainer,
             'user'           => $user,
-            'dateTime'       => $dateTime,
-            'name'           => $name,
-            'email'          => $email,
-            'group'          => $group,
-            'messageSubject' => $messageSubject,
-            'messageBody'    => $messageBody
+            'evercisegroup'  => $evercisegroup,
+            'session'        => $session,
+            'messageSubject' => $subject,
+            'messageBody'    => $body
         ];
 
-        $this->send($email, $params);
+        $this->send($trainer->email, $params);
     }
 
 
@@ -607,6 +602,8 @@ class Mail
         $attachments = $this->data['attachments'];
 
         $view = $this->view->make($this->data['view'], $this->data)->render();
+
+        $this->log->info($view);
 
         // Parse it all Inline
         $parse = new CssToInlineStyles($view, $this->data['css']);
