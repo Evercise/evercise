@@ -113,7 +113,7 @@ class Mail
             'user'        => $user,
             'cart'        => $cart,
             'transaction' => $transaction,
-            'image'    => image('/assets/img/email/user_booking_confirmation.jpg', 'welcome to evercise'),
+            'image'    => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
             'link_url' => $this->url->to('/uk/')
         ];
 
@@ -296,11 +296,13 @@ class Mail
 
 
         $params = [
-            'subject'      => $referrerName . ' thinks you should join Evercise!',
+            'subject'      => 'Join your friends on Evercise',
             'view'         => 'v3.emails.user.invite',
             'email'        => $email,
             'referralCode' => $referralCode,
-            'referrerName' => $referrerName
+            'referrerName' => $referrerName,
+            'image'    => image('/assets/img/email/welcome_from_referral.png', 'Join your friends on Evercise'),
+            'link_url' => $this->url->to('/refer_a_friend/'.$referralCode)
         ];
 
         $this->send($email, $params);
@@ -537,7 +539,9 @@ class Mail
             'view'          => 'v3.emails.trainer.user_joined_class',
             'user'          => $user,
             'trainer'       => $trainer,
-            'evercisegroup' => $evercisegroup
+            'evercisegroup' => $evercisegroup,
+            'link_url'     => $this->url->to('/'),
+            'image'        => 'http://evertest.evercise.com/assets/img/default_email.jpg',
         ];
 
         $this->send($user->email, $params);

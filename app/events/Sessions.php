@@ -149,7 +149,7 @@ class Sessions
 
         $this->track->registerUserSessionTracking($user, $session);
 
-        $this->mail->userJoinedTrainersSession($user, $trainer, $everciseGroup, $transactionId);
+        //$this->mail->userJoinedTrainersSession($user, $trainer, $everciseGroup, $transactionId); // This seems to be the same as trainerJoinSession
         $this->mail->trainerJoinSession($user, $trainer, $everciseGroup, $transactionId);
     }
 

@@ -224,7 +224,6 @@ Route::post('auth/forgot', ['as' => 'auth.forgot.post', 'uses' => 'auth\AuthCont
 
 //  Users
 Route::get('/register', ['as' => 'register', 'uses' => 'UsersController@create']);
-Route::get('/register', ['as' => 'register', 'uses' => 'UsersController@create']);
 
 Route::get('/finished-user', [
         'as' => 'finished.user.registration',

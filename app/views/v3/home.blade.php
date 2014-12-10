@@ -11,7 +11,7 @@
                             <h1 class="text-white"> {{ $sl['name'] }}</h1>
                             <h1 class="text-primary">only &pound; {{ round($sl['price'], 0) }}</h1>
                             <div class="row mt50 text-center">
-                            {{ Html::linkRoute('evercisegroups.show', 'View Class', $sl['evercisegroup_id'] ,['class' => 'btn btn-primary']) }}
+                            {{ Html::linkRoute('evercisegroups.show', 'View Class', Evercisegroup::getSlug($sl['evercisegroup_id']) ,['class' => 'btn btn-primary']) }}
                             <!--
                                 <div class="col-md-2 col-md-offset-4">
                                     <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-white-clock"></span></button>
