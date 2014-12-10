@@ -27,7 +27,7 @@
 
     <div class="">
 
-        <div id="attended" class="{{ $tab === 'attended' ? 'profile-panels' : 'hidden profile-panels' }}">
+        <div id="attended" class="{{ ($tab === 0 ? 'profile-panels' : ($tab === 'attended' ? 'profile-panels' : 'profile-panels hidden')) }}">
             @include('v3.users.profile.attended_classes', ['sessions' => $data['past_sessions']])
         </div>
         <div id="upcoming" class="{{ $tab === 'upcoming' ? 'profile-panels' : 'hidden profile-panels' }}">

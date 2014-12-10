@@ -17,9 +17,11 @@ $(function(){
     })
 
     // initialise user profile if user profile exists
+    /*
     $('#user-nav-bar').exists(function() {
         new Profile(this);
     });
+    */
 
     // used to change a button on click
     $('.toggle-switch').exists(function() {
@@ -160,7 +162,19 @@ $(function(){
         new scrollTo(this);
     })
     $('#profile-nav').exists(function(){
-        new profileNav(this);
+        new profileNav(this)
+        /*
+        window.addEventListener("popstate", function(e) {
+            console.log(e);
+            var activeTab = $('[href=' + location.hash + ']');
+            console.log(activeTab);
+            if (activeTab.length) {
+                activeTab.tab('show');
+            } else {
+                $('.nav-tabs a:first').tab('show');
+            }
+        });
+        */
     })
     $('.rate-it').exists(function(){
         new RateIt(this);
