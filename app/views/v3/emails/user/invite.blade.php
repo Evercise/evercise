@@ -1,43 +1,19 @@
- @extends('v3.emails.template')
+@extends('v3.emails.template')
+<?php View::share('align', 'center') ?>
 
-  $email, $referralCode, $referrerName
+@section('body')
 
+<p>Welcome to Evercise!</p>
+<p>Join {{$referrerName}} and discover Evercise - the flexible new Pay As You Go fitness community that fits in with your lifestyle and doesn&apos;t tie you down to an expensive gym membership.</p>
+<p>{{$referrerName}} has already discovered the benefits of Evercise, why not take a look yourself?</p>
+<p>Sign up using the link below and we’ll even add £5 to your Evercise balance to get started with.</p>
+<p>The Evercise network gives you access to a huge choice of fun and flexible fitness classes wherever you are and our simple three-step process means it’s quick and easy to sign up and get involved.</p>
 
- @section('body')
+@stop
+@section('extra')
 
+<p>1. SEARCH – Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
+<p>2. SELECT – You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have.</p>
+<p>3. SIGN UP – When you’ve found a class you like the look of our simple Pay As You Go booking system ensures that joining your class is as quick and easy as ordering a pizza!</p>
 
-$body = '
-		<p>Hi There</p>
-
-		<p>
-		May we introduce you to Evercise? We offer the perfect solution for those wanting to keep fit with maximum flexibility. It&apos;s simple:
-		</p>
-
-		<p>
-			<li>Search a huge range of fitness classes by type or location</li>
-			<li>Purchase classes online (you can do this on a class by class basis)</li>
-			<li>Show up and shape up</li>
-			<li>Rate and review</li>
-		</p>
-		<p>
-			On Evercise.com you can search for your favourite workout at a time and location that suits	you. Fit your training around your job or studies, find trainers with the best reviews, and keep fit without having to commit a thing
-		</p>
-		<p>
-			Does this sound interesting to you? Then what are you waiting for? It&apos;s completely free to join!
-		</p>
-		';
-
-
-		$subject = $referrerName.' thinks you should join Evercise!';
-		//$view = 'emails.auth.welcome'; // use for validation email
-		$view = 'emails.template';
-		$data['title'] = $referrerName.' thinks you should join Evercise!';
-		$data['mainHeader'] = 'Have you heard of Evercise?';
-		$data['subHeader'] = 'Your friend '.$referrerName.' thinks you would love it!';
-		$data['body'] = $body;
-		$data['link'] = HTML::linkRoute('referral', 'Click here to join Evercise', [$referralCode]);
-		$data['linkLabel'] = 'Start with evercise today:';
-
-		return $this->sendTo($email, $subject, $view, $data );
-
- @stop
+@stop

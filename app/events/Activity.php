@@ -197,9 +197,28 @@ class Activity
     }
 
 
+
     /**
      * @param $user
-     * @param int $amount
+     */
+    public function trainerRegistered($user)
+    {
+        $this->activities->create([
+            'title'       => 'Became a Instructor',
+            'type'        => 'trainerregistered',
+            'description' => 'Welcome',
+            'user_id'     => $user->id,
+            'type_id'     => $user->id,
+            'link'        => 'instructors/' . $user->display_name,
+            'link_title'  => 'Page',
+            'image'       => 'assets/img/activity/Activity_Joined_Evercise.png',
+        ]);
+    }
+
+
+
+    /**
+     * @param $user
      */
     public function userRegistered($user)
     {

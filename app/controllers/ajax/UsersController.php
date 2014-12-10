@@ -69,17 +69,19 @@ class UsersController extends AjaxBaseController{
                         ]
                     );
                 }
+
                 else if (Input::get('trainer', 'no') == 'yes' ) {
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => route('trainer')
+                            'url'      => route('trainers.create')
                         ]
                     );
                 } else {
 
-                    User::sendWelcomeEmail($user);
 
+
+                    User::sendWelcomeEmail($user);
 
                     return Response::json(
                         [

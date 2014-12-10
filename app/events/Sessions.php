@@ -116,11 +116,11 @@ class Sessions
      * @param $messageSubject
      * @param $messageBody
      */
-    public function mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody)
+    public function mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body)
     {
 
-        $this->log->info('Trainer Emailing All');
-        $this->mail->mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody);
+        $this->log->info('User '.$user->id.' Is Emailing Trainer '.$trainer->id);
+        $this->mail->mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body);
 
     }
 
@@ -149,7 +149,7 @@ class Sessions
 
         $this->track->registerUserSessionTracking($user, $session);
 
-        $this->mail->userJoinedTrainersSession($user, $trainer, $everciseGroup, $transactionId);
+        //$this->mail->userJoinedTrainersSession($user, $trainer, $everciseGroup, $transactionId); // This seems to be the same as trainerJoinSession
         $this->mail->trainerJoinSession($user, $trainer, $everciseGroup, $transactionId);
     }
 
