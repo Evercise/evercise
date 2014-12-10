@@ -69,6 +69,7 @@ class UsersController extends AjaxBaseController{
                         ]
                     );
                 }
+
                 else if (Input::get('trainer', 'no') == 'yes' ) {
                     return Response::json(
                         [
@@ -78,8 +79,9 @@ class UsersController extends AjaxBaseController{
                     );
                 } else {
 
-                    User::sendWelcomeEmail($user);
 
+
+                    User::sendWelcomeEmail($user);
 
                     return Response::json(
                         [
