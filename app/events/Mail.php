@@ -689,14 +689,13 @@ class Mail
      */
     private function plainText($content)
     {
+        /** Strip Styles */
         $content = preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "", $content);
 
-        $content = str_replace('\r\n', '', $content);
 
-        $content = strip_tags($content);
-
-        $content = str_replace(["\r\n", "\r"], "\n", $content);
+        $content = strip_tags(str_replace(["\r\n", "\r"], "\n", $content));
         $lines = explode("\n", $content);
+
         $new_lines = [];
 
         foreach ($lines as $i => $line) {

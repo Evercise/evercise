@@ -38,12 +38,7 @@ class Pardot
             'Birthdate' => $user->dob
         ];
 
-        \Log::info('what');
-
         $create = $this->connector->post('prospect', 'create', $params);
-
-
-        d($create);
 
         return $create;
 
@@ -79,8 +74,10 @@ class Pardot
                 $pardot_user = $this->createUser($user);
             }
 
-            $user->pardot_id = $pardot_user['id'];
-            $user->save();
+            if(!empty($pardot_user['id'])) {
+                $user->pardot_id = $pardot_user['id'];
+                $user->save();
+            }
 
         }
 
@@ -114,7 +111,6 @@ class Pardot
 
                 if (!empty($send['id'])) {
                     Log::info('Pardot Campaign  ' . $campaign_id . ' : ' . $send['id'] . ' Sent to user ' . $user_email);
-
                 }
             } catch (Exception $e) {
                 Log::error($e->getMessage());
