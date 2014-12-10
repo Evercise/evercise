@@ -92,7 +92,7 @@ class Mail
             'image'        => image('assets/img/email/user_default.jpg', 'Evercise'),
             'banner'       => FALSE,
             'banner_types' => $this->banner_types,
-            'css'          => file_get_contents('./assets/css/mail.css')
+            'css'          => file_get_contents((php_sapi_name() === 'cli' ? './public/':'./').'assets/css/mail.css')
         ];
 
     }

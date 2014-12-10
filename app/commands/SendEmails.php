@@ -37,7 +37,7 @@ class SendEmails extends Command {
 	 */
 		// Check for sessions happening in less than 2 days
 		//    Send a reminder email to all users
-		//    Send a participant list to the trainer
+		//    Send a participant list to the trainer 
 	public function fire()
 	{
 		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
