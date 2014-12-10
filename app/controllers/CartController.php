@@ -2,6 +2,16 @@
 
     class CartController extends \BaseController
     {
+
+        /**
+         * @var Packages
+         */
+        private $packages;
+
+        public function __construct(Packages $packages) {
+
+            $this->packages = $packages;
+        }
         public function getCart()
         {
 
@@ -30,8 +40,15 @@
             $coupon = Session::get('coupon', FALSE);
             $data   = EverciseCart::getCart($coupon);
 
+            $packages = [];
+
+            foreach($this->packages->orderBy('classes', 'asc')->orderBy('price', 'asc')->get() as $package) {
+                $packages[$package->style][] = $package;
+            }
+
             $data['coupon']         = $coupon;
-            $data['user']           = $this->user;
+            $data['user']           = Sentry::getUser();
+            $data['packages_available']       = $packages;
 
             return View::make('v3.cart.checkout', $data);
 

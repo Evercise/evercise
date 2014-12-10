@@ -195,7 +195,7 @@ class User
     /**
      * @param $user
      */
-    public function guestWelcome($user)
+    public function welcomeGuest($user)
     {
 
         $this->log->info('Sending welcome email with reset password to ' . $user->id);
