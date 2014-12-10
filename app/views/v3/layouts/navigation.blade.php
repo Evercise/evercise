@@ -80,7 +80,7 @@
               {{ isset($cart) ? $cart : '' }}
           </li>
 
-          <li class="dropdown">
+          <li id="cart-dropdown" class="dropdown">
               <a href="#" class="dropdown-toggle nav-list" data-toggle="dropdown">Login</a>
               <ul class="dropdown-menu" role="menu">
                   @include('v3.auth.login')
