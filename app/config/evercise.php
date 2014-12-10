@@ -28,8 +28,8 @@ for ($pounds = 0; $pounds < 100; $pounds++) {
 
 return [
 
-    'activity_exclude' => [
-        'topupcompleted'
+    'transaction_types' => [
+        'wallettoppup', 'cartcompleted', 'topupcompleted'
     ],
     'commission' => 10, //Default commission
     'upload_dir' => 'files/',

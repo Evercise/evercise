@@ -89,7 +89,7 @@
                         </li>
                         <li class="list-group-item bg-light-grey">
                             <div class="class-info-wrapper  row">
-                                <div class="col-xs-6" ><strong class="text-primary">&pound;{[{ marker.price }]}</strong></div>
+                                <div class="col-xs-6 mt5" ><strong class="text-large text-primary">{[{ marker.price | currency:"£": 2 }]}</strong></div>
                                 <div class="col-xs-6"><a href="{[{ marker.link }]}" class="btn btn-default pull-right">Join Class</a></div>
                             </div>
                         </li>

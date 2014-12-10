@@ -20,7 +20,7 @@ class Activities extends Eloquent
 
 
     public static function getAll($user_id, $limit = 100){
-        return static::select(DB::raw('*, DATE_FORMAT(created_at,"%M %D %Y") as format_date'))->where('user_id', $user_id)->orderBy('created_at', 'desc')->limit($limit)->get();
+        return static::select(DB::raw('*, DATE_FORMAT(created_at,"%M %D %Y") as format_date'))->where('user_id', $user_id)->orderBy('id', 'desc')->limit($limit)->get();
     }
 
     /**

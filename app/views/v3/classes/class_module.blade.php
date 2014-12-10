@@ -55,7 +55,7 @@
     </li>
     <li class="list-group-item bg-light-grey">
         <div class="class-info-wrapper  row">
-            <div class="col-xs-6" ><strong class="text-primary">&pound;{{ $class->futuresessions[0]->price }}</strong></div>
+            <div class="col-xs-6 mt5" ><strong class="text-large text-primary">&pound;{{ number_format($class->futuresessions[0]->price, 2, '.', '') }}</strong></div>
             <div class="col-xs-6"> {{ HTML::linkRoute('class.show', 'Join Class', $class->slug, ['class'=>'btn btn-default pull-right']) }}</div>
         </div>
     </li>

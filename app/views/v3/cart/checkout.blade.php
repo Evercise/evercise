@@ -24,6 +24,37 @@
                     </div>
                 </li>
             </div>
+
+
+
+            {{-- IGGY PACKAGES --}}
+
+            <div class="col-md-6 masonry-item sm-mb20">
+                <li class="list-group-item ">
+
+                    @foreach($packages_available as $style => $arr)
+
+                    <div class="row">
+
+                        Color: {{ $style}}
+                        @foreach($arr as $package)
+                        <div class="col-xs-8">
+                            Add to cart package {{ $package->name }} {{ $package->price }}
+                        </div>
+                        @endforeach
+                        <!--
+                        <div class="col-sm-4">
+                            <button id="topup-btn" class="btn btn-primary btn-block">Top up</button>
+                        </div>
+                        -->
+                    </div>
+                    @endforeach
+                </li>
+            </div>
+
+            {{-- IGGY PACKAGES END --}}
+
+
             <div class="col-md-6 masonry-item">
                 <ul class="list-group">
                     <li class="list-group-item ">
@@ -109,7 +140,7 @@
                                 <div class="col-xs-3 text-center">
                                     {{ HTML::linkRoute('packages', 'More', null, ['class' => 'btn btn-info btn-block btn-package']) }}
                                 </div>
-                                <div class="col-xs-7">
+                                <div class="col-xs-6">
                                     <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong><br>
                                 </div>
                                 <div class="col-xs-2 text-right">

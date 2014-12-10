@@ -74,11 +74,11 @@
 
 
                 <div class="text-center">
-                    <label class="custom-checkbox">
-                        {{ Form::checkbox('newsletter', 'yes', count($user->newsletter) ? ($user->newsletter[0] == 'yes' ? true : false) : false ) }}
 
-                         Get all the latest deals and news info by signing up to our newsletter
-                    </label>
+                    <div class="custom-checkbox">
+                        {{ Form::checkbox('newsletter', 'yes',  count($user->newsletter) ? ($user->newsletter[0] == 'yes' ? true : false) : false , ['id'=> 'newsletter']) }}
+                        <label for="newsletter" class="text-grey"> Get all the latest deals and news info by signing up to our newsletter</label>
+                    </div>
 
                 </div>
                 <div class="text-center form-group mt40">

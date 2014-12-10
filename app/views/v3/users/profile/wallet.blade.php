@@ -109,17 +109,17 @@
                         </div>
                       </li>
 
-                      @foreach($data['user']->activities as $act)
+                      @foreach($data['user']->activities()->whereIn('type', Config::get('evercise.transaction_types'))->orderBy('id', 'desc')->get() as $act)
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($act->created_at))}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    {{$act->description}}
+                                    {{$act->title}}
                                 </div>
                                 <div class="col-sm-2 text-right">
-                                    {{($act->transaction) ? $act->transaction['total'] : '0.00'}}
+                                    £{{number_format($act->transaction ? $act->transaction['total'] : '0.00', 2)}}
                                 </div>
                             </div>
                         </li>
@@ -149,7 +149,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <strong>Refer a friend</strong>
-                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your 500 Evercoin total. They will also recieve a evercoin for using your referral
+                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your grabbing your £5.00 reward.
                             </p>
                             <div class="form-group row mt20">
                                 {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form', 'id' => 'refer-a-friend'] ) }}
@@ -164,7 +164,7 @@
                             </div>
                             <div class="form-group row mt20">
                                 <div class="col-sm-12">
-                                    <strong>Friends referred: <span class="text-primary">{{$data['user']->milestone->showReferrals()}}</span></strong>
+                                    <strong>Friends referred: <span id="referral-amount" class="text-primary">{{$data['user']->milestone->showReferrals()}}</span></strong>
                                </div>
                             </div>
                         </div>

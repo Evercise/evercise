@@ -5,6 +5,7 @@ b { font-weight: bold; color:#768690; }
 table{ max-width: 640px; width: 100%; table-layout: fixed}
 .container{ }
 .pink-text{ color: #ff1b7e}
+.blue-text{ color: #5ECDE8}
 .white-text{ color: #ffffff}
 .text-right{ text-align: right}
 .text-center{ text-align: center}

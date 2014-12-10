@@ -7138,6 +7138,9 @@ a:focus {
 strong {
   color: #383d48;
 }
+.text-large {
+  font-size: 16px;
+}
 .custom-list {
   list-style-type: none;
   position: relative;
