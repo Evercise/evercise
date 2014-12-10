@@ -116,11 +116,11 @@ class Sessions
      * @param $messageSubject
      * @param $messageBody
      */
-    public function mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody)
+    public function mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body)
     {
 
-        $this->log->info('Trainer Emailing All');
-        $this->mail->mailTrainer($trainer, $user, $group, $dateTime, $messageSubject, $messageBody);
+        $this->log->info('User '.$user->id.' Is Emailing Trainer '.$trainer->id);
+        $this->mail->mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body);
 
     }
 

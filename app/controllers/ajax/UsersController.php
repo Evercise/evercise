@@ -73,7 +73,7 @@ class UsersController extends AjaxBaseController{
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => route('trainer')
+                            'url'      => route('trainers.create')
                         ]
                     );
                 } else {

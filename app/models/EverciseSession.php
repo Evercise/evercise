@@ -335,26 +335,15 @@ class Evercisesession extends \Eloquent
         $subject = Input::get('mail_subject');
         $body = Input::get('mail_body');
 
-        $dateTime = Evercisesession::where('id', $sessionId)->pluck('date_time');
-        $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-        $groupName = Evercisegroup::where('id', $groupId)->pluck('name');
-        $trainerDetails = User::where('id', $trainerId)->select('first_name', 'last_name', 'email')->first();
+        $session = Evercisesession::find($sessionId);
+        $evercisegroup = $session->evercisegroup()->first();
+        $trainer = User::find($trainerId);
+        $user = Sentry::getUser();
 
-        $name = $trainerDetails['first_name'] . ' ' . $trainerDetails['last_name'];
-        $email = $trainerDetails['email'];
-        $userList = [$name => $email];
+        event('session.mail_trainer', [$trainer, $user, $evercisegroup, $session, $subject, $body]);
 
-        $userName = User::getName(Sentry::getUser());
 
-        event('session.mail_trainer', array(
-            'email' => $userList,
-            'user' => $userName,
-            'groupName' => $groupName,
-            'dateTime' => $dateTime,
-            'subject' => $subject,
-            'body' => $body
-        ));
-        return [$groupId, $groupName];
+        return [$evercisegroup->id, $evercisegroup->name];
     }
 
 

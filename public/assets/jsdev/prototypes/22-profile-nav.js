@@ -5,13 +5,18 @@ function profileNav(nav){
     this.stickyTop = (this.nav.offset().top - this.nav.height());
     this.url = document.URL;
     this.lastOfUrl = '';
+    this.init();
     this.addListeners();
 }
 
 profileNav.prototype = {
     constructor: profileNav,
+    init : function(){
+        new Masonry( $('.masonry') );
+    },
     addListeners : function(){
         $(window).scroll($.proxy(this.checkScrollPosition, this) );
+        $(window).on('popstate',$.proxy(this.checkHistoryState, this) );
         this.nav.find('a').on('click', $.proxy( this.changeTabs, this));
     },
     checkScrollPosition : function(e){
@@ -21,6 +26,16 @@ profileNav.prototype = {
         }
         else{
             this.removeStickyClass();
+        }
+    },
+    checkHistoryState: function(e){
+        if(e.type == 'popstate'){
+            this.getUrl()
+            $('.nav-pills li').removeClass('active');
+            $('a[href="#'+this.lastOfUrl+'"]').parent().addClass('active');
+            $('.profile-panels').addClass('hidden');
+            $('#'+this.lastOfUrl).removeClass('hidden');
+            new Masonry( $('.masonry') );
         }
     },
     addStickyClass: function(){
@@ -36,6 +51,12 @@ profileNav.prototype = {
     changeTabs: function(e){
         e.preventDefault()
         var target = $(e.target).attr('href').substring(1);
+        $('.nav-pills li').removeClass('active');
+        $(e.target).parent().addClass('active');
+        $('.profile-panels').addClass('hidden');
+        $('#'+target).removeClass('hidden');
+
+
         this.getUrl();
 
         if(this.nav.data('name') == this.lastOfUrl)
@@ -45,6 +66,7 @@ profileNav.prototype = {
         else{
             window.history.pushState(null, target,target);
         }
+        new Masonry( $('.masonry') );
     },
     getUrl: function(){
         var url = window.location.pathname;
