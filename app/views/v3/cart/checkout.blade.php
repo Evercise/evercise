@@ -109,7 +109,7 @@
                         </li>
                     @else
                         <li id="voucher" class="list-group-item ">
-                            <div class="row mb20">
+                            <div class="row ">
                                 <div class="col-xs-11">
                                     <strong class="list-group-item-heading">I have a Voucher Code</strong>
                                 </div>
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
 
-                            <div id="have-voucher-block" class="hidden">
+                            <div id="have-voucher-block" class="hidden mt20">
                                 {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
                                     <div class="row">
                                         <div class="col-xs-8">
