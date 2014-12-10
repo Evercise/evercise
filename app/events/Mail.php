@@ -326,13 +326,9 @@ class Mail
             'email'        => $email,
             'referrerName' => $referrerName,
             'balanceWithBonus' => $balanceWithBonus,
-            'image'        => image('/assets/img/email/user_thanks_inviting.jpg', 'Thanks for sharing!'),
+            'image'        => image('/assets/img/email/referral_thanks.jpg', 'Thanks for sharing!'),
             'link_url' => $this->url->to('/uk/'),
-            'banner'       => [
-                'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
-                'url'   => $this->url->to('/uk/'),
-                'title' => 'SignUp Today and Receive £5'
-            ]
+            'banner'       => false
         ];
 
         $this->send($email, $params);
