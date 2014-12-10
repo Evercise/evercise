@@ -18,6 +18,9 @@ class BaseController extends Controller
 
         $this->user = false;
 
+        View::share('cart', View::make('v3.cart.dropdown')->with(EverciseCart::getCart())->render() );
+
+
         if (Sentry::check()) {
             $this->user = Sentry::getUser();
             $userImage = $this->user->image ? (Config::get('evercise.upload_dir') . 'profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
@@ -28,9 +31,6 @@ class BaseController extends Controller
             $header = $this->setupHeader('none');
         }
 
-        $cart = new EverciseCart;
-
-        View::share('cart', View::make('v3.cart.dropdown')->with($cart->getCart())->render() );
 
         View::share('header', $header);
 
