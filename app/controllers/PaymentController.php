@@ -57,8 +57,9 @@ class PaymentController extends BaseController
 
 
         $transactionId = $charge['id'];
+        $confirm = $this->paid($token, $transactionId, 'stripe', $cart, $coupon);
         $res = [
-            'confirm'      => $this->paid($token, $transactionId, 'stripe', $cart, $coupon),
+            'confirm'      => $confirm,
             'cart'         => $cart,
             'payment_type' => 'stripe',
             'coupon'       => $coupon,
@@ -177,7 +178,7 @@ class PaymentController extends BaseController
             return Redirect::route('checkout.confirmation')->with('res', $res);
 
         } else {
-            Log::info($response->getMessagE());
+            Log::info($response->getMessage());
             return Redirect::route('payment.error')->with('error', $response->getMessage());
         }
     }
@@ -402,7 +403,7 @@ class PaymentController extends BaseController
         }
 
        */
-
+//$token, $transactionId, $paymentMethod, $cart = [], $coupon = 0, $payer_id = 0
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
         EverciseCart::clearCart();
@@ -419,8 +420,9 @@ class PaymentController extends BaseController
     public function showConfirmation()
     {
         $res = Session::get('res');
-        if ($res)
+        if ($res) {
             return View::make('v3.cart.confirmation', $res);
+        }
         else
             return Redirect::route('home');
     }

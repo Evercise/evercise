@@ -108,11 +108,13 @@ class Mail
     public function userCartCompleted($user, $cart, $transaction)
     {
         $params = [
-            'subject'     => 'Congratulations',
+            'subject'     => 'CONFIRMATION OF BOOKING',
             'view'        => 'v3.emails.user.cart_completed',
             'user'        => $user,
             'cart'        => $cart,
-            'transaction' => $transaction
+            'transaction' => $transaction,
+            'image'    => image('/assets/img/email/user_booking_confirmation.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/uk/')
         ];
 
         $this->send($user->email, $params);
@@ -428,7 +430,7 @@ class Mail
     {
         $params = [
             'subject'       => 'User Joined Your Class',
-            'view'          => 'v3.emails.trainer.user_joined_session',
+            'view'          => 'v3.emails.trainer.user_joined_class',
             'trainer'       => $trainer,
             'evercisegroup' => $evercisegroup,
             'user'          => $user

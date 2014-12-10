@@ -38,7 +38,9 @@ Route::get('/ig', [
         function () {
 
             $user = Sentry::findUserById(151);
-            event('trainer.complete_profile', [$user]);
+            $cart = EverciseCart::getCart();
+            $transaction = Transactions::find(98);
+            event('user.cart.completed', [$user, $cart, $transaction]);
 
             die('done');
 
