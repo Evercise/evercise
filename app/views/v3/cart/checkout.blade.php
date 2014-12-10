@@ -109,7 +109,7 @@
                                 <div class="col-xs-3 text-center">
                                     {{ HTML::linkRoute('packages', 'More', null, ['class' => 'btn btn-info btn-block btn-package']) }}
                                 </div>
-                                <div class="col-xs-7">
+                                <div class="col-xs-6">
                                     <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong><br>
                                 </div>
                                 <div class="col-xs-2 text-right">
