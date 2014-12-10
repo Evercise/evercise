@@ -37,20 +37,19 @@ class GalleryController extends AjaxBaseController
         $find = $this->request->get('keywords', FALSE);
         if ($find) {
             $find = explode(',', $find);
-            $first = array_pull($find, 0);
 
-            $gal = $this->gallery->where('keywords', 'like', '%' . $first . '%')->where('counter', '>', 0);
-
-            foreach ($find as $key) {
-                $gal->orWhere('keywords', 'like', '%' . $key . '%');
-            }
-
-            $gallery = $gal->limit(20)->get();
-
+            $gallery = $this->gallery->where('counter', '>', 0)
+            ->where(function($query) use ($find)
+            {
+                foreach ($find as $key) {
+                    $query->orWhere('keywords', 'like', '%' . $key . '%');
+                }
+            })
+            ->limit(20)->get();
         }
 
         if (count($gallery) == 0) {
-            $gallery = $this->gallery->limit(20)->get();
+            $gallery = $this->gallery->where('counter', '>', 0)->limit(20)->get();
         }
 
         //return $this->response->json($gallery->toArray());
