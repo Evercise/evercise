@@ -10,7 +10,7 @@
             <h1>Checkout</h1>
         </div>
         <div id="masonry" class="row masonry">
-            <div class="col-md-6 masonry-item sm-mb20">
+            <div class="col-md-6 masonry-item mb20">
                 <li class="list-group-item ">
                     <div class="row">
                         <div class="col-xs-8">
@@ -29,30 +29,42 @@
 
             {{-- IGGY PACKAGES --}}
 
-            <div class="col-md-6 masonry-item sm-mb20">
-                <li class="list-group-item ">
-
+            <div class="col-md-6 masonry-item mb20">
+                <ul class="list-group package-stacked-list">
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>Add a package </h3>
+                            </div>
+                        </div>
+                    </li>
                     @foreach($packages_available as $style => $arr)
-
-                    <div class="row">
-
-                        Color: {{ $style}}
-                        @foreach($arr as $package)
-                        <div class="col-xs-8">
-                            Add to cart package {{ $package->name }} {{ $package->price }}
-                        </div>
-                        @endforeach
-                        <!--
-                        <div class="col-sm-4">
-                            <button id="topup-btn" class="btn btn-primary btn-block">Top up</button>
-                        </div>
-                        -->
-                    </div>
+                        <li class="list-group-item package-list-item package-{{$style}}">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3>{{ $arr[0]->name }}</h3>
+                                    <small>Classes up to £{{ $arr[0]->max_class_price }}</small>
+                                </div>
+                                @foreach($arr as $p)
+                                    <div class="col-sm-4 text-center">
+                                        {{ $p->classes }} Class Package
+                                        <strong class="text-larger">£{{ round($p->price,2) }}</strong>
+                                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $p->id, 'class' => 'add-to-class mt5']) }}
+                                            {{ Form::submit('Add Package', ['class'=> 'btn btn-white btn-transparent  add-btn']) }}
+                                            {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $p->id)) }}
+                                            {{ Form::hidden('refresh-page', true) }}
+                                            {{ Form::hidden('quantity', 1) }}
+                                        {{ Form::close() }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </li>
                     @endforeach
-                </li>
+                </ul>
+
             </div>
 
-            {{-- IGGY PACKAGES END --}}
+            {{--  PACKAGES END --}}
 
 
             <div class="col-md-6 masonry-item">

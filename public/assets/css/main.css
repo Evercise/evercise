@@ -7141,6 +7141,9 @@ strong {
 .text-large {
   font-size: 16px;
 }
+.text-larger {
+  font-size: 18px;
+}
 .custom-list {
   list-style-type: none;
   position: relative;
@@ -8682,7 +8685,7 @@ fieldset[disabled] .btn-twitter.active {
 }
 .btn-white {
   color: #ffffff;
-  background-color: #768690;
+  background-color: rgba(118, 134, 144, 0.2);
   border-color: #ffffff;
 }
 .btn-white:hover,
@@ -8691,7 +8694,7 @@ fieldset[disabled] .btn-twitter.active {
 .btn-white.active,
 .open > .dropdown-toggle.btn-white {
   color: #ffffff;
-  background-color: #5e6c75;
+  background-color: rgba(94, 108, 117, 0.2);
   border-color: #e0e0e0;
 }
 .btn-white:active,
@@ -8714,11 +8717,11 @@ fieldset[disabled] .btn-white:active,
 .btn-white.disabled.active,
 .btn-white[disabled].active,
 fieldset[disabled] .btn-white.active {
-  background-color: #768690;
+  background-color: rgba(118, 134, 144, 0.2);
   border-color: #ffffff;
 }
 .btn-white .badge {
-  color: #768690;
+  color: rgba(118, 134, 144, 0.2);
   background-color: #ffffff;
 }
 .btn-grey {
@@ -11443,6 +11446,39 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 .package-pink .package-pay .btn .badge {
   color: #ff1b7e;
   background-color: #ffffff;
+}
+.package-stacked-list .package-green {
+  background: #7ed321;
+}
+.package-stacked-list .package-blue {
+  background: #50c3e2;
+}
+.package-stacked-list .package-pink {
+  background: #ff1b7e;
+}
+.package-stacked-list .package-list-item {
+  border: 0;
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -436px -733px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  color: #ffffff;
+  padding: 15px;
+}
+.package-stacked-list .package-list-item.active {
+  background-position: -436px -813px;
+}
+.package-stacked-list .package-list-item.hover:hover,
+.package-stacked-list .package-list-item.active:hover {
+  cursor: pointer;
+  background-position: -436px -813px;
+}
+.package-stacked-list .package-list-item h3 {
+  color: #ffffff;
+  margin: 5px 0 0;
+}
+.package-stacked-list .package-list-item strong {
+  color: #ffffff;
 }
 @media (max-width: 991px) {
   .masonry-item {

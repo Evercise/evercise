@@ -1,64 +1,68 @@
 <?php
 
-    class CartController extends \BaseController
+class CartController extends \BaseController
+{
+
+    /**
+     * @var Packages
+     */
+    private $packages;
+
+    public function __construct(Packages $packages)
     {
 
-        /**
-         * @var Packages
-         */
-        private $packages;
+        $this->packages = $packages;
+    }
 
-        public function __construct(Packages $packages) {
+    public function getCart()
+    {
 
-            $this->packages = $packages;
-        }
-        public function getCart()
-        {
+        $coupon = Session::get('coupon', FALSE);
 
-            $coupon = Session::get('coupon', FALSE);
-
-            $data = [
-                'cart'           => EverciseCart::getCart($coupon),
-            ];
+        $data = [
+            'cart' => EverciseCart::getCart($coupon),
+        ];
 
 
-            /** Figure out how the hell are we going to display the Cart */
+        /** Figure out how the hell are we going to display the Cart */
 
 
+        return View::make('v3.cart.checkout')
+            ->with('data', $data);
+    }
 
-            return View::make('v3.cart.checkout')
-                ->with('data', $data);
-        }
 
-
-        public function checkout()
-        {
-            if(!Sentry::check()) {
-                return Redirect::route('cart.guest');
-            }
-
-            $coupon = Session::get('coupon', FALSE);
-            $data   = EverciseCart::getCart($coupon);
-
-            $packages = [];
-
-            foreach($this->packages->orderBy('classes', 'asc')->orderBy('price', 'asc')->get() as $package) {
-                $packages[$package->style][] = $package;
-            }
-
-            $data['coupon']         = $coupon;
-            $data['user']           = Sentry::getUser();
-            $data['packages_available']       = $packages;
-
-            return View::make('v3.cart.checkout', $data);
-
+    public function checkout()
+    {
+        if (!Sentry::check()) {
+            return Redirect::route('cart.guest');
         }
 
+        $coupon = Session::get('coupon', FALSE);
+        $data = EverciseCart::getCart($coupon);
 
-        public function paymentError()
-        {
+        $packages = [];
 
-            die('shit');
+        foreach ($this->packages->orderBy('classes', 'asc')->orderBy('price', 'asc')->get() as $package) {
+            $packages[$package->style][] = $package;
         }
+
+        $data['coupon'] = $coupon;
+        $data['user'] = Sentry::getUser();
+        $data['packages_available'] = $packages;
+        $data['cart'] = View::make('v3.cart.dropdown')->with(EverciseCart::getCart())->render();
+
+
+
+        return View::make('v3.cart.checkout', $data);
 
     }
+
+
+    public function paymentError()
+    {
+
+        die('shit');
+    }
+
+}
