@@ -74,7 +74,7 @@ class Mail
                 'url'   => $this->url->to('/'),
                 'title' => 'SignUp Today and Receive £5'
             ],
-            'welcome' => [
+            'welcome'       => [
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
                 'url'   => $this->url->to('/'),
                 'title' => 'SignUp Today and Receive £5'
@@ -93,7 +93,7 @@ class Mail
             'image'        => 'http://evertest.evercise.com/assets/img/default_email.jpg',
             'banner'       => FALSE,
             'banner_types' => $this->banner_types,
-            'css' => file_get_contents('./assets/css/mail.css')
+            'css'          => file_get_contents('./assets/css/mail.css')
         ];
 
     }
@@ -132,7 +132,7 @@ class Mail
             'title'    => 'Welcome to Evercise!',
             'view'     => 'v3.emails.user.welcome',
             'user'     => $user,
-            'banner'   => false,
+            'banner'   => FALSE,
             'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
             'link_url' => $this->url->to('/uk/')
         ];
@@ -167,11 +167,14 @@ class Mail
     public function welcomeFacebook($user, $link = '')
     {
 
-
         $params = [
-            'subject' => 'Welcome to Evercise',
-            'view'    => 'v3.emails.user.welcome_facebook',
-            'user'    => $user,
+            'subject'  => 'Welcome to Evercise',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.user.welcome_facebook',
+            'user'     => $user,
+            'banner'   => false,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/uk/'),
             'link'    => $link
         ];
 
@@ -187,10 +190,13 @@ class Mail
 
 
         $params = [
-            'subject' => 'Reset Password',
-            'view'    => 'v3.emails.user.forgot_password',
-            'user'    => $user,
-            'link'    => $link
+            'subject'  => 'Reset Password',
+            'title'    => 'Password escaped you?',
+            'view'     => 'v3.emails.user.forgot_password',
+            'user'     => $user,
+            'banner'   => false,
+            'image'    => image('/assets/img/email/user_default.jpg', 'reset your password'),
+            'link_url' => $link
         ];
 
         $this->send($user->email, $params);
@@ -361,13 +367,13 @@ class Mail
     public function trainerRegistered($trainer)
     {
         $params = [
-            'subject' => 'Welcome to Evercise!',
-            'title'   => 'Welcome to Evercise!',
-            'view'    => 'v3.emails.trainer.registered',
-            'trainer'    => $trainer,
-            'banner'   => null,
+            'subject'  => 'Welcome to Evercise!',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.trainer.registered',
+            'trainer'  => $trainer,
+            'banner'   => NULL,
             'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
-            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
+            'link_url' => $this->url->to('/profile/' . $trainer->display_name)
         ];
 
         $this->send($trainer->email, $params);
@@ -376,13 +382,13 @@ class Mail
     public function trainerWhyNotCompleteProfile($trainer)
     {
         $params = [
-            'subject' => 'BOOST YOUR EVERCISE SALES BY 50%',
-            'title'   => 'BOOST YOUR EVERCISE SALES BY 50%',
-            'view'    => 'v3.emails.trainer.complete_profile',
-            'trainer'    => $trainer,
-            'banner'   => null,
+            'subject'  => 'BOOST YOUR EVERCISE SALES BY 50%',
+            'title'    => 'BOOST YOUR EVERCISE SALES BY 50%',
+            'view'     => 'v3.emails.trainer.complete_profile',
+            'trainer'  => $trainer,
+            'banner'   => NULL,
             'image'    => image('/assets/img/email/trainer_finish_profile.png', 'finish profile'),
-            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
+            'link_url' => $this->url->to('/profile/' . $trainer->display_name)
         ];
 
         $this->send($trainer->email, $params);
@@ -396,8 +402,8 @@ class Mail
             'view'    => 'v3.emails.trainer.create_first_class',
             'trainer'    => $trainer,
             'banner'   => null,
-            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
-            'link_url' => $this->url->to('/profile/'.$trainer->display_name)
+            'image'    => image('/assets/img/email/trainer_create_first.png', 'why not create your first class'),
+            'link_url' => $this->url->to('/evercisegroups/create')
         ];
 
         $this->send($trainer->email, $params);
@@ -608,11 +614,12 @@ class Mail
         $content = $parse->convert();
 
 
-        if($this->url->to('/') == 'http://dev.evercise.com') {
+        if ($this->url->to('/') == 'http://dev.evercise.com') {
             $content = str_replace('dev.evercise.com', 'evertest.evercise.com', $content);
         }
 
 
+        $plain_text = $this->plainText($content);
 
 
         if ($this->config->get('pardot.active')) {
@@ -623,10 +630,11 @@ class Mail
             $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
 
-        if (!empty($campayn_id) ) {
+        if (!empty($campayn_id)) {
             $pardotEmail = new \PardotEmail([
-                'subject' => $subject,
-                'content' => $content
+                'subject'   => $subject,
+                'content'   => $content,
+                'plainText' => $plain_text
             ]);
 
             $pardot = new \Pardot();
@@ -641,7 +649,8 @@ class Mail
 
         } else {
             try {
-                $this->email->send('v3.emails.blank', ['content' => $content],
+                $this->email->send(['v3.emails.blank', 'v3.emails.plain_blank'],
+                    ['content' => $content, 'plain_text' => $plain_text],
                     function ($message) use ($email, $subject, $attachments) {
                         $message->to($email)->subject($subject);
                         if (count($attachments) > 0) {
@@ -669,7 +678,45 @@ class Mail
      */
     private function formatName($class, $function)
     {
+
         return strtolower(str_replace('\\', '.', implode('.', [str_replace('events\\', '', $class), $function])));
+    }
+
+
+    /**
+     * @param $content
+     * @return string
+     */
+    private function plainText($content)
+    {
+        $content = preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "", $content);
+
+        $content = str_replace('\r\n', '', $content);
+
+        $content = strip_tags($content);
+
+        $content = str_replace(["\r\n", "\r"], "\n", $content);
+        $lines = explode("\n", $content);
+        $new_lines = [];
+
+        foreach ($lines as $i => $line) {
+            if (!empty(trim($line))) {
+                $new_lines[] = trim($line);
+            }
+        }
+        $content = "\n" . implode($new_lines, "\n");
+
+        $remove = [
+            '&copy; Copyright 2014 Evercise',
+            'Follow us on',
+            'Unsubscribe'
+        ];
+
+        $content = str_replace($remove, '', $content);
+
+        $content .= $this->view->make('v3.emails.plain_footer', $this->data);
+
+        return $content;
     }
 }
 

@@ -35,6 +35,8 @@ Referral.prototype = {
                     self.failedValidation(data);
                 }
                 else{
+
+
                     window.location.href = data.url;
                 }
             },

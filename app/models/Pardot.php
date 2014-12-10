@@ -27,6 +27,32 @@ class Pardot
 
     }
 
+    public function createUser($user) {
+
+        $params = [
+            'email' => $user->email,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'country' => 'United Kingdom',
+            'phone' => $user->phone,
+            'Birthdate' => $user->dob
+        ];
+
+        \Log::info('what');
+
+        $create = $this->connector->post('prospect', 'create', $params);
+
+
+        d($create);
+
+        return $create;
+
+
+
+
+    }
+
+
 
     /**
      * @param $user
@@ -45,7 +71,13 @@ class Pardot
         }
 
         if (empty($user->pardot_id)) {
-            $pardot_user = $this->connector->post('prospect', 'read', ['email' => $user->email]);
+
+            try{
+                $pardot_user = $this->connector->post('prospect', 'read', ['email' => $user->email]);
+            } catch (\Exception $e) {
+                \Log::info($e->getMessage());
+                $pardot_user = $this->createUser($user);
+            }
 
             $user->pardot_id = $pardot_user['id'];
             $user->save();
@@ -65,13 +97,13 @@ class Pardot
     {
         $user = $this->getUser($user_email);
 
-        if (!empty($user->pardot_id)) {
+        if (!empty($user->pardot_id) && $user->pardot_id > 0) {
             $params = [
                 'campaign_id'  => $campaign_id,
                 'prospect_id'  => $user->pardot_id,
                 'name'         => $mail->subject,
                 'subject'      => $mail->subject,
-                'text_content' => $mail->content,
+                'text_content' => $mail->plainText,
                 'html_content' => $mail->content,
                 'from_email'   => $mail->from,
                 'from_name'    => $mail->fromName

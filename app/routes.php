@@ -37,10 +37,9 @@ Route::get('/ig', [
         'as' => 'aaa',
         function () {
 
+
             $user = Sentry::findUserById(151);
-            $cart = EverciseCart::getCart();
-            $transaction = Transactions::find(98);
-            event('user.cart.completed', [$user, $cart, $transaction]);
+            event('user.facebook.signup', [$user]);
 
             die('done');
 

@@ -24,6 +24,10 @@ class PardotEmail
      * @var
      */
     public $fromName;
+    /**
+     * @var
+     */
+    public $plainText;
 
 
     /**

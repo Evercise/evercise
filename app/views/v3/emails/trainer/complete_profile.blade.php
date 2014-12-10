@@ -9,7 +9,7 @@
 <p>Completing your Evercise profile is quick and easy so why not grab a few minutes and tell the world about yourself.</p>
 @stop
 @section('extra')
-<table width="100%" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
         <tr>
             <td>
                 <br>

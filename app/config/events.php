@@ -74,7 +74,7 @@ return [
         ['user.signup' => 'User@welcome'], // $user   // ∑
         ['user.guest.signup' => 'User@welcomeGuest'], // $user   // ∑
         ['user.facebook.signup' => 'User@facebookWelcome'], // $user   // ∑
-        ['user.forgot.password' => 'User@facebookWelcome'], // $user   // ∑
+        ['user.forgot.password' => 'User@forgotPassword'], // $user   // ∑
         ['user.changedPassword' => 'User@userChangedPassword'], // $user, $link   // ∑
         ['user.upgrade' => 'User@userUpgrade'], // $user   // ∑
 

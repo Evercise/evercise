@@ -32,6 +32,10 @@ class ReferralsController extends \BaseController {
 
 			if ($referral)
 			{
+
+
+                $this->user->milestone->increment('referrals');
+
 				event('referral.invite', [
 		        	'email' => $refereeEmail,
 		            'referralCode' => $referralCode,
