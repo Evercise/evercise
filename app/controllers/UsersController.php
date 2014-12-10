@@ -198,9 +198,6 @@ class UsersController extends \BaseController
             'activity' => $activity_group
         ];
 
-
-        // if user is trainer lob hub into data
-
         if(Trainer::isTrainerLoggedIn())
         {
             $hub = Evercisegroup::getTrainerHub($user);
