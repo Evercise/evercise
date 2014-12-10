@@ -43,19 +43,7 @@ class UsersController extends AjaxBaseController{
                 $user->save();
 
                 // check for newsletter and if so add to mailchimp
-
-                $newsletter = Input::get('userNewsletter');
-                $email_address = Input::get('email');
-                $first_name = Input::get('first_name');
-                $last_name = Input::get('last_name');
-                if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                        $email_address,
-                        $first_name,
-                        $last_name
-                    );
-                }
-
+                $this->setNewsletter(Input::get('userNewsletter'));
 
                 Sentry::login($user, true);
 
@@ -166,18 +154,7 @@ class UsersController extends AjaxBaseController{
                 $user->save();
 
                 // check for newsletter and if so add to mailchimp
-
-                $newsletter = Input::get('userNewsletter');
-                $email_address = Input::get('email');
-                $first_name = Input::get('first_name');
-                $last_name = Input::get('last_name');
-                if (!empty($newsletter)) {
-                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                        $email_address,
-                        $first_name,
-                        $last_name
-                    );
-                }
+                $this->setNewsletter(Input::get('userNewsletter'));
 
                 Sentry::login($user, true);
 
@@ -243,29 +220,11 @@ class UsersController extends AjaxBaseController{
             $area_code = Input::get('areacode');
             $phone = Input::get('phone');
             $password = Input::get('password');
-            $newsletter = Input::get('newsletter');
-
             $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password);
 
             $this->user->checkProfileMilestones();
 
-            if(!empty($newsletter)) {
-                if ($this->user->newsletter[0]->option != 'yes') {
-                    $this->user->marketingpreferences()->sync([1]);
-                    User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                        $this->user->email,
-                        $first_name,
-                        $last_name
-                    );
-                }
-            }else{
-                if ($this->user->newsletter[0]->option == 'yes') {
-                    $this->user->marketingpreferences()->sync([2]);
-                    User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                        $this->user->email
-                    );
-                }
-            }
+            $this->setNewsletter(Input::get('newsletter'));
 
 
 
@@ -328,5 +287,34 @@ class UsersController extends AjaxBaseController{
         });
 
         return Response::json($value);
+    }
+
+    private function setNewsletter($newsletter)
+    {
+
+        if($this->user->newsletter->count() == 0) {
+            $this->user->marketingpreferences()->sync([1]);
+
+        }
+
+        $news = $this->user->newsletter()->get();
+
+
+        if(!is_null($newsletter)) {
+            if ($news[0]->option != 'yes') {
+                User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                    $this->user->email,
+                    $this->user->first_name,
+                    $this->user->last_name
+                );
+            }
+        }else{
+            if ($news[0]->option == 'yes') {
+                $this->user->marketingpreferences()->sync([2]);
+                User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                    $this->user->email
+                );
+            }
+        }
     }
 } 

@@ -383,7 +383,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             && $this->phone
             && $this->image
         ) {
-            Event::fire('user.fullProfile', [$this]);
+            event('user.fullProfile', [$this]);
             Milestone::where('user_id', $this->id)->first()->add('profile');
         }
     }
