@@ -117,13 +117,18 @@ class SessionsController extends \BaseController
 
         $name = User::getName($trainerId);
 
-        return View::make('sessions.mail_trainer')
-            ->with('sessionId', $sessionId)
-            ->with('trainerId', $trainerId)
-            ->with('userId', Sentry::getUser()->id)
-            ->with('dateTime', $dateTime)
-            ->with('groupName', $groupName)
-            ->with('name', $name);
+        return Response::json(
+            [
+                'view'  => View::make('v3.classes.mail_trainer')
+                    ->with('sessionId', $sessionId)
+                    ->with('trainerId', $trainerId)
+                    ->with('userId', Sentry::getUser()->id)
+                    ->with('dateTime', $dateTime)
+                    ->with('groupName', $groupName)
+                    ->with('name', $name)->render()
+            ]
+        );
+
     }
 
     /**
@@ -137,8 +142,7 @@ class SessionsController extends \BaseController
 
         return Response::json(
             [
-                'message'  => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId,
-                'callback' => 'mailSent'
+                'view' => View::make('v3.layouts.positive-alert')->with('message', 'your message was sent successfully')->with('fixed', true)->render()
             ]
         );
     }

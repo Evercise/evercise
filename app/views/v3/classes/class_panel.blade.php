@@ -5,10 +5,12 @@
             {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
         </div>
          <div class="class-title-wrapper col-xs-8">
-             <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3>{{ $session->evercisegroup->name }}</h3></a>
+             <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3 class="pull-left">{{ $session->evercisegroup->name }}</h3></a>
+             {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail ml10 mt25', 'id' => 'mail-popup']) }}
+
              <div class="mt20">
-                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
-                <span>{{ HTML::decode(HTML::linkRoute('sessions.mail_trainer', '<img src="/img/mail_icon.png"></img>', array('sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id), array('class'=>'mail_trainer session-icon '))) }} Mail Trainer</span>
+                <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span><br>
+
 
              </div>
 

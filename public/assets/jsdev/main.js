@@ -207,6 +207,9 @@ $(function(){
             interval: 5000
         })
     })
+    $('#mail-popup').exists(function(){
+        new MailPopup(this);
+    })
 
 
 
