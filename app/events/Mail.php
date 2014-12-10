@@ -113,6 +113,7 @@ class Mail
             'user'        => $user,
             'cart'        => $cart,
             'transaction' => $transaction,
+            'banner'   => NULL,
             'image'    => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
             'link_url' => $this->url->to('/uk/')
         ];
@@ -293,16 +294,37 @@ class Mail
      */
     public function invite($email, $referralCode, $referrerName)
     {
-
-
         $params = [
             'subject'      => 'Join your friends on Evercise',
             'view'         => 'v3.emails.user.invite',
             'email'        => $email,
             'referralCode' => $referralCode,
             'referrerName' => $referrerName,
-            'image'    => image('/assets/img/email/welcome_from_referral.png', 'Join your friends on Evercise'),
-            'link_url' => $this->url->to('/refer_a_friend/'.$referralCode)
+            'banner'       => 'upsell_signup',
+            'image'        => image('/assets/img/email/welcome_from_referral.png', 'Join your friends on Evercise'),
+            'link_url'     => $this->url->to('/uk/')
+        ];
+
+        $this->send($email, $params);
+
+    }
+
+    /**
+     * @param $email
+     * @param $referralCode
+     * @param $referrerName
+     */
+    public function thanksForInviting($email, $referrerName, $balanceWithBonus)
+    {
+        $params = [
+            'subject'      => 'Thanks for sharing!',
+            'view'         => 'v3.emails.user.thanks_inviting',
+            'email'        => $email,
+            'referrerName' => $referrerName,
+            'balanceWithBonus' => $balanceWithBonus,
+            'banner'       => 'upsell_signup',
+            'image'        => image('/assets/img/email/user_thanks_inviting.jpg', 'Thanks for sharing!'),
+            'link_url'     => $this->url->to('/')
         ];
 
         $this->send($email, $params);

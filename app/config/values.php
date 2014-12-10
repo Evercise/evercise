@@ -6,7 +6,7 @@ return array(
 	// reward - Amount rewarded in pounds
 	// Recur - Number of times the award can be claimed 
 	'milestones' => [
-		'referral' => 		['count'=>3,	'reward'=>5, 	'recur'=>2,  	'column'=>'referrals'	],
+		'referral' => 		['count'=>1,	'reward'=>5, 	'recur'=>3,  	'column'=>'referrals'	],
 		'profile' => 			['count'=>1,	'reward'=>.5,	'recur'=>1,  	'column'=>'profile'		],
 		'facebook' => 		['count'=>1,	'reward'=>.5,	'recur'=>1,  	'column'=>'facebook'	],
 		'twitter' => 			['count'=>1,	'reward'=>.5,	'recur'=>1,  	'column'=>'twitter'		],

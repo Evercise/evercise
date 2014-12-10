@@ -39,7 +39,8 @@ class ReferralsController extends \BaseController {
 				event('referral.invite', [
 		        	'email' => $refereeEmail,
 		            'referralCode' => $referralCode,
-		            'referrerName' => $this->user->first_name.' '.$this->user->last_name
+		            'referrerName' => $this->user->first_name.' '.$this->user->last_name,
+					'balanceWithBonus' => ($this->user->balance + Config::get('values')['milestones']['referral']['reward'])
                 ]);
 			}
 		}

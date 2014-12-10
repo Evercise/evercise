@@ -113,7 +113,7 @@ return [
 
     ],
     '5'  => [
-        ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName // ∑
+        ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName, $balanceWithBonus // ∑
         ['landing.ppc' => 'User@ppc'] // $email, $categoryId, $ppcCode
     ],
     '0'  => [
