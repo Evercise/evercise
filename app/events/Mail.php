@@ -248,6 +248,7 @@ class Mail
 
             $params = [
                 'subject'      => 'Evercise class reminder',
+                'title'        => 'EVERCISE CLASS REMINDER',
                 'view'         => 'v3.emails.user.session_remind',
                 'userList'     => $userList,
                 'group'        => $group,
@@ -299,9 +300,13 @@ class Mail
             'email'        => $email,
             'referralCode' => $referralCode,
             'referrerName' => $referrerName,
-            'banner'       => 'upsell_signup',
             'image'        => image('/assets/img/email/welcome_from_referral.png', 'Join your friends on Evercise'),
-            'link_url'     => $this->url->to('/uk/')
+            'link_url'     => $this->url->to('/refer_a_friend/'.$referralCode),
+            'banner'       => [
+                'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
+                'url'   => $this->url->to('/refer_a_friend/'.$referralCode),
+                'title' => 'SignUp Today and Receive £5'
+            ],
         ];
 
         $this->send($email, $params);
@@ -322,10 +327,10 @@ class Mail
             'referrerName' => $referrerName,
             'balanceWithBonus' => $balanceWithBonus,
             'image'        => image('/assets/img/email/user_thanks_inviting.jpg', 'Thanks for sharing!'),
-            'link_url' => $this->url->to('/refer_a_friend/'.$referralCode),
+            'link_url' => $this->url->to('/uk/'),
             'banner'       => [
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
-                'url'   => $this->url->to('/refer_a_friend/'.$referralCode),
+                'url'   => $this->url->to('/uk/'),
                 'title' => 'SignUp Today and Receive £5'
             ]
         ];

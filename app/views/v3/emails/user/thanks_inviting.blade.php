@@ -11,6 +11,6 @@
 @stop
 @section('extra')
 
-    {{ Html::decode(Html::linkRoute('evercisegroups.search', image('/assets/img/email/btns/btn_discover.png', 'DISCOVER NEW CLASSES'), [$user->display_name], ['class' => 'btn btn-blue'])) }}
+    {{ Html::decode(Html::linkRoute('evercisegroups.search', image('/assets/img/email/btns/btn_discover.png', 'DISCOVER NEW CLASSES'), [], ['class' => 'btn btn-blue'])) }}
 
 @stop
