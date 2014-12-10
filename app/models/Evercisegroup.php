@@ -223,7 +223,7 @@ class Evercisegroup extends \Eloquent
         $nextSessions = []; // Links past session with the next Future session (of the same group) which this member has signed up for
 
         $pastSessionsAwaitingFutureBuddy = [];
-        foreach ($user->sessions as $key => $session) {
+        foreach ($user->sessions()->orderBy('date_time', 'desc')->get() as $key => $session) {
             // Past sessions
             if (new DateTime($session->date_time) < $currentDate) {
                 if (!array_key_exists($session->id, $futureSessions)) {

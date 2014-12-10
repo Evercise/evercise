@@ -9,28 +9,22 @@
         <div class="underline text-center">
             <h1>Checkout</h1>
         </div>
-        <div id="masonry" class="row masonry">
-            <div class="col-md-6 masonry-item mb20">
-                <li class="list-group-item ">
-                    <div class="row">
-                        <div class="col-xs-8">
-                            <h3>Current Balance: <span class="text-primary">£{{round($user->getWallet()->getBalance(), 2)}}</span> </h3>
-                        </div>
-                        <!--
-                        <div class="col-sm-4">
-                            <button id="topup-btn" class="btn btn-primary btn-block">Top up</button>
-                        </div>
-                        -->
-                    </div>
-                </li>
-            </div>
+        <div id="" class="row ">
+            <div class="col-md-6">
+                <ul class="list-group mb20">
+                    <li class="list-group-item">
+                        <h3>Current Balance: <span class="text-primary">£{{round($user->getWallet()->getBalance(), 2)}}</span> </h3>
+                    </li>
+                    <li class="list-group-item">
+                        <span class="text-grey">You can top up your account at anny time using:</span>
+                    </li>
+                    <li class="list-group-item bg-grey">
+                        {{ image('/img/payment_paypal.png', 'pay with paypal') }}
+                        {{ image('/img/payment_stripe.png', 'pay with paypal', ['class'=>'ml30 mt10']) }}
+                    </li>
+                </ul>
 
-
-
-            {{-- IGGY PACKAGES --}}
-
-            <div class="col-md-6 masonry-item mb20">
-                <ul class="list-group package-stacked-list">
+                 <ul class="list-group package-stacked-list">
                     <li class="list-group-item ">
                         <div class="row">
                             <div class="col-xs-12">
@@ -60,14 +54,14 @@
                             </div>
                         </li>
                     @endforeach
-                </ul>
-
+                 </ul>
             </div>
 
-            {{--  PACKAGES END --}}
 
 
-            <div class="col-md-6 masonry-item">
+
+
+            <div class="col-md-6">
                 <ul class="list-group">
                     <li class="list-group-item ">
                         <div class="row">
