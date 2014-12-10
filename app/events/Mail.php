@@ -78,8 +78,7 @@ class Mail
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
                 'url'   => $this->url->to('/'),
                 'title' => 'SignUp Today and Receive £5'
-            ],
-
+            ]
         ];
 
         $this->data = [
@@ -295,6 +294,7 @@ class Mail
     {
 
 
+
         $params = [
             'subject'      => 'Join your friends on Evercise',
             'view'         => 'v3.emails.user.invite',
@@ -302,7 +302,13 @@ class Mail
             'referralCode' => $referralCode,
             'referrerName' => $referrerName,
             'image'    => image('/assets/img/email/welcome_from_referral.png', 'Join your friends on Evercise'),
-            'link_url' => $this->url->to('/refer_a_friend/'.$referralCode)
+            'link_url' => $this->url->to('/refer_a_friend/'.$referralCode),
+            'banner'       => [
+                'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
+                'url'   => $this->url->to('/refer_a_friend/'.$referralCode),
+                'title' => 'SignUp Today and Receive £5'
+            ]
+
         ];
 
         $this->send($email, $params);
@@ -601,6 +607,9 @@ class Mail
          **/
 
         $this->data = array_merge($this->data, $params);
+        if(is_string($this->data['banner']) && !empty($this->data['banner_types'][$this->data['banner']])) {
+            $this->data['banner'] = $this->data['banner_types'][$this->data['banner']];
+        }
 
         $subject = $this->data['subject'];
         $attachments = $this->data['attachments'];
