@@ -35,9 +35,8 @@ Referral.prototype = {
                     self.failedValidation(data);
                 }
                 else{
-
-
-                    window.location.href = data.url;
+                    self.form.after(data.view);
+                    $('#referral-amount').text(data.referral);
                 }
             },
 

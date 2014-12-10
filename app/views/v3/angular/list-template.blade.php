@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="class-info-wrapper col-xs-2 bg-light-grey text-center">
-                            <strong class="text-primary center-block">&pound;{[{ marker.price }]}</strong>
+                            <strong class="text-primary center-block">{[{ marker.price | currency:"£": 2 }]}</strong>
                             <a href="{[{ marker.link }]}" class="btn btn-default center-block">Join Class</a>
                         </div>
                     </div>

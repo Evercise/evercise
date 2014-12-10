@@ -43,7 +43,12 @@ class ReferralsController extends \BaseController {
                 ]);
 			}
 		}
-		return Response::json(['url' => Route('users.edit', [$this->user->display_name.'/wallet'])]);
+		return Response::json(
+            [
+                'view'  => View::make('v3.layouts.positive-alert')->with('message', 'Referral sent successfully')->with('fixed', TRUE)->render(),
+                'referral' => $this->user->milestone->showReferrals()
+            ]
+        );
 	}
 
 	// Accept a code from a friend referral
