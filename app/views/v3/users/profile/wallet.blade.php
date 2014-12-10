@@ -109,17 +109,17 @@
                         </div>
                       </li>
 
-                      @foreach($data['user']->activities as $act)
+                      @foreach($data['user']->activities()->whereIn('type', Config::get('evercise.transaction_types'))->orderBy('id', 'desc')->get() as $act)
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-sm-4">
                                     <span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($act->created_at))}}</span>
                                 </div>
                                 <div class="col-sm-6">
-                                    {{$act->description}}
+                                    {{$act->title}}
                                 </div>
                                 <div class="col-sm-2 text-right">
-                                    {{($act->transaction) ? $act->transaction['total'] : '0.00'}}
+                                    £{{number_format($act->transaction ? $act->transaction['total'] : '0.00', 2)}}
                                 </div>
                             </div>
                         </li>

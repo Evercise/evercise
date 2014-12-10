@@ -535,8 +535,8 @@ class Activity
      */
     public function userTopupCompleted($user, $transaction)
     {
-        $title = 'Account TopUp';
-        $description = 'You topped up your account with ' . $this->fixAmountDisplay($transaction->total);
+        $title = 'Wallet TopUp';
+        $description = 'With ' . $this->fixAmountDisplay($transaction->total);
 
         $data = [
             'description' => $description,
@@ -560,7 +560,6 @@ class Activity
      * Deduct a item from a package
      * @param $user
      * @param $userpackage
-     * @param $package
      * @param $session
      */
     public function packageUsed($user, $userpackage, $session)
