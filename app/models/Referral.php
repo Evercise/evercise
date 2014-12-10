@@ -26,7 +26,7 @@ class Referral extends \Eloquent
     {
         $referral = 0;
         if (!is_null($rc)) {
-            $referral = Referral::where('code', $rc)->first();
+            $referral = static::where('code', $rc)->where('referee_id', 0)->first();
         }
         return $referral;
     }
@@ -40,9 +40,10 @@ class Referral extends \Eloquent
     public static function useReferralCode($rc, $user_id)
     {
         $referral = 0;
-        if (Referral::checkReferralCode($rc)) {
-            $referral = Referral::where('code', $rc)->first();
-            $referral->update(['code' => '', 'referee_id' => $user_id]);
+        if (static::checkReferralCode($rc)) {
+            $referral = static::where('code', $rc)->first();
+            $referral->update(['referee_id' => $user_id]);
+
         }
         return $referral;
     }
@@ -61,7 +62,7 @@ class Referral extends \Eloquent
 
     public static function checkAndStore($user_id, $email, $code)
     {
-        $referral = Referral::create(['user_id' => $user_id, 'email' => $email, 'code' => $code]);
+        $referral = static::create(['user_id' => $user_id, 'email' => $email, 'code' => $code]);
 
         return $referral;
     }
