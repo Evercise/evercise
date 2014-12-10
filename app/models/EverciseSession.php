@@ -46,6 +46,18 @@ class Evercisesession extends \Eloquent
             ->where('user_id', $user_id)->get();
     }
 
+    public function userRating($user_id)
+    {
+        /* This could do with being turned into a proper relationship instead of a dirty-ass loop */
+
+        $sessionmembers = $this->userSessionmembers($user_id);
+        foreach($sessionmembers as $sm)
+            if($sm->rating)
+                return $sm->rating;
+
+        return null;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

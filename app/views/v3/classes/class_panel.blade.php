@@ -13,7 +13,7 @@
          </div>
     </div>
     @if($session->isInPast())
-        @if( ! ($session->sessionmembers[0]->rating))
+        @if( ! ($rating = $session->userRating($data['user_id'])))
             <div id="rate-it" class="row panel-body bg-light-grey class-info-wrapper text-center">
                 <div class=" col-sm-12">
                     <span>Rate it</span>
@@ -51,12 +51,12 @@
                 <div class="col-sm-12">
                     <div class="class-rating-wrapper">
                         @for ($i = 0; $i < 5; $i++)
-                            <span class="icon icon-{{ $i < $session->userSessionmembers($data['user_id'])[0]->rating['stars'] ? 'full' : 'empty'  }}-star"></span>
+                            <span class="icon icon-{{ $i < $rating['stars'] ? 'full' : 'empty'  }}-star"></span>
                         @endfor
                     </div>
                 </div>
                 <div class="col-sm-12">
-                    <p>{{$session->sessionmembers[0]->rating['comment']}}</p>
+                    <p>{{$rating['comment']}}</p>
                 </div>
             </div>
         @endif
