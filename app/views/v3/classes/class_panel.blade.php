@@ -82,10 +82,10 @@
             </div>
         @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
             <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
-                <div class=" col-sm-7 sm-text-center">
+                <div class=" col-sm-6 sm-text-center">
                     <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->getNextFutureSession()->formattedDate().', '.$session->evercisegroup->getNextFutureSession()->formattedTime() }}</span>
                 </div>
-                <div class=" col-sm-5">
+                <div class=" col-sm-6">
                     <div class="row">
                         <div class="col-sm-3 sm-text-center">
                             <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
