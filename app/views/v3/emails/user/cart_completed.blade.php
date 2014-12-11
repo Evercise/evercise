@@ -28,7 +28,28 @@
                 Price
             </th>
         </tr>
-
+        @foreach($cart['sessions_grouped'] as $row)
+            <?php
+                $date = new \Carbon\Carbon($row['date_time']);
+            ?>
+            <tr  align="left">
+                <td colspan="2">
+                    {{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}
+                </td>
+                <td  colspan="2">
+                    <p>{{ $date->toDayDateTimeString() }}</p>
+                </td>
+                <td>
+                    <p>{{$row['duration']}} mins</p>
+                </td>
+                <td>
+                    <p>x {{$row['qty']}}</p>
+                </td>
+                <td>
+                    <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</p>
+                </td>
+            </tr>
+        @endforeach
         @if(isset($cart['packages']))
             @foreach($cart['packages'] as $row)
                 <tr  align="left">
@@ -54,16 +75,16 @@
             <td colspan="7" >
                 <strong>Sub-total <span class="blue-text">{{ $cart['total']['subtotal'] }}</span></strong>
                 @if($cart['total']['package_deduct'] > 0)
-                    <strong>Package deduct: <span class="blue-text"> £{{ $cart['total']['package_deduct']  }}</span></strong>
-                    <br>
+                    <strong>Package deduct: <span class="blue-text"> &pound;{{ $cart['total']['package_deduct']  }}</span></strong>
+                    <br/>
                 @endif
                 @if($cart['total']['from_wallet'] > 0)
-                    <strong>From Wallet: <span class="blue-text">£{{ $cart['total']['from_wallet']  }}</span></strong>
-                    <br>
+                    <strong>From Wallet: <span class="blue-text"> &pound;{{ $cart['total']['from_wallet']  }}</span></strong>
+                    <br/>
                 @endif
                 @if(!empty($cart['discount']['amount']) && $cart['discount']['amount'] > 0)
                     <strong>
-                        Voucher discount: <span class="blue-text">- £{{ $cart['discount']['amount'] }}</span>
+                        Voucher discount: <span class="blue-text">-  &pound;{{ $cart['discount']['amount'] }}</span>
                          @if($cart['discount']['type'] == 'percentage')
                              <span class="blue-text">{{ $cart['discount']['percentage']}}%</span>
                          @endif
