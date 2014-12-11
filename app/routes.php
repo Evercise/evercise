@@ -359,6 +359,12 @@ Route::group(['prefix' => 'cart'], function () {
     Route::get('payment/request/paypal',
         ['as' => 'payment.request.paypal', 'uses' => 'PaymentController@requestPaypalPaymentSessions']);
 
+    Route::get('payment/proccess/paypal/topup',
+        ['as' => 'payment.process.paypal.topup', 'uses' => 'PaymentController@processPaypalPaymentTopUp']);
+
+    Route::get('payment/request/paypal/topup',
+        ['as' => 'payment.request.paypal.topup', 'uses' => 'PaymentController@requestPaypalPaymentTopUp']);
+
     Route::get('payment/cancelled',
         ['as' => 'payment.cancelled', 'uses' => 'PaymentController@cancelled']);
 
