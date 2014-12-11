@@ -107,7 +107,7 @@ class Mail
     public function userCartCompleted($user, $cart, $transaction)
     {
         $params = [
-            'subject'     => 'CONFIRMATION OF BOOKING',
+            'subject'     => 'Confirmation of booking',
             'view'        => 'v3.emails.user.cart_completed',
             'user'        => $user,
             'cart'        => $cart,
@@ -578,6 +578,25 @@ class Mail
             'transactionId' => $transactionId,
             'link_url'      => $this->url->to('/'),
             'image'         => image('assets/img/email/user_default.jpg', 'someone has joined your classs'),
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function userReviewedClass($user, $trainer, $session, $evercisegroup, $transactionId)
+    {
+
+        $params = [
+            'subject'       => 'A User just Joined your Class',
+            'view'          => 'v3.emails.trainer.user_joined_class',
+            'user'          => $user,
+            'trainer'       => $trainer,
+            'session'       => $session,
+            'evercisegroup' => $evercisegroup,
+            'transactionId' => $transactionId,
+            'link_url'      => $this->url->to('/'),
+>>>>>>> origin/dev
         ];
 
         $this->send($user->email, $params);
