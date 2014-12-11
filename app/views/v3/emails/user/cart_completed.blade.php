@@ -49,7 +49,7 @@
                     <p>x {{$row['qty']}}</p>
                 </td>
                 <td>
-                    <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</p>
+                    <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</p>
                 </td>
             </tr>
         @endforeach
@@ -73,6 +73,34 @@
                     </td>
                 </tr>
             @endforeach
+        @endif
+        <tr>
+            <td >
+                <strong>Sub-total <span class="blue-text">{{ $cart['total']['subtotal'] }}</span></strong>
+                @if($cart['total']['package_deduct'] > 0)
+                    <strong>Package deduct: <span class="blue-text"> £{{ $cart['total']['package_deduct']  }}</span></strong>
+                    <br>
+                @endif
+                @if($cart['total']['from_wallet'] > 0)
+                    <strong>From Wallet: <span class="blue-text">£{{ $cart['total']['from_wallet']  }}</span></strong>
+                    <br>
+                @endif
+                @if(!empty($cart['discount']['amount']) && $cart['discount']['amount'] > 0)
+                    <strong>
+                        Voucher discount: <span class="blue-text">- £{{ $cart['discount']['amount'] }}</span>
+                         @if($cart['discount']['type'] == 'percentage')
+                             <span class="blue-text">{{ $cart['discount']['percentage']}}%</span>
+                         @endif
+                    </strong>
+                @endif
+            </td>
+        </tr>
+        @if($cart['total']['final_cost'] > 0)
+            <tr>
+                <strong>Total <span class="blue-text">&pound;{{$cart['total']['final_cost']}}</span></strong>
+            </tr>
+
+
         @endif
     </tbody>
 </table>
@@ -108,7 +136,7 @@
                                             <div class="pull-left ml20"><span class="icon icon-ticket"></span> x {{$row['qty']}}</div>
                                         </div>
                                         <div class="col-sm-3 text-right">
-                                            <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</strong>
+                                            <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</strong>
                                         </div>
                                     </div>
                                     <div class="row mt20">
