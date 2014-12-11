@@ -595,8 +595,7 @@ class Mail
             'session'       => $session,
             'evercisegroup' => $evercisegroup,
             'transactionId' => $transactionId,
-            'link_url'      => $this->url->to('/'),
->>>>>>> origin/dev
+            'link_url'      => $this->url->to('/')
         ];
 
         $this->send($user->email, $params);
