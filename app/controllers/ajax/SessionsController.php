@@ -54,6 +54,10 @@ class SessionsController extends AjaxBaseController{
 
         if($sessionIds)
         {
+            if(!is_array($sessionIds)) {
+                $sessionIds = [$sessionIds];
+            }
+
             foreach($sessionIds as $key => $id) {
                 $inputs = [
                     'time' => $time_array[$key],
