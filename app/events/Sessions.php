@@ -145,12 +145,12 @@ class Sessions
      * @param $everciseGroup
      * @param $transactionId
      */
-    public function joinedClass($user, $trainer, $session, $everciseGroup, $transactionId) {
+    public function joinedClass($user, $trainer, $session, $evercisegroup, $transactionId) {
 
         $this->track->registerUserSessionTracking($user, $session);
 
-        //$this->mail->userJoinedTrainersSession($user, $trainer, $everciseGroup, $transactionId); // This seems to be the same as trainerJoinSession
-        $this->mail->trainerJoinSession($user, $trainer, $everciseGroup, $transactionId);
+        //$this->mail->userJoinedTrainersSession($user, $trainer, $evercisegroup, $transactionId); // This seems to be the same as trainerJoinSession
+        $this->mail->trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId);
     }
 
 

@@ -477,15 +477,6 @@ class Evercisesession extends \Eloquent
         ]);
     }
 
-    /**
-     * @param $evercisegroup
-     * @param $userTrainer
-     * @param $transactionId
-     */
-    public static function sendSessionJoinedEmail($evercisegroup, $trainer, $transactionId)
-    {
-        event('session.joined',[Sentry::getUser(), $trainer, $evercisegroup, $transactionId]);
-    }
 
     /**
      * Generate the for for leaving a session
