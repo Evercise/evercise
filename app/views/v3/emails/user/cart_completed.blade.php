@@ -50,28 +50,28 @@
                 </td>
             </tr>
         @endforeach
-        @if(isset($cart['packages']))
-            @foreach($cart['packages'] as $row)
-                <tr  align="left">
-                    <td colspan="2">
-                        <p>{{ $row['name'] }}</p>
-                    </td>
-                    <td  colspan="2">
-                        <p>{{ $row['classes'] }} classes</p>
-                    </td>
-                    <td>
-
-                    </td>
-                    <td>
-                        <p>1</p>
-                    </td>
-                    <td>
-                        <p>&pound;{{ $row['price'] }}</p>
-                    </td>
-                </tr>
-            @endforeach
-        @endif
-
+       
+        <tr>
+            <td colspan="7" >
+                <strong>Sub-total <span class="blue-text">{{ $cart['total']['subtotal'] }}</span></strong>
+                @if($cart['total']['package_deduct'] > 0)
+                    <strong>Package deduct: <span class="blue-text"> £{{ $cart['total']['package_deduct']  }}</span></strong>
+                    <br>
+                @endif
+                @if($cart['total']['from_wallet'] > 0)
+                    <strong>From Wallet: <span class="blue-text">£{{ $cart['total']['from_wallet']  }}</span></strong>
+                    <br>
+                @endif
+                @if(!empty($cart['discount']['amount']) && $cart['discount']['amount'] > 0)
+                    <strong>
+                        Voucher discount: <span class="blue-text">- £{{ $cart['discount']['amount'] }}</span>
+                         @if($cart['discount']['type'] == 'percentage')
+                             <span class="blue-text">{{ $cart['discount']['percentage']}}%</span>
+                         @endif
+                    </strong>
+                @endif
+            </td>
+        </tr>
         @if($cart['total']['final_cost'] > 0)
         <tr>
             <td colspan="7" align="right">
