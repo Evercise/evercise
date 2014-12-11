@@ -43,7 +43,7 @@ class UsersController extends AjaxBaseController{
                 $user->save();
 
                 // check for newsletter and if so add to mailchimp
-                $this->setNewsletter(Input::get('userNewsletter'));
+                $this->setNewsletter(Input::get('userNewsletter', false));
 
                 Sentry::login($user, true);
 
@@ -289,7 +289,7 @@ class UsersController extends AjaxBaseController{
         return Response::json($value);
     }
 
-    private function setNewsletter($newsletter)
+    private function setNewsletter($newsletter = false)
     {
 
         if($this->user->newsletter->count() == 0) {
