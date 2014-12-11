@@ -12,6 +12,7 @@
 <p>{{ $location }}</p>
 <p>{{ $trainerName }}</p>
 <p>{{ $trainerEmail }}</p>
+<p>Transaction ID: {{ $transactionId }}</p>
 
 <p>Take note of your unique booking code. Your trainer will need this - along with another form of ID - to identify you.</p>
 <p>Please try to arrive 15 minutes before the specified start time. Late arrivals can be rejected.</p>

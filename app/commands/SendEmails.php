@@ -37,7 +37,7 @@ class SendEmails extends Command {
 	 */
 		// Check for sessions happening in less than 2 days
 		//    Send a reminder email to all users
-		//    Send a participant list to the trainer 
+		//    Send a participant list to the trainer
 	public function fire()
 	{
 		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
@@ -68,9 +68,19 @@ class SendEmails extends Command {
 				{
 					$userList = [];
 					foreach ($session->users as $user) {
-						$userList[$user->first_name.' '.$user->last_name] = $user->email;
+						$userList[$user->first_name.' '.$user->last_name] = [
+							'email' => $user->email,
+							'transactionId'=>$user->pivot->transaction_id,
+						];
 					}
-					$emails[] = ['group'=>$group->name, 'dateTime'=>$session->date_time, 'userList' =>$userList, 'trainer'=>$group->user, 'location'=>$group->venue->name, 'classId' => $group->id];
+					$emails[] = [
+						'group'=>$group->name,
+						'dateTime'=>$session->date_time,
+						'userList' =>$userList,
+						'trainer'=>$group->user,
+						'location'=>$group->venue->name,
+						'classId' => $group->id
+					];
 					$sessionIds[] = $session->id;
 				}
 			}
@@ -84,10 +94,9 @@ class SendEmails extends Command {
 				$this->info('Session: '.$email['group'].' - '.$email['dateTime']);
 				$this->info('Trainer: '.$email['trainer']->id.' - '.$email['trainer']->display_name);
 				$this->info('Venue: '.$email['location']);
-				foreach ($email['userList'] as $name => $userEmail)
+				foreach ($email['userList'] as $name => $details)
 				{
-					$this->info(' -- '.$name.' : '.$userEmail);
-
+					$this->info(' -- '.$name.' : '.$details['email']);
 				}
 
 				// Pang out an email with a list of users
