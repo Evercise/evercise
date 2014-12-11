@@ -27,23 +27,12 @@ if(typeof angular != 'undefined') {
         $scope.active = {};
 
         // default distance for filter
-        $scope.distance = 10;
+        $scope.maxDistance = 1;
 
         // watch the scope for map loaded
         $scope.myMarkers = [];
         $scope.markers = [];
-        $scope.$watch(function () {
-            return $scope.map.bounds;
-        }, function () {
-            for (var i = 0; i < $scope.initialLoad; i++) {
-                $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
-            }
-            $scope.markers = $scope.myMarkers;
-            $("img.lazy").lazyload({
-                container: $(".snippet-body")
-            });
 
-        }, true);
 
         // create the markers
 
@@ -82,7 +71,7 @@ if(typeof angular != 'undefined') {
 
         // used for distance filter
         $scope.distanceFilter = function (marker) {
-            if( marker.distance <= $scope.distance || marker == $scope.active){
+            if( marker.distance <= $scope.maxDistance || marker == $scope.active){
                 return marker;
             }
         };
@@ -118,6 +107,10 @@ if(typeof angular != 'undefined') {
             },100);
         }
 
+        $scope.setDistance = function(distance){
+            $scope.maxDistance = distance;
+        }
+
         //change view
         $scope.changeView = function (view) {
             $scope.view = view;
@@ -129,15 +122,13 @@ if(typeof angular != 'undefined') {
             $scope.isPreviewOpen = false;
         }
 
-        // current map cennter
-        $scope.currentCenter = {
-            latitude: 50,
-            longitude: -0.2
-        }
 
         // google map
         $scope.map = {
-            center: $scope.currentCenter,
+            center: {
+                latitude: 50,
+                longitude: -0.2
+            },
             pan: {},
             options: {
                 streetViewControl: false,
@@ -192,18 +183,13 @@ if(typeof angular != 'undefined') {
 
         $scope.clicked = function (marker) {
             // zoom out
-            $scope.map.zoom = 15;
-
-            $scope.currentCenter = {
-                latitude: marker.latitude,
-                longitude: marker.longitude
-            }
-
             $scope.active = marker;
             $scope.distanceFilter(marker);
+            $scope.isPreviewOpen = true;
 
             // change preview
             $scope.preview.id = 'preview-' + marker.id;
+            $scope.preview.name = marker.name;
             $scope.preview.image = marker.directory+ "/search_"+ marker.image;
             $scope.preview.description = marker.description;
             $scope.preview.nextClassDate = marker.sessions[0].date_time;
@@ -222,17 +208,20 @@ if(typeof angular != 'undefined') {
             $scope.mask = true;
 
             google.maps.event.trigger($scope.map, "resize");
+            //pan map
+            $scope.map.center = {
+                latitude: marker.latitude,
+                longitude: marker.longitude
+            };
             $scope.map.zoom = 15;
-            $scope.map.center = $scope.currentCenter;
-            scrollToSnippet('#' + marker.id);
 
-            $scope.isPreviewOpen = true;
+            $scope.mask = true;
+            scrollToSnippet('#' + marker.id);
 
         }
 
 
         function scrollToSnippet(id) {
-            console.log(id);
             $('.class-snippet').addClass('fade-out');
             $('.class-snippet').removeClass('active');
             $(id).addClass('active');
@@ -289,6 +278,21 @@ if(typeof angular != 'undefined') {
             }
 
         });
+
+        $scope.$watch(function () {
+            return $scope.map.bounds;
+        }, function () {
+            for (var i = 0; i < $scope.initialLoad; i++) {
+                $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
+            }
+            $scope.markers = $scope.myMarkers;
+            $("img.lazy").lazyload({
+                container: $(".snippet-body")
+            });
+
+        }, true);
+
+
         /*
         $(window).resize(function(){
             $scope.$apply(function(){

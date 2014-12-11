@@ -13,9 +13,11 @@
     </div>
     <div class="col-sm-12 tab-content">
         <div role="tabpanel" class="tab-pane active" id="about">
+
             <div class="underline text-center">
-                <h3>About the class</h3>
+                <h3>{[{ preview.name }]}</h3>
             </div>
+
             <div class="row text-center mb30">
                 <div class="col-sm-5"><span class="icon icon-clock"></span>{[{ preview.nextClassDate }]}</div>
                 <div class="col-sm-4"><span class="icon icon-watch"></span> {[{ preview.nextClassDuration}]} mins</div>
@@ -33,9 +35,11 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="schedule">
+            <!--
             <div class="underline text-center">
                 <h3>Schedule</h3>
             </div>
+            -->
 
             <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets | orderBy: date_time:reverse | limitTo:4">
                 <div class="col-sm-6 mt5">

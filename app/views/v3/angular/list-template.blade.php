@@ -26,7 +26,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-12" ng-repeat="marker in markers | orderBy: sort:revers | filter: distanceFiltere" id = {[{marker.id}]}>
+                <div class="col-sm-12" ng-repeat="marker in markers | orderBy: sort:revers | filter: distanceFilter" id = {[{marker.id}]}>
                     <div class="class-list center-block row">
                         <div class="class-image-wrapper col-xs-2">
                             {{ image('{[{marker.directory}]}/search_{[{ marker.image}]}', '{[{ marker.name}]}') }}
