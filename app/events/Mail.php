@@ -461,7 +461,7 @@ class Mail
      * @param $evercisegroup
      * @internal param $session
      */
-    public function userJoinedTrainersSession($user, $trainer, $evercisegroup)
+    public function userJoinedTrainersSession($user, $trainer, $evercisegroup) // Not actually used as it's the same as trainerJoinSession
     {
         $params = [
             'subject'       => 'User Joined Your Class',
@@ -556,9 +556,11 @@ class Mail
     /**
      * @param $user
      * @param $trainer
+     * @param $session
      * @param $evercisegroup
+     * @param $transactionId
      */
-    public function trainerJoinSession($user, $trainer, $evercisegroup)
+    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId)
     {
 
         $params = [
@@ -566,9 +568,11 @@ class Mail
             'view'          => 'v3.emails.trainer.user_joined_class',
             'user'          => $user,
             'trainer'       => $trainer,
+            'session'       => $session,
             'evercisegroup' => $evercisegroup,
-            'link_url'     => $this->url->to('/'),
-            'image'        => 'http://evertest.evercise.com/assets/img/default_email.jpg',
+            'transactionId' => $transactionId,
+            'link_url'      => $this->url->to('/'),
+            'image'         => 'http://evertest.evercise.com/assets/img/email/default_email.jpg',
         ];
 
         $this->send($user->email, $params);
