@@ -91,7 +91,7 @@
                             <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
                         </div>
                         <div class="col-sm-8 sm-text-center">
-                            @if($futuresession->remainingTickets()  > 0)
+                            @if($session->remainingTickets()  > 0)
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
                                     <div class="btn-group pull-right">
                                         {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
