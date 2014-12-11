@@ -1,15 +1,17 @@
-function EditClass(form){
+function GetMembers(form){
     this.form = form;
     this.addListeners();
 }
-EditClass.prototype = {
-    constructor: EditClass,
+
+GetMembers.prototype = {
+    constructor: GetMembers,
     addListeners: function(){
-        this.form.on('submit', $.proxy(this.submit, this));
+        this.form.on('submit', $.proxy(this.submit, this))
     },
     submit: function(e){
         e.preventDefault();
-        this.form = $(e.target);
+        this.form = $(e.target)
+        this.form.find('input[type="submit"]').replaceWith('<a  href="#session-members" class="icon icon-people mr15 hover" data-toggle="modal" data-target="#session-members"></a>')
         this.ajax();
     },
     ajax: function(){
@@ -21,11 +23,11 @@ EditClass.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
-                self.form.find(".btn-toggle-down").prop('disabled', true).addClass('loading');
             },
 
             success: function (data) {
-                self.edit(data);
+                self.form.after(data.view)
+                $('#session-members').modal('show');
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -36,16 +38,5 @@ EditClass.prototype = {
                 self.form.find("input[type='submit']").prop('disabled', false)
             }
         });
-    },
-    edit: function(data){
-        $('#'+ data.id).html(data.view);
-        $('#edit-'+ data.id).removeClass('disabled');
-        $('#submit-'+ data.id).hide();
-        $('#'+ data.id).parent().collapse('show');
-        $('#infoToggle-'+data.id).removeClass('hide');
-        datepick();
-        new UpdateSession($('.update-session'));
-        new RemoveSession($('.remove-session'));
-        new GetMembers($('.get-members'));
     }
 }

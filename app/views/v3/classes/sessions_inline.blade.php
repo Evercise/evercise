@@ -94,8 +94,13 @@
                                 {{ Form::close() }}
 
                                     @if($session->sessionmembers()->count() > 0)
-                                    <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
-                                    <span class="icon icon-people mr15 hover"></span>
+
+
+                                    {{ Form::open(['route'=>'session.get.members', 'method'=> 'post', 'class' => 'get-members', 'id'=>'get-members']) }}
+                                        <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
+                                        {{ Form::hidden('session_id', $session->id) }}
+                                        {{ Form::submit('', ['class' => 'icon btn-icon icon-people mr15 hover']) }}
+                                    {{ Form::close() }}
                                     @endif
 
                                 {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session hidden']) }}

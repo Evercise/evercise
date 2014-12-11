@@ -121,7 +121,7 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('sessions/store', ['as' => 'sessions.store', 'uses' => 'ajax\SessionsController@store']);
     Route::post('sessions/remove', ['as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy']);
 
-    Route::post('getmembers', ['as' => 'session.get.members', 'uses' => 'ajax\SessionsController@getMembers']);
+    Route::post('sessions/getmembers', ['as' => 'session.get.members', 'uses' => 'ajax\SessionsController@getMembers']);
 
 
     Route::post('/sessions/getparticipants',
