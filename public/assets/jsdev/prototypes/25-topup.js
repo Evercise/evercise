@@ -9,7 +9,7 @@ topUp.prototype = {
     constructor: topUp,
     init: function(){
         $('#stripe-button').prop('disabled', true);
-        $('#fb-pay').prop('disabled', true);
+        $('#fb-pay').addClass('disabled');
         this.addListeners();
     },
     addListeners : function(){
@@ -41,7 +41,8 @@ topUp.prototype = {
     },
     amountChanged: function(){
         $('#stripe-button').prop('disabled', true)
-        $('#fb-pay').prop('disabled', true)
+
+        $('#fb-pay').addClass('disabled');
         if( this.amount > 0 ){
             var oldValue = this.amount;
             var self = this;
@@ -85,7 +86,7 @@ topUp.prototype = {
 
             success: function (data) {
                 $('#stripe-button').prop('disabled', false);
-                $('#fb-pay').prop('disabled', false);
+                $('#fb-pay').removeClass('disabled');
                 self.payAmount = data.amount;
             },
 
