@@ -12,7 +12,7 @@
                @endforeach
           @else
             <div class="col-sm-12 text-center mb40">
-                <strong>Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no attended classes blah blah blah!</strong>
+                <strong>Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no attended classes.</strong>
             </div>
 
           @endif
