@@ -22,10 +22,14 @@ class PdfController extends \BaseController
 
     public function getPdf($session_id)
     {
+
         $evercisesession = Evercisesession::find($session_id);
+        if(empty($evercisesession)) return null;
+
         $evercisegroup = Evercisegroup::find($evercisesession->evercisegroup_id);
 
         $sessionmembers = $evercisesession->getSessionmembers();
+        if(empty($sessionmembers)) return null;
 
         $timestamp = date("d-m-Y");
 
