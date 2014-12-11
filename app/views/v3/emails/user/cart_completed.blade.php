@@ -37,7 +37,7 @@
             ?>
             <tr  align="left">
                 <td colspan="2">
-                    {{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ] ) }}
+                    {{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) , ['class' => 'blue-text']] ) }}
                 </td>
                 <td  colspan="2">
                     <p>{{ $date->toDayDateTimeString() }}</p>
@@ -75,7 +75,7 @@
             @endforeach
         @endif
         <tr>
-            <td >
+            <td colspan="7" >
                 <strong>Sub-total <span class="blue-text">{{ $cart['total']['subtotal'] }}</span></strong>
                 @if($cart['total']['package_deduct'] > 0)
                     <strong>Package deduct: <span class="blue-text"> £{{ $cart['total']['package_deduct']  }}</span></strong>
@@ -96,9 +96,12 @@
             </td>
         </tr>
         @if($cart['total']['final_cost'] > 0)
-            <tr>
+        <tr>
+            <td colspan="7" align="right">
                 <strong>Total <span class="blue-text">&pound;{{$cart['total']['final_cost']}}</span></strong>
-            </tr>
+            </td>
+
+        </tr>
 
 
         @endif
