@@ -577,7 +577,7 @@ class Mail
             'evercisegroup' => $evercisegroup,
             'transactionId' => $transactionId,
             'link_url'      => $this->url->to('/'),
-            'image'         => 'http://evertest.evercise.com/assets/img/email/default_email.jpg',
+            'image'         => image('assets/img/email/user_default.jpg', 'someone has joined your classs'),
         ];
 
         $this->send($user->email, $params);
