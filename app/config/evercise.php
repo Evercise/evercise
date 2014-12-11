@@ -29,7 +29,7 @@ for ($pounds = 0; $pounds < 100; $pounds++) {
 return [
 
     'transaction_types' => [
-        'wallettoppup', 'cartcompleted', 'topupcompleted'
+        'wallettoppup', 'cartcompleted', 'topupcompleted', 'milestonecompleted'
     ],
     'commission' => 10, //Default commission
     'upload_dir' => 'files/',
