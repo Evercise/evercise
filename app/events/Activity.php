@@ -464,7 +464,7 @@ class Activity
             'image'       => 'classreviewed.png',
         ]);
 
-        $this->mail->user($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId);
+        //$this->mail->user($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId);
 
     }
 

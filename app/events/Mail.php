@@ -107,7 +107,7 @@ class Mail
     public function userCartCompleted($user, $cart, $transaction)
     {
         $params = [
-            'subject'     => 'CONFIRMATION OF BOOKING',
+            'subject'     => 'Confirmation of booking',
             'view'        => 'v3.emails.user.cart_completed',
             'user'        => $user,
             'cart'        => $cart,
@@ -577,14 +577,14 @@ class Mail
             'evercisegroup' => $evercisegroup,
             'transactionId' => $transactionId,
             'link_url'      => $this->url->to('/'),
-            'image'         => 'http://evertest.evercise.com/assets/img/email/default_email.jpg',
+            'image'         => 'http://evertest.evercise.com/assets/img/email/user_default.jpg',
         ];
 
         $this->send($user->email, $params);
 
     }
 
-    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId)
+    public function userReviewedClass($user, $trainer, $session, $evercisegroup, $transactionId)
     {
 
         $params = [
