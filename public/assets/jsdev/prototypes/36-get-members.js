@@ -11,7 +11,8 @@ GetMembers.prototype = {
     submit: function(e){
         e.preventDefault();
         this.form = $(e.target)
-        this.form.find('input[type="submit"]').replaceWith('<a  href="#session-members" class="icon icon-people mr15 hover" data-toggle="modal" data-target="#session-members"></a>')
+        var id = this.form.find('input[name="session_id"]').val()
+        this.form.find('input[type="submit"]').replaceWith('<a  href="#session-members-'+id+'" class="icon icon-people mr15 hover" data-toggle="modal" data-target="#session-members-'+id+'"></a>')
         this.ajax();
     },
     ajax: function(){
@@ -22,12 +23,12 @@ GetMembers.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find("input[type='submit']").prop('disabled', true);
+                self.form.find(".icon-people").addClass('disabled');
             },
 
             success: function (data) {
-                self.form.after(data.view)
-                $('#session-members').modal('show');
+                self.form.append(data.view)
+                self.form.find('.modal').modal('show');
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -35,7 +36,7 @@ GetMembers.prototype = {
             },
 
             complete: function () {
-                self.form.find("input[type='submit']").prop('disabled', false)
+                self.form.find(".icon-people").removeClass('disabled');
             }
         });
     }

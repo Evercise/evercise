@@ -1,4 +1,4 @@
-<div class="modal fade" id="session-members" data-backdrop="static">
+<div class="modal fade" id="session-members-{{$evercisesession->id}}" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header text-center">
