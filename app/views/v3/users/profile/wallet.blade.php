@@ -46,7 +46,7 @@
                       <li id="topup-option" class="list-group-item">
                         <div class="row">
                             <div class="col-sm-5">
-                                <button id="fb-pay" class="btn btn-info btn-block">Pay with paypal</button>
+                                <button id="fb-pay" data-href="{{ route('payment.request.paypal.topup') }}" class="btn btn-info btn-block">Pay with paypal</button>
                             </div>
                             <div class="col-sm-2 text-center mt5">
                                 Or

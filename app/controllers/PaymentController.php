@@ -116,8 +116,6 @@ class PaymentController extends BaseController
                     echo $response->getMessage();
                 }
             } catch (Exception $e) {
-                d($e);
-
                 return Redirect::route('payment.error');
             }
 
@@ -179,6 +177,7 @@ class PaymentController extends BaseController
 
         } else {
             Log::info($response->getMessage());
+
             return Redirect::route('payment.error')->with('error', $response->getMessage());
         }
     }
@@ -187,7 +186,7 @@ class PaymentController extends BaseController
     {
         $coupon = Session::get('coupon', FALSE);
         $cart = EverciseCart::getCart($coupon);
-        $token = 'w_'.Functions::randomPassword(8);
+        $token = 'w_' . Functions::randomPassword(8);
         $transactionId = $token;
 
         $wallet = $this->user->getWallet();
@@ -219,6 +218,110 @@ class PaymentController extends BaseController
 
     public function paymentError()
     {
+
+
+    }
+
+
+    public function requestPaypalPaymentTopUp()
+    {
+
+        $cartRowId = EverciseCart::instance('topup')->search(['id' => 'TOPUP'])[0];
+        $cartRow = EverciseCart::instance('topup')->get($cartRowId);
+
+        $amount = $cartRow['price'];
+
+        if ($amount > 0) {
+            try {
+
+                $gateway = Omnipay::create('PayPal_Express');
+                $gateway->setUsername(getenv('PAYPAL_USER'));
+                $gateway->setPassword(getenv('PAYPAL_PASS'));
+                $gateway->setSignature(getenv('PAYPAL_SIGNATURE'));
+                $gateway->setTestMode(getenv('PAYPAL_TESTMODE'));
+
+
+                $response = $gateway->purchase(
+                    [
+                        'cancelUrl' => URL::route('payment.cancelled'),
+                        'returnUrl' => URL::route('payment.process.paypal.topup'),
+                        'amount'    => number_format($amount, 2),
+                        'currency'  => 'GBP'
+                    ]
+                )->send();
+
+                //FOR FUCKS SAKE!!! ->setItems($products)
+
+                if ($response->isRedirect()) {
+                    // redirect to offsite payment gateway
+                    $response->redirect();
+                } else {
+                    // payment failed: display message to customer
+                    echo $response->getMessage();
+                }
+            } catch (Exception $e) {
+                return Redirect::route('payment.error');
+            }
+
+        }
+    }
+
+
+    public function processPaypalPaymentTopUp()
+    {
+        $cartRowId = EverciseCart::instance('topup')->search(['id' => 'TOPUP'])[0];
+        $cartRow = EverciseCart::instance('topup')->get($cartRowId);
+
+        $amount = $cartRow['price'];
+
+        $gateway = Omnipay::create('PayPal_Express');
+        $gateway->setUsername(getenv('PAYPAL_USER'));
+        $gateway->setPassword(getenv('PAYPAL_PASS'));
+        $gateway->setSignature(getenv('PAYPAL_SIGNATURE'));
+        $gateway->setTestMode(getenv('PAYPAL_TESTMODE'));
+        try {
+            $response = $gateway->completePurchase(
+                [
+                    'amount'      => number_format($amount, 2),
+                    'currency'    => 'GBP',
+                    'Description' => 'Wallet TopUp'
+                ]
+            )->send();
+        } catch (Exception $e) {
+
+            Log::error($e->getMessage());
+
+            return Redirect::route('payment.error');
+        }
+        //return var_dump($response);
+
+        if ($response->isSuccessful()) {
+
+            $data = $response->getData(); // this is the raw response object
+
+
+            $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
+
+
+            $this->user->wallet->deposit($amount, 'Top up with Paypal', $this->user, 0, $data['TOKEN'], $transactionId,
+                'paypal', 0);
+            EverciseCart::clearTopup();
+
+
+            $data = [
+                'amount'        => $amount,
+                'token'         => $data['TOKEN'],
+                'transactionId' => $transactionId,
+            ];
+
+            return Redirect::to('topup_confirmation')
+                ->with('topup_details', $data);
+
+        } else {
+            Log::info($response->getMessage());
+
+            return Redirect::route('payment.error')->with('error', $response->getMessage());
+        }
 
 
     }
@@ -261,7 +364,8 @@ class PaymentController extends BaseController
         }
 
         $transactionId = $charge['id'];
-        $this->user->wallet->deposit($amount, 'top up with Stripe', $this->user, 0, $token, $transactionId, 'stripe', 0);
+        $this->user->wallet->deposit($amount, 'top up with Stripe', $this->user, 0, $token, $transactionId, 'stripe',
+            0);
         EverciseCart::clearTopup();
 
 
@@ -332,7 +436,6 @@ class PaymentController extends BaseController
                 $check = UserPackages::check($evercisesession, $this->user);
 
 
-
                 $packageClass = UserPackageClasses::create([
                     'user_id'            => $this->user->id,
                     'evercisesession_id' => $session['id'],
@@ -386,9 +489,9 @@ class PaymentController extends BaseController
 
             $trainer = $evercisegroup->user()->first();
 
-           /**
-            * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
-            */
+            /**
+             * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
+             */
 
             event('session.joined', [$this->user, $trainer, $evercisesession, $evercisegroup, $transaction->id]);
 
@@ -397,13 +500,13 @@ class PaymentController extends BaseController
         /**
          * We should do something like this soon!!
          * Group all Trainer sessions that a single user has joined and send him a email
+         *
+         * foreach($trainer_notify as $trainer_id => $params) {
+         * event('trainer.session.joined', [$params]);
+         * }
 
-        foreach($trainer_notify as $trainer_id => $params) {
-            event('trainer.session.joined', [$params]);
-        }
-
-       */
-//$token, $transactionId, $paymentMethod, $cart = [], $coupon = 0, $payer_id = 0
+         */
+        //$token, $transactionId, $paymentMethod, $cart = [], $coupon = 0, $payer_id = 0
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
         EverciseCart::clearCart();
@@ -412,6 +515,7 @@ class PaymentController extends BaseController
         Session::forget('coupon');
 
         /* Empty cart */
+
         //EverciseCart::clearCart();
 
         return TRUE;
@@ -422,9 +526,9 @@ class PaymentController extends BaseController
         $res = Session::get('res');
         if ($res) {
             return View::make('v3.cart.confirmation', $res);
-        }
-        else
+        } else {
             return Redirect::route('home');
+        }
     }
 
     public function topupConfirmation()
@@ -451,9 +555,10 @@ class PaymentController extends BaseController
 
         foreach ($cart['sessions_grouped'] as $id => $session) {
             $class = Evercisegroup::find($session['evercisegroup_id']);
-            $products[] = ['name'     => $class->name,
-                           'quantity' => $session['qty'],
-                           'price'    => round($session['price'], 2)
+            $products[] = [
+                'name'     => $class->name,
+                'quantity' => $session['qty'],
+                'price'    => round($session['price'], 2)
             ];
         }
 

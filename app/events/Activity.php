@@ -197,7 +197,6 @@ class Activity
     }
 
 
-
     /**
      * @param $user
      */
@@ -214,7 +213,6 @@ class Activity
             'image'       => 'assets/img/activity/Activity_Joined_Evercise.png',
         ]);
     }
-
 
 
     /**
@@ -516,7 +514,7 @@ class Activity
             'title'       => $title,
             'link'        => 'transaction/' . $transaction->id,
             'link_title'  => 'View transaction',
-            'image'       => 'cartcompleted.png',
+            'image'       => 'assets/img/activity/Activity_Made_Purchase.png',
             'type'        => 'cartcompleted',
             'user_id'     => $user->id,
             'type_id'     => $transaction->id
@@ -582,5 +580,19 @@ class Activity
         ]);
     }
 
+
+    public function milestoneCompleted($user, $type, $title, $description)
+    {
+        $this->activities->create([
+            'title'       => $title,
+            'description' => $description,
+            'link'        => FALSE,
+            'link_title'  => FALSE,
+            'type'        => 'milestonecompleted',
+            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
+            'user_id'     => $user->id,
+            'type_id'     => $user->id
+        ]);
+    }
 
 }

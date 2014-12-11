@@ -38,38 +38,11 @@ Route::get('/ig', [
         function () {
 
 
-            $user = Sentry::findUserById(151);
+            $user = Sentry::findUserById(getenv('DEV_ID') ?: 323);
             event('user.forgot.password', [$user]);
 
             die('done');
 
-            /**
-             *
-             * ['activity.class.payed' => 'Activity@payedClass'],  // $class, $user √
-             * ['activity.class.canceled' => 'Activity@canceledClass'],  // $class, $user
-             * ['activity.class.create' => 'Activity@createdClass'],  // $class, $user
-             * ['activity.class.update' => 'Activity@updatedClass'],  // $class, $user
-             * ['activity.class.delete' => 'Activity@deletedClass'],  // $class, $user
-             * ['activity.venue.create' => 'Activity@createdVenue'],  // $venue, $user
-             * ['activity.venue.update' => 'Activity@updatedVenue'],  // $venue, $user
-             * ['activity.venue.delete' => 'Activity@deletedVenue'],  // $venue, $user
-             *
-             * ['activity.session.create' => 'Activity@createdSessions'],  // $class, $user
-             * ['activity.session.update' => 'Activity@updatedSessions'],  // $class, $user
-             * ['activity.session.delete' => 'Activity@deletedSessions'],  // $class, $user
-             *
-             * ['activity.wallet.topup' => 'Activity@walletToppup'],  // $user, $amount
-             * ['activity.wallet.withdraw' => 'Activity@walletWithdraw'],  // $user, $amount
-             * ['activity.user.coupon' => 'Activity@usedCoupon'],  // $coupon, $user
-             *
-             * ['activity.user.editprofile' => 'Activity@userEditProfile'],  // $user
-             * ['activity.user.facebook' => 'Activity@linkFacebook'],  // $user
-             * ['activity.user.twitter' => 'Activity@linkTwitter'],  // $user
-             * ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
-             * ['activity.user.package.used' => 'Activity@packageUsed'],  //   $user, $userpackage, $package,  $session   √
-             * ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction  √
-             * ['activity.user.reviewed.class' => 'Activity@usedReviewedClass'],  // $user, $class
-             */
             event('class.created', [$class, $user]);
 
 
@@ -147,6 +120,9 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::put('/sessions/update', ['as' => 'sessions.update', 'uses' => 'ajax\SessionsController@update']);
     Route::post('sessions/store', ['as' => 'sessions.store', 'uses' => 'ajax\SessionsController@store']);
     Route::post('sessions/remove', ['as' => 'sessions.remove', 'uses' => 'ajax\SessionsController@destroy']);
+
+    Route::post('getmembers', ['as' => 'session.get.members', 'uses' => 'ajax\SessionsController@getMembers']);
+
 
     Route::post('/sessions/getparticipants',
         ['as' => 'sessions.get.participants', 'uses' => 'ajax\SessionsController@getParticipants']);
@@ -383,6 +359,12 @@ Route::group(['prefix' => 'cart'], function () {
     Route::get('payment/request/paypal',
         ['as' => 'payment.request.paypal', 'uses' => 'PaymentController@requestPaypalPaymentSessions']);
 
+    Route::get('payment/proccess/paypal/topup',
+        ['as' => 'payment.process.paypal.topup', 'uses' => 'PaymentController@processPaypalPaymentTopUp']);
+
+    Route::get('payment/request/paypal/topup',
+        ['as' => 'payment.request.paypal.topup', 'uses' => 'PaymentController@requestPaypalPaymentTopUp']);
+
     Route::get('payment/cancelled',
         ['as' => 'payment.cancelled', 'uses' => 'PaymentController@cancelled']);
 
@@ -583,7 +565,7 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
 Route::get('/iggy_login', function () {
     Sentry::logout();
-    $user = Sentry::findUserById(323);
+    $user = Sentry::findUserById(getenv('DEV_ID') ?: 323);
     Sentry::login($user);
 
     return Redirect::route('admin.dashboard');

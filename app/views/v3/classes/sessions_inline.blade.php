@@ -93,8 +93,11 @@
                                     {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
                                 {{ Form::close() }}
 
+                                    @if($session->sessionmembers()->count() > 0)
                                     <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
                                     <span class="icon icon-people mr15 hover"></span>
+                                    @endif
+
                                 {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session hidden']) }}
                                     {{ Form::hidden('id', $session->id) }}
                                     {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' , 'form' => 'update-sessions-'.$session->id]) }}
