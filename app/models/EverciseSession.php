@@ -72,7 +72,7 @@ class Evercisesession extends \Eloquent
      */
     public function users()
     {
-        return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id');
+        return $this->belongsToMany('User', 'sessionmembers', 'evercisesession_id', 'user_id')->withPivot('id', 'transaction_id');
     }
 
     /**

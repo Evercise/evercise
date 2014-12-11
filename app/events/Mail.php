@@ -244,8 +244,8 @@ class Mail
      */
     public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
     {
-        foreach ($userList as $name => $email) {
-
+        foreach ($userList as $name => $details) {
+            $email = $details['email'];
             $params = [
                 'subject'      => 'Evercise class reminder',
                 'title'        => 'EVERCISE CLASS REMINDER',
@@ -258,7 +258,8 @@ class Mail
                 'dateTime'     => $dateTime,
                 'trainerName'  => $trainerName,
                 'trainerEmail' => $trainerEmail,
-                'classId'      => $classId
+                'classId'      => $classId,
+                'transactionId'=> $details['transactionId']
             ];
 
             $this->send($email, $params);
