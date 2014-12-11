@@ -6,7 +6,7 @@
 
 <p>Dear {{ $user->display_name }}</p>
 <p>Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
-<strong><p>Transaction ID: {{$transaction->transaction}}</p></strong>
+
 @stop
 @section('extra')
 <table class="table" width="100%" height="20" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
@@ -50,7 +50,27 @@
                 </td>
             </tr>
         @endforeach
-       
+        @if(isset($cart['packages']))
+            @foreach($cart['packages'] as $row)
+                <tr  align="left">
+                    <td colspan="2">
+                        <p>{{ $row['name'] }}</p>
+                    </td>
+                    <td  colspan="2">
+                        <p>{{ $row['classes'] }} classes</p>
+                    </td>
+                    <td>
+
+                    </td>
+                    <td>
+                        <p>1</p>
+                    </td>
+                    <td>
+                        <p>&pound;{{ $row['price'] }}</p>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
         <tr>
             <td colspan="7" >
                 <strong>Sub-total <span class="blue-text">{{ $cart['total']['subtotal'] }}</span></strong>
