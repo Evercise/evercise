@@ -82,6 +82,10 @@
                                             <p>Trainers are the heart and soul of Evercise. We know there’s a huge variety of talented trainers and inspirational fitness programs out there and we want everyone to discover just how many unique, fun and fabulous fitness opportunities are on their doorstep. Especially yours!</p>
                                             <p>All you need to do now is set up your profile and start enjoying the benefits of Evercise.</p>
                                         </td>
+<?php $group = Evercisegroup::find('20')->name ?>
+<a href="{{ Share::load(Request::url() , $group)->facebook()  }}" target="_blank"><span class="icon icon-fb-white mr20 hover"></span> </a>
+<a href="{{ Share::load(Request::url() , $group)->twitter()  }}" target="_blank"><span class="icon icon-twitter-white mr20 hover"></span> </a>
+<a href="{{ Share::load(Request::url() , $group)->gplus()  }}" target="_blank"><span class="icon icon-google-white hover"></span> </a>
                                     </tr>
                                 </table>
 
