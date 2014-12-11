@@ -7319,6 +7319,9 @@ a.bg-light-grey:hover {
   z-index: 10;
   transition: 0;
 }
+.sticky-wrapper {
+  z-index: 1;
+}
 .nav-pills li {
   text-align: center;
 }
