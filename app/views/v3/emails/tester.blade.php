@@ -1,163 +1,207 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <style>
-            h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 26px;  line-height: 30px; font-weight: 500; color:#768690; margin: 0}
-            h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
-        	p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
-        	b { font-weight: bold; color:#768690; }
-        	.container{ padding: 30px}
-        	.pink-text{ color: #ff1b7e}
-        	.white-text{ color: #ffffff}
-        	.text-right{ text-align: right}
-        	.text-center{ text-align: center}
-        	.image-left{ float: left; margin-right: 25px}
-        	.image-right{ float: right; margin-left: 25px}
-        	.footer { font-size: 12px; text-align: left;}
-            .mb30{ width: 100%; margin-bottom: 30px; float: left;}
-            .btn{ display: inline-block; padding: 11px 18px;  border-radius: 4px; text-decoration: none; color: #ffffff ; text-transform: uppercase; font-family: helvetica, arial, sans-serif; font-weight:600;  }
-            .btn-blue{ background: #5ecde8}
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><style>h1 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 26px;  line-height: 30px; font-weight: 500; color:#768690; margin: 0}
+h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
+p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
+b { font-weight: bold; color:#768690; }
+table{ max-width: 640px; width: 100%; table-layout: fixed}
+th{ font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
+.container{ }
+.pink-text{ color: #ff1b7e}
+.blue-text{ color: #5ECDE8}
+.white-text{ color: #ffffff}
+.text-right{ text-align: right}
+.text-center{ text-align: center}
+img{ width: 100%}
+.image-left{ float: left; margin-right: 25px}
+.image-right{ float: right; margin-left: 25px}
+.footer { font-size: 12px; text-align: left;}
+.mb30{ width: 100%; margin-bottom: 30px; float: left;}
+.btn{line-height: 5px; border-radius:4px;color:#ffffff;display:inline-block;font-family:helvetica, arial, sans-serif;font-size:14px;font-weight:bold;text-align:center;text-decoration:none;-webkit-text-size-adjust:none;  }
+.btn-blue{ background: #5ecde8}
 
-        	@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
-                h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
-                p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
-                b { font-weight: bold; color:#768690; }
-                img { max-width: 640px; width: 100%}
-                .footer { font-size: 13px; text-align: left;}
-        	}
+@media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
+    table{ width: 100%}
+    h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }
+    p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
+    b { font-weight: bold; color:#768690; }
+    img { max-width: 640px; width: 100%}
+    .footer { font-size: 13px; text-align: left;}
+    .sm-hidden{ display: none}
+}
 
-        	@media screen and (max-device-width: 375px) and (max-device-height: 667px) {
-                h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: normal; color:#768690; }
-                p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
-                b { font-weight: bold; color:#768690; }
-                img { max-width: 640px; width: 100%}
-                .footer { font-size: 13px; text-align: left;}
-        	}
-
-        	</style>
-    </head>
-    <body width="100%" height="auto" bgcolor="#bfbfbf" style="margin:0; padding:0;">
+@media screen and (max-device-width: 375px) and (max-device-height: 667px) {
+    table{ width: 100%}
+    h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: normal; color:#768690; }
+    p { font-family: helvetica, arial, sans-serif; font-size: 26px;  line-height: 38px; font-weight: normal; color:#768690; }
+    b { font-weight: bold; color:#768690; }
+    img { max-width: 640px; width: 100%}
+    .footer { font-size: 13px; text-align: left;}
+    .sm-hidden{ display: none}
+}</style><style type="text/css"></style></head><body bgcolor="#bfbfbf">
     	<!-- Opening main -->
-    	<table width="640" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
-    		<tr>
-    			<td>
-                    <table width="640" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td>
+    	<table bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
+                    <table width="100%" height="auto" bgcolor="#FFFFFF" border="0" align="center" cellspacing="0" cellpadding="0" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
                                 <!-- Main image -->
-                                <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0">
-                                    <tr>
-                                        <td>
-                                            <a href="#">
-                                            {{ image('/assets/img/email/evercise-welcome.jpg') }}
+                                <table width="100%" height="auto" border="0" cellspacing="0" cellpadding="0" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
+                                            <a target="_blank" href="http://evertest.evercise.com/uk" title="Confirmation of booking">
+                                            files/u/59/9/thumb_tristan-allen-32.png
                                             </a>
                                         </td>
-                                    </tr>
-                                </table>
-                            </tr>
-                        </td>
-                    </table>
-
-                    <table width="640" height="auto" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center">
-                        <tr>
-                            <td>
+                                    </tr></tbody></table></td></tr></tbody></table><table width="100%" height="auto" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" align="center" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
                                 <!-- Messaging -->
-                                <table width="640" height="20" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
-                                    <tr>
-                                        <td>
+                                <table width="100%" height="20" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
                                         </td>
-                                    </tr>
-                                </table>
-                                <table width="640" height="auto" align="center" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+                                    </tr></tbody></table><table width="100%" height="auto" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td align="left">
 
-                                    <tr>
-                                        <td align="center">
-                                            <h1 class="pink-text">Welcome To Evercise</h1>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td align="center">
-                                            <p>Evercise is the exciting new <span class="pink-text">Pay As You Go</span> fitness community that’s flexible enough to fit in with your lifestyle and doesn&apos;t tie you down to an expensive gym membership.</p>
-                                            <p>The Evercise network gives you access to a huge array of fun and flexible fitness classes wherever you are and our simple three-step process means it’s quick and easy to <span class="pink-text">sign up</span> and get involved.</p>
+<p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Dear Igor_Matkovic</p>
+<p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
 
                                         </td>
-                                    </tr>
-                                </table>
+                                    </tr></tbody></table>
+                                    <strong>Transaction ID: w_oRRIqDdb</strong>
+                                    <table class="table" width="100%" height="20" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+                                        <tbody>
+                                            <tr align="left">
+                                                <th colspan="2">
+                                                    Name
+                                                </th>
+                                                <th colspan="2">
+                                                    Date
+                                                </th>
+                                                <th>
+                                                    Duration
+                                                </th>
+                                                <th>
+                                                    QTY
+                                                </th>
+                                            </tr>
+                                            <tr  align="left">
+                                                <td colspan="2">
+                                                    <a class="blue-text" target="_blank" href="http://evertest.evercise.com/classes/q9rotaNauD">Street Countdown</a>
+                                                </td>
+                                                <td  colspan="2">
+                                                    <p>Sat, Feb 14, 2015 6:30 AM</p>
+                                                </td>
+                                                <td>
+                                                    <p>90 mins</p>
+                                                </td>
+                                                <td>
+                                                    <p>2</p>
+                                                </td>
+                                            </tr>
+                                            <tr  align="left">
+                                                <td colspan="2">
+                                                    <a class="blue-text" target="_blank" href="http://evertest.evercise.com/classes/q9rotaNauD">Street Countdown</a>
+                                                </td>
+                                                <td  colspan="2">
+                                                    <p>Sat, Feb 14, 2015 6:30 AM</p>
+                                                </td>
+                                                <td>
+                                                    <p>90 mins</p>
+                                                </td>
+                                                <td>
+                                                    <p>2</p>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
 
 
-                                <table width="640" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ff1b7e">
-                                    <tr>
-                                        <td>
-                                            <div class="container">
-                                                <div class="mb30">
-                                                    <div class="image-left">
-                                                        {{ image('/img/home/wie.png') }}
-                                                    </div>
-                                                    <br>
-                                                    <h3 class="white-text">Search</h3>
-                                                    <p class="white-text">Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
-                                                </div>
-                                                <div class="mb30 text-right">
-                                                    <div class="image-right">
-                                                        {{ image('/img/home/wie.png') }}
-                                                    </div>
-                                                    <br>
-                                                    <h3 class="white-text">Select</h3>
-                                                    <p class="white-text">You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
-                                                </div>
-                                                <div class="mb30">
-                                                    <div class="image-left">
-                                                        {{ image('/img/home/wie.png') }}
-                                                    </div>
-                                                    <br>
-                                                    <h3 class="white-text">Sign up</h3>
-                                                    <p class="white-text">When you’ve found a class you like the look of our simple Pay As You Go booking system ensures that joining your class is as quick and easy as ordering a pizza! </p>
-                                                </div>
-                                                <br>
-                                                <br>
-                                                <div class="text-center mb30">
-                                                    <a href="#" class="btn btn-blue">Get Started</a>
-                                                </div>
+                                    <!--
+                                    <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Transaction ID: w_oRRIqDdb</p>
 
+
+                                                                    <li class="list-group-item bg-light-grey">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <img src="http://evertest.evercise.com/files/u/59/9/thumb_tristan-allen-32.png" class="img-responsive" alt="Street Countdown" style="width: 100%;"></div>
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col-sm-12 mb5">
+                                            <h3 style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0; text-transform: uppercase;"><a target="_blank" href="http://evertest.evercise.com/classes/q9rotaNauD">Street Countdown</a></h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <div class="pull-left">
+                                                <span class="icon icon-clock"></span>Sat, Feb 14, 2015 6:30 AM
                                             </div>
 
-                                        </td>
-                                    </tr>
-                                </table>
+                                            <div class="pull-left ml20"><span class="icon icon-watch"></span> 90 mins</div>
+                                            <div class="pull-left ml20"><span class="icon icon-ticket"></span> x 1</div>
+                                        </div>
+                                        <div class="col-sm-3 text-right" style="text-align: right;">
+                                            <strong class="text-primary"><strike>&amp;pound4.00</strike> &amp;pound0</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row mt20">
+                                        <div class="col-sm-12">
+                                            <span>
+                                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fevertest.evercise.com%2Fclass%2F838&amp;title=838"><span class="icon icon-fb mr20 hover"></span> </a>
+                                                <a target="_blank" href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fevertest.evercise.com%2Fclass%2F838&amp;text=838"><span class="icon icon-twitter mr20 hover"></span> </a>
+                                                <a target="_blank" href="https://plus.google.com/share?url=http%3A%2F%2Fevertest.evercise.com%2Fclass%2F838"><span class="icon icon-google hover"></span> </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                                                                                                        <li class="list-group-item bg-light-grey">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <strong>Sub-total <span class="text-primary ml15">4</span></strong>
+                            </div>
+                            <div class="col-sm-6 text-right" style="text-align: right;">
+                                                                    <strong>Package deduct: <span class="text-primary"> £4</span></strong>
+                                    <br></div>
+                        </div>
+                    </li>
+                                        <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-sm-3 col-sm-offset-6">
+                                <a target="_blank" href="http://evertest.evercise.com" class="btn btn-default btn-block" style="-webkit-text-size-adjust: none; border-radius: 4px; color: #ffffff; display: inline-block; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 5px; text-align: center; text-decoration: none;">Print</a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a target="_blank" href="http://evertest.evercise.com/profile/Igor_Matkovic/wallet" class="btn btn-primary btn-block" style="-webkit-text-size-adjust: none; border-radius: 4px; color: #ffffff; display: inline-block; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 5px; text-align: center; text-decoration: none;">View My Profile</a>
+                            </div>
+                        </div>
+                    </li>
+
+<p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Remember to bring a water bottle, a towel or two and appropriate clothing.</p>
+<p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">If you have any questions, feel free to contact the instructor here.</p>
+<p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Fitness is even more fun with friends! Click on the link below to share this class.</p>
+
+<a target="_blank" href="http://evertest.evercise.com/profile/Igor_Matkovic" class="btn btn-blue" style="-webkit-text-size-adjust: none; border-radius: 4px; color: #ffffff; display: inline-block; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 5px; text-align: center; text-decoration: none; background: #5ecde8;"><img src="http://evertest.evercise.com/assets/img/email/btns/btn_get_started.png" alt="Get Started" style="width: 100%;"></a>
+
+
 
                                 <!-- Footer -->
-                                <table width="640" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-                                    <tr>
-                                        <td width="30" height="85"></td>
-                                        <td width="330" height="50">
-                                            <p class="footer">&copy; Copyright 2014 Evercise</p>
-                                            <a style="color:#50c3e2" href="%%unsuscride%%">Unsubscribe</a>
+                                <table width="100%" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td class="sm-hidden" width="30" height="85"></td>
+
+                                        <td class="sm-hidden" height="50">
+
+                                            <p class="footer" style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 12px; font-weight: normal; line-height: 26px; text-align: left;">© Copyright 2014 Evercise</p>
+
                                         </td>
-                                        <td width="100" height="40">
-                                           <p>Follow us on</p>
+                                        <td width="100" height="40" align="center">
+                                            <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Follow us on</p>
                                         </td>
-                                        <td width="50" height="40" align="center">
-                                            <a href="http://facebook.com/evercise"><img src="http://evercise.com/img/email-campaign/Facebook.png" width="40" height="40" border="0" alt="Facebook"></a>
+                                        <td width="40" height="40" align="center">
+                                            <a target="_blank" href="http://facebook.com/evercise"><img src="http://evercise.com/img/email-campaign/Facebook.png" width="40" height="40" border="0" alt="Facebook" style="width: 100%;"></a>
                                         </td>
-                                        <td width="50" height="40" align="center">
-                                            <a href="http://twitter.com/evercise"><img src="http://evercise.com/img/email-campaign/Twitter.png" width="40" height="40" border="0" alt="Twitter"></a>
+                                        <td width="40" height="40" align="center">
+                                            <a target="_blank" href="http://twitter.com/evercise"><img src="http://evercise.com/img/email-campaign/Twitter.png" width="40" height="40" border="0" alt="Twitter" style="width: 100%;"></a>
                                         </td>
-                                        <td width="50" height="40" align="center">
-                                            <a href="http://instagram.com/evercisefitness"><img src="http://evercise.com/img/email-campaign/Instagram.png" width="40" height="40" border="0" alt="Instagram"></a>
+                                        <td width="40" height="40" align="center">
+                                            <a target="_blank" href="http://instagram.com/evercisefitness"><img src="http://evercise.com/img/email-campaign/Instagram.png" width="40" height="40" border="0" alt="Instagram" style="width: 100%;"></a>
                                         </td>
 
-                                        <td width="30" height="85"></td>
-                                    </tr>
-                                </table>
+                                        <td class="sm-hidden" width="30" height="85"></td>
+                                    </tr></tbody></table><table width="100%" height="20" cellspacing="0" cellpadding="30" bgcolor="#ffffff" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
+                                            <a target="_blank" style="color:#50c3e2" href="%%unsubscribe%%">Unsubscribe</a>
+                                        </td>
+                                    </tr></tbody></table><!-- Closing main --></td>
+                        </tr></tbody></table></td>
+    		</tr></tbody></table>
 
-                            <!-- Closing main -->
-                            </td>
-                        </tr>
-                    </table>
-    			</td>
-    		</tr>
-    	</table>
-    </body>
-</html>
-
+</body></html>

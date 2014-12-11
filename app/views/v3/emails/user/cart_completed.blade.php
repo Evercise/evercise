@@ -6,11 +6,78 @@
 
 <p>Dear {{ $user->display_name }}</p>
 <p>Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
-
+<strong><p>Transaction ID: {{$transaction->transaction}}</p></strong>
 @stop
 @section('extra')
+<table class="table" width="100%" height="20" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
+    <tbody>
+        <tr align="left">
+            <th colspan="2">
+                Name
+            </th>
+            <th colspan="2">
+                Date
+            </th>
+            <th>
+                Duration
+            </th>
+            <th>
+                QTY
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+        @foreach($cart['sessions_grouped'] as $row)
+            <?php
+                $date = new \Carbon\Carbon($row['date_time']);
+                $eg =  Evercisegroup::select('image', 'user_id')->where( 'id', $row['evercisegroup_id'])->first();
+                $directory = User::find($eg->user_id)->directory;
+                $image = $directory .'/thumb_'.$eg->image;
+            ?>
+            <tr  align="left">
+                <td colspan="2">
+                    {{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ] ) }}
+                </td>
+                <td  colspan="2">
+                    <p>{{ $date->toDayDateTimeString() }}</p>
+                </td>
+                <td>
+                    <p>{{$row['duration']}} mins</p>
+                </td>
+                <td>
+                    <p>x {{$row['qty']}}</p>
+                </td>
+                <td>
+                    <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</p>
+                </td>
+            </tr>
+        @endforeach
+        @if(isset($cart['packages']))
+            @foreach($cart['packages'] as $row)
+                <tr  align="left">
+                    <td colspan="2">
+                        <p>{{ $row['name'] }}</p>
+                    </td>
+                    <td  colspan="2">
+                        <p>{{ $row['classes'] }} classes</p>
+                    </td>
+                    <td>
 
-<p>Transaction ID: {{$transaction->transaction}}</p>
+                    </td>
+                    <td>
+                        <p>1</p>
+                    </td>
+                    <td>
+                        <p>&pound;{{ $row['price'] }}</p>
+                    </td>
+                </tr>
+            @endforeach
+        @endif
+    </tbody>
+</table>
+
+
 
 
                     @foreach($cart['sessions_grouped'] as $row)
