@@ -588,7 +588,7 @@ class Activity
             'description' => $description,
             'link'        => FALSE,
             'link_title'  => FALSE,
-            'type'        => 'milestone' . $type,
+            'type'        => 'milestonecompleted',
             'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
             'user_id'     => $user->id,
             'type_id'     => $user->id
