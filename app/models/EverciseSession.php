@@ -337,8 +337,7 @@ class Evercisesession extends \Eloquent
 
         $session = Evercisesession::find($sessionId);
         $evercisegroup = $session->evercisegroup()->first();
-        //$trainer = User::find($trainerId);
-        $trainer = \Trainer::find($trainerId)->user()->first();
+        $trainer = User::find($trainerId);
         $user = Sentry::getUser();
 
         event('session.mail_trainer', [$trainer, $user, $evercisegroup, $session, $subject, $body]);
