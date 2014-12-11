@@ -22,8 +22,8 @@
 <p>Fitness is even more fun with friends! Click on the links below to share this class.</p>
 
 
-<a href="{{ Share::load(Request::url() , $group)->facebook()  }}" target="_blank"><span class="icon icon-fb-white mr20 hover"></span> </a>
-<a href="{{ Share::load(Request::url() , $group)->twitter()  }}" target="_blank"><span class="icon icon-twitter-white mr20 hover"></span> </a>
-<a href="{{ Share::load(Request::url() , $group)->gplus()  }}" target="_blank"><span class="icon icon-google-white hover"></span> </a>
+<a href="{{ Share::load(Request::url() , $group)->facebook()  }}" target="_blank"><span class="icon icon-fb-white mr20 hover">Facebook</span> </a>
+<a href="{{ Share::load(Request::url() , $group)->twitter()  }}" target="_blank"><span class="icon icon-twitter-white mr20 hover">Twitter</span> </a>
+<a href="{{ Share::load(Request::url() , $group)->gplus()  }}" target="_blank"><span class="icon icon-google-white hover"></span>Google Plus</a>
 
 @stop

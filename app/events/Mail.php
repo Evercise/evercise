@@ -484,8 +484,10 @@ class Mail
      * @param $trainerName
      * @param $trainerEmail
      * @param $classId
+     *
+     * Event: session.upcoming_session
      */
-    public function trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    public function trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId)
     {
         $params = [
             'subject'      => 'Class reminder & participant list',
@@ -496,7 +498,8 @@ class Mail
             'dateTime'     => $dateTime,
             'trainerName'  => $trainerName,
             'trainerEmail' => $trainerEmail,
-            'classId'      => $classId
+            'classId'      => $classId,
+            'sessionId'    => $sessionId,
         ];
 
         $this->send($trainerEmail, $params);
@@ -559,6 +562,8 @@ class Mail
      * @param $session
      * @param $evercisegroup
      * @param $transactionId
+     *
+     * Event: session.joined
      */
     public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId)
     {
