@@ -91,10 +91,22 @@
                             <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
                         </div>
                         <div class="col-sm-8 sm-text-center">
-                            {{ Form::open(['id' => 'add-to-cart', 'url' => route('cart.add'), 'method' => 'post', 'class' => '']) }}
-                                {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
-                                {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
-                            {{ Form::close() }}
+                            @if($futuresession->remainingTickets()  > 0)
+                                {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
+                                    <div class="btn-group pull-right">
+                                        {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
+
+                                          <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                            @for($i=1; $i<($session->remainingTickets()  + 1 ); $i++)
+                                            <option value="{{$i}}">{{$i}}</option>
+                                            @endfor
+                                          </select>
+                                    </div>
+                                {{ Form::close() }}
+                            @else
+                                <span class="text-danger">Class Full</span>
+                            @endif
                         </div>
                     </div>
                 </div>
