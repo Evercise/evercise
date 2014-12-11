@@ -87,10 +87,10 @@
                 </div>
                 <div class=" col-sm-5">
                     <div class="row">
-                        <div class="col-sm-4 sm-text-center">
+                        <div class="col-sm-3 sm-text-center">
                             <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
                         </div>
-                        <div class="col-sm-8 sm-text-center">
+                        <div class="col-sm-9 sm-text-center">
                             @if($session->remainingTickets()  > 0)
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
                                     <div class="btn-group pull-right">
