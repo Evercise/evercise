@@ -41,11 +41,11 @@
                             <span class="caret"></span>
                         </div>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="pages-user_profile.html">User Profile</a></li>
-                            <li><a href="login_page.html">Log Out</a></li>
+                            <li><a href="{{ URL::route('users.edit', ['id' => $user->display_name]) }}">User Profile</a></li>
+                            <li><a href="{{ URL::route('auth.logout') }}">Log Out</a></li>
                         </ul>
                     </div>
-                    <div class="search_section hidden-sm hidden-xs">
+                    <div class="search_section hidden-sm hidden-xs hide">
                         <input type="text" class="form-control input-sm">
                         <button class="btn btn-link btn-sm" type="button"><span class="icon_search"></span></button>
                     </div>

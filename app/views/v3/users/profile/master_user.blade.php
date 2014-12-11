@@ -14,12 +14,15 @@
                     <div class="col-sm-8 mt20">
                         <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
                     </div>
-                    <a href="/auth/logout">Log out</a>
+                    <a href="{{ URL::route('auth.logout') }}">Log out</a>
                 </div>
 
             </div>
             <div class="col-sm-6 text-right mt50">
                 {{ HTML::linkRoute('trainers.create', 'Become a trainer', null, ['class' => 'btn btn-info']) }}
+                @if($data['user']->hasAccess('admin'))
+                    {{ HTML::linkRoute('admin.dashboard', 'Admin', null, ['class' => 'btn btn-success']) }}
+                @endif
             </div>
         </div>
     </div>

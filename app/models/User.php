@@ -52,10 +52,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     protected $hidden = ['password'];
 
 
-
-
-
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -71,6 +67,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public function trainer()
     {
         return $this->hasOne('Trainer');
+    }
+
+    public function isAdmin()
+    {
+
     }
 
 
@@ -171,7 +172,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -230,17 +230,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     /**
      * @param $trainer_id
      * @return \Illuminate\Database\Eloquent\Model|null|static
@@ -250,6 +239,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $user = Static::whereHas('trainer', function ($query) use (&$trainer_id) {
             $query->where('id', $trainer_id);
         })->first();
+
         return $user;
     }
 
@@ -258,7 +248,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function validDatesUserDob()
     {
-// dates for validation
+        // dates for validation
         $dt = new DateTime();
         $before = $dt->sub(new DateInterval('P' . Config::get('values')['min_age'] . 'Y'));
         $dateBefore = $before->format('Y-m-d');
@@ -266,6 +256,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $dt = new DateTime();
         $after = $dt->sub(new DateInterval('P' . Config::get('values')['max_age'] . 'Y'));
         $dateAfter = $after->format('Y-m-d');
+
         return [$dateBefore, $dateAfter];
     }
 
@@ -284,14 +275,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             $inputs,
             [
                 'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:15|min:2',
+                'first_name'   => 'required|max:15|min:2',
+                'last_name'    => 'required|max:15|min:2',
                 //'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:6|max:32',
-                'phone' => 'numeric',
+                'email'        => 'required|email|unique:users',
+                'password'     => 'required|min:6|max:32',
+                'phone'        => 'numeric',
             ]
         );
+
         return $validator;
     }
 
@@ -302,13 +294,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function handleUserValidation($inputs, $validator)
     {
-// if fails add errors to results
+        // if fails add errors to results
         if ($validator->fails()) {
             $result =
                 [
-                    'callback' => 'error',
+                    'callback'          => 'error',
                     'validation_failed' => 1,
-                    'errors' => $validator->errors()->toArray()
+                    'errors'            => $validator->errors()->toArray()
                 ];
             // log errors
             Log::notice($validator->errors()->toArray());
@@ -317,9 +309,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             // is user has filled in the area code but no number fail validation
             $result =
                 [
-                    'callback' => 'error',
+                    'callback'          => 'error',
                     'validation_failed' => 1,
-                    'errors' => ['areacode' => 'Please select a country']
+                    'errors'            => ['areacode' => 'Please select a country']
                 ];
             Log::notice('Please select a country');
         } else {
@@ -328,6 +320,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
                 'validation_failed' => 0
             ];
         }
+
         return $result;
     }
 
@@ -343,12 +336,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             $inputs,
             [
                 'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:15|min:2',
-                'dob' => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'phone' => 'numeric',
-                'password' => 'confirmed|min:6|max:32',
+                'last_name'  => 'required|max:15|min:2',
+                'dob'        => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
+                'phone'      => 'numeric',
+                'password'   => 'confirmed|min:6|max:32',
             ]
         );
+
         return $validator;
     }
 
@@ -365,13 +359,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         $this->update(array_filter([
             'first_name' => $first_name,
-            'last_name' => $last_name,
-            'dob' => $dob,
-            'gender' => $gender,
-            'image' => $image,
-            'area_code' => $area_code,
-            'phone' => $phone,
-            'password' => $password,
+            'last_name'  => $last_name,
+            'dob'        => $dob,
+            'gender'     => $gender,
+            'image'      => $image,
+            'area_code'  => $area_code,
+            'phone'      => $phone,
+            'password'   => $password,
         ]));
     }
 
@@ -423,12 +417,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             // Use a single object of a class throughout the lifetime of an application.
             $application = Config::get('facebook');
             $permissions = 'publish_stream,email,user_birthday,read_stream';
-            if($redirect_url != null)
-            {
-                $url_app = Request::root() . '/login/fb/'.$redirect_url;
-            }
-            else
-            {
+            if ($redirect_url != NULL) {
+                $url_app = Request::root() . '/login/fb/' . $redirect_url;
+            } else {
                 $url_app = Request::root() . '/login/fb';
             }
 
@@ -462,10 +453,12 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $image = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=300&height=300';
         try {
             $img = file_get_contents($image);
+
             return self::createImage($user, $image);
         } catch (Exception $e) {
             // This exception will happen from localhost, as pulling the file from facebook will not work
             Log::error('no facebook image :' . $e);
+
             return self::createImage($user);
         }
     }
@@ -475,17 +468,16 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public static function facebookRedirectHandler($redirect = null, $user ,$message = null)
+    public static function facebookRedirectHandler($redirect = NULL, $user, $message = NULL)
     {
-        if ($redirect != null) {
+        if ($redirect != NULL) {
             if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
             {
                 $result = Redirect::route($redirect)->with(
                     'notification', $message
                 );
 
-            }
-            else // Used when logging in before hitting the checkout
+            } else // Used when logging in before hitting the checkout
             {
                 $result = Redirect::route($redirect);
 
@@ -550,12 +542,12 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function validUserSignup($inputs)
     {
-       /* date of birth not been used in v3
-       * list($dateBefore, $dateAfter) = self::validDatesUserDob();
-       */
+        /* date of birth not been used in v3
+        * list($dateBefore, $dateAfter) = self::validDatesUserDob();
+        */
 
 
-       $validator = self::validateUserSignup($inputs/*, $dateAfter, $dateBefore*/);
+        $validator = self::validateUserSignup($inputs/*, $dateAfter, $dateBefore*/);
 
         return self::handleUserValidation($inputs, $validator);
 
@@ -583,24 +575,24 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $last_name = $inputs['last_name'];
         $email = $inputs['email'];
         $password = $inputs['password'];
-        $area_code = isset($inputs['areacode'])? $inputs['areacode'] : '+44' ;
-        $phone = isset($inputs['phone']) ?  $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ?  $inputs['gender'] : null;
+        $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
+        $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
+        $gender = isset($inputs['gender']) ? $inputs['gender'] : NULL;
 
         $user = Sentry::register(
             [
                 'display_name' => $display_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'email' => $email,
-                'area_code' => $area_code,
-                'phone' => $phone,
-                'password' => $password,
-                'gender' => $gender,
-                'activated' => true,
-                'directory' => '',
-                'image' => '',
-                'categories' => ''
+                'first_name'   => $first_name,
+                'last_name'    => $last_name,
+                'email'        => $email,
+                'area_code'    => $area_code,
+                'phone'        => $phone,
+                'password'     => $password,
+                'gender'       => $gender,
+                'activated'    => TRUE,
+                'directory'    => '',
+                'image'        => '',
+                'categories'   => ''
             ]
         );
         self::addToUserGroup($user);
@@ -626,7 +618,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-
     public function sendForgotPasswordEmail($user, $reset_code)
     {
 
@@ -641,7 +632,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function subscribeMailchimpNewsletter($list_id, $email_address, $first_name, $last_name)
     {
         try {
-            MailchimpWrapper::lists()->subscribe($list_id, ['email' => $email_address], ['FNAME' => $first_name, 'LNAME' => $last_name]);
+            MailchimpWrapper::lists()->subscribe($list_id, ['email' => $email_address],
+                ['FNAME' => $first_name, 'LNAME' => $last_name]);
             Log::info('user added to mailchimp');
         } catch (Mailchimp_Error $e) {
             if ($e->getMessage()) {
@@ -679,10 +671,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function getName($userOrId)
     {
-        if (! is_a($userOrId, 'Eloquent') ) // parameter passed in is id
+        if (!is_a($userOrId, 'Eloquent')) // parameter passed in is id
+        {
             $user = static::select('first_name', 'last_name')->where('id', $userOrId)->firstOrFail();
-        else                                // parameter passed in is User
+        } else                                // parameter passed in is User
+        {
             $user = $userOrId;
+        }
 
         return static::getFullName($user);
     }
@@ -695,10 +690,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function getNameAndEmail($userOrId)
     {
-        if (! is_a($userOrId, 'Eloquent') )
+        if (!is_a($userOrId, 'Eloquent')) {
             $user = User::select('first_name', 'last_name', 'email')->where('id', $userOrId)->firstOrFail();
-        else
+        } else {
             $user = $userOrId;
+        }
 
         return ['name' => static::getFullName($user), 'email' => $user->email];
     }
@@ -715,17 +711,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-
     public function getWallet()
     {
-        if(! isset($this->wallet))
-        {
+        if (!isset($this->wallet)) {
             Wallet::createIfDoesntExist($this->id);
         }
+
         return $this->wallet;
     }
     /* foreign keys */
-
 
 
     /**
@@ -735,12 +729,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         $dir = hashDir($user->id, 'u');
 
-        Log::info('User dir '.$dir);
+        Log::info('User dir ' . $dir);
         $user->directory = $dir;
         $user->save();
 
         return;
     }
+
     public function resetPassword()
     {
         $newPassword = Functions::randomPassword(7);
@@ -752,7 +747,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function getGender()
     {
-        return $this->gender ? ($this->gender == 1 ? 'male' : 'female') : '' ;
+        return $this->gender ? ($this->gender == 1 ? 'male' : 'female') : '';
     }
 
     public function hasTwitter()
@@ -766,22 +761,21 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-
-    public static function createImage($user, $image = false) {
+    public static function createImage($user, $image = FALSE)
+    {
 
         $sizes = Config::get('evercise.user_images');
 
         $dir = hashDir($user->id, 'u');
 
-        if(!$image) {
+        if (!$image) {
             $image = Image::make(file_get_contents('http://robohash.org/' . slugIt($user->display_name) . '/bgset_bg1/2.2' . slugIt($user->display_name) . '.png?size=300x300'));
         } else {
             $image = Image::make(file_get_contents($image));
         }
 
 
-        $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)])).'.png';
-
+        $user_file_name = slugIt(implode(' ', [$user->display_name, rand(1, 10)])) . '.png';
 
 
         foreach ($sizes as $s) {
@@ -803,12 +797,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-    public static function uniqueDisplayName($display_name){
+    public static function uniqueDisplayName($display_name)
+    {
         $next_display_name = $display_name;
         do {
             $unique = static::where('display_name', $next_display_name)->first();
             $next_display_name = $display_name . rand(1, 10);
-        } while(!is_null($unique));
+        } while (!is_null($unique));
+
         return $next_display_name;
 
     }

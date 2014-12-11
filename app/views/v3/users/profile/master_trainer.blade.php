@@ -18,6 +18,9 @@
             </div>
             <div class="col-md-6 text-right mt50 md-text-center sm-mb20">
                 {{ HTML::linkRoute('evercisegroups.create', 'Create a new class', null, ['class' => 'btn btn-primary']) }}
+                 @if($data['user']->hasAccess('admin'))
+                    {{ HTML::linkRoute('admin.dashboard', 'Admin', null, ['class' => 'btn btn-success']) }}
+                @endif
             </div>
         </div>
     </div>

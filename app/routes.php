@@ -515,9 +515,9 @@ Route::get('/layouts', function () {
 
 
 // -------------  ADMIN SECTION ---------------
-Route::get('/admin/', ['as' => 'admin.page', 'uses' => 'AdminController@dashboard']);
-Route::get('/admin/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@dashboard']);
-Route::get('/admin/', ['as' => 'users.create', 'uses' => 'AdminController@dashboard']);
+Route::get('/admin/', ['as' => 'admin.page', 'uses' => 'AdminController@dashboard', 'before' => 'admin']);
+Route::get('/admin/', ['as' => 'admin.dashboard', 'uses' => 'AdminController@dashboard', 'before' => 'admin']);
+Route::get('/admin/', ['as' => 'users.create', 'uses' => 'AdminController@dashboard', 'before' => 'admin']);
 
 Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
