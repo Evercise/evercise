@@ -33,6 +33,10 @@ class Activity
      * @var Evercisesession
      */
     private $evercisesession;
+    /**
+     * @var Mail
+     */
+    protected $mail;
 
     /**
      * @param Writer $log
@@ -40,19 +44,22 @@ class Activity
      * @param Dispatcher $event
      * @param Activities $activities
      * @param Evercisesession $evercisesession
+     * @param Mail $mail
      */
     public function __construct(
         Writer $log,
         Repository $config,
         Dispatcher $event,
         Activities $activities,
-        Evercisesession $evercisesession
+        Evercisesession $evercisesession,
+        Mail $mail
     ) {
         $this->config = $config;
         $this->log = $log;
         $this->event = $event;
         $this->activities = $activities;
         $this->evercisesession = $evercisesession;
+        $this->mail = $mail;
     }
 
     /**
@@ -457,6 +464,7 @@ class Activity
             'image'       => 'classreviewed.png',
         ]);
 
+        $this->mail->user($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId);
 
     }
 

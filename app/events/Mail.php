@@ -584,6 +584,24 @@ class Mail
 
     }
 
+    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId)
+    {
+
+        $params = [
+            'subject'       => 'A User just Joined your Class',
+            'view'          => 'v3.emails.trainer.user_joined_class',
+            'user'          => $user,
+            'trainer'       => $trainer,
+            'session'       => $session,
+            'evercisegroup' => $evercisegroup,
+            'transactionId' => $transactionId,
+            'link_url'      => $this->url->to('/'),
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
 
     /**
      * @param $trainer
