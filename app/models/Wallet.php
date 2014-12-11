@@ -164,6 +164,8 @@ class Wallet extends \Eloquent
     public function giveAmount($amount = 0, $type = false) {
         if(!$type || $amount == 0) return false;
 
+        $user = Sentry::getUser();
+
         switch($type) {
             case 'referral_signup':
                 $title = 'Milestone Completed';
@@ -198,18 +200,9 @@ class Wallet extends \Eloquent
                 return false;
         }
 
-        $this->deposit($amount, $description, Sentry::getUser());
+        $this->deposit($amount, $description, $user);
 
-        Activities::create([
-            'title'       => $title,
-            'type'        => 'milestone'.$type,
-            'description' => $description,
-            'user_id'     => $this->user_id,
-            'type_id'     => $this->user_id,
-            'link'        => '',
-            'link_title'  => '',
-            'image'       => 'milestone'.$type.'.png',
-        ]);
+        event('milestone.completed', [$user, $type, $title, $description, $amount]);
 
     }
 
