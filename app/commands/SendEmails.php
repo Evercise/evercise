@@ -79,7 +79,8 @@ class SendEmails extends Command {
 						'userList' =>$userList,
 						'trainer'=>$group->user,
 						'location'=>$group->venue->name,
-						'classId' => $group->id
+						'classId' => $group->id,
+						'sessionId' => $session->id,
 					];
 					$sessionIds[] = $session->id;
 				}
@@ -100,7 +101,7 @@ class SendEmails extends Command {
 				}
 
 				// Pang out an email with a list of users
-				Event::fire('session.upcoming_session', array(
+				Event::fire('session.upcoming_session', [
 	            	'userList' => $email['userList'], 
 	            	'group' => $email['group'], 
 	                'location' => $email['location'],
@@ -108,7 +109,8 @@ class SendEmails extends Command {
 	                'trainerName' => $email['trainer']->first_name.' '.$email['trainer']->last_name,
 	                'trainerEmail' => $email['trainer']->email,
 	                'classId' => $email['classId'],
-	            ));
+	                'sessionId' => $email['sessionId'],
+	            ]);
 
 			}
 

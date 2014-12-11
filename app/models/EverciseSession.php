@@ -34,7 +34,10 @@ class Evercisesession extends \Eloquent
     public function getSessionmembers()
     {
         //return $this->sessionmembers->lists('id');
-        return User::whereIn('id', $this->sessionmembers->lists('user_id'))->get();
+        if (count($this->sessionmembers))
+            return User::whereIn('id', $this->sessionmembers->lists('user_id'))->get();
+        else
+            return [];
     }
 
     /**
