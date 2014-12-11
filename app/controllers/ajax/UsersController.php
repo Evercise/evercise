@@ -42,6 +42,8 @@ class UsersController extends AjaxBaseController{
 
                 $user->save();
 
+                $this->user = $user;
+
                 // check for newsletter and if so add to mailchimp
                 $this->setNewsletter(Input::get('userNewsletter', false));
 
@@ -152,6 +154,8 @@ class UsersController extends AjaxBaseController{
                 User::createImage($user);
 
                 $user->save();
+
+                $this->user = $user;
 
                 // check for newsletter and if so add to mailchimp
                 $this->setNewsletter(Input::get('userNewsletter'));
@@ -291,30 +295,22 @@ class UsersController extends AjaxBaseController{
 
     private function setNewsletter($newsletter = false)
     {
-
-        if($this->user->newsletter->count() == 0) {
+        if(is_null($this->user->newsletter) || $this->user->newsletter()->count() == 0) {
             $this->user->marketingpreferences()->sync([1]);
-
         }
 
-        $news = $this->user->newsletter()->get();
-
-
-        if(!is_null($newsletter)) {
-            if ($news[0]->option != 'yes') {
-                User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                    $this->user->email,
-                    $this->user->first_name,
-                    $this->user->last_name
-                );
-            }
-        }else{
-            if ($news[0]->option == 'yes') {
-                $this->user->marketingpreferences()->sync([2]);
-                User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                    $this->user->email
-                );
-            }
+        $news = $this->user->newsletter()->first();
+        if($newsletter) {
+            User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                $this->user->email,
+                $this->user->first_name,
+                $this->user->last_name
+            );
+        } else {
+            User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                $this->user->email
+            );
         }
+
     }
 } 
