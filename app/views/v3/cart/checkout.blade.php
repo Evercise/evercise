@@ -154,7 +154,8 @@
                                 </div>
                                 <div class="col-xs-1">
                                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
-                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $row['id'])) }}
+                                        {{ Form::hidden('refresh-page', true) }}
                                         {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
                                     {{Form::close()}}
                                 </div>
