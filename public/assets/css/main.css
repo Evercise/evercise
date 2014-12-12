@@ -9490,15 +9490,6 @@ label {
 .custom-select {
   position: relative;
 }
-.custom-select:before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: #ffffff;
-}
 .custom-select:after {
   position: absolute;
   content: '';
@@ -9543,6 +9534,15 @@ label {
 }
 .custom-select .input-sm {
   line-height: 20px;
+}
+.input-group .custom-select:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: #ffffff;
 }
 .input-group .custom-select select {
   border-radius: 0;
