@@ -75,7 +75,7 @@ class SendEmails extends Command {
 					}
 					$emails[] = [
 						'groupName'=>$group->name,
-						'group'=>$group->name,
+						'group'=>$group,
 						'dateTime'=>$session->date_time,
 						'userList' =>$userList,
 						'trainer'=>$group->user,

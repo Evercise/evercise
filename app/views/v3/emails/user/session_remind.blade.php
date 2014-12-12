@@ -7,7 +7,7 @@
 <p>Hey {{$name}}</p>
 <p>Don&apos;t forget your upcoming class!</p>
 
-<p>{{ $group }}</p>
+<p>{{ $group->name }}</p>
 <p>{{ $dateTime }}</p>
 <p>{{ $location }}</p>
 <p>{{ $trainerName }}</p>
