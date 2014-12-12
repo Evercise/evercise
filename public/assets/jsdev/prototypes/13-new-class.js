@@ -93,7 +93,7 @@ createClass.prototype = {
             },
 
             success: function (data) {
-                if(data.validation_failed){
+                if(data.validation_failed = 1){
                     self.failedValidation(data);
                 }
                 else{
