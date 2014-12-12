@@ -244,6 +244,8 @@ class Mail
      * @param $trainerName
      * @param $trainerEmail
      * @param $classId
+     *
+     * Event session.upcoming_session
      */
     public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
     {
