@@ -776,6 +776,11 @@ class Mail
 
         } else {
             try {
+
+                /** Remove Unsubscribe for now! */
+                $content = str_replace('%%unsubscribe%%', '', $content);
+                $plain_text = str_replace('%%unsubscribe%%', '', $plain_text);
+                
                 $this->email->send(['v3.emails.blank', 'v3.emails.plain_blank'],
                     ['content' => $content, 'plain_text' => $plain_text],
                     function ($message) use ($email, $subject, $attachments) {
