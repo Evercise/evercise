@@ -11,15 +11,24 @@
         @endif
       </div>
       <div class="modal-body text-left">
-            {{ Form::open(['route' => 'ajax.process.withdrawal', 'method'=>'post']) }}
-                <div class="form-group">
-                    {{ Form::text('paypal', $user->paypal_email, ['class' => 'form-control']) }}
-                </div>
-                <div class="form-group">
-                    {{ Form::number('amount', 1, ['class' => 'form-control']) }} MAX: {{ number_format($wallet->balance,2) }}
+            {{ Form::open(['route' => 'ajax.process.withdrawal', 'method'=>'post', 'id' => 'request-withdrawal-form']) }}
+                <div class="row">
+                    <div class="form-group col-sm-12">
+                        {{ Form::label('paypal', 'Enter your paypal email') }}
+                        {{ Form::text('paypal', $user->paypal_email, ['class' => 'form-control', 'placeholder' => 'your paypal email']) }}
+                    </div>
+                    <div class="form-group col-sm-12">
+                        {{ Form::label('amount', 'The amount you wish to withdraw') }}
+                        {{ Form::number('amount', number_format($wallet->balance,2), ['class' => 'form-control', 'placeholder' => 'Amount to withdraw']) }}
+                        <p class="help-block mb40">MAX: {{ number_format($wallet->balance,2) }}</p>
+
+                    </div>
+                    <div class="text-center col-sm-12">
+                        {{ Form::submit('Request', ['class' => 'btn btn-primary']) }}
+                    </div>
                 </div>
 
-                {{ Form::submit('Request') }}
+
 
             {{ Form::close() }}
       </div>
