@@ -2,6 +2,7 @@ function MailPopup(link){
     this.link = link;
     this.target = '';
     this.form = '';
+    this.id = '';
     this.validIcon = 'glyphicon glyphicon-ok';
     this.invalidIcon = 'glyphicon glyphicon-remove';
     this.validatingIcon = 'glyphicon glyphicon-refresh';
@@ -29,8 +30,10 @@ MailPopup.prototype = {
     },
     getPopup: function(e){
         e.preventDefault();
+        this.link = $(e.target);
+        this.id = this.link.data('id');
         this.target = $(e.target).attr('href');
-        $(e.target).prop('disabled', true).after('<span id="mail-loading" class="icon icon-loading ml10 mt25"></span>');
+        $(e.target).addClass('icon-loading');
         this.ajaxGet();
 
     },
@@ -38,8 +41,8 @@ MailPopup.prototype = {
         var self = this;
         $.get( this.target, function(data) {
             self.link.after(data.view);
-            $('#mail-trainer').modal('show');
-            self.link.replaceWith('<a  href="#mail-trainer" class="icon icon-mail ml10 mt25" data-toggle="modal" data-target="#mail-trainer"></a>')
+            $('#mail-trainer-'+self.id).modal('show');
+            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail ml10 mt25" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>')
             self.form = $('#mail_trainer');
             self.validation();
         })
@@ -47,8 +50,7 @@ MailPopup.prototype = {
             alert( "error" );
         })
         .always(function() {
-            self.link.prop('disabled', false);
-            $('#mail-loading').remove();
+            self.link.removeClass('icon-loading');
         });
     },
     validation: function(){

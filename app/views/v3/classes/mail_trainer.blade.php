@@ -1,4 +1,4 @@
-<div class="modal fade" id="mail-trainer" data-backdrop="static">
+<div class="modal fade" id="mail-trainer-{{$sessionId}}" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

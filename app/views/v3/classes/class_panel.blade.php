@@ -6,7 +6,7 @@
         </div>
          <div class="class-title-wrapper col-xs-8">
              <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3 class="pull-left">{{ $session->evercisegroup->name }}</h3></a>
-             {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail ml10 mt25', 'id' => 'mail-popup']) }}
+             {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail ml10 mt25 mail-popup', 'id' => 'mail-popup', 'data-id' =>$session->id ]) }}
 
              <div class="mt20">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span><br>
@@ -82,10 +82,10 @@
             </div>
         @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
             <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
-                <div class=" col-sm-6 sm-text-center">
+                <div class=" col-sm-5 sm-text-center">
                     <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->getNextFutureSession()->formattedDate().', '.$session->evercisegroup->getNextFutureSession()->formattedTime() }}</span>
                 </div>
-                <div class=" col-sm-6">
+                <div class=" col-sm-7">
                     <div class="row">
                         <div class="col-sm-3 sm-text-center">
                             <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>

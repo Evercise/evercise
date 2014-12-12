@@ -207,7 +207,7 @@ $(function(){
             interval: 3000
         })
     })
-    $('#mail-popup').exists(function(){
+    $('.mail-popup').exists(function(){
         new MailPopup(this);
     })
 
