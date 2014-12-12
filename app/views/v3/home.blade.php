@@ -40,7 +40,7 @@
 
     <div class="container-fluid panel-body bg-dark-grey">
         <div class="container">
-            <div class="row no-gutter visible-lg-block">
+            <div class="row no-gutter visible-md-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-12">
                         <div class="input-group with-addon">
@@ -66,7 +66,7 @@
 
                 {{ Form::close() }}
             </div>
-            <div class="row no-gutter hidden-lg">
+            <div class="row no-gutter hidden-md">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-12">
                         <div class="input-group with-addon mb10">

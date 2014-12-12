@@ -12,7 +12,7 @@
     <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
     <meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
     {{ HTML::style('assets/css/cropper.min.css') }}
     <!-- load jquery -->
