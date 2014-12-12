@@ -26,14 +26,14 @@ function MailPopup(link){
 MailPopup.prototype = {
     constructor: MailPopup,
     addListener : function(){
-        this.link.on('click', $.proxy(this.getPopup, this));
+        $(document).on('click', '.mail-popup',  $.proxy(this.getPopup, this));
     },
     getPopup: function(e){
         e.preventDefault();
         this.link = $(e.target);
         this.id = this.link.data('id');
         this.target = $(e.target).attr('href');
-        $(e.target).addClass('icon-loading');
+        this.link.addClass('icon-loading');
         this.ajaxGet();
 
     },

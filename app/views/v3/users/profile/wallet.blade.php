@@ -7,17 +7,20 @@
         <div id="" class="row">
             <div class="col-md-6">
                 <ul class="list-group mb20">
-                  {{ Form::open(['id' => 'add-topup', 'route' => 'cart.add', 'method' => 'post', 'class' => '']) }}
-                      <li class="list-group-item ">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <h3>Current Balance: <span class="text-primary">£{{round($data['user']->getWallet()->getBalance(), 2)}}</span> </h3>
-                            </div>
-                            <div class="col-sm-4">
-                                <button id="cancel-btn" class="btn btn-default btn-block">Cancel</button>
-                            </div>
+
+                  <li class="list-group-item ">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h3>Current Balance: <span class="text-primary">£{{round($data['user']->getWallet()->getBalance(), 2)}}</span> </h3>
                         </div>
-                      </li>
+                        <div class="col-sm-4">
+                            {{ Form::open(['route' => 'ajax.request.withdrawal', 'method' => 'post', 'id' => 'withdraw-funds']) }}
+                                {{ Form::submit('Withdraw Funds', ['class' => 'btn btn-default']) }}
+                            {{Form::close()}}
+                        </div>
+                    </div>
+                  </li>
+                  {{ Form::open(['id' => 'add-topup', 'route' => 'cart.add', 'method' => 'post', 'class' => '']) }}
                       <li class="list-group-item ">
                         <div class="row">
                             <div class="col-sm-12">
