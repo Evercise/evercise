@@ -15,9 +15,9 @@
                 <div class="mt40">
                     <strong class="mr20">Share this class:</strong>
                     <span>
-                        <a href="{{ Share::load(Request::url() , $evercisegroup->name)->facebook()  }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>
-                        <a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" target="_blank"><span class="icon icon-twitter mr20 hover"></span> </a>
-                        <a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" target="_blank"><span class="icon icon-google hover"></span> </a>
+                        <a href="{{  Share::load(URL::to('class/'.$evercisegroup->slug)  , $evercisegroup->name)->facebook()   }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>
+                        <a href="{{ Share::load(URL::to('class/'.$evercisegroup->slug)  , $evercisegroup->name)->twitter()  }}" target="_blank"><span class="icon icon-twitter mr20 hover"></span> </a>
+                        <a href="{{Share::load(URL::to('class/'.$evercisegroup->slug)  , $evercisegroup->name)->gplus()  }}" target="_blank"><span class="icon icon-google hover"></span> </a>
                     </span>
                 </div>
 
