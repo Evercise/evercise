@@ -148,12 +148,15 @@ class Mail
     public function welcomeGuest($user, $link = '')
     {
 
-
         $params = [
-            'subject' => 'Welcome to Evercise',
-            'view'    => 'v3.emails.user.welcome_guest',
-            'user'    => $user,
-            'link'    => $link
+            'subject'  => 'Welcome to Evercise',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.user.welcome_guest',
+            'user'     => $user,
+            'banner'   => FALSE,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/uk/'),
+            'link'     => $link
         ];
 
         $this->send($user->email, $params);

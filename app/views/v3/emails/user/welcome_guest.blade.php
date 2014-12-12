@@ -1,40 +1,56 @@
 @extends('v3.emails.template')
-
-object $user, $link
+<?php View::share('align', 'center') ?>
 
 @section('body')
-
-
-
-       $body = '
-       			<p>You now have access to a huge range of fitness classes and trainers operating at multiple locations!</p>
-       			<br>
-       			<br>
-       			<p>Please click here to activate your account <a href="'.$link.'">'.$link.'</a></p>
-       			<br>
-       			<br>
-       			<p>Here are a few tips to get you started.</p>
-       			<br>
-       			<p>
-       				<li><strong>Search fitness classes:</strong> Simply click “discover classes” on the navigation bar, then search by category or location.</li>
-       				<li><strong>Sign up to a class online:</strong> Click on the class panel and you will see a list of sessions. Choose the time and date you want, and pay for the class online.</li>
-       				<li><strong>Show up and shape up:</strong> Make sure you know where to go, at what time you should arrive, how to dress appropriately for the class and if you should bring anything e.g. water.</li>
-       				<li><strong>Rate and review:</strong> Once you have taken a class, help improve Evercise by rating the class and reviewing your experience.</li>
-       			</p>
-       		';
-
-
-               $subject = 'Welcome to Evercise';
-               //$view = 'emails.auth.welcome'; // use for validation email
-               $view = 'emails.template';
-               $data['title'] = 'Welcome to Evercise';
-               $data['mainHeader'] = 'Welcome to Evercise, '.$display_name.'!';
-               $data['subHeader'] = 'Why not join some classes right away?';
-               $data['body'] = $body;
-               $data['link'] = HTML::linkRoute('evercisegroups.search', 'Discover classes');
-               $data['linkLabel'] = 'Search for classes near you:';
-               //$data['sellups'] = [ 0 => ['body' => 'Gain evercise credits to spend on classes by reommending your friends. for every 3 friend who join due to you referral you will recieve &pounds;3&apos;s of credit and each person who joined will recieve &pound;1 of credit aswell' , 'image' =>HTML::image('img/Sign-Up-Online.png','join up', array('class' => 'home-step-img'))] , 1 => ['body' => 'Jeff the trainer' , 'image' => HTML::image('img/Class.png','get fit', array('class' => 'home-step-img'))] ];
-
-               return $this->sendTo($email, $subject, $view, $data );
-
+<p>Evercise is the exciting new <span class="pink-text">Pay As You Go</span> fitness community that&apos;s flexible enough to fit in with your lifestyle and doesn&apos;t tie you down to an expensive gym membership.</p>
+<p>The Evercise network gives you access to a huge array of fun and flexible fitness classes wherever you are and our simple three-step process means it&apos;s quick and easy to <span class="pink-text">sign up</span> and get involved.</p>
+@stop
+@section('extra')
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
+        <tr width="100%">
+            <td width="33%">
+                <div class="mb30">
+                    {{ image('/img/home/wie.png') }}
+                </div>
+            </td>
+            <td width="67%">
+                <h3 class="white-text">Search</h3>
+                <p class="white-text">Evercise makes it easy to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you&apos;re sure to find something nearby that takes your fancy.</p>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
+        <tr width="100%">
+            <td width="67%">
+                <h3 class="white-text text-right">Select</h3>
+                <p class="white-text text-right">You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
+            </td>
+            <td width="33%">
+                {{ image('/img/home/wie.png') }}
+            </td>
+        </tr>
+    </table>
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
+        <tr width="100%">
+            <td width="33%">
+                {{ image('/img/home/wie.png') }}
+            </td>
+            <td width="67%">
+                <h3 class="white-text">Sign up</h3>
+                <p class="white-text">When you&apos;ve found a class you like the look of our simple Pay As You Go booking system ensures that joining your class is as quick and easy as ordering a pizza! </p>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
+        <tr>
+            <td>
+                <br>
+                <br>
+                <div class="text-center mb30">
+                    <p class="white-text">Please click here to activate your account</p>
+                    {{ Html::decode(Html::link($link, image('/assets/img/email/btns/btn_get_started.png', 'Get Started'),  ['class' => 'btn btn-blue'])) }}
+                </div>
+            </td>
+        </tr>
+    </table>
 @stop
