@@ -88,6 +88,11 @@ class Evercisegroup extends \Eloquent
 
 
             $venueId = $inputs['venue_select'];
+            if(! Venue::find($venueId)){
+                return Response::json(
+                    ['validation_failed' => 1, 'errors' => ['venue_select' => 'Please select or create a new venue']]
+                );
+            }
 
             // Push categories into an array, and fail if there are none.
             //$categories = static::categoriesToArray($inputs);
@@ -95,7 +100,7 @@ class Evercisegroup extends \Eloquent
 
             if (empty($categories)) {
                 return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['category1' => 'you must choose at least one category']]
+                    ['validation_failed' => 1, 'errors' => ['category1' => 'You must choose at least one category']]
                 );
             }
 

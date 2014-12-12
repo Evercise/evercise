@@ -7,7 +7,6 @@
             </div>
             <strong>Some type of instructions for the trainer to continue</strong>
         </div>
-        {{$user->numGroups()}}
         <div class="row mt50 mb50">
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="form-group mb15">
