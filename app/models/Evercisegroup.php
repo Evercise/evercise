@@ -1168,8 +1168,9 @@ class Evercisegroup extends \Eloquent
                 )
                 ->description($this->description)
                 ->url();
-        } catch (Exception $e) {
+        } catch (Exception $e) { 
             return ['error' => 'not trainer'];
+            Log::info($e);
         }
 
 
