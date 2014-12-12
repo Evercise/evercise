@@ -97,15 +97,7 @@ label{
 
 .custom-select {
   position: relative;
-  &:before{
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    background: #ffffff;
-  }
+
   &:after{
     position: absolute;
     content: '';
@@ -136,9 +128,19 @@ label{
 
 .input-group{
   .custom-select{
+    &:before{
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: #ffffff;
+    }
     select{
       border-radius: 0;
     }
+
   }
 }
 @-moz-document url-prefix() {
