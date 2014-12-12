@@ -18,8 +18,8 @@
 <p>Fitness is even more fun with friends! Click on the links below to share this class.</p>
 
 
-<p><a href="{{ Share::load(Request::url() , $group)->facebook()  }}" target="_blank"><span class="blue-text">Facebook</span></a></p>
-<p><a href="{{ Share::load(Request::url() , $group)->twitter()  }}" target="_blank"><span class="blue-text">Twitter</span> </a></p>
-<p><a href="{{ Share::load(Request::url() , $group)->gplus()  }}" target="_blank"><span class="blue-text"></span>Google Plus</a></p>
+<p><a href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank"><span class="blue-text">Facebook</span></a></p>
+<p><a href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank"><span class="blue-text">Twitter</span> </a></p>
+<p><a href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->gplus()  }}" target="_blank"><span class="blue-text"></span>Google Plus</a></p>
 
 @stop
