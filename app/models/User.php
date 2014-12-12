@@ -437,15 +437,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     /**
      * @param $user
-     * @param $inputs
-     */
-    public static function sendFacebookWelcomEmail($user, $inputs)
-    {
-        event('user.facebook.signup', [$user]);
-    }
-
-    /**
-     * @param $user
      * @param $me
      */
     public static function grabFacebookImage($user, $me)
@@ -615,6 +606,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function sendWelcomeEmail($user)
     {
         event('user.signup', [$user]);
+    }
+
+    /**
+     * @param $user
+     * @param $inputs
+     */
+    public static function sendFacebookWelcomEmail($user, $inputs)
+    {
+        event('user.facebook.signup', [$user]);
     }
 
 

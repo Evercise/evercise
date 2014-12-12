@@ -270,12 +270,12 @@ class User
      * @param $referralCode
      * @param $referrerName
      */
-    public function invite($email, $referralCode, $referrerName, $balanceWithBonus)
+    public function invite($email, $referralCode, $referrerName, $referrerEmail, $balanceWithBonus)
     {
         $this->log->info('User Invite ' . $email);
 
         $this->mail->invite($email, $referralCode, $referrerName);
-        $this->mail->thanksForInviting($email, $referrerName, $balanceWithBonus);
+        $this->mail->thanksForInviting($referrerEmail, $referrerName, $email, $balanceWithBonus);
     }
 
     /**

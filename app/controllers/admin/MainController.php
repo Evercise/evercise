@@ -227,7 +227,7 @@ class MainController extends \BaseController
             if($res = Trainer::createOrFail($trainer)) {
 
 
-                Event::fire('trainer.registered', [$user]);
+                Event::fire('trainer.registered', [$user, ]);
 
 
                 Event::fire('user.admin.trainerCreate', compact('user', 'trainer'));

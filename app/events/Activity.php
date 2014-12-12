@@ -450,7 +450,7 @@ class Activity
      * @param $user
      * @param $class
      */
-    public function usedReviewedClass($user, $class)
+    public function userReviewedClass($user, $trainer, $review, $class)
     {
 
         $this->activities->create([
@@ -464,7 +464,7 @@ class Activity
             'image'       => 'classreviewed.png',
         ]);
 
-        //$this->mail->user($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId);
+        $this->mail->userReviewedClass($user, $trainer, $review, $class);
 
     }
 

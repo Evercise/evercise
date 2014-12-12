@@ -113,7 +113,7 @@ return [
 
     ],
     '5'  => [
-        ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName, $balanceWithBonus // ∑
+        ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName, $referrerEmail, $balanceWithBonus // ∑
         ['landing.ppc' => 'User@ppc'] // $email, $categoryId, $ppcCode
     ],
     '0'  => [
@@ -160,7 +160,7 @@ return [
         ['activity.user.invite' => 'Activity@invitedEmail'],  // $user, $email
         ['activity.user.package.used' => 'Activity@packageUsed'],  //   $user, $userpackage, $package,  $session   √
         ['activity.user.cart.completed' => 'Activity@userCartCompleted'],  // $user, $cart, $transaction  √
-        ['activity.user.reviewed.class' => 'Activity@usedReviewedClass'],  // $user, $class
+        ['activity.user.reviewed.class' => 'Activity@userReviewedClass'],  // $user, $trainer, $review, $class
 
     ]
 ];

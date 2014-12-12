@@ -319,12 +319,13 @@ class Mail
      * @param $referralCode
      * @param $referrerName
      */
-    public function thanksForInviting($email, $referrerName, $balanceWithBonus)
+    public function thanksForInviting($email, $referrerName, $referreeEmail, $balanceWithBonus)
     {
         $params = [
             'subject'      => 'Thanks for sharing!',
             'view'         => 'v3.emails.user.thanks_inviting',
             'email'        => $email,
+            'refereeEmail' => $referreeEmail,
             'referrerName' => $referrerName,
             'balanceWithBonus' => $balanceWithBonus,
             'image'        => image('/assets/img/email/referral_thanks.jpg', 'Thanks for sharing!'),
@@ -584,7 +585,7 @@ class Mail
 
     }
 
-    public function userReviewedClass($user, $trainer, $session, $evercisegroup, $transactionId)
+    public function userReviewedClass($user, $trainer, $review, $class)
     {
 
         $params = [
@@ -592,9 +593,8 @@ class Mail
             'view'          => 'v3.emails.trainer.user_joined_class',
             'user'          => $user,
             'trainer'       => $trainer,
-            'session'       => $session,
-            'evercisegroup' => $evercisegroup,
-            'transactionId' => $transactionId,
+            'review'        => $review,
+            'session'       => $class,
             'link_url'      => $this->url->to('/'),
         ];
 
