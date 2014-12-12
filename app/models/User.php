@@ -808,4 +808,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $next_display_name;
 
     }
+
+    public function numGroups()
+    {
+        return count($this->evercisegroups);
+    }
 }
