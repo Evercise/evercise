@@ -23,7 +23,7 @@
             <div class="container">
                 <ul class="nav nav-pills nav-justified">
                     <li class="{{ ($tab === 0 ? 'active' : ($tab === 'classes' ? 'active' : null)) }}"><a href="#classes">Classes</a></li>
-                    <li class="{{ $tab === 'activity' ? 'active' : null }}"><a href="#activity">Activity</a></li>
+                   <!-- <li class="{{ $tab === 'activity' ? 'active' : null }}"><a href="#activity">Activity</a></li>-->
                     <li class="{{ $tab === 'reviews' ? 'active' : null }}"><a href="#reviews">Reviews</a></li>
                 </ul>
             </div>
