@@ -13,6 +13,7 @@
 
 // temporary routes for new layouts
 
+
 Route::get('/tester', function () { return Response::view('v3.emails.tester'); });
 Route::get('/tester2', function () { return Response::view('v3.emails.tester2'); });
 
@@ -151,6 +152,17 @@ Route::group(['prefix' => 'ajax'], function () {
 
     //Ratings
     Route::post('ratings/store', ['as' => 'ratings.store', 'uses' => 'ajax\RatingsController@store']);
+
+
+
+
+    Route::get('wallet/sessions',
+        ['as' => 'wallet.sessions', 'uses' => 'PaymentController@processWalletPaymentSessions']);
+
+
+
+    Route::post('withdrawal/request', ['as' => 'ajax.request.withdrawal', 'uses' => 'ajax\UsersController@requestWithdrawal']);
+    Route::post('withdrawal/process', ['as' => 'ajax.process.withdrawalajax.process.withdrawal', 'uses' => 'ajax\UsersController@makeWithdrawal']);
 
 });
 

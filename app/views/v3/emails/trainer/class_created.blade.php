@@ -4,5 +4,6 @@
 
 @section('body')
 
-    TRAINER CLASS CREATED
+    <p>Congratulations you&apos;ve created your first class!</p>
+    {{$class}}
 @stop

@@ -1,9 +1,12 @@
 <?php namespace ajax;
 
 use User, UserHelper, Session, Input, Config, Sentry, Event, Response, Wallet, Trainer, Request, Redirect, Milestone, Log, Validator;
+use View;
+use Withdrawalrequest;
 
 
-class UsersController extends AjaxBaseController{
+class UsersController extends AjaxBaseController
+{
 
     public function __construct()
     {
@@ -24,7 +27,7 @@ class UsersController extends AjaxBaseController{
         if ($valid_user['validation_failed'] == 0) {
 
             // register user and add to user group
-            $user = User::registerUser( Input::all() );
+            $user = User::registerUser(Input::all());
 
             UserHelper::generateUserDefaults($user->id);
 
@@ -45,9 +48,9 @@ class UsersController extends AjaxBaseController{
                 $this->user = $user;
 
                 // check for newsletter and if so add to mailchimp
-                $this->setNewsletter(Input::get('userNewsletter', false));
+                $this->setNewsletter(Input::get('userNewsletter', FALSE));
 
-                Sentry::login($user, true);
+                Sentry::login($user, TRUE);
 
                 event('user.registered', [$user]);
 
@@ -58,28 +61,27 @@ class UsersController extends AjaxBaseController{
                             'url'      => route(Input::get('redirect'))
                         ]
                     );
-                }
-
-                else if (Input::get('trainer', 'no') == 'yes' ) {
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route('trainers.create')
-                        ]
-                    );
                 } else {
+                    if (Input::get('trainer', 'no') == 'yes') {
+                        return Response::json(
+                            [
+                                'callback' => 'gotoUrl',
+                                'url'      => route('trainers.create')
+                            ]
+                        );
+                    } else {
 
 
+                        User::sendWelcomeEmail($user);
 
-                    User::sendWelcomeEmail($user);
+                        return Response::json(
+                            [
+                                'callback' => 'gotoUrl',
+                                'url'      => route('finished.user.registration')
+                            ]
+                        );
 
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route('finished.user.registration')
-                        ]
-                    );
-
+                    }
                 }
             }
         } else {
@@ -91,23 +93,23 @@ class UsersController extends AjaxBaseController{
 
     public function storeGuest()
     {
-        $inputs =  Input::except(['_token']);
+        $inputs = Input::except(['_token']);
         $validator = Validator::make(
             $inputs,
             [
                 'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:15|min:2',
-                'email' => 'required|email|unique:users',
-                'phone' => 'numeric',
+                'last_name'  => 'required|max:15|min:2',
+                'email'      => 'required|email|unique:users',
+                'phone'      => 'numeric',
             ]
         );
         // check user passes validation
         if ($validator->fails()) {
             $valid_user =
                 [
-                    'callback' => 'error',
+                    'callback'          => 'error',
                     'validation_failed' => 1,
-                    'errors' => $validator->errors()->toArray()
+                    'errors'            => $validator->errors()->toArray()
                 ];
             // log errors
             Log::notice($validator->errors()->toArray());
@@ -116,9 +118,9 @@ class UsersController extends AjaxBaseController{
             // is user has filled in the area code but no number fail validation
             $valid_user =
                 [
-                    'callback' => 'error',
+                    'callback'          => 'error',
                     'validation_failed' => 1,
-                    'errors' => ['areacode' => 'Please select a country']
+                    'errors'            => ['areacode' => 'Please select a country']
                 ];
             Log::notice('Please select a country');
         } else {
@@ -131,8 +133,8 @@ class UsersController extends AjaxBaseController{
         if ($valid_user['validation_failed'] == 0) {
 
             $inputs['password'] = str_random(12);
-            $inputs['display_name'] = User::uniqueDisplayName(slugIt($inputs['first_name'].' '.$inputs['last_name']));
-            $inputs['activated'] = true;
+            $inputs['display_name'] = User::uniqueDisplayName(slugIt($inputs['first_name'] . ' ' . $inputs['last_name']));
+            $inputs['activated'] = TRUE;
             $inputs['gender'] = 0;
 
 
@@ -160,7 +162,7 @@ class UsersController extends AjaxBaseController{
                 // check for newsletter and if so add to mailchimp
                 $this->setNewsletter(Input::get('userNewsletter'));
 
-                Sentry::login($user, true);
+                Sentry::login($user, TRUE);
 
                 event('user.registered', [$user]);
 
@@ -171,26 +173,27 @@ class UsersController extends AjaxBaseController{
                             'url'      => route(Input::get('redirect'))
                         ]
                     );
-                }
-                else if (Input::get('trainer', 'no') == 'yes' ) {
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route('trainer')
-                        ]
-                    );
                 } else {
+                    if (Input::get('trainer', 'no') == 'yes') {
+                        return Response::json(
+                            [
+                                'callback' => 'gotoUrl',
+                                'url'      => route('trainer')
+                            ]
+                        );
+                    } else {
 
-                    User::sendGuestWelcomeEmail($user);
+                        User::sendGuestWelcomeEmail($user);
 
 
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route('cart.checkout')
-                        ]
-                    );
+                        return Response::json(
+                            [
+                                'callback' => 'gotoUrl',
+                                'url'      => route('cart.checkout')
+                            ]
+                        );
 
+                    }
                 }
             }
         } else {
@@ -208,7 +211,7 @@ class UsersController extends AjaxBaseController{
     public function update()
     {
 
-        if(!$this->checkLogin()) {
+        if (!$this->checkLogin()) {
             return Redirect::route('home');
         }
 
@@ -231,13 +234,12 @@ class UsersController extends AjaxBaseController{
             $this->setNewsletter(Input::get('newsletter'));
 
 
-
             event(Trainer::isTrainerLoggedIn() ? 'trainer' : 'user' . '.edit', [$this->user]);
 
             return Response::json(
                 [
                     'callback' => 'gotoUrl',
-                    'url' => route('users.edit', [ $this->user->display_name, 'edit'])
+                    'url'      => route('users.edit', [$this->user->display_name, 'edit'])
                 ]
             );
         } else {
@@ -255,7 +257,8 @@ class UsersController extends AjaxBaseController{
         return Sentry::check();
     }
 
-    function setLocation() {
+    function setLocation()
+    {
 
         $lat = Input::get('lat');
         $lon = Input::get('lon');
@@ -266,40 +269,42 @@ class UsersController extends AjaxBaseController{
 
         $user = Sentry::getUser();
 
-        if(!empty($user->id)) {
+        if (!empty($user->id)) {
             $user->lat = $lat;
             $user->lon = $lon;
 
             $user->save();
         }
 
-        return Response::json(['stored' => true]);
+        return Response::json(['stored' => TRUE]);
     }
 
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    function getLocation() {
+    function getLocation()
+    {
 
-        $value = Session::get('location', function() {
+        $value = Session::get('location', function () {
 
             $user = Sentry::getUser();
+
             return [
-                'lat' => ($user->lat == '0.00' ? '': $user->lat),
-                'lon' => ($user->lon == '0.00' ? '': $user->lon)
+                'lat' => ($user->lat == '0.00' ? '' : $user->lat),
+                'lon' => ($user->lon == '0.00' ? '' : $user->lon)
             ];
         });
 
         return Response::json($value);
     }
 
-    private function setNewsletter($newsletter = false)
+    private function setNewsletter($newsletter = FALSE)
     {
-        if(is_null($this->user->newsletter) || $this->user->newsletter()->count() == 0) {
+        if (is_null($this->user->newsletter) || $this->user->newsletter()->count() == 0) {
             $this->user->marketingpreferences()->sync([1]);
         }
 
-        if($newsletter) {
+        if ($newsletter) {
             $this->user->marketingpreferences()->sync([1]);
             User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
                 $this->user->email,
@@ -312,5 +317,102 @@ class UsersController extends AjaxBaseController{
                 $this->user->email
             );
         }
+    }
+
+
+    public function requestWithdrawal()
+    {
+        if(!empty($this->user->id)) {
+            $res = [
+                'user'         => $this->user,
+                'wallet'       => $this->user->getWallet(),
+                'payment_date' => Config::get('evercise.payments_to_trainers')
+            ];
+
+            $view = View::make('v3.users.withdrawal', $res)->render();
+
+            return Response::json(['view' => $view]);
+        } else {
+            return Response::json(['error' => 'You need to be logged in to use this feature']);
+        }
+    }
+
+    public function makeWithdrawal()
+    {
+        if(!Sentry::check()) {
+            return Response::json(['error' => 'You need to be logged in to use this feature']);
+        }
+
+        $inputs = Input::all();
+        $messages = [
+            'between' => 'Max amount you can request is '.$this->user->getWallet()->balance
+        ];
+        $validator = Validator::make(
+            $inputs,
+            [
+                'paypal' => 'required|email',
+                'amount' => 'required|min:1|max:' . $this->user->getWallet()->balance
+            ],
+            $messages
+        );
+
+        // if fails add errors to results
+        if ($validator->fails()) {
+            $result =
+                [
+                    'callback'          => 'error',
+                    'validation_failed' => 1,
+                    'errors'            => $validator->errors()->toArray()
+                ];
+
+            Log::error($validator->errors()->toArray());
+
+            return Response::json($result);
+
+        }
+
+
+        $amount = $inputs['amount'];
+        $paypal = $inputs['paypal'];
+
+        $wallet = $this->user->getWallet();
+
+        $this->user->paypal_email = $paypal;
+        $this->user->save();
+
+        $withdrawal = Withdrawalrequest::create(
+            [
+                'user_id'            => $this->user->id,
+                'transaction_amount' => number_format($amount, 2),
+                'account'            => $paypal,
+                'acc_type'           => 'paypal',
+                'processed'          => 0
+            ]
+        );
+
+        if ($withdrawal) {
+
+            $wallet->withdraw($amount, 'Withdrawal request', $this->user);
+            $result =
+                [
+                    'callback'          => 'success',
+                    'validation_failed' => 0,
+                    'errors'            => FALSE
+                ];
+
+        } else {
+            $result =
+                [
+                    'callback'          => 'error',
+                    'validation_failed' => 1,
+                    'errors'            => ['We could not process your request. Please try again later']
+                ];
+
+            Log::error('Cant process Request ' . $this->user->id . ' amount: ' . $amount);
+        }
+
+        return $result;
+
+
     }
 } 

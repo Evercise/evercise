@@ -450,10 +450,11 @@ class Mail
      * @param $class
      * @param $trainer
      */
-    public function classCreated($class, $trainer)
+    public function classCreatedFirstTime($class, $trainer)
     {
         $params = [
             'subject' => 'Class created',
+            'title'   => 'Class created',
             'view'    => 'v3.emails.trainer.class_created',
             'trainer' => $trainer,
             'class'   => $class

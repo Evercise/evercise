@@ -34,7 +34,8 @@ class Classes
 
         /** Mail And other shit Go here */
 
-        $this->mail->classCreated($class, $trainer);
+        if($trainer->numGroups() == 1)
+            $this->mail->classCreatedFirstTime($class, $trainer);
 
         $this->activity->createdClass($class, $trainer);
 
