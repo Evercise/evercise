@@ -47,7 +47,7 @@ class Classes
 
     public function classPublished($class, $trainer){
 
-        $this->log->info('Trainer '.$trainer->id.' Published class '.$trainer->name);
+        $this->log->info('Trainer '.$trainer->id.' Published class '.$class->name);
 
         /** Mail And other shit Go here */
         $this->activity->publishedClass($class, $trainer);
@@ -60,7 +60,7 @@ class Classes
 
     public function classUnPublished($class, $trainer){
 
-        $this->log->info('Trainer '.$trainer->id.' UnPublished class '.$trainer->name);
+        $this->log->info('Trainer '.$trainer->id.' UnPublished class '.$class->name);
 
 
         $this->activity->unPublishedClass($class, $trainer);

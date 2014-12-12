@@ -170,7 +170,7 @@ class PaymentController extends BaseController
                 'coupon'       => $coupon,
                 'transaction'  => $transactionId,
                 'user'         => $this->user,
-                'balance'      => ($wallet ? $wallet->balance : 0),
+                'balance'      => $this->user->getWallet()->balance,
             ];
 
             return Redirect::route('checkout.confirmation')->with('res', $res);

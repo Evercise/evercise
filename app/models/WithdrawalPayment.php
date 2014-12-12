@@ -5,47 +5,44 @@ use Illuminate\Config\Repository;
 /**
  * @property mixed paypal_config
  */
-class WithdrawalPayment {
+class WithdrawalPayment
+{
 
-    protected $paypal_config;
-    protected $paypal;
+    private $paypal_config;
+    private $paypal;
 
-    protected $subject = 'Trainer Payment';
-    protected $currenctyCode = 'GBP';
-    protected $receivertype = 'GBP';
+    private $subject = 'Trainer Payment';
+    private $currency = 'GBP';
+    private $receivertype = 'EmailAddress';
+    private $recipients = [];
+    private $fields;
 
-    public function __construct(Writer $log,Repository $config) {
+    public function __construct(Writer $log, Repository $config)
+    {
 
 
         $this->paypal_config = [
-            'Sandbox' => getenv('PAYPAL_TESTMODE') ?: true,
-            'APIUsername' => getenv('PAYPAL_USER') ?: false,
-            'APIPassword' => getenv('PAYPAL_PASS') ?: false,
-            'APISignature' => getenv('PAYPAL_SIGNATURE') ?: false,
-            'PrintHeaders' => false,
-            'LogResults' => true,
-            'LogPath' => storage_path().'/logs/PayPal.log',
+            'Sandbox'      => getenv('PAYPAL_TESTMODE') ?: TRUE,
+            'APIUsername'  => getenv('PAYPAL_USER') ?: FALSE,
+            'APIPassword'  => getenv('PAYPAL_PASS') ?: FALSE,
+            'APISignature' => getenv('PAYPAL_SIGNATURE') ?: FALSE,
+            'PrintHeaders' => FALSE,
+            'LogResults'   => TRUE,
+            'LogPath'      => storage_path() . '/logs/PayPal.log',
         ];
 
         $this->paypal = new angelleye\PayPal\PayPal($this->paypal_config);
     }
 
 
-
     /**
      * @param string $currenctyCode
      */
-    public function setCurrenctyCode($currenctyCode)
+    public function setCurrency($currenctyCode)
     {
-        $this->currenctyCode = $currenctyCode;
-    }
+        $this->currency = $currenctyCode;
 
-    /**
-     * @param string $receivertype
-     */
-    public function setReceivertype($receivertype)
-    {
-        $this->receivertype = $receivertype;
+        return $this;
     }
 
     /**
@@ -53,73 +50,52 @@ class WithdrawalPayment {
      */
     public function setSubject($emailSubject)
     {
-        $this->emailSubject = $emailSubject;
+        $this->subject = $emailSubject;
+
+        return $this;
     }
 
-'l_email' => 'andrew_1342623385_per@angelleye.com', 							// Required.  Email address of recipient.  You must specify either L_EMAIL or L_RECEIVERID but you must not mix the two.
-'l_amt' => '10.00', 								// Required.  Payment amount.
-'l_uniqueid' => '', 						// Transaction-specific ID number for tracking in an accounting system.
-'l_note' => ''
+    public function addUser($params = [])
+    {
+        $this->recipients[] = [
+            'l_email'    => $params['email'],
+            'l_amt'      => number_format($params['amount'], 2),
+            'l_uniqueid' => $params['id'],
+            'l_note'     => ''
+        ];
 
-    public function addUser($params = []) {
-        $recipient = [
-            'l_email' =>
-
-        ]
+        return $this;
     }
 
 
+    public function pay()
+    {
 
-    public function pay() {
+        if (count($this->recipients) == 0) {
+            throw new \Exception('Please Add Recipients');
+        }
+
+        $this->setFields();
 
 
+        $PayPalRequestData = ['MPFields' => $this->fields, 'MPItems' => $this->recipients];
+
+        // Pass data into class for processing with PayPal and load the response array into $PayPalResult
+        $PayPalResult = $this->paypal->MassPay($PayPalRequestData);
+
+
+        Log::info($PayPalResult);
+
+        d($PayPalResult);
+    }
+
+    private function setFields()
+    {
+        $this->fields = [
+            'emailsubject' => $this->subject,
+            'currencycode' => $this->currency,
+            'receivertype' => $this->receivertype
+        ];
     }
 
 }
-
-
-// Prepare request arrays
-$MPFields = array(
-    'emailsubject' => 'Test MassPay', 						// The subject line of the email that PayPal sends when the transaction is completed.  Same for all recipients.  255 char max.
-    'currencycode' => 'USD', 						// Three-letter currency code.
-    'receivertype' => 'EmailAddress' 						// Indicates how you identify the recipients of payments in this call to MassPay.  Must be EmailAddress or UserID
-);
-
-// Typically, you'll loop through some sort of records to build your MPItems array.
-// Here I simply include 3 items individually.
-
-$Item1 = array(
-    'l_email' => 'andrew_1342623385_per@angelleye.com', 							// Required.  Email address of recipient.  You must specify either L_EMAIL or L_RECEIVERID but you must not mix the two.
-    'l_receiverid' => '', 						// Required.  ReceiverID of recipient.  Must specify this or email address, but not both.
-    'l_amt' => '10.00', 								// Required.  Payment amount.
-    'l_uniqueid' => '', 						// Transaction-specific ID number for tracking in an accounting system.
-    'l_note' => '' 								// Custom note for each recipient.
-);
-
-$Item2 = array(
-    'l_email' => 'usb_1329725429_biz@angelleye.com', 							// Required.  Email address of recipient.  You must specify either L_EMAIL or L_RECEIVERID but you must not mix the two.
-    'l_receiverid' => '', 						// Required.  ReceiverID of recipient.  Must specify this or email address, but not both.
-    'l_amt' => '10.00', 								// Required.  Payment amount.
-    'l_uniqueid' => '', 						// Transaction-specific ID number for tracking in an accounting system.
-    'l_note' => '' 								// Custom note for each recipient.
-);
-
-$Item3 = array(
-    'l_email' => 'andrew_1277258815_per@angelleye.com', 							// Required.  Email address of recipient.  You must specify either L_EMAIL or L_RECEIVERID but you must not mix the two.
-    'l_receiverid' => '', 						// Required.  ReceiverID of recipient.  Must specify this or email address, but not both.
-    'l_amt' => '10.00', 								// Required.  Payment amount.
-    'l_uniqueid' => '', 						// Transaction-specific ID number for tracking in an accounting system.
-    'l_note' => '' 								// Custom note for each recipient.
-);
-
-$MPItems = array($Item1, $Item2, $Item3);  // etc
-
-$PayPalRequestData = array('MPFields'=>$MPFields, 'MPItems' => $MPItems);
-
-// Pass data into class for processing with PayPal and load the response array into $PayPalResult
-$PayPalResult = $PayPal->MassPay($PayPalRequestData);
-
-// Write the contents of the response array to the screen for demo purposes.
-echo '<pre />';
-print_r($PayPalResult);
-?>
