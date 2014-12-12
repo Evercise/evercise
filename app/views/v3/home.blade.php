@@ -66,7 +66,7 @@
 
                 {{ Form::close() }}
             </div>
-            <div class="row no-gutter hidden-md">
+            <div class="row no-gutter hidden-md hidden-lg">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-12">
                         <div class="input-group with-addon mb10">
