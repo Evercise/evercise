@@ -117,11 +117,16 @@ createClass.prototype = {
         }
     },
     failedValidation: function(data){
-        self = this;
+        var self = this;
         var arr = data.errors;
         $.each(arr, function(index, value)
         {
-            if(self.form.find('input[name="' + index+ '"]').parent().hasClass('input-group')){
+            if( index == 'venue_select'){
+                self.form.find('#venue_select').parent().parent().addClass('has-error');
+                self.form.find('#venue_select').parent().after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
+                self.form.find('#venue_select').parent().after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="' + index + '"></i>');
+            }
+            else if(self.form.find('input[name="' + index+ '"]').parent().hasClass('input-group')){
                 self.form.find('input[name="' + index + '"]').parent().parent().addClass('has-error');
                 self.form.find('input[name="' + index + '"]').parent().after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
                 self.form.find('input[name="' + index + '"]').parent().after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="' + index + '"></i>');
