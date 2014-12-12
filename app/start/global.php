@@ -34,7 +34,7 @@ ClassLoader::addDirectories(array(
 |
 */
 
-Log::useFiles(storage_path().'/logs/laravel.log');
+Log::useDailyFiles(storage_path().'/logs/laravel.log');
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +114,19 @@ require app_path().'/composers.php';
 */
 
 require app_path().'/observables.php';
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Require The cronjobs config File
+|--------------------------------------------------------------------------
+|
+| Load a file containing the observables
+|
+*/
+
+require app_path().'/start/cronjobs.php';
 
 
 

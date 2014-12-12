@@ -148,12 +148,15 @@ class Mail
     public function welcomeGuest($user, $link = '')
     {
 
-
         $params = [
-            'subject' => 'Welcome to Evercise',
-            'view'    => 'v3.emails.user.welcome_guest',
-            'user'    => $user,
-            'link'    => $link
+            'subject'  => 'Welcome to Evercise',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.user.welcome_guest',
+            'user'     => $user,
+            'banner'   => FALSE,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/uk/'),
+            'link'     => $link
         ];
 
         $this->send($user->email, $params);
@@ -578,28 +581,28 @@ class Mail
             'evercisegroup' => $evercisegroup,
             'transactionId' => $transactionId,
             'link_url'      => $this->url->to('/'),
-            'image'         => 'http://evertest.evercise.com/assets/img/email/user_default.jpg',
+            'image'         => image('assets/img/email/user_default.jpg', 'someone has joined your classs'),
         ];
 
         $this->send($user->email, $params);
 
     }
 
-    public function userReviewedClass($user, $trainer, $review, $class)
+    public function userReviewedClass($user, $trainer, $review, $session, $evercisegroup)
     {
 
         $params = [
-            'subject'       => 'A User just Joined your Class',
+            'subject'       => 'A User Has Reviewed Your Class',
             'view'          => 'v3.emails.trainer.user_joined_class',
             'user'          => $user,
             'trainer'       => $trainer,
             'review'        => $review,
-            'session'       => $class,
+            'session'       => $session,
+            'evercisegroup' => $evercisegroup,
             'link_url'      => $this->url->to('/'),
         ];
 
         $this->send($user->email, $params);
-
     }
 
 

@@ -125,7 +125,8 @@ return array(
         'Pingpong\Shortcode\ShortcodeServiceProvider',
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
         'Igormatkovic\Livelogger\LiveloggerServiceProvider',
-        'Davispeixoto\LaravelSalesforce\LaravelSalesforceServiceProvider'
+        'Davispeixoto\LaravelSalesforce\LaravelSalesforceServiceProvider',
+        'Liebig\Cron\CronServiceProvider'
 
 
 

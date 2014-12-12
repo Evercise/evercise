@@ -8534,10 +8534,11 @@ a.bg-light-grey:hover {
   background-position: -360px -480px;
 }
 .icon-loading {
-  background-image: url("../img/spinner.gif");
+  background-image: url("../img/spinning-circles.svg");
   background-position: 50% 50%;
   background-repeat: no-repeat;
   overflow: hidden;
+  background-size: 22px 22px;
 }
 .icon-loading.active {
   background-position: 50% 10%;

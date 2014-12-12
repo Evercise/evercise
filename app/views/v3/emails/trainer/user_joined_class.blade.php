@@ -4,11 +4,8 @@
 
 @section('body')
 
-<p>Dear {{$trainer->display_name}}</p>
-<p>Someone has joined your class (Whoop!)</p>
-<p>name of user: {{$user->display_name}}</p>
-<p>name of group: {{$evercisegroup->name}}</p>
-<p>session: {{$session->date_time}}</p>
-<p>transaction id: {{Transactions::find($transactionId)->transaction}}</p>
+<strong>Hey <span class="pink-text">{{$trainer->display_name}}</span> </strong>
+<p><span class="pink-text">{{$user->display_name}}</span> has joined your class <span class="pink-text">{{$evercisegroup->name}}</span> on the <span class="pink-text">{{$session->date_time}}</span></p>
+<p>Their transaction id is: <span class="pink-text">{{Transactions::find($transactionId)->transaction}}</span></p>
 
 @stop

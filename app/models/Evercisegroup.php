@@ -1102,7 +1102,7 @@ class Evercisegroup extends \Eloquent
 
         // test to see if trainer is a tester and the user is not
         if ($userTrainer->inGroup($testers) && $testerLoggedIn == FALSE) {
-            return ['error' => 'trainer is tester, user is not'];
+    //        return ['error' => 'trainer is tester, user is not'];
         }
 
         /* if no upcoming sessions then redirect to discover page */

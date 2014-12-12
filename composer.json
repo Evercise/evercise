@@ -34,7 +34,8 @@
         "igormatkovic/laravel-livelogger": "~1.0",
         "davispeixoto/laravel-salesforce": "1.*",
         "hgg/pardot": "dev-master",
-        "tijsverkoyen/css-to-inline-styles": "~1.5"
+        "tijsverkoyen/css-to-inline-styles": "~1.5",
+        "liebig/cron": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
@@ -54,6 +55,7 @@
         ],
         "psr-4": {
             "events\\": "app/events/",
+            "cronjobs\\": "app/cronjobs/",
             "composers\\": "app/composers/"
         }
     },

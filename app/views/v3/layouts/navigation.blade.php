@@ -75,12 +75,12 @@
         <li>{{HTML::linkRoute('blog', 'Blog' , null , ['class' => Route::currentRouteName() == 'blog' ? 'nav-list active' : 'nav-list'])}}</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
+          <li  id="cart-dropdown" class="dropdown">
               <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
               {{ isset($cart) ? $cart : '' }}
           </li>
 
-          <li id="cart-dropdown" class="dropdown">
+          <li class="dropdown">
               <a href="#" class="dropdown-toggle nav-list" data-toggle="dropdown">Login</a>
               <ul class="dropdown-menu" role="menu">
                   @include('v3.auth.login')
