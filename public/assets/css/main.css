@@ -7217,6 +7217,10 @@ a.bg-light-grey:hover {
 .condensed {
   line-height: 14px;
 }
+.custom-inline-error {
+  float: left;
+  margin-bottom: -30px;
+}
 @media (max-width: 767px) {
   .sm-text-center {
     text-align: center;

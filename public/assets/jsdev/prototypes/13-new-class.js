@@ -123,8 +123,7 @@ createClass.prototype = {
         {
             if( index == 'venue_select'){
                 self.form.find('#venue_select').parent().parent().addClass('has-error');
-                self.form.find('#venue_select').parent().after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
-                self.form.find('#venue_select').parent().after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="' + index + '"></i>');
+                self.form.find('#venue_select').parent().after('<small class="help-block custom-inline-error" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
             }
             else if(self.form.find('input[name="' + index+ '"]').parent().hasClass('input-group')){
                 self.form.find('input[name="' + index + '"]').parent().parent().addClass('has-error');
