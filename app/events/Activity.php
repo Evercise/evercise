@@ -450,21 +450,22 @@ class Activity
      * @param $user
      * @param $class
      */
-    public function userReviewedClass($user, $trainer, $review, $class)
+    public function userReviewedClass($user, $trainer, $rating, $session, $evercisegroup)
     {
 
         $this->activities->create([
             'title'       => 'You recently reviewed',
             'type'        => 'classreviewed',
-            'description' => $class->name,
+            'description' => $evercisegroup->name,
             'user_id'     => $user->id,
-            'type_id'     => $class->id,
-            'link'        => 'classes/' . $class->id,
+            'type_id'     => $evercisegroup->id,
+            'link'        => 'classes/' . $evercisegroup->id,
             'link_title'  => 'View',
             'image'       => 'classreviewed.png',
         ]);
 
-        $this->mail->userReviewedClass($user, $trainer, $review, $class);
+        $this->mail->userReviewedClass($user, $trainer, $rating, $session, $evercisegroup);
+        $this->mail->thanksForReview($user, $trainer, $rating, $session, $evercisegroup);
 
     }
 

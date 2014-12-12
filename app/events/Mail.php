@@ -588,17 +588,34 @@ class Mail
 
     }
 
-    public function userReviewedClass($user, $trainer, $review, $session, $evercisegroup)
+    public function userReviewedClass($user, $trainer, $rating, $session, $evercisegroup)
     {
 
         $params = [
             'subject'       => 'A User Has Reviewed Your Class',
-            'view'          => 'v3.emails.trainer.user_joined_class',
+            'view'          => 'v3.emails.trainer.user_reviewed_class',
             'user'          => $user,
             'trainer'       => $trainer,
-            'review'        => $review,
+            'rating'        => $rating,
             'session'       => $session,
             'evercisegroup' => $evercisegroup,
+            'link_url'      => $this->url->to('/'),
+        ];
+
+        $this->send($trainer->email, $params);
+    }
+
+    public function thanksForReview($user, $trainer, $rating, $session, $evercisegroup)
+    {
+
+        $params = [
+            'subject'       => 'Thanks for the review!',
+            'view'          => 'v3.emails.user.thanks_review',
+            'user'          => $user,
+            'trainer'       => $trainer,
+            'review'        => $rating,
+            'session'       => $session,
+            'group' => $evercisegroup,
             'link_url'      => $this->url->to('/'),
         ];
 
