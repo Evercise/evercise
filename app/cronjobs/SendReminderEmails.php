@@ -2,6 +2,7 @@
 
 
 use Illuminate\Log\Writer;
+use Illuminate\Console\Application as Artisan;
 
 
 class SendReminderEmails
@@ -13,7 +14,7 @@ class SendReminderEmails
      */
     private $artisan;
 
-    public function __construct(Writer $log, \Artisan $artisan)
+    public function __construct(Writer $log, Artisan $artisan)
     {
 
         $this->log = $log;
