@@ -1,5 +1,5 @@
 <div id="gridview" ng-show="view == 'gridview'" class="discover-nav-spacer">
-    <div class="container-fluid bg-grey">
+    <div class="container-fluid bg-light-grey">
         <div class="container">
             <div class="row">
                 <div class="mt15 mb20 pull-left visible-lg-block">

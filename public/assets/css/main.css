@@ -10908,6 +10908,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .carousel-indicators {
   bottom: -20px;
 }
+.carousel-indicators li {
+  background: #768690;
+  border-color: #768690;
+}
+.carousel-indicators li.active {
+  border-color: #ff1b7e;
+}
 .holder {
   background-color: #e8ebec;
   width: 100%;
