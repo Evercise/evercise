@@ -6,9 +6,11 @@
 
 <p>Hey <span class="blue-text">{{$name}}</span></p>
 <p>Don&apos;t forget your upcoming class!</p>
+
 <p>Dont fortget your class <span class="blue-text">{{ $group->name }}</span> is coming up on the {{ date('M jS, g:ia', strtotime($dateTime)) }}</p>
 <p>This class iis held by <span class="blue-text">{{ $trainerName }}</span> </p>
 <p>Your transaction ID: <strong class="blue-text">{{ $transactionId }}</strong></p>
+
 
 <p>Take note of your unique booking code. Your trainer will need this - along with another form of ID - to identify you.</p>
 <p>Please try to arrive 15 minutes before the specified start time. Late arrivals can be rejected.</p>

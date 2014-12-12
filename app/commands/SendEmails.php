@@ -74,7 +74,8 @@ class SendEmails extends Command {
 						];
 					}
 					$emails[] = [
-						'group'=>$group->name,
+						'groupName'=>$group->name,
+						'group'=>$group,
 						'dateTime'=>$session->date_time,
 						'userList' =>$userList,
 						'trainer'=>$group->user,
@@ -92,7 +93,7 @@ class SendEmails extends Command {
 			foreach($emails as $email)
 			{
 				$this->info('');
-				$this->info('Session: '.$email['group'].' - '.$email['dateTime']);
+				$this->info('Session: '.$email['groupName'].' - '.$email['dateTime']);
 				$this->info('Trainer: '.$email['trainer']->id.' - '.$email['trainer']->display_name);
 				$this->info('Venue: '.$email['location']);
 				foreach ($email['userList'] as $name => $details)
@@ -103,7 +104,7 @@ class SendEmails extends Command {
 				// Pang out an email with a list of users
 				Event::fire('session.upcoming_session', [
 	            	'userList' => $email['userList'], 
-	            	'group' => $email['group'], 
+	            	'group' => $email['group'],
 	                'location' => $email['location'],
 	                'dateTime' => $email['dateTime'],
 	                'trainerName' => $email['trainer']->first_name.' '.$email['trainer']->last_name,
