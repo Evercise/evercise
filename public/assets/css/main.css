@@ -9544,6 +9544,9 @@ label {
 .custom-select .input-sm {
   line-height: 20px;
 }
+.input-group .custom-select select {
+  border-radius: 0;
+}
 @-moz-document url-prefix() {
   .custom-select {
     position: relative;
