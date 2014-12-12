@@ -9535,7 +9535,7 @@ label {
 .custom-select .input-sm {
   line-height: 20px;
 }
-.input-group .custom-select:before {
+.custom-select-white:before {
   position: absolute;
   content: '';
   top: 0;
