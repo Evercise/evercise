@@ -130,7 +130,7 @@ class SessionsController extends AjaxBaseController
         $evercisegroupId = isset($inputs['evercisegroup_id']) ? $inputs['evercisegroup_id'] : $inputs['evercisegroupId'];
         $time = $inputs['time'];
         $duration = $inputs['duration'];
-        $tickets = isset($inputs['tickets']) ?: $inputs['members'];
+        $tickets = isset($inputs['tickets']) ? $inputs['tickets'] : $inputs['members'];
         $price = $inputs['price'];
 
         if (Input::get('session_array', FALSE)) {
