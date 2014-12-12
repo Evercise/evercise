@@ -20,6 +20,7 @@ class ReminderForPayments
 
     function run()
     {
+        $this->log->info('Sending Payments Reminder');
 
         $payments = \Withdrawalrequest::where('processed', 0)->count();
 
