@@ -211,6 +211,10 @@ $(function(){
         new MailPopup(this);
     })
 
+    $('#withdraw-funds').exists(function(){
+        new Withdrawal(this);
+    })
+
 
 
 

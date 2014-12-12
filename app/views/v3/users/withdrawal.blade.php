@@ -12,9 +12,13 @@
       </div>
       <div class="modal-body text-left">
             {{ Form::open(['route' => 'ajax.process.withdrawal', 'method'=>'post']) }}
+                <div class="form-group">
+                    {{ Form::text('paypal', $user->paypal_email, ['class' => 'form-control']) }}
+                </div>
+                <div class="form-group">
+                    {{ Form::number('amount', 1, ['class' => 'form-control']) }} MAX: {{ number_format($wallet->balance,2) }}
+                </div>
 
-                {{ Form::text('paypal', $user->paypal_email) }}
-                {{ Form::number('amount', 1) }} MAX: {{ number_format($wallet->balance,2) }}
                 {{ Form::submit('Request') }}
 
             {{ Form::close() }}

@@ -10,10 +10,10 @@
 
                   <li class="list-group-item ">
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-7">
                             <h3>Current Balance: <span class="text-primary">£{{round($data['user']->getWallet()->getBalance(), 2)}}</span> </h3>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-5 text-right">
                             {{ Form::open(['route' => 'ajax.request.withdrawal', 'method' => 'post', 'id' => 'withdraw-funds']) }}
                                 {{ Form::submit('Withdraw Funds', ['class' => 'btn btn-default']) }}
                             {{Form::close()}}

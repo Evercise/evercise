@@ -93,7 +93,13 @@ createClass.prototype = {
             },
 
             success: function (data) {
-                window.location.href = data.url
+                if(data.validation_failed){
+                    console.log(data);
+                }
+                else{
+                    window.location.href = data.url;
+                }
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);

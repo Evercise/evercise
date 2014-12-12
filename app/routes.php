@@ -162,7 +162,7 @@ Route::group(['prefix' => 'ajax'], function () {
 
 
     Route::post('withdrawal/request', ['as' => 'ajax.request.withdrawal', 'uses' => 'ajax\UsersController@requestWithdrawal']);
-    Route::post('withdrawal/process', ['as' => 'ajax.process.withdrawalajax.process.withdrawal', 'uses' => 'ajax\UsersController@makeWithdrawal']);
+    Route::post('withdrawal/process', ['as' => 'ajax.process.withdrawal', 'uses' => 'ajax\UsersController@makeWithdrawal']);
 
 });
 
