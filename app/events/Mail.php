@@ -262,7 +262,9 @@ class Mail
                 'trainerName'  => $trainerName,
                 'trainerEmail' => $trainerEmail,
                 'classId'      => $classId,
-                'transactionId'=> $details['transactionId']
+                'transactionId'=> $details['transactionId'],
+                'image'        => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
+                'link_url'     => $this->url->to('/profile/' . $group->slug)
             ];
 
             $this->send($email, $params);
@@ -504,6 +506,8 @@ class Mail
             'trainerEmail' => $trainerEmail,
             'classId'      => $classId,
             'sessionId'    => $sessionId,
+            'image'      => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
+            'link_url'   => $this->url->to('/download_user_list/'.$sessionId)
         ];
 
         $this->send($trainerEmail, $params);

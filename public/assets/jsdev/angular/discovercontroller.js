@@ -38,6 +38,7 @@ if(typeof angular != 'undefined') {
 
 
         var createMarker = function (data) {
+            console.log(data);
             var result = {
                 id: data.id,
                 name: data.name,
