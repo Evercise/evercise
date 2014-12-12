@@ -49,7 +49,7 @@ $(document).ready(function() {
                 @endforeach
             </table>
             <br>
-            {{ Form::submit('Process now!') }}
+            {{ Form::submit('Process now!', array('class'=>'btn-yellow btn btn-info')) }}
             {{ Form::close() }}
             <br>
             <br>

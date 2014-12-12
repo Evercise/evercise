@@ -25,6 +25,7 @@ return [
         'milestonecompleted'
     ],
     'payments_to_trainers'        => 'Monday 4pm',
+    'pending_emails'              => ['mlatko@gmail.com'],
     'commission'                  => 10, //Default commission
     'upload_dir'                  => 'files/',
     'testing_ips'                 => ['188.39.12.12', '192.168', '127.0.0'],
