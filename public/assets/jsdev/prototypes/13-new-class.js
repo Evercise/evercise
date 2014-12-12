@@ -95,6 +95,7 @@ createClass.prototype = {
             success: function (data) {
                 if(data.validation_failed == 1){
                     self.failedValidation(data);
+                    console.log(data);
                 }
                 else{
                     window.location.href = data.url;
