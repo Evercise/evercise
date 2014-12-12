@@ -2,7 +2,6 @@
 
 @section('body')
     <p><strong>No worries, it happens! Here&apos;s how to reset it.</strong></p>
-    <p>Hi <span class="pink-text">{{ $user->first_name }}</span> </p>
     <p>Simply click the link below.</p>
 @stop
 @section('extra')

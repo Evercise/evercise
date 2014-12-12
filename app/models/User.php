@@ -618,10 +618,10 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-    public function sendForgotPasswordEmail($user, $reset_code)
+    public function sendForgotPasswordEmail($reset_code)
     {
 
-        event('user.forgot.password', [$user, $reset_code]);
+        event('user.forgot.password', [$this, $reset_code]);
     }
 
     /**

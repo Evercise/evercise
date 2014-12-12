@@ -98,7 +98,7 @@
                                 <table width="100%" height="20" cellspacing="0" cellpadding="30" bgcolor="#ffffff">
                                     <tr>
                                         <td>
-                                            <a style="color:#50c3e2" href="{{ $unsubscribe }}">Unsubscribe</a>
+                                            {{ $unsubscribe }}
                                         </td>
                                     </tr>
                                 </table>

@@ -92,7 +92,7 @@ class Mail
             'image'        => image('assets/img/email/user_default.jpg', 'Evercise'),
             'banner'       => FALSE,
             'banner_types' => $this->banner_types,
-            'css'          => file_get_contents((php_sapi_name() === 'cli' ? './public/':'./').'assets/css/mail.css')
+            'css'          => file_get_contents((php_sapi_name() === 'cli' ? './public/' : './') . 'assets/css/mail.css')
         ];
 
     }
@@ -112,9 +112,9 @@ class Mail
             'user'        => $user,
             'cart'        => $cart,
             'transaction' => $transaction,
-            'banner'   => NULL,
-            'image'    => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
-            'link_url' => $this->url->to('/uk/')
+            'banner'      => NULL,
+            'image'       => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
+            'link_url'    => $this->url->to('/uk/')
         ];
 
         $this->send($user->email, $params);
@@ -252,21 +252,21 @@ class Mail
         foreach ($userList as $name => $details) {
             $email = $details['email'];
             $params = [
-                'subject'      => 'Evercise class reminder',
-                'title'        => 'EVERCISE CLASS REMINDER',
-                'view'         => 'v3.emails.user.session_remind',
-                'userList'     => $userList,
-                'group'        => $group,
-                'location'     => $location,
-                'name'         => $name,
-                'email'        => $email,
-                'dateTime'     => $dateTime,
-                'trainerName'  => $trainerName,
-                'trainerEmail' => $trainerEmail,
-                'classId'      => $classId,
-                'transactionId'=> $details['transactionId'],
-                'image'        => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
-                'link_url'     => $this->url->to('/profile/' . $group->slug)
+                'subject'       => 'Evercise class reminder',
+                'title'         => 'EVERCISE CLASS REMINDER',
+                'view'          => 'v3.emails.user.session_remind',
+                'userList'      => $userList,
+                'group'         => $group,
+                'location'      => $location,
+                'name'          => $name,
+                'email'         => $email,
+                'dateTime'      => $dateTime,
+                'trainerName'   => $trainerName,
+                'trainerEmail'  => $trainerEmail,
+                'classId'       => $classId,
+                'transactionId' => $details['transactionId'],
+                'image'         => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
+                'link_url'      => $this->url->to('/profile/' . $group->slug)
             ];
 
             $this->send($email, $params);
@@ -309,10 +309,10 @@ class Mail
             'referralCode' => $referralCode,
             'referrerName' => $referrerName,
             'image'        => image('/assets/img/email/welcome_from_referral.png', 'Join your friends on Evercise'),
-            'link_url'     => $this->url->to('/refer_a_friend/'.$referralCode),
+            'link_url'     => $this->url->to('/refer_a_friend/' . $referralCode),
             'banner'       => [
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
-                'url'   => $this->url->to('/refer_a_friend/'.$referralCode),
+                'url'   => $this->url->to('/refer_a_friend/' . $referralCode),
                 'title' => 'SignUp Today and Receive £5'
             ],
         ];
@@ -329,15 +329,15 @@ class Mail
     public function thanksForInviting($email, $referrerName, $referreeEmail, $balanceWithBonus)
     {
         $params = [
-            'subject'      => 'Thanks for sharing!',
-            'view'         => 'v3.emails.user.thanks_inviting',
-            'email'        => $email,
-            'refereeEmail' => $referreeEmail,
-            'referrerName' => $referrerName,
+            'subject'          => 'Thanks for sharing!',
+            'view'             => 'v3.emails.user.thanks_inviting',
+            'email'            => $email,
+            'refereeEmail'     => $referreeEmail,
+            'referrerName'     => $referrerName,
             'balanceWithBonus' => $balanceWithBonus,
-            'image'        => image('/assets/img/email/referral_thanks.jpg', 'Thanks for sharing!'),
-            'link_url' => $this->url->to('/uk/'),
-            'banner'       => false
+            'image'            => image('/assets/img/email/referral_thanks.jpg', 'Thanks for sharing!'),
+            'link_url'         => $this->url->to('/uk/'),
+            'banner'           => FALSE
         ];
 
         $this->send($email, $params);
@@ -470,7 +470,11 @@ class Mail
      * @param $evercisegroup
      * @internal param $session
      */
-    public function userJoinedTrainersSession($user, $trainer, $evercisegroup) // Not actually used as it's the same as trainerJoinSession
+    public function userJoinedTrainersSession(
+        $user,
+        $trainer,
+        $evercisegroup
+    ) // Not actually used as it's the same as trainerJoinSession
     {
         $params = [
             'subject'       => 'User Joined Your Class',
@@ -496,8 +500,16 @@ class Mail
      *
      * Event: session.upcoming_session
      */
-    public function trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId)
-    {
+    public function trainerSessionRemind(
+        $userList,
+        $group,
+        $location,
+        $dateTime,
+        $trainerName,
+        $trainerEmail,
+        $classId,
+        $sessionId
+    ) {
         $params = [
             'subject'      => 'Class reminder & participant list',
             'view'         => 'v3.emails.trainer.session_remind',
@@ -509,8 +521,8 @@ class Mail
             'trainerEmail' => $trainerEmail,
             'classId'      => $classId,
             'sessionId'    => $sessionId,
-            'image'      => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
-            'link_url'   => $this->url->to('/download_user_list/'.$sessionId)
+            'image'        => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
+            'link_url'     => $this->url->to('/download_user_list/' . $sessionId)
         ];
 
         $this->send($trainerEmail, $params);
@@ -616,14 +628,14 @@ class Mail
     {
 
         $params = [
-            'subject'       => 'Thanks for the review!',
-            'view'          => 'v3.emails.user.thanks_review',
-            'user'          => $user,
-            'trainer'       => $trainer,
-            'review'        => $rating,
-            'session'       => $session,
-            'group' => $evercisegroup,
-            'link_url'      => $this->url->to('/'),
+            'subject'  => 'Thanks for the review!',
+            'view'     => 'v3.emails.user.thanks_review',
+            'user'     => $user,
+            'trainer'  => $trainer,
+            'review'   => $rating,
+            'session'  => $session,
+            'group'    => $evercisegroup,
+            'link_url' => $this->url->to('/'),
         ];
 
         $this->send($user->email, $params);
@@ -657,6 +669,36 @@ class Mail
 
     /**
      * ########################################################################################
+     * #####            ADMIN STUFF           #################################################
+     * ########################################################################################
+     */
+
+
+    public function adminSendReminderForPayments($total)
+    {
+
+
+        $emails = $this->config->get('evercise.pending_emails');
+
+        foreach ($emails as $email) {
+            $params = [
+                'subject' => 'You have ' . $total . ' pending payments',
+                'view'    => 'v3.emails.admin.payments_reminder',
+                'total'   => $total,
+                'link_url'     => $this->url->route('admin.pending_withdrawal'),
+                'image'        => image('assets/img/email/admin.jpg', 'Evercise'),
+            ];
+
+            $this->send($email, $params);
+        }
+    }
+
+
+
+
+
+    /**
+     * ########################################################################################
      * #####          DEFAULT STUFF           #################################################
      * ########################################################################################
      */
@@ -682,7 +724,7 @@ class Mail
          **/
 
         $this->data = array_merge($this->data, $params);
-        if(is_string($this->data['banner']) && !empty($this->data['banner_types'][$this->data['banner']])) {
+        if (is_string($this->data['banner']) && !empty($this->data['banner_types'][$this->data['banner']])) {
             $this->data['banner'] = $this->data['banner_types'][$this->data['banner']];
         }
 
@@ -734,6 +776,11 @@ class Mail
 
         } else {
             try {
+
+                /** Remove Unsubscribe for now! */
+                $content = str_replace('%%unsubscribe%%', '', $content);
+                $plain_text = str_replace('%%unsubscribe%%', '', $plain_text);
+                
                 $this->email->send(['v3.emails.blank', 'v3.emails.plain_blank'],
                     ['content' => $content, 'plain_text' => $plain_text],
                     function ($message) use ($email, $subject, $attachments) {
