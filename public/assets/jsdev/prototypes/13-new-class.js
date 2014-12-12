@@ -94,7 +94,7 @@ createClass.prototype = {
 
             success: function (data) {
                 if(data.validation_failed){
-                    console.log(data);
+                    self.failedValidation(data);
                 }
                 else{
                     window.location.href = data.url;
@@ -114,5 +114,24 @@ createClass.prototype = {
         if( $("input[name='image']").val() && $("input[name='category_array[]']").val()) {
             this.form.find("input[type='submit']").prop('disabled', false);
         }
+    },
+    failedValidation: function(data){
+        self = this;
+        var arr = data.errors;
+        $.each(arr, function(index, value)
+        {
+            if(self.form.find('input[name="' + index+ '"]').parent().hasClass('input-group')){
+                self.form.find('input[name="' + index + '"]').parent().parent().addClass('has-error');
+                self.form.find('input[name="' + index + '"]').parent().after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
+                self.form.find('input[name="' + index + '"]').parent().after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="' + index + '"></i>');
+            }
+            else {
+                self.form.find('input[name="' + index + '"]').parent().addClass('has-error');
+                self.form.find('input[name="' + index + '"]').parent().find('.glyphicon').remove();
+                self.form.find('input[name="' + index + '"]').parent().find('.help-block:visible').remove();
+                self.form.find('input[name="' + index + '"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
+                self.form.find('input[name="' + index + '"]').after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="' + index + '"></i>');
+            }
+        })
     }
 }

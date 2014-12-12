@@ -1,8 +1,8 @@
 <div id="gridview" ng-show="view == 'gridview'" class="discover-nav-spacer">
     <div class="container-fluid bg-light-grey">
         <div class="container">
-            <div class="row">
-                <div class="mt15 mb20 pull-left visible-lg-block">
+            <div class="row sm-mt40">
+                <div class="mt15 mb20 pull-left visible-sm-block">
                     <div class="col-sm-6 mt5">
                         <strong>Your search return <span class="text-primary">{[{ results }]}</span> results</strong>
                     </div>
@@ -26,7 +26,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4"  ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter" id = {[{marker.id}]}>
+                <div class="col-sm-4"  ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter" id = {[{marker.id}]}>
                     <!--
                     <div class="class-module center-block">
                         <div class="class-image-wrapper">
