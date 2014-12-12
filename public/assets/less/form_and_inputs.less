@@ -97,6 +97,15 @@ label{
 
 .custom-select {
   position: relative;
+  &:before{
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: #ffffff;
+  }
   &:after{
     position: absolute;
     content: '';
@@ -108,7 +117,6 @@ label{
   }
   &:hover{
     &:after{
-      z-index: -1;
       .sprite(-50px, -280px);
     }
   }
@@ -118,7 +126,7 @@ label{
 
   select {
     background: transparent;
-    background-image: none;
+    line-height: 1;
     -webkit-appearance: none;
   }
   .input-sm{

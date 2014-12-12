@@ -202,9 +202,9 @@ $(function(){
         new listAccordion(this);
     })
 
-    $('#hero-carousel').exists(function() {
+    $('#hero-carousel , #image-carousel').exists(function() {
         $(this).carousel({
-            interval: 5000
+            interval: 3000
         })
     })
     $('#mail-popup').exists(function(){

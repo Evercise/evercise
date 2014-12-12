@@ -74,7 +74,7 @@
                             <li class="list-group-item bg-light-grey">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        {{ image('assets/img/Activity_Joined_Evercise.png', 'package', ['class' => 'img-responsive']) }}
+                                        {{ image('assets/img/activity/Activity_Joined_Evercise.png', 'package', ['class' => 'img-responsive']) }}
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="row">

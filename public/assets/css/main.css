@@ -9490,6 +9490,15 @@ label {
 .custom-select {
   position: relative;
 }
+.custom-select:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: #ffffff;
+}
 .custom-select:after {
   position: absolute;
   content: '';
@@ -9511,7 +9520,6 @@ label {
   background-position: -50px -280px;
 }
 .custom-select:hover:after {
-  z-index: -1;
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -280px;
   background-repeat: no-repeat;
@@ -9530,7 +9538,7 @@ label {
 }
 .custom-select select {
   background: transparent;
-  background-image: none;
+  line-height: 1;
   -webkit-appearance: none;
 }
 .custom-select .input-sm {

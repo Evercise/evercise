@@ -51,7 +51,9 @@
                             {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
 
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
+                            <div class="custom-select">
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
+                            </div>
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" type="submit">
                                      Find a Class
@@ -158,13 +160,13 @@
         </div>
     </div>
     <div class="container-fluid bg-grey">
-        <div class="container">
+        <div class="container mt20">
             <div class="underline">
                  <h1 class="text-center">Featured classes</h1>
             </div>
             <div class="row">
 
-                <div id="image-carousel" class="carousel slide" data-interval="false">
+                <div id="image-carousel" class="carousel slide" data-interval="true">
                     <!-- Indicators -->
                       <ol class="carousel-indicators">
                         @if(count($featured->hits) > 3)
@@ -198,16 +200,7 @@
                                 @endif
                             @endforeach
                       </div>
-                      @if(count($featured->hits) > 3)
-                          <!--/carousel-inner-->
-                          <a class="visible-lg-block left carousel-control" href="#image-carousel" data-slide="prev">
-                             <span class="icon icon-left-triangle"></span>
-                          </a>
 
-                          <a class="visible-lg-block right carousel-control" href="#image-carousel" data-slide="next">
-                             <span class="icon icon-right-triangle"></span>
-                          </a>
-                      @endif
                 </div>
             </div>
         </div>
