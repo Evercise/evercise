@@ -20,7 +20,7 @@
 
                             </div>
                             <div class="col-sm-6 text-right mt20">
-                                <h3>current balance: <span class="text-primary">£{{$balance}}</span> </h3>
+                                <h3>current balance: <span class="text-primary">£{{round($balance, 2)}}</span> </h3>
                             </div>
                         </div>
                     </li>
@@ -30,7 +30,7 @@
                             $date = new \Carbon\Carbon($row['date_time']);
                             $eg =  Evercisegroup::select('image', 'user_id')->where( 'id', $row['evercisegroup_id'])->first();
                             $directory = User::find($eg->user_id)->directory;
-                            $image = $directory .'/thumb_'.$eg->image;
+                            $image = $directory .'/preview_'.$eg->image;
                         ?>
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
@@ -74,7 +74,7 @@
                             <li class="list-group-item bg-light-grey">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        image
+                                        {{ image('assets/img/Activity_Joined_Evercise.png', 'package', ['class' => 'img-responsive']) }}
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="row">
@@ -99,20 +99,20 @@
                     <li class="list-group-item bg-light-grey">
                         <div class="row">
                             <div class="col-sm-6">
-                                <strong>Sub-total <span class="text-primary ml15">{{ $cart['total']['subtotal'] }}</span></strong>
+                                <strong>Sub-total <span class="text-primary ml15">£{{ round($cart['total']['subtotal'], 2) }}</span></strong>
                             </div>
                             <div class="col-sm-6 text-right">
                                 @if($cart['total']['package_deduct'] > 0)
-                                    <strong>Package deduct: <span class="text-primary"> £{{ $cart['total']['package_deduct']  }}</span></strong>
+                                    <strong>Package deduct: <span class="text-primary"> £{{ round($cart['total']['package_deduct'], 2)  }}</span></strong>
                                     <br>
                                 @endif
                                 @if($cart['total']['from_wallet'] > 0)
-                                    <strong>From Wallet: <span class="text-primary">£{{ $cart['total']['from_wallet']  }}</span></strong>
+                                    <strong>From Wallet: <span class="text-primary">£{{round( $cart['total']['from_wallet'], 2)  }}</span></strong>
                                     <br>
                                 @endif
                                 @if(!empty($cart['discount']['amount']) && $cart['discount']['amount'] > 0)
                                     <strong>
-                                        Voucher discount: <span class="text-primary ml15">- £{{ $cart['discount']['amount'] }}</span>
+                                        Voucher discount: <span class="text-primary ml15">- £{{ round($cart['discount']['amount'], 2) }}</span>
                                          @if($cart['discount']['type'] == 'percentage')
                                              <span class="text-primary ml15">{{ $cart['discount']['percentage']}}%</span>
                                          @endif
@@ -125,7 +125,7 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <strong>Total <span class="text-primary ml15">£{{$cart['total']['final_cost']}}</span></strong>
+                                    <strong>Total <span class="text-primary ml15">£{{ round($cart['total']['final_cost'], 2)}}</span></strong>
                                 </div>
                             </div>
                         </li>
