@@ -21,7 +21,6 @@ Cart.prototype = {
 
     },
     submit: function(e){
-        console.log('subb');
         e.preventDefault();
         e.stopPropagation();
         this.form = $(e.target);
