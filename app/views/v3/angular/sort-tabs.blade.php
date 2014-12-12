@@ -6,7 +6,7 @@
             <li  class="list-group-item"><a ng-click="setDistance('1') ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#1" >Less than 1 mile<span ng-class="{ active : maxDistance == '1' }" class="pull-right icon icon-checkbox hover"></span></a></li>
             <li  class="list-group-item"><a ng-click="setDistance('2') ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#2" >2 miles<span  ng-class="{ active : maxDistance == '2' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
             <li  class="list-group-item"><a ng-click="setDistance('5') ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#5" >5 miles<span  ng-class="{ active : maxDistance == '5' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
-            <li  class="list-group-item"><a ng-click="setDistance('200')' ; closeDropdown('filter')" role="menuitem" tabindex="-1" href="#200" >All<span  ng-class="{ active : maxDistance == '200' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
+            <li  class="list-group-item"><a ng-click="setDistance('200'); closeDropdown('filter')" role="menuitem" tabindex="-1" href="#200" >All<span  ng-class="{ active : maxDistance == '200' }"  class="pull-right icon icon-checkbox hover"></span></a></li>
         </ul>
     </div>
     <div role="tabpanel" class="tab-pane tab-pane-sort fade" id="sort">
