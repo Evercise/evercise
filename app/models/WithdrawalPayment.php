@@ -15,6 +15,15 @@ class WithdrawalPayment
     private $currency = 'GBP';
     private $receivertype = 'EmailAddress';
     private $recipients = [];
+
+    /**
+     * @return array
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
     private $fields;
 
     public function __construct(Writer $log, Repository $config)
@@ -86,7 +95,7 @@ class WithdrawalPayment
 
         Log::info($PayPalResult);
 
-        d($PayPalResult);
+        return $PayPalResult;
     }
 
     private function setFields()

@@ -300,15 +300,51 @@ class MainController extends \BaseController
     {
 
 
-        $pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->get();
+        $pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->orderBy('created_at', 'desc')->get();
 
-        $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->get();
+        $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->orderBy('created_at', 'desc')->get();
 
         return View::make('admin.pendingwithdrawals')
             ->with('pendingWithdrawals', $pendingWithdrawals)
             ->with('processedWithdrawals', $processedWithdrawals);
     }
 
+
+    public function processWithdrawalMulti() {
+
+        $process = Input::get('process');
+
+        $payments = Withdrawalrequest::whereIn('id', array_keys($process))->get();
+
+        if($payments->count() == 0) {
+            return Redirect::route('admin.pending_withdrawal')->with('notification', 'You need to select somebody !!!');
+        }
+
+
+        $paypal = App::make('WithdrawalPayment');
+
+        foreach($payments as $p) {
+            $paypal->addUser([
+                'id'    => $p->id,
+                'email' => $p->account,
+                'amount' => number_format($p->transaction_amount, 2)
+            ]);
+        }
+
+        $res = $paypal->pay();
+
+        if($res['ACK'] !== 'Success') {
+            return Redirect::route('admin.pending_withdrawal')->with('notification', 'Check if all the emails are Correct!!!!!');
+        }
+
+
+        foreach($payments as $p) {
+            $p->processed = 1;
+            $p->save();
+        }
+
+        return Redirect::route('admin.pending_withdrawal')->with('notification', 'Yaay.. you payed Somebody!!!');
+    }
 
     /**
      * @return \Illuminate\Http\RedirectResponse
@@ -439,6 +475,7 @@ class MainController extends \BaseController
 
         return View::make('admin.classes', compact('classes'));
     }
+
 
 
 

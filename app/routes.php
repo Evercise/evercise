@@ -616,6 +616,8 @@ Route::group(
             ['as' => 'admin.approve_trainer', 'uses' => 'MainController@approveTrainer']);
         Route::get('/pending_withdrawal',
             ['as' => 'admin.pending_withdrawal', 'uses' => 'MainController@pendingWithdrawal']);
+        Route::post('/pending_withdrawal_multi',
+            ['as' => 'admin.pending.process', 'uses' => 'MainController@processWithdrawalMulti']);
         Route::post('/process_withdrawal',
             ['as' => 'admin.process_withdrawal', 'uses' => 'MainController@processWithdrawal']);
 
