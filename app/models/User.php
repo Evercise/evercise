@@ -558,6 +558,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     /**
      * @return \Cartalyst\Sentry\Users\UserInterface
+     *
+     * Store
      */
     public static function registerUser($inputs)
     {
@@ -568,7 +570,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
         $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ? $inputs['gender'] : NULL;
+        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 0 : 1) : NULL;
 
         $user = Sentry::register(
             [

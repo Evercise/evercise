@@ -111,6 +111,10 @@ return [
         ['venue.update' => 'Classes@venueUpdated'],
 
 
+        ['user.facebook.connected' => 'User@connectedFacebook'], // $user
+        ['user.twitter.connected' => 'User@connectedTwitter'], // $user
+
+
     ],
     '5'  => [
         ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName, $referrerEmail, $balanceWithBonus // ∑

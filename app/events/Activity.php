@@ -258,11 +258,16 @@ class Activity
     public function linkFacebook($user)
     {
 
-        //        $this->activities->create([
-        //            'description' => 'Linked Facebook account',
-        //            'type'        => 'linkfacebook',
-        //            'user_id'     => $user->id
-        //        ]);
+        $this->activities->create([
+            'title'       => 'Facebook',
+            'type'        => 'linkfacebook',
+            'description' => 'Linked account',
+            'user_id'     => $user->id,
+            'type_id'     => $user->id,
+            'link'        => 'profile/' . $user->display_name,
+            'link_title'  => 'Profile',
+            'image'       => 'assets/img/activity/Activity_Facebook_Connected.png',
+        ]);
     }
 
     /**
@@ -271,11 +276,16 @@ class Activity
     public function linkTwitter($user)
     {
 
-        //        $this->activities->create([
-        //            'description' => 'Linked Twitter account',
-        //            'type'        => 'linktwitter',
-        //            'user_id'     => $user->id
-        //        ]);
+        $this->activities->create([
+            'title'       => 'Twitter',
+            'type'        => 'linkedtwitter',
+            'description' => 'Linked account',
+            'user_id'     => $user->id,
+            'type_id'     => $user->id,
+            'link'        => 'profile/' . $user->display_name,
+            'link_title'  => 'Profile',
+            'image'       => 'assets/img/activity/Activity_Twitter_Connected.png',
+        ]);
     }
 
     /**
@@ -322,7 +332,7 @@ class Activity
     public function createdVenue($venue, $user)
     {
         $this->activities->create([
-            'title'       => 'You created a Venue',
+            'title'       => 'Venue Created',
             'description' => $venue->name,
             'type'        => 'createvenue',
             'description' => $venue->name,
@@ -374,7 +384,7 @@ class Activity
     public function updatedVenue($venue, $user)
     {
         $this->activities->create([
-            'title'       => 'You Updated a Venue',
+            'title'       => 'Venue Updated',
             'description' => $venue->name,
             'type'        => 'updatevenue',
             'user_id'     => $user->id,
@@ -461,7 +471,7 @@ class Activity
             'type_id'     => $evercisegroup->id,
             'link'        => 'classes/' . $evercisegroup->id,
             'link_title'  => 'View',
-            'image'       => 'classreviewed.png',
+            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
         ]);
 
         $this->mail->userReviewedClass($user, $trainer, $rating, $session, $evercisegroup);

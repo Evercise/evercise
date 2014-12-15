@@ -177,6 +177,31 @@ class User
     }
 
 
+    /**
+     * @param $user
+     */
+    public function connectedFacebook($user)
+    {
+
+
+        $this->log->info('User ' . $user->id . ' Connected his facebook account');
+        $this->activity->linkFacebook($user);
+
+    }
+
+
+    /**
+     * @param $user
+     */
+    public function connectedTwitter($user)
+    {
+
+
+        $this->log->info('User ' . $user->id . ' Connected his twitter account');
+        $this->activity->linkTwitter($user);
+
+    }
+
     /** MOVED FROM UserMailer */
 
 
