@@ -8385,31 +8385,31 @@ a.bg-light-grey:hover {
 }
 .icon-full-star {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -526px -570px;
+  background-position: -616px -410px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-full-star.active {
-  background-position: -526px -610px;
+  background-position: -616px -450px;
 }
 .icon-full-star.hover:hover,
 .icon-full-star.active:hover {
   cursor: pointer;
-  background-position: -526px -610px;
+  background-position: -616px -450px;
 }
 .icon-empty-star {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -546px -570px;
+  background-position: -616px -450px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-empty-star.active {
-  background-position: -546px -610px;
+  background-position: -616px -490px;
 }
 .icon-empty-star.hover:hover,
 .icon-empty-star.active:hover {
   cursor: pointer;
-  background-position: -546px -610px;
+  background-position: -616px -490px;
 }
 .icon-fb-white {
   background-image: url("../img/ev_site_icons.png");
@@ -8539,17 +8539,17 @@ a.bg-light-grey:hover {
 }
 .icon-lg-instagram {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -440px -400px;
+  background-position: -360px -400px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-lg-instagram.active {
-  background-position: -440px -480px;
+  background-position: -360px -480px;
 }
 .icon-lg-instagram.hover:hover,
 .icon-lg-instagram.active:hover {
   cursor: pointer;
-  background-position: -440px -480px;
+  background-position: -360px -480px;
 }
 .icon-loading {
   background-image: url("../img/spinning-circles.svg");
@@ -9101,6 +9101,18 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .btn-group.btn-block .btn.btn-aside {
   width: 20%;
+}
+@media (max-width: 767px) {
+  .sm-btn-block {
+    display: block;
+    width: 100%;
+  }
+}
+@media (max-width: 991px) {
+  .md-btn-block {
+    display: block;
+    width: 100%;
+  }
 }
 .image-placeholder {
   position: relative;

@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-sm-4 sm-text-center">
                     {{ Form::hidden('radius', '5mi') }}
-                    {{ Form::submit('Find a Class', ['class' => 'btn btn-primary mr10']) }}
+                    {{ Form::submit('Find a Class', ['class' => 'btn btn-primary mr10 md-btn-block']) }}
                     <div ng-if="results > 0" class="pull-right mt10 visible-lg-block">
                         <span ng-click="changeView('gridview')" class="icon icon-grid mr10 hover" ng-class="{active : view == 'gridview'}"></span>
                         <span ng-click="changeView('listview')" class="icon icon-list mr10 hover" ng-class="{active : view == 'listview'}"></span>
