@@ -11,9 +11,7 @@
 				<div class="pdf-row">
 					@if($user['image'] != null)
 
-					{{ HTML::image($user->directory.'/medium_'.$user->image, 'session members profile image' , array('class' => 'session-list-profile')); }}
-					@else
-						{{ HTML::image('img/no-user-img.jpg', 'session members profile image' , array('class' => 'session-list-profile')); }}
+					{{ HTML::image($user->directory.'/medium_'.$user->image, 'session members profile image' , ['class' => 'session-list-profile']); }}
 					@endif
 					<div class="pdf-wrap">
 						<p>{{ $user['display_name']}}</p>
