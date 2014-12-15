@@ -11,7 +11,7 @@
 
 <a class="blue-text" href="{{route('class.show', [$class->slug])}}" target="_blank">Manage your class</a>
 
-<p>We’ll make sure your class gets excellent exposure across the Evercise community. Why not give it an extra boost by sharing it with your friends and contacts? Evercise makes it easy to share your classes, just click on the link below to get started.</p>
+<p>We&apos;ll make sure your class gets excellent exposure across the Evercise community. Why not give it an extra boost by sharing it with your friends and contacts? Evercise makes it easy to share your classes, just click on the link below to get started.</p>
 
 <p>Share you class on FACEBOOK, TWITTER, GOOGLE PLUS:</p>
 <p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->facebook()  }}" target="_blank">Facebook</a></p>

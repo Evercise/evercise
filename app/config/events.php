@@ -83,7 +83,7 @@ return [
         ['user.loginFacebook' => 'User@facebookLogin'],
         ['user.edit' => 'User@edit'],
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
-        ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction // ∑
+        ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction, $balance // ∑
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 

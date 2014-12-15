@@ -98,12 +98,19 @@ class Mail
     }
 
 
-    /**
+    /*
      * ########################################################################################
      * #####            USER EMAIL's          #################################################
      * ########################################################################################
      */
 
+    /**
+     * @param $user
+     * @param $cart
+     * @param $transaction
+     *
+     * Event user.cart.completed
+     */
     public function userCartCompleted($user, $cart, $transaction)
     {
         $params = [
@@ -114,6 +121,29 @@ class Mail
             'transaction' => $transaction,
             'banner'      => NULL,
             'image'       => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
+            'link_url'    => $this->url->to('/uk/')
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     * @param $balance
+     *
+     * Event user.topup.completed
+     */
+    public function topupCompleted($user, $transaction, $balance)
+    {
+        $params = [
+            'subject'     => 'Confirmation of topup',
+            'view'        => 'v3.emails.user.topup_completed',
+            'user'        => $user,
+            'transaction' => $transaction,
+            'balance'      => $balance,
+            'banner'      => NULL,
+            'image'       => image('/assets/img/email/user_default.jpg', 'topup confirmation'),
             'link_url'    => $this->url->to('/uk/')
         ];
 
@@ -603,7 +633,7 @@ class Mail
             'image'         => image('assets/img/email/user_default.jpg', 'someone has joined your classs'),
         ];
 
-        $this->send($user->email, $params);
+        $this->send($trainer->email, $params);
 
     }
 

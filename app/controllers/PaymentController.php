@@ -535,6 +535,12 @@ class PaymentController extends BaseController
     {
         /* Get topup details sent with redirect */
         $data = Session::get('topup_details');
+        if (!$data)
+            return Redirect::route('home');
+
+        $balance = $this->user->getWallet()->getBalance();
+
+        $data['balance'] = $balance;
 
         return View::make('v3.cart.topup_confirmation')
             ->with('data', $data);
@@ -543,7 +549,7 @@ class PaymentController extends BaseController
 
     /**
      * @param $cart
-     * @param $products
+     * @return array
      */
     public function getProductsPaypal($cart)
     {

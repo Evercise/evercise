@@ -74,7 +74,7 @@
         @endif
         <tr>
             <td colspan="7" >
-                <strong>Sub-total <span class="blue-text">{{ $cart['total']['subtotal'] }}</span></strong>
+                <strong>Sub-total <span class="blue-text">&pound;{{ $cart['total']['subtotal'] }}</span></strong>
                 @if($cart['total']['package_deduct'] > 0)
                     <strong>Package deduct: <span class="blue-text"> &pound;{{ $cart['total']['package_deduct']  }}</span></strong>
                     <br/>

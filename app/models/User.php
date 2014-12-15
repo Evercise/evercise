@@ -355,7 +355,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $area_code
      * @param $phone
      */
-    public function updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password)
+    public function updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password, $email)
     {
         $this->update(array_filter([
             'first_name' => $first_name,
@@ -366,6 +366,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             'area_code'  => $area_code,
             'phone'      => $phone,
             'password'   => $password,
+            'email'   => $email,
         ]));
     }
 
