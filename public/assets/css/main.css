@@ -8619,6 +8619,7 @@ a.bg-light-grey:hover {
 }
 .form-control-feedback {
   top: 41px;
+  z-index: 0;
 }
 .form-control-feedback.bv-no-label {
   top: 0;

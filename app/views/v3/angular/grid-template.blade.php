@@ -4,7 +4,7 @@
             <div class="row mt15">
 
                 <div class="col-sm-6 mt5 mb15 sm-text-center">
-                    <strong>Your search return <span class="text-primary">{[{ results }]}</span> results</strong>
+                    <strong>Your search return <span class="text-primary">{[{ filteredResults.length }]}</span> results</strong>
                 </div>
 
                 <div class="col-md-6 mb15">
