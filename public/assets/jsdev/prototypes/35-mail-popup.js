@@ -85,7 +85,7 @@ MailPopup.prototype = {
             },
 
             success: function (data) {
-                $('#mail-trainer').modal('hide');
+                $('.modal').modal('hide');
                 $('body').append(data.view);
             },
 

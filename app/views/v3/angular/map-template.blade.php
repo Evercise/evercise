@@ -1,7 +1,7 @@
 <div id="mapView" ng-show="view == 'mapview'">
     <div class="class-snippet-wrapper side-bar">
         <div class="snippet-header">
-            <strong class="ml10">Your search returned <span class="text-primary">{[{ results }]}</span> results</strong>
+            <strong class="ml10">Your search returned <span class="text-primary">{[{ filteredResults.length }]}</span> results</strong>
 
         </div>
         <div class="snippet-header sub-menu" role="tabpanel">
@@ -25,9 +25,10 @@
             </ul>
         </div>
 
+
         <div id="main_block_with_scroll" class="snippet-body mb-scroll">
 
-            <div ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter"
+            <div ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter as filteredResults"
                  id = {[{marker.id}]}
                  class="class-snippet"
                  ng-click="clicked(marker)">

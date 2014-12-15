@@ -44,12 +44,16 @@
     </li>
     <li class="list-group-item bg-light-grey">
         <div class="class-info-wrapper  row">
-            <div class="pull-left">
-                <span class="icon icon-clock"></span>{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}
+            <div class="col-xs-6">
+                <span class="icon icon-clock"></span><small>{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}</small>
+            </div>
+            <div class="col-xs-6">
+                <div class="row no-gutter">
+                    <div class="col-xs-7"><span class="icon icon-watch"></span> <small>{{$class->futuresessions[0]->duration}} mins</small></div>
+                    <div class="col-xs-5"><span class="icon icon-ticket"></span><small> x {{$class->futuresessions[0]->remaining}}</small> </div>
+                </div>
             </div>
 
-            <div class="pull-left ml20"><span class="icon icon-watch"></span> {{$class->futuresessions[0]->duration}} mins</div>
-            <div class="pull-right"><span class="icon icon-ticket"></span> x {{$class->futuresessions[0]->remaining}}</div>
 
         </div>
     </li>

@@ -46,7 +46,7 @@
     </div>
     <div class="col-sm-9 mt25">
         <button id="image-select" type="button" class="image-select btn btn-primary mb20">Select an Image</button>
-        <p>Image must be a JPG, JPEG, PNG or GIF with a maximum file size of 2MB</p>
+        <p>Image must be a JPG, JPEG, PNG or GIF with a maximum file size of 10MB</p>
     </div>
 </div>
 

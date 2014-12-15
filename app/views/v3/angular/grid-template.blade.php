@@ -78,12 +78,16 @@
                         </li>
                         <li class="list-group-item bg-light-grey">
                             <div class="class-info-wrapper  row">
-                                <div class="pull-left">
-                                    <span class="icon icon-clock"></span> {[{ marker.nextClassDate  }]}
+                                <div class="col-xs-6">
+                                    <span class="icon icon-clock"></span> <small>{[{ marker.nextClassDate  }]}</small>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="row no-gutter">
+                                        <div class="col-xs-7"><span class="icon icon-watch"></span> <small>{[{ marker.nextClassDuration}]} mins</small></div>
+                                        <div class="col-xs-5"><span class="icon icon-ticket"></span> <small>x {[{ marker.capacity }]}</small></div>
+                                    </div>
                                 </div>
 
-                                <div class="pull-left ml20"><span class="icon icon-watch"></span> {[{ marker.nextClassDuration}]} mins</div>
-                                <div class="pull-right"><span class="icon icon-ticket"></span> x {[{ marker.capacity }]}</div>
 
                             </div>
                         </li>
