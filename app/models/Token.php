@@ -53,12 +53,12 @@ class Token extends \Eloquent
 
     public function hasValidFacebookToken()
     {
-        return $this->facebook ? true : false;
+        return (!empty($this->facebook) ? true : false);
     }
 
     public function hasValidTwitterToken()
     {
-        return $this->twitter ? true : false;
+        return (!empty($this->twitter) ? true : false);
     }
 
     public static function createIfDoesntExist($user_id)

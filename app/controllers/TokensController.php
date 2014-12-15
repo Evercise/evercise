@@ -31,6 +31,9 @@ class TokensController extends \BaseController
 			
 			$token = Token::where('user_id', $this->user->id)->first();
 			$token->addToken('facebook', Token::makeFacebookToken($getUser));
+
+
+            event('user.facebook.connected', [$this->user]);
 		}
 		return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your facebook account has been linked successfully.');
 	}
@@ -54,6 +57,8 @@ class TokensController extends \BaseController
 			{
 				$token = Token::where('user_id', $userId)->first();
 				$token->addToken('twitter', $accessToken);
+
+                event('user.twitter.connected', [$this->user]);
 			}
 		}
 		else
