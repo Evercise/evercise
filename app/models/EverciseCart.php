@@ -125,6 +125,8 @@ class EverciseCart extends Cart
 
         $cart_packages = [];
         $sessions = [];
+
+        $objects = [];
         foreach ($cartRows as $row) {
 
             $code = EverciseCart::fromProductCode($row['id']);
@@ -142,12 +144,16 @@ class EverciseCart extends Cart
                 case 'session':
                     for ($i = 0; $i < $row->qty; $i++) {
 
-                        $session = Evercisesession::find($code['id']);
+                        if(!empty($objects['sessions'][$code['id']])) {
+                            $session = $objects['sessions'][$code['id']];
+                        } else {
+                            $session = Evercisesession::find($code['id']);
+                            $objects['sessions'][$code['id']] = $session;
+                        }
 
 
                         if(!empty($session->id)) {
                             $remaining_tickets = $session->remainingTickets();
-
                             $slug = $session->evercisegroup->slug;
                             $session = $session->toArray();
                             $session['tickets'] = $remaining_tickets;
@@ -170,7 +176,13 @@ class EverciseCart extends Cart
             $sessions[$s]['package'] = 0;
             $sessions[$s]['cart_id'] = $session['id'];
 
-            $evercisegroup = Evercisegroup::find($session['evercisegroup_id']);
+            if(!empty($objects['groups'][$session['evercisegroup_id']])) {
+                $evercisegroup = $objects['groups'][$session['evercisegroup_id']];
+            } else {
+                $evercisegroup = Evercisegroup::find($session['evercisegroup_id']);
+                $objects['groups'][$session['evercisegroup_id']] = $evercisegroup;
+            }
+
             $sessions[$s]['name'] = $evercisegroup->name;
 
             $package_used = FALSE;

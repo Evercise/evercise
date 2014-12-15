@@ -38,14 +38,20 @@ class GalleryController extends AjaxBaseController
         if ($find) {
             $find = explode(',', $find);
 
+            foreach ($find as $key) {
+
+                $subcategory = \Subcategory::with('categories')->where('name', $key)->first();
+
+                $find[] = $subcategory->categories()->first()->name;
+            }
+
             $gallery = $this->gallery->where('counter', '>', 0)
-            ->where(function($query) use ($find)
-            {
-                foreach ($find as $key) {
-                    $query->orWhere('keywords', 'like', '%' . $key . '%');
-                }
-            })
-            ->limit(20)->get();
+                ->where(function ($query) use ($find) {
+                    foreach ($find as $key) {
+                        $query->orWhere('keywords', 'like', '%' . $key . '%');
+                    }
+                })
+                ->limit(20)->get();
         }
 
         if (count($gallery) == 0) {
