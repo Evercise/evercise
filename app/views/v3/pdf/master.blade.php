@@ -43,8 +43,7 @@
 	.session-list-profile{
 		width: 60px;
 		float: left;
-
-		border: 2px solid #ccc;
+		border: 2px solid #3abbde;
 	}
 	.pdf-wrap{
 		margin-left: 30px;

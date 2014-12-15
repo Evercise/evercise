@@ -10,7 +10,7 @@
 
                   @if(count($data['activity']) == 0)
                     <div class="text-center">
-                        <strong class="text-center">Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no attended classes blah blah blah!</strong>
+                        <strong class="text-center">Hey <span class="text-primary">{{ $user->display_name }}</span> You currently have no activity on Evercise</strong>
                     </div>
 
                   @else
