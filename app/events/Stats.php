@@ -10,9 +10,11 @@ class Stats
     {
         Log::info('Class Viewed '.$class->id);
 
-        $class->increment('counter');
+        if(!$class instanceof \Evercisegroup) {
+            $class = \Evercisegroup::find($class->id);
+        }
 
-        Event::fire('class.index.single', ['id' => $class->id]);
+        $class->increment('counter');
 
     }
 }

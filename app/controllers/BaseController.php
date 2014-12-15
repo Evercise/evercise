@@ -18,11 +18,23 @@ class BaseController extends Controller
 
         $this->user = false;
 
-        View::share('cart', View::make('v3.cart.dropdown')->with(EverciseCart::getCart())->render() );
+
+        $coupon = Session::get('coupon', false);
+        $this->cart = EverciseCart::getCart($coupon);
+
+        $this->cart_items = [];
+        foreach($this->cart['sessions_grouped'] as $key_id => $val) {
+            $this->cart_items[$key_id] = $val['qty'];
+        }
+
+
+        View::share('cart_items', $this->cart_items);
+        View::share('cart', View::make('v3.cart.dropdown')->with($this->cart)->render());
 
 
         if (Sentry::check()) {
             $this->user = Sentry::getUser();
+
             $userImage = $this->user->image ? (Config::get('evercise.upload_dir') . 'profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
             View::share('userImage', isset($userImage) ? $userImage : '');
             View::share('user', $this->user);

@@ -207,23 +207,15 @@ class Elastic
         $searchParams['size'] = 1;
         $searchParams['from'] = 0;
 
-        if ($id > 0) {
-            $searchParams['body']['query'] = [
-                'ids' => ['values' => [$id]]
-            ];
+        if (is_numeric($id)) {
+            $searchParams['body']['query']['match'] = ['id' => $id];
         } else {
-            $searchParams['body']['sort']['_script'] = [
-                'script' => rand(1, 10000),
-                'type'   => 'number',
-                'params' => [],
-                'order'  => 'asc'
-            ];
+            $searchParams['body']['query']['match'] = ['slug' => $id];
         }
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
         $result_object = json_decode(json_encode($result), FALSE);
-
 
         return $result_object;
 
@@ -357,12 +349,12 @@ class Elastic
 
                 $user = $s->user;
                 $index['ratings'][] = [
-                    'user_id' => (int)$s->user_id,
-                    'image'   => $user->directory . '/small_' . $user->image,
-                    'name'    => $user->first_name . ' ' . $user->last_name,
-                    'stars'   => (int)$s->stars,
-                    'comment' => $s->comment,
-                    'date_left'    => $s->created_at
+                    'user_id'   => (int)$s->user_id,
+                    'image'     => $user->directory . '/small_' . $user->image,
+                    'name'      => $user->first_name . ' ' . $user->last_name,
+                    'stars'     => (int)$s->stars,
+                    'comment'   => $s->comment,
+                    'date_left' => $s->created_at
                 ];
 
             }
@@ -377,7 +369,8 @@ class Elastic
                     'duration'        => (int)$s->duration,
                     'members_emailed' => (int)$s->members_emailed,
                     'tickets'         => (int)$s->tickets,
-                    'remaining'       => (int)$s->remainingTickets()
+                    'remaining'       => (int)$s->remainingTickets(),
+                    'default_tickets' => 1
                 ];
                 $with_session++;
             }
@@ -388,7 +381,6 @@ class Elastic
             $params['index'] = $this->elastic_index;
             $params['type'] = $this->elastic_type;
             $params['id'] = $a->id;
-
 
 
             try {
