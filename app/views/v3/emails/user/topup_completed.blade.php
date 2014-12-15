@@ -20,13 +20,11 @@
             <td colspan="7" align="right">
                 <strong>Total <span class="blue-text">&pound;{{$transaction->total_after_fees}}</span></strong>
             </td>
-
         </tr>
         <tr>
             <td colspan="7" align="right">
                 <strong>New wallet balance <span class="blue-text">&pound;{{$balance}}</span></strong>
             </td>
-
         </tr>
     </tbody>
 </table>
