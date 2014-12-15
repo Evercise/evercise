@@ -45,12 +45,14 @@ Cart.prototype = {
             },
 
             success: function (data) {
-                console.log(data);
                 if(data.view){
                     self.updateCart(data);
                 }
                 else if(data.refresh){
                     location.reload();
+                }
+                else if(data.validation_failed == 1){
+                    self.failedValidation(data);
                 }
             },
 
@@ -67,5 +69,8 @@ Cart.prototype = {
     updateCart: function(data){
         $('#cart-dropdown').addClass('open');
         $('#cart-dropdown .dropdown-cart').replaceWith(data.view);
+    },
+    failedValidation: function(data){
+        $('body').append('<div class="mt10 alert alert-danger alert-dismissible fixed" >'+data.errors.custom+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
     }
 }

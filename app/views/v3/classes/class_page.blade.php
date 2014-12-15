@@ -121,7 +121,7 @@
                                                 <div class="btn-group pull-right">
                                                     {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                                                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
-
+                                                    {{ Form::hidden('force', true) }}
                                                       <select name="quantity" id="quantity" class="btn btn-primary btn-select">
                                                         @for($i=1; $i<($futuresession->remainingTickets()  + 1 ); $i++)
                                                         <option value="{{$i}}">{{$i}}</option>
