@@ -1,6 +1,7 @@
 <?php
 /**
- *
+ * Simple Cronjob Config File.
+ * Manage all cronjobs from here
  *
     *    *    *    *    *    *
     -    -    -    -    -    -
@@ -21,5 +22,6 @@ return [
     'jobs'       => [
         'ReminderForPayments' => '10 9 * 1 *',
         'SendReminderEmails' => '15 7 * * *',
+        'DailyIndexer' => '15 1 * * *',
     ]
 ];
