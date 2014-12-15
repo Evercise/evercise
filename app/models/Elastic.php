@@ -82,6 +82,7 @@ class Elastic
 
         if (!isset($params['all'])) {
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => TRUE];
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
             $searchParams['body']['query']['filtered']['filter']['bool']['must_not']['missing'] = [
                 'field'      => 'futuresessions.members',
                 'existence'  => TRUE,
@@ -299,7 +300,6 @@ class Elastic
                 ->where('id', $id)
                 ->get();
         }
-
 
         $this->log->info('Get all Indexing data ' . date('d H:i:s'));
         foreach ($all as $a) {
