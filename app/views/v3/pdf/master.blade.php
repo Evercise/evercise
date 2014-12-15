@@ -58,7 +58,8 @@
 
 </head>
 <body>
-	{{HTML::image('img/top_banner.jpg', 'Everybody exercise', array('width' => 600, 'id' => 'banner'));}}
+    {{ image('') }}
+	{{HTML::image('img/assets/top_banner.jpg', 'Everybody exercise', array('width' => 600, 'id' => 'banner'));}}
 	<div class="container">
 		
 
