@@ -1,5 +1,5 @@
 <!-- Tab panes -->
-<div class="tab-content visible-lg-block">
+<div class="tab-content">
     <div role="tabpanel" class="tab-pane tab-pane-sort fade" id="filter">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Distance</li>
