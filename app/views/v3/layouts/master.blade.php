@@ -59,8 +59,15 @@
 
      @yield('script')
 
+
+     @include('v3.layouts.tracking')
+
 </head>
 <body>
+
+
+
+
     <!-- include app navigation  -->
     {{ isset($header) ? $header : '' }}
     <!-- include page body -->
