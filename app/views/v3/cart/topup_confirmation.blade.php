@@ -11,6 +11,10 @@
             <span class="badge" style="color:#000">{{$data['transactionId']}}</span>
             <strong>Transaction id:</strong>
           </li>
+          <li class="list-group-item">
+            <span class="badge" style="color:#000">{{$data['balance']}}</span>
+            <strong>New balance:</strong>
+          </li>
         </ul>
     </div>
 @stop

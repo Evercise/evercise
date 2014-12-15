@@ -31,6 +31,16 @@ class Search
         $this->elastic = $elastic;
         $this->evercisegroup = $evercisegroup;
         $this->log = $log;
+
+
+        $this->cart = EverciseCart::getCart();
+
+        $this->cart_items = [];
+        foreach($this->cart['sessions_grouped'] as $key_id => $val) {
+            $this->cart_items[$key_id] = $val['qty'];
+        }
+
+
     }
 
 
@@ -41,13 +51,13 @@ class Search
      * @param bool $all
      * @return mixed
      */
-    public function getResults(Place $area, $params = [], $all = false)
+    public function getResults(Place $area, $params = [], $all = FALSE)
     {
         /**  Set Defaults */
         $defaults = [
             'radius' => '10mi',
-            'size' => 24,
-            'from' => 0
+            'size'   => 24,
+            'from'   => 0
         ];
 
         foreach ($defaults as $key => $val) {
@@ -73,7 +83,7 @@ class Search
 
         $results = $this->elastic->getSingle($id);
 
-        return $this->formatResults($results, false);
+        return $this->formatResults($results, FALSE);
     }
 
 
@@ -82,7 +92,7 @@ class Search
      * @param $results
      * @return mixed
      */
-    public function formatResults($results, $area = false)
+    public function formatResults($results, $area = FALSE)
     {
         $all_results = [];
 
@@ -106,7 +116,7 @@ class Search
 
         $i = 0;
 
-        foreach($row->_source->futuresessions as $s) {
+        foreach ($row->_source->futuresessions as $s) {
             $row->_source->futuresessions[$i]->date_time = (new Carbon($s->date_time))->format('M jS, g:ia');
 
             $i++;
@@ -121,11 +131,11 @@ class Search
                 $row->_source->venue->lng = $decoded['longtitude'];
 
 
-
-                if(!empty($row->sort[0])) {
+                if (!empty($row->sort[0])) {
                     $row->_source->distance = round($row->sort[0], 2);
                 } else {
-                    $row->_source->distance = round($this->getDistance($decoded['latitude'], $decoded['longtitude'], $area->lat,
+                    $row->_source->distance = round($this->getDistance($decoded['latitude'], $decoded['longtitude'],
+                        $area->lat,
                         $area->lng, 'M'), 2);
                 }
 
@@ -139,11 +149,21 @@ class Search
             }
         }
 
+        /** Set Default Amount*/
+
+        $i = 0;
+        foreach ($row->_source->futuresessions as $s) {
+            if (!empty($this->cart_items[$s->id])) {
+                $row->_source->futuresessions[$i]->default_tickets = $this->cart_items[$s->id];
+            }
+            $i++;
+        }
+
         return $row->_source;
     }
 
 
-    private function getDistance($lat1 = false, $lon1 = false, $lat2 = false, $lon2 = false, $unit = 'K')
+    private function getDistance($lat1 = FALSE, $lon1 = FALSE, $lat2 = FALSE, $lon2 = FALSE, $unit = 'K')
     {
         if (!$lat1 || !$lon1 || !$lat2 || !$lon2) {
             return '';
@@ -181,7 +201,7 @@ class Search
         $mapResult = [];
 
         $not_needed = [
-            'global' => [
+            'global'  => [
                 'default_duration',
                 'published',
                 'created_at',
@@ -190,8 +210,8 @@ class Search
                 'title',
                 'gender'
             ],
-            'user' => ['id', 'display_name', 'first_name', 'last_name', 'email', 'image', 'phone'],
-            'venue' => ['id', 'address', 'postcode', 'location', 'image'],
+            'user'    => ['id', 'display_name', 'first_name', 'last_name', 'email', 'image', 'phone'],
+            'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
             'ratings' => ['user_id', 'comment']
         ];
         foreach ($results->hits as $k => $row) {
@@ -243,12 +263,12 @@ class Search
         $mapResult = [];
 
         $not_needed = [
-            'global' => [
+            'global'  => [
                 'created_at',
                 'updated_at',
                 'venue_id',
             ],
-            'venue' => ['id', 'address', 'postcode', 'location', 'image'],
+            'venue'   => ['id', 'address', 'postcode', 'location', 'image'],
             'ratings' => ['user_id']
         ];
         foreach ($results->hits as $row) {

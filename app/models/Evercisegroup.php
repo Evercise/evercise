@@ -1097,25 +1097,6 @@ class Evercisegroup extends \Eloquent
             return ['error' => 'not trainer'];
         }
 
-        /* if trainer is tester and user is not redirect */
-
-        $testers = Sentry::findGroupById(5); // get the tester group
-
-        $testerLoggedIn = $user ? $user->inGroup($testers) : FALSE; // see if user is a tester
-
-        $userTrainer = Sentry::findUserById($this->user_id); // create a sentry user object
-
-        // test to see if trainer is a tester and the user is not
-        if ($userTrainer->inGroup($testers) && $testerLoggedIn == FALSE) {
-    //        return ['error' => 'trainer is tester, user is not'];
-        }
-
-        /* if no upcoming sessions then redirect to discover page */
-        if (count($this->evercisesession) == 0) {
-            //return ['error' => 'no sessions'];
-        }
-
-
         // create a array containing all members
         $members = [];
         $membersIds = [];
@@ -1181,10 +1162,6 @@ class Evercisegroup extends \Eloquent
         $fakeUserGroup = Sentry::findGroupByName('Fakeuser');
         $fakeUsers = Sentry::findAllUsersInGroup($fakeUserGroup)->lists('display_name', 'id');
 
-
-        JavaScript::put(['initPut' => json_encode(['selector' => '#fakerating_create'])]);
-
-        JavaScript::put(['initPut' => json_encode(['selector' => '#add-to-cart'])]);
 
         return [
             'evercisegroup' => $this,

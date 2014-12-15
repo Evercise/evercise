@@ -164,13 +164,13 @@ class User
      * @param $user
      * @param $transaction
      */
-    public function topupCompleted($user, $transaction)
+    public function topupCompleted($user, $transaction, $balance)
     {
 
 
         $this->log->info('User ' . $user->id . ' topup completed');
 
-        //$this->mail->userCartCompleted($user, $transaction);
+        $this->mail->topupCompleted($user, $transaction, $balance);
 
         $this->activity->userTopupCompleted($user, $transaction);
 

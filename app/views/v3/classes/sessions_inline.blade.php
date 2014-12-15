@@ -33,7 +33,7 @@
 
                                           <select name="quantity" id="quantity" class="btn btn-primary btn-select">
                                             @for($i=1; $i<($session->tickets - count($session->sessionmembers) + 1 ); $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
+                                            <option value="{{$i}}" {{ (!empty($cart_items[$session->id]) && $cart_items[$session->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                             @endfor
                                           </select>
 

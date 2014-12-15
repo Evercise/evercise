@@ -227,7 +227,8 @@ class UsersController extends AjaxBaseController
             $area_code = Input::get('areacode');
             $phone = Input::get('phone');
             $password = Input::get('password');
-            $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password);
+            $email = Input::get('email');
+            $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password, $email);
 
             $this->user->checkProfileMilestones();
 

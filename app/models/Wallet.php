@@ -137,10 +137,12 @@ class Wallet extends \Eloquent
                 'payer_id'         => $payer_id
             ]);
 
-        event('user.topup.completed', [$user, $transaction]);
+        $newBalance = $this->attributes['balance'] + $amount;
+
+        event('user.topup.completed', [$user, $transaction, $newBalance]);
 
         $user_id = $this->attributes['user_id'];
-        $this->attributes['balance'] = $this->attributes['balance'] + $amount;
+        $this->attributes['balance'] = $newBalance;
 
         $this->save();
 
