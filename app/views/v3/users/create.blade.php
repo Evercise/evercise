@@ -86,7 +86,7 @@
                         </div>
                         <div class="row  mt10">
                             <div class="form-group col-sm-6">
-                                <label class="mb15" for="phone">Phone Number<small> (Get alerts about classes)</small></label>
+                                <label class="mb15" for="phone">Mobile Number <small>(Get alerts about your classes)</small></label>
                                 <div class="input-group">
                                     <div class="input-group-addon custom-select">
                                        {{ Form::select('areacode', Config::get('countrycodes.pretty')

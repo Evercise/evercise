@@ -54,7 +54,7 @@
                     <div class="col-xs-7">
                         {{ Html::linkRoute('class.show', $row['name'], [$row['slug']]) }}
                         <br>
-                        <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : $row['grouped_price']) }}</strong>
+                        <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : '£'.round($row['grouped_price'],2) ) }}</strong>
                     </div>
                     <div class="col-xs-2 text-right mt10">
                         {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
