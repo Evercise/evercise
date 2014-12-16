@@ -11193,6 +11193,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   right: 30px;
   top: 50%;
   margin-top: -10px;
+  z-index: -1;
 }
 .list-group-accordion .list-group-accordion-title:before.active {
   background-position: -409px -290px;
@@ -11217,6 +11218,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   right: 30px;
   top: 50%;
   margin-top: -10px;
+  z-index: -1;
 }
 .list-group-accordion .list-group-accordion-title.active:before.active {
   background-position: -369px -330px;
