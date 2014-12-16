@@ -156,15 +156,6 @@ if(typeof angular != 'undefined') {
                 angular.forEach(clusterModels, function (value, key) {
                     $scope.clicked(value);
                 });
-                $scope.clusterStyles = [
-                    {
-                        textColor: 'black',
-                        url: '/assets/img/icon_default_small_pin_number.png',
-                        height: 43,
-                        width: 33,
-                        anchorText: [-14,9]
-                    }
-                ];
             }
         };
 
@@ -207,7 +198,7 @@ if(typeof angular != 'undefined') {
             // topggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
             $scope.lastActiveMarker = marker;
-            marker.icon = '/assets/img/icon_default_small_pin_grey.png';
+            marker.icon = '/assets/img/icon_default_large_pin_grey.png';
 
             $scope.mask = true;
 
