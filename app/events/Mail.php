@@ -137,7 +137,7 @@ class Mail
     public function topupCompleted($user, $transaction, $balance)
     {
         $params = [
-            'subject'     => 'Confirmation of topup',
+            'subject'     => 'Funds have been added to your wallet',
             'view'        => 'v3.emails.user.topup_completed',
             'user'        => $user,
             'transaction' => $transaction,

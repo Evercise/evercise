@@ -27,4 +27,8 @@
             return $this->hasMany('TransactionItems', 'transaction_id');
         }
 
+        public function formattedDate()
+        {
+            return  date('M jS Y', strtotime($this->created_at));
+        }
     }
