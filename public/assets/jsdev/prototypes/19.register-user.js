@@ -115,7 +115,13 @@ registerUser.prototype = {
         })
         .on('success.form.bv', function(e) {
             e.preventDefault();
-            self.ajaxUpload();
+                if(self.form.find('input[name="terms"]').is(':checked'))
+                {
+                    self.ajaxUpload();
+                }
+                else{
+                    self.form.find('input[name="terms"]').parent().append('<span class="help-box">You must accept our terms and conditions before continuing</span>')
+                };
         });
     },
     ajaxUpload: function(){
@@ -126,7 +132,7 @@ registerUser.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find("input[type='submit']").prop('disabled', true).after('<span id="register-loading" class="icon icon-loading ml10"></span>');
+                self.form.find("input[type='submit']").prop('disabled', true).after('<br><span id="register-loading" class="icon icon-loading ml10"></span>');
             },
 
             success: function (data) {

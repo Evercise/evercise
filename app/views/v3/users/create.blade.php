@@ -132,7 +132,13 @@
                                 <label for="newsletter" class="text-grey"> Get all the latest deals and news info by signing up to our newsletter</label>
                             </div>
                         </div>
-                        <div class="text-center form-group mt40">
+                        <div class="text-center mt40">
+                            <div class="custom-checkbox">
+                                {{ Form::checkbox('terms', 'yes', true , ['id'=> 'terms']) }}
+                                <label for="terms" class="text-grey">I Agree With the <a href="" class="text-primary">Terms of Use</a>, <a href="" class="text-primary">Privacy Policy</a> and <a href="" class="text-primary">Cookie Policy</a></label>
+                            </div>
+                        </div>
+                        <div class="text-center form-group mt20">
                             {{ Form::submit('Create My Account', ['class' => 'btn btn-primary'] )  }}
                         </div>
 
