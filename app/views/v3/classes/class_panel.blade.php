@@ -53,7 +53,7 @@
                     <em><small>You said:</small></em>
                 </div>
                 <div class="col-sm-12">
-                    <div class="class-rating-wrapper">
+                    <div class="class-rating-wrapper mt5">
                         @for ($i = 0; $i < 5; $i++)
                             <span class="icon icon-{{ $i < $rating['stars'] ? 'full' : 'empty'  }}-star"></span>
                         @endfor
@@ -82,7 +82,7 @@
             </div>
         @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
             <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
-                <div class=" col-sm-5 sm-text-center">
+                <div class=" col-sm-5 sm-text-center mt10">
                     <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->getNextFutureSession()->formattedDate().', '.$session->evercisegroup->getNextFutureSession()->formattedTime() }}</span>
                 </div>
                 <div class=" col-sm-7">
