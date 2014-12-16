@@ -1,20 +1,25 @@
 @extends('v3.layouts.master')
 @section('body')
+
     <div class="container first-container">
-        <h2 class="text-center">Topup Confirmation</h2>
-        <ul class="col-sm-6 col-sm-offset-3 list-grou mt30">
-          <li class="list-group-item">
-            <span class="badge" style="color:#000">{{$data['amount']}}</span>
-            <strong class="text-primary" style="color:#000">Topup successful:</strong>
-          </li>
-          <li class="list-group-item">
-            <span class="badge" style="color:#000">{{$data['transactionId']}}</span>
-            <strong>Transaction id:</strong>
-          </li>
-          <li class="list-group-item">
-            <span class="badge" style="color:#000">{{$data['balance']}}</span>
-            <strong>New balance:</strong>
-          </li>
-        </ul>
+        <div class="row text-center">
+            <div class="underline">
+                <h1>Topup Confirmation</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h4>Topup Confirmation </h4>
+                    </div>
+                    <div class="panel-body">
+                      <p>You topped up your account with the amount of <span class="text-primary">£{{ round($data['amount'],2)}}</span> </p>
+                      <p>Your transaction id is: <span class="text-primary">{{$data['transactionId']}}</span></p>
+                      <p>Your new balance is: <span class="text-primary">£{{round($data['balance'],2)}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @stop
