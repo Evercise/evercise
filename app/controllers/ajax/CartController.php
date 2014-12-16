@@ -42,15 +42,16 @@ class CartController extends AjaxBaseController
                 $row = EverciseCart::get($rowId);
                 $currentQuantity = $row->qty;
 
-                if (($row->qty + $quantity) > $session->remainingTickets()) {
+
+
+                $newQuantity = (!$force ? $currentQuantity + $quantity : $quantity);
+
+                if ($newQuantity > $session->remainingTickets()) {
                     return Response::json([
                         'validation_failed' => 1,
                         'errors'            => ['custom' => 'We only have ' . $session->remainingTickets() . ' ticket' . ($session->remainingTickets() > 1 ? 's' : '') . ' available for this class']
                     ]);
                 }
-
-
-                $newQuantity = (!$force ? $currentQuantity + $quantity : $quantity);
                 EverciseCart::update($rowId, $newQuantity);
 
             } else // Make a new entry in the cart, and link it to the session.

@@ -227,7 +227,7 @@ class EverciseCart extends Cart
         foreach ($sessions as $s) {
             if (!empty($cart['sessions_grouped'][$s['id']]['qty'])) {
                 $cart['sessions_grouped'][$s['id']]['qty']++;
-                $cart['sessions_grouped'][$s['id']]['tickets_left']--;
+             //   $cart['sessions_grouped'][$s['id']]['tickets_left']--;
                 $cart['sessions_grouped'][$s['id']]['grouped_price'] += $s['price'];
                 if ($s['package'] == 0) {
                     $cart['sessions_grouped'][$s['id']]['grouped_price_discount'] += $s['price'];
@@ -235,7 +235,8 @@ class EverciseCart extends Cart
             } else {
                 $cart['sessions_grouped'][$s['id']] = $s;
                 $cart['sessions_grouped'][$s['id']]['qty'] = 1;
-                $cart['sessions_grouped'][$s['id']]['tickets_left'] = $s['tickets'] - 1;
+             //   $cart['sessions_grouped'][$s['id']]['tickets_left'] = $s['tickets'] - 1;
+                $cart['sessions_grouped'][$s['id']]['tickets_left'] = $s['tickets'];
                 $cart['sessions_grouped'][$s['id']]['grouped_price'] = $s['price'];
                 $cart['sessions_grouped'][$s['id']]['grouped_price_discount'] = 0;
                 if ($s['package'] == 0) {
@@ -306,6 +307,7 @@ class EverciseCart extends Cart
             }
 
         }
+
         return $cart;
 
 

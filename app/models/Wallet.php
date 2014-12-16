@@ -113,7 +113,7 @@ class Wallet extends \Eloquent
     {
         $this->transaction(-$amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
     }
-    
+
 
     protected function transaction($amount, $description, $type, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {

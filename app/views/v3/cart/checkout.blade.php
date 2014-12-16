@@ -179,7 +179,7 @@
 
                                             <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
                                                 <option value=""></option>
-                                                @for($i = 1; $i < ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
+                                                @for($i = 1; $i <= ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
                                                     <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
                                             </select>
