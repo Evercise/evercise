@@ -85,8 +85,12 @@ MailPopup.prototype = {
             },
 
             success: function (data) {
-                $('.modal').modal('hide');
-                $('body').append(data.view);
+                self.form.find("input[type='submit']").before('<strong class="text-primary">Message sent successfully!</strong><br>');
+                setTimeout(function(){
+                    $('.modal').modal('hide');
+                },900);
+
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
