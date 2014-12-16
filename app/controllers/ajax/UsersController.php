@@ -230,11 +230,14 @@ class UsersController extends AjaxBaseController
                 'password'      => Input::get('password'),
                 'email'         => Input::get('email'),
             ]);
-            $this->user->trainer->updateTrainer([
-                'profession'    => Input::get('profession', 0),
-                'bio'           => Input::get('bio', 0),
-                'website'       => Input::get('website', 0),
-            ]);
+
+            if($this->user->isTrainer()) {
+                $this->user->trainer->updateTrainer([
+                    'profession' => Input::get('profession', 0),
+                    'bio' => Input::get('bio', 0),
+                    'website' => Input::get('website', 0),
+                ]);
+            }
 
             $this->user->checkProfileMilestones();
 

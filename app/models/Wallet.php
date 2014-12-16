@@ -148,6 +148,12 @@ class Wallet extends \Eloquent
                 case 'referral_signup':
                     event('user.referral.signup', [$this->user, $transaction, $newBalance]);
                     break;
+                case 'full_payment':
+
+                    break;
+                case 'part_payment':
+
+                    break;
             }
         } else {
             Log::error('----- WE MISSED THIS ONE!!!!!!!-----');
@@ -197,8 +203,6 @@ class Wallet extends \Eloquent
 
     public function giveAmount($amount = 0, $type = false) {
         if(!$type || $amount == 0) return false;
-
-        Log::info('WALLET\giveAmount:::  type:'.$type);
 
         $user = Sentry::getUser();
 

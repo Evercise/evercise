@@ -49,7 +49,7 @@ class PaymentController extends BaseController
 
         $wallet = $this->user->getWallet();
         if ($cart['total']['from_wallet'] > 0) {
-            $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', $this->user);
+            $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', 'part_payment');
         }
 
 
@@ -155,7 +155,7 @@ class PaymentController extends BaseController
 
             if ($cart['total']['from_wallet'] > 0) {
                 $wallet = $this->user->getWallet();
-                $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', $this->user);
+                $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', 'part_payment');
             }
 
             $coupon = Coupons::processCoupon($coupon, $this->user);
@@ -190,7 +190,7 @@ class PaymentController extends BaseController
         $transactionId = $token;
 
         $wallet = $this->user->getWallet();
-        $wallet->withdraw($cart['total']['from_wallet'], 'Full payment for classes', $this->user);
+        $wallet->withdraw($cart['total']['from_wallet'], 'Full payment for classes', 'full_payment');
 
         $coupon = Coupons::processCoupon($coupon, $this->user);
 

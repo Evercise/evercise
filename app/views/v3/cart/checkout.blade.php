@@ -16,7 +16,7 @@
                         <h3>Current Balance: <span class="text-primary">£{{round($user->getWallet()->getBalance(), 2)}}</span> </h3>
                     </li>
                     <li class="list-group-item">
-                        <span class="text-grey">You can top up your account at anny time using:</span>
+                        <span class="text-grey">You can top up your account at any time using:</span>
                     </li>
                     <li class="list-group-item bg-grey">
                         {{ image('/img/payment_paypal.png', 'pay with paypal') }}

@@ -38,8 +38,12 @@ class CartController extends \BaseController
             return Redirect::route('cart.guest');
         }
 
+
         $coupon = Session::get('coupon', FALSE);
         $data = EverciseCart::getCart($coupon);
+
+        if (empty($data['sessions_grouped']) && empty($data['packages']) && empty($data['sessions']))
+            return Redirect::route('home');
 
         $packages = [];
 

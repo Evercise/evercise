@@ -132,9 +132,9 @@
                     @endif
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-sm-3 col-sm-offset-6">
-                                {{ Html::linkRoute('home', 'Print', null, ['class' => 'btn btn-default btn-block']) }}
-                            </div>
+                            <!--div class="col-sm-3 col-sm-offset-6">
+                                {{-- Html::linkRoute('home', 'Print', null, ['class' => 'btn btn-default btn-block']) --}}
+                            </div-->
                             <div class="col-sm-3">
                                 {{ Html::linkRoute('users.edit', 'View My Profile', [$user->display_name, 'wallet'], ['class' => 'btn btn-primary btn-block']) }}
                             </div>
