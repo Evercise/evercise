@@ -82,13 +82,13 @@ class Evercisegroup extends \Eloquent
             $description = $inputs['class_description'];
             $image = $inputs['image'];
 
-            if($inputs['gallery_image'] == 'true') {
+            if ($inputs['gallery_image'] == 'true') {
                 $image = Gallery::selectImage($image, $user, $classname);
             }
 
 
             $venueId = $inputs['venue_select'];
-            if(! Venue::find($venueId)){
+            if (!Venue::find($venueId)) {
                 return Response::json(
                     ['validation_failed' => 1, 'errors' => ['venue_select' => 'Please select or create a new venue']]
                 );
@@ -229,6 +229,7 @@ class Evercisegroup extends \Eloquent
 
         $pastSessionsAwaitingFutureBuddy = [];
         foreach ($user->sessions()->orderBy('date_time', 'desc')->get() as $key => $session) {
+
             // Past sessions
             if (new DateTime($session->date_time) < $currentDate) {
                 if (!array_key_exists($session->id, $futureSessions)) {
@@ -252,6 +253,9 @@ class Evercisegroup extends \Eloquent
             }
 
         }
+
+        krsort($futureSessions);
+
 
 
         $data = [
@@ -1146,7 +1150,7 @@ class Evercisegroup extends \Eloquent
             $og->title($this->name)
                 ->type('article')
                 ->image(
-                    url() .'/'.$trainer->user->directory . '/thumb_' . $this->image,
+                    url() . '/' . $trainer->user->directory . '/thumb_' . $this->image,
                     [
                         'width'  => 150,
                         'height' => 156

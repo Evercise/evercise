@@ -151,7 +151,7 @@ class Wallet extends \Eloquent
             }
         } else {
             Log::error('----- WE MISSED THIS ONE!!!!!!!-----');
-            Log::error(debug_backtrace());
+            Log::error($type);
         }
 
         $user_id = $this->attributes['user_id'];
