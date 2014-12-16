@@ -104,6 +104,7 @@ class EvercisegroupsController extends \BaseController
 
             $class = $data->hits[0]->_source;
 
+
             $og = new OpenGraph();
 
             /* try to create og if fails redirect to discover page */

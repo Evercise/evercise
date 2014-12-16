@@ -345,15 +345,18 @@ class UsersController extends AjaxBaseController
         }
 
         $inputs = Input::all();
+
         $messages = [
-            'between' => 'Max amount you can request is '.$this->user->getWallet()->balance
+            'min' => 'Minimum amount you can withdraw is £'.Config::get('evercise.minimim_withdraw'),
+            'max' => 'Max amount you can withdraw is £'.number_format($this->user->getWallet()->balance)
+        ];
+        $validations = [
+            'paypal' => 'required|email',
+            'amount' => 'required|integer|min:'.Config::get('evercise.minimim_withdraw').'|max:'.round($this->user->getWallet()->balance, 0)
         ];
         $validator = Validator::make(
             $inputs,
-            [
-                'paypal' => 'required|email',
-                'amount' => 'required|min:1|max:' . $this->user->getWallet()->balance
-            ],
+            $validations,
             $messages
         );
 
@@ -371,7 +374,6 @@ class UsersController extends AjaxBaseController
             return Response::json($result);
 
         }
-
 
         $amount = $inputs['amount'];
         $paypal = $inputs['paypal'];
