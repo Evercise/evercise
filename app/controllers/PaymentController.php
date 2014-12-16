@@ -307,7 +307,6 @@ class PaymentController extends BaseController
                 'paypal', 0);
 
 
-
             $this->paidTopup($amount,
                 [
                     'token'          => $data['TOKEN'],
@@ -358,6 +357,8 @@ class PaymentController extends BaseController
             'type'               => 'topup',
             'evercisesession_id' => 0,
             'amount'             => round(abs($amount), 2),
+            'final_price'       => round(abs($amount), 2),
+            'name'               => 'Wallet TopUp',
         ]);
 
         return $transaction->items()->save($item);
@@ -466,9 +467,12 @@ class PaymentController extends BaseController
 
 
             $item = new TransactionItems([
-                'user_id'    => $this->user->id,
-                'type'       => 'package',
-                'package_id' => $p->id
+                'user_id'      => $this->user->id,
+                'type'         => 'package',
+                'package_id'   => $p->id,
+                'amount'       => round($p->package()->first()->price, 2),
+                'final_price' => round($p->package()->first()->price, 2),
+                'name'         => $p->package()->first()->name,
             ]);
 
             $transaction->items()->save($item);
@@ -478,6 +482,8 @@ class PaymentController extends BaseController
         $trainer_notify = [];
 
         foreach ($cart['sessions'] as $session) {
+
+            $free = FALSE;
             $evercisesession = Evercisesession::find($session['id']);
 
             try {
@@ -494,7 +500,7 @@ class PaymentController extends BaseController
 
                 event('activity.user.package.used', [$this->user, $check, $evercisesession]);
 
-
+                $free = TRUE;
             } catch (Exception $e) {
                 /** No package available */
                 Log::error($e->getMessage());
@@ -527,7 +533,10 @@ class PaymentController extends BaseController
             $item = new TransactionItems([
                 'user_id'            => $this->user->id,
                 'type'               => 'session',
-                'evercisesession_id' => $created->id
+                'evercisesession_id' => $created->id,
+                'amount'             => round(abs( $session['price']), 2),
+                'final_price'       => round($free ? 0 : abs( $session['price']), 2),
+                'name'               => $evercisesession->evercisegroup()->first()->name,
             ]);
 
             $transaction->items()->save($item);

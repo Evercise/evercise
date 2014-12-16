@@ -325,6 +325,10 @@ Route::group(['prefix' => 'cart'], function () {
 });
 
 
+Route::get('transaction/{id}', 'TransactionController@show');
+
+
+
 // sessions
 
     Route::get(

@@ -24,6 +24,8 @@ class TransactionController extends BaseController
         parent::__construct();
 
         $this->transactions = $transactions;
+
+
         $this->items = $items;
         $this->log = $log;
     }
@@ -32,8 +34,19 @@ class TransactionController extends BaseController
     public function show($id)
     {
         $transaction = $this->transactions->find($id);
+
+        if($this->user->id != $transaction->user_id) {
+            return Redirect::route('home');
+        }
+
         $items = $transaction->items;
-        return View::make('transactions.show', compact('transaction', 'items'));
+
+        $total = 0;
+        foreach($items as $item) {
+            $total += $item->amount;
+        }
+
+        return View::make('v3.cart.invoice', compact('transaction', 'items', 'total'));
 
 
     }
