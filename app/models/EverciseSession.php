@@ -146,7 +146,7 @@ class Evercisesession extends \Eloquent
         }
         else {
 
-            $date_time = $sessionData['date'] . ' ' . $sessionData['time'];
+            $date_time = $sessionData['date'] . ' ' . $sessionData['time'].':00';
 
             $evercisegroupName = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
@@ -197,7 +197,7 @@ class Evercisesession extends \Eloquent
 
             $currentDate = strtotime($this->date_time);
             $date_str = date("Y-m-d", $currentDate);
-            $date_time_str = $date_str . ' ' . $sessionData['time'];
+            $date_time_str = $date_str . ' ' . $sessionData['time'].':00';
 
             $this->update([
                 'date_time' => new \Carbon\Carbon($date_time_str),
