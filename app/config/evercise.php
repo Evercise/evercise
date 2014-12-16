@@ -24,6 +24,7 @@ return [
         'topupcompleted',
         'milestonecompleted'
     ],
+    'minimim_withdraw'            => 5,
     'payments_to_trainers'        => 'Monday 4pm',
     'pending_emails'              => ['mlatko@gmail.com'],
     'commission'                  => 10, //Default commission
