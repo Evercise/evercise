@@ -150,7 +150,7 @@
                                     <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong><br>
                                 </div>
                                 <div class="col-xs-2 text-right">
-                                    <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
+                                    <strong class="text-primary">&pound;{{ round($row['price'], 2) }}</strong>
                                 </div>
                                 <div class="col-xs-1">
                                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
@@ -192,7 +192,7 @@
                                     {{ $date->toDayDateTimeString() }}
                                 </div>
                                 <div class="col-xs-2 text-right">
-                                    <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.$row['grouped_price'].'</strike> &pound'.$row['grouped_price_discount'] : '&pound'.$row['grouped_price']) }}</strong>
+                                    <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.round($row['grouped_price'],2).'</strike> &pound'.round($row['grouped_price_discount'],2) : '&pound'.round($row['grouped_price'],2) ) }}</strong>
                                 </div>
                                 <div class="col-xs-1">
                                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
@@ -212,22 +212,22 @@
                                         <strong>Sub-total</strong>
                                     </div>
                                     <div class="col-xs-7">
-                                        <strong class="text-primary">&pound{{ $total['subtotal'] }}</strong>
+                                        <strong class="text-primary">&pound{{ round($total['subtotal'], 2) }}</strong>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xs-6 text-right">
                                 @if($total['package_deduct'] > 0)
-                                    <strong>Package deduct: <span class="text-primary"> £{{ $total['package_deduct']  }}</span></strong>
+                                    <strong>Package deduct: <span class="text-primary"> £{{ round($total['package_deduct'],2)  }}</span></strong>
                                     <br>
                                 @endif
                                 @if($total['from_wallet'] > 0)
-                                    <strong>From Wallet: <span class="text-primary">£{{ $total['from_wallet']  }}</span></strong>
+                                    <strong>From Wallet: <span class="text-primary">£{{ round($total['from_wallet'],2)  }}</span></strong>
                                     <br>
                                 @endif
                                 @if(!empty($discount['amount']) && $discount['amount'] > 0)
                                     <strong>
-                                        Voucher discount: <span class="text-primary">- £{{ $discount['amount'] }}</span>
+                                        Voucher discount: <span class="text-primary">- £{{ round($discount['amount'] ,2)}}</span>
                                          @if($discount['type'] == 'percentage')
                                              <span class="text-primary">{{ $discount['percentage']}}%</span>
                                          @endif
@@ -244,7 +244,7 @@
                                         <strong>Total</strong>
                                     </div>
                                     <div class="col-xs-7">
-                                        <strong class="text-primary">&pound{{ $total['final_cost'] }}</strong>
+                                        <strong class="text-primary">&pound{{ round($total['final_cost'], 2) }}</strong>
                                     </div>
                                 </div>
                             </div>

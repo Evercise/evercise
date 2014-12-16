@@ -72,20 +72,20 @@
             <strong>Sub-total</strong>
         </div>
         <div class="col-xs-3">
-            <strong class="text-primary">&pound;<span id="cart-sub-total">{{ $total['subtotal'] }}</span></strong>
+            <strong class="text-primary">&pound;<span id="cart-sub-total">{{ round($total['subtotal'], 2) }}</span></strong>
         </div>
         <div class="col-xs-6 text-right">
             @if($total['package_deduct'] > 0)
-                <strong>Package deduct: <span class="text-primary"> £{{ $total['package_deduct']  }}</span></strong>
+                <strong>Package deduct: <span class="text-primary"> £{{ round($total['package_deduct'] ,2)  }}</span></strong>
                 <br>
             @endif
             @if($total['from_wallet'] > 0)
-                <strong>From Wallet: <span class="text-primary">£{{ $total['from_wallet']  }}</span></strong>
+                <strong>From Wallet: <span class="text-primary">£{{ round($total['from_wallet'] ,2)  }}</span></strong>
                 <br>
             @endif
             @if(!empty($discount['amount']) && $discount['amount'] > 0)
                 <strong>
-                    Voucher discount: <span class="text-primary">- £{{ $discount['amount'] }}</span>
+                    Voucher discount: <span class="text-primary">- £{{ round($discount['amount'] , 2) }}</span>
                      @if($discount['type'] == 'percentage')
                          <span class="text-primary">{{ $discount['percentage']}}%</span>
                      @endif
@@ -99,7 +99,7 @@
             <strong>Total</strong>
         </div>
         <div class="col-xs-5">
-            <strong class="text-primary">&pound;<span id="cart-total">{{ $total['final_cost'] }}</span></strong>
+            <strong class="text-primary">&pound;<span id="cart-total">{{ round($total['final_cost'] , 2) }}</span></strong>
         </div>
         <div class="col-xs-4 mb10 text-right">
             <a href="/cart/checkout"><button class="btn btn-primary">Checkout</button></a>
