@@ -4,7 +4,7 @@ function Withdrawal(form){
     this.addListeners();
 }
 
-Withdrawal.prototype = {
+WWithdrawalprototype = {
     constructor : Withdrawal,
     addListeners: function(){
         this.form.on('submit', $.proxy(this.submit, this));
@@ -35,10 +35,11 @@ Withdrawal.prototype = {
                     self.modal = $('#request-withdrawal');
                     self.modal.modal('show');
                 }
-                else if(data.validation_failed = 1){
+                else if(data.validation_failed == 1){
                     self.failedValidation(data);
                 }
                 else{
+                    self.form.find('input[name="amount"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="amount" data-bv-result="VALID">Withdrawel Successful, We are now refreshing this page for you.</small>');
                     location.reload();
                 }
 
