@@ -547,7 +547,7 @@ class Activity
      * @param $user
      * @param $transaction
      */
-    public function userTopupCompleted($user, $transaction)
+    public function userTopupCompleted($user, $transaction, $type)
     {
         $title = 'Wallet TopUp';
         $description = 'With ' . $this->fixAmountDisplay($transaction->total);
@@ -558,7 +558,7 @@ class Activity
             'link'        => 'transaction/' . $transaction->id,
             'link_title'  => 'View transaction',
             'image'       => 'assets/img/activity/Activity_Topped_Up.png',
-            'type'        => 'topupcompleted',
+            'type'        => $type,
             'user_id'     => $user->id,
             'type_id'     => $transaction->id
         ];

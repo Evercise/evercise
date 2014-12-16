@@ -763,7 +763,7 @@ class Mail
 
         $view = $this->view->make($this->data['view'], $this->data)->render();
 
-        $this->log->info($view);
+        //$this->log->info($view);
 
         // Parse it all Inline
         $parse = new CssToInlineStyles($view, $this->data['css']);

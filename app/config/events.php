@@ -84,6 +84,8 @@ return [
         ['user.edit' => 'User@edit'],
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction, $balance // ∑
+        ['user.referral.completed' => 'User@referralCompleted'], // $user, $transaction, $balance // ∑
+        ['user.referral.signup' => 'User@referralSignup'], // $user, $transaction, $balance // ∑
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 

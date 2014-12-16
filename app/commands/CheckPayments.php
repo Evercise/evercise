@@ -56,7 +56,7 @@ class CheckPayments extends Command {
 
 			$this->info('processing payment. id: '.$payment->id.', total after fees: '.$payment->total_after_fees.', new balance: '.$newBalance);
 
-			$payment->user->wallet->find($payment->user->wallet->id)->deposit($payment->total_after_fees, $payment->id);
+			$payment->user->wallet->find($payment->user->wallet->id)->deposit($payment->total_after_fees, $payment->id, 'trainer_payment');
 
 			/*$payment->user->wallet->where('id', $payment->user->wallet->id)->update([
 				'balance'=>$newBalance,

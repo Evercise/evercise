@@ -62,7 +62,7 @@ class Referral extends \Eloquent
 
     public static function checkAndStore($user_id, $email, $code)
     {
-        $referral = static::create(['user_id' => $user_id, 'email' => $email, 'code' => $code]);
+        $referral = static::create(['user_id' => $user_id, 'email' => $email, 'code' => $code, 'referee_id' => 0]);
 
         return $referral;
     }
