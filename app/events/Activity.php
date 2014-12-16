@@ -540,9 +540,6 @@ class Activity
         ];
         $activity = $this->activities->create($data);
 
-        $this->log->info(implode(', ', $data));
-        $this->log->info($activity->toJson());
-
 
     }
 

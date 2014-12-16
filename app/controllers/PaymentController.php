@@ -449,7 +449,7 @@ class PaymentController extends BaseController
 
             } catch (Exception $e) {
                 /** No package available */
-                Log::info($e->getMessage());
+                Log::error($e->getMessage());
             }
 
 
