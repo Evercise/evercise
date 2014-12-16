@@ -48,7 +48,8 @@ LocationAutoComplete.prototype = {
                 mapTypeControl: false,
                 panControl: false,
                 zoomControl: false,
-                streetViewControl: false
+                streetViewControl: false,
+                componentRestrictions: {country: "uk"}
             }
 
             var self = this;

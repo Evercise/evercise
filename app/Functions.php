@@ -1,5 +1,26 @@
 <?php
 
+    if (!function_exists('formatDuration')) {
+
+        /*
+         * Wrap event class
+         *
+         */
+
+
+
+
+        function formatDuration($duration = 0)
+        {
+
+            $hours = floor($duration / 60);
+            $minutes = $duration % 60;
+
+            return ($hours ? $hours . ' hours ' : '') . ( $minutes . ' minutes');
+        }
+    }
+
+
     if (!function_exists('event')) {
 
         /*
