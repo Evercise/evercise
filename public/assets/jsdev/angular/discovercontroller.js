@@ -156,6 +156,15 @@ if(typeof angular != 'undefined') {
                 angular.forEach(clusterModels, function (value, key) {
                     $scope.clicked(value);
                 });
+                $scope.clusterStyles = [
+                    {
+                        textColor: 'black',
+                        url: '/assets/img/icon_default_small_pin_number.png',
+                        height: 43,
+                        width: 33,
+                        anchorText: [-14,9]
+                    }
+                ];
             }
         };
 
