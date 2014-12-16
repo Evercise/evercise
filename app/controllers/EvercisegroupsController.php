@@ -100,9 +100,14 @@ class EvercisegroupsController extends \BaseController
         $data = $this->elastic->getSingle($id);
 
 
+
         if (!empty($data->hits[0]->_source)){
 
             $class = $data->hits[0]->_source;
+
+            if(is_numeric($id)) {
+                return Redirect::route('class.show', [$id => $class->slug], 301);
+            }
 
 
             $og = new OpenGraph();

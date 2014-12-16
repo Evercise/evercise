@@ -303,7 +303,7 @@ class PaymentController extends BaseController
             $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
 
 
-            $this->user->wallet->deposit($amount, 'Top up with Paypal', 'topup', 0, $data['TOKEN'], $transactionId,
+            $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
                 'paypal', 0);
             EverciseCart::clearTopup();
 
@@ -364,7 +364,7 @@ class PaymentController extends BaseController
         }
 
         $transactionId = $charge['id'];
-        $this->user->wallet->deposit($amount, 'top up with Stripe', 'topup', 0, $token, $transactionId, 'stripe',
+        $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
             0);
         EverciseCart::clearTopup();
 
