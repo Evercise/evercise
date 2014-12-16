@@ -34,8 +34,11 @@
     border-bottom: 1px solid @gray-light;
     padding: 22px 27px;
     position: relative;
+    a{
+      display: block;
+    }
 
-    &:after{
+    &:before{
       content: '';
       position: absolute;
       width: 22px;
@@ -49,7 +52,7 @@
       a{
         color: @brand-primary;
       }
-      &:after{
+      &:before{
         content: '';
         position: absolute;
         width: 22px;

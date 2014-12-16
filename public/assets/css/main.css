@@ -11178,7 +11178,10 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   padding: 22px 27px;
   position: relative;
 }
-.list-group-accordion .list-group-accordion-title:after {
+.list-group-accordion .list-group-accordion-title a {
+  display: block;
+}
+.list-group-accordion .list-group-accordion-title:before {
   content: '';
   position: absolute;
   width: 22px;
@@ -11191,18 +11194,18 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   top: 50%;
   margin-top: -10px;
 }
-.list-group-accordion .list-group-accordion-title:after.active {
+.list-group-accordion .list-group-accordion-title:before.active {
   background-position: -409px -290px;
 }
-.list-group-accordion .list-group-accordion-title:after.hover:hover,
-.list-group-accordion .list-group-accordion-title:after.active:hover {
+.list-group-accordion .list-group-accordion-title:before.hover:hover,
+.list-group-accordion .list-group-accordion-title:before.active:hover {
   cursor: pointer;
   background-position: -409px -290px;
 }
 .list-group-accordion .list-group-accordion-title.active a {
   color: #ff1b7e;
 }
-.list-group-accordion .list-group-accordion-title.active:after {
+.list-group-accordion .list-group-accordion-title.active:before {
   content: '';
   position: absolute;
   width: 22px;
@@ -11215,11 +11218,11 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   top: 50%;
   margin-top: -10px;
 }
-.list-group-accordion .list-group-accordion-title.active:after.active {
+.list-group-accordion .list-group-accordion-title.active:before.active {
   background-position: -369px -330px;
 }
-.list-group-accordion .list-group-accordion-title.active:after.hover:hover,
-.list-group-accordion .list-group-accordion-title.active:after.active:hover {
+.list-group-accordion .list-group-accordion-title.active:before.hover:hover,
+.list-group-accordion .list-group-accordion-title.active:before.active:hover {
   cursor: pointer;
   background-position: -369px -330px;
 }

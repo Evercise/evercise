@@ -5,7 +5,6 @@
             <div class="underline">
                 <h1>Create a class</h1>
             </div>
-            <strong>Some type of instructions for the trainer to continue</strong>
         </div>
         <div class="row mt50 mb50">
             <div class="col-sm-8 col-sm-offset-2">
