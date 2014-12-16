@@ -4,7 +4,7 @@ function Withdrawal(form){
     this.addListeners();
 }
 
-WWithdrawalprototype = {
+Withdrawal.prototype = {
     constructor : Withdrawal,
     addListeners: function(){
         this.form.on('submit', $.proxy(this.submit, this));
