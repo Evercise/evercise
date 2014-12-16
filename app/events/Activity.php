@@ -130,7 +130,7 @@ class Activity
             'title'       => 'Class unpublished',
             'description' => $class->name,
             'type'        => 'classunpublished',
-            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
+            'image'       => 'assets/img/activity/Activity_Class_Unpublished.png',
             'link'        => 'classes/' . $class->slug,
             'link_title'  => 'View',
             'user_id'     => $trainer->id,
@@ -149,7 +149,7 @@ class Activity
             'title'       => 'Class Published',
             'description' => $class->name,
             'type'        => 'classpublished',
-            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
+            'image'       => 'assets/img/activity/Activity_Class_Published.png',
             'link'        => 'classes/' . $class->slug,
             'link_title'  => 'View',
             'user_id'     => $trainer->id,
@@ -266,7 +266,7 @@ class Activity
             'type_id'     => $user->id,
             'link'        => 'profile/' . $user->display_name,
             'link_title'  => 'Profile',
-            'image'       => 'assets/img/activity/Activity_Facebook_Connected.png',
+            'image'       => 'assets/img/activity/Activity_Facebook.png',
         ]);
     }
 
@@ -284,7 +284,7 @@ class Activity
             'type_id'     => $user->id,
             'link'        => 'profile/' . $user->display_name,
             'link_title'  => 'Profile',
-            'image'       => 'assets/img/activity/Activity_Twitter_Connected.png',
+            'image'       => 'assets/img/activity/Activity_Twitter.png',
         ]);
     }
 
@@ -563,9 +563,28 @@ class Activity
             'type_id'     => $transaction->id
         ];
         $activity = $this->activities->create($data);
+    }
 
-        $this->log->info(implode(', ', $data));
-        $this->log->info($activity->toJson());
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function userWithdrawCompleted($user, $transaction)
+    {
+        $title = 'Wallet Withdrawal';
+        $description = 'With ' . $this->fixAmountDisplay($transaction->total);
+
+        $data = [
+            'description' => $description,
+            'title'       => $title,
+            'link'        => 'transaction/' . $transaction->id,
+            'link_title'  => 'View transaction',
+            'image'       => 'assets/img/activity/Activity_Withdrawal.png',
+            'type'        => 'withdrawcompleted',
+            'user_id'     => $user->id,
+            'type_id'     => $transaction->id
+        ];
+        $activity = $this->activities->create($data);
     }
 
 
@@ -605,7 +624,7 @@ class Activity
             'link'        => FALSE,
             'link_title'  => FALSE,
             'type'        => 'milestonecompleted',
-            'image'       => 'assets/img/activity/Activity_Reviewed_Class.png',
+            'image'       => 'assets/img/activity/Activity_Milestone.png',
             'user_id'     => $user->id,
             'type_id'     => $user->id
         ]);

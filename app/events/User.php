@@ -176,6 +176,22 @@ class User
 
     }
 
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function withdrawCompleted($user, $transaction, $balance)
+    {
+
+
+        $this->log->info('User ' . $user->id . ' topup completed');
+
+        $this->mail->withdrawCompleted($user, $transaction, $balance);
+
+        $this->activity->userWithdrawCompleted($user, $transaction);
+
+    }
+
 
     /**
      * @param $user

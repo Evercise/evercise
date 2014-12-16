@@ -96,12 +96,12 @@ class Wallet extends \Eloquent
 
     public function deposit($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction($amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        $this->transaction($amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id, 'deposit');
     }
 
     public function withdraw($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction(-$amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        $this->transaction(-$amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id, 'withdraw');
     }
 
     public function recordedSave(array $params)
@@ -122,7 +122,7 @@ class Wallet extends \Eloquent
 
     }
 
-    protected function transaction($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0 )
+    protected function transaction($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0, $type = '' )
     {
         $transaction = Transactions::create(
             [
@@ -139,9 +139,16 @@ class Wallet extends \Eloquent
 
         $newBalance = $this->attributes['balance'] + $amount;
 
-        event('user.topup.completed', [$user, $transaction, $newBalance]);
-
+        switch($type) {
+            case 'deposit':
+                event('user.topup.completed', [$user, $transaction, $newBalance]);
+                break;
+            case 'withdraw':
+                event('user.withdraw.completed', [$user, $transaction, $newBalance]);
+                break;
+        }
         $user_id = $this->attributes['user_id'];
+        $this->attributes['previous_balance'] = $this->attributes['balance'];
         $this->attributes['balance'] = $newBalance;
 
         $this->save();
