@@ -67,47 +67,56 @@
                         <tr class="text-center" id="hub-edit-row-{{$session->id}}">
 
                             <td class="text-left"><span>{{ $session->formattedDate()}}</span></td>
-                            <td>
-                                <div class="custom-select">
-                                    {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="custom-select">
-                                    {{ Form::select('duration',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="custom-select">
-                                    {{ Form::select('tickets',Config::get('evercise.tickets'), $session->tickets , ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
-                                </div>
-                            </td>
-                            <td>
-                                <div class="custom-select">
-                                    {{ Form::select('price',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
-                                </div>
-                            </td>
-                            <td class="text-right">
-                                 {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session pull-right ml20']) }}
-                                    {{ Form::hidden('id', $session->id) }}
-                                    {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
-                                {{ Form::close() }}
+                            @if($session->sessionmembers()->count() == 0)
+                                <td>
 
-                                    @if($session->sessionmembers()->count() > 0)
+                                    <div class="custom-select">
+                                        {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    </div>
 
+                                </td>
+                                <td>
+                                    <div class="custom-select">
+                                        {{ Form::select('duration',Config::get('evercise.duration'),  $session->duration, ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="custom-select">
+                                        {{ Form::select('tickets',Config::get('evercise.tickets'), $session->tickets , ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="custom-select">
+                                        {{ Form::select('price',Config::get('evercise.price'), $session->price, ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                     {{ Form::open(['id' => 'remove-session-'.$session->id, 'route' => 'sessions.remove', 'method' => 'post', 'class' => 'remove-session pull-right ml20']) }}
+                                        {{ Form::hidden('id', $session->id) }}
+                                        {{ Form::submit('',[ 'class' => 'btn btn-icon icon icon-cross hover']) }}
+                                    {{ Form::close() }}
+
+                                    {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session hidden']) }}
+                                        {{ Form::hidden('id', $session->id) }}
+                                        {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' , 'form' => 'update-sessions-'.$session->id]) }}
+                                    {{ Form::close() }}
+                                </td>
+                            @else
+                                <td>{{ $session->formattedTime()}}</td>
+                                <td>{{ $session->formattedDuration()}}</td>
+                                <td><strong>{{ $session->sessionmembers()->count().'/'.$session->tickets}}</strong></td>
+                                <td>{{'&pound'. $session->price}}</td>
+                                <td class="text-right">
 
                                     {{ Form::open(['route'=>'session.get.members', 'method'=> 'post', 'class' => 'get-members', 'id'=>'get-members']) }}
                                         <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
                                         {{ Form::hidden('session_id', $session->id) }}
-                                        {{ Form::submit('', ['class' => 'icon btn-icon icon-people mr15 hover']) }}
+                                        {{ Form::submit('', ['class' => 'icon btn-icon icon-people hover']) }}
                                     {{ Form::close() }}
-                                    @endif
 
-                                {{ Form::open(['id' => 'update-sessions-'.$session->id, 'route' => 'sessions.update', 'method' => 'put', 'class' => 'update-session hidden']) }}
-                                    {{ Form::hidden('id', $session->id) }}
-                                    {{ Form::submit('',['class' => 'btn btn-icon icon icon-tick hover ml20' , 'form' => 'update-sessions-'.$session->id]) }}
-                                {{ Form::close() }}
-                            </td>
+                                </td>
+
+                            @endif
 
                         </tr>
 

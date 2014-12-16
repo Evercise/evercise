@@ -57,6 +57,11 @@ LocationAutoComplete.prototype = {
                 document.getElementById(self.input.attr('id')),
                 this.mapOptions
             );
+            /*
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                console.log(this.types[0]);
+            });
+            */
         }
         else
         {
