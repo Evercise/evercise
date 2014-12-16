@@ -117,7 +117,7 @@ class Trainer extends \Eloquent
         // validation rules for input field on register form
         $validator = Validator::make(
             $inputs,
-            [
+            [ // validation for these fields upon update lies in User/validateUserEdit
                 'bio' => 'required|max:500|min:50',
                 'image' => 'required',
                 'website' => 'sometimes',
@@ -142,6 +142,11 @@ class Trainer extends \Eloquent
             ];
         }
         return $result;
+    }
+
+    public function updateTrainer($params)
+    {
+        $this->update(array_filter($params));
     }
 
 }

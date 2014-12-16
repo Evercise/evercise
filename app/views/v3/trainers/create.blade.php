@@ -21,7 +21,7 @@
                         {{ Form::text('profession', null, ['class' => 'form-control', 'placeholder' => 'Max 50 Characters', 'maxlength' => 50]) }}
                    </div>
                    <div class="form-group mb50">
-                        {{ Form::label('profession', 'Add your Bio', ['class' => 'mb15'] )  }}
+                        {{ Form::label('bio', 'Add your Bio', ['class' => 'mb15'] )  }}
                         {{ Form::textarea('bio', null, ['class' => 'form-control', 'placeholder' => 'Between 50 and 500 characters', 'maxlength' => 500, 'rows'=> 7]) }}
                    </div>
                    <div class="form-group mb50">
