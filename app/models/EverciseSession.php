@@ -560,8 +560,9 @@ class Evercisesession extends \Eloquent
 
             $refundInEvercoins = Evercoin::poundsToEvercoins($refund);
 
-            $evercoin = Evercoin::where('user_id', Sentry::getUser()->id)->first();
-            $evercoin->deposit($refundInEvercoins);
+            // EVERCOINS NO LONGER EXIST - REPLACE WITH WALLET DEPOSIT
+            //$evercoin = Evercoin::where('user_id', Sentry::getUser()->id)->first();
+            //$evercoin->deposit($refundInEvercoins);
 
             $evercisegroup = Evercisegroup::find($session->evercisegroup_id);
             $niceTime = date('h:ia', strtotime($session->date_time));

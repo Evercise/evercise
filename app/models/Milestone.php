@@ -26,10 +26,6 @@ class Milestone extends \Eloquent
 //],
 
 
-    public function assingAmount($user, $amount) {
-
-
-    }
     /**
      *
      *

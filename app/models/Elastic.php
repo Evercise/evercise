@@ -349,7 +349,7 @@ class Elastic
 
             foreach ($a->ratings as $s) {
 
-                $user = $s->user;
+                $user = $s->rator;
                 $index['ratings'][] = [
                     'user_id'   => (int)$s->user_id,
                     'image'     => $user->directory . '/small_' . $user->image,

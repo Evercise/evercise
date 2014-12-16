@@ -13,6 +13,15 @@ class Wallet extends \Eloquent
      * @log notci: invalid request
      * @return array|\Illuminate\Http\JsonResponse
      */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
+
     public static function validWithdrawalRequest($inputs, $id)
     {
         $validator = Validator::make(
@@ -94,14 +103,72 @@ class Wallet extends \Eloquent
         return $result;
     }
 
-    public function deposit($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
+    public function deposit($amount, $description, $type = 'deposit', $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction($amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        $this->transaction($amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id );
+
     }
 
-    public function withdraw($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
+    public function withdraw($amount, $description, $type = 'withdraw', $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction(-$amount, $description, $user, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        $this->transaction(-$amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+    }
+    
+
+    protected function transaction($amount, $description, $type, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
+    {
+        $user_id = $this->attributes['user_id'];
+
+        $transaction = Transactions::create(
+            [
+                'user_id'          => $user_id,
+                'total'            => $amount,
+                'total_after_fees' => $amount,
+                'coupon_id'        => 0,
+                'commission'       => 0,
+                'token'            => $token,
+                'transaction'      => $transactionId,
+                'payment_method'   => $paymentMethod,
+                'payer_id'         => $payer_id
+            ]);
+
+        $newBalance = $this->attributes['balance'] + $amount;
+
+        if(!$type instanceof \User) {
+            switch ($type) {
+                case 'deposit':
+                    event('user.topup.completed', [$this->user, $transaction, $newBalance]);
+                    break;
+                case 'withdraw':
+                    event('user.withdraw.completed', [$this->user, $transaction, $newBalance]);
+                    break;
+                case 'referral':
+                    event('user.referral.completed', [$this->user, $transaction, $newBalance]);
+                    break;
+                case 'referral_signup':
+                    event('user.referral.signup', [$this->user, $transaction, $newBalance]);
+                    break;
+            }
+        } else {
+            Log::error('----- WE MISSED THIS ONE!!!!!!!-----');
+            Log::error(debug_backtrace());
+        }
+
+        $user_id = $this->attributes['user_id'];
+        $this->attributes['previous_balance'] = $this->attributes['balance'];
+        $this->attributes['balance'] = $newBalance;
+
+        $this->save();
+
+        Wallethistory::create(
+            [
+                'user_id' => $user_id,
+                'sessionmember_id' => $sessionmember_id,
+                'transaction_amount' => $amount,
+                'new_balance' => $this->attributes['balance'],
+                'description' => $description,
+            ]
+        );
     }
 
     public function recordedSave(array $params)
@@ -122,41 +189,6 @@ class Wallet extends \Eloquent
 
     }
 
-    protected function transaction($amount, $description, $user, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0 )
-    {
-        $transaction = Transactions::create(
-            [
-                'user_id'          => $user->id,
-                'total'            => $amount,
-                'total_after_fees' => $amount,
-                'coupon_id'        => 0,
-                'commission'       => 0,
-                'token'            => $token,
-                'transaction'      => $transactionId,
-                'payment_method'   => $paymentMethod,
-                'payer_id'         => $payer_id
-            ]);
-
-        $newBalance = $this->attributes['balance'] + $amount;
-
-        event('user.topup.completed', [$user, $transaction, $newBalance]);
-
-        $user_id = $this->attributes['user_id'];
-        $this->attributes['balance'] = $newBalance;
-
-        $this->save();
-
-        Wallethistory::create(
-            [
-                'user_id' => $user_id,
-                'sessionmember_id' => $sessionmember_id,
-                'transaction_amount' => $amount,
-                'new_balance' => $this->attributes['balance'],
-                'description' => $description,
-            ]
-        );
-    }
-
     public function updatePaypal($newPaypal)
     {
         $this->attributes['paypal'] = $newPaypal;
@@ -165,6 +197,8 @@ class Wallet extends \Eloquent
 
     public function giveAmount($amount = 0, $type = false) {
         if(!$type || $amount == 0) return false;
+
+        Log::info('WALLET\giveAmount:::  type:'.$type);
 
         $user = Sentry::getUser();
 
@@ -202,7 +236,7 @@ class Wallet extends \Eloquent
                 return false;
         }
 
-        $this->deposit($amount, $description, $user);
+        $this->deposit($amount, $description, $type);
 
         event('milestone.completed', [$user, $type, $title, $description, $amount]);
 

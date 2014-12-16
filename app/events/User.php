@@ -166,13 +166,49 @@ class User
      */
     public function topupCompleted($user, $transaction, $balance)
     {
-
-
         $this->log->info('User ' . $user->id . ' topup completed');
 
         $this->mail->topupCompleted($user, $transaction, $balance);
 
-        $this->activity->userTopupCompleted($user, $transaction);
+        $this->activity->userTopupCompleted($user, $transaction, 'topupcompleted');
+
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function referralCompleted($user, $transaction, $balance)
+    {
+        $this->log->info('User ' . $user->id . ' referral completed');
+
+        $this->activity->userTopupCompleted($user, $transaction, 'referralcompleted');
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function referralSignup($user, $transaction, $balance)
+    {
+        $this->log->info('User ' . $user->id . ' signup through referral');
+
+        $this->activity->userTopupCompleted($user, $transaction, 'referralsignup');
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function withdrawCompleted($user, $transaction, $balance)
+    {
+
+
+        $this->log->info('User ' . $user->id . ' topup completed');
+
+        $this->mail->withdrawCompleted($user, $transaction, $balance);
+
+        $this->activity->userWithdrawCompleted($user, $transaction);
 
     }
 

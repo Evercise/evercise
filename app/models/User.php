@@ -816,4 +816,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         return count($this->evercisegroups);
     }
+
+    public function pendingReferrals()
+    {
+        return $this->hasMany('Referral')
+            ->where('referee_id', 0);
+    }
+    public function countPendingReferrals()
+    {
+        return count($this->pendingReferrals);
+    }
 }

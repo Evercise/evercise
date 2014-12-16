@@ -143,6 +143,29 @@ class Mail
             'transaction' => $transaction,
             'balance'      => $balance,
             'banner'      => NULL,
+            'image'       => image('/assets/img/email/user_default.jpg', 'Topup Confirmation'),
+            'link_url'    => $this->url->to('/uk/london')
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     * @param $balance
+     *
+     * Event user.topup.completed
+     */
+    public function withdrawCompleted($user, $transaction, $balance)
+    {
+        $params = [
+            'subject'     => 'Confirmation of Withdraw',
+            'view'        => 'v3.emails.user.withdraw_completed',
+            'user'        => $user,
+            'transaction' => $transaction,
+            'balance'      => $balance,
+            'banner'      => NULL,
             'image'       => image('/assets/img/email/user_default.jpg', 'topup confirmation'),
             'link_url'    => $this->url->to('/uk/')
         ];
@@ -763,7 +786,7 @@ class Mail
 
         $view = $this->view->make($this->data['view'], $this->data)->render();
 
-        $this->log->info($view);
+        //$this->log->info($view);
 
         // Parse it all Inline
         $parse = new CssToInlineStyles($view, $this->data['css']);

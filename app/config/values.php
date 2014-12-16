@@ -15,7 +15,7 @@ return array(
 
 	// Amount rewarded for signing up from a referral link in pounds
 	'freeCoins' => [
-		'referral_signup' => 1,
+		'referral_signup' => 5,
 		'ppc_signup' => 3,
 	],
 	
