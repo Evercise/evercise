@@ -15,7 +15,8 @@ class Classes
     private $stats;
     private $log;
 
-    public function __construct(Activity $activity, Indexer $indexer, Mail $mail, Stats $stats, Writer $log) {
+    public function __construct(Activity $activity, Indexer $indexer, Mail $mail, Stats $stats, Writer $log)
+    {
 
         $this->activity = $activity;
         $this->indexer = $indexer;
@@ -25,17 +26,17 @@ class Classes
     }
 
 
+    public function classCreated($class, $trainer)
+    {
 
-    public function classCreated($class, $trainer){
-
-        $this->log->info('Trainer '.$trainer->id.' created class '.$trainer->name);
-
+        $this->log->info('Trainer ' . $trainer->id . ' created class ' . $trainer->name);
 
 
         /** Mail And other shit Go here */
 
-        if($trainer->numGroups() == 1)
+        if ($trainer->numGroups() == 1) {
             $this->mail->classCreatedFirstTime($class, $trainer);
+        }
 
         $this->activity->createdClass($class, $trainer);
 
@@ -44,11 +45,10 @@ class Classes
     }
 
 
+    public function classPublished($class, $trainer)
+    {
 
-
-    public function classPublished($class, $trainer){
-
-        $this->log->info('Trainer '.$trainer->id.' Published class '.$class->name);
+        $this->log->info('Trainer ' . $trainer->id . ' Published class ' . $class->name);
 
         /** Mail And other shit Go here */
         $this->activity->publishedClass($class, $trainer);
@@ -58,10 +58,10 @@ class Classes
     }
 
 
+    public function classUnPublished($class, $trainer)
+    {
 
-    public function classUnPublished($class, $trainer){
-
-        $this->log->info('Trainer '.$trainer->id.' UnPublished class '.$class->name);
+        $this->log->info('Trainer ' . $trainer->id . ' UnPublished class ' . $class->name);
 
 
         $this->activity->unPublishedClass($class, $trainer);
@@ -71,10 +71,10 @@ class Classes
     }
 
 
+    public function classDeleted($class, $user)
+    {
 
-    public function classDeleted($class, $user){
-
-        $this->log->info('User '.$user->id.' Updated class '.$class->name);
+        $this->log->info('User ' . $user->id . ' Updated class ' . $class->name);
 
 
         $this->activity->deletedClass($class, $user);
@@ -85,9 +85,10 @@ class Classes
     }
 
 
-    public function classUpdated($class, $user){
+    public function classUpdated($class, $user)
+    {
 
-        $this->log->info('User '.$user->id.' Updated class '.$class->name);
+        $this->log->info('User ' . $user->id . ' Updated class ' . $class->name);
 
 
         $this->activity->updatedClass($class, $user);
@@ -98,7 +99,8 @@ class Classes
     }
 
 
-    public function classViewed($class, $user = false){
+    public function classViewed($class, $user = FALSE)
+    {
 
         $this->stats->classViewed($class);
 
@@ -106,18 +108,20 @@ class Classes
     }
 
 
-    public function venueCreated($venue, $user) {
+    public function venueCreated($venue, $user)
+    {
 
-        $this->log->info('User '.$user->id.' Created Venue '.$venue->name);
+        $this->log->info('User ' . $user->id . ' Created Venue ' . $venue->name);
 
-        $this->activity->createdVenue($venue,$user);
+        $this->activity->createdVenue($venue, $user);
     }
 
-    public function venueUpdated($venue, $user) {
+    public function venueUpdated($venue, $user)
+    {
 
-        $this->log->info('User '.$user->id.' Updated Venue '.$venue->name);
+        $this->log->info('User ' . $user->id . ' Updated Venue ' . $venue->name);
 
-        $this->activity->updatedVenue($venue,$user);
+        $this->activity->updatedVenue($venue, $user);
     }
 
 }

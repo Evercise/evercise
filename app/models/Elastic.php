@@ -275,7 +275,7 @@ class Elastic
         $this->log->info('Indexing Evercise Groups started ' . date('d H:i:s'));
 
         if ($id == 0) {
-            $all = $this->evercisegroup->has('futuresessions')
+            $all = $this->evercisegroup->with('futuresessions')
                 ->has('confirmed')
                 ->with('venue')
                 ->with('user')
@@ -283,7 +283,7 @@ class Elastic
                 ->with('futuresessions')
                 ->get();
         } else {
-            $all = $this->evercisegroup->has('futuresessions')
+            $all = $this->evercisegroup->with('futuresessions')
                 ->has('confirmed')
                 ->with('venue')
                 ->with('user')
@@ -326,7 +326,7 @@ class Elastic
                     'first_name'   => $a->user->first_name,
                     'last_name'    => $a->user->last_name,
                     'display_name' => $a->user->display_name,
-                    'image'        => $a->user->directory . '/' . $a->user->image,
+                    'image'        => $a->user->image,
                     'directory'    => $a->user->directory,
                     'phone'        => $a->user->phone,
                 ],
@@ -336,8 +336,10 @@ class Elastic
                     'address'  => $a->venue->address,
                     'postcode' => $a->venue->postcode,
                     'town'     => $a->venue->town,
+                    'lat'      => $a->venue->lat,
+                    'lon'      => $a->venue->lng,
                     'location' => [
-                        'geohash' => $hash
+                        'geohash' => $hash,
                     ],
                     'image'    => $a->venue->image
                 ],

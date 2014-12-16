@@ -5,6 +5,39 @@ class EvercisegroupsController extends \BaseController
 {
 
 
+
+    protected $evercisegroup;
+    protected $input;
+    protected $log;
+    protected $elastic;
+
+    public function __construct(
+        Evercisegroup $evercisegroup,
+        Illuminate\Http\Request $input,
+        Illuminate\Log\Writer $log,
+        Illuminate\Config\Repository $config,
+        Es $elasticsearch,
+        Geotools $geotools
+    ) {
+
+        parent::__construct();
+
+        $this->evercisegroup = $evercisegroup;
+        $this->input = $input;
+        $this->log = $log;
+        $this->config = $config;
+
+        $this->elastic = new Elastic(
+            $geotools::getFacadeRoot(),
+            $this->evercisegroup,
+            $elasticsearch::getFacadeRoot(),
+            $this->log
+        );
+
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -62,36 +95,53 @@ class EvercisegroupsController extends \BaseController
      */
     public function show($id, $preview = NULL)
     {
-        if (is_numeric($id)) {
-            $evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
-                ->with('evercisesession.sessionpayment')
-                ->with('subcategories.categories')
-                ->find($id);
-        } else {
-
-            $evercisegroup = Evercisegroup::with('Evercisesession.Sessionmembers.Users')
-                ->with('evercisesession.sessionpayment')
-                ->with('subcategories.categories')
-                ->where('slug', $id)->first();
-        }
 
 
-        if ($evercisegroup){
-            $data = $evercisegroup->showAsNonOwner($this->user);
+        $data = $this->elastic->getSingle($id);
 
-            event('class.viewed', [$evercisegroup, $this->user]);
 
-            if (Sentry::check() && $evercisegroup->user_id == $this->user->id)
+        if (!empty($data->hits[0]->_source)){
+
+            $class = $data->hits[0]->_source;
+
+            $og = new OpenGraph();
+
+            /* try to create og if fails redirect to discover page */
+
+            try {
+                $og->title($class->name)
+                    ->type('article')
+                    ->image(
+                        url() .'/'.$class->user->directory . '/thumb_' . $class->image,
+                        [
+                            'width'  => 150,
+                            'height' => 156
+                        ]
+                    )
+                    ->description($class->description)
+                    ->url();
+                $class->og = $og;
+            } catch (Exception $e) {
+                $class->og = [];
+            }
+
+            /** Overwrite Venue because of amenities */
+            $class->venue = Venue::with('facilities')->find($class->venue_id);
+
+
+            event('class.viewed', [$class, $this->user]);
+
+            if (Sentry::check() && $class->user_id == $this->user->id)
             // This Group belongs to this User/Trainer
             {
                 return View::make('v3.classes.class_page')
                     ->with('preview', 'preview')
-                    ->with('data', $data);
+                    ->with('data', (array)$class);
             }
             else // This group does not belong to this user
             {
                 return View::make('v3.classes.class_page')
-                    ->with('data', $data);
+                    ->with('data', (array)$class);
             }
         } else {
             //return View::make('errors.missing');
