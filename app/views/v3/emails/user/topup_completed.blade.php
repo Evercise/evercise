@@ -4,7 +4,7 @@
 
 @section('body')
 
-<p>Dear {{ $user->display_name }}</p>
+<p>Dear {{ $user->first_name }}</p>
 <p>You have successfully topped up your wallet</p>
 <strong><p>Transaction ID: {{$transaction->id}}</p></strong>
 @stop
@@ -12,7 +12,7 @@
 <table class="table" width="100%" height="20" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
     <tbody>
         <tr>
-            <td colspan="7" >
+            <td colspan="7" align="right" >
                 <strong>Sub-total <span class="blue-text">&pound;{{ abs($transaction->total) }}</span></strong>
             </td>
         </tr>

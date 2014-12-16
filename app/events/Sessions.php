@@ -136,6 +136,8 @@ class Sessions
 
         $this->mail->userLeaveSession($user, $trainer, $everciseGroup, $sessionDate);
         $this->mail->trainerLeaveSession($user, $trainer, $everciseGroup, $sessionDate);
+
+        $this->indexer->indexSingle($everciseGroup->id);
     }
 
     /**
@@ -151,6 +153,9 @@ class Sessions
 
         //$this->mail->userJoinedTrainersSession($user, $trainer, $evercisegroup, $transactionId); // This seems to be the same as trainerJoinSession
         $this->mail->trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId);
+
+
+        $this->indexer->indexSingle($evercisegroup->id);
     }
 
 

@@ -47,7 +47,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-yuk2 toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="5">
+            <table class="table table-yuk2 toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="20">
                 <thead>
                     <tr>
                         <th data-toggle="true">ID</th>
