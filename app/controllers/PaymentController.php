@@ -305,6 +305,16 @@ class PaymentController extends BaseController
 
             $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
                 'paypal', 0);
+
+
+
+            $this->paidTopup($amount,
+                [
+                    'token'          => $data['TOKEN'],
+                    'transaction'    => $transactionId,
+                    'payment_method' => 'paypal',
+                ]);
+
             EverciseCart::clearTopup();
 
 
@@ -323,6 +333,34 @@ class PaymentController extends BaseController
             return Redirect::route('payment.error')->with('error', $response->getMessage());
         }
 
+
+    }
+
+    public function paidTopup($amount, $params = [])
+    {
+
+        $transaction = Transactions::create(
+            [
+                'user_id'          => $this->user->id,
+                'total'            => round(abs($amount), 2),
+                'total_after_fees' => round(abs($amount), 2),
+                'coupon_id'        => 0,
+                'commission'       => 0,
+                'token'            => (!empty($params['token']) ? $params['token'] : 0),
+                'transaction'      => (!empty($params['transaction']) ? $params['transaction'] : 0),
+                'payment_method'   => (!empty($params['payment_method']) ? $params['payment_method'] : 0),
+                'payer_id'         => (!empty($params['payer_id']) ? $params['payer_id'] : 0),
+            ]);
+
+
+        $item = new TransactionItems([
+            'user_id'            => $this->user->id,
+            'type'               => 'topup',
+            'evercisesession_id' => 0,
+            'amount'             => round(abs($amount), 2),
+        ]);
+
+        return $transaction->items()->save($item);
 
     }
 
@@ -366,6 +404,16 @@ class PaymentController extends BaseController
         $transactionId = $charge['id'];
         $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
             0);
+
+
+        $this->paidTopup($amount,
+            [
+                'token'          => $token,
+                'transaction'    => $transactionId,
+                'payment_method' => 'stripe',
+            ]);
+
+
         EverciseCart::clearTopup();
 
 
@@ -535,8 +583,9 @@ class PaymentController extends BaseController
     {
         /* Get topup details sent with redirect */
         $data = Session::get('topup_details');
-        if (!$data)
+        if (!$data) {
             return Redirect::route('home');
+        }
 
         $balance = $this->user->getWallet()->getBalance();
 
