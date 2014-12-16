@@ -146,12 +146,17 @@ class EvercisegroupsController extends \BaseController
             }
             else // This group does not belong to this user
             {
+                /** Check if this is active or not! */
+
+                if($class->published == 0) {
+                    return Redirect::to('uk/london')->with('notification', 'This class does not exist');
+                }
                 return View::make('v3.classes.class_page')
                     ->with('data', (array)$class);
             }
         } else {
             //return View::make('errors.missing');
-            return Redirect::route('home')->with('notification', 'this class does not exist');
+            return Redirect::route('uk/london')->with('notification', 'This class does not exist');
         }
 
     }
