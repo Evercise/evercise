@@ -39,6 +39,7 @@ Withdrawal.prototype = {
                     self.failedValidation(data);
                 }
                 else{
+                    self.form.find('input[name="amount"]').addClass('mb40');
                     self.form.find('input[name="amount"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="amount" data-bv-result="VALID">Withdrawel Successful, We are now refreshing this page for you.</small>');
                     location.reload();
                 }

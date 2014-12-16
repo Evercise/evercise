@@ -19,8 +19,8 @@
                     </div>
                     <div class="form-group col-sm-12">
                         {{ Form::label('amount', 'The amount you wish to withdraw') }}
-                        {{ Form::number('amount', number_format($wallet->balance,2), ['class' => 'form-control', 'placeholder' => 'Amount to withdraw']) }}
-                        <p class="help-block mb40">MAX: {{ number_format($wallet->balance,2) }}</p>
+                        {{ Form::number('amount', round($wallet->balance,2), ['class' => 'form-control', 'placeholder' => 'Amount to withdraw']) }}
+                        <p class="help-block mb40">MAX: £{{ round($wallet->balance,2) }}</p>
 
                     </div>
                     <div class="text-center col-sm-12">
