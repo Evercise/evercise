@@ -119,10 +119,10 @@
                                         @if($futuresession->remaining  > 0)
                                             {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
                                                 <div class="btn-group pull-right">
-                                                    {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
+                                                    {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn '.isset($preview) ? 'disabled' : null])}}']) }}
                                                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
                                                     {{ Form::hidden('force', true) }}
-                                                      <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                                      <select name="quantity" id="quantity" class="btn btn-primary btn-select {{isset($preview) ? 'disabled' : null}}">
                                                         @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
                                                         <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                                         @endfor
