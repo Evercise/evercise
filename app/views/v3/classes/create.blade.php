@@ -44,7 +44,9 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-6 text-right sm-text-center"><button class="btn btn-default">Cancel</button> </div>
+                        <div class="col-sm-6 text-right sm-text-center">
+                            {{ Html::linkRoute('users.edit', 'Cancel', $user->id, ['class' => 'btn btn-default']) }}
+                        </div>
                         {{ Form::hidden('image', isset($cloneGroup->image) ? $cloneGroup->image : null) }}
                         {{ Form::hidden('gallery_image', false) }}
                         {{ Form::hidden('category_array[]',null ) }}
