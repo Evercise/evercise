@@ -57,6 +57,32 @@ function updateProfile(form){
             }
         }
     };
+    this.profession = {
+        message: 'Your profession is not valid',
+        validators: {
+            notEmpty: {
+                message: 'You must add a profession'
+            },
+            stringLength: {
+                min: 2,
+                max: 50,
+                message: 'Your profession must be more than 2 and less than 50 characters long'
+            }
+        }
+    };
+    this.bio = {
+        message: 'Your bio is not valid',
+        validators: {
+            notEmpty: {
+                message: 'You must add a bio'
+            },
+            stringLength: {
+                min: 50,
+                max: 500,
+                message: 'Your bio must be more than 50 and less than 500 characters long'
+            }
+        }
+    };
     this.init();
 }
 updateProfile.prototype = {
@@ -80,7 +106,9 @@ updateProfile.prototype = {
                 first_name: this.first_name,
                 last_name: this.last_name,
                 password: this.password,
-                confirmed_password: this.confirmed_password
+                confirmed_password: this.confirmed_password,
+                profession: this.profession,
+                bio: this.bio
             }
         })
         .on('success.form.bv', function(e) {
@@ -124,11 +152,11 @@ updateProfile.prototype = {
 
         $.each(arr, function(index, value)
         {
-            self.form.find('input[name="' + index+ '"]').parent().addClass('has-error');
-            self.form.find('input[name="' + index+ '"]').parent().find('.glyphicon').remove();
-            self.form.find('input[name="' + index + '"]').parent().find('.help-block:visible').remove();
-            self.form.find('input[name="' + index+ '"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
-            self.form.find('input[name="' + index+ '"]').after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="'+index+'"></i>');
+            self.form.find('input[name="' + index+ '"],input[textarea="' + index+ '"] ').parent().addClass('has-error');
+            self.form.find('input[name="' + index+ '"],input[textarea="' + index+ '"] ').parent().find('.glyphicon').remove();
+            self.form.find('input[name="' + index+ '"],input[textarea="' + index+ '"] ').parent().find('.help-block:visible').remove();
+            self.form.find('input[name="' + index+ '"],input[textarea="' + index+ '"] ').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="'+index+'" data-bv-result="INVALID">'+value+'</small>');
+            self.form.find('input[name="' + index+ '"],input[textarea="' + index+ '"] ').after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="'+index+'"></i>');
         })
     }
 }
