@@ -33,9 +33,6 @@ class ReferralsController extends \BaseController {
 			if ($referral)
 			{
 
-
-                $this->user->milestone->increment('referrals');
-
 				event('referral.invite', [
 		        	'email' => $refereeEmail,
 		            'referralCode' => $referralCode,
@@ -48,7 +45,7 @@ class ReferralsController extends \BaseController {
 		return Response::json(
             [
                 'view'  => View::make('v3.layouts.positive-alert')->with('message', 'Referral sent successfully')->with('fixed', TRUE)->render(),
-                'referral' => $this->user->milestone->showReferrals()
+                'referral' => $this->user->countPendingReferrals()
             ]
         );
 	}

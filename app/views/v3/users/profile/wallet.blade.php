@@ -76,7 +76,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <strong>Refer a friend</strong>
-                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, they&apos;ll count towards your grabbing your £5.00 reward.
+                            <p>Enter a friends email address below and they&apos;ll be sent a referral code. If they then register with Evercise using the referral code, You&apos;ll both get a £5.00 reward.
                             </p>
                             <div class="form-group row mt20">
                                 {{ Form::open(['url' => 'new_referral', 'method' => 'post', 'class'=>'', 'role' => 'form', 'id' => 'refer-a-friend'] ) }}
@@ -91,6 +91,7 @@
                             </div>
                             <div class="form-group row mt20">
                                 <div class="col-sm-12">
+                                    <strong>Pending referrals: <span id="referral-amount" class="text-primary">{{$data['user']->countPendingReferrals()}}</span></strong>
                                     <strong>Friends referred: <span id="referral-amount" class="text-primary">{{$data['user']->milestone->showReferrals()}}</span></strong>
                                </div>
                             </div>

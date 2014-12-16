@@ -395,7 +395,7 @@ class UsersController extends AjaxBaseController
 
         if ($withdrawal) {
 
-            $wallet->withdraw($amount, 'Withdrawal request', $this->user);
+            $wallet->withdraw($amount, 'Withdrawal request', 'withdraw');
             $result =
                 [
                     'callback'          => 'success',
