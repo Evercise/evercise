@@ -49,7 +49,7 @@
                 <div class=" col-sm-7">
                     <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-sm-12 mt10">
                     <em><small>You said:</small></em>
                 </div>
                 <div class="col-sm-12">

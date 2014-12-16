@@ -8539,17 +8539,17 @@ a.bg-light-grey:hover {
 }
 .icon-lg-instagram {
   background-image: url("../img/ev_site_icons.png");
-  background-position: -360px -400px;
+  background-position: -440px -400px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-lg-instagram.active {
-  background-position: -360px -480px;
+  background-position: -440px -480px;
 }
 .icon-lg-instagram.hover:hover,
 .icon-lg-instagram.active:hover {
   cursor: pointer;
-  background-position: -360px -480px;
+  background-position: -440px -480px;
 }
 .icon-loading {
   background-image: url("../img/spinning-circles.svg");
