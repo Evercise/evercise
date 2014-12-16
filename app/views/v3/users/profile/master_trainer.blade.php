@@ -54,7 +54,7 @@
             @include('v3.users.profile.wallet')
         </div>
         <div id="edit" class="{{ $tab === 'edit' ? 'profile-panels' : 'hidden profile-panels' }}">
-            @include('v3.users.profile.edit')
+            @include('v3.trainers.profile.edit')
         </div>
 
     </div>

@@ -62,7 +62,7 @@ class CheckPayments extends Command {
 				'balance'=>$newBalance,
 				'previous_balance'=>$currentBalance
 			]);
-			$payment->user->wallet->recordedSave([
+			$payment->user->wallet->recordedSave([=>
 				'user_id' => $payment->user_id,
 				'sessionpayment_id' => $payment->id,
 				'transaction_amount' => $payment->total_after_fees,

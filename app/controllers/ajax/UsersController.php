@@ -217,18 +217,24 @@ class UsersController extends AjaxBaseController
 
         $valid_user = User::validUserEdit(Input::all());
 
-        if ($valid_user['validation_failed'] == 0) {
+        if (! $valid_user['validation_failed']) {
             // Actually update the user record
-            $first_name = Input::get('first_name');
-            $last_name = Input::get('last_name');
-            $dob = Input::get('dob');
-            $gender = Input::get('gender');
-            $image = Input::get('image');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-            $password = Input::get('password');
-            $email = Input::get('email');
-            $this->user->updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password, $email);
+            $this->user->updateUser([
+                'first_name'    => Input::get('first_name'),
+                'last_name'     => Input::get('last_name'),
+                'dob'           => Input::get('dob'),
+                'gender'        => Input::get('gender'),
+                'image'         => Input::get('image'),
+                'area_code'     => Input::get('areacode'),
+                'phone'         => Input::get('phone'),
+                'password'      => Input::get('password'),
+                'email'         => Input::get('email'),
+            ]);
+            $this->user->trainer->updateTrainer([
+                'profession'    => Input::get('profession', 0),
+                'bio'           => Input::get('bio', 0),
+                'website'       => Input::get('website', 0),
+            ]);
 
             $this->user->checkProfileMilestones();
 

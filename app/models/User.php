@@ -335,11 +335,16 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $validator = Validator::make(
             $inputs,
             [
+                // User fields
                 'first_name' => 'required|max:15|min:2',
                 'last_name'  => 'required|max:15|min:2',
                 'dob'        => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 'phone'      => 'numeric',
                 'password'   => 'confirmed|min:6|max:32',
+                // Trainer fields
+                'bio' => 'max:500|min:50',
+                'website' => 'sometimes',
+                'profession' => 'max:50|min:2',
             ]
         );
 
@@ -355,19 +360,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $area_code
      * @param $phone
      */
-    public function updateUser($first_name, $last_name, $dob, $gender, $image, $area_code, $phone, $password, $email)
+    public function updateUser($params)
     {
-        $this->update(array_filter([
-            'first_name' => $first_name,
-            'last_name'  => $last_name,
-            'dob'        => $dob,
-            'gender'     => $gender,
-            'image'      => $image,
-            'area_code'  => $area_code,
-            'phone'      => $phone,
-            'password'   => $password,
-            'email'   => $email,
-        ]));
+        $this->update(array_filter($params));
     }
 
     public function checkProfileMilestones()
