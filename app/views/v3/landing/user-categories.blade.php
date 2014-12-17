@@ -21,7 +21,7 @@
             <h1 class="text-primary">Get up to {{ $price }}</h1>
             <h2 class="text-white">For your first {{ $category }} class</h2>
             <h3 class="text-info">{{ $number_sessions }} Classes to choose from</h3>
-            {{ Form::open(['route' => 'home', 'method' => 'post',]) }}
+            {{ Form::open(['url' => 'landings', 'method' => 'post',]) }}
                 <div class="landing-form container">
                     <div class="form-group">
                             <div class="input-wrapper email">
@@ -54,7 +54,7 @@
                 <div class="col-sm-4 sm-mb20">
                     {{ image('assets/img/how_icon.png', 'what is evercise', ['class' => 'img-responsive']) }}
                     <h4 class="text-white">How does it work?</h4>
-                    <p class="text-white">Discover exiting {cat} classes find something nearby</p>
+                    <p class="text-white">Discover exiting {{ $category }} classes find something nearby</p>
                 </div>
 
             </div>

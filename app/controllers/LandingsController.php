@@ -2,6 +2,59 @@
 
 class LandingsController extends \BaseController {
 
+
+
+    protected $evercisegroup;
+    protected $sentry;
+    protected $link;
+    protected $input;
+    protected $log;
+    protected $session;
+    protected $redirect;
+    protected $paginator;
+    protected $place;
+    protected $elastic;
+    protected $search;
+
+    public function __construct(
+        Evercisegroup $evercisegroup,
+        Sentry $sentry,
+        Link $link,
+        Illuminate\Http\Request $input,
+        Illuminate\Log\Writer $log,
+        Illuminate\Session\Store $session,
+        Illuminate\Routing\Redirector $redirect,
+        Illuminate\Pagination\Factory $paginator,
+        Illuminate\Config\Repository $config,
+        Es $elasticsearch,
+        Geotools $geotools,
+        Place $place
+    ) {
+
+        parent::__construct();
+
+        $this->evercisegroup = $evercisegroup;
+        $this->sentry = $sentry;
+        $this->link = $link;
+        $this->input = $input;
+        $this->log = $log;
+        $this->place = $place;
+        $this->session = $session;
+        $this->redirect = $redirect;
+        $this->paginator = $paginator;
+        $this->config = $config;
+
+        $this->elastic = new Elastic(
+            $geotools::getFacadeRoot(),
+            $this->evercisegroup,
+            $elasticsearch::getFacadeRoot(),
+            $this->log
+        );
+        $this->search = new Search($this->elastic, $this->evercisegroup, $this->log);
+
+    }
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -35,9 +88,74 @@ class LandingsController extends \BaseController {
 
 
 
+        $params = [
+            'size' => 10,
+            'from' => 0,
+            'radius' => '10mi',
+            'search' => $item['category']
+        ];
+        $area = Place::where('name', 'London')->remember(200)->first();
 
-        $item['number_sessions'] = 999;
+        $searchResults = $this->search->getResults($area, $params);
+        $item['number_sessions'] = $searchResults->total;
 
+        $i = 0;
+        foreach($item['blocks']['large'] as $block) {
+            $params['search'] = $block['name'];
+            $searchResults = $this->search->getResults($area, $params);
+            $total = 0;
+
+            if($searchResults->total > 0) {
+                $price = 0;
+
+                foreach ($searchResults->hits as $evercisegroup) {
+
+                    $total += count($evercisegroup->futuresessions);
+
+                    foreach($evercisegroup->futuresessions as $session) {
+                        if($price == 0 || $price > $session->price) {
+                            $price = $session->price;
+                        }
+                    }
+                }
+
+                $item['blocks']['large'][$i]['from'] = '£'.$price;
+            }
+
+            $item['blocks']['large'][$i]['total'] = $total;
+
+            $i++;
+        }
+
+        $i = 0;
+        foreach($item['blocks']['small'] as $block) {
+            $params['search'] = $block['name'];
+            $searchResults = $this->search->getResults($area, $params);
+            $total = 0;
+
+            if($searchResults->total > 0) {
+                $price = 0;
+
+                foreach ($searchResults->hits as $evercisegroup) {
+
+                    $total += count($evercisegroup->futuresessions);
+
+                    foreach($evercisegroup->futuresessions as $session) {
+                        if($price == 0 || $price > $session->price) {
+                            $price = $session->price;
+                        }
+                    }
+                }
+
+                $item['blocks']['small'][$i]['from'] = '£'.$price;
+            }
+
+
+            $item['blocks']['small'][$i]['total'] = $total;
+
+
+            $i++;
+        }
 
         return View::make('v3.landing.user-categories', $item)->render();
 
@@ -53,18 +171,18 @@ class LandingsController extends \BaseController {
 		
 		$validator = Validator::make(
 			Input::all(),
-			array(
+			[
 				'email' => 'required|email|unique:users,email',
-				'category' => 'required',
-			)
+				'category' => '',
+			]
 		);
 		if($validator->fails()) {
 			if(Request::ajax())
 	        { 
-	        	$result = array(
+	        	$result = [
 		            'validation_failed' => 1,
 		            'errors' =>  $validator->errors()->toArray()
-		         );	
+		         ];
 
 				return Response::json($result);
 	        }else{
@@ -88,11 +206,11 @@ class LandingsController extends \BaseController {
 
 			if ($ppc)
 			{
-				Event::fire('landing.ppc', array(
+				Event::fire('landing.ppc', [
 		        	'email' => $email,
 		        	'categoryId' => $categoryId,
 	            'ppcCode' => $ppcCode
-	        ));
+	        ]);
 			}
 
 			//return Redirect::to('users/create');

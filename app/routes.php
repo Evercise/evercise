@@ -535,7 +535,8 @@ foreach ($landings as $land) {
     Route::get($land, [
         'as'   => 'landing.bootcamp',
         'uses' => function () use ($land) {
-            return (new LandingsController)->landCategory($land);
+            $lc = App::make('LandingsController');
+            return $lc->landCategory($land);
         }
     ]);
 }
