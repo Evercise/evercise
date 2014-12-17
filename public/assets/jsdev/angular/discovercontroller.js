@@ -32,7 +32,6 @@ if(typeof angular != 'undefined') {
 
 
         var createMarker = function (data) {
-            console.log(data);
             var result = {
                 id: data.id,
                 name: data.name,
@@ -212,6 +211,10 @@ if(typeof angular != 'undefined') {
 
             $scope.mask = true;
             scrollToSnippet('#' + marker.id);
+
+            if($scope.preview.sessions.length == 0){
+                $('#preview-'+marker.id).find('a[href="about"]').trigger('click');
+            };
 
         }
 
