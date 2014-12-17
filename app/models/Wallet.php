@@ -206,35 +206,43 @@ class Wallet extends \Eloquent
     public function giveAmount($amount = 0, $type = false) {
         if(!$type || $amount == 0) return false;
 
-        $user = Sentry::getUser();
+        $newBalance = $this->attributes['balance'] + $amount;
+
+        $transaction = Transactions::create(
+            [
+                'user_id'          => $this->user->id,
+                'total'            => $amount,
+                'total_after_fees' => $amount,
+                'coupon_id'        => 0,
+                'commission'       => 0,
+                'token'            => 0,
+                'transaction'      => 0,
+                'payment_method'   => $type,
+                'payer_id'         => 0
+            ]);
 
         switch($type) {
             case 'referral_signup':
-                $title = 'Milestone Completed';
+                event('user.referral.signup', [$this->user, $transaction, $newBalance]);
                 $description = 'You received £'.$amount.' for referral sign up';
                 break;
             case 'ppc_signup':
-                $title = 'Milestone Completed';
                 $description = 'You received £'.$amount.' for ppc sign up';
                 break;
             case 'referral':
-                $title = 'Milestone Completed';
+                event('user.referral.completed', [$this->user, $transaction, $newBalance]);
                 $description = 'You received £'.$amount.' for referring your friends';
                 break;
             case 'profile':
-                $title = 'Milestone Completed';
                 $description = 'You received £'.$amount.' for completing your profile';
                 break;
             case 'facebook':
-                $title = 'Milestone Completed';
                 $description = 'You received £'.$amount.' for connecting your Facebook account';
                 break;
             case 'twitter':
-                $title = 'Milestone Completed';
                 $description = 'You received £'.$amount.' for connecting your Twitter account';
                 break;
             case 'review':
-                $title = 'Milestone Completed';
                 $description = 'You received £'.$amount.' for writing a review';
                 break;
 
@@ -244,21 +252,8 @@ class Wallet extends \Eloquent
 
         $this->deposit($amount, $description, $type);
 
-        Transactions::create(
-        [
-            'user_id'          => $this->user->id,
-            'total'            => $amount,
-            'total_after_fees' => $amount,
-            'coupon_id'        => 0,
-            'commission'       => 0,
-            'token'            => 0,
-            'transaction'      => 0,
-            'payment_method'   => $type,
-            'payer_id'         => 0
-        ]);
 
-        event('milestone.completed', [$user, $type, $title, $description, $amount]);
-
+        //event('milestone.completed', [$user, $type, $title, $description, $amount]);
     }
 
 

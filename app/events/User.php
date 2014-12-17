@@ -182,7 +182,7 @@ class User
     {
         $this->log->info('User ' . $user->id . ' referral completed');
 
-        $this->activity->userTopupCompleted($user, $transaction, 'referralcompleted');
+        $this->activity->userReferralCompleted($user, $transaction, 'referralcompleted');
     }
 
     /**
@@ -193,7 +193,7 @@ class User
     {
         $this->log->info('User ' . $user->id . ' signup through referral');
 
-        $this->activity->userTopupCompleted($user, $transaction, 'referralsignup');
+        $this->activity->userReferralSignup($user, $transaction, 'referralsignup');
     }
 
     /**

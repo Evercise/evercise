@@ -56,6 +56,7 @@ class Milestone extends \Eloquent
                     if (!($this->attributes[$column] % $milestones[$type]['count'])) {
                         $wallet->giveAmount($milestones[$type]['reward'], $type);
                         Log::info('User ' .$user->id. ' has been awarded '. $milestones[$type]['reward']. 'for referring friends');
+
                     }
                 }
                 $this->save();

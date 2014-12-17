@@ -549,7 +549,7 @@ class Activity
      */
     public function userTopupCompleted($user, $transaction, $type)
     {
-        $title = 'Wallet TopUp';
+        $title = 'Wallet top-up';
         $description = 'With ' . $this->fixAmountDisplay($transaction->total);
 
         $data = [
@@ -558,6 +558,50 @@ class Activity
             'link'        => 'transaction/' . $transaction->id,
             'link_title'  => 'View transaction',
             'image'       => 'assets/img/activity/Activity_Topped_Up.png',
+            'type'        => $type,
+            'user_id'     => $user->id,
+            'type_id'     => $transaction->id
+        ];
+        $activity = $this->activities->create($data);
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function userReferralCompleted($user, $transaction, $type)
+    {
+        $title = 'Referral completed';
+        $description = 'With ' . $this->fixAmountDisplay($transaction->total);
+
+        $data = [
+            'description' => $description,
+            'title'       => $title,
+            'link'        => 'transaction/' . $transaction->id,
+            'link_title'  => 'View transaction',
+            'image'       => 'assets/img/activity/Activity_Refferal.png',
+            'type'        => $type,
+            'user_id'     => $user->id,
+            'type_id'     => $transaction->id
+        ];
+        $activity = $this->activities->create($data);
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     */
+    public function userReferralSignup($user, $transaction, $type)
+    {
+        $title = 'Signup from referral';
+        $description = 'With ' . $this->fixAmountDisplay($transaction->total);
+
+        $data = [
+            'description' => $description,
+            'title'       => $title,
+            'link'        => 'transaction/' . $transaction->id,
+            'link_title'  => 'View transaction',
+            'image'       => 'assets/img/activity/Activity_Refferal.png',
             'type'        => $type,
             'user_id'     => $user->id,
             'type_id'     => $transaction->id
