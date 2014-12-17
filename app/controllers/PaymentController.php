@@ -68,6 +68,8 @@ class PaymentController extends BaseController
             'balance'      => ($wallet ? $wallet->balance : 0),
         ];
 
+        event('user.topup.completed', [$this->user, $transaction, $newBalance]);
+
         return Redirect::route('checkout.confirmation')->with('res', $res);
         //return View::make('v3.cart.confirmation', $res);
     }
@@ -303,16 +305,18 @@ class PaymentController extends BaseController
             $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
 
 
-            $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
+            $newBalance = $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
                 'paypal', 0);
 
 
-            $this->paidTopup($amount,
+            $transaction = $this->paidTopup($amount,
                 [
                     'token'          => $data['TOKEN'],
                     'transaction'    => $transactionId,
                     'payment_method' => 'paypal',
                 ]);
+
+            event('user.topup.completed', [$this->user, $transaction, $newBalance]);
 
             EverciseCart::clearTopup();
 
@@ -320,7 +324,7 @@ class PaymentController extends BaseController
             $data = [
                 'amount'        => $amount,
                 'token'         => $data['TOKEN'],
-                'transactionId' => $transactionId,
+                'transactionId' => $transaction->id,
             ];
 
             return Redirect::to('topup_confirmation')
@@ -361,11 +365,15 @@ class PaymentController extends BaseController
             'name'               => 'Wallet TopUp',
         ]);
 
-        return $transaction->items()->save($item);
-
+        $transaction->items()->save($item);
+        return $transaction;
     }
 
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
+     */
     public function processStripePaymentTopup()
     {
         $cartRowId = EverciseCart::instance('topup')->search(['id' => 'TOPUP'])[0];
@@ -403,17 +411,18 @@ class PaymentController extends BaseController
         }
 
         $transactionId = $charge['id'];
-        $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
+        $newBalance = $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
             0);
 
 
-        $this->paidTopup($amount,
+        $transaction = $this->paidTopup($amount,
             [
                 'token'          => $token,
                 'transaction'    => $transactionId,
                 'payment_method' => 'stripe',
             ]);
 
+        event('user.topup.completed', [$this->user, $transaction, $newBalance]);
 
         EverciseCart::clearTopup();
 
@@ -421,7 +430,7 @@ class PaymentController extends BaseController
         $data = [
             'amount'        => $amount,
             'token'         => $token,
-            'transactionId' => $transactionId,
+            'transactionId' => $transaction->id,
         ];
 
         return Redirect::to('topup_confirmation')
