@@ -11,11 +11,8 @@
     {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
 </head>
 <body>
-    <div class="container first-container">
-@else
-@extends('v3.layouts.master')
-@section('body')
 @endif
+    <div class="container first-container">
         <div class="row">
             <div class="col-xs-8 col-sm-offset-2">
                 <div class="row">
@@ -30,9 +27,8 @@
                         </div>
                       </div>
                     </div>
-
-
                 </div>
+                <div class="row">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
@@ -59,10 +55,9 @@
                             <td class="text-right">£{{ number_format($item->final_price, 2) }}</td>
                           </tr>
                       @endforeach
-
-
                     </tbody>
                   </table>
+                  </div>
                   <div class="row text-right">
                     <div class="col-xs-5 col-xs-offset-7">
                       <div class="panel panel-info">
@@ -101,10 +96,8 @@
                 </div>
             </div>
         </div>
-    @if(!isset($single))
     </div>
+    @if(!isset($single))
 </body>
 </html>
-@else
-@stop
 @endif

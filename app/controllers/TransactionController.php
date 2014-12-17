@@ -35,20 +35,44 @@ class TransactionController extends BaseController
     {
         $transaction = $this->transactions->find($id);
 
-        if($this->user->id != $transaction->user_id) {
+        if ($this->user->id != $transaction->user_id) {
             return Redirect::route('home');
         }
 
         $items = $transaction->items;
 
         $total = 0;
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $total += $item->amount;
         }
 
-        return View::make('v3.cart.invoice', compact('transaction', 'items', 'total'));
+        $single = TRUE;
+        $content = View::make('v3.cart.invoice', compact('transaction', 'items', 'total', 'single'))->render();
+        return View::make('v3.cart.invoice_wrapper', compact('content'));
 
 
     }
 
+
+    public function download($id)
+    {
+        $transaction = $this->transactions->find($id);
+
+        if ($this->user->id != $transaction->user_id) {
+            return Redirect::route('home');
+        }
+
+        $items = $transaction->items;
+
+        $total = 0;
+        foreach ($items as $item) {
+            $total += $item->amount;
+        }
+
+        $view = View::make('v3.cart.invoice', compact('transaction', 'items', 'total'));
+
+
+        return PDF::load($view, 'A4', 'portrait')->download('Invoice_' . $id.'.pdf');
+
+    }
 }
