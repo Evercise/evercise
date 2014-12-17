@@ -124,6 +124,12 @@ class SearchController extends \BaseController
     {
         $input = array_filter($this->input->all());
 
+        $landing = false;
+        if(!empty($input['landing'])) {
+            $landing = $input['landing'];
+            unset($input['landing']);
+        }
+
         /** Clean up empty Arrays  */
         foreach ($input as $key => $val) {
             if (empty($val)) {
@@ -232,6 +238,18 @@ class SearchController extends \BaseController
             'page' => $page,
             'search' => $search
         ];
+
+
+        if($landing) {
+            $item = array_filter($this->config->get('landing_pages'), function($url) use ($landing){
+               return (str_replace('/uk/london/', '', $url) == $landing);
+            }, ARRAY_FILTER_USE_KEY);
+
+            if(!empty(array_values($item)[0])) {
+                $data['landing'] = array_values($item)[0];
+            }
+
+        }
 
         JavaScript::put(['mapResults' => $mapResults]);
 
