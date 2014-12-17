@@ -1,5 +1,8 @@
 .list-group-item{
   padding: 20px 15px;
+  &.list-group-item-full-width{
+    padding: 0;
+  }
   th{
     color: @gray-darker;
   }
@@ -14,6 +17,8 @@
   }
 
 }
+
+
 .list-group-no-border{
   .list-group-item{
     border-left-width: 0;
@@ -80,6 +85,20 @@
         border-bottom-width: 1px ;
       }
 
+    }
+  }
+}
+
+.landing-list{
+  .list-group-item{
+    padding: 10px 15px;
+    &.list-group-item-full-width{
+      padding: 0;
+    }
+    line-height: 34px;
+    h4{
+      margin: 0;
+      line-height: 34px;
     }
   }
 }

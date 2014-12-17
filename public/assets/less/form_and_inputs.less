@@ -222,4 +222,51 @@ label{
   }
 }
 
+.landing-form{
+  background: fade(@white, 40%);
+  padding: 30px;
+  .input-wrapper{
+    position: relative;
+    height: 60px;
+    width: 33%;
+    float: left;
+    margin-right: 0.33%;
+    position: relative;
+
+    &:after{
+      position: absolute;
+      content: '';
+      top: 20px;
+      left: 20px;
+      height: 20px;
+      width: 20px;
+
+    }
+    &.email{
+      &:after{
+        .sprite(-490px, -290px);
+      }
+    }
+    &.location{
+      &:after{
+        .sprite(-650px, -290px);
+      }
+    }
+    .form-control{
+      height: 100%;
+      border-radius: 0;
+      border-color: @white;
+      padding-left: 50px;
+    }
+  }
+
+  .btn{
+    height: 60px;
+    width: 33.33%;
+    float: left;
+    border-radius: 0;
+    text-transform: uppercase;
+  }
+}
+
 

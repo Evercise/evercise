@@ -17,6 +17,7 @@
 Route::get('/tester', function () { return Response::view('v3.emails.tester'); });
 Route::get('/tester2', function () { return Response::view('v3.emails.tester2'); });
 Route::get('/invoice', function () { return Response::view('v3.cart.invoice'); });
+Route::get('/landing', function () { return Response::view('v3.landing.user-categories'); });
 
 Route::get('/test', function () {
     $data = [

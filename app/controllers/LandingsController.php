@@ -168,4 +168,9 @@ class LandingsController extends \BaseController {
 		return $this->loadCategory($cat);
 	}
 
+    public function categoryLanding($cat)
+    {
+
+    }
+
 }
