@@ -39,7 +39,8 @@ return [
         '2 miles'  => '2mi',
         '3 miles'  => '3mi',
         '5 miles'  => '5mi',
-        '10 miles' => '10mi'
+        '10 miles' => '10mi',
+        '25 miles' => '25mi'
     ],
     'time'                        => $timeArray,
     'duration'                    => $durationArray,

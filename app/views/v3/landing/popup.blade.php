@@ -1,3 +1,5 @@
+@if(!empty($landing))
+
 <div class="landing-mask"></div>
 <div class="landing-popup" style="background-image:  url('{{url().'/assets/img/landings/popup/bootcamp_modal_img.jpg'}}')">
     <h1 class="text-primary">Get up to £10</h1>
@@ -26,3 +28,5 @@
         </div>
     {{ Form::close() }}
 </div>
+
+@landing
