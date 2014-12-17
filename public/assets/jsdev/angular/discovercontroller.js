@@ -309,12 +309,13 @@ if(typeof angular != 'undefined') {
 
         $scope.scrollHeight = function(){
             // set the map scoll bar to the correct height
-            $scope.windowHeight = $(window).outerHeight();
+            $scope.windowHeight = $(document).height();
             $scope.navHeight = $('#nav').outerHeight();
             $scope.searchHeight = $('.discover-nav').outerHeight();
             $scope.filterHeight = 104;
 
             $scope.scrollBarHeight = $scope.windowHeight - $scope.navHeight - $scope.searchHeight -  $scope.filterHeight;
+            console.log($scope.windowHeight);
 
             return {
                 height: $scope.scrollBarHeight + 'px'
