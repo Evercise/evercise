@@ -11,6 +11,7 @@ return [
         'category_id' => 7,
         'total'       => '100',
         'main_image'  => $base . 'bootcamp_assets/bootcamp_landing_img.jpg',
+        'popup_image'  => $base . 'default_assets/bootcamp_landing_img.jpg',
         'blocks'      => [
             'large' => [
                 [

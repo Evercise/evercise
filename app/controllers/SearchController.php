@@ -182,8 +182,11 @@ class SearchController extends \BaseController
             );
         }
 
+        $radius = $this->input->get('radius');
+        if(!$radius) {
+            $radius = $this->input->get('distance', $this->config->get('evercise.default_radius'));
+        }
 
-        $radius = $this->input->get('radius', $this->config->get('evercise.default_radius'));
         $size = $this->session->get('PER_PAGE', $this->config->get('evercise.default_per_page'));
 
 
@@ -238,6 +241,7 @@ class SearchController extends \BaseController
             'page' => $page,
             'search' => $search
         ];
+
 
 
         if($landing) {

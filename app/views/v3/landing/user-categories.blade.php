@@ -9,6 +9,8 @@
     <meta name="language" content="en-UK" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
+
+     @include('v3.layouts.tracking')
 </head>
 @endif
 <body>
