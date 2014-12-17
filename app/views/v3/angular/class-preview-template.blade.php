@@ -6,7 +6,7 @@
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
             <ul class="nav navbar-nav nav-justified nav-no-float">
                 <li class="active"><a href="#about" data-toggle="tab">About</a></li>
-                <li ng-if="preview.sessions.length > 0"><a href="#schedule" data-toggle="tab">Schedule</a></li>
+                <li ng-show="(preview.sessions | filter:hasTickets ).length > 0"><a href="#schedule" data-toggle="tab">Schedule</a></li>
                 <li ng-if="preview.reviews.length > 0"><a  href="#reviews" data-toggle="tab">Reviews</a></li>
             </ul>
         </nav>
