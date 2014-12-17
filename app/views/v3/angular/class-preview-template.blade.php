@@ -51,6 +51,7 @@
                         <div class="btn-group pull-right">
                             {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
+
                             <select name="quantity" id="quantity" class="btn btn-primary btn-select">
                                  <option ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
                             </select>

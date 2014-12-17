@@ -120,6 +120,7 @@ label{
     background: transparent;
     line-height: 1;
     -webkit-appearance: none;
+    -moz-appearance: none;
   }
   .input-sm{
     line-height: 20px;
@@ -157,12 +158,19 @@ label{
 }
 
 .btn-select{
-  -webkit-appearance: none;
+  appearance: none;
   height: 40px;
+  width: 38px;
   padding: 0 8px;
   border: 0;
   border-left: 1px solid @white;
+  &::-ms-expand {
+    display: none;
+  }
 }
+
+
+
 
 .custom-btn-dropdown-select{
   &:after{
