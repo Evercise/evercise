@@ -72,7 +72,7 @@
                         {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
                     </li>
                     <li class="list-group-item">
-                        <h4 class="text-center">{{ $b['name'] }}</h4>
+                        <h4 class="text-center">{{ strtoupper($b['name']) }}</h4>
                     </li>
                     <li class="list-group-item">
                         <div class="row">
@@ -100,7 +100,7 @@
                                 {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
                             </li>
                             <li class="list-group-item">
-                                <h4 class="text-center">{{ $b['name'] }}</h4>
+                                <h4 class="text-center">{{ strtoupper($b['name']) }}</h4>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
