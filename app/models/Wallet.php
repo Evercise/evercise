@@ -105,13 +105,13 @@ class Wallet extends \Eloquent
 
     public function deposit($amount, $description, $type = 'deposit', $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction($amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id );
+        return $this->transaction($amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id );
 
     }
 
     public function withdraw($amount, $description, $type = 'withdraw', $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
-        $this->transaction(-$amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
+        return $this->transaction(-$amount, $description, $type, $sessionmember_id, $token, $transactionId, $paymentMethod, $payer_id);
     }
 
 
@@ -119,7 +119,7 @@ class Wallet extends \Eloquent
     {
         $user_id = $this->attributes['user_id'];
 
-        $transaction = Transactions::create(
+        /*$transaction = Transactions::create(
             [
                 'user_id'          => $user_id,
                 'total'            => $amount,
@@ -130,11 +130,11 @@ class Wallet extends \Eloquent
                 'transaction'      => $transactionId,
                 'payment_method'   => $paymentMethod,
                 'payer_id'         => $payer_id
-            ]);
+            ]);*/
 
         $newBalance = $this->attributes['balance'] + $amount;
 
-        if(!$type instanceof \User) {
+/*        if(!$type instanceof \User) {
             switch ($type) {
                 case 'deposit':
                     event('user.topup.completed', [$this->user, $transaction, $newBalance]);
@@ -158,7 +158,7 @@ class Wallet extends \Eloquent
         } else {
             Log::error('----- WE MISSED THIS ONE!!!!!!!-----');
             Log::error($type);
-        }
+        }*/
 
         $user_id = $this->attributes['user_id'];
         $this->attributes['previous_balance'] = $this->attributes['balance'];
@@ -175,6 +175,8 @@ class Wallet extends \Eloquent
                 'description' => $description,
             ]
         );
+
+        return $newBalance;
     }
 
     public function recordedSave(array $params)
@@ -241,6 +243,19 @@ class Wallet extends \Eloquent
         }
 
         $this->deposit($amount, $description, $type);
+
+        Transactions::create(
+        [
+            'user_id'          => $this->user->id,
+            'total'            => $amount,
+            'total_after_fees' => $amount,
+            'coupon_id'        => 0,
+            'commission'       => 0,
+            'token'            => 0,
+            'transaction'      => 0,
+            'payment_method'   => $type,
+            'payer_id'         => 0
+        ]);
 
         event('milestone.completed', [$user, $type, $title, $description, $amount]);
 

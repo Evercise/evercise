@@ -137,7 +137,7 @@ class Mail
     public function topupCompleted($user, $transaction, $balance)
     {
         $params = [
-            'subject'     => 'Confirmation of topup',
+            'subject'     => 'Funds have been added to your wallet',
             'view'        => 'v3.emails.user.topup_completed',
             'user'        => $user,
             'transaction' => $transaction,
@@ -641,7 +641,7 @@ class Mail
      *
      * Event: session.joined
      */
-    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transactionId)
+    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transaction)
     {
 
         $params = [
@@ -651,7 +651,7 @@ class Mail
             'trainer'       => $trainer,
             'session'       => $session,
             'evercisegroup' => $evercisegroup,
-            'transactionId' => $transactionId,
+            'transaction' => $transaction,
             'link_url'      => $this->url->to('/'),
             'image'         => image('assets/img/email/user_default.jpg', 'someone has joined your classs'),
         ];

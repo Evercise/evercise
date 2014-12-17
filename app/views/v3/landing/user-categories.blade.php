@@ -13,7 +13,7 @@
 @endif
 <body>
     <div class="hero landing-header mt0" style="background-image: url('{{url().'/assets/img/hero.jpg'}}')">
-        <div class="container mt15">
+        <div class="container mt15 pull-left">
             {{ Html::decode( Html::linkRoute('home', image('assets/img/strapline_logo.png', 'logo', ['class' => 'img-responsive']))) }}
         </div>
 
@@ -91,7 +91,7 @@
                     </li>
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-sm-4"><strong class="text-primary">from £90</strong></div>
+                            <div class="col-sm-4 sm-text-center"><strong class="text-primary">from £90</strong></div>
                             <div class="col-sm-4 text-center"><h4>12345 classes</h4></div>
                             <div class="col-sm-4">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
                         </div>

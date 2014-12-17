@@ -361,7 +361,18 @@ class Elastic
 
             }
 
+            $price = 0;
+
             foreach ($a->futuresessions as $s) {
+
+
+                if($price == 0) {
+                    $price = (double)$s->price;
+                }
+
+                if($price > (double)$s->price) {
+                    $price = (double)$s->price;
+                }
 
                 $index['futuresessions'][] = [
                     'id'              => (int)$s->id,
@@ -375,6 +386,10 @@ class Elastic
                     'default_tickets' => 1
                 ];
                 $with_session++;
+            }
+
+            if($price > 0) {
+                $index['default_price'] = $price;
             }
 
             $params = [];

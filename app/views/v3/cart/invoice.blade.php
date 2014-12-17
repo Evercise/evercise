@@ -11,28 +11,24 @@
     {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
 </head>
 <body>
+@endif
     <div class="container first-container">
-    @endif
         <div class="row">
             <div class="col-xs-8 col-sm-offset-2">
                 <div class="row">
                     <div class="col-xs-7">
                       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand' ])}}
-                      <h1><small>Invoice {invoice number}</small></h1>
+                      <h1><small>Invoice <strong> {{ $transaction->id }}</strong></small></h1>
                     </div>
                     <div class="col-xs-5">
                       <div class="panel panel-default">
                         <div class="panel-heading">
-                          <h4>From: <small>Name</small></h4>
-                        </div>
-                        <div class="panel-body">
-                          <p>some details about the user</p>
+                          <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                         </div>
                       </div>
                     </div>
-
-
                 </div>
+                <div class="row">
                   <table class="table table-bordered">
                     <thead>
                       <tr>
@@ -51,28 +47,17 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>class</td>
-                        <td class="text-right">3</td>
-                        <td class="text-right">£20.00</td>
-                        <td class="text-right">£20.00</td>
-                      </tr>
-                      <tr>
-                        <td>class</td>
-                        <td class="text-right">3</td>
-                        <td class="text-right">£20.00</td>
-                        <td class="text-right">£20.00</td>
-                      </tr>
-                      <tr>
-                        <td>class</td>
-                        <td class="text-right">3</td>
-                        <td class="text-right">£20.00</td>
-                        <td class="text-right">£20.00</td>
-                      </tr>
-
-
+                      @foreach($items as $item)
+                          <tr>
+                            <td>{{$item->name}}</td>
+                            <td class="text-right">1</td>
+                            <td class="text-right">£{{ number_format($item->amount, 2) }}</td>
+                            <td class="text-right">£{{ number_format($item->final_price, 2) }}</td>
+                          </tr>
+                      @endforeach
                     </tbody>
                   </table>
+                  </div>
                   <div class="row text-right">
                     <div class="col-xs-5 col-xs-offset-7">
                       <div class="panel panel-info">
@@ -84,17 +69,23 @@
                                 <div class="col-xs-8 text-right">
                                   <p>
                                     <strong>
-                                    Sub Total : <br>
-                                    TAX : <br>
-                                    Total : <br>
+                                    Sub Total :  <br/>
+                                    TAX :  <br/>
+                                    @if(number_format($total, 2) != number_format($transaction->total, 2))
+                                    Discounts: <br/>
+                                    @endif
+                                    Total : <br/>
                                     </strong>
                                   </p>
                                 </div>
                                 <div class="col-xs-4">
                                   <strong>
-                                  £50.00 <br>
-                                  N/A <br>
-                                  £50.00  <br>
+                                  £{{ number_format($total, 2) }} <br/>
+                                  N/A <br/>
+                                  @if(number_format($total, 2) != number_format($transaction->total, 2))
+                                  -£{{ number_format(abs(number_format($transaction->total, 2) - number_format($total, 2)), 2) }} <br/>
+                                  @endif
+                                  £{{ number_format($transaction->total) }}  <br/>
                                   </strong>
                                 </div>
                             </div>
@@ -105,8 +96,8 @@
                 </div>
             </div>
         </div>
-    @if(!isset($single))
     </div>
+    @if(!isset($single))
 </body>
 </html>
 @endif

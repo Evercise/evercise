@@ -55,15 +55,14 @@ class PaymentController extends BaseController
 
         $coupon = Coupons::processCoupon($coupon, $this->user);
 
-
         $transactionId = $charge['id'];
-        $confirm = $this->paid($token, $transactionId, 'stripe', $cart, $coupon);
+        $transaction = $this->paid($token, $transactionId, 'stripe', $cart, $coupon);
+
         $res = [
-            'confirm'      => $confirm,
             'cart'         => $cart,
             'payment_type' => 'stripe',
             'coupon'       => $coupon,
-            'transaction'  => $transactionId,
+            'transaction'  => $transaction->id,
             'user'         => $this->user,
             'balance'      => ($wallet ? $wallet->balance : 0),
         ];
@@ -159,16 +158,14 @@ class PaymentController extends BaseController
             }
 
             $coupon = Coupons::processCoupon($coupon, $this->user);
-
-
             $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
+            $transaction = $this->paid($data['TOKEN'], $transactionId, 'paypal', $cart, $coupon, $data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID']);
+
             $res = [
-                'confirm'      => $this->paid($data['TOKEN'], $transactionId, 'paypal', $cart,
-                    $coupon, $data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID']),
                 'cart'         => $cart,
                 'payment_type' => 'paypal',
                 'coupon'       => $coupon,
-                'transaction'  => $transactionId,
+                'transaction'  => $transaction->id,
                 'user'         => $this->user,
                 'balance'      => $this->user->getWallet()->balance,
             ];
@@ -193,13 +190,13 @@ class PaymentController extends BaseController
         $wallet->withdraw($cart['total']['from_wallet'], 'Full payment for classes', 'full_payment');
 
         $coupon = Coupons::processCoupon($coupon, $this->user);
+        $transaction = $this->paid($token, $transactionId, 'stripe', $cart, $coupon);
 
         $res = [
-            'confirm'      => $this->paid($token, $transactionId, 'stripe', $cart, $coupon),
             'cart'         => $cart,
             'payment_type' => 'wallet',
             'coupon'       => $coupon,
-            'transaction'  => $transactionId,
+            'transaction'  => $transaction->id,
             'user'         => $this->user,
             'balance'      => $wallet->balance,
         ];
@@ -303,17 +300,18 @@ class PaymentController extends BaseController
             $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
 
 
-            $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
+            $newBalance = $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
                 'paypal', 0);
 
 
-
-            $this->paidTopup($amount,
+            $transaction = $this->paidTopup($amount,
                 [
                     'token'          => $data['TOKEN'],
                     'transaction'    => $transactionId,
                     'payment_method' => 'paypal',
                 ]);
+
+            event('user.topup.completed', [$this->user, $transaction, $newBalance]);
 
             EverciseCart::clearTopup();
 
@@ -321,7 +319,7 @@ class PaymentController extends BaseController
             $data = [
                 'amount'        => $amount,
                 'token'         => $data['TOKEN'],
-                'transactionId' => $transactionId,
+                'transactionId' => $transaction->id,
             ];
 
             return Redirect::to('topup_confirmation')
@@ -358,13 +356,19 @@ class PaymentController extends BaseController
             'type'               => 'topup',
             'evercisesession_id' => 0,
             'amount'             => round(abs($amount), 2),
+            'final_price'       => round(abs($amount), 2),
+            'name'               => 'Wallet TopUp',
         ]);
 
-        return $transaction->items()->save($item);
-
+        $transaction->items()->save($item);
+        return $transaction;
     }
 
 
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws Exception
+     */
     public function processStripePaymentTopup()
     {
         $cartRowId = EverciseCart::instance('topup')->search(['id' => 'TOPUP'])[0];
@@ -402,17 +406,18 @@ class PaymentController extends BaseController
         }
 
         $transactionId = $charge['id'];
-        $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
+        $newBalance = $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
             0);
 
 
-        $this->paidTopup($amount,
+        $transaction = $this->paidTopup($amount,
             [
                 'token'          => $token,
                 'transaction'    => $transactionId,
                 'payment_method' => 'stripe',
             ]);
 
+        event('user.topup.completed', [$this->user, $transaction, $newBalance]);
 
         EverciseCart::clearTopup();
 
@@ -420,7 +425,7 @@ class PaymentController extends BaseController
         $data = [
             'amount'        => $amount,
             'token'         => $token,
-            'transactionId' => $transactionId,
+            'transactionId' => $transaction->id,
         ];
 
         return Redirect::to('topup_confirmation')
@@ -466,9 +471,12 @@ class PaymentController extends BaseController
 
 
             $item = new TransactionItems([
-                'user_id'    => $this->user->id,
-                'type'       => 'package',
-                'package_id' => $p->id
+                'user_id'      => $this->user->id,
+                'type'         => 'package',
+                'package_id'   => $p->id,
+                'amount'       => round($p->package()->first()->price, 2),
+                'final_price' => round($p->package()->first()->price, 2),
+                'name'         => $p->package()->first()->name,
             ]);
 
             $transaction->items()->save($item);
@@ -478,6 +486,8 @@ class PaymentController extends BaseController
         $trainer_notify = [];
 
         foreach ($cart['sessions'] as $session) {
+
+            $free = FALSE;
             $evercisesession = Evercisesession::find($session['id']);
 
             try {
@@ -494,10 +504,10 @@ class PaymentController extends BaseController
 
                 event('activity.user.package.used', [$this->user, $check, $evercisesession]);
 
-
+                $free = TRUE;
             } catch (Exception $e) {
                 /** No package available */
-                Log::error($e->getMessage());
+                Log::info($e->getMessage());
             }
 
 
@@ -506,7 +516,7 @@ class PaymentController extends BaseController
                     'user_id'            => $this->user->id,
                     'evercisesession_id' => $session['id'],
                     'token'              => $transaction->token,
-                    'transaction_id'     => $transaction->transaction,
+                    'transaction_id'     => $transaction->id,
                     'payment_method'     => $paymentMethod
                 ]
             );
@@ -527,7 +537,10 @@ class PaymentController extends BaseController
             $item = new TransactionItems([
                 'user_id'            => $this->user->id,
                 'type'               => 'session',
-                'evercisesession_id' => $created->id
+                'evercisesession_id' => $created->id,
+                'amount'             => round(abs( $session['price']), 2),
+                'final_price'       => round($free ? 0 : abs( $session['price']), 2),
+                'name'               => $evercisesession->evercisegroup()->first()->name,
             ]);
 
             $transaction->items()->save($item);
@@ -541,7 +554,7 @@ class PaymentController extends BaseController
              * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
              */
 
-            event('session.joined', [$this->user, $trainer, $evercisesession, $evercisegroup, $transaction->id]);
+            event('session.joined', [$this->user, $trainer, $evercisesession, $evercisegroup, $transaction]);
 
         }
 
@@ -566,7 +579,7 @@ class PaymentController extends BaseController
 
         //EverciseCart::clearCart();
 
-        return TRUE;
+        return $transaction;
     }
 
     public function showConfirmation()

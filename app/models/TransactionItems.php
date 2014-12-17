@@ -4,7 +4,7 @@ class TransactionItems extends Eloquent
 {
 
     protected $table = 'transaction_items';
-    protected $fillable = ['id', 'user_id', 'transaction_id', 'type', 'evercisesession_id', 'package_id', 'amount'];
+    protected $fillable = ['id', 'user_id', 'transaction_id', 'type', 'evercisesession_id', 'package_id', 'amount', 'name', 'final_price'];
 
 
     /**
@@ -22,7 +22,7 @@ class TransactionItems extends Eloquent
 
     public function package()
     {
-        return $this->belongsTo('Package', 'evercisesession_id');
+        return $this->belongsTo('Packages', 'package_id');
     }
 
 }

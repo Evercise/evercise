@@ -6,7 +6,7 @@
 
 <p>Dear {{ $user->display_name }}</p>
 <p>Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
-<strong><p>Transaction ID: {{$transaction->transaction}}</p></strong>
+<strong><p>Transaction ID: {{$transaction->id}}</p></strong>
 @stop
 @section('extra')
 <table class="table" width="100%" height="20" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
