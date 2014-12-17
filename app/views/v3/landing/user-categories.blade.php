@@ -40,18 +40,18 @@
     <div class="container-fluid bg-dark-grey landing-banner">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 sm-mb20">
                     {{ image('assets/img/what_icon.png', 'what is evercise', ['class' => 'img-responsive']) }}
                     <h4 class="text-white">What is Evercise?</h4>
                     <p class="text-white">Pay as You go fitness access to a huge array of fitness classes</p>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 sm-mb20">
                     {{ image('assets/img/why_icon.png', 'what is evercise', ['class' => 'img-responsive']) }}
 
                     <h4 class="text-white">Why join evercise?</h4>
                     <p class="text-white">Fun and flexible quick and easy to sign up</p>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 sm-mb20">
                     {{ image('assets/img/how_icon.png', 'what is evercise', ['class' => 'img-responsive']) }}
                     <h4 class="text-white">How does it work?</h4>
                     <p class="text-white">Discover exiting {cat} classes find something nearby</p>
@@ -100,70 +100,81 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-3">
-                <ul class="list-group landing-list">
-                    <li class="list-group-item list-group-item-full-width">
-                        {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="text-center">Bootcamp</h4>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                            <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
-                        </div>
-                    </li>
-                </ul>
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <ul class="list-group landing-list">
+                            <li class="list-group-item list-group-item-full-width">
+                                {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
+                            </li>
+                            <li class="list-group-item">
+                                <h4 class="text-center">Bootcamp</h4>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
+                                    <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6">
+                        <ul class="list-group landing-list">
+                            <li class="list-group-item list-group-item-full-width">
+                                {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
+                            </li>
+                            <li class="list-group-item">
+                                <h4 class="text-center">Bootcamp</h4>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
+                                    <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <ul class="list-group landing-list">
-                    <li class="list-group-item list-group-item-full-width">
-                        {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="text-center">Bootcamp</h4>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                            <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <ul class="list-group landing-list">
+                                <li class="list-group-item list-group-item-full-width">
+                                    {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
+                                </li>
+                                <li class="list-group-item">
+                                    <h4 class="text-center">Bootcamp</h4>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
+                                        <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-3">
-                <ul class="list-group landing-list">
-                    <li class="list-group-item list-group-item-full-width">
-                        {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="text-center">Bootcamp</h4>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                            <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                        <div class="col-xs-6">
+                            <ul class="list-group landing-list">
+                                <li class="list-group-item list-group-item-full-width">
+                                    {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
+                                </li>
+                                <li class="list-group-item">
+                                    <h4 class="text-center">Bootcamp</h4>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
+                                        <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <ul class="list-group landing-list">
-                    <li class="list-group-item list-group-item-full-width">
-                        {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="text-center">Bootcamp</h4>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                            <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+
         </div>
     </div>
 

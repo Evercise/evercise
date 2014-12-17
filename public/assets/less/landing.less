@@ -21,7 +21,7 @@
   }
 }
 .landing-banner{
-  height: 160px;
+  min-height: 160px;
 
   img{
     float: left;
@@ -34,5 +34,32 @@
   }
   p{
     line-height: 20px;
+  }
+}
+
+@media screen and (max-width: @screen-sm-min){
+  .landing-header{
+    .jumbotron{
+      padding-top: 30px;
+    }
+    .input-wrapper{
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .btn{
+      width: 100%;
+    }
+    h1{
+      font-size: 62px;
+    }
+    h2{
+      font-size: 50px;
+    }
+    h3{
+      font-size: 20px;
+    }
+  }
+  .landing-banner{
+    padding-bottom: 40px;
   }
 }

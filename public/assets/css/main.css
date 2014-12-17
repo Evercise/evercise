@@ -11648,7 +11648,7 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   letter-spacing: 1px;
 }
 .landing-banner {
-  height: 160px;
+  min-height: 160px;
 }
 .landing-banner img {
   float: left;
@@ -11661,4 +11661,28 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 }
 .landing-banner p {
   line-height: 20px;
+}
+@media screen and (max-width: 768px) {
+  .landing-header .jumbotron {
+    padding-top: 30px;
+  }
+  .landing-header .input-wrapper {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .landing-header .btn {
+    width: 100%;
+  }
+  .landing-header h1 {
+    font-size: 62px;
+  }
+  .landing-header h2 {
+    font-size: 50px;
+  }
+  .landing-header h3 {
+    font-size: 20px;
+  }
+  .landing-banner {
+    padding-bottom: 40px;
+  }
 }
