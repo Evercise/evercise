@@ -52,7 +52,7 @@
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="row">
-                        {{ Form::open(['route' => 'users.guest.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
+                        {{ Form::open(['route' => 'users.guest.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'regidster-form'] ) }}
 
                             <div class="row  mt10">
                                 <div class="col-sm-6">
