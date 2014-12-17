@@ -66,7 +66,6 @@ if(typeof angular != 'undefined') {
 
         // used for distance filter
         $scope.distanceFilter = function (marker) {
-            console.log('fuck');
             if( marker.distance <= $scope.maxDistance || marker == $scope.active){
                 return marker;
             }
@@ -103,7 +102,8 @@ if(typeof angular != 'undefined') {
             },100);
         }
 
-        $scope.setDistance = function(distance){
+        $scope.setDistance = function(e,distance){
+            e.preventDefault();
             $scope.maxDistance = distance;
         }
 
