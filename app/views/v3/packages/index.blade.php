@@ -11,6 +11,8 @@
         <strong>Get fit and stay active with an Evercise 5 class package</strong>
         <br>
         <strong>Grab a five-class package to save money, speed up your booking process and stay active</strong>
+        <br>
+        <p>All packages have a 60-day expiry date</p>
     </div>
     <div class="row mb30">
         @foreach($packages as $index => $p)
@@ -65,6 +67,8 @@
         <strong>Feel the burn! Become an Evercise fitness VIP with a 10 class package</strong>
         <br>
         <strong>Serious about getting fit? Save up to 50% and enjoy the VIP treatment with one of our 10 class packages</strong>
+        <br>
+        <p>All packages have a 60-day expiry date</p>
     </div>
     <div class="row">
         @foreach($packages as $index => $p)
