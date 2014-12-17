@@ -24,10 +24,10 @@
             {{ Form::open(['url' => 'landings', 'method' => 'post',]) }}
                 <div class="landing-form container">
                     <div class="form-group">
-                            <div class="input-wrapper email">
+                            <div class="input-wrapper email pull-left">
                                 {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) }}
                             </div>
-                            <div class="input-wrapper location">
+                            <div class="input-wrapper location pull-left">
                                 {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Preferred Location']) }}
                             </div>
 

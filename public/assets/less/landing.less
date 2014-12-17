@@ -37,6 +37,46 @@
   }
 }
 
+.landing-popup{
+  height: 520px;
+  width: 860px;
+  position: fixed;
+  left: 50%;
+  margin-left: -460px;
+  top: 50%;
+  margin-top: -285px;
+  z-index: 9999;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-color: @white;
+  background-size: contain;
+  padding: 75px 85px;
+  h1{
+    font-size: 85px;
+    margin: 0;
+    line-height: 85px;
+  }
+  h2{
+    font-size: 42px;
+    margin: 0 0 28px;
+    line-height: 42px;
+    color: #758690;
+  }
+  strong{
+    font-size: 17px;
+  }
+}
+
+.landing-mask{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: fade(#000, 30%);
+  z-index: 9998;
+}
+
 @media screen and (max-width: @screen-sm-min){
   .landing-header{
     .jumbotron{

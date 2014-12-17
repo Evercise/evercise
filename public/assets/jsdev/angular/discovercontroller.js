@@ -21,7 +21,7 @@ if(typeof angular != 'undefined') {
         $scope.active = {};
 
         // default distance for filter
-        $scope.maxDistance = 5;
+        $scope.maxDistance = 200;
 
         // watch the scope for map loaded
         $scope.myMarkers = [];

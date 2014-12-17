@@ -9663,14 +9663,20 @@ label {
   background: rgba(255, 255, 255, 0.4);
   padding: 30px;
 }
-.landing-form .input-wrapper {
+.landing-form .btn {
+  height: 60px;
+  width: 33.33%;
+  float: left;
+  border-radius: 0;
+  text-transform: uppercase;
+}
+.input-wrapper {
   height: 60px;
   width: 33%;
-  float: left;
   margin-right: 0.33%;
   position: relative;
 }
-.landing-form .input-wrapper:after {
+.input-wrapper:after {
   position: absolute;
   content: '';
   top: 20px;
@@ -9678,46 +9684,40 @@ label {
   height: 20px;
   width: 20px;
 }
-.landing-form .input-wrapper.email:after {
+.input-wrapper.email:after {
   background-image: url("../img/ev_site_icons.png");
   background-position: -490px -290px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.landing-form .input-wrapper.email:after.active {
+.input-wrapper.email:after.active {
   background-position: -490px -330px;
 }
-.landing-form .input-wrapper.email:after.hover:hover,
-.landing-form .input-wrapper.email:after.active:hover {
+.input-wrapper.email:after.hover:hover,
+.input-wrapper.email:after.active:hover {
   cursor: pointer;
   background-position: -490px -330px;
 }
-.landing-form .input-wrapper.location:after {
+.input-wrapper.location:after {
   background-image: url("../img/ev_site_icons.png");
   background-position: -650px -290px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.landing-form .input-wrapper.location:after.active {
+.input-wrapper.location:after.active {
   background-position: -650px -330px;
 }
-.landing-form .input-wrapper.location:after.hover:hover,
-.landing-form .input-wrapper.location:after.active:hover {
+.input-wrapper.location:after.hover:hover,
+.input-wrapper.location:after.active:hover {
   cursor: pointer;
   background-position: -650px -330px;
 }
-.landing-form .input-wrapper .form-control {
+.input-wrapper .form-control {
   height: 100%;
-  border-radius: 0;
-  border-color: #ffffff;
   padding-left: 50px;
 }
-.landing-form .btn {
-  height: 60px;
-  width: 33.33%;
-  float: left;
-  border-radius: 0;
-  text-transform: uppercase;
+.input-wrapper .btn {
+  height: 100%;
 }
 .cart-row {
   padding: 10px 0;
@@ -11661,6 +11661,44 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 }
 .landing-banner p {
   line-height: 20px;
+}
+.landing-popup {
+  height: 520px;
+  width: 860px;
+  position: fixed;
+  left: 50%;
+  margin-left: -460px;
+  top: 50%;
+  margin-top: -285px;
+  z-index: 9999;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-color: #ffffff;
+  background-size: contain;
+  padding: 75px 85px;
+}
+.landing-popup h1 {
+  font-size: 85px;
+  margin: 0;
+  line-height: 85px;
+}
+.landing-popup h2 {
+  font-size: 42px;
+  margin: 0 0 28px;
+  line-height: 42px;
+  color: #758690;
+}
+.landing-popup strong {
+  font-size: 17px;
+}
+.landing-mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9998;
 }
 @media screen and (max-width: 768px) {
   .landing-header .jumbotron {
