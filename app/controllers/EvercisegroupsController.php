@@ -156,7 +156,7 @@ class EvercisegroupsController extends \BaseController
             }
         } else {
             //return View::make('errors.missing');
-            return Redirect::route('uk/london')->with('notification', 'This class does not exist');
+            return Redirect::to('uk/london')->with('notification', 'This class does not exist');
         }
 
     }
