@@ -123,5 +123,6 @@
 
         </div>
     </div>
+    @include('v3.layouts.stripped_footer')
 
 </body>
