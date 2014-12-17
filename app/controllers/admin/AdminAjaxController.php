@@ -232,7 +232,7 @@ class AdminAjaxController extends AdminController
      */
     public function saveTags()
     {
-        $tags = implode(',', Input::get('tags'));
+        $tags = implode(',', Input::get('tags', []));
         $id = Input::get('id');
 
         Gallery::where('id', $id)->update(['keywords' => $tags]);
@@ -272,7 +272,7 @@ class AdminAjaxController extends AdminController
                 mkdir('files/gallery_defaults');
             }
 
-            $name = $file->getClientOriginalName();
+            $name = 'g_'.rand(1,1000).'-'.$file->getClientOriginalName();
             /** Save the image name without the Prefix to the DB */
 
             $save = FALSE;
