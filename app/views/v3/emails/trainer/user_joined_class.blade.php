@@ -8,4 +8,6 @@
 <p><span class="pink-text">{{$user->display_name}}</span> has joined your class <span class="pink-text">{{$evercisegroup->name}}</span> on the <span class="pink-text">{{date('M jS, g:ia', strtotime($session->date_time)) }}</span></p>
 <p>Their transaction id is: <span class="pink-text">{{$transaction->id}}</span></p>
 
+{{ Html::decode(Html::linkRoute('trainer', image('/assets/img/email/btns/btn_get_started.png', 'Manage your class'), [], ['class' => 'btn btn-blue'])) }}
+
 @stop

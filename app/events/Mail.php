@@ -388,7 +388,7 @@ class Mail
             'refereeEmail'     => $referreeEmail,
             'referrerName'     => $referrerName,
             'balanceWithBonus' => $balanceWithBonus,
-            'image'            => image('/assets/img/email/referral_thanks.jpg', 'Thanks for sharing!'),
+            'image'            => image('/assets/img/email/evercise-welcome.jpg', 'Thanks for sharing!'),
             'link_url'         => $this->url->to('/uk/'),
             'banner'           => FALSE
         ];
@@ -672,7 +672,7 @@ class Mail
             'evercisegroup' => $evercisegroup,
             'transaction' => $transaction,
             'link_url'      => $this->url->to('/'),
-            'image'         => image('assets/img/email/user_default.jpg', 'someone has joined your classs'),
+            'image'         => image('assets/img/email/user_booking_confirmation.jpg', 'someone has joined your classs'),
         ];
 
         $this->send($trainer->email, $params);
