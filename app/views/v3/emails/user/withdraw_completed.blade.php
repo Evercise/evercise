@@ -6,6 +6,11 @@
 
 <p>Dear {{ $user->first_name }}</p>
 <p>Withdraw has been scheduled. We process all withdrawals every monday.</p>
+
+<p>This email is to confirm that withdrawal of your funds from your Evercise wallet to your Paypal account has been successfully scheduled.
+   from your Evercise wallet to your Paypal account.
+   Please save this information for future reference.
+</p>
 <strong><p>Transaction ID: {{$transaction->id}}</p></strong>
 @stop
 @section('extra')

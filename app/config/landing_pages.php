@@ -11,7 +11,7 @@ return [
         'category_id' => 7,
         'total'       => '100',
         'main_image'  => $base . 'bootcamp_assets/bootcamp_landing_img.jpg',
-        'popup_image'  => $base . 'default_assets/bootcamp_landing_img.jpg',
+        'popup_image'  => $base . 'default_assets/bootcamp_modal_img.jpg',
         'blocks'      => [
             'large' => [
                 [
@@ -69,6 +69,7 @@ return [
         'category_id' => 1,
         'total'       => '100',
         'main_image'  => $base . 'dance_assets/dance_landing_img.jpg',
+        'popup_image'  => $base . 'default_assets/dance_modal_img.jpg',
         'blocks'      => [
             'large' => [
                 [
@@ -126,6 +127,7 @@ return [
         'category_id' => 3,
         'total'       => '100',
         'main_image'  => $base . 'fitness_assets/fitness_landing_img.jpg',
+        'popup_image'  => $base . 'default_assets/fitness_modal_img.jpg',
         'blocks'      => [
             'large' => [
                 [
@@ -183,6 +185,7 @@ return [
         'category_id' => 4,
         'total'       => '100',
         'main_image'  => $base . 'martial_arts_assets/martial_arts_landing_img.jpg',
+        'popup_image'  => $base . 'default_assets/martial_arts_modal_img.jpg',
         'blocks'      => [
             'large' => [
                 [
@@ -240,6 +243,7 @@ return [
         'category_id' => 2,
         'total'       => '100',
         'main_image'  => $base . 'pilates_assets/pilates_class_landing.jpg',
+        'popup_image'  => $base . 'default_assets/pilates_modal_img.jpg',
         'blocks'      => [
             'large' => [
                 [
@@ -297,6 +301,7 @@ return [
         'category_id' => 5,
         'total'       => '100',
         'main_image'  => $base . 'yoga_assets/yoga_landing_img.jpg',
+        'popup_image'  => $base . 'default_assets/yoga_modal_img.jpg',
         'blocks'      => [
             'large' => [
                 [

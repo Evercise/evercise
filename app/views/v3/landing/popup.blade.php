@@ -1,7 +1,7 @@
 @if(!empty($landing))
 
 <div class="landing-mask"></div>
-<div class="landing-popup" style="background-image:  url('{{url().'/assets/img/landings/popup/bootcamp_modal_img.jpg'}}')">
+<div class="landing-popup" style="background-image:  url('{{url().'/'.$landing['popup_image']}}')">
     <h1 class="text-primary">Get up to {{ $landing['price'] }}</h1>
     <h2>For you first {{ $landing['category'] }} class</h2>
     <strong>Fun & flexible, No commitment</strong>

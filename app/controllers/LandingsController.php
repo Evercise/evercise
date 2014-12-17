@@ -199,6 +199,9 @@ class LandingsController extends \BaseController
                 'ppcCode'    => $ppcCode,
                 'location'   => $location
             ]);
+
+            Session::flash('success', 'Fan Sent you a message... enjoy');
+
         }
 
         return $this->submitPpc($category_id, $ppcCode, $email);
@@ -322,7 +325,9 @@ class LandingsController extends \BaseController
         Session::put('ppcCategory', $categoryId);
         Session::put('ppcCode', $ppcCode);
 
-        return Redirect::route('register')->with('email', $email);
+        $category = Category::find($categoryId);
+
+        return Redirect::to('uk/london?search='.$category->name)->with('email', $email);
     }
 
     public function loadCategory($category)

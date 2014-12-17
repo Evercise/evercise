@@ -247,7 +247,7 @@ class Mail
 
         $params = [
             'subject'  => 'Reset Password',
-            'title'    => 'Password escaped you?',
+            'title'    => 'Evercise password reset',
             'view'     => 'v3.emails.user.forgot_password',
             'user'     => $user,
             'banner'   => FALSE,
