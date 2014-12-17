@@ -4,6 +4,9 @@ if(typeof angular != 'undefined') {
         // grab classes fromn elastic
         $scope.everciseGroups = laracasts.mapResults;
 
+        console.log()
+
+
         // the number of results returned
         $scope.results = $scope.everciseGroups.length;
 
