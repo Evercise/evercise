@@ -115,7 +115,7 @@ registerUser.prototype = {
         })
         .on('success.form.bv', function(e) {
             e.preventDefault();
-                if(self.form.find('input[name="terms"]').is(':checked'))
+                if(self.form.find('input[name="terms"]').is(':checked') || self.form.find('input[name="terms"]').length == 0)
                 {
                     self.ajaxUpload();
                 }
