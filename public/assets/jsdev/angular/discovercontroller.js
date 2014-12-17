@@ -303,8 +303,29 @@ if(typeof angular != 'undefined') {
             $("img.lazy").lazyload({
                 container: $(".snippet-body")
             });
+            $scope.scrollHeight();
 
         }, true);
+
+        $scope.scrollHeight = function(){
+            // set the map scoll bar to the correct height
+            $scope.windowHeight = $(window).outerHeight();
+            $scope.navHeight = $('#nav').outerHeight();
+            $scope.searchHeight = $('.discover-nav').outerHeight();
+            $scope.filterHeight = 104;
+
+            $scope.scrollBarHeight = $scope.windowHeight - $scope.navHeight - $scope.searchHeight -  $scope.filterHeight;
+
+            return {
+                height: $scope.scrollBarHeight + 'px'
+            }
+        }
+
+        $(window).resize(function(){
+            $scope.$apply(function(){
+                $scope.scrollHeight();
+            })
+        })
 
 
         /*
