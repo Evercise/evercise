@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <td colspan="7" align="right">
-                <strong>Fundong amount: <span class="blue-text">&pound;{{abs($transaction->total_after_fees)}}</span></strong>
+                <strong>Funding amount: <span class="blue-text">&pound;{{abs($transaction->total_after_fees)}}</span></strong>
             </td>
         </tr>
         <tr>

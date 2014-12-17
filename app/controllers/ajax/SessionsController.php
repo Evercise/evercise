@@ -53,7 +53,7 @@ class SessionsController extends AjaxBaseController
 
         $userId = \Sentry::getUser()->id;
 
-        if ($sessionIds) {
+        if (!empty($sessionIds)) {
             if (!is_array($sessionIds)) {
                 $sessionIds = [$sessionIds];
             }
@@ -162,7 +162,7 @@ class SessionsController extends AjaxBaseController
 
         }
 
-        $sessions = Evercisegroup::find($evercisegroupId)->evercisesession;
+        $sessions = Evercisegroup::find($evercisegroupId)->futuresessions;
 
         event('class.index.single', [$evercisegroupId]);
 

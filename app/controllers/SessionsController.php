@@ -33,7 +33,7 @@ class SessionsController extends \BaseController
      */
     public function create($class_id)
     {
-        $sessions = Evercisegroup::find($class_id)->evercisesession;
+        $sessions = Evercisegroup::find($class_id)->futuresessions;
         $data = [
             'evercisegroup_id' => $class_id
         ];

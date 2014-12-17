@@ -276,13 +276,7 @@ class UsersController extends \BaseController
 
         if ($validator->fails()) {
 
-            if (Request::ajax()) {
-                return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
-            } else {
-                return Redirect::route('v3.auth.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
         } else {
             if ($oldPassword == $newPassword) {
                 return Response::json(
@@ -352,19 +346,10 @@ class UsersController extends \BaseController
         $code = Input::get('code');
 
         if ($validator->fails()) {
-
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('v3.auth.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            return Response::json([
+                'validation_failed' => 1,
+                'errors'            => $validator->errors()->toArray()
+            ]);
         } else {
             $success = false;
             try {

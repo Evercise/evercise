@@ -107,7 +107,6 @@
                                 <td><strong>{{ $session->sessionmembers()->count().'/'.$session->tickets}}</strong></td>
                                 <td>{{'&pound'. $session->price}}</td>
                                 <td class="text-right">
-
                                     {{ Form::open(['route'=>'session.get.members', 'method'=> 'post', 'class' => 'get-members', 'id'=>'get-members']) }}
                                         <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr15 hover"></a>
                                         {{ Form::hidden('session_id', $session->id) }}
