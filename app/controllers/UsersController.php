@@ -28,12 +28,22 @@ class UsersController extends \BaseController
         $referral = Referral::checkReferralCode(Session::get('referralCode'));
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
 
+        $ppcDb = Landing::where('code', Session::get('ppcCode'))->first();
+
+        $email = '';
+
+        if(!empty($ppcDb->email)) {
+            $email = $ppcDb->email;
+        }
+        if(!empty($referral->email)) {
+            $email = $referral->email;
+        }
 
         return View::make('v3.users.create')
             ->with('referralCode', $referral ? $referral->code : null)
             ->with('redirect', $redirect)
             ->with('ppcCode', $ppcCode)
-            ->with('email', $referral ? $referral->email : '');
+            ->with('email', $email);
 
     }
 

@@ -3,11 +3,12 @@
 $base = 'assets/img/landings/';
 return [
 
-    '/uk/london/bootcamp' => [
+    '/uk/london/bootcamp'     => [
         'title'       => 'First Bootcamp Class',
         'description' => 'Get your first Bootcamp class on US',
         'price'       => '£10',
         'category'    => 'Bootcamp',
+        'category_id' => 7,
         'total'       => '100',
         'main_image'  => $base . 'bootcamp_assets/bootcamp_landing_img.jpg',
         'blocks'      => [
@@ -59,11 +60,12 @@ return [
             ]
         ]
     ],
-    '/uk/london/dance'    => [
+    '/uk/london/dance'        => [
         'title'       => 'First Dance Class',
         'description' => 'Get your first Dance class on US',
         'price'       => '£10',
         'category'    => 'Dance',
+        'category_id' => 1,
         'total'       => '100',
         'main_image'  => $base . 'dance_assets/dance_landing_img.jpg',
         'blocks'      => [
@@ -115,11 +117,12 @@ return [
             ]
         ]
     ],
-    '/uk/london/fitness'  => [
+    '/uk/london/fitness'      => [
         'title'       => 'First Fitness Class',
         'description' => 'Get your first Fitness class on US',
         'price'       => '£10',
         'category'    => 'Fitness',
+        'category_id' => 3,
         'total'       => '100',
         'main_image'  => $base . 'fitness_assets/fitness_landing_img.jpg',
         'blocks'      => [
@@ -171,11 +174,12 @@ return [
             ]
         ]
     ],
-    '/uk/london/martial-arts'  => [
+    '/uk/london/martial-arts' => [
         'title'       => 'First Martial Arts Class',
         'description' => 'Get your first Martial Arts class on US',
         'price'       => '£10',
         'category'    => 'Martial Arts',
+        'category_id' => 4,
         'total'       => '100',
         'main_image'  => $base . 'martial_arts_assets/martial_arts_landing_img.jpg',
         'blocks'      => [
@@ -227,11 +231,12 @@ return [
             ]
         ]
     ],
-    '/uk/london/pilates'  => [
+    '/uk/london/pilates'      => [
         'title'       => 'First Pilates Class',
         'description' => 'Get your first Pilates class on US',
         'price'       => '£10',
         'category'    => 'Pilates',
+        'category_id' => 2,
         'total'       => '100',
         'main_image'  => $base . 'pilates_assets/pilates_class_landing.jpg',
         'blocks'      => [
@@ -283,11 +288,12 @@ return [
             ]
         ]
     ],
-    '/uk/london/yoga'  => [
+    '/uk/london/yoga'         => [
         'title'       => 'First Yoga Class',
         'description' => 'Get your first Yoga class on US',
         'price'       => '£10',
         'category'    => 'Yoga',
+        'category_id' => 5,
         'total'       => '100',
         'main_image'  => $base . 'yoga_assets/yoga_landing_img.jpg',
         'blocks'      => [

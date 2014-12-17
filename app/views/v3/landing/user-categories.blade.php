@@ -20,10 +20,12 @@
         <div class="jumbotron text-center">
             <h1 class="text-primary">Get up to {{ $price }}</h1>
             <h2 class="text-white">For your first {{ $category }} class</h2>
-            <h3 class="text-info">{{ $number_sessions }} Classes to choose from</h3>
-            {{ Form::open(['url' => 'landings', 'method' => 'post',]) }}
+            <h3 class="text-info" style="color:#8ee1f8">{{ $number_sessions }} Classes to choose from</h3>
+            {{ Form::open(['route' => 'landings.send', 'method' => 'post',]) }}
                 <div class="landing-form container">
                     <div class="form-group">
+                             {{ Form::hidden('category_id', $category_id)}}
+
                             <div class="input-wrapper email">
                                 {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) }}
                             </div>
