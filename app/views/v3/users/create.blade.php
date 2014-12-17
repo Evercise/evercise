@@ -1,9 +1,13 @@
 @extends('v3.layouts.master')
 @section('body')
     <div class="container first-container">
-        @if(!$referralCode)
-             <div class="referral-wrapper">
-                <p>Your referral code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['referral_signup'] }} credited to your account!</p>
+        @if($referralCode)
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="alert alert-success text-center">
+                       <p>Your referral code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['referral_signup'] }} credited to your account!</p>
+                    </div>
+                </div>
             </div>
          @endif
         <div class="row text-center">
