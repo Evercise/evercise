@@ -477,6 +477,7 @@ Route::get('terms_of_use', ['as' => 'static.terms_of_use', 'uses' => 'StaticCont
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
 Route::get('the_team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
 Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
+Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
 Route::get('class_guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);
 Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
