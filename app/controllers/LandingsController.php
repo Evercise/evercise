@@ -1,7 +1,7 @@
 <?php
 
-class LandingsController extends \BaseController {
-
+class LandingsController extends \BaseController
+{
 
 
     protected $evercisegroup;
@@ -55,42 +55,42 @@ class LandingsController extends \BaseController {
     }
 
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        //
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		return View::make('landings.create');
-	}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return View::make('landings.create');
+    }
 
 
-    public function display(){
+    public function display()
+    {
         $url = str_replace(URL::to('/'), '', Request::url());
 
-        $item = Config::get('landing_pages.'.$url);
+        $item = Config::get('landing_pages.' . $url);
 
 
-        if(!isset($item['category'])) {
+        if (!isset($item['category'])) {
             return Redirect::route('home');
         }
 
 
-
         $params = [
-            'size' => 10,
-            'from' => 0,
+            'size'   => 10,
+            'from'   => 0,
             'radius' => '10mi',
             'search' => $item['category']
         ];
@@ -100,26 +100,26 @@ class LandingsController extends \BaseController {
         $area = $this->place->where('name', 'London')->first();
 
         $i = 0;
-        foreach($item['blocks']['large'] as $block) {
+        foreach ($item['blocks']['large'] as $block) {
             $params['search'] = $block['name'];
             $searchResults = $this->search->getResults($area, $params);
             $total = 0;
 
-            if($searchResults->total > 0) {
+            if ($searchResults->total > 0) {
                 $price = 0;
 
                 foreach ($searchResults->hits as $evercisegroup) {
 
                     $total += count($evercisegroup->futuresessions);
 
-                    foreach($evercisegroup->futuresessions as $session) {
-                        if($price == 0 || $price > $session->price) {
+                    foreach ($evercisegroup->futuresessions as $session) {
+                        if ($price == 0 || $price > $session->price) {
                             $price = $session->price;
                         }
                     }
                 }
 
-                $item['blocks']['large'][$i]['from'] = '£'.$price;
+                $item['blocks']['large'][$i]['from'] = '£' . $price;
             }
 
             $item['blocks']['large'][$i]['total'] = $total;
@@ -130,26 +130,26 @@ class LandingsController extends \BaseController {
         }
 
         $i = 0;
-        foreach($item['blocks']['small'] as $block) {
+        foreach ($item['blocks']['small'] as $block) {
             $params['search'] = $block['name'];
             $searchResults = $this->search->getResults($area, $params);
             $total = 0;
 
-            if($searchResults->total > 0) {
+            if ($searchResults->total > 0) {
                 $price = 0;
 
                 foreach ($searchResults->hits as $evercisegroup) {
 
                     $total += count($evercisegroup->futuresessions);
 
-                    foreach($evercisegroup->futuresessions as $session) {
-                        if($price == 0 || $price > $session->price) {
+                    foreach ($evercisegroup->futuresessions as $session) {
+                        if ($price == 0 || $price > $session->price) {
                             $price = $session->price;
                         }
                     }
                 }
 
-                $item['blocks']['small'][$i]['from'] = '£'.$price;
+                $item['blocks']['small'][$i]['from'] = '£' . $price;
             }
 
 
@@ -165,173 +165,184 @@ class LandingsController extends \BaseController {
     }
 
 
-    public function landingSend() {
+    public function landingSend()
+    {
 
         $email = Input::get('email');
         $location = Input::get('location');
         $category_id = Input::get('category_id');
 
-        $ppcCode = Functions::randomPassword(20);
-        $ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'location'=>$location, 'category_id'=>$category_id ]);
 
-        if ($ppc)
-        {
+        $validator = Validator::make(
+            Input::all(),
+            [
+                'email'       => 'required|email',
+                'category_id' => 'required'
+            ]
+        );
+        if ($validator->fails()) {
+            return Redirect::back();
+        }
+
+        $ppcCode = Functions::randomPassword(20);
+        $ppc = Landing::create([
+            'email'       => $email,
+            'code'        => $ppcCode,
+            'location'    => $location,
+            'category_id' => $category_id
+        ]);
+
+        if ($ppc) {
             event('landing.user', [
-                'email' => $email,
+                'email'      => $email,
                 'categoryId' => $category_id,
-                'ppcCode' => $ppcCode,
-                'location' => $location
+                'ppcCode'    => $ppcCode,
+                'location'   => $location
             ]);
         }
 
-       return $this->submitPpc($category_id, $ppcCode, $email);
+        return $this->submitPpc($category_id, $ppcCode, $email);
     }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		
-		$validator = Validator::make(
-			Input::all(),
-			[
-				'email' => 'required|email|unique:users,email',
-				'category' => '',
-			]
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = [
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         ];
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store()
+    {
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('landing.category', ['category'=>Input::get('category')])
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else {
+        $validator = Validator::make(
+            Input::all(),
+            [
+                'email'    => 'required|email|unique:users,email',
+                'category' => '',
+            ]
+        );
+        if ($validator->fails()) {
+            if (Request::ajax()) {
+                $result = [
+                    'validation_failed' => 1,
+                    'errors'            => $validator->errors()->toArray()
+                ];
 
-			$email = Input::get('email');
-			$categoryId = Input::get('category');
+                return Response::json($result);
+            } else {
+                return Redirect::route('landing.category', ['category' => Input::get('category')])
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        } else {
 
-			$ppcCode = Functions::randomPassword(20);
-			$ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
+            $email = Input::get('email');
+            $categoryId = Input::get('category');
 
-			Session::put('ppcCode', $ppcCode);
-			Session::put('email', $email);
+            $ppcCode = Functions::randomPassword(20);
+            $ppc = Landing::create(['email' => $email, 'code' => $ppcCode, 'category_id' => $categoryId]);
 
-			$category = Category::find($categoryId)->pluck('name');
+            Session::put('ppcCode', $ppcCode);
+            Session::put('email', $email);
 
-			if ($ppc)
-			{
-				Event::fire('landing.ppc', [
-		        	'email' => $email,
-		        	'categoryId' => $categoryId,
-	            'ppcCode' => $ppcCode
-	        ]);
-			}
+            $category = Category::find($categoryId)->pluck('name');
 
-			//return Redirect::to('users/create');
-			return Response::json(['callback'=>'gotoUrl', 'url' => route('users.create')]);
-		}
-	}
+            if ($ppc) {
+                Event::fire('landing.ppc', [
+                    'email'      => $email,
+                    'categoryId' => $categoryId,
+                    'ppcCode'    => $ppcCode
+                ]);
+            }
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
+            //return Redirect::to('users/create');
+            return Response::json(['callback' => 'gotoUrl', 'url' => route('users.create')]);
+        }
+    }
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
-	}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
 
-	// Facebook link on landing page clicked
-	public function facebookPpc($categoryId)
-	{
-		$ppcCode = Functions::randomPassword(20);
-		$ppc = Landing::create([ 'email'=>'facebook', 'code'=>$ppcCode, 'category_id'=>$categoryId ]);
+    // Facebook link on landing page clicked
+    public function facebookPpc($categoryId)
+    {
+        $ppcCode = Functions::randomPassword(20);
+        $ppc = Landing::create(['email' => 'facebook', 'code' => $ppcCode, 'category_id' => $categoryId]);
 
-		Session::put('ppcCategory', $categoryId);
-		Session::put('ppcCode', $ppcCode);
+        Session::put('ppcCategory', $categoryId);
+        Session::put('ppcCode', $ppcCode);
 
-		return Redirect::to('login/fb');
-	}
+        return Redirect::to('login/fb');
+    }
 
 
-	// Accept code from a pay-per-click generated email.
-	public function submitPpc($categoryId, $ppcCode, $email)
-	{
-		Session::put('ppcCategory', $categoryId);
-		Session::put('ppcCode', $ppcCode);
+    // Accept code from a pay-per-click generated email.
+    public function submitPpc($categoryId, $ppcCode, $email)
+    {
+        Session::put('ppcCategory', $categoryId);
+        Session::put('ppcCode', $ppcCode);
 
-		return Redirect::route('register')->with('email', $email);
-	}
-	
-	public function loadCategory($category)
-	{
-		if (array_key_exists($category, Config::get('values')['ppc_categories']))
-		{
-			$categoryId = Config::get('values')['ppc_categories'][$category];
+        return Redirect::route('register')->with('email', $email);
+    }
 
-			$category = Category::find($categoryId);
-			
-			return View::make('landings.create')
-			->with('category', $category);
-		}
-		else
-		{
-			return Redirect::to('/');
-		}
-	}
+    public function loadCategory($category)
+    {
+        if (array_key_exists($category, Config::get('values')['ppc_categories'])) {
+            $categoryId = Config::get('values')['ppc_categories'][$category];
 
-	public function landCategory($cat)
-	{
-		return $this->loadCategory($cat);
-	}
+            $category = Category::find($categoryId);
+
+            return View::make('landings.create')
+                ->with('category', $category);
+        } else {
+            return Redirect::to('/');
+        }
+    }
+
+    public function landCategory($cat)
+    {
+        return $this->loadCategory($cat);
+    }
 
     public function categoryLanding($cat)
     {
