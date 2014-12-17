@@ -4,7 +4,7 @@
             <div class="col-sm-8">
                 Copyright &copy;2014 Evercise
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 mt10">
                 <ul class="list-inline text-right">
                     <li><a target="_blank" href="https://www.facebook.com/evercise"><span class="icon-lg icon-lg-fb hover"></span></a></li>
                     <li><a target="_blank" href="https://twitter.com/Evercise"><span class="icon-lg icon-lg-tweeter hover"></span></a></li>
