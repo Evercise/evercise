@@ -54,7 +54,12 @@
                             {{ Form::hidden('force', true) }}
                             {{ (!empty($cart_items) ? var_dump($cart_items) : null ) }}
                             <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-                                 <option ng-selected="{[{ n + 1 == 4}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                @if(!empty($cart_items['{[{ session.id  }]}']))
+                                    <option ng-selected="{[{ n + 1 == $cart_items['{[{ session.id  }]}'] }]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                @else
+                                    <option ng-selected="{[{ n + 1 == 1}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                @endif
+
                             </select>
 
                         </div>
