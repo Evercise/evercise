@@ -8,7 +8,7 @@ class Landing extends \Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['id', 'user_id', 'email', 'code', 'category_id'];
+    protected $fillable = ['id', 'user_id', 'email', 'code', 'category_id', 'location'];
 
     /**
      * @var string

@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -487,6 +488,7 @@ Route::get('video/create', ['as' => 'video', 'uses' => 'VideoController@create']
 Route::get('refer_a_friend/{code}', ['as' => 'referral', 'uses' => 'ReferralsController@submitCode']);
 Route::get('ppc/{category}/{code}', ['as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc']);
 Route::get('ppc_fb/{category}', ['as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc']);
+Route::post('landing/send', ['as' => 'landings.send', 'uses' => 'LandingsController@landingSend']);
 
 Route::post('new_referral', ['as' => 'new_referral', 'uses' => 'ReferralsController@store']);
 

@@ -164,6 +164,29 @@ class LandingsController extends \BaseController {
 
     }
 
+
+    public function landingSend() {
+
+        $email = Input::get('email');
+        $location = Input::get('location');
+        $category_id = Input::get('category_id');
+
+        $ppcCode = Functions::randomPassword(20);
+        $ppc = Landing::create([ 'email'=>$email, 'code'=>$ppcCode, 'location'=>$location, 'category_id'=>$category_id ]);
+
+        if ($ppc)
+        {
+            event('landing.user', [
+                'email' => $email,
+                'categoryId' => $category_id,
+                'ppcCode' => $ppcCode,
+                'location' => $location
+            ]);
+        }
+
+       return $this->submitPpc($category_id, $ppcCode, $email);
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -280,12 +303,12 @@ class LandingsController extends \BaseController {
 
 
 	// Accept code from a pay-per-click generated email.
-	public function submitPpc($categoryId, $ppcCode)
+	public function submitPpc($categoryId, $ppcCode, $email)
 	{
 		Session::put('ppcCategory', $categoryId);
 		Session::put('ppcCode', $ppcCode);
 
-		return Redirect::to('users/create');
+		return Redirect::route('register')->with('email', $email);
 	}
 	
 	public function loadCategory($category)

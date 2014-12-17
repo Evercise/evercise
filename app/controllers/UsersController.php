@@ -28,12 +28,22 @@ class UsersController extends \BaseController
         $referral = Referral::checkReferralCode(Session::get('referralCode'));
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
 
+        $ppcDb = Landing::where('code', Session::get('ppcCode'))->first();
+
+        $email = '';
+
+        if(!empty($ppcDb->email)) {
+            $email = $ppcDb->email;
+        }
+        if(!empty($referral->email)) {
+            $email = $referral->email;
+        }
 
         return View::make('v3.users.create')
             ->with('referralCode', $referral ? $referral->code : null)
             ->with('redirect', $redirect)
             ->with('ppcCode', $ppcCode)
-            ->with('email', $referral ? $referral->email : '');
+            ->with('email', $email);
 
     }
 
@@ -276,13 +286,7 @@ class UsersController extends \BaseController
 
         if ($validator->fails()) {
 
-            if (Request::ajax()) {
-                return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
-            } else {
-                return Redirect::route('v3.auth.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
         } else {
             if ($oldPassword == $newPassword) {
                 return Response::json(
@@ -352,19 +356,10 @@ class UsersController extends \BaseController
         $code = Input::get('code');
 
         if ($validator->fails()) {
-
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('v3.auth.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            return Response::json([
+                'validation_failed' => 1,
+                'errors'            => $validator->errors()->toArray()
+            ]);
         } else {
             $success = false;
             try {

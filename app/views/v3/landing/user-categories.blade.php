@@ -20,11 +20,14 @@
         <div class="jumbotron text-center">
             <h1 class="text-primary">Get up to {{ $price }}</h1>
             <h2 class="text-white">For your first {{ $category }} class</h2>
-            <h3 class="text-info">{{ $number_sessions }} Classes to choose from</h3>
-            {{ Form::open(['url' => 'landings', 'method' => 'post',]) }}
+            <h3 class="text-info" style="color:#8ee1f8">{{ $number_sessions }} Classes to choose from</h3>
+            {{ Form::open(['route' => 'landings.send', 'method' => 'post',]) }}
                 <div class="landing-form container">
                     <div class="form-group">
                             <div class="input-wrapper email pull-left">
+
+                                {{ Form::hidden('category_id', $category_id)}}
+
                                 {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) }}
                             </div>
                             <div class="input-wrapper location pull-left">
@@ -72,7 +75,7 @@
                         {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
                     </li>
                     <li class="list-group-item">
-                        <h4 class="text-center">{{ $b['name'] }}</h4>
+                        <h4 class="text-center">{{ strtoupper($b['name']) }}</h4>
                     </li>
                     <li class="list-group-item">
                         <div class="row">
@@ -100,7 +103,7 @@
                                 {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
                             </li>
                             <li class="list-group-item">
-                                <h4 class="text-center">{{ $b['name'] }}</h4>
+                                <h4 class="text-center">{{ strtoupper($b['name']) }}</h4>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">

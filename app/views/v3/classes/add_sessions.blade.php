@@ -106,6 +106,7 @@
             <div class="row text-center mt40">
                 <div class="underline">
                 <h1>Edit your sessions</h1>
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
