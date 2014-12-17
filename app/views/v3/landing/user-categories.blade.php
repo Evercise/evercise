@@ -74,7 +74,7 @@
             <div class="col-sm-6">
                 <ul class="list-group landing-list">
                     <li class="list-group-item list-group-item-full-width">
-                        {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
+                       <a href="{{ url($b['link']) }}" target="_blank">{{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}</a>
                     </li>
                     <li class="list-group-item">
                         <h4 class="text-center">{{ strtoupper($b['name']) }}</h4>
@@ -83,7 +83,7 @@
                         <div class="row">
                             <div class="col-sm-4"><strong class="text-primary">from {{ $b['from'] }}</strong></div>
                             <div class="col-sm-4 text-center"><h4>{{ $b['total'] }} classes</h4></div>
-                            <div class="col-sm-4">{{ Html::link($b['link'], 'Discover',['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                            <div class="col-sm-4">{{ Html::link($b['link'], 'Discover',['class' => 'btn btn-default btn-sm btn-block', 'target' => '_blank']) }}</div>
                         </div>
                     </li>
                 </ul>
