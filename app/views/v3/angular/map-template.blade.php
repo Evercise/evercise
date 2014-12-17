@@ -1,10 +1,10 @@
 <div id="mapView" ng-show="view == 'mapview'">
     <div class="class-snippet-wrapper side-bar">
-        <div class="snippet-header">
+        <div id="snippet-results" class="snippet-header">
             <strong class="ml10">Your search returned <span class="text-primary">{[{ filteredResults.length }]}</span> results</strong>
 
         </div>
-        <div class="snippet-header sub-menu" role="tabpanel">
+        <div id="snippet-filter" class="snippet-header sub-menu" role="tabpanel">
 
             <!-- Nav tabs -->
             <ul class="nav nav-pills nav-justified" role="tablist">
@@ -26,7 +26,7 @@
         </div>
 
 
-        <div id="main_block_with_scroll" class="snippet-body mb-scroll">
+        <div id="main_block_with_scroll" class="snippet-body mb-scroll" ng-style="scrollHeight()">
 
             <div ng-repeat="marker in markers | orderBy: sort:reverse | filter: distanceFilter as filteredResults"
                  id = {[{marker.id}]}
@@ -37,7 +37,7 @@
                 </div>
                 <div class="class-title-wrapper panel-body col-sm-8">
                     <div class="ml10">
-                        <h3>{[{ marker.name | truncate:20  }]}</h3>
+                        <h3>{[{ marker.name | truncate:19  }]}</h3>
                         <small>Distance : {[{ marker.distance }]} Miles</small>
                     </div>
                     <div class="class-rating-wrapper col-xs-9">
