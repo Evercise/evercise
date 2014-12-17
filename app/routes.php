@@ -16,7 +16,7 @@
 
 
 Route::get('/tester', function () { return Response::view('v3.emails.tester'); });
-Route::get('/tester2', function () { return Response::view('v3.emails.tester2'); });
+Route::get('/tester2', function () { return Response::view('v3.emails.user.landing_email'); });
 Route::get('/invoice', function () { return Response::view('v3.cart.invoice'); });
 Route::get('/landing', function () { return Response::view('v3.landing.user-categories'); });
 
@@ -26,7 +26,7 @@ Route::get('/test', function () {
         'config'      => Config::get('evercise'),
         'subject'     => 'Evercise',
         'title'       => FALSE,
-        'view'        => 'v3.emails.default',
+        'view'        => 'v3.emails.landing_email',
         'attachments' => [],
         'unsubscribe' => '%%unsubscribe%%',
         'link_url'    => URL::to('/'),
@@ -44,12 +44,7 @@ Route::get('/ig', [
 
 
             $user = Sentry::findUserById(getenv('DEV_ID') ?: 323);
-            event('user.forgot.password', [$user]);
-
-            die('done');
-
-            event('class.created', [$class, $user]);
-
+            event('landing.user', [$user->email]);
 
             die('done');
         }

@@ -419,6 +419,25 @@ class Mail
     }
 
 
+    public function userLanding($email)
+    {
+
+
+        $params = [
+            'subject'          => 'GET ACTIVE, GET SOCIAL, GET FIT',
+            'title'            => 'GET ACTIVE, GET SOCIAL, GET FIT!',
+            'view'             => 'v3.emails.user.landing_email',
+            'email'            => $email,
+            'image'            => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url'         => $this->url->to('/uk/'),
+            'banner'           => FALSE
+        ];
+
+        $this->send($email, $params);
+
+    }
+
+
     /**
      * @param $email
      * @param $userName

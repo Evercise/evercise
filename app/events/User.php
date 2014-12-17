@@ -350,4 +350,11 @@ class User
 
         $this->mail->ppc($email, $categoryId, $ppcCode);
     }
+
+    public function userLanding($email)
+    {
+        $this->log->info('landing user ' . $email);
+
+        $this->mail->userLanding($email);
+    }
 }
