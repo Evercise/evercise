@@ -304,6 +304,7 @@ class Elastic
                 $hash = '';
             }
 
+
             $index = [
                 'id'               => (int)$a->id,
                 'user_id'          => (int)$a->user_id,
@@ -366,11 +367,11 @@ class Elastic
             foreach ($a->futuresessions as $s) {
 
 
-                if($price == 0) {
+                if ($price == 0) {
                     $price = (double)$s->price;
                 }
 
-                if($price > (double)$s->price) {
+                if ($price > (double)$s->price) {
                     $price = (double)$s->price;
                 }
 
@@ -388,7 +389,26 @@ class Elastic
                 $with_session++;
             }
 
-            if($price > 0) {
+
+            /** Categories */
+            $categories = [];
+
+
+            foreach ($a->subcategories()->get() as $sub) {
+                if (!in_array($sub->name, $categories)) {
+                    $categories[] = $sub->name;
+                }
+
+                foreach ($sub->categories()->get() as $cat) {
+                    if (!in_array($cat->name, $categories)) {
+                        $categories[] = $cat->name;
+                    }
+                }
+            }
+
+            $index['categories'] = implode(', ', $categories);
+
+            if ($price > 0) {
                 $index['default_price'] = $price;
             }
 
@@ -506,10 +526,10 @@ class Elastic
                         'venue_id'         => ['type' => 'integer', 'include_in_all' => TRUE],
                         'user_id'          => ['type' => 'integer', 'include_in_all' => TRUE],
                         'gender'           => ['type' => 'integer'],
+                        'categories'       => ['type' => 'string'],
                         'default_price'    => ['type' => 'integer'],
                         'capacity'         => ['type' => 'integer'],
                         'default_duration' => ['type' => 'integer'],
-                        'published'        => ['type' => 'integer'],
                         'published'        => ['type' => 'boolean'],
                         'description'      => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                         'image'            => ['type' => 'string'],
