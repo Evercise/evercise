@@ -4,7 +4,7 @@
 
 @section('body')
 <div class="container first-container">
-    <div class="row text-center mb50">
+    <div class="row text-center mb40">
         <div class="underline">
             <h1>High Five</h1>
         </div>
@@ -60,7 +60,7 @@
             @endif
         @endforeach
     </div>
-    <div class="row text-center mb50">
+    <div class="row text-center mb40">
         <div class="underline">
             <h1>Perfect Ten</h1>
         </div>
