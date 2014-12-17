@@ -272,7 +272,7 @@ class AdminAjaxController extends AdminController
                 mkdir('files/gallery_defaults');
             }
 
-            $name = $file->getClientOriginalName();
+            $name = 'g_'.rand(1,1000).'-'.$file->getClientOriginalName();
             /** Save the image name without the Prefix to the DB */
 
             $save = FALSE;
