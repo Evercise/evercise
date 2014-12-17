@@ -7135,9 +7135,6 @@ a:focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-p {
-  word-break: break-all;
-}
 strong {
   color: #383d48;
 }
