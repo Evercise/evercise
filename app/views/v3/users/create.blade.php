@@ -1,7 +1,7 @@
 @extends('v3.layouts.master')
 @section('body')
     <div class="container first-container">
-        @if($referralCode)
+        @if(!$referralCode)
              <div class="referral-wrapper">
                 <p>Your referral code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['referral_signup'] }} credited to your account!</p>
             </div>
