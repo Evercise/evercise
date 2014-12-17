@@ -4,9 +4,6 @@ if(typeof angular != 'undefined') {
         // grab classes fromn elastic
         $scope.everciseGroups = laracasts.mapResults;
 
-        console.log()
-
-
         // the number of results returned
         $scope.results = $scope.everciseGroups.length;
 
@@ -24,7 +21,8 @@ if(typeof angular != 'undefined') {
         $scope.active = {};
 
         // default distance for filter
-        $scope.maxDistance = 200;
+        $scope.originalDistance =  parseInt( $('select[name="distance"]').val() );
+        $scope.maxDistance = parseInt( $('select[name="distance"]').val() );
 
         // watch the scope for map loaded
         $scope.myMarkers = [];
@@ -68,6 +66,7 @@ if(typeof angular != 'undefined') {
 
         // used for distance filter
         $scope.distanceFilter = function (marker) {
+            console.log('fuck');
             if( marker.distance <= $scope.maxDistance || marker == $scope.active){
                 return marker;
             }
