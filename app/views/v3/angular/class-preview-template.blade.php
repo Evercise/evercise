@@ -53,6 +53,7 @@
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
                             <?php $sid = '{[{ session.id  }]}' ?>
+                            {{ $cart_items[$sid] }}
                             <select name="quantity" id="quantity" class="btn btn-primary btn-select">
 
                                 @if(!empty($cart_items[$sid]))
