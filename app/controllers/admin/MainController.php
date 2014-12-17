@@ -477,6 +477,38 @@ class MainController extends \BaseController
     }
 
 
+    public function landings() {
+
+        $landings = LandingPages::all();
+
+        return View::make('admin.landings', compact('landings'));
+
+
+    }
+
+    public function landing($id) {
+
+        $page = LandingPages::find($id);
+
+        $categories = [];
+
+        foreach (Subcategory::all() as $sub) {
+            if (!in_array($sub->name, $categories)) {
+                $categories[$sub->name] = $sub->name;
+            }
+
+            foreach ($sub->categories()->get() as $cat) {
+                if (!in_array($cat->name, $categories)) {
+                    $categories[$cat->name] = $cat->name;
+                }
+            }
+        }
+
+        return View::make('admin.landing_manage', compact('page', 'categories'));
+
+
+    }
+
 
 
 

@@ -22,6 +22,17 @@ class LandingsController extends \BaseController {
 		return View::make('landings.create');
 	}
 
+
+    public function display(){
+        $url = str_replace(URL::to('/'), '', Request::url());
+
+        $item = Config::get('landing_pages.'.$url);
+
+
+        return View::make('v3.landing.user-categories', $item)->render();
+
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *

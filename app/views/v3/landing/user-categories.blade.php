@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>{{ isset($title)? $title : 'Everyone exercise'}}</title>
-    <meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
+    <meta name="description" content="{{ isset($description)? $description : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" />

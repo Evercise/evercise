@@ -290,6 +290,14 @@ Route::post(
     ['as' => 'evercisegroups.delete', 'uses' => 'EvercisegroupsController@deleteEG']
 );
 
+/** Landing Pages */
+foreach(Config::get('landing_pages') as $url => $params) {
+
+    Route::get($url,
+        ['as' => 'landing_page.'.str_replace('/','.',$url), 'uses' => 'LandingsController@display']
+    );
+}
+
 
 //Redirect All UK segments to the same function and we will go from there
 Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchController@parseUrl'])->where(
@@ -683,6 +691,13 @@ Route::group(
 
         Route::get('expired/{date?}',
             ['as' => 'admin.expired', 'uses' => 'MainController@expired']);
+
+        Route::get('landings',
+            ['as' => 'admin.landings', 'uses' => 'MainController@landings']);
+        Route::get('landing/{id?}',
+            ['as' => 'admin.landing.manage', 'uses' => 'MainController@landing']);
+
+
     }
 
 
