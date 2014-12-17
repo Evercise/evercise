@@ -119,8 +119,10 @@ imageCropper.prototype = {
             success: function (data) {
                 self.galleryValue = data.filename;
                 self.galleryImage = '<img src="/'+data.folder + self.imageType +data.filename +'" alt="cover photo" class="img-responsive">';
+
                 self.croppedForm.find("input[type=submit]").prop('disabled', false);
                 self.uploadForm.append(self.galleryImage);
+
                 if( $('#first-img')){
                     $('#first-img').html(self.galleryImage);
                     $('#first-img').append('<div class="holder-add-more"><span class="image-select icon-lg icon-md-camera hover"></span>');
@@ -150,7 +152,7 @@ imageCropper.prototype = {
         }
     },
     updatedRow: function(){
-        if(this.galleryImage != '')
+        if(this.galleryImage != '' && this.galleryImage != '<img src="/undefined"  alt="cover photo" class="img-responsive">')
         {
             $('#first-img').html(this.galleryImage);
             $('#first-img').append('<div class="holder-add-more"><span class="image-select icon-lg icon-md-camera hover"></span>');
