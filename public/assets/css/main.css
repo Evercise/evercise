@@ -9593,7 +9593,7 @@ label {
   }
 }
 .btn-select {
-  appearance: none;
+  -webkit-appearance: none;
   height: 40px;
   width: 38px;
   padding: 0 8px;
