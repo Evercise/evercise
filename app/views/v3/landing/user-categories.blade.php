@@ -12,15 +12,15 @@
 </head>
 @endif
 <body>
-    <div class="hero landing-header mt0" style="background-image: url('{{url().'/assets/img/hero.jpg'}}')">
+    <div class="hero landing-header mt0" style="background-image: url('{{url().'/'.$main_image}}')">
         <div class="container mt15 pull-left">
             {{ Html::decode( Html::linkRoute('home', image('assets/img/strapline_logo.png', 'logo', ['class' => 'img-responsive']))) }}
         </div>
 
         <div class="jumbotron text-center">
-            <h1 class="text-primary">Get up to £10</h1>
-            <h2 class="text-white">For your first {cat} class</h2>
-            <h3 class="text-info">{ # of sessions} Classes to choose from</h3>
+            <h1 class="text-primary">Get up to {{ $price }}</h1>
+            <h2 class="text-white">For your first {{ $category }} class</h2>
+            <h3 class="text-info">{{ $number_sessions }} Classes to choose from</h3>
             {{ Form::open(['route' => 'home', 'method' => 'post',]) }}
                 <div class="landing-form container">
                     <div class="form-group">
@@ -64,116 +64,59 @@
     </div>
     <div class="container">
          <div class="row mt30">
+
+            @foreach($blocks['large'] as $b)
             <div class="col-sm-6">
                 <ul class="list-group landing-list">
                     <li class="list-group-item list-group-item-full-width">
-                        {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
+                        {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
                     </li>
                     <li class="list-group-item">
-                        <h4 class="text-center">Bootcamp</h4>
+                        <h4 class="text-center">{{ $b['name'] }}</h4>
                     </li>
                     <li class="list-group-item">
                         <div class="row">
-                            <div class="col-sm-4"><strong class="text-primary">from £90</strong></div>
-                            <div class="col-sm-4 text-center"><h4>12345 classes</h4></div>
-                            <div class="col-sm-4">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                            <div class="col-sm-4"><strong class="text-primary">from {{ $b['from'] }}</strong></div>
+                            <div class="col-sm-4 text-center"><h4>{{ $b['total'] }} classes</h4></div>
+                            <div class="col-sm-4">{{ Html::link($b['link'], 'Discover',['class' => 'btn btn-default btn-sm btn-block']) }}</div>
                         </div>
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-6">
-                <ul class="list-group landing-list">
-                    <li class="list-group-item list-group-item-full-width">
-                        {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                    </li>
-                    <li class="list-group-item">
-                        <h4 class="text-center">Bootcamp</h4>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-4 sm-text-center"><strong class="text-primary">from £90</strong></div>
-                            <div class="col-sm-4 text-center"><h4>12345 classes</h4></div>
-                            <div class="col-sm-4">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            @endforeach
+
         </div>
         <div class="row">
+
+            @foreach($blocks['small'] as $key => $b)
+
+            @if(in_array($key, [0, 2]))
             <div class="col-sm-6">
                 <div class="row">
+            @endif
                     <div class="col-xs-6">
                         <ul class="list-group landing-list">
                             <li class="list-group-item list-group-item-full-width">
-                                {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
+                                {{ image($b['image'], $b['name'], ['class' => 'img-responsive']) }}
                             </li>
                             <li class="list-group-item">
-                                <h4 class="text-center">Bootcamp</h4>
+                                <h4 class="text-center">{{ $b['name'] }}</h4>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                                    <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
+                                    <div class="col-sm-6"><strong class="text-primary">from {{ $b['from'] }}</strong></div>
+                                    <div class="col-sm-6">{{ Html::link($b['link'], 'Discover', ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-6">
-                        <ul class="list-group landing-list">
-                            <li class="list-group-item list-group-item-full-width">
-                                {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                            </li>
-                            <li class="list-group-item">
-                                <h4 class="text-center">Bootcamp</h4>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                                    <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            @if(in_array($key, [1, 3]))
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <ul class="list-group landing-list">
-                                <li class="list-group-item list-group-item-full-width">
-                                    {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                                </li>
-                                <li class="list-group-item">
-                                    <h4 class="text-center">Bootcamp</h4>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                                        <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-xs-6">
-                            <ul class="list-group landing-list">
-                                <li class="list-group-item list-group-item-full-width">
-                                    {{ image('/assets/img/hero.jpg', 'what is evercise', ['class' => 'img-responsive']) }}
-                                </li>
-                                <li class="list-group-item">
-                                    <h4 class="text-center">Bootcamp</h4>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-sm-6"><strong class="text-primary">from £90</strong></div>
-                                        <div class="col-sm-6">{{ Html::linkRoute('home','Discover', null, ['class' => 'btn btn-default btn-sm btn-block']) }}</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endif
+
+            @endforeach
+
 
         </div>
     </div>

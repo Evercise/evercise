@@ -29,6 +29,16 @@ class LandingsController extends \BaseController {
         $item = Config::get('landing_pages.'.$url);
 
 
+        if(!isset($item['category'])) {
+            return Redirect::route('home');
+        }
+
+
+
+
+        $item['number_sessions'] = 999;
+
+
         return View::make('v3.landing.user-categories', $item)->render();
 
     }

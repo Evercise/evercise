@@ -232,7 +232,7 @@ class AdminAjaxController extends AdminController
      */
     public function saveTags()
     {
-        $tags = implode(',', Input::get('tags'));
+        $tags = implode(',', Input::get('tags', []));
         $id = Input::get('id');
 
         Gallery::where('id', $id)->update(['keywords' => $tags]);
