@@ -94,10 +94,10 @@ class LandingsController extends \BaseController {
             'radius' => '10mi',
             'search' => $item['category']
         ];
-        $area = Place::where('name', 'London')->remember(200)->first();
 
-        $searchResults = $this->search->getResults($area, $params);
-        $item['number_sessions'] = $searchResults->total;
+        $item['number_sessions'] = 0;
+
+        $area = $this->place->where('name', 'London')->first();
 
         $i = 0;
         foreach($item['blocks']['large'] as $block) {
@@ -123,6 +123,8 @@ class LandingsController extends \BaseController {
             }
 
             $item['blocks']['large'][$i]['total'] = $total;
+
+            $item['number_sessions'] += $total;
 
             $i++;
         }
@@ -154,6 +156,7 @@ class LandingsController extends \BaseController {
             $item['blocks']['small'][$i]['total'] = $total;
 
 
+            $item['number_sessions'] += $total;
             $i++;
         }
 
