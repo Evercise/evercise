@@ -1,8 +1,7 @@
 @extends('v3.emails.template')
 
 @section('body')
-    <p><strong>No worries, it happens! Here&apos;s how to reset it.</strong></p>
-    <p>Simply click the link below.</p>
+    <p><strong>Password escaped you? No worries, it happens! Your new password is just a click away.</strong></p>
 @stop
 @section('extra')
     <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
@@ -16,4 +15,5 @@
             </td>
         </tr>
     </table>
+    <p>If you didn&apos;t request to reset your password, please ignore this email.  Nothing will change until you access the link above and create a new one.</p>
 @stop
