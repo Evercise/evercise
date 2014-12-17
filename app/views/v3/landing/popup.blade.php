@@ -29,4 +29,4 @@
     {{ Form::close() }}
 </div>
 
-@landing
+@endif
