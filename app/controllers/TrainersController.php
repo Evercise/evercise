@@ -72,6 +72,7 @@ class TrainersController extends \BaseController
     {
         if ($id == 'me') {
             $user = Sentry::getUser();
+            if (!$user) return Redirect::route('home')->with('notification', 'Please log in');
             $id = $user->id;
         }
 

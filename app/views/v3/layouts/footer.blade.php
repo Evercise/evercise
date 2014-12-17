@@ -16,8 +16,8 @@
             </div>
             <div class="col-sm-4">
                 <h3>Contact Us</h3>
-                <li><a href="#">+44 (0)203 322 216</a></li>
-                {{ HTML::mailto('hello@evercise.com') }}
+                <li><a href="#">+44 (0)20 3515 0157</a></li>
+                {{ HTML::mailto('contact@evercise.com') }}
                 <ul class="list-inline">
                     <li><a target="_blank" href="https://www.facebook.com/evercise"><span class="icon-lg icon-lg-fb hover"></span></a></li>
                     <li><a target="_blank" href="https://twitter.com/Evercise"><span class="icon-lg icon-lg-tweeter hover"></span></a></li>
