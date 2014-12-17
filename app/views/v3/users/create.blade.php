@@ -120,10 +120,11 @@
                                    <div class="custom-select">
                                        {{ Form::select('gender',
                                            [
+                                               '' => '',
                                                'male' => 'male',
                                                'female' => 'female'
                                            ]
-                                        , 'female', ['class' => 'form-control'] ) }}
+                                        , '', ['class' => 'form-control'] ) }}
                                    </div>
                                </div>
                             </div>
