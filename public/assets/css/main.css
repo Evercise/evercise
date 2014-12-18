@@ -7398,7 +7398,7 @@ a.bg-light-grey:hover {
   width: 100%;
 }
 .discover-nav {
-  height: 170px;
+  height: 216px;
   top: 61px;
   padding: 15px 0;
   border-bottom: 1px solid #e8ebec;
@@ -7413,7 +7413,7 @@ a.bg-light-grey:hover {
   }
 }
 .discover-nav-spacer {
-  margin-top: 231px;
+  margin-top: 276px;
 }
 @media (min-width: 768px) {
   .discover-nav-spacer {
