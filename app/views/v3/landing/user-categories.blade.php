@@ -30,7 +30,10 @@
 
                                 {{ Form::hidden('category_id', $category_id)}}
 
-                                {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email Address']) }}
+                                {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email Address', 'required']) }}
+                                 @if ($errors->has('email'))
+                                    {{ $errors->first('email', '<p class="text-danger">:email</p>')}}
+                                @endif
                             </div>
                             <div class="input-wrapper location pull-left">
                                 {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Preferred Location']) }}
