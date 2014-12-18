@@ -26,12 +26,12 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown no-mob">
+        <li class="dropdown cart-dropdown no-mob">
             <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
             {{ isset($cart) ? $cart : '' }}
         </li>
 
-        <li class="dropdown cart-dropdown login-drop">
+        <li class="dropdown  login-drop">
             <a href="#" class="dropdown-toggle nav-list" data-toggle="dropdown">Login</a>
             <ul class="dropdown-menu" role="menu">
                 @include('v3.auth.login')
