@@ -7321,9 +7321,16 @@ a.bg-light-grey:hover {
   float: left;
   margin: -3px 20px;
 }
-#mobile-cart .dropdown-cart {
-  position: absolute;
+#mobile-cart .cart-dropdown.open .dropdown-cart {
+  position: fixed;
+  width: 100%;
+  top: 54px;
+  padding: 0 20px;
+  border: 1px solid #e8ebec;
   background-color: #ffffff;
+}
+#mobile-cart .cart-dropdown.open .dropdown-cart .custom-btn-dropdown-select {
+  float: left;
 }
 @media (min-width: 992px) {
   #mobile-cart {

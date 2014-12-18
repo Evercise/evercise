@@ -10,7 +10,7 @@
       </button>
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand' ])}}
       <ul id="mobile-cart" class="nav navbar-nav navbar-right">
-          <li class="dropdown">
+          <li class="dropdown cart-dropdown">
               <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
               {{ isset($cart) ? $cart : '' }}
           </li>
@@ -25,7 +25,7 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-       <li class="dropdown no-mob">
+       <li class="dropdown cart-dropdown no-mob">
            <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
            {{ isset($cart) ? $cart : '' }}
        </li>

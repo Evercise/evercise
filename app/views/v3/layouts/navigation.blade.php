@@ -11,7 +11,7 @@
 
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand' ])}}
       <ul id="mobile-cart" class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+            <li class="dropdown cart-dropdown">
                 <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
                 {{ isset($cart) ? $cart : '' }}
             </li>
@@ -31,7 +31,7 @@
             {{ isset($cart) ? $cart : '' }}
         </li>
 
-        <li class="dropdown login-drop">
+        <li class="dropdown cart-dropdown login-drop">
             <a href="#" class="dropdown-toggle nav-list" data-toggle="dropdown">Login</a>
             <ul class="dropdown-menu" role="menu">
                 @include('v3.auth.login')
