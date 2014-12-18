@@ -113,7 +113,7 @@ class EvercisegroupsController extends \BaseController
             $og = new OpenGraph();
 
             /* try to create og if fails redirect to discover page */
-
+/*
             try {
                 $og->title($class->name)
                     ->type('article')
@@ -129,7 +129,7 @@ class EvercisegroupsController extends \BaseController
                 $class->og = $og;
             } catch (Exception $e) {
                 $class->og = [];
-            }
+            }*/
 
             /** Overwrite Venue because of amenities */
             $class->venue = Venue::with('facilities')->find($class->venue_id);
