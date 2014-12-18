@@ -55,7 +55,7 @@
                                 {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                             </div>
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
+                                <button class="btn btn-primary sm-btn-block" type="submit">
                                      Find a Class
                                 </button>
                             </span>
@@ -100,7 +100,7 @@
             <div class="col-md-4 text-center">
                 <div class="panel-body">
                     <div class="underline">
-                        <h2>What is Evercise</h2>
+                        <h2>{{ Html::linkRoute('general.about', 'What is Evercise', null, ['class' => 'text-dark']) }}</h2>
                     </div>
                     <div class="home-assets">
                         {{ image('img/home/wie.png', 'what is evercise', ['class' => 'img-responsive center-block']) }}
@@ -115,7 +115,7 @@
             <div class="col-md-4 text-center">
                 <div class="panel-body">
                     <div class="underline">
-                        <h2>Why join Evercise</h2>
+                        <h2>{{ Html::linkRoute('general.about', 'Why join Evercise', null, ['class' => 'text-dark']) }}</h2>
                     </div>
                     <div class="home-assets">
                         {{ image('img/home/wje.png', 'why join evercise', ['class' => 'img-responsive center-block']) }}
@@ -129,7 +129,7 @@
             <div class="col-md-4 text-center">
                 <div class="panel-body">
                     <div class="underline">
-                        <h2>How it works</h2>
+                        <h2>{{ Html::linkRoute('general.about', 'How it works', null, ['class' => 'text-dark']) }}</h2>
                     </div>
                     <div class="home-assets">
                         {{ image('img/home/hiw.png', 'how it works', ['class' => 'img-responsive center-block']) }}
