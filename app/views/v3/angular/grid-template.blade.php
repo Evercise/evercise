@@ -39,10 +39,10 @@
                         <li class="list-group-item">
 
                             <div class="class-title-wrapper text-center">
-                                <a href="{[{ marker.link }]}"><h3>{[{ marker.name  }]}</h3></a>
+                                <a href="{[{ marker.link }]}"><h3>{[{ marker.name | | truncate:31  }]}</h3></a>
                                 <div class="class-rating-wrapper">
                                     <span ng-class="n + 1 <= marker.stars ? 'icon-full-star' : 'icon-empty-star'"  class="icon" ng-repeat="n in [] | repeat:5"></span>
-   
+
                                 </div>
                             </div>
                         </li>
