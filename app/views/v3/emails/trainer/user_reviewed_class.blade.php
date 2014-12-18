@@ -7,8 +7,8 @@
 <br>
 <p>A user has reviewed your class</p>
 
-They said:
-{{$rating->comment}}
+<p>They said:</p>
+<p>{{$rating->comment}}</p>
 
 
 @stop

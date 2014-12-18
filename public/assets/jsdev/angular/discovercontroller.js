@@ -1,6 +1,5 @@
 if(typeof angular != 'undefined') {
     app.controller('DiscoverController', ["$scope", "$q", function ($scope, $q) {
-
         // grab classes fromn elastic
         $scope.everciseGroups = laracasts.mapResults;
 

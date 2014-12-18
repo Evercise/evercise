@@ -8,7 +8,7 @@
 @section('extra')
     <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
         <tr width="100%">
-            <td width="33%">
+            <td valign="top" width="33%">
                 <div class="mb30">
                     {{ image('/assets/img/email/Search.jpg', 'search') }}
                 </div>
@@ -25,14 +25,14 @@
                 <h3 class="white-text text-right">Select</h3>
                 <p class="white-text text-right">You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
             </td>
-            <td width="33%">
+            <td valign="top" width="33%">
                 {{ image('/assets/img/email/Select.png', 'select') }}
             </td>
         </tr>
     </table>
     <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
         <tr width="100%">
-            <td width="33%">
+            <td valign="top" width="33%">
                 {{ image('/assets/img/email/Sign_Up.png', 'sign up') }}
             </td>
             <td width="67%">
