@@ -2,7 +2,7 @@
 
 <script>
   var handler = StripeCheckout.configure({
-    key: "@stripeKey",
+    key: "{{  ( Config::get('evercise.stripe_testing') ? Config::get('evercise.stripe_api_key_test') : Config::get('evercise.stripe_api_key_test') ) }}",
     image: '{{url()}}/img/evercoin.png',
     currency: "gbp",
     token: function(token) {

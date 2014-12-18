@@ -46,7 +46,7 @@ class BaseController extends Controller
 
         View::share('header', $header);
 
-        $version = include((php_sapi_name() === 'cli' ? './':'../').'.version.php');
+        $version = include(base_path().'/.version.php');
 
         View::share('version', $version);
 
