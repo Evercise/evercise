@@ -7285,7 +7285,7 @@ a.bg-light-grey:hover {
 .navbar-default .navbar-nav .nav-cart {
   padding: 20px 10px 12px;
 }
-@media (max-width: 991px) {
+@media (max-width: 992px) {
   #navy {
     text-align: center;
     background-color: #383d48;
@@ -7302,7 +7302,7 @@ a.bg-light-grey:hover {
     display: none;
   }
 }
-@media (max-width: 991px) and (max-width: 991px) {
+@media (max-width: 992px) and (max-width: 992px) {
   #navy .login-drop {
     margin: auto;
     width: 100%;
@@ -7324,7 +7324,7 @@ a.bg-light-grey:hover {
   position: absolute;
   background-color: #ffffff;
 }
-@media (min-width: 991px) {
+@media (min-width: 992px) {
   #mobile-cart {
     display: none;
   }
