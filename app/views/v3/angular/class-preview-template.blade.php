@@ -86,7 +86,7 @@
                         <div class="condensed">
                             <strong>{[{ review.name }]}</strong>
                         </div>
-                        <i>{[{ review.date_left | date : 'MMM d, h:mma'  }]}</i>
+                        <i>{[{ review.date_left   }]}</i>
                         <div class="mb25">
                             <div class="class-rating-wrapper">
                                 <span class="icon icon-full-star" ng-repeat="n in [] | repeat:review.stars"></span>
