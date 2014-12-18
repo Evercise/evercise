@@ -62,7 +62,7 @@ Route::get('/popular', [
 
 
 /** SEO URLS */
-Route::get('/instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
+Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
 
 

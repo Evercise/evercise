@@ -9,7 +9,7 @@
 
 @section('content')
 
-	@include('trainers.trainerBlock', array('logout' => true , 'speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $user->directory.'/'. $user->image , 'name' => $user->display_name , 'member_since' => date('dS M-Y', strtotime( $user->created_at))))
+	@include('trainers.trainerBlock', ['logout' => true , 'speciality' => $trainer->profession , 'orientation' => 'landscape', 'image' => '/profiles/'.  $user->directory.'/'. $user->image , 'name' => $user->display_name , 'member_since' => date('dS M-Y', strtotime( $user->created_at))])
 
 	<div class="full-width">
 		<div class="trainer-dashboard-wrapper">
