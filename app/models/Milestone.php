@@ -68,7 +68,7 @@ class Milestone extends \Eloquent
      * Assign Free coins to User
      * @param $type
      */
-    public function referralComplete($type)
+    public function milestoneComplete($type)
     {
         $freeCoins = Config::get('values')['freeCoins'];
         if (isset($freeCoins[$type])) {
@@ -77,6 +77,7 @@ class Milestone extends \Eloquent
             $wallet->giveAmount($freeCoins[$type], $type);
         }
     }
+
 
     public static function createIfDoesntExist($user_id)
     {

@@ -144,7 +144,7 @@ class UsersController extends AjaxBaseController
             UserHelper::generateUserDefaults($user->id);
 
             UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
-            UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
+            UserHelper::checkAndUseLandingCode(Session::get('ppcCode'), $user->id);
 
             Session::forget('email');
 

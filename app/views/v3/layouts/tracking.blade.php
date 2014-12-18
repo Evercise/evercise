@@ -18,7 +18,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', {{ getenv('GA_CODE') }}, 'auto');
+  ga('create', '{{ getenv('GA_CODE') }}', 'auto');
   ga('send', 'pageview');
 
 

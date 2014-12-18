@@ -478,11 +478,6 @@ if (Schema::hasTable('articles')) {
     $pagesController->generateRoutes();
 }
 
-// working on
-
-Route::get('refer_a_friend/{code}', ['as' => 'referral', 'uses' => 'ReferralsController@submitCode']);
-Route::get('ppc/{category}/{code}', ['as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc']);
-Route::get('ppc_fb/{category}', ['as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc']);
 
 
 $landings = ['dance', 'pilates', 'martialarts', 'yoga', 'bootcamp', 'personaltrainer'];

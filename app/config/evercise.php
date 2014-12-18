@@ -18,6 +18,11 @@ foreach (range(1, 300) as $pounds) {
 
 return [
 
+    'stripe_testing'           => false,
+    'stripe_api_key'        => getenv('STRIPE_API_KEY') ?: false,
+    'stripe_pub_key'        => getenv('STRIPE_PUB_KEY') ?: false,
+    'stripe_api_key_test'        => getenv('STRIPE_API_KEY_TEST') ?: false,
+    'stripe_pub_key_test'        => getenv('STRIPE_PUB_KEY_TEST') ?: false,
     'transaction_types'           => [
         'wallettoppup',
         'cartcompleted',

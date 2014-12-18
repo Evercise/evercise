@@ -5,18 +5,12 @@
     <div class="container first-container">
         {{ Form::open() }}
             @if(isset($success))
-                <div class="row">
-                    <div class="mt10 alert alert-success alert-dismissible" role="alert">
-                          <h2>{{ $success }}</h2>
-                          <br>
-                          <h6>{{ $message }}</h6>
-                          <br>
-                          <p>{{ $action }}</p>
-                          <button type="button" class="close" data-dismiss="alert">
-                              <span aria-hidden="true">&times;</span>
-                              <span class="sr-only">Close</span>
-                          </button>
-                      </div>
+                <div class="row text-center">
+                    <div class="underline">
+                        <h1>{{ $success }}</h1>
+                    </div>
+                    <strong>{{ $message }}</strong>
+                    <p>{{ $action }}</p>
                 </div>
             @else
                 <div class="row text-center mb40">

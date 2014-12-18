@@ -419,7 +419,7 @@ class Mail
     }
 
 
-    public function userLanding($email)
+    public function userLanding($email, $categoryId, $ppcCode, $location)
     {
 
 
@@ -428,6 +428,8 @@ class Mail
             'title'            => 'GET ACTIVE, GET SOCIAL, GET FIT!',
             'view'             => 'v3.emails.user.landing_email',
             'email'            => $email,
+            'categoryId'       => $categoryId,
+            'ppcCode'          => $ppcCode,
             'image'            => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
             'link_url'         => $this->url->to('/uk/'),
             'banner'           => FALSE

@@ -9,11 +9,14 @@
             <td>
                 <br>
                 <br>
-                <div class="text-center mb30">
+                <div class="text-center">
                     {{ Html::decode(Html::link($link_url , image('/assets/img/email/btns/btn_get_started.png', 'reset password'), ['class' => 'btn btn-blue'])) }}
+                </div>
+                <div class="mb30">
+                    <p>If you didn&apos;t request to reset your password, please ignore this email.  Nothing will change until you access the link above and create a new one.</p>
                 </div>
             </td>
         </tr>
     </table>
-    <p>If you didn&apos;t request to reset your password, please ignore this email.  Nothing will change until you access the link above and create a new one.</p>
+
 @stop

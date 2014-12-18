@@ -11,7 +11,7 @@ $.fn.exists = function(callback) {
 function datepick(){
     $('.date-picker').datepicker({
         format: "yyyy-mm-dd",
-        startDate: "+1d",
+        startDate: "+2d",
         autoclose: true,
         todayHighlight: true
     });
