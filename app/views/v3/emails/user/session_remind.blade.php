@@ -3,7 +3,6 @@
 
 @section('body')
 
-
 <p>Hey <span class="blue-text">{{$name}}</span></p>
 
 <p>Don&apos;t forget your upcoming class <span class="blue-text">{{ $group->name }}</span> is coming up on the {{ date('M jS, g:ia', strtotime($dateTime)) }}</p>
@@ -19,8 +18,8 @@
 <p>Fitness is even more fun with friends! Click on the links below to share this class.</p>
 
 
-<p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank">Facebook</a></p>
-<p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank">Twitter</a></p>
-<p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->gplus()  }}" target="_blank">Google Plus</a></p>
+<p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank">Facebook</a></p>
+<p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank">Twitter</a></p>
+<p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->gplus()  }}" target="_blank">Google Plus</a></p>
 
 @stop

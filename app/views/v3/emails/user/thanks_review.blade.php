@@ -9,8 +9,8 @@
 <p>Sharing is an important part of the Evercise community and reviews are a great way to enhance everyone’s Evericse experience.</p>
 <p>We love to hear what you think and we reckon your friends would too. Sharing your Evercise experience on social media is quick and easy, just click on the link below.</p>
 
-<a href="{{ Share::load(Request::url() , $group)->facebook()  }}" target="_blank"><span class="icon icon-fb-white mr20 hover">Facebook</span> </a>
-<a href="{{ Share::load(Request::url() , $group)->twitter()  }}" target="_blank"><span class="icon icon-twitter-white mr20 hover">Twitter</span> </a>
-<a href="{{ Share::load(Request::url() , $group)->gplus()  }}" target="_blank"><span class="icon icon-google-white hover"></span>Google Plus</a>
+<p>Share this class on <a class="pink-text" href="{{ Share::load(Request::url() , $group)->facebook()  }}" target="_blank">Facebook </a></p>
+<p>Share this class on <a class="pink-text" href="{{ Share::load(Request::url() , $group)->twitter()  }}" target="_blank">Twitter</a></p>
+<p>Share this class on <a class="pink-text" href="{{ Share::load(Request::url() , $group)->gplus()  }}" target="_blank">Google Plus</a></p>
 
 @stop
