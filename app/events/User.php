@@ -199,12 +199,13 @@ class User
     /**
      * @param $user
      * @param $transaction
+     * @param $type
      */
-    public function uniquePpcSignup($user, $transaction, $balance)
+    public function ppcSignup($user, $transaction, $type)
     {
-        $this->log->info('User ' . $user->id . ' signup through referral');
+        $this->log->info('User ' . $user->id . ' signup through '.$type.' ppc code');
 
-        $this->activity->userReferralSignup($user, $transaction, 'uniqueppcsignup');
+        $this->activity->ppcSignup($user, $transaction, $type);
     }
 
     /**

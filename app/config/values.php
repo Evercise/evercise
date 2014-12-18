@@ -17,6 +17,7 @@ return array(
 	'freeCoins' => [
 		'referral_signup' => 5,
 		'ppc_signup' => 5,
+		'static_ppc_signup' => 5,
 	],
 	
 	// Value of an evercoin in pounds

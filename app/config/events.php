@@ -89,6 +89,8 @@ return [
         ['user.referral.completed' => 'User@referralCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.signup' => 'User@referralSignup'], // $user, $transaction, $balance // ∑
 
+        ['user.ppc.signup' => 'User@ppcSignup'], // $user, $transaction, $type // ∑
+
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 
