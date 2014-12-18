@@ -31,7 +31,7 @@ class UserHelper
         if ($referral = Referral::useReferralCode($referral_code, $user_id)) {
             Log::info('using referral code: ' . $referral_code. ' user id: '.$user_id);
             Milestone::where('user_id', $referral->user_id)->first()->add('referral');
-            Milestone::where('user_id', $user_id)->first()->referralComplete('referral_signup');
+            Milestone::where('user_id', $user_id)->first()->milestoneComplete('referral_signup');
 
             Session::forget('referralCode');
         }
@@ -44,11 +44,11 @@ class UserHelper
      * @param bool $ppc_code
      * @param int $user_id
      */
-    public static function checkLandingCode($ppc_code = false, $user_id = 0)
+    public static function checkAndUseLandingCode($ppc_code = false, $user_id = 0)
     {
 
         if ($landing = Landing::useLandingCode($ppc_code, $user_id)) {
-            Milestone::where('user_id', $user_id)->first()->freeCoin('ppc_signup');
+            Milestone::where('user_id', $user_id)->first()->milestoneComplete('ppc_signup');
         }
 
         Session::forget('ppcCode');

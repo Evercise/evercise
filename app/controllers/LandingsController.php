@@ -170,7 +170,7 @@ class LandingsController extends \BaseController
 
         $email = Input::get('email');
         $location = Input::get('location');
-        $category_id = Input::get('category_id');
+        $categoryId = Input::get('category_id');
 
 
         $validator = Validator::make(
@@ -189,13 +189,13 @@ class LandingsController extends \BaseController
             'email'       => $email,
             'code'        => $ppcCode,
             'location'    => $location,
-            'category_id' => $category_id
+            'category_id' => $categoryId
         ]);
 
         if ($ppc) {
             event('landing.user', [
                 'email'      => $email,
-                'categoryId' => $category_id,
+                'categoryId' => $categoryId,
                 'ppcCode'    => $ppcCode,
                 'location'   => $location
             ]);
@@ -204,7 +204,10 @@ class LandingsController extends \BaseController
 
         }
 
-        return $this->submitPpc($category_id, $ppcCode, $email);
+        //return $this->submitPpc($categoryId, $ppcCode, $email);
+
+        $category = Category::find($categoryId);
+        return Redirect::to('uk/london?search='.$category->name)->with('email', $email);
     }
 
     /**
@@ -261,51 +264,6 @@ class LandingsController extends \BaseController
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-
     // Facebook link on landing page clicked
     public function facebookPpc($categoryId)
     {
@@ -320,14 +278,16 @@ class LandingsController extends \BaseController
 
 
     // Accept code from a pay-per-click generated email.
-    public function submitPpc($categoryId, $ppcCode, $email)
+    public function submitPpc($categoryId, $ppcCode)
     {
         Session::put('ppcCategory', $categoryId);
         Session::put('ppcCode', $ppcCode);
 
-        $category = Category::find($categoryId);
 
-        return Redirect::to('uk/london?search='.$category->name)->with('email', $email);
+        return Redirect::route('register');
+
+        //$category = Category::find($categoryId);
+        //return Redirect::to('uk/london?search='.$category->name)->with('email', $email);
     }
 
     public function loadCategory($category)

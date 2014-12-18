@@ -351,10 +351,10 @@ class User
         $this->mail->ppc($email, $categoryId, $ppcCode);
     }
 
-    public function userLanding($email)
+    public function userLanding($email, $categoryId, $ppcCode, $location)
     {
         $this->log->info('landing user ' . $email);
 
-        $this->mail->userLanding($email);
+        $this->mail->userLanding($email, $categoryId, $ppcCode, $location);
     }
 }

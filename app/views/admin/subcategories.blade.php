@@ -27,7 +27,7 @@
 <br>
 <div class="row" id="category_list">
     <br>
-    {{ Form::open(array('id' => 'edit_subcategories', 'url' => 'admin/edit_subcategories', 'method' => 'post', 'class' => '')) }}
+    {{ Form::open(array('id' => 'edit_subcategories', 'route' => 'admin.edit_subcategories', 'method' => 'post', 'class' => '')) }}
     {{ Form::hidden('update_categories', null, ['id'=>'update_categories'] )}}
     {{ Form::hidden('update_associations', null, ['id'=>'update_associations'] )}}
     {{ Form::submit('Save changes' , array('class'=>'btn')) }}

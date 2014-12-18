@@ -20,7 +20,7 @@
             <td align="center">
                 <h3 class="pink-text">Join today and grab &pound;10!</h3>
                 <p>Claim &pound;5 straight away then double your money by referring a friend. </p>
-                {{ Html::decode( Html::linkRoute('register', image('assets/img/email/btns/btn_claim.png', 'claim your offer'), null, ['class' => 'btn btn-pink']) )  }}
+                {{ Html::decode( Html::linkRoute('landing.category.code', image('assets/img/email/btns/btn_claim.png', 'claim your offer'), [$categoryId, $ppcCode], ['class' => 'btn btn-pink']) )  }}
             </td>
         </tr>
     </table>

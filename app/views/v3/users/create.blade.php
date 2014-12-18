@@ -10,6 +10,15 @@
                 </div>
             </div>
          @endif
+        @if($ppcCode)
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="alert alert-success text-center">
+                       <p>Your PPC code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['ppc_signup'] }} credited to your account!</p>
+                    </div>
+                </div>
+            </div>
+         @endif
         <div class="row text-center">
             <div class="underline">
                 <h1>Register</h1>
