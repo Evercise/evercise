@@ -200,7 +200,7 @@ class LandingsController extends \BaseController
                 'location'   => $location
             ]);
 
-            Session::flash('success', 'Fan Sent you a message... enjoy');
+            Session::flash('success', 'Discover your first class. Remember to check your email for the offer!');
 
         }
 
