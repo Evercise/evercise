@@ -4,7 +4,7 @@ use Illuminate\Log\Writer;
 use Illuminate\Console\Application as Artisan;
 
 
-class DailyIndexer
+class CheckPayments
 {
 
     private $log;

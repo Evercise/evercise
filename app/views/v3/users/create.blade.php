@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     <div class="alert alert-success text-center">
-                       <p>Your PPC code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['ppc_signup'] }} credited to your account!</p>
+                       <p>Your code is valid! Sign up now to receive £{{ Config::get('values')['freeCoins']['ppc_signup'] }}, and double it by referring a friend!</p>
                     </div>
                 </div>
             </div>

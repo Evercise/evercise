@@ -674,4 +674,32 @@ class Activity
         ]);
     }
 
+    public function uniquePpcSignup($user, $landing, $title, $description)
+    {
+        $this->activities->create([
+            'title'       => $title,
+            'description' => $description,
+            'link'        => FALSE,
+            'link_title'  => FALSE,
+            'type'        => 'uniqueppcsignup',
+            'image'       => 'assets/img/activity/Activity_Milestone.png',
+            'user_id'     => $user->id,
+            'type_id'     => $landing->id
+        ]);
+    }
+
+    public function staticPpcSignup($user, $landing, $title, $description)
+    {
+        $this->activities->create([
+            'title'       => $title,
+            'description' => $description,
+            'link'        => FALSE,
+            'link_title'  => FALSE,
+            'type'        => 'uniqueppcsignup',
+            'image'       => 'assets/img/activity/Activity_Milestone.png',
+            'user_id'     => $user->id,
+            'type_id'     => $landing->id
+        ]);
+    }
+
 }
