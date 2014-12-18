@@ -276,7 +276,6 @@ class Elastic
 
         if ($id == 0) {
             $all = $this->evercisegroup->with('futuresessions')
-                ->has('confirmed')
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
@@ -284,7 +283,6 @@ class Elastic
                 ->get();
         } else {
             $all = $this->evercisegroup->with('futuresessions')
-                ->has('confirmed')
                 ->with('venue')
                 ->with('user')
                 ->with('ratings')
