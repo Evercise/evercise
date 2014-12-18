@@ -200,6 +200,17 @@ class User
      * @param $user
      * @param $transaction
      */
+    public function uniquePpcSignup($user, $transaction, $balance)
+    {
+        $this->log->info('User ' . $user->id . ' signup through referral');
+
+        $this->activity->userReferralSignup($user, $transaction, 'uniqueppcsignup');
+    }
+
+    /**
+     * @param $user
+     * @param $transaction
+     */
     public function withdrawCompleted($user, $transaction, $balance)
     {
 

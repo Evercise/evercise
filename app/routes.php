@@ -639,6 +639,7 @@ Route::get('makestaticlandingcode', function(){
 });
 
 Route::get('generatestaticlandingemail', function(){
+    // Make sure line '$this->log->info($view);' in Mail/send is uncommented, to get generated email in log
     $code = StaticLanding::find(1)->code;
     //return View::make('v3.emails.user.static_landing_email')->with('ppcCode', StaticLanding::find(1)->code);
     event('generate.static.landing.email', [$code, 0]);
