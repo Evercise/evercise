@@ -41,3 +41,25 @@
         </button>
     </div>
 @endif
+
+<!-- session alerts  -->
+@if(Session::has('error'))
+    <div class="mt10 alert alert-danger alert-dismissible fixed" role="alert">
+        {{ Session::get('error')  }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+@endif
+
+<!-- session alerts  -->
+@if(Session::has('notification'))
+    <div class="mt10 alert alert-info alert-dismissible fixed" role="alert">
+        {{ Session::get('notification')  }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+@endif
