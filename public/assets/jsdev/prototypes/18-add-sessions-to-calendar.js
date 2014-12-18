@@ -92,6 +92,7 @@ AddSessionsToCalendar.prototype = {
         var dateValues ={};
 
         $.each(this.dates , function (index, value) {
+            console.log('v:' + value);
             // check for duplicates
             if ( ! dateValues[ value.key ]){
                 dateValues[value.key] = true;
@@ -99,7 +100,7 @@ AddSessionsToCalendar.prototype = {
             }
         });
 
-        this.calendar.datepicker('setDates', dates );
+        this.calendar.datepicker('setUTCDates', dates );
     },
     getMonthNumber : function(mon , year){
         var d = Date.parse(mon + "1, "+ year);
