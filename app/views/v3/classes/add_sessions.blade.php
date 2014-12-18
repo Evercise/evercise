@@ -90,6 +90,7 @@
                         <div class="col-sm-4 col-sm-offset-4">
                             {{ Form::hidden('evercisegroup_id', $data['evercisegroup_id']) }}
                             {{ Form::hidden('session_array', null ) }}
+                            {{ Form::hidden('update', true) }}
                             {{ Form::submit('Save', ['class' => 'btn btn-default btn-block']) }}
                         </div>
 
