@@ -18,7 +18,7 @@
 </div>
 <br>
 
-{{ Form::open(array('id' => 'add_subcategory', 'url' => 'admin/add_subcategory', 'method' => 'post', 'class' => '')) }}
+{{ Form::open(array('id' => 'add_subcategory', 'route' => 'admin.add_subcategory', 'method' => 'post', 'class' => '')) }}
 {{ Form::text('new_subcategory', null, ['id'=>'new_subcategory'] )}}
 <br>
 {{ Form::submit('Add new subcategory' , array('class'=>'btn')) }}
