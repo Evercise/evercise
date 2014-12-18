@@ -86,6 +86,7 @@ function registerUser(form){
             }
         }
     };
+
     this.init();
 }
 
@@ -100,7 +101,9 @@ registerUser.prototype = {
         this.form.find('input[name="terms"]').on('change', $.proxy(this.reVal, this));
     },
     reVal: function(e){
-        console.log(e)
+        if($(e.target).is(':checked') && this.form.data('bootstrapValidator').isValid()){
+            this.form.find("input[type='submit']").prop('disabled', false);
+        }
     },
     validation: function(){
         var self = this;
@@ -123,16 +126,14 @@ registerUser.prototype = {
         })
         .on('success.form.bv', function(e) {
             e.preventDefault();
-                self.ajaxUpload();
-                /*
                 if(self.form.find('input[name="terms"]').is(':checked') || self.form.find('input[name="terms"]').length == 0)
                 {
-                    self.ajaxUpload();
+                   self.ajaxUpload();
                 }
                 else{
                     self.form.find('input[name="terms"]').parent().append('<span class="center-block text-danger help-box">You must accept our terms and conditions before continuing</span>')
                 };
-                */
+
         });
     },
     ajaxUpload: function(){

@@ -52,16 +52,9 @@
                             {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
-                            <?php $sid = '{[{ session.id  }]}' ?>
 
                             <select name="quantity" id="quantity" class="btn btn-primary btn-select">
-
-                                @if(!empty($cart_items[$sid]))
-                                    <option ng-selected="{[{ n + 1 == {{$cart_items[$sid] }} }]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
-                                @else
-                                    <option ng-selected="{[{ n + 1 == 1}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
-                                @endif
-
+                                <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
                             </select>
 
                         </div>
