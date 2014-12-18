@@ -42,7 +42,7 @@
         </nav>
     </div>
     <div class="container mt30 mb40">
-        <div class="row" id="about">
+        <div class="row sm-text-center" id="about">
             <div class="col-sm-6">
                 <h1 class="mb5">{{ $data['name'] }}</h1>
                 <div class="mb30">
@@ -143,7 +143,7 @@
 
         <hr>
         @if(count($facilities = $data['venue']->getFacilities()) || count($amenities = $data['venue']->getAmenities()))
-            <div id="facilities" class="row">
+            <div id="facilities" class="row sm-text-center">
                 <div class="col-sm-12">
                     @if(count($facilities = $data['venue']->getFacilities()))
                         <div class="page-header">
@@ -176,7 +176,7 @@
         @endif
         @if(count($data['ratings']) > 0)
         <hr>
-        <div id="ratings" class="row">
+        <div id="ratings" class="row sm-text-center">
             <div class="col-sm-12">
                 <div class="page-header">
                     <h1>Reviews</h1>

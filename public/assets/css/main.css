@@ -7316,6 +7316,9 @@ a.bg-light-grey:hover {
   #navy .login-drop:before {
     display: none;
   }
+  #navy .login-drop .dropdown-menu {
+    min-width: 100px;
+  }
 }
 #mobile-cart {
   float: left;
