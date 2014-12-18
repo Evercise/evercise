@@ -115,7 +115,7 @@
                                             <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
                                         </span>
                                     </td>
-                                    <td>
+                                    <td width="175">
                                         @if($futuresession->remaining  > 0)
                                             {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
                                                 <div class="btn-group pull-right">
