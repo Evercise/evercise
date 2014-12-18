@@ -1,7 +1,7 @@
 function scrollTo(nav){
     this.nav = nav;
     this.target = '';
-    this.top = $('#nav').height();
+    this.top = $('#nav').outerHeight();
     this.addListeners()
 }
 
