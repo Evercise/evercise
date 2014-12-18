@@ -7286,6 +7286,9 @@ a.bg-light-grey:hover {
   padding: 20px 10px 12px;
 }
 @media (max-width: 992px) {
+  .navbar-brand {
+    margin-left: 10px;
+  }
   #navy {
     text-align: center;
     background-color: #383d48;
@@ -7301,8 +7304,6 @@ a.bg-light-grey:hover {
   #navy .no-mob {
     display: none;
   }
-}
-@media (max-width: 992px) and (max-width: 992px) {
   #navy .login-drop {
     margin: auto;
     width: 100%;
@@ -7318,7 +7319,7 @@ a.bg-light-grey:hover {
 }
 #mobile-cart {
   float: left;
-  margin: -2px 20px;
+  margin: -3px 20px;
 }
 #mobile-cart .dropdown-cart {
   position: absolute;

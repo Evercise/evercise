@@ -30,10 +30,14 @@
 }
 
 @media (max-width: @grid-float-breakpoint) {
+  .navbar-brand{
+    margin-left: 10px;
+  }
   #navy {
     text-align: center;
     background-color: @gray-darker;
     max-height: 100%;
+
     li {
       a {
         color: @white;
@@ -45,27 +49,28 @@
     .no-mob{
       display: none;
     }
-    @media (max-width: @grid-float-breakpoint) {
-      .login-drop{
-        margin: auto;
-        width: 100%;
-        display: inline-block;
-        padding: 0 18%;
-        &:after{
-          display: none;
-        }
-        &:before{
-          display: none;
-        }
+
+
+    .login-drop{
+      margin: auto;
+      width: 100%;
+      display: inline-block;
+      padding: 0 18%;
+      &:after{
+        display: none;
+      }
+      &:before{
+        display: none;
       }
     }
-
   }
+
+
 }
 
 #mobile-cart{
   float: left;
-  margin: -2px 20px;
+  margin: -3px 20px;
   .dropdown-cart{
     position: absolute;
     background-color: @white;
