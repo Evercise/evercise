@@ -357,4 +357,11 @@ class User
 
         $this->mail->userLanding($email, $categoryId, $ppcCode, $location);
     }
+
+    public function generateStaticLandingEmail($ppcCode, $categoryId)
+    {
+        $this->log->info('static landing email generated ' . $ppcCode);
+
+        $this->mail->generateStaticLandingEmail($ppcCode, $categoryId);
+    }
 }

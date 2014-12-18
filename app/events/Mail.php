@@ -740,6 +740,19 @@ class Mail
         $this->send($trainer->email, $params);
     }
 
+    public function generateStaticLandingEmail($ppcCode, $categoryId = 0)
+    {
+        $params = [
+            'subject'        => 'Static Landing Email',
+            'view'           => 'v3.emails.user.static_landing_email',
+            'ppcCode'        => $ppcCode,
+            'categoryId'     => $categoryId,
+        ];
+
+        $this->send('test@test.com', $params);
+
+    }
+
 
     /**
      * ########################################################################################
@@ -807,7 +820,7 @@ class Mail
 
         $view = $this->view->make($this->data['view'], $this->data)->render();
 
-        //$this->log->info($view);
+        $this->log->info($view);
 
         // Parse it all Inline
         $parse = new CssToInlineStyles($view, $this->data['css']);

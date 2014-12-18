@@ -33,7 +33,7 @@
     {{ Form::submit('Save changes' , array('class'=>'btn')) }}
     <br>
     <br>
-    <table class="table-yuk table-categories">
+    <table class="table-yuk table-categories">[02:35:36 PM] Igor Matković: 8ehaiajejgo0g422
         <thead>
             <tr class="table-header">
                 <th>Subcategory</th>

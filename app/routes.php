@@ -632,3 +632,16 @@ Route::group(
 
 
 );
+
+
+Route::get('makestaticlandingcode', function(){
+    StaticLanding::create(['code'=>'89o7645v68h6345']);
+});
+
+Route::get('generatestaticlandingemail', function(){
+    $code = StaticLanding::find(1)->code;
+    //return View::make('v3.emails.user.static_landing_email')->with('ppcCode', StaticLanding::find(1)->code);
+    event('generate.static.landing.email', [$code, 0]);
+
+    return 'generated. code: '.$code;
+});
