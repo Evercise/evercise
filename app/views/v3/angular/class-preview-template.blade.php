@@ -35,11 +35,6 @@
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="schedule">
-            <!--
-            <div class="underline text-center">
-                <h3>Schedule</h3>
-            </div>
-            -->
 
             <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets | orderBy: date_time:reverse | limitTo:4">
                 <div class="col-sm-6 mt5">
@@ -49,7 +44,7 @@
                 <div ng-if="session.remaining > 0" class="col-sm-6">
                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ session.id  }]}', 'class' => 'add-to-class']) }}
                         <div class="btn-group pull-right">
-                            {{ Form::submit('join class', ['class'=> 'btn btn-primary add-btn']) }}
+                            {{ Form::submit('Join Class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
 

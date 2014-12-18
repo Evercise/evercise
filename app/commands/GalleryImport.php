@@ -36,7 +36,7 @@ class GalleryImport extends Command
 
         $files = File::allFiles(base_path() . '/public/files/gallery_defaults/');
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             @unlink($file);
         }
 
@@ -44,12 +44,9 @@ class GalleryImport extends Command
 
         $folders = ['Bootcamp', 'Dance', 'Martial Arts', 'Yoga', 'Pilates', 'Spin', 'Workout'];
 
-        foreach($folders as $folder) {
+        foreach ($folders as $folder) {
 
-            $files = File::allFiles(base_path() . '/public/files/gallery_new/'.$folder);
-
-
-
+            $files = File::allFiles(base_path() . '/public/files/gallery_new/' . $folder);
 
 
             $sizes = Config::get('evercise.gallery.sizes');
@@ -57,7 +54,7 @@ class GalleryImport extends Command
             $this->info(count($files));
             foreach ($files as $file) {
 
-                $name = slugIt($folder.'_'.rand(1000, 60000)).'.'.$file->getExtension();
+                $name = slugIt($folder . '_' . rand(1000, 60000)) . '.' . $file->getExtension();
                 /** Save the image name without the Prefix to the DB */
 
                 $save = FALSE;
@@ -74,7 +71,7 @@ class GalleryImport extends Command
 
                             $this->line($img['prefix'] . '_' . $name);
                         }
-                    } catch( Exception $e) {
+                    } catch (Exception $e) {
                         $this->error(base_path() . '/public/files/gallery_new/' . $folder . '/' . $file);
                         $this->error($e->getMessage());
                     }
@@ -82,13 +79,15 @@ class GalleryImport extends Command
                 }
 
                 if ($save) {
-                    Gallery::create(['image' => $name, 'counter' => Config::get('evercise.gallery.image_counter', 3), 'keywords' => $folder]);
+                    Gallery::create(['image'    => $name,
+                                     'counter'  => Config::get('evercise.gallery.image_counter', 3),
+                                     'keywords' => $folder
+                        ]);
 
                     $this->info('/files/gallery_defaults/thumb_' . $name);
                 }
             }
         }
-
 
 
     }

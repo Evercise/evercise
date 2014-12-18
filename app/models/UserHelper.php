@@ -47,7 +47,10 @@ class UserHelper
     public static function checkAndUseLandingCode($ppc_code = false, $user_id = 0)
     {
 
-        if ($landing = Landing::useLandingCode($ppc_code, $user_id)) {
+        if (Landing::useLandingCode($ppc_code, $user_id)) {
+            Milestone::where('user_id', $user_id)->first()->milestoneComplete('ppc_signup');
+        }
+        else if (StaticLanding::useLandingCode($ppc_code, $user_id)) {
             Milestone::where('user_id', $user_id)->first()->milestoneComplete('ppc_signup');
         }
 
