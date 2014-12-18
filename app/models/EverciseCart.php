@@ -109,7 +109,9 @@ class EverciseCart extends Cart
 
         if (!empty($user->id)) {
             foreach ($user->packages as $p) {
+                // &&  $p->created_at->addMonths(2)->format('Y-m-d') >= date('Y-m-d')
                 if(count($p->package)) {
+
                     $package = $p->package->toArray();
                     $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
                     $package['package_id'] = $package['id'];

@@ -21,8 +21,8 @@ Artisan::add(new IndexerImport);
 Artisan::add(new IndexerGeo);
 Artisan::add(new ConvertImages);
 Artisan::add(new GenerateUrls);
+Artisan::add(new GalleryImport);
 Artisan::add(new FixImages);
-
 
 
 

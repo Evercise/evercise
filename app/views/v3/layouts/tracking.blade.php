@@ -32,7 +32,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   	removeEvents();
   }
 
-  document.body.addEventListener('click', sendInteractionEvent);
+ // document.body.addEventListener('click', sendInteractionEvent);
   window.addEventListener('scroll', sendInteractionEvent);
 
 </script>

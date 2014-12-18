@@ -27,6 +27,8 @@ class UsersController extends \BaseController
 
         $referral = Referral::checkReferralCode(Session::get('referralCode'));
         $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
+        if(!$ppcCode)
+            $ppcCode = StaticLanding::checkLandingCode(Session::get('ppcCode'));
 
         $ppcDb = Landing::where('code', Session::get('ppcCode'))->first();
 

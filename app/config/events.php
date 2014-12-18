@@ -124,7 +124,8 @@ return [
     '5'  => [
         ['referral.invite' => 'User@invite'], // $email, $referralCode, $referrerName, $referrerEmail, $balanceWithBonus // ∑
         ['landing.ppc' => 'User@ppc'], // $email, $categoryId, $ppcCode
-        ['landing.user' => 'User@userLanding']  // $email, $categoryId, $ppcCode, $location
+        ['landing.user' => 'User@userLanding'],  // $email, $categoryId, $ppcCode, $location
+        ['generate.static.landing.email' => 'User@generateStaticLandingEmail'],
     ],
     '0'  => [
         //All Tracking is Low Priority

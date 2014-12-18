@@ -29,6 +29,74 @@
   }
 }
 
+@media (max-width: @grid-float-breakpoint) {
+  .navbar-brand{
+    margin-left: 10px;
+  }
+  #navy {
+    text-align: center;
+    background-color: @gray-darker;
+    max-height: 100%;
+
+    li {
+      a {
+        color: @white;
+        :hover, .active {
+          color: @brand-primary;
+        }
+      }
+    }
+    .no-mob{
+      display: none;
+    }
+
+
+
+    .login-drop{
+      margin: auto;
+      width: 100%;
+
+      display: inline-block;
+      padding: 0 18%;
+      &:after{
+        display: none;
+      }
+      &:before{
+        display: none;
+      }
+      .dropdown-menu{
+        min-width: 100px;
+      }
+    }
+  }
+
+
+}
+
+#mobile-cart{
+  float: left;
+  margin: -3px 20px;
+  .cart-dropdown{
+    &.open{
+      .dropdown-cart{
+        position: fixed;
+        width: 100%;
+        top: 54px;
+        left: 0;
+        padding: 0 20px;
+        border: 1px solid @gray-light;
+        background-color: @white;
+        .custom-btn-dropdown-select{
+          float: left;
+        }
+      }
+    }
+  }
+  @media (min-width: @grid-float-breakpoint) {
+    display: none;
+  }
+}
+
 .nav-hero{
   background: transparent;
   border-color: transparent;
@@ -88,7 +156,7 @@
 }
 
 .discover-nav{
-  height: 170px;
+  height: 216px;
   top: @navbar-height-outer;
   padding: @discover-navbar-padding;
   border-bottom: 1px solid @gray-light;
@@ -102,7 +170,7 @@
 }
 
 .discover-nav-spacer{
-  margin-top: @navbar-height-outer + @discover-navbar-height + 100;
+  margin-top: @navbar-height-outer + @discover-navbar-height + 145;
   @media (min-width: @screen-sm-min) {
     margin-top: @navbar-height-outer + @discover-navbar-height;
   }

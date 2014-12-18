@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-xs-3">
 
-                        <strong class="text-primary">&pound;{[{ marker.price }]}</strong>
+                        <strong class="text-primary">&pound;{[{ marker.price | currency:"£":2 }]}</strong>
                     </div>
                 </div>
             </div>

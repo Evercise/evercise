@@ -1,4 +1,4 @@
-<div ng-if="results > 0">
+<div ng-if="results > 0" ng-cloak>
     @include('v3.angular.map-template')
 
     @include('v3.angular.list-template')

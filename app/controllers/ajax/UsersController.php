@@ -32,7 +32,7 @@ class UsersController extends AjaxBaseController
             UserHelper::generateUserDefaults($user->id);
 
             UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
-            UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
+            UserHelper::checkAndUseLandingCode(Session::get('ppcCode'), $user->id);
 
             Session::forget('email');
 
@@ -219,17 +219,19 @@ class UsersController extends AjaxBaseController
 
         if (! $valid_user['validation_failed']) {
             // Actually update the user record
-            $this->user->updateUser([
+            $params = [
                 'first_name'    => Input::get('first_name'),
                 'last_name'     => Input::get('last_name'),
                 'dob'           => Input::get('dob'),
-                'gender'        => (Input::get('gender') == 'male' ? 1 : 0),
+                'gender'        => (Input::get('gender') == 'male' ? 1 : 2),
                 'image'         => Input::get('image'),
                 'area_code'     => Input::get('areacode'),
                 'phone'         => Input::get('phone'),
                 'password'      => Input::get('password'),
                 'email'         => Input::get('email'),
-            ]);
+            ];
+
+            $this->user->updateUser($params);
 
             if($this->user->isTrainer()) {
                 $this->user->trainer->updateTrainer([
