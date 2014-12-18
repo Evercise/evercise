@@ -105,7 +105,7 @@ class UploadController extends AjaxBaseController
             $this->request->except('_token'),
             [
                 'venue_id' => 'required|numeric',
-                'file' => 'mimes:jpeg,gif,png'
+                'file' => 'mimes:jpeg,gif,png,bmp,tiff'
             ]);
 
 
