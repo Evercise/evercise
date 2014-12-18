@@ -10,7 +10,7 @@
         <tr width="100%">
             <td width="33%">
                 <div class="mb30">
-                    {{ image('/img/home/wie.png') }}
+                    {{ image('/assets/img/email/Search.jpg', 'search') }}
                 </div>
             </td>
             <td width="67%">
@@ -26,14 +26,14 @@
                 <p class="white-text text-right">You can see reviews of all our classes, find out more about the venue and facilities and ask the trainer any questions you might have. </p>
             </td>
             <td width="33%">
-                {{ image('/img/home/wie.png') }}
+                {{ image('/assets/img/email/Select.png', 'select') }}
             </td>
         </tr>
     </table>
     <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
         <tr width="100%">
             <td width="33%">
-                {{ image('/img/home/wie.png') }}
+                {{ image('/assets/img/email/Sign_Up.png', 'sign up') }}
             </td>
             <td width="67%">
                 <h3 class="white-text">Sign up</h3>
