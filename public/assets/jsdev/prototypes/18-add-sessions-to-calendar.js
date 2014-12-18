@@ -51,8 +51,6 @@ AddSessionsToCalendar.prototype = {
             year = this.currentMonthYear[1],
             self = this;
 
-        console.log(month + ' - ' + year);
-
         this.index = ($(e.target).index());
 
         d.setDate(1);
@@ -143,6 +141,9 @@ AddSessionsToCalendar.prototype = {
                 self.selectedDates = [];
                 self.setCalendarDates();
                 $("html, body").animate({scrollTop: $('#update-container').offset().top -20 }, 1000);
+                if(RemoveSession.length == 0){
+                    new RemoveSession($('.remove-session'));
+                }
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

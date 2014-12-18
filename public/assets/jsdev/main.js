@@ -214,6 +214,9 @@ $(function(){
     $('#withdraw-funds').exists(function(){
         new Withdrawal(this);
     })
+    $('.remove-session').exists(function(){
+        new RemoveSession(this);
+    })
 
 
 

@@ -14,6 +14,7 @@ RemoveSession.prototype = {
         this.form = $(e.target);
         this.id = this.form.find('input[name="id"]').val();
         this.ajax();
+        console.log('sub');
     },
     ajax: function(){
         var  self = this;
