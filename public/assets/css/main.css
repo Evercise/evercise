@@ -7325,6 +7325,7 @@ a.bg-light-grey:hover {
   position: fixed;
   width: 100%;
   top: 54px;
+  left: 0;
   padding: 0 20px;
   border: 1px solid #e8ebec;
   background-color: #ffffff;
