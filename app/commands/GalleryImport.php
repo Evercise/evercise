@@ -79,10 +79,11 @@ class GalleryImport extends Command
                 }
 
                 if ($save) {
-                    Gallery::create(['image'    => $name,
-                                     'counter'  => Config::get('evercise.gallery.image_counter', 3),
-                                     'keywords' => $folder
-                        ]);
+                    Gallery::create([
+                        'image'    => $name,
+                        'counter'  => Config::get('evercise.gallery.image_counter', 3),
+                        'keywords' => $folder
+                    ]);
 
                     $this->info('/files/gallery_defaults/thumb_' . $name);
                 }

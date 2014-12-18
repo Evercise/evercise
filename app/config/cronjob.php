@@ -22,7 +22,7 @@ return [
     'jobs'       => [
         'ReminderForPayments' => '10 9 * 1 *',
         'SendReminderEmails'  => '15 7 * * *',
-        'DailyIndexer'        => '15 1 * * *',
-        'DailyIndexer'        => '30 5 * * *',
+        'DailyIndexer'        => '15 * * * *',
+        'CheckPayments'        => '30 5 * * *',
     ]
 ];
