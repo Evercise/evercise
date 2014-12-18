@@ -113,7 +113,7 @@ class EvercisegroupsController extends \BaseController
             $og = new OpenGraph();
 
             /* try to create og if fails redirect to discover page */
-/*
+
             try {
                 $og->title($class->name)
                     ->type('article')
@@ -129,7 +129,7 @@ class EvercisegroupsController extends \BaseController
                 $class->og = $og;
             } catch (Exception $e) {
                 $class->og = [];
-            }*/
+            }
 
             /** Overwrite Venue because of amenities */
             $class->venue = Venue::with('facilities')->find($class->venue_id);
@@ -149,14 +149,14 @@ class EvercisegroupsController extends \BaseController
                 /** Check if this is active or not! */
 
                 if($class->published == 0) {
-                    return Redirect::to('uk/london')->with('notification', 'This class does not exist');
+                    return Redirect::to('uk/london')->with('error', 'This class does not exist');
                 }
                 return View::make('v3.classes.class_page')
                     ->with('data', (array)$class);
             }
         } else {
             //return View::make('errors.missing');
-            return Redirect::to('uk/london')->with('notification', 'This class does not exist');
+            return Redirect::to('uk/london')->with('error', 'This class does not exist');
         }
 
     }
