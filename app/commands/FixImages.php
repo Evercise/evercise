@@ -49,11 +49,19 @@ class FixImages extends Command
                 }
                 foreach(range(1, 10) as $num) {
                     $file_name = slugIt(implode(' ', [$user->display_name, $num]));
-                    $name = $s['prefix'] . '_' . $file_name.'.jpg';
+                    $name = $s['prefix'] . '_' . $file_name;
                     $full = 'public/' . $user->directory . '/' . $name;
-                    $this->info($full);
-                    if (file_exists($full)) {
-                        $user->image = $file_name;
+
+                    if (file_exists($full.'.jpg')) {
+                        $user->image = $file_name.'.jpg';
+
+                        $this->line('Fixed '.$user->directory . '/' . $name);
+                        $user->save();
+                        $done = TRUE;
+                        break;
+                    }
+                    if (file_exists($full.'.png')) {
+                        $user->image = $file_name.'.png';
 
                         $this->line('Fixed '.$user->directory . '/' . $name);
                         $user->save();
