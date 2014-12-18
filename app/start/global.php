@@ -71,7 +71,15 @@ App::error(function(Exception $exception, $code)
 
 App::down(function()
 {
-	return Response::make("Be right back!", 503);
+    $ip = Request::getClientIp();
+
+    $allowed = array('81.133.93.26', '127.0.0.1', '192.168.10.1');
+
+    if(!in_array($ip, $allowed))
+    {
+        return Response::view('v3.errors.maintenance', array(), 503);
+    }
+
 });
 
 
