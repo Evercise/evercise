@@ -223,7 +223,7 @@ class UsersController extends AjaxBaseController
                 'first_name'    => Input::get('first_name'),
                 'last_name'     => Input::get('last_name'),
                 'dob'           => Input::get('dob'),
-                'gender'        => Input::get('gender'),
+                'gender'        => (Input::get('gender') == 'male' ? 1 : 0),
                 'image'         => Input::get('image'),
                 'area_code'     => Input::get('areacode'),
                 'phone'         => Input::get('phone'),
