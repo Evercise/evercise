@@ -167,7 +167,7 @@ class SessionsController extends AjaxBaseController
         event('class.index.single', [$evercisegroupId]);
 
         return Response::json([
-            'view' => View::make('v3.classes.update_sessions_inline')->with('sessions', $sessions)->render(),
+            'view' => View::make('v3.classes.sessions_inline')->with('sessions', $sessions)->with('evercisegroup_id', $evercisegroupId)->render(),
             'id'   => $evercisegroupId
         ]);
 
