@@ -22,7 +22,6 @@
       <ul class="nav navbar-nav">
         <li>{{HTML::linkRoute('evercisegroups.search', 'Discover Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.search' ? 'nav-list active' : 'nav-list'])}}</li>
         <li>{{HTML::linkRoute('evercisegroups.search', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.search' ? 'nav-list active' : 'nav-list'])}}</li>
-        <li>{{HTML::linkRoute('packages', 'Packages' , null , ['class' => Route::currentRouteName() == 'packages' ? 'nav-list active' : 'nav-list'])}}</li>
         <li>{{HTML::linkRoute('blog', 'Blog' , null , ['class' => Route::currentRouteName() == 'blog' ? 'nav-list active' : 'nav-list'])}}</li>
       </ul>
 
