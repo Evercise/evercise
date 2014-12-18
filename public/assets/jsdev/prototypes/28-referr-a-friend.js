@@ -27,6 +27,7 @@ Referral.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
+                self.emailChange(self.form.find("input[name='referee_email']"));
                 self.form.find("input[type='submit']").prop('disabled', true);
             },
 

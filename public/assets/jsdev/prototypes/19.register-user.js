@@ -94,7 +94,15 @@ registerUser.prototype = {
     init: function(){
         this.form.find("input[type='submit']").prop('disabled', true);
         this.validation();
-    },validation: function(){
+        this.addListeners();
+    },
+    addListeners : function(){
+        this.form.find('input[name="terms"]').on('change', $.proxy(this.reVal, this));
+    },
+    reVal: function(e){
+        console.log(e)
+    },
+    validation: function(){
         var self = this;
         this.form.bootstrapValidator({
             message: 'This value is not valid',
@@ -115,13 +123,16 @@ registerUser.prototype = {
         })
         .on('success.form.bv', function(e) {
             e.preventDefault();
+                self.ajaxUpload();
+                /*
                 if(self.form.find('input[name="terms"]').is(':checked') || self.form.find('input[name="terms"]').length == 0)
                 {
                     self.ajaxUpload();
                 }
                 else{
-                    self.form.find('input[name="terms"]').parent().append('<span class="help-box">You must accept our terms and conditions before continuing</span>')
+                    self.form.find('input[name="terms"]').parent().append('<span class="center-block text-danger help-box">You must accept our terms and conditions before continuing</span>')
                 };
+                */
         });
     },
     ajaxUpload: function(){
