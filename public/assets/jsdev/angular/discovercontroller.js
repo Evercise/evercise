@@ -198,7 +198,7 @@ if(typeof angular != 'undefined') {
             // topggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
             $scope.lastActiveMarker = marker;
-            marker.icon = '/assets/img/icon_default_large_pin_grey.png';
+            marker.icon = '/assets/img/icon_default_large_pin_pink.png';
 
             $scope.mask = true;
 
