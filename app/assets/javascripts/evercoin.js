@@ -9,6 +9,7 @@ function initRedeemEvercoin(params)
  	trace(priceInEvercoins);
  	if (evercoinBalance > 0) {
 		$(document).on('click' , '.redeem-btn.up', function(){
+
 			var redeem = parseInt($('#redeem').val());
 
 				if (redeem < evercoinBalance && redeem < priceInEvercoins) {
@@ -23,24 +24,29 @@ function initRedeemEvercoin(params)
 					$('#redeem').val(redeem - 10);
 				}
 		} )
-		$('#redeem').on('keyup', function(){
-			var redeem = parseInt($('#redeem').val());
-			if (redeem >= evercoinBalance && redeem < priceInEvercoins) {
-				$('#redeem').val(evercoinBalance);
-			}
-			if (redeem >= priceInEvercoins && evercoinBalance >= priceInEvercoins){
-				$('#redeem').val(priceInEvercoins);
-			}
-			if (redeem >= priceInEvercoins && evercoinBalance < priceInEvercoins){
-				$('#redeem').val(evercoinBalance);
-			}
-		})
+		$('#redeem').on('keypress', function(e){
+            var redeem = parseInt($('#redeem').val());
+
+            if(e.which != 8 && isNaN(String.fromCharCode(e.which))){
+                event.preventDefault();
+            };
+            if (redeem >= evercoinBalance && redeem < priceInEvercoins) {
+                $('#redeem').val(evercoinBalance);
+            }
+            if (redeem >= priceInEvercoins && evercoinBalance >= priceInEvercoins){
+                $('#redeem').val(priceInEvercoins);
+            }
+            if (redeem >= priceInEvercoins && evercoinBalance < priceInEvercoins){
+                $('#redeem').val(evercoinBalance);
+            }
+        })
 	};
 
 
 }
 
 registerInitFunction('initRedeemEvercoin');
+
 
 function paidWithEvercoins(data)
 {
