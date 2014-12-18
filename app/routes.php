@@ -633,7 +633,7 @@ Route::group(
 
 );
 
-
+/*
 Route::get('makestaticlandingcode', function(){
     StaticLanding::create(['code'=>'89o7645v68h6345']);
 });
@@ -645,3 +645,4 @@ Route::get('generatestaticlandingemail', function(){
 
     return 'generated. code: '.$code;
 });
+*/
