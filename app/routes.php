@@ -12,50 +12,20 @@
 |
 */
 
-// temporary routes for new layouts
 
-
-
-Route::get('/tester', function () { return Response::view('v3.emails.tester'); });
-Route::get('/tester2', function () { return Response::view('v3.emails.user.landing_email'); });
-Route::get('/invoice', function () { return Response::view('v3.cart.invoice'); });
-Route::get('/landing', function () { return Response::view('v3.landing.user-categories'); });
-
-
-Route::get('/test', function () {
-    $data = [
-        'config'      => Config::get('evercise'),
-        'subject'     => 'Evercise',
-        'title'       => FALSE,
-        'view'        => 'v3.emails.landing_email',
-        'attachments' => [],
-        'unsubscribe' => '%%unsubscribe%%',
-        'link_url'    => URL::to('/'),
-        'image'       => 'http://evertest.evercise.com/assets/img/default_email.jpg'
-    ];
-
-
-    return Response::view('v3.emails.template', $data);
-
-});
-
-Route::get('/ig', [
-        'as' => 'aaa',
-        function () {
-
-
-            $user = Sentry::findUserById(getenv('DEV_ID') ?: 323);
-            event('landing.user', [$user->email]);
-
-            die('done');
-        }
-    ]
+/* Show home page */
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
+Route::get(
+    'what_is_evercise',
+    function () {
+        return Redirect::to('about_evercise');
+    }
 );
 
 Route::get('/popular', [
         'as' => 'popular',
         function () {
-            return View::make('v3.home');
+            return Redirect::to('/uk/london');
         }
     ]
 );
@@ -65,17 +35,6 @@ Route::get('/popular', [
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
 
-
-/* end tempary routes for new styles */
-
-
-/* Freking wrong url on page */
-Route::get(
-    'what_is_evercise',
-    function () {
-        return Redirect::to('about');
-    }
-);
 
 // ajax prefix
 Route::group(['prefix' => 'ajax'], function () {
@@ -164,9 +123,6 @@ Route::group(['prefix' => 'ajax'], function () {
         ['as' => 'ajax.process.withdrawal', 'uses' => 'ajax\UsersController@makeWithdrawal']);
 
 });
-
-/* Show home page */
-Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
 
 // auth / login
 
@@ -287,10 +243,10 @@ Route::post(
 );
 
 /** Landing Pages */
-foreach(Config::get('landing_pages') as $url => $params) {
+foreach (Config::get('landing_pages') as $url => $params) {
 
     Route::get($url,
-        ['as' => 'landing_page.'.str_replace('/','.',$url), 'uses' => 'LandingsController@display']
+        ['as' => 'landing_page.' . str_replace('/', '.', $url), 'uses' => 'LandingsController@display']
     );
 }
 
@@ -449,18 +405,20 @@ Route::get('/packages', ['as' => 'packages', 'uses' => 'PackagesController@index
 
 
 // widgets
-Route::get('/widgets/upload', ['as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm']);
-Route::post('/widgets/upload', ['as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload']);
-Route::get('/widgets/crop', ['as' => 'widgets.crop', 'uses' => 'widgets\ImageController@getCrop']);
-Route::post('/widgets/crop', ['as' => 'widgets.crop.post', 'uses' => 'widgets\ImageController@postCrop']);
-Route::get('/widgets/map', ['as' => 'widgets.map', 'uses' => 'widgets\LocationController@getMap']);
-Route::get('/widgets/mapForm', ['as' => 'widgets.map-form', 'uses' => 'widgets\LocationController@getGeo']);
-Route::post('/widgets/postGeo', ['as' => 'widgets.postGeo', 'uses' => 'widgets\LocationController@postGeo']);
-Route::get('/widgets/calendar', ['as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar']);
-Route::post(
-    '/widgets/calendar',
-    ['as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@postCalendar']
-);
+
+
+Route::group(['prefix' => 'widgets'], function () {
+    Route::get('upload', ['as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm']);
+    Route::post('upload', ['as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload']);
+    Route::get('crop', ['as' => 'widgets.crop', 'uses' => 'widgets\ImageController@getCrop']);
+    Route::post('crop', ['as' => 'widgets.crop.post', 'uses' => 'widgets\ImageController@postCrop']);
+    Route::get('map', ['as' => 'widgets.map', 'uses' => 'widgets\LocationController@getMap']);
+    Route::get('mapForm', ['as' => 'widgets.map-form', 'uses' => 'widgets\LocationController@getGeo']);
+    Route::post('postGeo', ['as' => 'widgets.postGeo', 'uses' => 'widgets\LocationController@postGeo']);
+    Route::get('calendar', ['as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar']);
+    Route::post('calendar', ['as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@postCalendar']);
+});
+
 
 // layouts and static pages
 Route::get('blog', ['as' => 'blog', 'uses' => 'PagesController@showBlog']);
@@ -534,18 +492,14 @@ foreach ($landings as $land) {
         'as'   => 'landing.bootcamp',
         'uses' => function () use ($land) {
             $lc = App::make('LandingsController');
+
             return $lc->landCategory($land);
         }
     ]);
 }
 
 
-// layout page
-
-Route::get('/layouts', function () {
-    return View::make('layouts.layouts');
-});
-
+// -------------  ADMIN STUFF ---------------
 
 // -------------  ADMIN SECTION ---------------
 Route::get('/admin/', ['as' => 'admin.page', 'uses' => 'AdminController@dashboard', 'before' => 'admin']);
@@ -594,24 +548,6 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
 
 });
-
-
-Route::get('/iggy_login', function () {
-    Sentry::logout();
-    $user = Sentry::findUserById(getenv('DEV_ID') ?: 323);
-    Sentry::login($user);
-
-    return Redirect::route('admin.dashboard');
-});
-Route::get('/tris_login', function () {
-    Sentry::logout();
-    $user = Sentry::findUserById(169);
-    Sentry::login($user);
-
-    return Redirect::route('admin.dashboard');
-});
-
-// -------------  ADMIN STUFF ---------------
 
 
 Route::group(
@@ -701,68 +637,3 @@ Route::group(
 
 
 );
-
-Route::get('newvenue', function () {
-    $venue = Venue::validateAndStore([
-        'venue_name' => 'name2',
-        'street'     => 'street2',
-        'city'       => 'city2',
-        'postcode'   => 'postcode2'
-    ], '169', [0, 0]);
-
-    return var_dump($venue);
-});
-Route::get('updatevenue/{id}', function ($id) {
-    $venue = Venue::find($id)->validateAndUpdate([
-        'venue_name'       => 'edited1',
-        'street'           => 'edited1',
-        'city'             => 'edited1',
-        'postcode'         => 'edited1',
-        'facilities_array' => ['4', '5']
-    ]);
-
-    return var_dump($venue);
-});
-
-Route::get('updategroup/{id}', function ($id) {
-    $result = Evercisegroup::find($id)->validateAndUpdate([
-        'class_name'        => 'Running or something',
-        'venue_select'      => '28',
-        'class_description' => 'changed2 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1 changed1updategroupupdategroup ',
-        'image'             => 'changed1',
-        'category_array'    => ['1', '2'],
-    ], Sentry::getUser());
-
-    return var_dump($result);
-});
-
-Route::get('creategroup', function () {
-    $result = Evercisegroup::validateAndStore([
-        'class_name'        => 'Fancy shit',
-        'venue_select'      => '28',
-        'class_description' => 'new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one new one ',
-        'image'             => 'image.jpg',
-        'category_array'    => ['4'],
-    ], Sentry::getUser());
-
-    return var_dump($result);
-});
-
-Route::get('show_amenities/{venueId}', function ($id) {
-        return Venue::find($id)->getAmenities($id);
-    }
-);
-Route::get('show_facilities/{venueId}', function ($id) {
-        return Venue::find($id)->getFacilities($id);
-    }
-);
-
-
-Route::get('paytest', function () {
-        $pc = new PaymentController;
-
-        return $pc->paid('bollocks', 'more bollocks', 'paytest');
-        //return 'yeah';
-    }
-);
-Route::get('conftest', ['uses' => 'PaymentController@conftest']);
