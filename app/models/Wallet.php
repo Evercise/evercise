@@ -227,6 +227,11 @@ class Wallet extends \Eloquent
                 $description = 'You received £'.$amount.' for referral sign up';
                 break;
             case 'ppc_signup':
+                event('user.ppc.signup', [$this->user, $transaction, 'unique']);
+                $description = 'You received £'.$amount.' for ppc sign up';
+                break;
+            case 'static_ppc_signup':
+                event('user.ppc.signup', [$this->user, $transaction, 'static']);
                 $description = 'You received £'.$amount.' for ppc sign up';
                 break;
             case 'referral':

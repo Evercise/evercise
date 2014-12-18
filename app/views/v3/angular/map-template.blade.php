@@ -40,14 +40,17 @@
                         <h3>{[{ marker.name | truncate:19  }]}</h3>
                         <small>Distance : {[{ marker.distance }]} Miles</small>
                     </div>
-                    <div class="class-rating-wrapper col-xs-9">
-                        <span class="icon icon-full-star" ng-repeat="n in [] | repeat:marker.stars"></span>
-                        <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
-                    </div>
-                    <div class="col-xs-3">
+                    <div class="row">
+                        <div class="class-rating-wrapper col-xs-8">
+                            <span class="icon icon-full-star" ng-repeat="n in [] | repeat:marker.stars"></span>
+                            <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
+                        </div>
+                        <div class="col-xs-4">
 
-                        <strong class="text-primary">&pound;{[{ marker.price | currency:"£":2 }]}</strong>
+                            <strong class="text-primary">{[{  marker.price | currency:"£": 2  }]}</strong>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -664,7 +664,7 @@ class Evercisesession extends \Eloquent
 
     public function formattedDate()
     {
-        return  date('M jS Y', strtotime($this->date_time));
+        return  date('D jS M Y', strtotime($this->date_time));
     }
 
     public function formattedTime()

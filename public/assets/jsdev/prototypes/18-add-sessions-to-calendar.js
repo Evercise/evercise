@@ -51,8 +51,6 @@ AddSessionsToCalendar.prototype = {
             year = this.currentMonthYear[1],
             self = this;
 
-        console.log(month + ' - ' + year);
-
         this.index = ($(e.target).index());
 
         d.setDate(1);
@@ -67,13 +65,17 @@ AddSessionsToCalendar.prototype = {
         // Get all the other nth in the month
         while (d.getMonth()  === month) {
 
-            var recurringDate = new Date( d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2) );
+            var recurringDate = new Date( d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() +1)).slice(-2) + '-' +  ('0' + d.getUTCDate()).slice(-2)  );
 
             var resultFound = $.grep(self.dates, function(e){
                 return e.key == recurringDate.valueOf();
             });
 
-            if (resultFound.length == 0) {
+            var resultFoundPlusHour = $.grep(self.dates, function(e){
+                return e.key == (recurringDate.valueOf() - 3600000);
+            });
+
+            if (resultFound.length == 0 && resultFoundPlusHour.length == 0 ) {
                 self.dates.push({
                     'key' : recurringDate.valueOf(),
                     'dates' : recurringDate
@@ -101,7 +103,7 @@ AddSessionsToCalendar.prototype = {
             }
         });
 
-        this.calendar.datepicker('setDates', dates );
+        this.calendar.datepicker('setUTCDates', dates );
     },
     getMonthNumber : function(mon , year){
         var d = Date.parse(mon + "1, "+ year);
@@ -143,6 +145,9 @@ AddSessionsToCalendar.prototype = {
                 self.selectedDates = [];
                 self.setCalendarDates();
                 $("html, body").animate({scrollTop: $('#update-container').offset().top -20 }, 1000);
+                if(RemoveSession.length == 0){
+                    new RemoveSession($('.remove-session'));
+                }
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
