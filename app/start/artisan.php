@@ -22,6 +22,7 @@ Artisan::add(new IndexerGeo);
 Artisan::add(new ConvertImages);
 Artisan::add(new GenerateUrls);
 Artisan::add(new FixImages);
+Artisan::add(new GalleryImport);
 
 
 
