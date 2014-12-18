@@ -78,6 +78,7 @@
         <div role="tabpanel" class="tab-pane" id="reviews">
 
             <div ng-repeat="review in preview.reviews" >
+                {[{ review }]}
                 <div class="row">
                     <div class="col-sm-3">
                         {{ image('{[{ review.image }]}', '{[{ review.name }]})', ['class' => 'img-responsive img-circle']) }}

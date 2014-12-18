@@ -3,7 +3,7 @@
 <?php  View::share('footer', 'no') ?>
 
 @section('body')
-  <div id="angular" ng-app="DiscoverApp" ng-controller="DiscoverController">
+  <div id="angular" ng-app="DiscoverApp" ng-controller="DiscoverController" ng-cloak>
     @include('v3.classes.discover.filters')
     @include('v3.landing.popup')
 
