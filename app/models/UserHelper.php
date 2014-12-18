@@ -51,7 +51,7 @@ class UserHelper
             Milestone::where('user_id', $user_id)->first()->milestoneComplete('ppc_signup');
         }
         else if (StaticLanding::useLandingCode($ppc_code, $user_id)) {
-            Milestone::where('user_id', $user_id)->first()->milestoneComplete('ppc_signup');
+            Milestone::where('user_id', $user_id)->first()->milestoneComplete('static_ppc_signup');
         }
 
         Session::forget('ppcCode');
