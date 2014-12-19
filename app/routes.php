@@ -479,7 +479,6 @@ if (Schema::hasTable('articles')) {
 }
 
 
-
 $landings = ['dance', 'pilates', 'martialarts', 'yoga', 'bootcamp', 'personaltrainer'];
 
 foreach ($landings as $land) {
@@ -538,7 +537,6 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.ajax.set_image', 'uses' => 'AdminAjaxController@setClassImage']);
 
 
-
     Route::post('featureClass',
         ['as' => 'admin.ajax.featureClass', 'uses' => 'AdminAjaxController@featureClass']);
     Route::post('sliderUpload',
@@ -586,7 +584,6 @@ Route::group(
 
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);
-
 
 
         Route::get('articles',
@@ -654,9 +651,9 @@ Route::get('generatestaticlandingemail', function(){
     return 'generated. code: '.$code;
 });
 */
-Route::get('ping', function(){
+Route::get('ping', function () {
     return 'All is good.';
 });
 
 
-Route::any('emailgrab', ['as' => 'email.grab', 'EmailGrabber@grab']);
+Route::any('emailgrab', ['as' => 'email.grab', 'uses' => 'EmailGrabber@grab']);
