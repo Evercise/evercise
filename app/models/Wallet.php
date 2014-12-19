@@ -115,7 +115,7 @@ class Wallet extends \Eloquent
     }
 
 
-    protected function transaction($amount, $description, $type, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
+    protected function transaction($amount, $walletHistoryDescription, $type, $sessionmember_id = 0, $token = 0, $transactionId = 0, $paymentMethod = 0, $payer_id = 0)
     {
         $user_id = $this->attributes['user_id'];
 
@@ -172,7 +172,7 @@ class Wallet extends \Eloquent
                 'sessionmember_id' => $sessionmember_id,
                 'transaction_amount' => $amount,
                 'new_balance' => $this->attributes['balance'],
-                'description' => $description,
+                'description' => $walletHistoryDescription,
             ]
         );
 
@@ -203,7 +203,7 @@ class Wallet extends \Eloquent
         $this->save();
     }
 
-    public function giveAmount($amount = 0, $type = false) {
+    public function giveAmount($amount = 0, $type, $description = 0) {
         if(!$type || $amount == 0) return false;
 
         $newBalance = $this->attributes['balance'] + $amount;
@@ -224,41 +224,41 @@ class Wallet extends \Eloquent
         switch($type) {
             case 'referral_signup':
                 event('user.referral.signup', [$this->user, $transaction, $newBalance]);
-                $description = 'You received £'.$amount.' for referral sign up';
+                $walletHistoryDescription = 'You received £'.$amount.' for referral sign up';
                 break;
             case 'ppc_signup':
                 event('user.ppc.signup', [$this->user, $transaction, 'unique']);
-                $description = 'You received £'.$amount.' for ppc sign up';
+                $walletHistoryDescription = 'You received £'.$amount.' for ppc sign up';
                 break;
             case 'static_ppc_signup':
-                event('user.ppc.signup', [$this->user, $transaction, 'static']);
-                $description = 'You received £'.$amount.' for ppc sign up';
+                event('user.ppc.signup', [$this->user, $transaction, 'static', $description ]);
+                $walletHistoryDescription = 'You received £'.$amount.' for ppc sign up';
                 break;
             case 'referral':
                 event('user.referral.completed', [$this->user, $transaction, $newBalance]);
-                $description = 'You received £'.$amount.' for referring your friends';
+                $walletHistoryDescription = 'You received £'.$amount.' for referring your friends';
                 break;
             case 'profile':
-                $description = 'You received £'.$amount.' for completing your profile';
+                $walletHistoryDescription = 'You received £'.$amount.' for completing your profile';
                 break;
             case 'facebook':
-                $description = 'You received £'.$amount.' for connecting your Facebook account';
+                $walletHistoryDescription = 'You received £'.$amount.' for connecting your Facebook account';
                 break;
             case 'twitter':
-                $description = 'You received £'.$amount.' for connecting your Twitter account';
+                $walletHistoryDescription = 'You received £'.$amount.' for connecting your Twitter account';
                 break;
             case 'review':
-                $description = 'You received £'.$amount.' for writing a review';
+                $walletHistoryDescription = 'You received £'.$amount.' for writing a review';
                 break;
 
             default:
                 return false;
         }
 
-        $this->deposit($amount, $description, $type);
+        $this->deposit($amount, $walletHistoryDescription, $type);
 
 
-        //event('milestone.completed', [$user, $type, $title, $description, $amount]);
+        //event('milestone.completed', [$user, $type, $title, $walletHistoryDescription, $amount]);
     }
 
 
@@ -285,6 +285,5 @@ class Wallet extends \Eloquent
 
         return $wallet;
     }
-
 
 }

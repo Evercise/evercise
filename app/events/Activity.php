@@ -674,10 +674,10 @@ class Activity
         ]);
     }
 
-    public function ppcSignup($user, $transaction, $type)
+    public function ppcSignup($user, $transaction, $type, $description = 0)
     {
         $this->activities->create([
-            'title'       => 'Signup from PPC',
+            'title'       => $description ? $description : 'Signup from PPC',
             'description' => 'With ' . $this->fixAmountDisplay($transaction->total),
             'link'        => FALSE,
             'link_title'  => FALSE,
