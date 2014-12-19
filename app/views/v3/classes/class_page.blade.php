@@ -143,15 +143,16 @@
                                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
                                         <div class="row sm-mt5">
                                             <div class="col-xs-6">
-                                                {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn btn-block']) }}
-                                            </div>
-                                            <div class="col-xs-6">
                                                 <div class="toggle-select row" data-qty="{{$futuresession->remaining}}">
                                                     <div class="switch col-xs-3"><a href="#minus">-</a></div>
                                                     <div id="qty" class="col-xs-6 text-center">{{ !empty($cart_items[$futuresession->id]) ?  $cart_items[$futuresession->id] : 1}}</div>
                                                     <div class="switch col-xs-3"><a href="#plus">+</a> </div>
                                                     {{Form::hidden('quantity', !empty($cart_items[$futuresession->id]) ?  $cart_items[$futuresession->id] : 1 ,['id' => 'toggle-quantity'])}}
                                                 </div>
+
+                                            </div>
+                                            <div class="col-xs-6">
+                                                {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn btn-block']) }}
                                             </div>
                                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
                                             {{ Form::hidden('force', true) }}
