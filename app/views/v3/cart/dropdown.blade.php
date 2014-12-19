@@ -1,9 +1,9 @@
 @if( !empty($sessions_grouped) || !empty($packages))
     <ul class="dropdown-menu dropdown-cart" role="menu">
-        <div class="col-xs-10">
+        <div class="col-xs-10 sm-mt10">
             <h4>Your classes cart</h4>
         </div>
-        <div class="col-xs-2 text-right">
+        <div class="col-xs-2 text-right sm-mt10">
             {{ Form::open(['route' =>'cart.emptyCart', 'method' => 'post', 'id' => 'empty-cart']) }}
                 {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-bin hover mt10']) )}}
             {{Form::close()}}
@@ -60,8 +60,8 @@
                     <div class="col-sm-7">
                         {{ Html::linkRoute('class.show', $row['name'], [$row['slug']] , ['class' => 'sm-strong']) }}
                         <br class="hidden-mob">
-                        <div class="sm-pull-right">
-                            <strong class="text-primary text-right">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : '£'.round($row['grouped_price'],2) ) }}</strong>
+                        <div class="sm-pull-right text-right">
+                            <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : '£'.round($row['grouped_price'],2) ) }}</strong>
                         </div>
 
                     </div>
