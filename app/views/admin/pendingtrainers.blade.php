@@ -19,7 +19,7 @@
                     <h3 class="ul_userName"><span class="ul_firstName"><?php echo $trainer->user->first_name ?></span> <span class="ul_lastName"><?php  echo $trainer->user->last_name ?></span></h3>
 
                    	<div>
-                   	    <img class="user_profile_img" src="<?php echo '../../profiles/'.$trainer->user->directory.'/'.$trainer->user->image ?>" alt="" width="76" height="76">
+                   	    <img class="user_profile_img" src="<?php echo url($trainer->user->directory.'/small_'.$trainer->user->image); ?>" alt="" width="76" height="76">
                    	</div>
                     <p>
                         <small class="text-muted">Phone:</small> <span class="ul_phone"><?php  echo $trainer->user->display_name ?></span>

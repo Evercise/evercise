@@ -204,7 +204,7 @@ $(function(){
 
     $('#hero-carousel , #image-carousel').exists(function() {
         $(this).carousel({
-            interval: 3000
+            interval: 4000
         })
     })
     $('.mail-popup').exists(function(){

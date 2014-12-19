@@ -27,6 +27,14 @@ class Milestone extends \Eloquent
 
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
+
+    /**
      *
      *
      * @param $type
@@ -72,8 +80,7 @@ class Milestone extends \Eloquent
     {
         $freeCoins = Config::get('values')['freeCoins'];
         if (isset($freeCoins[$type])) {
-            $user = User::find($this->user_id);
-            $wallet = $user->getWallet();
+            $wallet = $this->user->getWallet();
             $wallet->giveAmount($freeCoins[$type], $type);
         }
     }

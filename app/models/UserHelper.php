@@ -47,11 +47,19 @@ class UserHelper
     public static function checkAndUseLandingCode($ppc_code = false, $user_id = 0)
     {
 
-        if (Landing::useLandingCode($ppc_code, $user_id)) {
-            Milestone::where('user_id', $user_id)->first()->milestoneComplete('ppc_signup');
+        if ($landing = Landing::useLandingCode($ppc_code, $user_id)) {
+            $wallet = Wallet::where('user_id', $user_id)->first();
+
+            $type = 'ppc_signup';
+            $freeCoins = Config::get('values')['freeCoins'];
+            if (isset($freeCoins[$type])) {
+                $wallet->giveAmount($freeCoins[$type], $type);
+            }
         }
-        else if (StaticLanding::useLandingCode($ppc_code, $user_id)) {
-            Milestone::where('user_id', $user_id)->first()->milestoneComplete('static_ppc_signup');
+        else if ($staticLanding = StaticLanding::useLandingCode($ppc_code, $user_id)) {
+            $wallet = Wallet::where('user_id', $user_id)->first();
+
+            $wallet->giveAmount($staticLanding->amount, 'static_ppc_signup', $staticLanding->description);
         }
 
         Session::forget('ppcCode');
