@@ -7355,6 +7355,7 @@ a.bg-light-grey:hover {
   padding: 0 20px;
   border: 1px solid #e8ebec;
   background-color: #ffffff;
+  -webkit-backface-visibility: hidden;
 }
 #mobile-cart .cart-dropdown.open .dropdown-cart .custom-btn-dropdown-select {
   float: left;
