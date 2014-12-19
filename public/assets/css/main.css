@@ -7347,6 +7347,15 @@ a.bg-light-grey:hover {
   float: none;
   margin: -3px 20px 0 0px;
 }
+#mobile-cart .cart-dropdown {
+  padding-left: 127px;
+}
+#mobile-cart .cart-dropdown:before {
+  left: 147px;
+}
+#mobile-cart .cart-dropdown:after {
+  left: 147px;
+}
 #mobile-cart .cart-dropdown.open .dropdown-cart {
   position: fixed;
   top: 54px;
