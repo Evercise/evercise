@@ -170,7 +170,7 @@
         </div>
         <hr>
         @if(count($facilities = $data['venue']->getFacilities()) || count($amenities = $data['venue']->getAmenities()))
-            <div id="facilities" class="row sm-text-center">
+            <div id="facilities" class="row sm-text-left">
                 <div class="col-sm-12">
                     @if(count($facilities = $data['venue']->getFacilities()))
                         <div class="page-header">
@@ -179,7 +179,7 @@
 
                         <ul class="row custom-list">
                             @foreach($facilities as $facility)
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 sm-text-left">
                                     <li>{{ $facility->name}}</li>
                                 </div>
                             @endforeach
@@ -192,7 +192,7 @@
                         </div>
                         <ul class="row custom-list">
                             @foreach($amenities as $amenity)
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 sm-text-left">
                                     <li>{{ $amenity->name}}</li>
                                 </div>
                             @endforeach
