@@ -75,7 +75,7 @@
             <div class="col-sm-6">
                 <h1 class="mb5">Location</h1>
                 <span><span class="icon icon-pink-pointer"></span>{{ $data['venue']->address }}</span>
-                <div id="map_canvas" class="map_canvas mt10" data-zoom="12" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lon }}"></div>
+                <div id="map_canvas" class="map_canvas mt10" data-zoom="12" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lng }}"></div>
             </div>
         </div>
         <hr>
