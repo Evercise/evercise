@@ -9,9 +9,11 @@
               <div id="categories" class="panel-collapse collapse">
                 <div class="list-group">
                     @foreach($categories as $c)
-                        <li class="list-group-item bg-grey">
-                            {{ Html::link(url($c->permalink), $c->title) }}
-                        </li>
+                        @if($c->title != 'Information')
+                            <li class="list-group-item bg-grey">
+                                {{ Html::link(url($c->permalink), $c->title) }}
+                            </li>
+                        @endif
                     @endforeach
               </div>
             </div>
@@ -28,7 +30,6 @@
                 @endforeach
               </div>
             </div>
-
           </div>
         </div>
     </div>

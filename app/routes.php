@@ -430,8 +430,12 @@ Route::get('about_evercise', [
         return View::make('v3.pages.about');
     }
 ]);
-Route::get('about', ['as' => 'static.about', 'uses' => 'StaticController@show']);
-Route::get('terms_of_use', ['as' => 'static.terms_of_use', 'uses' => 'StaticController@show']);
+Route::get('terms', [
+    'as' => 'general.terms',
+    function () {
+        return View::make('v3.pages.terms');
+    }
+]);
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
 Route::get('the_team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
 Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);

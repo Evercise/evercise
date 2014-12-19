@@ -9,7 +9,9 @@ class StaticController extends \BaseController {
 	 */
 	public function show()
 	{
+		return 'twat';
 		$page = Route::getCurrentRoute()->getPath();
 		return View::make('static.'.$page);
 	}
+
 }
