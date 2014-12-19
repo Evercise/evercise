@@ -7430,6 +7430,11 @@ a.bg-light-grey:hover {
     float: none;
   }
 }
+@media (max-width: 992px) {
+  .nav-no-float {
+    margin: 10px 0;
+  }
+}
 @media (min-width: 992px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
