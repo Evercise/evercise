@@ -11,7 +11,7 @@ Map.prototype = {
     constructor: Map,
     init: function(){
         var script = document.createElement("script");
-        script.src = "http://www.google.com/jsapi?key=AIzaSyAha5JzFciZvU_rWu_2d2UVl7o4Z8LWdcg&callback=map.load";
+        script.src = "//www.google.com/jsapi?key=AIzaSyAha5JzFciZvU_rWu_2d2UVl7o4Z8LWdcg&callback=map.load";
         script.type = "text/javascript";
         document.getElementsByTagName("head")[0].appendChild(script);
     },
