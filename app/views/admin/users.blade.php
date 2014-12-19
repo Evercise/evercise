@@ -50,16 +50,27 @@
                     <tr>
                         <th data-toggle="true">ID</th>
                         <th>Name</th>
+                        <th>Email</th>
                         <th>Registered</th>
                         <th>Type</th>
                         <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(User::all() as $user)
+                    @foreach(User::orderBy('id', 'desc')->get() as $user)
                     <tr>
                             <td>{{ $user->id }}</td>
-                            <td>{{ $user->first_name }} {{ $user->last_name }}</td>
+                            <td>
+                            @if($user->isTrainer())
+                                <a href="{{ URL::route('trainer.show', [$user->display_name]) }}" target="_blank">
+                            @endif
+                            {{ (!empty($user->first_name) ? $user->first_name.' '.$user->last_name : $user->display_name) }}
+
+                            @if($user->isTrainer())
+                                </a>
+                            @endif
+                            </td>
+                            <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at->format('d/m/Y') }}</td>
                             <td>
                                 <span class="label status-
