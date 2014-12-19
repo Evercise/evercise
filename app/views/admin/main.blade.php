@@ -40,6 +40,9 @@
 
     </head>
     <body class="side_menu_active side_menu_expanded fx_width">
+    @yield('side_menu')
+
+
         <div id="page_wrapper">
             @include('admin.include.header')
 
