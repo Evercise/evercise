@@ -350,6 +350,26 @@ class AdminAjaxController extends AdminController
         return $slider->save();
 
     }
+    public function setClassImage()
+    {
+        $class_id = Input::get('class_id');
+        $image_id = Input::get('image_id');
+
+        $class = Evercisegroup::find($class_id);
+
+        $save_image = Gallery::selectImage($image_id, $class->user, $class->name);
+
+        $class->image = $save_image;
+        $class->save();
+
+        event('class.index.single', [$class->id]);
+
+        return Response::json(['ok' => '1']);
+
+
+    }
+
+
 
     /**
      * @return \Illuminate\Http\RedirectResponse

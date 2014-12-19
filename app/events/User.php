@@ -200,12 +200,13 @@ class User
      * @param $user
      * @param $transaction
      * @param $type
+     * @param $description
      */
-    public function ppcSignup($user, $transaction, $type)
+    public function ppcSignup($user, $transaction, $type, $description = 0)
     {
         $this->log->info('User ' . $user->id . ' signup through '.$type.' ppc code');
 
-        $this->activity->ppcSignup($user, $transaction, $type);
+        $this->activity->ppcSignup($user, $transaction, $type, $description);
     }
 
     /**

@@ -471,9 +471,10 @@ class MainController extends \BaseController
     public function listClasses()
     {
         $classes = Evercisegroup::all();
+        $images = Gallery::where('counter', '>', 0)->get();
 
 
-        return View::make('admin.classes', compact('classes'));
+        return View::make('admin.classes', compact('classes','images'));
     }
 
 

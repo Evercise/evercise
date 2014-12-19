@@ -10,7 +10,7 @@ class StaticLanding extends \Eloquent
      *
      * email can be removed
      */
-    protected $fillable = ['id', 'user_id', 'email', 'code', 'category_id', 'location'];
+    protected $fillable = ['id', 'user_id', 'email', 'code', 'category_id', 'location', 'amount'];
 
     /**
      * @var string
@@ -43,11 +43,11 @@ class StaticLanding extends \Eloquent
      */
     public static function useLandingCode($lc, $user_id)
     {
-        $landing = 0;
+        $staticLanding = 0;
         if (static::checkLandingCode($lc)) {
-            $landing = static::where('code', $lc)->first();
+            $staticLanding = static::where('code', $lc)->first();
             //$landing->update(['code' => '', 'user_id' => $user_id]);
         }
-        return $landing;
+        return $staticLanding;
     }
 }
