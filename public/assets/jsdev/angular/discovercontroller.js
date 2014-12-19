@@ -185,7 +185,7 @@ if(typeof angular != 'undefined') {
             // change preview
             $scope.preview.id = 'preview-' + marker.id;
             $scope.preview.name = marker.name;
-            $scope.preview.image = marker.directory+ "/search_"+ marker.image;
+            $scope.preview.image = marker.directory+ "/preview_"+ marker.image;
             $scope.preview.description = marker.description;
             $scope.preview.nextClassDate = marker.sessions[0].date_time;
             $scope.preview.nextClassDuration = marker.sessions[0].duration;
