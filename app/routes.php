@@ -229,8 +229,8 @@ Route::get(
 
 Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
 Route::delete(
-    '/evercisegroups/{id}',
-    ['as' => 'evercisegroups.destroy', 'uses' => 'EvercisegroupsController@destroy']
+    '/evercisegroups/delete',
+    ['as' => 'evercisegroups.destroy', 'before' => 'admin', 'uses' => 'EvercisegroupsController@adminDestroy']
 );
 
 Route::get(

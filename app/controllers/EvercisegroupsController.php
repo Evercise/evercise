@@ -191,15 +191,29 @@ class EvercisegroupsController extends \BaseController
      * @param  int $id
      * @return Route
      */
-    public function destroy($id)
+    public function destroy()
     {
+        $id = Input::get('id');
+        //return $id;
         $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
-
+        if(!$evercisegroup) return 'cannot find group '.$id;
 
         $delete = $evercisegroup->deleteGroup($this->user);
 
         event(' class.deleted', [$this->user, $evercisegroup]);
+        return 'deleted '.$id;
+    }
 
+    public function adminDestroy()
+    {
+        $id = Input::get('id');
+        //return $id;
+        $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
+        if(!$evercisegroup) return 'cannot find group '.$id;
+
+        $deleted = $evercisegroup->adminDeleteIfNoSessions();
+
+        return Redirect::route('admin.listClasses')->with('notification', ($deleted ? 'deleted '.$id : 'not deleted '.$id. ' delete sessions first'));
     }
 
 

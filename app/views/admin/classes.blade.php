@@ -305,7 +305,6 @@ var activeImageClass;
                         @if($a->published == 0)
                         <span class="label label-default status-disabled" title="Unpublished">Unpublished</span></td>
                         @endif
-                        </td>
 
 
                         <td>
@@ -331,7 +330,12 @@ var activeImageClass;
                         ?>
                         <td data-value="{{ $featured_count }}">
 
-                        <span class="el-icon-star bs_ttip cp feature_it" data-id="{{ $a->id }}" style="{{ ($featured_count == 1 ? 'color:#d58512':'')}}"></span>
+                            <span class="el-icon-star bs_ttip cp feature_it" data-id="{{ $a->id }}" style="{{ ($featured_count == 1 ? 'color:#d58512':'')}}"></span>
+
+                            {{ Form::open(['route' =>'evercisegroups.destroy', 'method' => 'delete', 'class' => 'remove-row']) }}
+                                {{ Form::hidden('id', $a->id) }}
+                                {{ HTML::decode( Form::submit('delete', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
+                            {{Form::close()}}
 
 
                         </td>
