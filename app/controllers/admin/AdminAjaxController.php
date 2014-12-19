@@ -338,11 +338,17 @@ class AdminAjaxController extends AdminController
     public function sliderStatus()
     {
         $id = Input::get('id');
-        $checked = Input::get('checked');
+        $checked = Input::get('checked', 'true');
 
         $slider = Slider::where(['evercisegroup_id' => $id])->first();
-        $slider->active = (int)$checked;
-        $slider->save();
+        if($checked == 'true') {
+            $slider->active = 1;
+        } else {
+            $slider->active = 0;
+        }
+
+        return $slider->save();
+
     }
 
     /**
