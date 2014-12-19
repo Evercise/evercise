@@ -7299,12 +7299,20 @@ a.bg-light-grey:hover {
     background-color: #383d48;
     max-height: 100%;
   }
+  #navy li {
+    text-align: left;
+  }
   #navy li a {
+    padding: 10px;
     color: #ffffff;
   }
   #navy li a :hover,
   #navy li a .active {
     color: #ff1b7e;
+  }
+  #navy li a.nav-profile {
+    border-top: 1px solid #ffffff;
+    padding-top: 15px;
   }
   #navy .no-mob {
     display: none;
@@ -7313,7 +7321,7 @@ a.bg-light-grey:hover {
     margin: auto;
     width: 100%;
     display: inline-block;
-    padding: 0 18%;
+    padding: 0 10px;
   }
   #navy .login-drop:after {
     display: none;
@@ -10260,6 +10268,11 @@ label {
 .calendar {
   margin-left: -40px;
   margin-right: -40px;
+}
+@media (max-width: 992px) {
+  .calendar {
+    margin: 10px 0 ;
+  }
 }
 .calendar .datepicker-inline {
   width: 100%;

@@ -123,7 +123,7 @@ AddSessionsToCalendar.prototype = {
             self.submitDates.push(year + '-'+ month + '-' + day);
         })
         $('input[name="session_array"]').val( this.submitDates );
-        //this.ajaxUpload();
+        this.ajaxUpload();
     },
     ajaxUpload: function () {
         var self = this;

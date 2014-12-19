@@ -39,10 +39,16 @@
     max-height: 100%;
 
     li {
+      text-align: left;
       a {
+        padding: 10px;
         color: @white;
         :hover, .active {
           color: @brand-primary;
+        }
+        &.nav-profile{
+          border-top: 1px solid @white;
+          padding-top: 15px;
         }
       }
     }
@@ -57,7 +63,7 @@
       width: 100%;
 
       display: inline-block;
-      padding: 0 18%;
+      padding: 0 10px;
       &:after{
         display: none;
       }

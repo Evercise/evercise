@@ -14,12 +14,12 @@
         <div class="cart-rows">
             @foreach($packages as $row)
                 <div class="cart-row">
-                    <div class="col-xs-3">
+                    <div class="col-sm-3">
                         {{ image('assets/img/More_pink.png', 'package', ['class' => 'img-responsive']) }}
                     </div>
-                    <div class="col-xs-7">
+                    <div class="col-sm-7">
                         {{ Html::linkRoute('class.show', $row['name'], [$row['id']]) }}
-                        <br>
+                        <br class="hidden-mob">
                         <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
                     </div>
                     <div class="col-xs-2 text-right mt10">
@@ -33,27 +33,25 @@
 
             @foreach($sessions_grouped as $row)
                 <div class="cart-row">
-                    <div class="col-xs-3">
+                {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
+                    {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                    {{ Form::hidden('force', true) }}
+                    <div class="col-sm-3 hidden-mob">
+                        <div class="btn-group pull-right custom-btn-dropdown-select">
+                            {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
 
-                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
-                            {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
-                            {{ Form::hidden('force', true) }}
-
-                            <div class="btn-group pull-right custom-btn-dropdown-select">
-                                {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
-
-                                <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
-                                    <option value=""></option>
-                                    @for($i = 1; $i < ($row['tickets_left'] <= 10 ? $row['tickets_left'] : 10); $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                        {{ Form::close() }}
+                            <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
+                                <option value=""></option>
+                                @for($i = 1; $i < ($row['tickets_left'] <= 10 ? $row['tickets_left'] : 10); $i++)
+                                    <option value="{{$i}}">{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-xs-7">
+                    {{ Form::close() }}
+                    <div class="col-sm-7">
                         {{ Html::linkRoute('class.show', $row['name'], [$row['slug']]) }}
-                        <br>
+                        <br class="hidden-mob">
                         <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : '£'.round($row['grouped_price'],2) ) }}</strong>
                     </div>
                     <div class="col-xs-2 text-right mt10">
