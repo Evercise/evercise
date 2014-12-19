@@ -33,7 +33,12 @@ class SessionsController extends \BaseController
      */
     public function create($class_id)
     {
-        $sessions = Evercisegroup::find($class_id)->futuresessions;
+        $class = Evercisegroup::find($class_id);
+        if($class->user_id != $this->user->id) {
+            return Redirect::route('home');
+        }
+
+        $sessions = $class->futuresessions;
         $data = [
             'evercisegroup_id' => $class_id
         ];
