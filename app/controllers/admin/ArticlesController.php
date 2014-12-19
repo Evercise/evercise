@@ -46,6 +46,8 @@ class ArticlesController extends \BaseController
      */
     public function manage($id = 0)
     {
+        //$data = $this->request->except(['_token', 'row_single']);
+        //return $data['published_on'];
 
         if (!empty($_POST)) {
             $save = $this->saveArticle($id);
@@ -168,11 +170,10 @@ class ArticlesController extends \BaseController
                 unset($data['main_image']);
             }
 
-
             if (!isset($data['published_on'])) {
-                $data['published_on'] = date('Y-m-d H:i:s');
+                $data['published_on'] = new \Carbon\Carbon();
             } else {
-                $data['published_on'] = date('Y-m-d H:i:s', strtotime($data['published_on']));
+                $data['published_on'] = \Carbon\Carbon::createFromFormat('d/m/Y', $data['published_on']);
             }
 
             $url = '';
