@@ -10,8 +10,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-W9FJFT');</script>
 <!-- End Google Tag Manager -->
 
-
-
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -21,6 +19,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   ga('create', '{{ getenv('GA_CODE') }}', 'auto');
   ga('send', 'pageview');
 
+
+@if(!empty($track_cart) && !empty($cart))
+
+    ga('require', 'ecommerce');
+    ga('ecommerce:addTransaction', {
+      'id': '{{ $transaction }}',                     // Transaction ID. Required.
+      'affiliation': 'Evercise',   // Affiliation or store name.
+      'revenue': '{{ round(($cart['total']['final_cost'] + $cart['total']['from_wallet']) , 2) }}',               // Grand Total.
+      'shipping': '0',                  // Shipping.
+      'tax': '0',                     // Tax.
+      'currency': 'GBP'
+    });
+
+    @foreach($cart['packages'] as $row)
+    ga('ecommerce:addItem', {
+      'id': '{{ $transaction }}',                     // Transaction ID. Required.
+      'name': '{{ $row['name'] }}',    // Product name. Required.
+      'sku': '{{ EverciseCart::toProductCode('package', $row['id']) }}',                 // SKU/code.
+      'category': 'Package',         // Category or variation.
+      'price': '{{ round($row['price'],2) }}',                 // Unit price.
+      'quantity': '1'
+    });
+    @endforeach
+
+    @foreach($cart['sessions_grouped'] as $row)
+    ga('ecommerce:addItem', {
+      'id': '{{ $transaction }}',                     // Transaction ID. Required.
+      'name': '{{ $row['name'] }}',    // Product name. Required.
+      'sku': '{{ EverciseCart::toProductCode('session', $row['id']) }}',                 // SKU/code.
+      'category': 'Session',         // Category or variation.
+      'price': '{{ round($row['price'],2) }}',                 // Unit price.
+      'quantity': '{{ $row['qty'] }}'
+    });
+    @endforeach
+
+    ga('ecommerce:send');
+
+
+@endif
 
   function removeEvents() {
   	document.body.removeEventListener('click', sendInteractionEvent);

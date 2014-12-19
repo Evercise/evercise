@@ -63,6 +63,7 @@ class PaymentController extends BaseController
             'payment_type' => 'stripe',
             'coupon'       => $coupon,
             'transaction'  => $transaction->id,
+            'track_cart'  => true,
             'user'         => $this->user,
             'balance'      => ($wallet ? $wallet->balance : 0),
         ];
@@ -166,6 +167,7 @@ class PaymentController extends BaseController
                 'payment_type' => 'paypal',
                 'coupon'       => $coupon,
                 'transaction'  => $transaction->id,
+                'track_cart'  => true,
                 'user'         => $this->user,
                 'balance'      => $this->user->getWallet()->balance,
             ];
@@ -197,6 +199,7 @@ class PaymentController extends BaseController
             'payment_type' => 'wallet',
             'coupon'       => $coupon,
             'transaction'  => $transaction->id,
+            'track_cart'  => true,
             'user'         => $this->user,
             'balance'      => $wallet->balance,
         ];
