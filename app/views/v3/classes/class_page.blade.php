@@ -166,7 +166,8 @@
                         </div>
                     @endforeach
                 </div>
-
+            </div>
+        </div>
         <hr>
         @if(count($facilities = $data['venue']->getFacilities()) || count($amenities = $data['venue']->getAmenities()))
             <div id="facilities" class="row sm-text-center">
