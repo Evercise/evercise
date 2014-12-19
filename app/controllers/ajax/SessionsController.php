@@ -67,15 +67,27 @@ class SessionsController extends AjaxBaseController
                 ];
 
                 $session = Evercisesession::find($id);
-                //return $session->validateAndUpdate($inputs, $userId);
-                $updateResponse = $session->validateAndUpdate($inputs, $userId);
-                if ($updateResponse['validation_failed']) {
+                if ($session) {
+                    //return $session->validateAndUpdate($inputs, $userId);
+                    $updateResponse = $session->validateAndUpdate($inputs, $userId);
+                    if ($updateResponse['validation_failed']) {
+                        return Response::json(
+                            [
+                                'view' => View::make('v3.layouts.negative-alert')->with('message',
+                                    'Sessions could not be updated')->with('fixed', TRUE)->render(),
+                                'errors' => $updateResponse,
+                                'id' => $id
+                            ]
+                        );
+                    }
+                }else
+                {
                     return Response::json(
                         [
-                            'view'   => View::make('v3.layouts.negative-alert')->with('message',
-                                'Sessions could not be updated')->with('fixed', TRUE)->render(),
-                            'errors' => $updateResponse,
-                            'id'     => $id
+                            'view' => View::make('v3.layouts.negative-alert')->with('message',
+                                'Session '.$id.' could not be found')->with('fixed', TRUE)->render(),
+                            'errors' => ['sessions'=>'session cannot be found'],
+                            'id' => $id
                         ]
                     );
                 }
