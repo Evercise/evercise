@@ -31,7 +31,7 @@
                             </div>
                             {{ $errors->first('forgot', '<p class="error-msg">:message</p>')}}
                         @endif
-                        <p>Please confirm the email address associated with your account. We will then  email you a link to reset your password</p>
+                        <p class="text-center mt30 mb40">Please confirm the email address associated with your account. We will then  email you a link to reset your password</p>
                         <div class="text-center">
                             {{ Form::submit('Retrieve Password', ['class' => 'btn btn-primary']) }}
                         </div>
