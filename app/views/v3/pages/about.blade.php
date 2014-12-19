@@ -34,22 +34,22 @@
                  <div class="how-it-work-trainer mt15">
                     <strong class="large">Trainer</strong>
                     <div class="mt50 mb50">
-                        {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                        {{ image('assets/img/screenshots/1.signuptrainer.png', 'sign up a atrainer', ['class'=>'img-responsive center-block']) }}
                     </div>
-                    <b>1. Sing up</b>
+                    <b>1. Sign up</b>
                     <p>Evercise allows you to create a unique profile with the minimum of fuss.</p>
                     <div class="mt50 mb50">
-                        {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                        {{ image('assets/img/screenshots/2 Create a class.png', 'create a class', ['class'=>'img-responsive center-block']) }}
                     </div>
                     <b>2. Create a class</b>
                     <p>Once you’ve set up your profile you can start to list your classes. Evercise gives you the tools to make your class stand out from the crowd.</p>
                     <div class="mt50 mb50">
-                        {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                        {{ image('assets/img/screenshots/3.Train.png', 'train', ['class'=>'img-responsive center-block']) }}
                     </div>
                     <b>3. Train</b>
                     <p>The main event! Evercise aims to help you fill your classes and spend more time doing what you do best – train!</p>
                     <div class="mt50 mb50">
-                        {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                        {{ image('assets/img/screenshots/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
                     </div>
                     <b>4. Withdraw your money</b>
                     <p>Managing your Evercise account couldn’t be easier. Evercise makes the whole process - from handling bookings to collecting your payment – effortless.</p>
@@ -58,17 +58,17 @@
                  <div class="how-it-work-user mt50">
                      <strong class="large">Participant</strong>
                      <div class="mt50 mb50">
-                         {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                         {{ image('assets/img/screenshots/usersignup.png', 'sign up participants', ['class'=>'img-responsive center-block']) }}
                      </div>
                      <b>1. Sign up</b>
                      <p>It’s quick and easy to create an Evercise profile.</p>
                      <div class="mt50 mb50">
-                         {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                         {{ image('assets/img/screenshots/lookforclass.png', 'look for a class', ['class'=>'img-responsive center-block']) }}
                      </div>
                      <b>2. Find a class</b>
                      <p>Discovering exciting new fitness classes in your area is easy. Evercise allows you to search your area and discover the perfect class for you. With classes covering everything from aerobics to zumba you’re sure to find something nearby that takes your fancy.</p>
                      <div class="mt50 mb50">
-                         {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                         {{ image('assets/img/screenshots/3.bookaclass.png', 'book a class', ['class'=>'img-responsive center-block']) }}
                      </div>
                      <b>3. Book class</b>
                      <p>When you’ve found a class you like the look of our simple Pay As You Go booking system allows you to complete your booking in just three clicks.</p>
