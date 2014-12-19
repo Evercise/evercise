@@ -55,7 +55,7 @@
                                 {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                             </div>
                             <span class="input-group-btn">
-                                <button class="btn btn-primary sm-btn-block" type="submit">
+                                <button class="btn btn-primary" type="submit">
                                      Find a Class
                                 </button>
                             </span>
@@ -82,7 +82,7 @@
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                         </div>
 
-                                <button class="btn btn-primary center-block" type="submit">
+                                <button class="btn btn-primary center-block sm-btn-block" type="submit">
                                      Find a Class
                                 </button>
 

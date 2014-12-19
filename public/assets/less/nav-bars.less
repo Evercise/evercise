@@ -167,12 +167,17 @@
   @media (min-width: @screen-sm-min) {
     height: @discover-navbar-height;
   }
+  @media( max-width: @grid-float-breakpoint){
+    position: relative;
+  }
 }
 
 .discover-nav-spacer{
-  margin-top: @navbar-height-outer + @discover-navbar-height + 145;
-  @media (min-width: @screen-sm-min) {
+
     margin-top: @navbar-height-outer + @discover-navbar-height;
+
+  @media( max-width: @grid-float-breakpoint){
+    margin-top: @navbar-height-outer;;
   }
 }
 
@@ -181,6 +186,12 @@
     li{
       float: none;
     }
+  }
+}
+
+@media (max-width: @grid-float-breakpoint){
+  .nav-no-float{
+    margin: 10px 0;
   }
 }
 

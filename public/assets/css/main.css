@@ -7258,6 +7258,11 @@ a.bg-light-grey:hover {
 .transparent-border-bottom {
   border-bottom-color: transparent!important;
 }
+@media (max-width: 992px) {
+  .hidden-mob {
+    display: none!important;
+  }
+}
 .navbar-default {
   transition: all 0.4s;
 }
@@ -7412,17 +7417,27 @@ a.bg-light-grey:hover {
     height: 70px;
   }
 }
-.discover-nav-spacer {
-  margin-top: 276px;
+@media (max-width: 992px) {
+  .discover-nav {
+    position: relative;
+  }
 }
-@media (min-width: 768px) {
+.discover-nav-spacer {
+  margin-top: 131px;
+}
+@media (max-width: 992px) {
   .discover-nav-spacer {
-    margin-top: 131px;
+    margin-top: 61px;
   }
 }
 @media (min-width: 992px) {
   .nav-no-float li {
     float: none;
+  }
+}
+@media (max-width: 992px) {
+  .nav-no-float {
+    margin: 10px 0;
   }
 }
 @media (min-width: 992px) {
@@ -9158,6 +9173,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .btn-group.btn-block .btn.btn-aside {
   width: 20%;
+  padding-left: 5%;
 }
 @media (max-width: 767px) {
   .sm-btn-block {
@@ -9478,6 +9494,27 @@ fieldset[disabled] .stripe-button-el.active {
   content: '';
   pointer-events: none;
 }
+@media (max-width: 992px) {
+  .hide-by-class-wrapper {
+    padding: 0 10px;
+  }
+}
+.session-list {
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+}
+.session-list .hide-by-class-element {
+  height: 66px;
+  border-bottom: 1px solid #e8ebec;
+  padding: 13px 0 12px;
+  line-height: 40px;
+}
+@media (max-width: 992px) {
+  .session-list .hide-by-class-element {
+    height: auto;
+  }
+}
 label {
   color: #383d48;
 }
@@ -9779,6 +9816,30 @@ label {
 }
 .input-wrapper .btn {
   height: 100%;
+}
+.toggle-select {
+  border: 1px solid #e8ebec;
+  border-radius: 3px;
+  height: 40px;
+}
+.toggle-select .switch {
+  background-color: #e8ebec;
+  height: 38px;
+  font-weight: 600;
+  text-align: center;
+  font-family: 'UniversLTStd59UltraCondensed';
+  cursor: pointer;
+  padding: 0;
+}
+.toggle-select .switch a {
+  height: 100%;
+  display: block;
+  color: #ffffff;
+  font-size: 36px;
+  line-height: 34px;
+}
+.toggle-select .switch:hover {
+  background-color: #b0babe;
 }
 .cart-row {
   padding: 10px 0;

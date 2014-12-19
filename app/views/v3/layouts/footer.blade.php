@@ -4,14 +4,15 @@
             <div class="col-sm-4">
                 <h3>Evercise Classes</h3>
                 <li>{{HTML::linkRoute('evercisegroups.search', 'Discover Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.serach' ? 'active' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.class_guidelines', 'Evercise Class Guidelines' , null , ['class' => Route::currentRouteName() == 'static.class_guidelines' ? 'active' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.faq', 'Need Help' , null , ['class' => Route::currentRouteName() == 'static.faq' ? 'active' : ''])}}</li>
                 <!--<li>{{HTML::linkRoute('popular', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'popular' ? 'active' : ''])}}</li>-->
             </div>
             <div class="col-sm-4">
                 <h3>About Evercise</h3>
                 <li>{{HTML::linkRoute('general.about', 'What is Evercise' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.class_guidelines', 'Evercise Class Guidelines' , null , ['class' => Route::currentRouteName() == 'static.class_guidelines' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.faq', 'Need Help' , null , ['class' => Route::currentRouteName() == 'static.faq' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.the_team', 'Meet the Evercise Team' , null , ['class' => Route::currentRouteName() == 'static.the_team' ? 'active' : ''])}}</li>
+                <li>{{HTML::linkRoute('general.terms', 'Terms' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.the_team', 'Meet the Team' , null , ['class' => Route::currentRouteName() == 'static.the_team' ? 'active' : ''])}}</li>
                 <li>{{HTML::linkRoute('static.careers', 'Evercise Careers' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
             </div>
             <div class="col-sm-4">

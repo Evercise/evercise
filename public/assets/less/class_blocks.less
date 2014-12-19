@@ -131,3 +131,26 @@
   }
 }
 
+@media (max-width: @grid-float-breakpoint) {
+  .hide-by-class-wrapper {
+    padding: 0 10px;
+  }
+}
+
+.session-list{
+  float: left;
+  width: 100%;
+  padding: 0 10px;
+
+  .hide-by-class-element{
+    height: 66px;
+    border-bottom: 1px solid @gray-light;
+    padding: 13px 0 12px;
+    line-height: 40px;
+    @media (max-width: @grid-float-breakpoint) {
+      height: auto;
+    }
+  }
+}
+
+

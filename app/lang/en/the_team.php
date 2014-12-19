@@ -47,7 +47,7 @@ return [
   'image' => '/img/tristan.jpg',
   'food' => 'Steak',
   'hobby' => 'Climbing and mountain biking',
-  'quote' => 'Do a flip!',
+  'quote' => 'I caught you a delicious bass',
   ],
  
 ];
