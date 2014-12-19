@@ -27,9 +27,9 @@
           <div class="container">
               <ul class="nav navbar-nav nav-justified nav-no-float" id="scroll-to">
                 <li class="active"><a href="#about">About</a></li>
-                <li class="{{ count($data['futuresessions']) == 0 ? 'disabled' : null}}"><a href="#schedule">Schedule</a></li>
-                <li class="{{ count($data['venue']->facilities) == 0 ? 'disabled' : null}}"><a href="#facilities">Facilities & Amenities</a></li>
-                <li class="{{ count($data['ratings']) == 0 ? 'disabled' : null}}"><a href="#ratings" >Reviews</a></li>
+                <li class="{{ count($data['futuresessions']) == 0 ? 'hidden' : null}}"><a href="#schedule">Schedule</a></li>
+                <li class="{{ count($data['venue']->facilities) == 0 ? 'hidden' : null}}"><a href="#facilities">Facilities & Amenities</a></li>
+                <li class="{{ count($data['ratings']) == 0 ? 'hidden' : null}}"><a href="#ratings" >Reviews</a></li>
                 <li class="text-center">
                     <span>
                         <a href="{{ Share::load(Request::url() , $data['name'])->facebook()  }}" target="_blank"><span class="icon icon-fb-white mr20 hover"></span> </a>
