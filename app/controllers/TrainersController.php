@@ -21,7 +21,7 @@ class TrainersController extends \BaseController
     public function create()
     {
         if (!Sentry::check()) {
-            return View::make('trainers.about')->with('status', 'logged-out')->with('redirect_after_login', TRUE);
+            return Redirect::route('register');
         }
 
         //$user = Sentry::getUser();

@@ -171,7 +171,6 @@ class User
         $this->mail->topupCompleted($user, $transaction, $balance);
 
         $this->activity->userTopupCompleted($user, $transaction, 'topupcompleted');
-
     }
 
     /**
@@ -215,14 +214,11 @@ class User
      */
     public function withdrawCompleted($user, $transaction, $balance)
     {
-
-
         $this->log->info('User ' . $user->id . ' topup completed');
 
         $this->mail->withdrawCompleted($user, $transaction, $balance);
 
         $this->activity->userWithdrawCompleted($user, $transaction);
-
     }
 
 
@@ -231,11 +227,9 @@ class User
      */
     public function connectedFacebook($user)
     {
-
-
         $this->log->info('User ' . $user->id . ' Connected his facebook account');
-        $this->activity->linkFacebook($user);
 
+        $this->activity->linkFacebook($user);
     }
 
 
@@ -244,11 +238,9 @@ class User
      */
     public function connectedTwitter($user)
     {
-
-
         $this->log->info('User ' . $user->id . ' Connected his twitter account');
-        $this->activity->linkTwitter($user);
 
+        $this->activity->linkTwitter($user);
     }
 
     /** MOVED FROM UserMailer */
