@@ -57,7 +57,7 @@
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                {{ image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->first_name, ['class' => 'img-responsive img-circle']) }}
+                                {{ image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->first_name, ['class' => 'img-responsive img-circle center-block']) }}
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">
@@ -86,60 +86,86 @@
 
             <div class="col-sm-12">
                 <ul class="nav navbar-nav nav-carousel hide-by-class-wrapper">
-                    <li><a class="hide-by-class disabled" href="#Mon">MON</a></li>
-                    <li><a class="hide-by-class disabled" href="#Tue">TUE</a></li>
-                    <li><a class="hide-by-class disabled" href="#Wed">WED</a></li>
-                    <li><a class="hide-by-class disabled" href="#Thu">THU</a></li>
-                    <li><a class="hide-by-class disabled" href="#Fri">FRI</a></li>
-                    <li><a class="hide-by-class disabled" href="#Sat">SAT</a></li>
-                    <li><a class="hide-by-class disabled" href="#Sun">SUN</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Mon">MON</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Tue">TUE</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Wed">WED</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Thu">THU</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Fri">FRI</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Sat">SAT</a></li>
+                    <li class="hidden-mob"><a class="hide-by-class disabled" href="#Sun">SUN</a></li>
                 </ul>
-
-                <div class="table-responsive center-block">
-                    <table class="table table-hover pull-left">
-                        <tbody>
-                            @foreach($data['futuresessions'] as $futuresession)
-                                <tr class="{{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
-                                    <td><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($futuresession->date_time))}}</span></td>
-                                    <td><span class="icon icon-clock mr5"></span><span>{{ (date('g:ia' , strtotime($futuresession->date_time))) .' - '. (date('g:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))) }}</span></td>
-                                    <td>
-                                        @if($futuresession->remaining  > 0)
-                                            <span class="icon icon-ticket mr10"></span><span>x {{$futuresession->remaining  }} tickets left</span>
-                                        @else
-                                            <span class="text-danger">Class Full</span>
-                                        @endif
-                                    </td>
-                                    <td><span class="icon icon-watch mr5"></span><span>{{ formatDuration($futuresession->duration) }}</span></td>
-                                    <td>
-                                        <span>
-                                            <strong class="text-primary mr25 lead">&pound;{{ $futuresession->price }} </strong>
-                                        </span>
-                                    </td>
-                                    <td width="175">
-                                        @if($futuresession->remaining  > 0)
-                                            {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
-                                                <div class="btn-group pull-right">
-                                                    {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn ']) }}
-                                                    {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
-                                                    {{ Form::hidden('force', true) }}
-                                                      <select name="quantity" id="quantity" class="btn btn-primary btn-select {{isset($preview) ? 'disabled' : null}}">
-                                                        @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
-                                                        <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
-                                                        @endfor
-                                                      </select>
+                <div class="session-list">
+                    @foreach($data['futuresessions'] as $futuresession)
+                        <div class="row {{date('D' , strtotime($futuresession->date_time))}} hide-by-class-element hide">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <div class="row">
+                                            <div class="col-sm-7"><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($futuresession->date_time))}}</span></div>
+                                            <div class="col-sm-5"><span class="icon icon-clock mr5"></span><span>{{ (date('g:ia' , strtotime($futuresession->date_time))) }}</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-7">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @if($futuresession->remaining  > 0)
+                                                    <span class="icon icon-ticket mr10"></span><span>x {{$futuresession->remaining  }} tickets left</span>
+                                                @else
+                                                    <span class="text-danger">Class Full</span>
+                                                @endif
+                                            </div>
+                                            <div class="col-sm-6"><span class="icon icon-watch mr5"></span><span>{{ formatDuration($futuresession->duration) }}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1"><strong class="text-primary mr25 text-larger">&pound;{{ round($futuresession->price , 2)}}</strong></div>
+                            <div class="col-md-3 hidden-sm hidden-xs">
+                                @if($futuresession->remaining  > 0)
+                                    {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
+                                        <div class="btn-group btn-block">
+                                            {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn ']) }}
+                                            {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
+                                            {{ Form::hidden('force', true) }}
+                                              <select name="quantity" id="quantity" class="btn btn-primary btn-aside btn-select {{isset($preview) ? 'disabled' : null}}">
+                                                @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
+                                                <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                                @endfor
+                                              </select>
+                                        </div>
+                                    {{ Form::close() }}
+                                @else
+                                    <span class="text-danger">Class Full</span>
+                                @endif
+                            </div>
+                            <div class="col-md-3 visible-sm-block visible-xs-block">
+                                @if($futuresession->remaining  > 0)
+                                    {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $futuresession->id, 'class' => 'add-to-class']) }}
+                                        <div class="row sm-mt5">
+                                            <div class="col-xs-6">
+                                                {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn btn-block']) }}
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="toggle-select row" data-qty="{{$futuresession->remaining}}">
+                                                    <div class="switch col-xs-3"><a href="#minus">-</a></div>
+                                                    <div id="qty" class="col-xs-6 text-center">{{ !empty($cart_items[$futuresession->id]) ?  $cart_items[$futuresession->id] : 1}}</div>
+                                                    <div class="switch col-xs-3"><a href="#plus">+</a> </div>
+                                                    {{Form::hidden('quantity', !empty($cart_items[$futuresession->id]) ?  $cart_items[$futuresession->id] : 1 ,['id' => 'toggle-quantity'])}}
                                                 </div>
-                                            {{ Form::close() }}
-                                        @else
-                                            <span class="text-danger">Class Full</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                            </div>
+                                            {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
+                                            {{ Form::hidden('force', true) }}
+
+                                        </div>
+                                    {{ Form::close() }}
+                                @else
+                                    <span class="text-danger">Class Full</span>
+                                @endif
+                            </div>
+
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-        </div>
 
         <hr>
         @if(count($facilities = $data['venue']->getFacilities()) || count($amenities = $data['venue']->getAmenities()))

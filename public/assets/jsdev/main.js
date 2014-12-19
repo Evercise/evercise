@@ -77,7 +77,11 @@ $(function(){
             $('.'+$(this).attr('href').substr(1)).exists(function(){
                 if(i == 0){
                     $(self).addClass('active');
+                    $(self).parent().removeClass('hidden-mob');
                     $(this).removeClass('hide');
+                }
+                else{
+
                 }
                 $(self).removeClass('disabled');
                 i++;

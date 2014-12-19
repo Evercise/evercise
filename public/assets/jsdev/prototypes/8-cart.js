@@ -1,6 +1,7 @@
 function Cart(cart) {
     this.cart = cart;
     this.form = '';
+    this.maxQty = '2000';
     this.addListeners();
 }
 Cart.prototype = {
@@ -10,6 +11,7 @@ Cart.prototype = {
         $(document).on('submit', '.remove-row', $.proxy(this.submit, this));
         $(document).on('submit', '.add-to-class', $.proxy(this.submit, this));
         $(document).on('change', '.btn-select', $.proxy(this.changeSelectDropdown, this));
+        $(document).on('click', '.toggle-select .switch a', $.proxy(this.switchQty, this));
     },
     changeSelectDropdown: function(e){
         if( $(e.target).val() ){
@@ -20,11 +22,32 @@ Cart.prototype = {
         }
 
     },
+    switchQty: function(e){
+        e.preventDefault();
+        var toggle = $(e.target).closest('.toggle-select');
+        this.maxQty = $(toggle).data('qty');
+        var type = $(e.target).attr('href').substring(1);
+        var currentQty = $(toggle).find('#toggle-quantity').val();
+        if(type == 'plus'){
+            if(currentQty < this.maxQty){
+                var qty = Math.max(parseInt(currentQty ) + 1)
+                $(toggle).find('#toggle-quantity').val( qty );
+                $(toggle).find('#qty').text( qty );
+            }
+        }
+        else{
+            if(currentQty > 1){
+                var qty = Math.max(parseInt(currentQty ) - 1)
+                $(toggle).find('#toggle-quantity').val( qty );
+                $(toggle).find('#qty').text( qty );
+            }
+        }
+
+    },
     submit: function(e){
         e.preventDefault();
         e.stopPropagation();
         this.form = $(e.target);
-        //new AjaxRequest(form, cart.updateCart);
         this.ajaxSubmit();
     },
     ajaxSubmit: function(){
