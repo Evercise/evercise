@@ -7344,8 +7344,8 @@ a.bg-light-grey:hover {
   }
 }
 #mobile-cart {
-  float: left;
-  margin: -3px 20px;
+  float: none;
+  margin: -3px 20px 0 127px;
 }
 #mobile-cart .cart-dropdown.open .dropdown-cart {
   position: fixed;
