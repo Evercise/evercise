@@ -3,12 +3,33 @@
 class EmailGrabber extends Controller
 {
 
+    /**
+     * @var EmailStats
+     */
+    private $emailstats;
+
+    public function __construct(EmailStats $emailstats) {
+
+        $this->emailstats = $emailstats;
+    }
     public function grab() {
 
+        $all = Input::all();
 
-        Log::error($_POST);
+        foreach($all as $a) {
+            $stat = [];
 
-        d($_POST);
+            foreach($this->emailstats->fillable as $key) {
+                if(!empty($a[$key])) {
+                    $stat[$key] = $a[$key];
+                }
+            }
+
+
+            if(count($stat) > 0) {
+                $this->emailstats->create($stat);
+            }
+        }
     }
 
 }
