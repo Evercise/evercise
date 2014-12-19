@@ -7262,6 +7262,16 @@ a.bg-light-grey:hover {
   .hidden-mob {
     display: none!important;
   }
+  .sm-pull-right {
+    float: right!important;
+  }
+  .sm-pull-left {
+    float: left!important;
+  }
+  .sm-strong {
+    font-weight: 600;
+    color: #383d48;
+  }
 }
 .navbar-default {
   transition: all 0.4s;
@@ -7339,9 +7349,9 @@ a.bg-light-grey:hover {
 }
 #mobile-cart .cart-dropdown.open .dropdown-cart {
   position: fixed;
-  width: 100%;
   top: 54px;
-  left: 0;
+  left: 10px;
+  right: 10px;
   padding: 0 20px;
   border: 1px solid #e8ebec;
   background-color: #ffffff;
@@ -8826,6 +8836,47 @@ fieldset[disabled] .btn-white.active {
   color: rgba(118, 134, 144, 0.2);
   background-color: #ffffff;
 }
+.btn-light {
+  color: #ffffff;
+  background-color: #d8d8d8;
+  border-color: #d5d5d5;
+}
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active,
+.btn-light.active,
+.open > .dropdown-toggle.btn-light {
+  color: #ffffff;
+  background-color: #bfbfbf;
+  border-color: #b7b7b7;
+}
+.btn-light:active,
+.btn-light.active,
+.open > .dropdown-toggle.btn-light {
+  background-image: none;
+}
+.btn-light.disabled,
+.btn-light[disabled],
+fieldset[disabled] .btn-light,
+.btn-light.disabled:hover,
+.btn-light[disabled]:hover,
+fieldset[disabled] .btn-light:hover,
+.btn-light.disabled:focus,
+.btn-light[disabled]:focus,
+fieldset[disabled] .btn-light:focus,
+.btn-light.disabled:active,
+.btn-light[disabled]:active,
+fieldset[disabled] .btn-light:active,
+.btn-light.disabled.active,
+.btn-light[disabled].active,
+fieldset[disabled] .btn-light.active {
+  background-color: #d8d8d8;
+  border-color: #d5d5d5;
+}
+.btn-light .badge {
+  color: #d8d8d8;
+  background-color: #ffffff;
+}
 .btn-grey {
   color: #768690;
   background-color: #768690;
@@ -9826,18 +9877,25 @@ label {
   height: 100%;
 }
 .toggle-select {
-  border: 1px solid #e8ebec;
+  border: 1px solid #d8d8d8;
   border-radius: 3px;
   height: 40px;
+  line-height: 40px;
 }
 .toggle-select .switch {
-  background-color: #e8ebec;
+  background-color: #d8d8d8;
   height: 38px;
   font-weight: 600;
   text-align: center;
   font-family: 'UniversLTStd59UltraCondensed';
   cursor: pointer;
   padding: 0;
+}
+.toggle-select .switch.disabled {
+  opacity: 0.3;
+  z-index: -1;
+  pointer-events: none;
+  cursor: default;
 }
 .toggle-select .switch a {
   height: 100%;

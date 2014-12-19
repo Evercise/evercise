@@ -280,18 +280,24 @@ label{
 }
 
 .toggle-select{
-  border: 1px solid @gray-light;
+  border: 1px solid @gray-mob;
   border-radius: 3px;
   height: 40px;
+  line-height: 40px;
   .switch{
-    background-color: @gray-light;
-
+    background-color: @gray-mob;
     height: 38px;
     font-weight: 600;
     text-align: center;
     font-family: @font-family-condensed;
     cursor: pointer;
     padding: 0;
+    &.disabled{
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
+      cursor: default;
+    }
     a{
       height: 100%;
       display: block;
