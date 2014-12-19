@@ -83,6 +83,7 @@
   float: left;
   margin: -3px 20px;
   .cart-dropdown{
+
     &.open{
       .dropdown-cart{
         position: fixed;
@@ -92,6 +93,7 @@
         padding: 0 20px;
         border: 1px solid @gray-light;
         background-color: @white;
+        -webkit-backface-visibility:hidden;
         .custom-btn-dropdown-select{
           float: left;
         }
