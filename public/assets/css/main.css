@@ -7417,12 +7417,17 @@ a.bg-light-grey:hover {
     height: 70px;
   }
 }
-.discover-nav-spacer {
-  margin-top: 276px;
+@media (max-width: 992px) {
+  .discover-nav {
+    position: relative;
+  }
 }
-@media (min-width: 768px) {
+.discover-nav-spacer {
+  margin-top: 131px;
+}
+@media (max-width: 992px) {
   .discover-nav-spacer {
-    margin-top: 131px;
+    margin-top: 61px;
   }
 }
 @media (min-width: 992px) {
