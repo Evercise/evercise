@@ -20,7 +20,6 @@ class CreateEmailStats extends Migration {
             $table->string('reason');
             $table->string('event');
             $table->string('purchase');
-            $table->string('email');
             $table->integer('timestamp');
             $table->string('email');
             $table->string('smtp-id');
