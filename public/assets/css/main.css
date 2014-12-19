@@ -7345,7 +7345,7 @@ a.bg-light-grey:hover {
 }
 #mobile-cart {
   float: none;
-  margin: -3px 20px 0 127px;
+  margin: -3px 20px 0 0px;
 }
 #mobile-cart .cart-dropdown.open .dropdown-cart {
   position: fixed;
