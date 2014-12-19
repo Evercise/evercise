@@ -658,3 +658,5 @@ Route::get('ping', function(){
     return 'All is good.';
 });
 
+
+Route::any('emailgrab', ['as' => 'email.grab', 'EmailGrabber@grab']);
