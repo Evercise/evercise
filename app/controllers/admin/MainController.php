@@ -190,6 +190,8 @@ class MainController extends \BaseController
                 // register user and add to user group
                 $user = User::registerUser($inputs);
 
+                $userGroup = Sentry::findGroupById(3);
+                $user->addGroup($userGroup);
 
                 if ($user) {
                     UserHelper::generateUserDefaults($user->id);
