@@ -15,7 +15,7 @@
             @foreach($packages as $row)
                 <div class="cart-row sm-mt10">
                     <div class="col-sm-3 hidden-mob">
-                        {{ image('assets/img/More_pink.png', 'package', ['class' => 'img-responsive']) }}
+                        {{ image('assets/img/More_'.$row['style'].'.png', 'package', ['class' => 'img-responsive']) }}
                     </div>
                     <div class="col-sm-7">
                         {{ Html::linkRoute('class.show', $row['name'], [$row['id']],  ['class' => 'sm-strong']) }}
