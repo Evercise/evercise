@@ -24,6 +24,7 @@ Artisan::add(new GenerateUrls);
 Artisan::add(new GalleryImport);
 Artisan::add(new FixImages);
 Artisan::add(new FixDisplayNames);
+Artisan::add(new UpdateUserNewsletter);
 
 
 
