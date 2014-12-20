@@ -5,7 +5,7 @@
                     @include('v3.classes.class_hub_panel', ['type' => 's'])
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-4 sm-text-center">
                     <ul class="list-unstyled mt25">
                         <strong class="text-dark">Class Stats</strong>
                         <li>Past Dates: <strong class="text-primary">{{ count($evercisegroup->pastsessions) }}</strong> </li>
