@@ -314,6 +314,7 @@ if(typeof angular != 'undefined') {
             $scope.filterHeight = 104;
 
             $scope.scrollBarHeight = $scope.windowHeight - $scope.navHeight - $scope.searchHeight -  $scope.filterHeight;
+            console.log($scope.windowHeight);
 
             return {
                 height: $scope.scrollBarHeight + 'px'
