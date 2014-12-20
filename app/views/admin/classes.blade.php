@@ -24,6 +24,8 @@
 
 <style>
 /* general style for all menus */
+
+.delete_it:hover{ color:#c00}
 nav.menu {
   position: fixed;
   z-index: 10000;
@@ -118,7 +120,6 @@ body.pmr-open nav.push-menu-right {
 <script src="/admin/assets/lib/footable/footable.paginate.min.js"></script>
 <script src="/admin/assets/lib/footable/footable.filter.min.js"></script>
 <script src="/admin/assets/lib/footable/footable.sort.min.js"></script>
-<script src="/admin/assets/lib/jBox-0.3.0/Source/jBox.min.js"></script>
 <script src="/admin/assets/js/light.js"></script>
 
 
@@ -126,9 +127,8 @@ body.pmr-open nav.push-menu-right {
 var currentRequest;
 var activeImageClass;
 
-    $(function() {
+   $(document).ready(function(){
         yukon_footable.p_plugins_tables_footable();
-        yukon_jBox.p_components_notifications_popups();
 
 
         $('.feature_it').click(function(e){
@@ -147,7 +147,98 @@ var activeImageClass;
                             if (currentRequest != null) currentRequest.abort();
                         },
                         success:function(res){
+
                             console.log(res);
+                            if(res.featured) {
+                                row.css('color', '#d58512');
+                            } else {
+
+                                row.css('color', '#222');
+                            }
+                        }
+                })
+
+        });
+
+        $('.categories_modal').click(function(e){
+
+            var id = $(this).data('id');
+            var url = $(this).data('url');
+
+                currentRequest = $.ajax({
+                        type: "GET",
+                        url: url,
+                        cache: false,
+                        dataType: 'json',
+                        data: 'id='+id,
+                        beforeSend: function (json) {
+                            if (currentRequest != null) currentRequest.abort();
+                        },
+                        success:function(res){
+                            $('#ajaxModal').html(res.view);
+                        }
+                })
+
+        });
+
+        $('body').append('<div class="modal" id="ajaxModal"><div class="modal-body"></div></div>');
+
+        $('.delete_it').click(function(e){
+
+            var id = $(this).data('id');
+
+                var row = $(this);
+
+                currentRequest = $.ajax({
+                        type: "DELETE",
+                        url: AJAX_URL + "evercisegroups/delete",
+                        cache: false,
+                        dataType: 'json',
+                        data: 'id='+id,
+                        beforeSend: function (json) {
+                            if (currentRequest != null) currentRequest.abort();
+                        },
+                        success:function(res){
+
+                            if(res.deleted) {
+
+                                 $('.class_'+id).css('background', '#ff1b7e').fadeOut('slow');
+
+                                 new jBox('Notice', {
+                                     offset: {
+                                         y: 100,
+                                         x: 100
+                                     },
+                                     stack: false,
+                                     autoClose: 3000,
+                                     animation: {
+                                         open: 'slide:top',
+                                         close: 'slide:right'
+                                     },
+                                     onInit: function () {
+                                         this.options.content = 'Class Deleted.';
+                                     }
+                                });
+
+                            } else {
+
+                                 new jBox('Notice', {
+                                     offset: {
+                                         y: 100,
+                                         x: 100
+                                     },
+                                     stack: false,
+                                     autoClose: 3000,
+                                     animation: {
+                                         open: 'slide:top',
+                                         close: 'slide:right'
+                                     },
+                                     onInit: function () {
+                                         this.options.content = res.message;
+                                     }
+                                });
+
+                            }
                             if(res.featured) {
                                 row.css('color', '#d58512');
                             } else {
@@ -247,7 +338,7 @@ var activeImageClass;
         });
 
 
-    })
+    });
 
 </script>
 
@@ -290,7 +381,7 @@ var activeImageClass;
                     ?>
 
 
-                    <tr>
+                    <tr class="class_{{$a->id}}">
                         <td>{{ $a->id }}</td>
                         <td><a href="/classes/{{$a->slug}}" target="_blank">{{ $a->name }}</a></td>
                         <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
@@ -331,11 +422,8 @@ var activeImageClass;
                         <td data-value="{{ $featured_count }}">
 
                             <span class="el-icon-star bs_ttip cp feature_it" data-id="{{ $a->id }}" style="{{ ($featured_count == 1 ? 'color:#d58512':'')}}"></span>
-
-                            {{ Form::open(['route' =>'evercisegroups.destroy', 'method' => 'delete', 'class' => 'remove-row']) }}
-                                {{ Form::hidden('id', $a->id) }}
-                                {{ HTML::decode( Form::submit('delete', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
-                            {{Form::close()}}
+                            <span class="el-icon-remove bs_ttip cp delete_it" data-id="{{ $a->id }}"></span>
+                            <span class="el-icon-remove bs_ttip cp categories_modal" data-toggle="modal" data-target="#ajaxModal" data-id="{{ $a->id }}" data-url="{{ URL::route('ajax.admin.modal.categories', [$a->id]) }}"></span>
 
 
                         </td>
@@ -356,6 +444,22 @@ var activeImageClass;
             </table>
 </div>
 </div>
+
+
+<div class="modal fade" id="ajaxModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">Empty Modal</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Loading</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
 

@@ -357,6 +357,8 @@ class AdminAjaxController extends AdminController
 
         $class = Evercisegroup::find($class_id);
 
+
+
         $save_image = Gallery::selectImage($image_id, $class->user, $class->name);
 
         $class->image = $save_image;
@@ -366,6 +368,29 @@ class AdminAjaxController extends AdminController
 
         return Response::json(['ok' => '1']);
 
+
+    }
+
+
+
+    public function deleteClass()
+    {
+
+        $id = Input::get('id');
+
+        $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
+        if(!$evercisegroup) {
+            return Response::json(['deleted' => false, 'message' => 'No Evercise group found. Refresh page!']);
+        }
+
+
+
+        $deleted = $evercisegroup->adminDeleteIfNoSessions();
+
+
+        event('class.index.single', [$id]);
+
+        return Response::json(['deleted' => $deleted, 'message' => ($deleted ? 'Class Deleted' : 'Please delete Class Sessions first and then you can delete classes')]);
 
     }
 
@@ -417,6 +442,30 @@ class AdminAjaxController extends AdminController
         }
 
         return Redirect::route('admin.listClasses');
+
+
+    }
+
+
+    public function modalClassCategories($class_id = 0) {
+
+        $evercisegroup = $this->evercisegroup->find($class_id);
+
+        $subcategories_obj = $evercisegroup->subcategories()->get();
+
+        $subcategories = [];
+        foreach($subcategories_obj as $s) {
+            $subcategories[$s->id] = true;
+        }
+
+
+        $all_subs = Subcategory::all();
+
+
+        $view = View::make('admin.modal.categories', compact('evercisegroup', 'subcategories', 'all_subs'))->render();
+
+
+        return Response::json(['view' => $view, 'error' => false]);
 
 
     }

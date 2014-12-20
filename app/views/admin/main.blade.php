@@ -8,7 +8,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
         <!-- bootstrap framework -->
-		<link href="/admin/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
         <!-- icon sets -->
             <!-- elegant icons -->
@@ -90,11 +90,11 @@
         </div>
 
         <!-- jQuery -->
-        <script src="/admin/assets/js/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <!-- jQuery Cookie -->
         <script src="/admin/assets/js/jqueryCookie.min.js"></script>
         <!-- Bootstrap Framework -->
-        <script src="/admin/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <!-- retina images -->
         <script src="/admin/assets/js/retina.min.js"></script>
         <script src="/admin/assets/lib/jBox-0.3.0/Source/jBox.min.js"></script>

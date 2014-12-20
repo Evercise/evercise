@@ -12,7 +12,6 @@
 |
 */
 
-
 /* Show home page */
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
 Route::get(
@@ -229,10 +228,7 @@ Route::get(
 );
 
 Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
-Route::delete(
-    '/evercisegroups/delete',
-    ['as' => 'evercisegroups.destroy', 'before' => 'admin', 'uses' => 'EvercisegroupsController@adminDestroy']
-);
+
 
 Route::get(
     '/clone_class/{id}',
@@ -548,6 +544,16 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.ajax.slider_upload', 'uses' => 'AdminAjaxController@sliderUpload']);
     Route::post('sliderStatus',
         ['as' => 'admin.ajax.sliderStatus', 'uses' => 'AdminAjaxController@sliderStatus']);
+
+
+    Route::delete(
+        '/evercisegroups/delete',
+        ['as' => 'admin.ajax.delete.class', 'before' => 'admin', 'uses' => 'AdminAjaxController@deleteClass']
+    );
+
+    Route::get('modal/categories/{id?}',
+        ['as' => 'ajax.admin.modal.categories', 'uses' => 'AdminAjaxController@modalClassCategories']);
+
 
 
 });

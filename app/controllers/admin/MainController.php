@@ -245,7 +245,7 @@ class MainController extends \BaseController
         $user = Sentry::findUserById(Input::get('user_id'));
         Sentry::login($user);
 
-        return Redirect::route('users.edit');
+        return Redirect::route('users.edit', ['id' => Input::get('user_id')]);
     }
 
 
