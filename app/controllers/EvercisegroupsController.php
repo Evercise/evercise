@@ -137,7 +137,7 @@ class EvercisegroupsController extends \BaseController
 
             event('class.viewed', [$class, $this->user]);
 
-            if (Sentry::check() && $class->user_id == $this->user->id)
+            if (Sentry::check() && ($class->user_id == $this->user->id || $this->user->hasAccess('admin')))
             // This Group belongs to this User/Trainer
             {
                 return View::make('v3.classes.class_page')
@@ -191,15 +191,17 @@ class EvercisegroupsController extends \BaseController
      * @param  int $id
      * @return Route
      */
-    public function destroy($id)
+    public function destroy()
     {
+        $id = Input::get('id');
+        //return $id;
         $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
-
+        if(!$evercisegroup) return 'cannot find group '.$id;
 
         $delete = $evercisegroup->deleteGroup($this->user);
 
         event(' class.deleted', [$this->user, $evercisegroup]);
-
+        return 'deleted '.$id;
     }
 
 
