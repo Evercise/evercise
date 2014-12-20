@@ -202,4 +202,9 @@ class Venue extends \Eloquent
         }
         return $facilities;
     }
+
+    public function fullAddress()
+    {
+        return ucwords($this->address) . ', ' . ucwords($this->town) . ', ' . strtoupper($this->postcode);
+    }
 }
