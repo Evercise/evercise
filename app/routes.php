@@ -90,6 +90,7 @@ Route::group(['prefix' => 'ajax'], function () {
 
     // venue
     Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
+    Route::post('venues/edit', ['as' => 'venue.edit', 'uses' => 'ajax\VenuesController@edit']);
 
     // evercise groups
     Route::post('evercisegroups',
