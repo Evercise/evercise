@@ -318,16 +318,21 @@ class UsersController extends AjaxBaseController
 
         if ($newsletter) {
             $this->user->marketingpreferences()->sync([1]);
-            User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                $this->user->email,
-                $this->user->first_name,
-                $this->user->last_name
-            );
+
+            if(false) {
+                User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                    $this->user->email,
+                    $this->user->first_name,
+                    $this->user->last_name
+                );
+            }
         } else {
             $this->user->marketingpreferences()->sync([2]);
-            User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
-                $this->user->email
-            );
+            if(false) {
+                User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
+                    $this->user->email
+                );
+            }
         }
     }
 
