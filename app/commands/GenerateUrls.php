@@ -39,14 +39,15 @@ class GenerateUrls extends Command {
 
         $classes = Evercisegroup::all();
 
-
-
         foreach ($classes as $class) {
-            $class->slug = str_random(10);
+            $class->slug = Evercisegroup::uniqueSlug($class);
             $class->save();
         }
 
         $this->line("Completed ".$classes->count());
+        $this->line("Indexing");
+        event('class.index.all');
+        $this->line("DONE");
     }
 
     /**

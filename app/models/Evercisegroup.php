@@ -111,9 +111,14 @@ class Evercisegroup extends \Eloquent
                     'venue_id'    => $venueId,
                     'description' => $description,
                     'image'       => $image,
-                    'slug'        => str_random(10),
+                    'slug'        => $slug,
                 ]
             );
+
+
+            $slug = self::uniqueSlug($evercisegroup);
+            $evercisegroup->slug = $slug;
+            $evercisegroup->save();
 
             $evercisegroup->subcategories()->attach($categories);
 
@@ -152,6 +157,31 @@ class Evercisegroup extends \Eloquent
         }
 
         return $categories;
+    }
+
+
+    public static function uniqueSlug($class)
+    {
+        $venue = $class->venue()->first();
+        $name = [
+            slugIt($class->name),
+            slugIt($venue->name),
+            slugIt($venue->town.' UK')
+        ];
+        $name = implode('_', $name);
+        if(!self::slugTaken($name)) {
+            return $name;
+        }
+
+        /** Looks like its Taken */
+        /** Stick the ID at the end and forget it */
+        $name .= $name.'_'.$class->id;
+
+        return $name;
+    }
+
+    private static function slugTaken($slug) {
+        return static::where('slug', $slug)->first();
     }
 
     public function validateAndUpdate($inputs, $user)
@@ -255,7 +285,6 @@ class Evercisegroup extends \Eloquent
         }
 
         krsort($futureSessions);
-
 
 
         $data = [
@@ -1223,12 +1252,13 @@ class Evercisegroup extends \Eloquent
 
     public function adminDeleteIfNoSessions()
     {
-        if (! count($this->evercisesession))
-        {
+        if (!count($this->evercisesession)) {
             $this->delete();
-            return true;
+
+            return TRUE;
         }
-        return false;
+
+        return FALSE;
     }
 
 
