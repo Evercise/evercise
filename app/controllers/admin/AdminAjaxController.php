@@ -459,7 +459,7 @@ class AdminAjaxController extends AdminController
         }
 
 
-        $all_subs = Subcategory::all();
+        $all_subs = Subcategory::orderBy('name', 'asc')->get();
 
 
         $view = View::make('admin.modal.categories', compact('evercisegroup', 'subcategories', 'all_subs'))->render();

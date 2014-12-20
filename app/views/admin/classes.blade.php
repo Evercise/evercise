@@ -164,6 +164,10 @@ var activeImageClass;
 
             var id = $(this).data('id');
             var url = $(this).data('url');
+            $('#ajaxModal').html('<div class="modal-dialog"><div class="modal-content" style="text-align: center"><div class="modal-header">'+
+                                    '<h4 class="modal-title">Edit Categories</h4></div><div class="modal-body">'+
+                                    '<img src="/assets/img/spinning-circles.svg" style="width:130px; text-align:center;margin:5px auto"/>'+
+                                    '</div></div></div>');
 
                 currentRequest = $.ajax({
                         type: "GET",
@@ -386,7 +390,7 @@ var activeImageClass;
                         <td><a href="/classes/{{$a->slug}}" target="_blank">{{ $a->name }}</a></td>
                         <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
                         <td><span class="get_image el-icon-picture cp" data-class_id="{{ $a->id }}"></span> </td>
-                        <td class="warning">{{ $a->capacity }}</td>
+                        <td class="warning">{{ round($a->evercisesession()->avg('tickets'),0) }}</td>
                         <td>{{ $a->default_price }}</td>
                         <td>{{ $a->futuresessions()->count() }}</td>
                         <td>
