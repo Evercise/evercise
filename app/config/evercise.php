@@ -37,7 +37,7 @@ return [
     'testing_ips'                 => ['188.39.12.12', '192.168', '127.0.0'],
     'per_page'                    => [12, 18, 24],
     'default_per_page'            => 12,
-    'max_display_map_results'     => 100,
+    'max_display_map_results'     => 300,
     'radius'                      => [
         '1/2 mile' => '0.5mi',
         '1 mile'   => '1mi',
