@@ -51,11 +51,25 @@ class SessionsController extends AjaxBaseController
         $price_array = Input::get('price');
         $evercisegoupId = Input::get('$evercisegoupId');
 
+
+
         $userId = \Sentry::getUser()->id;
 
         if (!empty($sessionIds)) {
             if (!is_array($sessionIds)) {
                 $sessionIds = [$sessionIds];
+            }
+            if (!is_array($time_array)) {
+                $time_array = [$time_array];
+            }
+            if (!is_array($duration_array)) {
+                $duration_array = [$duration_array];
+            }
+            if (!is_array($tickets_array)) {
+                $tickets_array = [$tickets_array];
+            }
+            if (!is_array($price_array)) {
+                $price_array = [$price_array];
             }
 
             foreach ($sessionIds as $key => $id) {
@@ -70,6 +84,7 @@ class SessionsController extends AjaxBaseController
                 if ($session) {
                     //return $session->validateAndUpdate($inputs, $userId);
                     $updateResponse = $session->validateAndUpdate($inputs, $userId);
+
                     if ($updateResponse['validation_failed']) {
                         return Response::json(
                             [
