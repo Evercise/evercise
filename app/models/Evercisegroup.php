@@ -1221,6 +1221,16 @@ class Evercisegroup extends \Eloquent
         return Response::json(['mode' => 'redirect', 'url' => route('evercisegroups.index')]);
     }
 
+    public function adminDeleteIfNoSessions()
+    {
+        if (! count($this->evercisesession))
+        {
+            $this->delete();
+            return true;
+        }
+        return false;
+    }
+
 
     public static function getGroupWithSpecificSessions($evercisegroupId, $sessionIds)
     {

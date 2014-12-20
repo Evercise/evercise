@@ -2,6 +2,11 @@
 
 class SessionsController extends \BaseController
 {
+
+
+    public function __construct() {
+        parent::__construct();
+    }
     /**
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
@@ -34,8 +39,13 @@ class SessionsController extends \BaseController
     public function create($class_id)
     {
         $class = Evercisegroup::find($class_id);
+
+        if(!isset($class->user_id) || !isset($this->user->id)) {
+            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
+        }
+
         if($class->user_id != $this->user->id) {
-            return Redirect::route('home');
+            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
         }
 
         $sessions = $class->futuresessions;

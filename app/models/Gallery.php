@@ -17,20 +17,24 @@ class Gallery extends Eloquent
 
         $extension = explode('.', $item->image);
         $extension = end($extension);
-        $name = slugIt($class_name) . '.' . $extension;
+
+        $name = slugIt($class_name);
+
 
 
         foreach (Config::get('evercise.class_images') as $img) {
 
-            $file_name = $img['prefix'] . '_' . $name;
+            $file_name = uniqueFile(public_path() . '/' . $user->directory . '/', $img['prefix'] . '_' . $name, $extension);
             $image = Image::make('files/gallery_defaults/' . 'main_' . $item->image)->fit(
                 $img['width'],
                 $img['height']
-            )->save(public_path() . '/' . $user->directory . '/' . $file_name);
+            )->save(public_path() . '/' . $user->directory . '/'.$file_name);
+
+            $real_name = str_replace($img['prefix'] . '_', '', $file_name);
 
         }
 
-        return $name;
+        return $real_name;
 
     }
 

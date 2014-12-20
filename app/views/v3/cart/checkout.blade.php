@@ -133,7 +133,7 @@
                         </li>
                     @endif
 
-                    <li class="list-group-item">
+                    <li class="list-group-item hidden-mob">
                         <div class="row">
                             <strong class="list-group-item-heading col-xs-3">Quantity</strong>
                             <strong class="list-group-item-heading col-xs-6">Description of Purchase</strong>
@@ -143,16 +143,17 @@
                     @foreach($packages as $row)
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
-                                <div class="col-xs-3 text-center">
-                                    {{ HTML::linkRoute('packages', 'More', null, ['class' => 'btn btn-info btn-block btn-package']) }}
+                                <div class="col-sm-3 text-center hidden-mob">
+                                    {{ image('assets/img/More_pink.png', 'package', ['class' => 'img-responsive']) }}
                                 </div>
-                                <div class="col-xs-6">
-                                    <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong><br>
+                                <div class="col-md-6">
+                                    <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong>
+                                    <strong class="text-primary text-right hidden-lg sm-pull-right">&pound;{{ round($row['price'], 2) }}</strong>
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <div class="col-sm-2 text-right hidden-mob">
                                     <strong class="text-primary">&pound;{{ round($row['price'], 2) }}</strong>
                                 </div>
-                                <div class="col-xs-1">
+                                <div class="col-xs-1 hidden-mob">
                                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $row['id'])) }}
                                         {{ Form::hidden('refresh-page', true) }}
@@ -168,7 +169,7 @@
                         ?>
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
-                                <div class="col-xs-3">
+                                <div class="col-sm-3 hidden-mob">
 
                                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
@@ -187,19 +188,42 @@
 
                                     {{ Form::close() }}
                                 </div>
-                                <div class="col-xs-6">
-                                    <strong>{{ $row['name']}}</strong><br>
+                                <div class="col-md-6">
+                                    <strong>{{ $row['name']}}</strong>
+                                    <strong class="text-primary hidden-lg hidden-md sm-pull-right">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.round($row['grouped_price'],2).'</strike> &pound'.round($row['grouped_price_discount'],2) : '&pound'.round($row['grouped_price'],2) ) }}</strong>
+                                    <br>
                                     {{ $date->toDayDateTimeString() }}
+
                                 </div>
-                                <div class="col-xs-2 text-right">
+                                <div class="col-sm-2 text-right hidden-mob">
                                     <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.round($row['grouped_price'],2).'</strike> &pound'.round($row['grouped_price_discount'],2) : '&pound'.round($row['grouped_price'],2) ) }}</strong>
                                 </div>
-                                <div class="col-xs-1">
+                                <div class="col-xs-1 hidden-mob">
                                     {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                                         {{ Form::hidden('refresh-page', true) }}
                                         {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
                                     {{Form::close()}}
+                                </div>
+                                <div class="visible-sm-block visible-xs-block sm-mt25">
+                                    <div class="col-xs-6">
+                                        {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                            {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                            {{ Form::submit('Remove', ['class' => 'btn btn-light btn-block']) }}
+                                        {{Form::close()}}
+                                    </div>
+                                    {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
+                                    {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                    {{ Form::hidden('force', true) }}
+                                    <div class="col-xs-6">
+                                        <div class="toggle-select row" data-trigger="true" data-qty="{{$row['tickets_left']}}">
+                                            <div class="switch col-xs-3"><a href="#minus">-</a></div>
+                                            <div id="qty" class="col-xs-6 text-center">{{ !empty($cart_items[$row['id']]) ?  $cart_items[$row['id']] : 1}}</div>
+                                            <div class="switch col-xs-3"><a href="#plus">+</a> </div>
+                                            {{Form::hidden('quantity', !empty($cart_items[$row['id']]) ?  $cart_items[$row['id']] : 1 ,['id' => 'toggle-quantity'])}}
+                                        </div>
+                                    </div>
+                                    {{ Form::close() }}
                                 </div>
                             </div>
                         </li>
@@ -253,21 +277,21 @@
                     <li  class="list-group-item">
                         <div class="row">
                             @if($total['final_cost'] > 0)
-                                <div class="col-xs-5">
+                                <div class="col-sm-5 sm-mb10">
                                     <button  id="fb-pay" class="btn btn-info btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button>
                                 </div>
-                                <div class="col-xs-2 text-center mt5">
+                                <div class="col-xs-2 hidden-xs text-center mt5">
                                     Or
                                 </div>
-                                <div class="col-xs-5">
+                                <div class="col-sm-5">
                                     <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
                                 </div>
                             @elseif($total['subtotal'] == $total['package_deduct'])
-                                <div class="col-xs-5">
+                                <div class="col-sm-5 sm-mb10">
                                     {{ Html::linkRoute('wallet.sessions', 'Pay with package',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
                                 </div>
                             @else
-                                <div class="col-xs-5">
+                                <div class="col-sm-5">
                                     {{ Html::linkRoute('wallet.sessions', 'Pay with wallet',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
                                 </div>
                             @endif

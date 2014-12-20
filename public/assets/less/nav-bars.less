@@ -80,18 +80,26 @@
 }
 
 #mobile-cart{
-  float: left;
-  margin: -3px 20px;
+  float: none;
+  margin: -3px 60px 0 0px;
   .cart-dropdown{
+    padding-left: 127px;
+    &:before{
+      left: 147px;
+    }
+    &:after{
+      left: 147px;
+    }
     &.open{
       .dropdown-cart{
         position: fixed;
-        width: 100%;
         top: 54px;
-        left: 0;
+        left: 10px;
+        right: 10px;
         padding: 0 20px;
         border: 1px solid @gray-light;
         background-color: @white;
+        -webkit-backface-visibility:hidden;
         .custom-btn-dropdown-select{
           float: left;
         }

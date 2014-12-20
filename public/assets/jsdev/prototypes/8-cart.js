@@ -24,8 +24,11 @@ Cart.prototype = {
     },
     switchQty: function(e){
         e.preventDefault();
+        e.stopPropagation();
         var toggle = $(e.target).closest('.toggle-select');
         this.maxQty = $(toggle).data('qty');
+        var trigger = $(toggle).data('trigger');
+
         var type = $(e.target).attr('href').substring(1);
         var currentQty = $(toggle).find('#toggle-quantity').val();
         if(type == 'plus'){
@@ -41,6 +44,10 @@ Cart.prototype = {
                 $(toggle).find('#toggle-quantity').val( qty );
                 $(toggle).find('#qty').text( qty );
             }
+        }
+
+        if(trigger){
+            $(e.target).closest('.add-to-class').trigger('submit');
         }
 
     },
@@ -64,6 +71,7 @@ Cart.prototype = {
                 else{
                     self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading"></span>');
                 }
+                self.form.find(".switch").addClass('disabled');
 
             },
 
@@ -86,6 +94,7 @@ Cart.prototype = {
             complete: function () {
                 self.form.find("input[type=submit]").prop('disabled', false);
                 $('#cart-loading').remove();
+                self.form.find(".switch").removeClass('disabled');
             }
         });
     },

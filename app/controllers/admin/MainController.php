@@ -190,6 +190,8 @@ class MainController extends \BaseController
                 // register user and add to user group
                 $user = User::registerUser($inputs);
 
+                $userGroup = Sentry::findGroupById(3);
+                $user->addGroup($userGroup);
 
                 if ($user) {
                     UserHelper::generateUserDefaults($user->id);
@@ -243,7 +245,7 @@ class MainController extends \BaseController
         $user = Sentry::findUserById(Input::get('user_id'));
         Sentry::login($user);
 
-        return Redirect::route('users.edit');
+        return Redirect::route('users.edit', ['id' => Input::get('user_id')]);
     }
 
 

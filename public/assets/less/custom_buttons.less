@@ -8,6 +8,9 @@
 .btn-white {
   .button-variant(@btn-white-color; fade(@btn-grey-bg, 20%); @btn-white-border);
 }
+.btn-light {
+  .button-variant(@btn-white-color; @gray-mob; darken(@gray-mob, 1%));
+}
 
 .btn-grey {
   .button-variant(@btn-grey-color; @btn-grey-bg; @btn-grey-border);

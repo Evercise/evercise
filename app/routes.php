@@ -12,7 +12,6 @@
 |
 */
 
-
 /* Show home page */
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
 Route::get(
@@ -90,6 +89,7 @@ Route::group(['prefix' => 'ajax'], function () {
 
     // venue
     Route::post('venues/store', ['as' => 'venue.store', 'uses' => 'ajax\VenuesController@store']);
+    Route::post('venues/edit', ['as' => 'venue.edit', 'uses' => 'ajax\VenuesController@edit']);
 
     // evercise groups
     Route::post('evercisegroups',
@@ -228,10 +228,7 @@ Route::get(
 );
 
 Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
-Route::delete(
-    '/evercisegroups/{id}',
-    ['as' => 'evercisegroups.destroy', 'uses' => 'EvercisegroupsController@destroy']
-);
+
 
 Route::get(
     '/clone_class/{id}',
@@ -547,6 +544,16 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.ajax.slider_upload', 'uses' => 'AdminAjaxController@sliderUpload']);
     Route::post('sliderStatus',
         ['as' => 'admin.ajax.sliderStatus', 'uses' => 'AdminAjaxController@sliderStatus']);
+
+
+    Route::delete(
+        '/evercisegroups/delete',
+        ['as' => 'admin.ajax.delete.class', 'before' => 'admin', 'uses' => 'AdminAjaxController@deleteClass']
+    );
+
+    Route::get('modal/categories/{id?}',
+        ['as' => 'ajax.admin.modal.categories', 'uses' => 'AdminAjaxController@modalClassCategories']);
+
 
 
 });

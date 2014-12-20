@@ -1,5 +1,26 @@
 <?php
 
+
+
+    if (!function_exists('uniqueFile')) {
+
+        /*
+         * Wrap event class
+         *
+         */
+
+
+
+
+        function uniqueFile($path, $name, $extension)
+        {
+            do {
+                $next_file = $name.'-'.rand(1,50).'.'.$extension;
+            } while (is_file($path.$next_file));
+
+            return $next_file;
+        }
+    }
     if (!function_exists('formatDuration')) {
 
         /*

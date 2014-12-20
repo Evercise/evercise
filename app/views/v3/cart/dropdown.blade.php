@@ -1,9 +1,9 @@
 @if( !empty($sessions_grouped) || !empty($packages))
     <ul class="dropdown-menu dropdown-cart" role="menu">
-        <div class="col-xs-10">
+        <div class="col-xs-10 sm-mt10">
             <h4>Your classes cart</h4>
         </div>
-        <div class="col-xs-2 text-right">
+        <div class="col-xs-2 text-right sm-mt10">
             {{ Form::open(['route' =>'cart.emptyCart', 'method' => 'post', 'id' => 'empty-cart']) }}
                 {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-bin hover mt10']) )}}
             {{Form::close()}}
@@ -13,26 +13,34 @@
         <li class="divider col-xs-12"></li>
         <div class="cart-rows">
             @foreach($packages as $row)
-                <div class="cart-row">
-                    <div class="col-sm-3">
+                <div class="cart-row sm-mt10">
+                    <div class="col-sm-3 hidden-mob">
                         {{ image('assets/img/More_pink.png', 'package', ['class' => 'img-responsive']) }}
                     </div>
                     <div class="col-sm-7">
-                        {{ Html::linkRoute('class.show', $row['name'], [$row['id']]) }}
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['id']],  ['class' => 'sm-strong']) }}
                         <br class="hidden-mob">
-                        <strong class="text-primary">&pound;{{ $row['price'] }}</strong>
+                        <strong class="text-primary text-right sm-pull-right">&pound;{{ $row['price'] }}</strong>
                     </div>
-                    <div class="col-xs-2 text-right mt10">
+                    <div class="col-xs-2 text-right mt10 hidden-mob">
                         {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $row['id'])) }}
                             {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
                         {{Form::close()}}
                     </div>
+                    <div class="visible-sm-block visible-xs-block sm-mt25">
+                        <div class="col-xs-6">
+                            {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                {{ Form::submit('Remove', ['class' => 'btn btn-light btn-block']) }}
+                            {{Form::close()}}
+                        </div>
+                    </div>
                 </div>
             @endforeach
 
             @foreach($sessions_grouped as $row)
-                <div class="cart-row">
+                <div class="cart-row sm-mt10">
                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                     {{ Form::hidden('force', true) }}
@@ -50,15 +58,38 @@
                     </div>
                     {{ Form::close() }}
                     <div class="col-sm-7">
-                        {{ Html::linkRoute('class.show', $row['name'], [$row['slug']]) }}
+                        {{ Html::linkRoute('class.show', $row['name'], [$row['slug']] , ['class' => 'sm-strong']) }}
                         <br class="hidden-mob">
-                        <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : '£'.round($row['grouped_price'],2) ) }}</strong>
+                        <div class="sm-pull-right text-right">
+                            <strong class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>£'.$row['grouped_price'].'</strike> £'.$row['grouped_price_discount'] : '£'.round($row['grouped_price'],2) ) }}</strong>
+                        </div>
+
                     </div>
-                    <div class="col-xs-2 text-right mt10">
+                    <div class="col-xs-2 text-right mt10 hidden-mob">
                         {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                             {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-cross hover']) )}}
                         {{Form::close()}}
+                    </div>
+                    <div class="visible-sm-block visible-xs-block sm-mt25">
+                        <div class="col-xs-6">
+                            {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
+                                {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                                {{ Form::submit('Remove', ['class' => 'btn btn-light btn-block']) }}
+                            {{Form::close()}}
+                        </div>
+                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
+                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
+                        {{ Form::hidden('force', true) }}
+                        <div class="col-xs-6">
+                            <div class="toggle-select row" data-trigger="true" data-qty="{{$row['tickets_left']}}">
+                                <div class="switch col-xs-3"><a href="#minus">-</a></div>
+                                <div id="qty" class="col-xs-6 text-center">{{ !empty($cart_items[$row['id']]) ?  $cart_items[$row['id']] : 1}}</div>
+                                <div class="switch col-xs-3"><a href="#plus">+</a> </div>
+                                {{Form::hidden('quantity', !empty($cart_items[$row['id']]) ?  $cart_items[$row['id']] : 1 ,['id' => 'toggle-quantity'])}}
+                            </div>
+                        </div>
+                        {{ Form::close() }}
                     </div>
                 </div>
             @endforeach
@@ -93,14 +124,14 @@
 
         <li class="divider col-xs-12"></li>
 
-        <div class="col-xs-3">
+        <div class="col-xs-3 mt10">
             <strong>Total</strong>
         </div>
-        <div class="col-xs-5">
+        <div class="col-xs-3 mt10">
             <strong class="text-primary">&pound;<span id="cart-total">{{ round($total['final_cost'] , 2) }}</span></strong>
         </div>
-        <div class="col-xs-4 mb10 text-right">
-            <a href="/cart/checkout"><button class="btn btn-primary">Checkout</button></a>
+        <div class="col-xs-6 mb10 text-right">
+            <a href="/cart/checkout"><button class="btn btn-primary btn-block">Checkout</button></a>
         </div>
     </ul>
 @else

@@ -35,6 +35,50 @@ class VenuesController extends AjaxBaseController{
         return Response::json($result);
     }
 
+    public function edit()
+    {
+        $venue = Venue::find(Input::get('venue_id'));
+
+        $res = ['error' => true, 'message' => ''];
+
+        if(!isset($venue->id)) {
+            $res['message'] = 'Venue Does not Exist';
+            return Response::json($res);
+        }
+
+        if($this->user->id != $venue->user_id) {
+
+            $res['message'] = 'You dont have permissions to edit this class';
+            return Response::json($res);
+        }
+
+
+        $res['error'] = 'false';
+        $res['venue'] = $venue->toArray();
+        $facilities = $venue->getFacilities();
+        $amenities = $venue->getAmenities();
+        foreach($facilities as $f) {
+            $res['facilities'][] = [
+                'id' => $f->id,
+                'name' => $f->name,
+                'image' => $f->image,
+            ];
+        }
+        foreach($amenities as $f) {
+            $res['amenities'][] = [
+                'id' => $f->id,
+                'name' => $f->name,
+                'image' => $f->image,
+            ];
+        }
+
+
+        return Response::json($res);
+    }
+
+
+
+
     /**
      * POST Params:
      * name
