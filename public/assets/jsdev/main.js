@@ -223,6 +223,7 @@ $(function(){
     })
 
     $("#image-carousel").swiperight(function() {
+        alert('right');
         $(this).carousel('prev');
     });
     $("#image-carousel").swipeleft(function() {
