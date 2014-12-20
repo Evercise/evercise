@@ -152,20 +152,22 @@ class MainController extends \BaseController
     }
     public function trainerStore() {
 
+        $validationRules = array_merge([
+            'first_name' => 'required|max:15|min:2',
+            'last_name' => 'required|max:25|min:2',
+            'email' => 'required|unique:users,email',
+            'display_name' => 'required|unique:users,display_name',
+            'phone' => 'numeric',
+            'gender' => 'required',
+            ],
+            Trainer::$validationRules
+        );
+        $validationRules['image'] = 'sometimes';
 
         $inputs =  Input::except(['_token', 'trainer']);
         $validator = Validator::make(
             $inputs,
-            array(
-                'first_name' => 'required|max:15|min:2',
-                'last_name' => 'required|max:25|min:2',
-                'email' => 'required|unique:users,email',
-                'display_name' => 'required|unique:users,display_name',
-                'phone' => 'numeric',
-                'gender' => 'required',
-                'profession' => 'required|max:500|min:50',
-                'bio'   =>  'required|max:500'
-            )
+            $validationRules
         );
 
 
