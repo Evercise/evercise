@@ -8,12 +8,17 @@
             <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                     {{ Form::open(['route' => 'evercisegroups.publish', 'method' => 'post', 'id' =>'publish-class']) }}
-                        <span class="text-white">This is what your class will look like when published</span>
+                        <div class="row">
+                            <div class="col-sm-8 sm-text-center"><span class="text-white">This is what your class will look like when published</span></div>
+                            <div class="col-sm-2 sm-mb10  sm-mt10">{{ Html::linkRoute('sessions.add', 'Edit Sessions', $data['id'], ['class' => 'btn btn-default btn-block'] ) }}</div>
+                            <div class="col-sm-2 sm-mb10">{{Form::submit( $data['published'] == 1 ? 'Un-publish' : 'Publish',['class'=>'btn btn-primary btn-block'])}}</div>
+                        </div>
 
-                        {{ Html::linkRoute('sessions.add', 'Edit Sessions', $data['id'], ['class' => 'btn btn-default text-right ml20 mr20'] ) }}
+
+
                         {{ Form::hidden('id', $data['id'] ) }}
                         {{ Form::hidden('publish', $data['published'] == 1 ? 0 : 1) }}
-                        {{Form::submit( $data['published'] == 1 ? 'Un-publish' : 'Publish',['class'=>'btn btn-primary'])}}
+
                     {{ Form::close() }}
                 </div>
             </div>
@@ -155,7 +160,7 @@
 
                                             </div>
                                             <div class="col-xs-6">
-                                                {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn btn-block']) }}
+                                                {{ Form::submit('join class', ['class'=> isset($preview) ? 'btn btn-primary disabled btn-block' : 'btn btn-primary add-btn btn-block']) }}
                                             </div>
                                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
                                             {{ Form::hidden('force', true) }}
