@@ -26,6 +26,7 @@
 /* general style for all menus */
 
 .delete_it:hover{ color:#c00}
+.categories_modal:hover, .get_image:hover{ color:#00dd00}
 nav.menu {
   position: fixed;
   z-index: 10000;
@@ -129,6 +130,7 @@ var activeImageClass;
 
    $(document).ready(function(){
         yukon_footable.p_plugins_tables_footable();
+        yukon_jBox.p_components_notifications_popups();
 
 
         $('.feature_it').click(function(e){
@@ -160,10 +162,35 @@ var activeImageClass;
 
         });
 
+        $(document).on('click', '.save_categories', function(e) {
+                var class_id = $('#ajaxModal').data('class_id');
+                var cats = $(".sub_cats_checkbox").map(function(){
+                    if($(this).prop( "checked" )) {
+                        return $(this).val();
+                    }
+                }).get();
+
+                currentRequest = $.ajax({
+                                        type: "PUT",
+                                        url: "{{ URL::route('ajax.admin.modal.categories.save') }}",
+                                        cache: false,
+                                        dataType: 'json',
+                                        data: 'class_id='+class_id+'&cat='+cats,
+                                        beforeSend: function (json) {
+                                            if (currentRequest != null) currentRequest.abort();
+                                        },
+                                        success:function(res){
+                                            console.log(res);
+                                        }
+                                })
+        });
+
+
         $('.categories_modal').click(function(e){
 
             var id = $(this).data('id');
             var url = $(this).data('url');
+            $('#ajaxModal').data('class_id', id);
             $('#ajaxModal').html('<div class="modal-dialog"><div class="modal-content" style="text-align: center"><div class="modal-header">'+
                                     '<h4 class="modal-title">Edit Categories</h4></div><div class="modal-body">'+
                                     '<img src="/assets/img/spinning-circles.svg" style="width:130px; text-align:center;margin:5px auto"/>'+
@@ -367,13 +394,11 @@ var activeImageClass;
                         <th data-toggle="true">ID</th>
                         <th>Name</th>
                         <th>Trainer</th>
-                        <th>IMAGE</th>
                         <th class="warning">Capacity</th>
                         <th>Default price</th>
                         <th>Future Sessions</th>
                         <th>Status</th>
-                        <th>Frontpage Image</th>
-                        <th>Frontpage Image</th>
+                        <th>Slider</th>
                         <th data-sort-initial="descending" >Options</th>
                     </tr>
                 </thead>
@@ -389,7 +414,6 @@ var activeImageClass;
                         <td>{{ $a->id }}</td>
                         <td><a href="/classes/{{$a->slug}}" target="_blank">{{ $a->name }}</a></td>
                         <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
-                        <td><span class="get_image el-icon-picture cp" data-class_id="{{ $a->id }}"></span> </td>
                         <td class="warning">{{ round($a->evercisesession()->avg('tickets'),0) }}</td>
                         <td>{{ $a->default_price }}</td>
                         <td>{{ $a->futuresessions()->count() }}</td>
@@ -403,13 +427,9 @@ var activeImageClass;
 
 
                         <td>
-                        {{$slider->image or ''}}
                         @if($slider_image)
                             <span class="el-icon-zoom-in cp" href="{{ $slider_image }}" data-featherlight="image" data-image="{{$slider->image}}"></span>
                         @endif
-                        </td>
-
-                        <td>
                             <input type="checkbox" class="check_box {{ (!$slider_image ? 'hide':'') }}" {{ ( !empty($slider->active) && $slider->active == 1 ? 'checked="checked"':'') }} data-id="{{ $a->id }}"/>
                             <span class="icon_upload cp image_upload " style="margin-left: {{ (!$slider_image ? '36':'20') }}px" data-id="{{ $a->id }}"></span>
                             <form class="form_{{$a->id}}" action="{{ URL::route('admin.ajax.slider_upload') }}" method="post" enctype="multipart/form-data">
@@ -423,12 +443,12 @@ var activeImageClass;
                         <?php
                         $featured_count = count($a->featuredClasses);
                         ?>
-                        <td data-value="{{ $featured_count }}">
+                        <td data-value="{{ $featured_count }}" width="140">
 
                             <span class="el-icon-star bs_ttip cp feature_it" data-id="{{ $a->id }}" style="{{ ($featured_count == 1 ? 'color:#d58512':'')}}"></span>
-                            <span class="el-icon-remove bs_ttip cp delete_it" data-id="{{ $a->id }}"></span>
-                            <span class="el-icon-remove bs_ttip cp categories_modal" data-toggle="modal" data-target="#ajaxModal" data-id="{{ $a->id }}" data-url="{{ URL::route('ajax.admin.modal.categories', [$a->id]) }}"></span>
-
+                            <span class="el-icon-braille bs_ttip cp categories_modal" data-toggle="modal" data-target="#ajaxModal" data-id="{{ $a->id }}" data-url="{{ URL::route('ajax.admin.modal.categories', [$a->id]) }}"></span>
+                            <span class="get_image el-icon-picture cp" data-class_id="{{ $a->id }}"></span>
+                            <span data-confirm="Are you sure you want to delete this class?" class="el-icon-remove bs_ttip cp delete_it" style="margin-left:5px" data-id="{{ $a->id }}"></span>
 
                         </td>
 

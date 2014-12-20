@@ -1,12 +1,20 @@
 <div id="panel-{{$session->id}}" class="class-panel center-block">
-    <div class="row">
+    <div class="row sm-mb20">
 
-        <div class="class-image-wrapper col-xs-4">
+        <div class="class-image-wrapper col-sm-4 sm-text-center">
             {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
         </div>
-         <div class="class-title-wrapper col-xs-8">
-             <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3 class="pull-left">{{ $session->evercisegroup->name }}</h3></a>
-             {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail ml10 mt25 mail-popup', 'id' => 'mail-popup', 'data-id' =>$session->id ]) }}
+         <div class="class-title-wrapper col-sm-8 sm-text-center">
+            <div class="row">
+                <div class="col-sm-10">
+                    <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3>{{ $session->evercisegroup->name }}</h3></a>
+                </div>
+                <div class="col-sm-2">
+                    {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail mt25 mail-popup', 'id' => 'mail-popup', 'data-id' =>$session->id ]) }}
+                </div>
+            </div>
+
+
 
              <div class="mt20">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span><br>
@@ -39,7 +47,7 @@
                         </div>
                         <div class="form-group">
                             <!--<button class="btn btn-default" type="button">Cancel</button>-->
-                            {{ Form::submit('Add Review', ['class' => 'btn btn-primary'] )  }}
+                            {{ Form::submit('Add Review', ['class' => 'btn btn-primary sm-btn-block'] )  }}
                         </div>
                     {{ Form::close() }}
                 </div>
@@ -93,11 +101,11 @@
                         <div class="col-sm-9 sm-text-center">
                             @if($session->remainingTickets()  > 0)
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
-                                    <div class="btn-group pull-right">
+                                    <div class="btn-group btn-block">
                                         {{ Form::submit('Join class', ['class'=> 'btn btn-primary add-btn']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
 
-                                          <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                                          <select name="quantity" id="quantity" class="btn btn-primary btn-select btn-aside">
                                             @for($i=1; $i<($session->remainingTickets()  + 1 ); $i++)
                                             <option value="{{$i}}">{{$i}}</option>
                                             @endfor

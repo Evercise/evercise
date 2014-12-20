@@ -21,16 +21,18 @@ class Gallery extends Eloquent
         $name = slugIt($class_name);
 
 
-
+        $file_name = FALSE;
         foreach (Config::get('evercise.class_images') as $img) {
 
-            $file_name = uniqueFile(public_path() . '/' . $user->directory . '/', $img['prefix'] . '_' . $name, $extension);
+            if (!$file_name) {
+                $file_name = uniqueFile(public_path() . '/' . $user->directory . '/', $img['prefix'] . '_' . $name,
+                    $extension);
+                $real_name = str_replace($img['prefix'] . '_', '', $file_name);
+            }
             $image = Image::make('files/gallery_defaults/' . 'main_' . $item->image)->fit(
                 $img['width'],
                 $img['height']
-            )->save(public_path() . '/' . $user->directory . '/'.$file_name);
-
-            $real_name = str_replace($img['prefix'] . '_', '', $file_name);
+            )->save(public_path() . '/' . $user->directory . '/' . $img['prefix'] . '_' . $real_name);
 
         }
 

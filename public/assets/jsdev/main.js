@@ -222,6 +222,12 @@ $(function(){
         new RemoveSession(this);
     })
 
+    $("#image-carousel").swiperight(function() {
+        $(this).carousel('prev');
+    });
+    $("#image-carousel").swipeleft(function() {
+        $(this).carousel('next');
+    });
 
 
 

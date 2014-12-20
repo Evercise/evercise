@@ -1,10 +1,10 @@
 <div class="img-uploader row">
-    <div class="col-sm-12">
+    <div class="col-sm-12 sm-text-center">
         {{ Form::label('image', 'Upload a Profile Picture', ['class' => 'mb15'] )  }}
     </div>
     <div class="col-sm-3">
         <div class="row mb20" id="image-cropper">
-            <div class="holder profile" id="cover_image">
+            <div class="holder profile center-block" id="cover_image">
                 @if(isset($image))
                     {{ image( $image , 'profile image', ['class' => 'img-responsive', 'id' => 'uploaded-image']) }}
                 @endif
@@ -20,7 +20,6 @@
                       </div>
                       <div class="modal-body">
                         <div class="bootstrap-modal-cropper">
-
                             <img src="" id="uploaded-image" class="img-responsive">
                         </div>
                       </div>
@@ -44,8 +43,8 @@
 
         </div>
     </div>
-    <div class="col-sm-9 mt25">
-        <button id="image-select" type="button" class="image-select btn btn-primary mb20">Select an Image</button>
+    <div class="col-sm-9 mt25 sm-text-center">
+        <button id="image-select" type="button" class="image-select btn btn-primary mb20 sm-btn-block">Select an Image</button>
         <p>Image must be a JPG, JPEG, PNG or GIF with a maximum file size of 10MB</p>
     </div>
 </div>

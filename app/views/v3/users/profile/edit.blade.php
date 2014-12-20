@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="row  mt10">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 mb50">
                         <label class="mb15" for="phone">Phone Number<small> (Get alerts about classes)</small></label>
 
                         <div class="input-group">
@@ -83,7 +83,7 @@
                 </div>
                 <div class="text-center form-group mt40">
                     {{ Form::hidden('image', isset($user->image) ? $user->image : null) }}
-                    {{ Form::submit('Save', ['class' => 'btn btn-primary'] )  }}
+                    {{ Form::submit('Save', ['class' => 'btn btn-primary sm-btn-block'] )  }}
                 </div>
 
             {{ Form::close() }}

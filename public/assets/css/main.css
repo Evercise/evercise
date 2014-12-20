@@ -9253,10 +9253,13 @@ fieldset[disabled] .stripe-button-el.active {
   border: none;
   box-shadow: none;
 }
-.btn-group.btn-block .btn {
-  width: 80%;
-  padding-left: 0px;
-  padding-right: 0px;
+.btn-group.btn-block {
+  /*.btn{
+      width: 80%;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    */
 }
 .btn-group.btn-block .btn.btn-aside {
   width: 20%;
@@ -11254,6 +11257,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 }
 .holder.profile {
   height: 170px;
+  width: 170px;
 }
 .holder.gallery-img-wrapper {
   height: 87px;
@@ -11449,9 +11453,14 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   margin: 10px 0 0;
 }
 .list-group-item .list-group-item-img {
-  margin: -20px 20px -20px -15px;
-  width: 110px;
-  float: left;
+  margin: auto;
+}
+@media (min-width: 992px) {
+  .list-group-item .list-group-item-img {
+    margin: -20px 0 -20px -15px;
+    max-width: 115%;
+    width: 115%;
+  }
 }
 .list-group-no-border .list-group-item {
   border-left-width: 0;
