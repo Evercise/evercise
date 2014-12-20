@@ -123,14 +123,14 @@
                         {{ Form::hidden('preview', 'yes') }}
                         <div class="row">
                             <div class="col-sm-4">
-                                {{ Form::submit('Save', ['class' => 'btn btn-default btn-block', 'id' => 'save']) }}
+                                {{ Form::submit('Save', ['class' => 'btn btn-default btn-block sm-mb10', 'id' => 'save']) }}
                             </div>
                             <div class="col-sm-4">
 
-                                {{ Form::submit('Save & Preview', ['class' => 'btn btn-primary btn-block']) }}
+                                {{ Form::submit('Save & Preview', ['class' => 'btn btn-primary btn-block sm-mb10']) }}
                             </div>
                             <div class="col-sm-4">
-                                <a href="#calendar" id="more-sessions" class="btn btn-default btn-block">More sessions</a>
+                                <a href="#calendar" id="more-sessions" class="btn btn-default btn-block sm-mb10">More sessions</a>
                             </div>
                         </div>
                     {{ Form::close() }}

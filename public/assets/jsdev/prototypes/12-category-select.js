@@ -31,6 +31,12 @@ categorySelect.prototype = {
         this.form.on("submit", $.proxy(this.submitForm, this));
         this.select.on("select2-selecting", $.proxy(this.addToKeywords, this))
         this.select.on("select2-removing", $.proxy(this.removeFromKeywords, this))
+        $(document).on('swiperight', '#image-carousel', function(){
+            $(this).carousel('next');
+        })
+        $(document).on('swipeleft', '#image-carousel', function(){
+            $(this).carousel('prev');
+        })
     },
     submitForm: function(e){
         e.preventDefault();

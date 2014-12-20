@@ -44,12 +44,12 @@
 
                     <div class="row">
                         <div class="col-sm-6 text-right sm-text-center">
-                            {{ Html::linkRoute('users.edit', 'Cancel', $user->display_name, ['class' => 'btn btn-default']) }}
+                            {{ Html::linkRoute('users.edit', 'Cancel', $user->display_name, ['class' => 'btn btn-default sm-btn-block sm-mb10']) }}
                         </div>
                         {{ Form::hidden('image', isset($cloneGroup->image) ? $cloneGroup->image : null) }}
                         {{ Form::hidden('gallery_image', false) }}
                         {{ Form::hidden('category_array[]',null ) }}
-                        <div class="col-sm-6 sm-text-center">{{ Form::submit('Next step', ['class' => 'btn btn-primary', 'form' => 'create-class'] )  }}</div>
+                        <div class="col-sm-6 sm-text-center">{{ Form::submit('Next step', ['class' => 'btn btn-primary sm-btn-block', 'form' => 'create-class'] )  }}</div>
                     </div>
                 {{Form::close()}}
 

@@ -128,6 +128,38 @@ body.pmr-open nav.push-menu-right {
 var currentRequest;
 var activeImageClass;
 
+
+    function deleteIt(id){
+
+            currentRequest = $.ajax({
+                   type: "DELETE",
+                   url: AJAX_URL + "evercisegroups/delete",
+                   cache: false,
+                   dataType: 'json',
+                   data: 'id='+id,
+                   beforeSend: function (json) {
+                       if (currentRequest != null) currentRequest.abort();
+                   },
+                   success:function(res){
+
+                       if(res.deleted) {
+
+                            $('.class_'+id).css('background', '#ff1b7e').fadeOut('slow');
+                            notify('Class Deleted.');
+
+                       } else {
+                            notify(res.message);
+                       }
+                   }
+           });
+
+
+
+
+
+
+
+        }
    $(document).ready(function(){
         yukon_footable.p_plugins_tables_footable();
         yukon_jBox.p_components_notifications_popups();
@@ -213,74 +245,6 @@ var activeImageClass;
         });
 
         $('body').append('<div class="modal" id="ajaxModal"><div class="modal-body"></div></div>');
-
-        $('.delete_it').click(function(e){
-
-            var id = $(this).data('id');
-
-                var row = $(this);
-
-                currentRequest = $.ajax({
-                        type: "DELETE",
-                        url: AJAX_URL + "evercisegroups/delete",
-                        cache: false,
-                        dataType: 'json',
-                        data: 'id='+id,
-                        beforeSend: function (json) {
-                            if (currentRequest != null) currentRequest.abort();
-                        },
-                        success:function(res){
-
-                            if(res.deleted) {
-
-                                 $('.class_'+id).css('background', '#ff1b7e').fadeOut('slow');
-
-                                 new jBox('Notice', {
-                                     offset: {
-                                         y: 100,
-                                         x: 100
-                                     },
-                                     stack: false,
-                                     autoClose: 3000,
-                                     animation: {
-                                         open: 'slide:top',
-                                         close: 'slide:right'
-                                     },
-                                     onInit: function () {
-                                         this.options.content = 'Class Deleted.';
-                                     }
-                                });
-
-                            } else {
-
-                                 new jBox('Notice', {
-                                     offset: {
-                                         y: 100,
-                                         x: 100
-                                     },
-                                     stack: false,
-                                     autoClose: 3000,
-                                     animation: {
-                                         open: 'slide:top',
-                                         close: 'slide:right'
-                                     },
-                                     onInit: function () {
-                                         this.options.content = res.message;
-                                     }
-                                });
-
-                            }
-                            if(res.featured) {
-                                row.css('color', '#d58512');
-                            } else {
-
-                                row.css('color', '#222');
-                            }
-                        }
-                })
-
-        });
-
 
         $('.get_image').click(function(e) {
 
@@ -371,6 +335,9 @@ var activeImageClass;
 
     });
 
+
+
+
 </script>
 
 @stop
@@ -398,8 +365,8 @@ var activeImageClass;
                         <th>Default price</th>
                         <th>Future Sessions</th>
                         <th>Status</th>
-                        <th>Slider</th>
-                        <th data-sort-initial="descending" >Options</th>
+                        <th  style="width:90px !important;">Slider</th>
+                        <th data-sort-initial="descending"  width="140">Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -427,16 +394,17 @@ var activeImageClass;
 
 
                         <td>
-                        @if($slider_image)
-                            <span class="el-icon-zoom-in cp" href="{{ $slider_image }}" data-featherlight="image" data-image="{{$slider->image}}"></span>
-                        @endif
-                            <input type="checkbox" class="check_box {{ (!$slider_image ? 'hide':'') }}" {{ ( !empty($slider->active) && $slider->active == 1 ? 'checked="checked"':'') }} data-id="{{ $a->id }}"/>
-                            <span class="icon_upload cp image_upload " style="margin-left: {{ (!$slider_image ? '36':'20') }}px" data-id="{{ $a->id }}"></span>
+                            <span class="pull-left icon_upload cp image_upload " data-id="{{ $a->id }}"></span>
                             <form class="form_{{$a->id}}" action="{{ URL::route('admin.ajax.slider_upload') }}" method="post" enctype="multipart/form-data">
                                  <input type="file" name="file" class="hide upload_{{$a->id}} upload_input" data-id="{{ $a->id }}"/>
                                  <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                                  <input type="hidden" name="id" value="{{$a->id}}"/>
                              </form>
+                             <input type="checkbox" style="margin:2px 4px" class="pull-left check_box {{ (!$slider_image ? 'hide':'') }}" {{ ( !empty($slider->active) && $slider->active == 1 ? 'checked="checked"':'') }} data-id="{{ $a->id }}"/>
+
+                            @if($slider_image)
+                                <span class="pull-left el-icon-zoom-in cp" href="{{ $slider_image }}" data-featherlight="image" data-image="{{$slider->image}}"></span>
+                            @endif
 
                         </td>
 
@@ -448,7 +416,7 @@ var activeImageClass;
                             <span class="el-icon-star bs_ttip cp feature_it" data-id="{{ $a->id }}" style="{{ ($featured_count == 1 ? 'color:#d58512':'')}}"></span>
                             <span class="el-icon-braille bs_ttip cp categories_modal" data-toggle="modal" data-target="#ajaxModal" data-id="{{ $a->id }}" data-url="{{ URL::route('ajax.admin.modal.categories', [$a->id]) }}"></span>
                             <span class="get_image el-icon-picture cp" data-class_id="{{ $a->id }}"></span>
-                            <span data-confirm="Are you sure you want to delete this class?" class="el-icon-remove bs_ttip cp delete_it" style="margin-left:5px" data-id="{{ $a->id }}"></span>
+                            <span data-confirm="Are you sure you want to delete this class?" onclick="deleteIt({{ $a->id }})" class="el-icon-remove bs_ttip cp delete_it" style="margin-left:5px" data-id="{{ $a->id }}"></span>
 
                         </td>
 

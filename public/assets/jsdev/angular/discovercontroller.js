@@ -147,7 +147,7 @@ if(typeof angular != 'undefined') {
         ];
         $scope.clusterOptions = {
             gridSize: 8,
-            maxZoom: 20,
+            maxZoom: 15,
             zoom: 15,
             styles: $scope.clusterStyles
         };
