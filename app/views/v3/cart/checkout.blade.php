@@ -144,7 +144,7 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="row">
                                 <div class="col-sm-3 text-center hidden-mob">
-                                    {{ image('assets/img/More_pink.png', 'package', ['class' => 'img-responsive']) }}
+                                    {{ image('assets/img/More_'.$row['style'].'.png', 'package', ['class' => 'img-responsive']) }}
                                 </div>
                                 <div class="col-md-6">
                                     <strong>{{ $row['name'] . ' : ' . $row['classes'] . ' classes'}}</strong>

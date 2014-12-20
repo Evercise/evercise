@@ -92,7 +92,7 @@
 
     <div class="form-group">
           <label>Date published:</label>
-           {{ Form::text('published_on', (!empty($article->published_on) ? $article->published_on->format('d/m/Y') :  date('d/m/Y')), ['placeholder'=> 'Date published', 'class' => 'form-control datetime', 'id'=>'dp_basic']) }}
+           {{ Form::text('published_on', (!empty($article->published_on) && $article->published_on != '0000-00-00 00:00:00') ? $article->published_on->format('d/m/Y') :  date('d/m/Y')), ['placeholder'=> 'Date published', 'class' => 'form-control datetime', 'id'=>'dp_basic']) }}
 
 
     </div>

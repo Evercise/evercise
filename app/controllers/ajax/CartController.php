@@ -85,7 +85,7 @@ class CartController extends AjaxBaseController
                 } else // Make a new entry in the cart, and link it to the session.
                 {
                     EverciseCart::associate('Packages')->add($productCode, $package->name, $quantity, $package->price,
-                        []);
+                        ['style' => $package->style]);
                 }
 
 
