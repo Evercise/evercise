@@ -20,17 +20,26 @@
                         </li>
                         @foreach($activities as $a)
                         <li class="list-group-item clearfix activity_{{$a->cartcompleted}}">
-                          {{ image($a->image, $a->type, ['class'=>'img-responsive list-group-item-img'])}}
-                          <div class="pull-left">
-                              <strong class="list-group-item-heading">{{ $a->title }}</strong>
-                              <p class="list-group-item-text">{{ $a->description }}</p>
-                          </div>
-                          <div class="pull-right">
-                           <!-- needs a route -->
-                           @if($a->link)
-                            {{ Html::link( $a->link, $a->link_title, ['class' => 'btn btn-primary']) }}
-                           @endif
-                          </div>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            {{ image($a->image, $a->type, ['class'=>'img-responsive list-group-item-img'])}}
+                                        </div>
+                                        <div class="col-sm-9 sm-mt20 sm-text-center">
+                                            <strong class="list-group-item-heading">{{ $a->title }}</strong>
+                                            <p class="list-group-item-text">{{ $a->description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3 sm-mt20">
+                                    @if($a->link)
+                                        {{ Html::link( $a->link, $a->link_title, ['class' => 'btn btn-primary btn-block']) }}
+                                    @endif
+                                </div>
+                            </div>
+
 
 
                         </li>
