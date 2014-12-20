@@ -43,12 +43,12 @@ class MainController extends \BaseController
             ->where('processed', 1)
             ->groupBy('month')
             ->orderBy(DB::raw('year asc, month'))
-            ->get(array(
+            ->get([
                 DB::raw('YEAR(created_at) as year'),
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('SUM(total) as total'),
                 DB::raw('SUM(total_after_fees) as total_after_fees')
-            ));
+            ]);
 
         $start = Carbon::now()->subYear();
         $end = Carbon::now();
@@ -72,19 +72,19 @@ class MainController extends \BaseController
         $this->data['total_classes'] = Evercisegroup::where('created_at', '>=', Carbon::now()->subYear())
             ->groupBy('month')
             ->orderBy(DB::raw('year asc, month'))
-            ->get(array(
+            ->get([
                 DB::raw('YEAR(created_at) as year'),
                 DB::raw('MONTH(created_at) as month'),
                 DB::raw('COUNT(id) as total')
-            ));
+            ]);
         $this->data['total_sessions'] = Evercisesession::where('created_at', '>=', Carbon::now()->subYear())
             ->groupBy('month')
             ->orderBy(DB::raw('year asc, month'))
-            ->get(array(
+            ->get([
                 DB::raw('YEAR(date_time) as year'),
                 DB::raw('MONTH(date_time) as month'),
                 DB::raw('COUNT(id) as total')
-            ));
+            ]);
 
         foreach ($period as $dt) {
             $this->data['total_classes_count'][(int)$dt->format("m")] = 0;
@@ -200,12 +200,14 @@ class MainController extends \BaseController
 
                     Session::forget('email');
 
-                    User::subscribeMailchimpNewsletter(
-                        Config::get('mailchimp')['newsletter'],
-                        $user->email,
-                        $user->first_name,
-                        $user->last_name
-                    );
+                    if(false) {
+                        User::subscribeMailchimpNewsletter(
+                            Config::get('mailchimp')['newsletter'],
+                            $user->email,
+                            $user->first_name,
+                            $user->last_name
+                        );
+                    }
                     User::makeUserDir($user);
 
                 }
@@ -214,7 +216,7 @@ class MainController extends \BaseController
             }
 
             try {
-                Event::fire('user.registered', [$user]);
+                event('user.registered', [$user]);
             }catch(Exception $e){
                 Log::error($e);
             }
@@ -234,10 +236,10 @@ class MainController extends \BaseController
             if($res = Trainer::createOrFail($trainer)) {
 
 
-                Event::fire('trainer.registered', [$user, ]);
+                event('trainer.registered', [$user, ]);
 
 
-                Event::fire('user.admin.trainerCreate', compact('user', 'trainer'));
+                event('user.admin.trainerCreate', compact('user', 'trainer'));
 
                 Session::flash('notification', 'Trainer Created');
                 return Redirect::route('admin.users');
