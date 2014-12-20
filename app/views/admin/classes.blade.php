@@ -160,10 +160,35 @@ var activeImageClass;
 
         });
 
+        $(document).on('click', '.save_categories', function(e) {
+                var class_id = $('#ajaxModal').data('class_id');
+                var cats = $(".sub_cats_checkbox").map(function(){
+                    if($(this).prop( "checked" )) {
+                        return $(this).val();
+                    }
+                }).get();
+
+                currentRequest = $.ajax({
+                                        type: "PUT",
+                                        url: "{{ URL::route('ajax.admin.modal.categories.save') }}",
+                                        cache: false,
+                                        dataType: 'json',
+                                        data: 'class_id='+class_id+'&cat='+cats,
+                                        beforeSend: function (json) {
+                                            if (currentRequest != null) currentRequest.abort();
+                                        },
+                                        success:function(res){
+                                            console.log(res);
+                                        }
+                                })
+        });
+
+
         $('.categories_modal').click(function(e){
 
             var id = $(this).data('id');
             var url = $(this).data('url');
+            $('#ajaxModal').data('class_id', id);
             $('#ajaxModal').html('<div class="modal-dialog"><div class="modal-content" style="text-align: center"><div class="modal-header">'+
                                     '<h4 class="modal-title">Edit Categories</h4></div><div class="modal-body">'+
                                     '<img src="/assets/img/spinning-circles.svg" style="width:130px; text-align:center;margin:5px auto"/>'+

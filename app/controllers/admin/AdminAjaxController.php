@@ -470,4 +470,31 @@ class AdminAjaxController extends AdminController
 
     }
 
+
+    public function saveClassCategories()
+    {
+
+        $class = $this->evercisegroup->find($this->input->get('class_id'));
+        $categories = $this->input->get('cat');
+
+        if(strpos($categories, ',') !== false) {
+            $categories = explode(',',$categories);
+        } else {
+            $categories = [$categories];
+        }
+
+        if($class) {
+
+            $class->subcategories()->detach();
+            if (count($categories) > 0) {
+                $class->subcategories()->attach($categories);
+            }
+        }
+
+
+        return Response::json(['res' => $class->subcategories()->get()->toArray(), 'error' => false]);
+
+
+    }
+
 }
