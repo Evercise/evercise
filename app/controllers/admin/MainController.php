@@ -213,8 +213,11 @@ class MainController extends \BaseController
                 die($e->getMessage());
             }
 
-
-            Event::fire('user.registered', [$user]);
+            try {
+                Event::fire('user.registered', [$user]);
+            }catch(Exception $e){
+                Log::error($e);
+            }
 
             $trainer=['confirmed' => 1, 'user_id' => $user->id];
 
