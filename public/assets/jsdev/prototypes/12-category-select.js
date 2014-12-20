@@ -34,7 +34,7 @@ categorySelect.prototype = {
         $(document).on('swiperight', '#image-carousel', function(){
             $(this).carousel('next');
         })
-        $(document).on('left', '#image-carousel', function(){
+        $(document).on('swipeleft', '#image-carousel', function(){
             $(this).carousel('prev');
         })
     },

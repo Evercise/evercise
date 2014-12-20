@@ -4,6 +4,11 @@
     top: 100px;
     right: 80px;
     z-index: 9999;
+    @media (max-width: @grid-float-breakpoint) {
+      right: 0;
+      text-align: center;
+      width:  100%;
+    }
   }
   &.absolute{
     position: absolute;

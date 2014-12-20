@@ -77,11 +77,11 @@
 
          </div>
          <!--/carousel-inner-->
-         <a class="left carousel-control" href="#image-carousel" data-slide="prev">
+         <a class="left carousel-control hidden-mob" href="#image-carousel" data-slide="prev">
             <span class="icon icon-left-triangle"></span>
          </a>
 
-         <a class="right carousel-control" href="#image-carousel" data-slide="next">
+         <a class="right carousel-control hidden-mob" href="#image-carousel" data-slide="next">
             <span class="icon icon-right-triangle"></span>
          </a>
     </div>

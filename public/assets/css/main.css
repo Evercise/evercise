@@ -11210,6 +11210,13 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   right: 80px;
   z-index: 9999;
 }
+@media (max-width: 992px) {
+  .alert.fixed {
+    right: 0;
+    text-align: center;
+    width: 100%;
+  }
+}
 .alert.absolute {
   position: absolute;
   left: 30px;
@@ -11419,6 +11426,15 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   margin-left: 60px;
   margin-bottom: 10px;
   border-bottom: 1px solid #e8ebec;
+}
+@media (max-width: 992px) {
+  .article .article-block {
+    margin: 0;
+  }
+  .article .article-block img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 .article span.alert {
   padding: 15px;
