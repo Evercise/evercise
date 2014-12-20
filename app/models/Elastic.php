@@ -314,7 +314,7 @@ class Elastic
                 'gender'           => $a->gender,
                 'description'      => $a->description,
                 'image'            => $a->image,
-                'capacity'         => (int)$a->capacity,
+                'capacity'         => round($a->futuresessions()->avg('tickets'), 0),
                 'default_duration' => (int)$a->default_duration,
                 'default_price'    => (double)$a->default_price,
                 'published'        => ($a->published == 0 ? FALSE : TRUE),

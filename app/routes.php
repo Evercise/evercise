@@ -50,6 +50,7 @@ Route::group(['prefix' => 'ajax'], function () {
         ['as' => 'users.location.set', 'uses' => 'ajax\UsersController@setLocation']);
 
     // login
+    // login
     Route::post('/auth/login', ['as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin']);
 
     // cart
