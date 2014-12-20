@@ -111,7 +111,7 @@ class Evercisegroup extends \Eloquent
                     'venue_id'    => $venueId,
                     'description' => $description,
                     'image'       => $image,
-                    'slug'        => $slug,
+                    'slug'        => str_random(12),
                 ]
             );
 
@@ -175,7 +175,7 @@ class Evercisegroup extends \Eloquent
 
         /** Looks like its Taken */
         /** Stick the ID at the end and forget it */
-        $name .= $name.'_'.$class->id;
+        $name = $name.'_'.$class->id;
 
         return $name;
     }
