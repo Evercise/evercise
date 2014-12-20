@@ -222,10 +222,11 @@ $(function(){
         new RemoveSession(this);
     })
 
-    $("#image-carousel").swiperight(function() {
+    $(document).on('swiperight', '#image-carousel', function(){
         alert('right');
         $(this).carousel('prev');
-    });
+    })
+
     $("#image-carousel").swipeleft(function() {
         $(this).carousel('next');
     });
