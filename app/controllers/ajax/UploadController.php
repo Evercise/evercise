@@ -267,17 +267,28 @@ class UploadController extends AjaxBaseController
         $image = $file->crop((int)$crop_width, (int)$crop_height, (int)$crop_x, (int)$crop_y);
 
         /** New Slug for the Image */
-        $slug = slugIt(implode(' ', [$user->display_name, rand(1, 100)])) . '.' . $upload_file->getClientOriginalExtension();
+        $slug = slugIt($user->display_name);
 
 
-        /** Save the images */
+        $file_name = false;
 
         foreach($sizes as $s) {
-            $file_name = $s['prefix'].'_' . $slug;
-            $image->fit($s['width'], $s['height'])->save($folder . '/' . $file_name);
+
+
+            if(!$file_name) {
+                $file_name = uniqueFile(public_path() . '/' . $folder . '/', $s['prefix'] . '_' . $slug,
+                    $upload_file->getClientOriginalExtension());
+
+                $real_name = str_replace($s['prefix'] . '_', '', $file_name);
+            }
+
+            $file_name = $s['prefix'].'_'.$real_name;
+            $image->fit($s['width'], $s['height'])->save(public_path() . '/' . $folder . '/'.$file_name);
+
+
         }
 
-        return $this->response->json(['file' => $folder . '/' . $slug, 'filename' => $slug, 'folder' => $folder]);
+        return $this->response->json(['file' => $folder . '/' . $real_name, 'filename' => $real_name, 'folder' => $folder]);
 
 
     }

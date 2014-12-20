@@ -28,6 +28,13 @@
 .class-hub-panel {
   .class-box(auto, 180px);
   box-shadow: none;
+  @media (max-width: @grid-float-breakpoint) {
+    .class-image-wrapper,.class-title-wrapper{
+      width: 100%;
+      text-align: center;
+    }
+  }
+
 }
 
 .class-snippet-wrapper{

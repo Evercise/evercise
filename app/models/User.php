@@ -332,20 +332,20 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function validateUserEdit($inputs, $dateAfter, $dateBefore)
     {
-        $validator = Validator::make(
-            $inputs,
-            [
-                // User fields
+        $validationRules = array_merge([
                 'first_name' => 'required|max:15|min:2',
                 'last_name'  => 'required|max:15|min:2',
                 'dob'        => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
                 'phone'      => 'numeric',
                 'password'   => 'confirmed|min:6|max:32',
-                // Trainer fields
-                'bio' => 'max:500|min:50',
-                'website' => 'sometimes',
-                'profession' => 'max:50|min:2',
-            ]
+            ],
+            Trainer::$validationRules
+        );
+        $validationRules['image'] = 'sometimes';
+
+        $validator = Validator::make(
+            $inputs,
+            $validationRules
         );
 
         return $validator;

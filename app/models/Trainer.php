@@ -17,6 +17,13 @@ class Trainer extends \Eloquent
      */
     protected $table = 'trainers';
 
+    public static $validationRules = [ // validation for these fields upon update lies in User/validateUserEdit
+        'bio' => 'required|max:500|min:50',
+        'image' => 'required',
+        'website' => 'sometimes',
+        'profession' => 'required|max:50|min:2',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
@@ -117,12 +124,7 @@ class Trainer extends \Eloquent
         // validation rules for input field on register form
         $validator = Validator::make(
             $inputs,
-            [ // validation for these fields upon update lies in User/validateUserEdit
-                'bio' => 'required|max:500|min:50',
-                'image' => 'required',
-                'website' => 'sometimes',
-                'profession' => 'required|max:50|min:2',
-            ]
+            static::validationRules
         );
         return $validator;
     }

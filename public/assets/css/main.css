@@ -7188,6 +7188,12 @@ a.text-grey:hover {
 a.bg-grey:hover {
   background-color: #d6d9db;
 }
+.bg-white {
+  background-color: #ffffff;
+}
+a.bg-white:hover {
+  background-color: #e6e6e6;
+}
 .bg-dark-grey {
   background-color: #383d48;
 }
@@ -7278,6 +7284,7 @@ a.bg-light-grey:hover {
 }
 .navbar-default .navbar-brand {
   width: 96px;
+  z-index: 9999;
   background-image: url("../img/ev_site_icons.png");
   background-position: -40px -72px;
   overflow: hidden;
@@ -7414,6 +7421,17 @@ a.bg-light-grey:hover {
 }
 .sticky-wrapper {
   z-index: 1;
+}
+@media (max-width: 992px) {
+  .sticky-wrapper {
+    position: relative;
+    top: 0!important;
+  }
+}
+@media (max-width: 992px) {
+  .profile-panels {
+    margin-top: 0!important;
+  }
 }
 .nav-pills li {
   text-align: center;
@@ -9439,6 +9457,13 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-hub-panel .class-info-wrapper form {
   padding: 0 15px;
+}
+@media (max-width: 992px) {
+  .class-hub-panel .class-image-wrapper,
+  .class-hub-panel .class-title-wrapper {
+    width: 100%;
+    text-align: center;
+  }
 }
 .class-snippet-wrapper {
   box-shadow: 3px 0 2px -2px rgba(56, 61, 72, 0.5);
