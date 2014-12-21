@@ -26,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-                <div class="row">
+                <div class="">
                     {{ Form::open(['route' => 'users.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
                         <div>
                            {{ Form::label('trainer-question', 'Are you a trainer?', ['class' => 'col-sm-3 col-sm-offset-3 control-label text-right'])  }}

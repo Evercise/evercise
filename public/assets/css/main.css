@@ -9816,6 +9816,9 @@ label {
   background: #ffffff;
   pointer-events: none;
 }
+.input-group .form-control {
+  z-index: 0;
+}
 .input-group .custom-select select {
   border-radius: 0;
 }
