@@ -7355,7 +7355,7 @@ a.bg-light-grey:hover {
   margin: -3px 60px 0 0px;
 }
 #mobile-cart .cart-dropdown {
-  padding-left: 127px;
+  margin-left: 127px;
 }
 #mobile-cart .cart-dropdown:before {
   left: 147px;
@@ -10323,6 +10323,12 @@ label {
   position: fixed;
   z-index: 10;
   min-width: 250px;
+}
+@media (max-width: 992px) {
+  .custom-dropdown {
+    left: 0!important;
+    width: 100%!important;
+  }
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,
