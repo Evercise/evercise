@@ -85,7 +85,7 @@
                                   @if(number_format($total, 2) != number_format($transaction->total, 2))
                                   -£{{ number_format(abs(number_format($transaction->total, 2) - number_format($total, 2)), 2) }} <br/>
                                   @endif
-                                  £{{ number_format($transaction->total) }}  <br/>
+                                  £{{ number_format($transaction->total, 2) }}  <br/>
                                   </strong>
                                 </div>
                             </div>
