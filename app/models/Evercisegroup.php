@@ -104,16 +104,7 @@ class Evercisegroup extends \Eloquent
 
             $categoryIds = Subcategory::namesToIds($categoryNames);
 
-/*            $categoryIds = [];
-            foreach($categories as $c){
-                $categoryIds[] =
-            }*/
-
-            return Response::json(
-                ['validation_failed' => 1, 'errors' => ['category-select' => 'category :'.implode('|',$categoryIds)]]
-            );
-
-            if (empty($categories)) {
+            if (empty($categoryIds)) {
                 return Response::json(
                     ['validation_failed' => 1, 'errors' => ['category-select' => 'You must choose at least one category']]
                 );
@@ -135,7 +126,7 @@ class Evercisegroup extends \Eloquent
             $evercisegroup->slug = $slug;
             $evercisegroup->save();
 
-            $evercisegroup->subcategories()->attach($categories);
+            $evercisegroup->subcategories()->attach($categoryIds);
 
             Trainerhistory::create(
                 [

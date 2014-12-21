@@ -1,10 +1,10 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
-
 <script>
   var handler = StripeCheckout.configure({
-    key: "{{  ( Config::get('evercise.stripe_testing') ? Config::get('evercise.stripe_api_key_test') : Config::get('evercise.stripe_api_key_test') ) }}",
+    key: "{{  getenv('STRIPE_API_KEY') }}",
     image: '{{url()}}/img/evercoin.png',
-    currency: "gbp",
+    currency: "GBP",
+    allowRememberMe: false,
     token: function(token) {
       $('#stripe-form').find('input[name="stripeToken"]').val(token.id);
       $('#stripe-form').trigger('submit');
