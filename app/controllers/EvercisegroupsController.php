@@ -57,6 +57,14 @@ class EvercisegroupsController extends \BaseController
     {
         // Get names of subcategories and sort alphabetically
         $subcategories = Subcategory::lists('name');
+
+        //$subcategories = $subcategoriesList;
+/*        return var_dump($subcategoriesList);
+        foreach($subcategoriesList as $s)
+        {
+            $subcategories[$s['id']] = $s['name'];
+        }*/
+
         natsort($subcategories);
 
         $venues = Venue::usersVenues($this->user->id);

@@ -111,7 +111,7 @@ class Place extends \Eloquent
 
             if ($zip_code) {
                 $type = 'ZIP';
-                $return = ['zip', Str::slug($zip_code)];
+                $return = ['postcode', Str::slug($zip_code)];
                 $name = $zip_code;
             }
 

@@ -83,13 +83,13 @@
                                             <p>Follow us on</p>
                                         </td>
                                         <td width="40"  height="40" align="center">
-                                            <a href="http://facebook.com/evercise"><img src="http://evercise.com/img/email-campaign/Facebook.png" width="40" height="40" border="0" alt="Facebook"></a>
+                                            <a href="http://facebook.com/evercise"><img src="http://evercise.com/img/email-campaign/facebook.png" width="40" height="40" border="0" alt="Facebook"></a>
                                         </td>
                                         <td width="40" height="40" align="center">
-                                            <a href="http://twitter.com/evercise"><img src="http://evercise.com/img/email-campaign/Twitter.png" width="40" height="40" border="0" alt="Twitter"></a>
+                                            <a href="http://twitter.com/evercise"><img src="http://evercise.com/img/email-campaign/twitter.png" width="40" height="40" border="0" alt="Twitter"></a>
                                         </td>
                                         <td width="40" height="40" align="center">
-                                            <a href="http://instagram.com/evercisefitness"><img src="http://evercise.com/img/email-campaign/Instagram.png" width="40" height="40" border="0" alt="Instagram"></a>
+                                            <a href="http://instagram.com/evercisefitness"><img src="http://evercise.com/img/email-campaign/instagram.png" width="40" height="40" border="0" alt="Instagram"></a>
                                         </td>
 
                                         <td class="sm-hidden" width="30" height="85"></td>

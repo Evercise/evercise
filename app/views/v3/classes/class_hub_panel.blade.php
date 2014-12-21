@@ -1,7 +1,7 @@
 <div class="class-hub-panel center-block">
     <div class="row">
         <div class="class-image-wrapper pull-left">
-            {{ image( $evercisegroup->user->directory.'/preview_'.$evercisegroup->image) }}
+            <a href="{{ URL::route('class.show', [$evercisegroup->slug]) }}">{{ image( $evercisegroup->user->directory.'/preview_'.$evercisegroup->image) }}</a>
         </div>
         <div class="class-title-wrapper pull-left">
             <a href="{{ URL::route('class.show', [$evercisegroup->slug]) }}"><h3>{{ $evercisegroup->name }}</h3></a>

@@ -18,17 +18,20 @@
             </div>
         </div>
     </div>
+    <hr>
+    <!--
     <div id="profile-nav" class="sticky-wrapper">
         <nav id="user-nav-bar" class="navbar navbar-default mb0 sticky-fixed-nav" role="navigation">
             <div class="container">
                 <ul class="nav nav-pills nav-justified">
                     <li class="{{ ($tab === 0 ? 'active' : ($tab === 'classes' ? 'active' : null)) }}"><a href="#classes">Classes</a></li>
-                   <!-- <li class="{{ $tab === 'activity' ? 'active' : null }}"><a href="#activity">Activity</a></li>-->
+                    <li class="{{ $tab === 'activity' ? 'active' : null }}"><a href="#activity">Activity</a></li>
                     <li class="{{ $tab === 'reviews' ? 'active' : null }}"><a href="#reviews">Reviews</a></li>
                 </ul>
             </div>
         </nav>
     </div>
+    -->
     <div id="classes" class="{{ ($tab === 0 ? 'profile-panels' : ($tab === 'classes' ? 'profile-panels' : 'profile-panels hidden')) }}">
          @include('v3.users.profile.class_hub', ['groups' => $data['evercisegroups'], 'mode' => 'user'])
     </div>

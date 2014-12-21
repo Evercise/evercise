@@ -88,12 +88,14 @@ class SearchController extends \BaseController
     {
         $link = $this->link->checkLink($all_segments, $this->input->get('area_id', false));
 
+
         if ($link) {
 
             switch ($link->type) {
                 case 'AREA':
                 case 'STATION':
                 case 'POSTCODE':
+                case 'ZIP':
                     return $this->search($link->getArea);
                     break;
                 case 'CLASS':
@@ -223,7 +225,8 @@ class SearchController extends \BaseController
         /* Overide $params arr so it will show the map results only */
         $params['size'] = $this->config->get('evercise.max_display_map_results');
         $params['from'] = 0;
-        $mapResults = $this->search->cleanMapResults($this->search->getResults($area, $params));
+        $map_search = $this->search->getResults($area, $params);
+        $mapResults = $this->search->cleanMapResults($map_search);
 
         //Log Stats
         $this->elastic->saveStats((!empty($this->user->id) ? $this->user->id : 0), $this->input->ip(), $area, $params,

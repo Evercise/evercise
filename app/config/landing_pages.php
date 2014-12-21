@@ -4,8 +4,8 @@ $base = 'assets/img/landings/';
 return [
 
     '/uk/london/bootcamp'     => [
-        'title'       => 'First Bootcamp Class',
-        'description' => 'Get your first Bootcamp class on US',
+        'title'       => 'Bootcamp Classes in London | Evercise',
+        'description' => 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Bootcamp Trainers and Bootcamp classes all over London.',
         'price'       => '£10',
         'category'    => 'Bootcamp',
         'category_id' => 7,
@@ -119,7 +119,7 @@ return [
             ]
         ]
     ],
-    '/uk/london/fitness'      => [
+    '/uk/london/fitnessclasses'      => [
         'title'       => 'First Fitness Class',
         'description' => 'Get your first Fitness class on US',
         'price'       => '£10',
@@ -177,7 +177,7 @@ return [
             ]
         ]
     ],
-    '/uk/london/martial-arts' => [
+    '/uk/london/martialarts' => [
         'title'       => 'First Martial Arts Class',
         'description' => 'Get your first Martial Arts class on US',
         'price'       => '£10',

@@ -243,6 +243,24 @@ class Search
                 }
             }
 
+            $futuresessions = [];
+
+            if(count($row->futuresessions) > 4) {
+                $total = 0;
+                foreach($row->futuresessions as $s) {
+
+                    if($total > 3) {
+                        $row->futuresessions = $futuresessions;
+                        break;
+                    }
+
+                    if($s->remaining > 0) {
+                        $futuresessions[] = $s;
+                        $total++;
+                    }
+                }
+            }
+
             $mapResult[] = $row;
         }
 

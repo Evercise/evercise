@@ -9759,37 +9759,38 @@ label {
 .custom-select {
   position: relative;
 }
-.custom-select:after {
+.custom-select:before {
   position: absolute;
   content: '';
   height: 40px;
   width: 20px;
   top: 0;
   right: 3px;
+  pointer-events: none;
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -240px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-select:after.active {
+.custom-select:before.active {
   background-position: -50px -280px;
 }
-.custom-select:after.hover:hover,
-.custom-select:after.active:hover {
+.custom-select:before.hover:hover,
+.custom-select:before.active:hover {
   cursor: pointer;
   background-position: -50px -280px;
 }
-.custom-select:hover:after {
+.custom-select:hover:before {
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -280px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-select:hover:after.active {
+.custom-select:hover:before.active {
   background-position: -50px -320px;
 }
-.custom-select:hover:after.hover:hover,
-.custom-select:hover:after.active:hover {
+.custom-select:hover:before.hover:hover,
+.custom-select:hover:before.active:hover {
   cursor: pointer;
   background-position: -50px -320px;
 }
@@ -9813,6 +9814,7 @@ label {
   width: 100%;
   height: 40px;
   background: #ffffff;
+  pointer-events: none;
 }
 .input-group .custom-select select {
   border-radius: 0;
@@ -10007,6 +10009,13 @@ label {
 }
 .hero.small-padding {
   padding-top: 10px;
+}
+.hero .hero-full-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 @media screen and (min-width: 768px) {
   .hero-sm {

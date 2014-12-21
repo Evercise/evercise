@@ -10,6 +10,9 @@ if(typeof angular != 'undefined') {
         // set initial sort
         $scope.sort = 'id';
 
+
+
+
         // set initial dropdown styling
         $scope.dropwdownStyle = {
             top : 0,
@@ -89,15 +92,26 @@ if(typeof angular != 'undefined') {
 
         // when dropdown is closed
         $scope.closeDropdown = function(toggle){
+            $("img.lazy").trigger("sort");
             window.setTimeout(function(){
                 $('.tab-pane-sort').removeClass('active');
                 $('.'+toggle+'-btn').removeClass('active');
             },1);
             window.setTimeout(function(){
-                $('.mb-scroll').mCustomScrollbar("scrollTo", '#'+$scope.lastActiveMarker.id, {
-                    scrollInertia: 500,
-                    timeout: 10
-                });
+                if(typeof $scope.lastActiveMarker.id !== 'undefined'){
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", '#'+$scope.lastActiveMarker.id, {
+                        scrollInertia: 500,
+                        timeout: 10
+                    });
+                }
+                else
+                {
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", '1px', {
+                        scrollInertia: 500,
+                        timeout: 10
+                    });
+                }
+
             },100);
         }
 
@@ -198,7 +212,7 @@ if(typeof angular != 'undefined') {
             // topggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
             $scope.lastActiveMarker = marker;
-            marker.icon = '/assets/img/icon_default_large_pin_pink.png';
+            marker.icon = '/assets/img/icon_default_large_pink.png';
 
             $scope.mask = true;
 
@@ -300,8 +314,10 @@ if(typeof angular != 'undefined') {
             }
             $scope.markers = $scope.myMarkers;
             $("img.lazy").lazyload({
-                container: $(".snippet-body")
+                container: $(".snippet-body"),
+                event : "sort"
             });
+
             $scope.scrollHeight();
 
         }, true);
@@ -314,7 +330,6 @@ if(typeof angular != 'undefined') {
             $scope.filterHeight = 104;
 
             $scope.scrollBarHeight = $scope.windowHeight - $scope.navHeight - $scope.searchHeight -  $scope.filterHeight;
-            console.log($scope.windowHeight);
 
             return {
                 height: $scope.scrollBarHeight + 'px'
