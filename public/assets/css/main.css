@@ -9253,13 +9253,10 @@ fieldset[disabled] .stripe-button-el.active {
   border: none;
   box-shadow: none;
 }
-.btn-group.btn-block {
-  /*.btn{
-      width: 80%;
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-    */
+.btn-group.btn-block .btn {
+  width: 80%;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .btn-group.btn-block .btn.btn-aside {
   width: 20%;
