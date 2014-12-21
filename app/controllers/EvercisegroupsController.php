@@ -5,7 +5,6 @@ class EvercisegroupsController extends \BaseController
 {
 
 
-
     protected $evercisegroup;
     protected $input;
     protected $log;
@@ -35,7 +34,6 @@ class EvercisegroupsController extends \BaseController
         );
 
     }
-
 
 
     /**
@@ -101,12 +99,11 @@ class EvercisegroupsController extends \BaseController
         $data = $this->elastic->getSingle($id);
 
 
-
-        if (!empty($data->hits[0]->_source)){
+        if (!empty($data->hits[0]->_source)) {
 
             $class = $data->hits[0]->_source;
 
-            if(is_numeric($id)) {
+            if (is_numeric($id)) {
                 return Redirect::route('class.show', [$id => $class->slug], 301);
             }
 
@@ -119,7 +116,7 @@ class EvercisegroupsController extends \BaseController
                 $og->title($class->name)
                     ->type('article')
                     ->image(
-                        url() .'/'.$class->user->directory . '/thumb_' . $class->image,
+                        url() . '/' . $class->user->directory . '/thumb_' . $class->image,
                         [
                             'width'  => 150,
                             'height' => 156
@@ -135,25 +132,32 @@ class EvercisegroupsController extends \BaseController
             /** Overwrite Venue because of amenities */
             $class->venue = Venue::with('facilities')->find($class->venue_id);
 
+            $params = [
+                'data'            => (array)$class,
+                'title'           => $class->name . ' - ' . trim($class->venue->town) . ' | Evercise',
+                'metaDescription' => $class->name . ' in activity that enhances and maintains overall health and wellness. ' . $class->name . ' Fitness Classes ' . trim($class->venue->town)
 
-            event('class.viewed', [$class, $this->user]);
+            ];
 
-            if (Sentry::check() && ($class->user_id == $this->user->id || $this->user->hasAccess('admin')))
-            // This Group belongs to this User/Trainer
+
+            if (Sentry::check() && ($class->user_id == $this->user->id || $this->user->hasAccess('admin'))) // This Group belongs to this User/Trainer
             {
-                return View::make('v3.classes.class_page')
-                    ->with('preview', 'preview')
-                    ->with('data', (array)$class);
-            }
-            else // This group does not belong to this user
-            {
+
+                event('class.viewed', [$class, $this->user]);
+                $params['preview'] = 'preview';
+
+                return View::make('v3.classes.class_page', $params);
+            } else {
+                // This group does not belong to this user
                 /** Check if this is active or not! */
 
-                if($class->published == 0) {
+                if ($class->published == 0) {
                     return Redirect::to('uk/london')->with('error', 'This class does not exist');
                 }
-                return View::make('v3.classes.class_page')
-                    ->with('data', (array)$class);
+
+                event('class.viewed', [$class, $this->user]);
+
+                return View::make('v3.classes.class_page', $params);
             }
         } else {
             //return View::make('errors.missing');
@@ -197,12 +201,15 @@ class EvercisegroupsController extends \BaseController
         $id = Input::get('id');
         //return $id;
         $evercisegroup = Evercisegroup::with('evercisesession.sessionmembers')->find($id);
-        if(!$evercisegroup) return 'cannot find group '.$id;
+        if (!$evercisegroup) {
+            return 'cannot find group ' . $id;
+        }
 
         $delete = $evercisegroup->deleteGroup($this->user);
 
         event(' class.deleted', [$this->user, $evercisegroup]);
-        return 'deleted '.$id;
+
+        return 'deleted ' . $id;
     }
 
 
