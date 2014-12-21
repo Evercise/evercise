@@ -7313,6 +7313,9 @@ a.bg-light-grey:hover {
 @media (max-width: 992px) {
   .navbar-brand {
     margin-left: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   #navy {
     text-align: center;
