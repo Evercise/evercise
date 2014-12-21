@@ -395,6 +395,10 @@ class Elastic
             foreach ($a->subcategories()->get() as $sub) {
                 if (!in_array($sub->name, $categories)) {
                     $categories[] = $sub->name;
+                    if(!empty($sub->associations)) {
+                        $categories[] = $sub->associations;
+                    }
+
                 }
 
                 foreach ($sub->categories()->get() as $cat) {
