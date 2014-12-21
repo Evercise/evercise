@@ -215,7 +215,7 @@ class UsersController extends AjaxBaseController
             return Redirect::route('home');
         }
 
-        $valid_user = User::validUserEdit(Input::all());
+        $valid_user = User::validUserEdit(Input::all(), $this->user->isTrainer());
 
         if (! $valid_user['validation_failed']) {
             // Actually update the user record
