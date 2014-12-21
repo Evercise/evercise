@@ -86,6 +86,6 @@ categorySelect.prototype = {
         this.updateCategoriesInput();
     },
     updateCategoriesInput: function(){
-        $('input[name="category_array[]"]').val(this.keys).trigger('change');
+        $('input[name="category_array[]"]').val(this.keywords).trigger('change');
     }
 }

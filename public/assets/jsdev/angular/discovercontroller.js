@@ -92,15 +92,26 @@ if(typeof angular != 'undefined') {
 
         // when dropdown is closed
         $scope.closeDropdown = function(toggle){
+            $("img.lazy").trigger("sort");
             window.setTimeout(function(){
                 $('.tab-pane-sort').removeClass('active');
                 $('.'+toggle+'-btn').removeClass('active');
             },1);
             window.setTimeout(function(){
-                $('.mb-scroll').mCustomScrollbar("scrollTo", '#'+$scope.lastActiveMarker.id, {
-                    scrollInertia: 500,
-                    timeout: 10
-                });
+                if(typeof $scope.lastActiveMarker.id !== 'undefined'){
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", '#'+$scope.lastActiveMarker.id, {
+                        scrollInertia: 500,
+                        timeout: 10
+                    });
+                }
+                else
+                {
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", '1px', {
+                        scrollInertia: 500,
+                        timeout: 10
+                    });
+                }
+
             },100);
         }
 
@@ -303,13 +314,9 @@ if(typeof angular != 'undefined') {
             }
             $scope.markers = $scope.myMarkers;
             $("img.lazy").lazyload({
-                event : "finished"
+                container: $(".snippet-body"),
+                event : "sort"
             });
-
-
-            var timeout = setTimeout(function() {
-                $("img.lazy").trigger("finished")
-            }, 1000);
 
             $scope.scrollHeight();
 
