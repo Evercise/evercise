@@ -355,7 +355,7 @@ class Elastic
                     'name'      => $user->first_name . ' ' . $user->last_name,
                     'stars'     => (int)$s->stars,
                     'comment'   => $s->comment,
-                    'date_left' => $s->created_at->format('D jS M Y')
+                    'date_left' => $s->created_at->format('M jS, g:ia')
                 ];
 
             }
