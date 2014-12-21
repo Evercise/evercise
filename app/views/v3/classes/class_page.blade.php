@@ -62,7 +62,7 @@
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                {{ image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->first_name, ['class' => 'img-responsive img-circle center-block']) }}
+                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->first_name, ['class' => 'img-responsive img-circle center-block']) , $data['user']->display_name) ) }}
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">

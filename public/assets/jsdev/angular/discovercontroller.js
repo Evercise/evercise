@@ -10,6 +10,9 @@ if(typeof angular != 'undefined') {
         // set initial sort
         $scope.sort = 'id';
 
+
+
+
         // set initial dropdown styling
         $scope.dropwdownStyle = {
             top : 0,
@@ -85,6 +88,9 @@ if(typeof angular != 'undefined') {
                     $(e.target).parent().removeClass('active');
                 },1);
             }
+            $("img.lazy").lazyload({
+                container: $(".snippet-body")
+            });
         };
 
         // when dropdown is closed
@@ -314,7 +320,6 @@ if(typeof angular != 'undefined') {
             $scope.filterHeight = 104;
 
             $scope.scrollBarHeight = $scope.windowHeight - $scope.navHeight - $scope.searchHeight -  $scope.filterHeight;
-            console.log($scope.windowHeight);
 
             return {
                 height: $scope.scrollBarHeight + 'px'

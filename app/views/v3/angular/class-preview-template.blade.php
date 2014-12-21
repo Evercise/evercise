@@ -3,6 +3,7 @@
         <span class="icon icon-grey-left-arrow"></span>
     </div>
     <div class="hero hero-sm mb25" style="background-image: url( {{ url( '{[{ preview.image }]}' ) }} )">
+        <a class="hero-full-link" href="{[{ preview.link }]}"></a>
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
             <ul class="nav navbar-nav nav-justified nav-no-float">
                 <li class="active"><a href="#about" data-toggle="tab">About</a></li>
@@ -15,7 +16,7 @@
         <div role="tabpanel" class="tab-pane active" id="about">
 
             <div class="underline text-center">
-                <h3>{[{ preview.name }]}</h3>
+                <h3><a href="{[{ preview.link }]}">{[{ preview.name }]}</a></h3>
             </div>
 
             <div class="row text-center mb30">
@@ -47,11 +48,11 @@
                             {{ Form::submit('Join Class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
-
-                            <select name="quantity" id="quantity" class="btn btn-primary btn-aside btn-select">
+<div class="btn btn-primary btn-aside">
+                            <select name="quantity" id="quantity" class="btn-primary btn-select">
                                 <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
                             </select>
-
+                            </div>
                         </div>
                     {{ Form::close() }}
 
