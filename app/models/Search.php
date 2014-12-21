@@ -264,7 +264,6 @@ class Search
             $mapResult[] = $row;
         }
 
-        d($mapResult);
         return $mapResult;
 
     }
