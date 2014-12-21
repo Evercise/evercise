@@ -135,11 +135,13 @@
                                             {{ Form::submit('Join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn ']) }}
                                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
                                             {{ Form::hidden('force', true) }}
-                                              <select name="quantity" id="quantity" class="btn btn-primary btn-aside btn-select {{isset($preview) ? 'disabled' : null}}">
+                                            <div class="btn btn-primary btn-aside">
+                                              <select name="quantity" id="quantity" class="btn-select btn-primary {{isset($preview) ? 'disabled' : null}}">
                                                 @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
                                                 <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                                 @endfor
                                               </select>
+                                            </div>
                                         </div>
                                     {{ Form::close() }}
                                 @else

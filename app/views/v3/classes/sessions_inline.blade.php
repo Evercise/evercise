@@ -42,15 +42,16 @@
             <div class="row sm-mb10">
                 <div class="col-xs-12">
                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
-                        <div class="btn-group pull-right">
+                        <div class="btn-group btn-block">
                             {{ Form::submit('join class', ['class'=> 'btn btn-primary']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
-
-                              <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                            <div class="btn btn-primary btn-aside">
+                              <select name="quantity" id="quantity" class="btn-primary btn-select">
                                 @for($i=1; $i<($session->tickets - count($session->sessionmembers) + 1 ); $i++)
                                 <option value="{{$i}}" {{ (!empty($cart_items[$session->id]) && $cart_items[$session->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                 @endfor
                               </select>
+                            </div>
 
                         </div>
                     {{ Form::close() }}

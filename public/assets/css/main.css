@@ -9261,9 +9261,52 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .btn-group.btn-block .btn.btn-aside {
   width: 30%;
-  padding-left: 0;
-  padding-right: 0;
+}
+.btn-group.btn-block .btn-dropdown {
+  width: 30%;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid #ffffff;
+}
+.btn-group.btn-block .btn-dropdown select {
+  height: 100%;
+  width: 20px;
+}
+.btn-aside {
+  border: 0;
+  border-left: 1px solid #ffffff;
+  padding: 0;
   text-align: center;
+}
+.btn-aside:hover {
+  cursor: default;
+  border: 0;
+  border-left: 1px solid #ffffff;
+}
+.btn-aside.btn-primary:hover {
+  background-color: #ff1b7e;
+}
+.btn-aside .btn-select {
+  cursor: pointer;
+  -webkit-appearance: none;
+  padding: 0 19px;
+  border: 0;
+  height: 40px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.btn-aside .btn-select::-ms-expand {
+  display: none;
+}
+.btn-aside .caret {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 6px;
+  width: 6px;
+  margin-top: -3px;
+  margin-left: -3px;
 }
 @media (max-width: 767px) {
   .sm-btn-block {
@@ -9781,16 +9824,6 @@ label {
   .custom-select:after {
     position: relative;
   }
-}
-.btn-select {
-  -webkit-appearance: none;
-  height: 40px;
-  padding: 0 8px;
-  border: 0;
-  border-left: 1px solid #ffffff;
-}
-.btn-select::-ms-expand {
-  display: none;
 }
 .custom-btn-dropdown-select:after {
   position: absolute;
