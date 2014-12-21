@@ -39,7 +39,7 @@
                     <b>1. Sign up</b>
                     <p>Evercise allows you to create a unique profile with the minimum of fuss.</p>
                     <div class="mt50 mb50">
-                        {{ image('assets/img/screenshots/2 Create a class.png', 'create a class', ['class'=>'img-responsive center-block']) }}
+                        {{ image('assets/img/screenshots/2Createaclass.png', 'create a class', ['class'=>'img-responsive center-block']) }}
                     </div>
                     <b>2. Create a class</b>
                     <p>Once you’ve set up your profile you can start to list your classes. Evercise gives you the tools to make your class stand out from the crowd.</p>
@@ -49,7 +49,7 @@
                     <b>3. Train</b>
                     <p>The main event! Evercise aims to help you fill your classes and spend more time doing what you do best – train!</p>
                     <div class="mt50 mb50">
-                        {{ image('assets/img/screenshots/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                        {{ image('assets/img/screenshots/4.Withdraw.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
                     </div>
                     <b>4. Withdraw your money</b>
                     <p>Managing your Evercise account couldn’t be easier. Evercise makes the whole process - from handling bookings to collecting your payment – effortless.</p>
@@ -73,7 +73,7 @@
                      <b>3. Book class</b>
                      <p>When you’ve found a class you like the look of our simple Pay As You Go booking system allows you to complete your booking in just three clicks.</p>
                      <div class="mt50 mb50">
-                         {{ image('assets/img/screen-example.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
+                         {{ image('assets/img/screenshots/4.GetActive.png', 'screen shot', ['class'=>'img-responsive center-block']) }}
                      </div>
                      <b>4. Get active!</b>
 
