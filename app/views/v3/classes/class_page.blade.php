@@ -93,7 +93,7 @@
             </div>
 
             <div class="col-sm-12">
-                <ul class="nav navbar-nav nav-carousel hide-by-class-wrapper">
+                <ul class="nav  nav-carousel hide-by-class-wrapper">
                     <li class="hidden-mob"><a class="hide-by-class disabled" href="#Mon">MON</a></li>
                     <li class="hidden-mob"><a class="hide-by-class disabled" href="#Tue">TUE</a></li>
                     <li class="hidden-mob"><a class="hide-by-class disabled" href="#Wed">WED</a></li>
