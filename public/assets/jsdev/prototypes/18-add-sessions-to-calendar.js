@@ -65,7 +65,7 @@ AddSessionsToCalendar.prototype = {
         // Get all the other nth in the month
         while (d.getMonth()  === month) {
 
-            var recurringDate = new Date( d.getUTCFullYear() + '-' + ('0' + (d.getUTCMonth() +1)).slice(-2) + '-' +  ('0' + d.getUTCDate()).slice(-2)  );
+            var recurringDate = new Date( d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2) + ' 00:00:00'  );
 
             var resultFound = $.grep(self.dates, function(e){
                 return e.key == recurringDate.valueOf();
@@ -88,7 +88,6 @@ AddSessionsToCalendar.prototype = {
             }
             d.setDate(d.getDate() + 7);
         }
-
         this.setCalendarDates();
     },
     setCalendarDates: function(){
@@ -102,7 +101,6 @@ AddSessionsToCalendar.prototype = {
                 dates.push(value.dates);
             }
         });
-
         this.calendar.datepicker('setDates', dates );
     },
     getMonthNumber : function(mon , year){
