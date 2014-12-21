@@ -673,3 +673,18 @@ Route::get('ping', function () {
 
 
 Route::any('emailgrab', ['as' => 'email.grab', 'uses' => 'EmailGrabber@grab']);
+
+Route::get('cleansubcategoriesup', function(){
+
+    $subcategories =  Subcategory::get();
+
+    foreach ($subcategories as $sc) {
+        $n = $sc['name'];
+        //return var_dump($n);
+        //if ($n != 'dance' && $n != 'belly dancing')
+            //return ucfirst($n);
+        $sc->name = ucfirst($n);
+        $sc->save();
+    }
+
+});
