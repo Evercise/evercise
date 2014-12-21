@@ -10,7 +10,7 @@
                     <strong>{{ $rating->name }}</strong>
                 </div>
 
-                <i>{{ date('M jS, g:ia' , strtotime($rating->date_left->date))}}</i>
+                <i>{{ $rating->date_left }}</i>
                 <div class="mb25">
                     @for ($i = 0; $i < 5; $i++)
                         <span class="icon icon-{{ $i < $rating->stars ? 'full' : 'empty'  }}-star"></span>
