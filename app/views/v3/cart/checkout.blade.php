@@ -175,15 +175,17 @@
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                                         {{ Form::hidden('force', true) }}
                                         {{ Form::hidden('refresh-page', true) }}
-                                        <div class="btn-group custom-btn-dropdown-select">
+                                        <div class="btn-group btn-block">
                                             {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
+                                            <div class="btn btn-primary btn-dropdown">
+                                                <select name="quantity" id="quantity" class="btn-primary btn-select">
+                                                    <option value=""></option>
+                                                    @for($i = 1; $i <= ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
+                                                        <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
 
-                                            <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
-                                                <option value=""></option>
-                                                @for($i = 1; $i <= ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
-                                                    <option value="{{$i}}">{{$i}}</option>
-                                                @endfor
-                                            </select>
                                         </div>
 
                                     {{ Form::close() }}

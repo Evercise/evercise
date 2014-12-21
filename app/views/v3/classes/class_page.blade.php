@@ -6,12 +6,12 @@
           <div class="container mt10">
 
             <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
+                <div class="col-sm-10 col-sm-offset-1">
                     {{ Form::open(['route' => 'evercisegroups.publish', 'method' => 'post', 'id' =>'publish-class']) }}
                         <div class="row">
-                            <div class="col-sm-8 sm-text-center"><span class="text-white">This is what your class will look like when published</span></div>
-                            <div class="col-sm-2 sm-mb10  sm-mt10">{{ Html::linkRoute('sessions.add', 'Edit Sessions', $data['id'], ['class' => 'btn btn-default btn-block'] ) }}</div>
-                            <div class="col-sm-2 sm-mb10">{{Form::submit( $data['published'] == 1 ? 'Un-publish' : 'Publish',['class'=>'btn btn-primary btn-block'])}}</div>
+                            <div class="col-sm-6 sm-text-center"><span class="text-white">This is what your class will look like when published</span></div>
+                            <div class="col-sm-3 sm-mb10  sm-mt10">{{ Html::linkRoute('sessions.add', 'Edit Sessions', $data['id'], ['class' => 'btn btn-default btn-block'] ) }}</div>
+                            <div class="col-sm-3 sm-mb10">{{Form::submit( $data['published'] == 1 ? 'Un-publish' : 'Publish',['class'=>'btn btn-primary btn-block'])}}</div>
                         </div>
 
 
@@ -93,7 +93,7 @@
             </div>
 
             <div class="col-sm-12">
-                <ul class="nav navbar-nav nav-carousel hide-by-class-wrapper">
+                <ul class="nav  nav-carousel hide-by-class-wrapper">
                     <li class="hidden-mob"><a class="hide-by-class disabled" href="#Mon">MON</a></li>
                     <li class="hidden-mob"><a class="hide-by-class disabled" href="#Tue">TUE</a></li>
                     <li class="hidden-mob"><a class="hide-by-class disabled" href="#Wed">WED</a></li>
@@ -135,11 +135,13 @@
                                             {{ Form::submit('Join class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn ']) }}
                                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
                                             {{ Form::hidden('force', true) }}
-                                              <select name="quantity" id="quantity" class="btn btn-primary btn-aside btn-select {{isset($preview) ? 'disabled' : null}}">
+                                            <div class="btn btn-primary btn-aside">
+                                              <select name="quantity" id="quantity" class="btn-select btn-primary {{isset($preview) ? 'disabled' : null}}">
                                                 @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
                                                 <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                                 @endfor
                                               </select>
+                                            </div>
                                         </div>
                                     {{ Form::close() }}
                                 @else

@@ -105,18 +105,73 @@
 
 .btn-group{
   &.btn-block{
-    /*.btn{
-      width: 80%;
+
+    .btn{
+      width: 70%;
       padding-left: 0px;
       padding-right: 0px;
+      text-align: center;
     }
-    */
+
     .btn.btn-aside{
-      width: 20%;
-      padding-left: 5%;
+      width: 30%;
     }
+    .btn-dropdown{
+      width: 30%;
+      height: 40px;
+      padding: 0;
+      border: 0;
+      border-left: 1px solid @white;
+      select{
+        height: 100%;
+        width:  20px;
+
+      }
+    }
+
   }
 }
+
+.btn-aside{
+  border: 0;
+  border-left: 1px solid @white;
+  padding: 0;
+  text-align: center;
+  &:hover{
+    cursor: default;
+    border: 0;
+    border-left: 1px solid @white;
+  }
+  &.btn-primary{
+    &:hover{
+      background-color: @btn-primary-bg;
+    }
+  }
+
+  .btn-select{
+    cursor: pointer;
+    -webkit-appearance: none;
+    padding: 0 19px;
+    border: 0;
+    height: 40px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    &::-ms-expand {
+      display: none;
+    }
+  }
+  .caret{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 6px;
+    width: 6px;
+    margin-top: -3px;
+    margin-left: -3px;
+  }
+}
+
+
 
 @media (max-width: @screen-xs-max) {
   .sm-btn-block{
