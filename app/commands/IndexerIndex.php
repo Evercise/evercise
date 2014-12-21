@@ -51,6 +51,9 @@ class IndexerIndex extends Command
 
         $time_start = microtime(true);
 
+
+        Artisan::call('indexer:create');
+
         if (!$this->elastic_index) {
             $this->error('YOU NEED TO UPDATE YOUR .env.php file.');
             $this->error('Please check EXAMPLE.env.php');
