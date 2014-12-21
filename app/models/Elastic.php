@@ -362,7 +362,7 @@ class Elastic
 
             $price = 0;
 
-            foreach ($a->futuresessions as $s) {
+            foreach ($a->futuresessions()->orderBy('date_time', 'asc')->get() as $s) {
 
 
                 if ($price == 0) {
