@@ -66,7 +66,7 @@ class Elastic
 
         $search = FALSE;
 
-        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.23;
+        // $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.23;
 
 
         if (!empty($params['search'])) {
