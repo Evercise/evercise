@@ -75,8 +75,9 @@ if(typeof angular != 'undefined') {
 
         // toggle sorting dropdowns
         $scope.toggle = function(e,toggle){
-            var offset = $(e.target).offset();
-            var height = ( $(e.target).height() * 1.5 );
+            var container = $(e.target);
+            var offset = container.offset();
+            var height = ( container.height() * 1.5 );
             $scope.dropwdownStyle = {
                 top : offset.top + height,
                 left : offset.left
@@ -87,8 +88,29 @@ if(typeof angular != 'undefined') {
                     $('#'+toggle).removeClass('active');
                     $(e.target).parent().removeClass('active');
                 },1);
+
             }
+
+
         };
+
+        $(document).mouseup(function (e)
+        {
+            var container = $(".custom-dropdown");
+
+            if(container.parent().hasClass('active')){
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    $('.sort-btn').removeClass('active');
+                    $('.filter-btn').removeClass('active');
+                    $('.tab-pane-sort').removeClass('active');
+                }
+            }
+
+
+        });
+
 
         // when dropdown is closed
         $scope.closeDropdown = function(toggle){

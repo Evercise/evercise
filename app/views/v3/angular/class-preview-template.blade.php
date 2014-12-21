@@ -37,7 +37,7 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="schedule">
 
-            <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets | orderBy: date_time:reverse | limitTo:4">
+            <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets |  limitTo:4">
                 <div class="col-sm-6 mt5">
                     <span class="icon icon-clock"></span>
                     {[{ session.date_time }]}
