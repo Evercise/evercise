@@ -46,10 +46,10 @@
                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
                     {{ Form::hidden('force', true) }}
 
-                        <div class="btn-group pull-right custom-btn-dropdown-select">
+                        <div class="btn-group btn-block">
                             {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
 
-                            <select name="quantity" id="quantity" class="btn btn-primary  btn-select">
+                            <select name="quantity" id="quantity" class="btn btn-primary btn-aside btn-select">
                                 <option value=""></option>
                                 @for($i = 1; $i <= ($row['tickets_left'] /*<= 10 ? $row['tickets_left'] : 10*/); $i++)
                                     <option value="{{$i}}">{{$i}}</option>

@@ -43,12 +43,12 @@
                 </div>
                 <div ng-if="session.remaining > 0" class="col-sm-6">
                     {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ session.id  }]}', 'class' => 'add-to-class']) }}
-                        <div class="btn-group pull-right">
+                        <div class="btn-group btn-block">
                             {{ Form::submit('Join Class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
 
-                            <select name="quantity" id="quantity" class="btn btn-primary btn-select">
+                            <select name="quantity" id="quantity" class="btn btn-primary btn-aside btn-select">
                                 <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
                             </select>
 
