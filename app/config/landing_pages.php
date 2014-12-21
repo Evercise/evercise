@@ -119,7 +119,7 @@ return [
             ]
         ]
     ],
-    '/uk/london/fitness'      => [
+    '/uk/london/fitnessclasses'      => [
         'title'       => 'First Fitness Class',
         'description' => 'Get your first Fitness class on US',
         'price'       => '£10',
@@ -177,7 +177,7 @@ return [
             ]
         ]
     ],
-    '/uk/london/martial-arts' => [
+    '/uk/london/martialarts' => [
         'title'       => 'First Martial Arts Class',
         'description' => 'Get your first Martial Arts class on US',
         'price'       => '£10',
