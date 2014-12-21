@@ -96,11 +96,26 @@ class Evercisegroup extends \Eloquent
 
             // Push categories into an array, and fail if there are none.
             //$categories = static::categoriesToArray($inputs);
-            $categories = $inputs['category_array'];
+
+            if (count($inputs['category_array']) == 1)
+                $categoryNames = explode(',', $inputs['category_array'][0]);
+            else
+                $categoryNames = $inputs['category_array'];
+
+            $categoryIds = Subcategory::namesToIds($categoryNames);
+
+/*            $categoryIds = [];
+            foreach($categories as $c){
+                $categoryIds[] =
+            }*/
+
+            return Response::json(
+                ['validation_failed' => 1, 'errors' => ['category-select' => 'category :'.implode('|',$categoryIds)]]
+            );
 
             if (empty($categories)) {
                 return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['category1' => 'You must choose at least one category']]
+                    ['validation_failed' => 1, 'errors' => ['category-select' => 'You must choose at least one category']]
                 );
             }
 

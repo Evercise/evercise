@@ -69,4 +69,11 @@ class Subcategory extends Eloquent
 		
 		return true;
 	}
+
+
+	public static function namesToIds($names)
+	{
+		return static::whereIn('name', $names)->lists('id');
+    }
+
 }

@@ -30,5 +30,4 @@ class Category extends Eloquent
             'subcategory_id'
         )->withTimestamps();
     }
-
 }
