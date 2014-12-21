@@ -7341,7 +7341,6 @@ a.bg-light-grey:hover {
     margin: auto;
     width: 100%;
     display: inline-block;
-    padding: 0 10px;
   }
   #navy .login-drop:after {
     display: none;
