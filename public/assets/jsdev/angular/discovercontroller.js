@@ -88,9 +88,6 @@ if(typeof angular != 'undefined') {
                     $(e.target).parent().removeClass('active');
                 },1);
             }
-            $("img.lazy").lazyload({
-                container: $(".snippet-body")
-            });
         };
 
         // when dropdown is closed
@@ -204,7 +201,7 @@ if(typeof angular != 'undefined') {
             // topggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
             $scope.lastActiveMarker = marker;
-            marker.icon = '/assets/img/icon_default_large_pin_pink.png';
+            marker.icon = '/assets/img/icon_default_large_pink.png';
 
             $scope.mask = true;
 
@@ -306,8 +303,14 @@ if(typeof angular != 'undefined') {
             }
             $scope.markers = $scope.myMarkers;
             $("img.lazy").lazyload({
-                container: $(".snippet-body")
+                event : "finished"
             });
+
+
+            var timeout = setTimeout(function() {
+                $("img.lazy").trigger("finished")
+            }, 1000);
+
             $scope.scrollHeight();
 
         }, true);
