@@ -37,6 +37,13 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'custom_commission'
     ];
 
+    public static $validationRules = [
+        'first_name' => 'required|max:15|min:2',
+        'last_name'  => 'required|max:15|min:2',
+        'phone'      => 'numeric',
+        'password'   => 'confirmed|min:6|max:32',
+    ];
+
     /**
      * The database table used by the model.
      *
@@ -269,19 +276,16 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function validateUserSignup($inputs/*, $dateAfter, $dateBefore*/)
     {
 
-
         // validation rules for input field on register form
         $validator = Validator::make(
             $inputs,
-            [
-                'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name'   => 'required|max:15|min:2',
-                'last_name'    => 'required|max:15|min:2',
-                //'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email'        => 'required|email|unique:users',
-                'password'     => 'required|min:6|max:32',
-                'phone'        => 'numeric',
-            ]
+            array_merge(
+                static::$validationRules,
+                [
+                    'display_name' => 'required|max:20|min:5|unique:users',
+                    'email'        => 'required|email|unique:users',
+                ]
+            )
         );
 
         return $validator;
@@ -328,20 +332,20 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $inputs
      * @param $dateAfter
      * @param $dateBefore
+     * @param $isTrainer
      * @return \Illuminate\Validation\Validator
      */
-    public static function validateUserEdit($inputs, $dateAfter, $dateBefore)
+    public static function validateUserEdit($inputs, $dateAfter, $dateBefore, $isTrainer)
     {
-        $validationRules = array_merge([
-                'first_name' => 'required|max:15|min:2',
-                'last_name'  => 'required|max:15|min:2',
-                'dob'        => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'phone'      => 'numeric',
-                'password'   => 'confirmed|min:6|max:32',
-            ],
-            Trainer::$validationRules
-        );
+
+        if($isTrainer) {
+            $validationRules = array_merge(
+                static::$validationRules,
+                Trainer::$validationRules
+            );
+        }
         $validationRules['image'] = 'sometimes';
+        $validationRules['dob'] = 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore;
 
         $validator = Validator::make(
             $inputs,
@@ -543,11 +547,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @return \Illuminate\Validation\Validator
      */
-    public static function validUserEdit($inputs)
+    public static function validUserEdit($inputs, $isTrainer)
     {
         list($dateBefore, $dateAfter) = self::validDatesUserDob();
 
-        $validator = self::validateUserEdit($inputs, $dateAfter, $dateBefore);
+        $validator = self::validateUserEdit($inputs, $dateAfter, $dateBefore, $isTrainer);
 
         return self::handleUserValidation($inputs, $validator);
     }
@@ -566,7 +570,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
         $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 0 : 1) : NULL;
+        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : 2) : 0;
 
         $user = Sentry::register(
             [

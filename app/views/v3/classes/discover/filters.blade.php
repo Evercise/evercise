@@ -17,7 +17,7 @@
                 <div class="col-sm-3 sm-mb10">
                     <div class="input-group with-addon">
                         <div class="input-group-addon"><span class="icon icon-distance"></span></div>
-                        <div class="custom-select custom-select-white">
+                        <div class="custom-select">
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                         </div>
                     </div>

@@ -33,6 +33,9 @@
 @media (max-width: @grid-float-breakpoint) {
   .navbar-brand{
     margin-left: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
   #navy {
     text-align: center;
@@ -64,7 +67,6 @@
       width: 100%;
 
       display: inline-block;
-      padding: 0 10px;
       &:after{
         display: none;
       }
@@ -85,6 +87,7 @@
   margin: -3px 60px 0 0px;
   .cart-dropdown{
     padding-left: 127px;
+   // margin-left: 127px;
     &:before{
       left: 147px;
     }

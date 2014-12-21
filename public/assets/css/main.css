@@ -7268,6 +7268,9 @@ a.bg-light-grey:hover {
   .hidden-mob {
     display: none!important;
   }
+  .sm-no-float {
+    float: none!important;
+  }
   .sm-pull-right {
     float: right!important;
   }
@@ -7310,6 +7313,9 @@ a.bg-light-grey:hover {
 @media (max-width: 992px) {
   .navbar-brand {
     margin-left: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
   #navy {
     text-align: center;
@@ -7338,7 +7344,6 @@ a.bg-light-grey:hover {
     margin: auto;
     width: 100%;
     display: inline-block;
-    padding: 0 10px;
   }
   #navy .login-drop:after {
     display: none;
@@ -9816,6 +9821,9 @@ label {
   background: #ffffff;
   pointer-events: none;
 }
+.input-group .form-control {
+  z-index: 0;
+}
 .input-group .custom-select select {
   border-radius: 0;
 }
@@ -10321,6 +10329,12 @@ label {
   z-index: 10;
   min-width: 250px;
 }
+@media (max-width: 992px) {
+  .custom-dropdown {
+    left: 0!important;
+    width: 100%!important;
+  }
+}
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -10396,7 +10410,7 @@ label {
   width: 100%;
 }
 .map-wrapper.open {
-  left: 820px;
+  left: 640px;
 }
 .map_canvas {
   height: 260px;

@@ -66,6 +66,8 @@ class Elastic
 
         $search = FALSE;
 
+        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.23;
+
 
         if (!empty($params['search'])) {
             $searchParams['body']['query']['filtered']['query'] = [
@@ -355,14 +357,14 @@ class Elastic
                     'name'      => $user->first_name . ' ' . $user->last_name,
                     'stars'     => (int)$s->stars,
                     'comment'   => $s->comment,
-                    'date_left' => $s->created_at->format('D jS M Y')
+                    'date_left' => $s->created_at->format('M jS, g:ia')
                 ];
 
             }
 
             $price = 0;
 
-            foreach ($a->futuresessions as $s) {
+            foreach ($a->futuresessions()->orderBy('date_time', 'asc')->get() as $s) {
 
 
                 if ($price == 0) {

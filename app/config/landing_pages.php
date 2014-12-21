@@ -62,8 +62,8 @@ return [
         ]
     ],
     '/uk/london/dance'        => [
-        'title'       => 'First Dance Class',
-        'description' => 'Get your first Dance class on US',
+        'title'       => 'Dance Classes in London | Evercise',
+        'description' => 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Dance Trainers and Dance classes all over London.',
         'price'       => '£10',
         'category'    => 'Dance',
         'category_id' => 1,
@@ -120,8 +120,8 @@ return [
         ]
     ],
     '/uk/london/fitnessclasses'      => [
-        'title'       => 'First Fitness Class',
-        'description' => 'Get your first Fitness class on US',
+        'title'       => 'Fitness Classes in London | Evercise',
+        'description' => 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and Fitness classes all over London.',
         'price'       => '£10',
         'category'    => 'Fitness',
         'category_id' => 3,
@@ -178,8 +178,8 @@ return [
         ]
     ],
     '/uk/london/martialarts' => [
-        'title'       => 'First Martial Arts Class',
-        'description' => 'Get your first Martial Arts class on US',
+        'title'       => 'Martial Arts in London | Evercise',
+        'description' => 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Martial Arts Trainers and Martial Arts classes all over London.',
         'price'       => '£10',
         'category'    => 'Martial Arts',
         'category_id' => 4,
@@ -236,8 +236,8 @@ return [
         ]
     ],
     '/uk/london/pilates'      => [
-        'title'       => 'First Pilates Class',
-        'description' => 'Get your first Pilates class on US',
+        'title'       => 'Pilates Classes in London | Evercise',
+        'description' => 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Pilates Trainers and Pilates classes all over London.',
         'price'       => '£10',
         'category'    => 'Pilates',
         'category_id' => 2,
@@ -294,8 +294,8 @@ return [
         ]
     ],
     '/uk/london/yoga'         => [
-        'title'       => 'First Yoga Class',
-        'description' => 'Get your first Yoga class on US',
+        'title'       => 'Yoga Classes in London | Evercise',
+        'description' => 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Yoga Trainers and Yoga classes all over London.',
         'price'       => '£10',
         'category'    => 'Yoga',
         'category_id' => 5,

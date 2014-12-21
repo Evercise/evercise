@@ -115,6 +115,7 @@ class Search
 
 
         $i = 0;
+        $row->_source->score = $row->_score;
 
         foreach ($row->_source->futuresessions as $s) {
             $row->_source->futuresessions[$i]->date_time = (new Carbon($s->date_time))->format('M jS, g:ia');

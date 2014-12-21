@@ -26,12 +26,12 @@
         </div>
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-                <div class="row">
+                <div class="">
                     {{ Form::open(['route' => 'users.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
-                        <div>
+                        <div class="row sm-text-center">
                            {{ Form::label('trainer-question', 'Are you a trainer?', ['class' => 'col-sm-3 col-sm-offset-3 control-label text-right'])  }}
                            <div class="col-sm-6 mb20">
-                               <div class="custom-checkbox pull-left">
+                               <div class="custom-checkbox pull-left sm-no-float">
                                    {{ Form::radio('trainer', 'yes', false, ['id' => 'yes']) }}
                                    <label for="yes" class="text-grey">Yes</label>
                                </div>
@@ -92,8 +92,8 @@
                             </div>
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('confirmed_password', 'Confirmed Password' , ['class' => 'mb15'])  }}
-                                 {{ Form::password('confirmed_password', ['class' => 'form-control', 'placeholder' => 'confirm your password']) }}
+                                 {{ Form::label('password_confirmation', 'Confirmed Password' , ['class' => 'mb15'])  }}
+                                 {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'confirm your password']) }}
                                </div>
                             </div>
                         </div>
