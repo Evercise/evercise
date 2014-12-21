@@ -655,7 +655,7 @@ class Activity
             'type_id'     => $userpackage->id,
             'link'        => ($amountUsed > $package->classes ? 'packages/' : ''),
             'link_title'  => ($amountUsed > $package->classes ? 'Buy more' : ''),
-            'image'       => 'packageused.png',
+            'image'       => 'assets/img/activity/Activity_Package.png',
         ]);
     }
 
