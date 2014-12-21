@@ -28,10 +28,10 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="">
                     {{ Form::open(['route' => 'users.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'register-form'] ) }}
-                        <div>
+                        <div class="row sm-text-center">
                            {{ Form::label('trainer-question', 'Are you a trainer?', ['class' => 'col-sm-3 col-sm-offset-3 control-label text-right'])  }}
                            <div class="col-sm-6 mb20">
-                               <div class="custom-checkbox pull-left">
+                               <div class="custom-checkbox pull-left sm-no-float">
                                    {{ Form::radio('trainer', 'yes', false, ['id' => 'yes']) }}
                                    <label for="yes" class="text-grey">Yes</label>
                                </div>
