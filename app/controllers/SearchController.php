@@ -248,12 +248,15 @@ class SearchController extends \BaseController
 
 
         if($landing) {
-            $item = array_filter($this->config->get('landing_pages'), function($url) use ($landing){
-               return (str_replace('/uk/london/', '', $url) == $landing);
-            }, ARRAY_FILTER_USE_KEY);
 
-            if(!empty(array_values($item)[0])) {
-                $data['landing'] = array_values($item)[0];
+            foreach($this->config->get('landing_pages') as $url => $params) {
+                if(str_replace('/uk/london/', '', $url) == $landing) {
+                    $item = $params;
+                }
+            }
+
+            if(!empty($item)) {
+                $data['landing'] = $item;
             }
 
         }
