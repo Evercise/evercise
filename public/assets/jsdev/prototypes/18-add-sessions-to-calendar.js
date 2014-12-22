@@ -65,8 +65,10 @@ AddSessionsToCalendar.prototype = {
         // Get all the other nth in the month
         while (d.getMonth()  === month) {
 
-            var recurringDate = new Date( d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2) + ' 00:00:00'  );
+            var rd = d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2) + ' 00:00:00 AM'  ;
 
+            rd = rd.replace(/-/g,"/");
+            var recurringDate = new Date(rd);
             var resultFound = $.grep(self.dates, function(e){
                 return e.key == recurringDate.valueOf();
             });
