@@ -9845,7 +9845,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   content: '';
   top: 0;
   left: 0;
-  width: 100%;
   height: 40px;
   background: #ffffff;
   pointer-events: none;
