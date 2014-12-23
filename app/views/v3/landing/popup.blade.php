@@ -2,6 +2,7 @@
 
 <div class="landing-mask"></div>
 <div class="landing-popup" style="background-image:  url('{{url().'/'.$landing['popup_image']}}')">
+    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
     <h1 class="text-primary">Get up to {{ $landing['price'] }}</h1>
     <h2>For you first {{ $landing['category'] }} class</h2>
     <strong>Fun & flexible, No commitment</strong>
