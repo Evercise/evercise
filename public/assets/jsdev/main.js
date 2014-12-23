@@ -229,6 +229,13 @@ $(function(){
         });
     })
 
+    $('.landing-popup').exists(function(){
+        $(document).on('click', '.close', function(){
+            $('.landing-popup').addClass('hidden');
+            $('.landing-mask').addClass('hidden');
+        })
+    })
+
 
 
 

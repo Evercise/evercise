@@ -4,7 +4,7 @@
     <p><strong>Password escaped you? No worries, it happens! Your new password is just a click away.</strong></p>
 @stop
 @section('extra')
-    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+    <table width="100%" height="auto" align="center" cellspacing="30" cellpadding="0" bgcolor="#ffffff">
         <tr>
             <td>
                 <br>

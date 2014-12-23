@@ -9764,7 +9764,7 @@ label {
 .custom-select {
   position: relative;
 }
-.custom-select:before {
+.custom-select:after {
   position: absolute;
   content: '';
   height: 40px;
@@ -9777,25 +9777,25 @@ label {
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-select:before.active {
+.custom-select:after.active {
   background-position: -50px -280px;
 }
-.custom-select:before.hover:hover,
-.custom-select:before.active:hover {
+.custom-select:after.hover:hover,
+.custom-select:after.active:hover {
   cursor: pointer;
   background-position: -50px -280px;
 }
-.custom-select:hover:before {
+.custom-select:hover:after {
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -280px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-select:hover:before.active {
+.custom-select:hover:after.active {
   background-position: -50px -320px;
 }
-.custom-select:hover:before.hover:hover,
-.custom-select:hover:before.active:hover {
+.custom-select:hover:after.hover:hover,
+.custom-select:hover:after.active:hover {
   cursor: pointer;
   background-position: -50px -320px;
 }
@@ -11985,6 +11985,9 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   background-size: contain;
   padding: 75px 85px;
 }
+.landing-popup.in {
+  display: block;
+}
 .landing-popup h1 {
   font-size: 85px;
   margin: 0;
@@ -11998,6 +12001,11 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 }
 .landing-popup strong {
   font-size: 17px;
+}
+.landing-popup .close {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 .landing-mask {
   position: fixed;

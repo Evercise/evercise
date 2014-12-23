@@ -1,7 +1,7 @@
 <div class="container-fluid bg-grey">
     <div class="container">
         <div class="underline text-center">
-            <h1>Activitys</h1>
+            <h1>Activities</h1>
         </div>
         <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
