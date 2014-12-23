@@ -348,7 +348,7 @@ class UsersController extends \BaseController
             Input::all(),
             array(
                 'email' => 'required|email',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'password' => 'required|confirmed|min:6|max:32',
             ),
             ['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
         );

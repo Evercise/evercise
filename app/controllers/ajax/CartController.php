@@ -43,7 +43,6 @@ class CartController extends AjaxBaseController
                 $currentQuantity = $row->qty;
 
 
-
                 $newQuantity = (!$force ? $currentQuantity + $quantity : $quantity);
 
                 if ($newQuantity > $session->remainingTickets()) {
@@ -178,10 +177,23 @@ class CartController extends AjaxBaseController
         $productCode = Input::get('product-id', FALSE);
         $rowId = EverciseCart::search(['id' => $productCode]);
         $refreshPage = Input::get('refresh-page', FALSE);
+        $product = EverciseCart::fromProductCode($productCode);
 
         if ($rowId) {
-            EverciseCart::remove($rowId[0]);
+            if ($product['type'] == 'package') {
+
+                $currentQuantity = EverciseCart::get($rowId[0])->qty;
+                $newQuantity = $currentQuantity - 1;
+                if ($newQuantity > 0) {
+                    EverciseCart::update($rowId[0], $newQuantity);
+                } else {
+                    EverciseCart::remove($rowId[0]);
+                }
+            } else {
+                EverciseCart::remove($rowId[0]);
+            }
         }
+
 
         if ($refreshPage) {
             return Response::json(
