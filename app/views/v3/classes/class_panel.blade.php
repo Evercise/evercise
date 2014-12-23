@@ -105,11 +105,14 @@
                                         {{ Form::submit('Join class', ['class'=> 'btn btn-primary add-btn']) }}
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
                                         <div class="btn btn-primary btn-aside">
-                                          <select name="quantity" id="quantity" class="btn-primary btn-select btn-aside">
-                                            @for($i=1; $i<($session->remainingTickets()  + 1 ); $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                            @endfor
-                                          </select>
+                                            <div class="custom-select">
+                                                <select name="quantity" id="quantity" class="btn-primary btn-select ">
+                                                    @for($i=1; $i<($session->remainingTickets()  + 1 ); $i++)
+                                                    <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                 </select>
+                                            </div>
+
                                         </div>
                                     </div>
                                 {{ Form::close() }}

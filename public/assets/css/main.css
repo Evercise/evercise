@@ -9259,16 +9259,16 @@ fieldset[disabled] .stripe-button-el.active {
   box-shadow: none;
 }
 .btn-group.btn-block .btn {
-  width: 70%;
+  width: 65%;
   padding-left: 0px;
   padding-right: 0px;
   text-align: center;
 }
 .btn-group.btn-block .btn.btn-aside {
-  width: 30%;
+  width: 35%;
 }
 .btn-group.btn-block .btn-dropdown {
-  width: 30%;
+  width: 35%;
   height: 40px;
   padding: 0;
   border: 0;
@@ -9295,14 +9295,19 @@ fieldset[disabled] .stripe-button-el.active {
 .btn-aside .btn-select {
   cursor: pointer;
   -webkit-appearance: none;
-  padding: 0 19px;
+  -moz-appearance: none;
+  padding: 0 7px;
   border: 0;
   height: 40px;
+  width: 100%;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 .btn-aside .btn-select::-ms-expand {
   display: none;
+}
+.btn-aside .btn-drop select {
+  opacity: 0;
 }
 .btn-aside .caret {
   position: absolute;
@@ -9312,6 +9317,7 @@ fieldset[disabled] .stripe-button-el.active {
   width: 6px;
   margin-top: -3px;
   margin-left: -3px;
+  pointer-events: none;
 }
 @media (max-width: 767px) {
   .sm-btn-block {
@@ -9761,10 +9767,10 @@ label {
   cursor: pointer;
   background-position: -970px -330px;
 }
-.custom-select {
+.btn .custom-select {
   position: relative;
 }
-.custom-select:after {
+.btn .custom-select:after {
   position: absolute;
   content: '';
   height: 40px;
@@ -9777,39 +9783,62 @@ label {
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-select:after.active {
+.btn .custom-select:after.active {
   background-position: -50px -280px;
 }
-.custom-select:after.hover:hover,
-.custom-select:after.active:hover {
+.btn .custom-select:after.hover:hover,
+.btn .custom-select:after.active:hover {
   cursor: pointer;
   background-position: -50px -280px;
 }
-.custom-select:hover:after {
+.btn .custom-select:hover:after {
   background-image: url("../img/ev_site_icons.png");
   background-position: -50px -280px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.custom-select:hover:after.active {
+.btn .custom-select:hover:after.active {
   background-position: -50px -320px;
 }
-.custom-select:hover:after.hover:hover,
-.custom-select:hover:after.active:hover {
+.btn .custom-select:hover:after.hover:hover,
+.btn .custom-select:hover:after.active:hover {
   cursor: pointer;
   background-position: -50px -320px;
 }
-.custom-select select::-ms-expand {
+.btn .custom-select.btn-drop:after {
   display: none;
 }
-.custom-select select {
+.btn .custom-select select::-ms-expand {
+  display: none;
+}
+.btn .custom-select select {
   background: transparent;
   line-height: 1;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-.custom-select .input-sm {
+.btn .custom-select .input-sm {
   line-height: 20px;
+}
+.btn.btn-primary .custom-select select {
+  background: #ff1b7e;
+}
+.btn.btn-primary .custom-select:after {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -50px -320px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.btn.btn-primary .custom-select:after.active {
+  background-position: -50px -360px;
+}
+.btn.btn-primary .custom-select:after.hover:hover,
+.btn.btn-primary .custom-select:after.active:hover {
+  cursor: pointer;
+  background-position: -50px -360px;
+}
+body:not(:-moz-handler-blocked) .custom-select:after {
+  right: -50px;
 }
 .custom-select-white:before {
   position: absolute;

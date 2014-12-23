@@ -48,10 +48,13 @@
                             {{ Form::submit('Join Class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
-<div class="btn btn-primary btn-aside">
-                            <select name="quantity" id="quantity" class="btn-primary btn-select">
-                                <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
-                            </select>
+                            <div class="btn btn-primary btn-aside ">
+                                <div class="custom-select">
+                                    <select name="quantity" id="quantity" class="btn-primary btn-select">
+                                        <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                     {{ Form::close() }}

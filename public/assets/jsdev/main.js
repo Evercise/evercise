@@ -225,7 +225,7 @@ $(function(){
 
     $('.btn-selects').exists(function(){
         $(this).select2({
-            allowClear: false
+            placeholder: "Select a State"
         });
     })
 

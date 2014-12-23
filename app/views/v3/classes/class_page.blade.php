@@ -136,11 +136,14 @@
                                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $futuresession->id)) }}
                                             {{ Form::hidden('force', true) }}
                                             <div class="btn btn-primary btn-aside">
-                                              <select name="quantity" id="quantity" class="btn-select btn-primary {{isset($preview) ? 'disabled' : null}}">
-                                                @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
-                                                <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
-                                                @endfor
-                                              </select>
+                                                <div class="custom-select">
+                                                    <select name="quantity" id="quantity" class="btn-select btn-primary {{isset($preview) ? 'disabled' : null}}">
+                                                        @for($i=1; $i<($futuresession->remaining  + 1 ); $i++)
+                                                        <option value="{{$i}}" {{ (!empty($cart_items[$futuresession->id]) && $cart_items[$futuresession->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
+
                                             </div>
                                         </div>
                                     {{ Form::close() }}
