@@ -23,6 +23,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 @if(!empty($track_cart) && !empty($cart))
 
     ga('require', 'ecommerce');
+
+
+    var products = [];
+
+
+
+
     ga('ecommerce:addTransaction', {
       'id': '{{ $transaction }}',                     // Transaction ID. Required.
       'affiliation': 'Evercise',   // Affiliation or store name.
@@ -41,6 +48,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'price': '{{ round($row['price'],2) }}',                 // Unit price.
       'quantity': '1'
     });
+
+    var product = {
+        sku: '{{ EverciseCart::toProductCode('package', $row['id']) }}',
+        name : '{{ $row['name'] }}',
+        price : {{ round($row['price'],2) }},
+        quantity : 1
+    };
+
+    products.push(product);
+
     @endforeach
 
     @foreach($cart['sessions_grouped'] as $row)
@@ -52,9 +69,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'price': '{{ round($row['price'],2) }}',                 // Unit price.
       'quantity': '{{ $row['qty'] }}'
     });
+
+    var product = {
+        sku: '{{ EverciseCart::toProductCode('session', $row['id']) }}',
+        name : '{{ $row['name'] }}',
+        price : {{ round($row['price'],2) }},
+        quantity : {{ $row['qty'] }}
+    };
+
+    products.push(product);
+
     @endforeach
 
     ga('ecommerce:send');
+
+    dataLayer.push({
+      event: "ecomEvent",
+      transactionId: "{{ $transaction }}",
+      transactionAffiliation: "Evercise",
+      transactionTotal: {{ round(($cart['total']['final_cost'] + $cart['total']['from_wallet']) , 2) }},
+      transactionTax: 0,
+      transactionShipping: 0,
+      transactionCity: "Londong",
+      transactionState: "",
+      transactionCountry: "UK",
+      transactionProducts: products
+    });
 
 
 @endif
