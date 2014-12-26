@@ -120,7 +120,8 @@ return [
 
         ['user.facebook.connected' => 'User@connectedFacebook'], // $user
         ['user.twitter.connected' => 'User@connectedTwitter'], // $user
-        ['marketing.newYear' => 'User@newYear'],
+        ['marketing.newYear' => 'User@newYear'], // $user
+        ['marketing.relaunch' => 'Trainer@relaunch'], // $user
 
 
     ],
