@@ -118,6 +118,7 @@
                                 {{ Form::close() }}
                             @else
                                 <span class="text-danger">Class Full</span>
+                                <span class="text-danger">Class Full</span>
                             @endif
                         </div>
                     </div>
