@@ -777,7 +777,7 @@ class Mail
             'view'     => 'v3.emails.trainer.relaunch',
             'user'     => $user,
             'banner'   => FALSE,
-            'image'    => image('/assets/img/email/relaunch.jpg', 'Check out  the all new evercise'),
+            'image'    => image('/assets/img/email/relaunch.png', 'Check out the all new evercise'),
             'link_url' => $this->url->to('/')
         ];
 
