@@ -753,6 +753,22 @@ class Mail
 
     }
 
+    public function newYear($user)
+    {
+        $params = [
+            'subject'  => 'Discover a new fitness challenge',
+            'title'    => 'Discover a new fitness challenge',
+            'view'     => 'v3.emails.user.new_year',
+            'user'     => $user,
+            'banner'   => FALSE,
+            'image'    => image('/assets/img/email/new_year.jpg', 'Warm up for the new year'),
+            'link_url' => $this->url->to('/')
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
 
     /**
      * ########################################################################################

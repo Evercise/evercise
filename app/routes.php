@@ -29,6 +29,13 @@ Route::get('/popular', [
     ]
 );
 
+Route::get('/test', [
+    'as' => 'tesst',
+    function(){
+        $user = Sentry::getUser(151);
+        event('marketing.newYear', [$user]);
+    }
+]);
 
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
