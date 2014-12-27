@@ -177,13 +177,17 @@
                                         {{ Form::hidden('refresh-page', true) }}
                                         <div class="btn-group btn-block">
                                             {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
-                                            <div class="btn btn-primary btn-dropdown">
-                                                <select name="quantity" id="quantity" class="btn-primary btn-select">
-                                                    <option value=""></option>
-                                                    @for($i = 1; $i <= ($row['tickets_left'] <= 50 ? $row['tickets_left'] : 50); $i++)
-                                                        <option value="{{$i}}">{{$i}}</option>
-                                                    @endfor
-                                                </select>
+                                            <div class="btn btn-primary btn-aside">
+                                                <div class="custom-select btn-drop">
+                                                    <select name="quantity" id="quantity" class="btn-primary btn-select ">
+                                                        <option value=""></option>
+                                                        @for($i = 1; $i <= ($row['tickets_left'] /*<= 10 ? $row['tickets_left'] : 10*/); $i++)
+                                                            <option value="{{$i}}">{{$i}}</option>
+                                                        @endfor
+                                                    </select>
+
+                                                    <span class="caret"></span>
+                                                </div>
                                             </div>
 
                                         </div>

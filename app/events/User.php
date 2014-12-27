@@ -369,4 +369,11 @@ class User
 
         $this->mail->generateStaticLandingEmail($ppcCode, $categoryId);
     }
+
+    public function newYear($user)
+    {
+        $this->log->info('new year message sent ' . $user->id);
+
+        $this->mail->newYear($user);
+    }
 }

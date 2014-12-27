@@ -107,17 +107,17 @@
   &.btn-block{
 
     .btn{
-      width: 70%;
+      width: 65%;
       padding-left: 0px;
       padding-right: 0px;
       text-align: center;
     }
 
     .btn.btn-aside{
-      width: 30%;
+      width: 35%;
     }
     .btn-dropdown{
-      width: 30%;
+      width: 35%;
       height: 40px;
       padding: 0;
       border: 0;
@@ -151,14 +151,22 @@
   .btn-select{
     cursor: pointer;
     -webkit-appearance: none;
-    padding: 0 19px;
+    -moz-appearance: none;
+    padding: 0 7px;
     border: 0;
     height: 40px;
+    width: 100%;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     &::-ms-expand {
       display: none;
     }
+  }
+  .btn-drop{
+    select{
+      opacity: 0;
+    }
+
   }
   .caret{
     position: absolute;
@@ -168,6 +176,7 @@
     width: 6px;
     margin-top: -3px;
     margin-left: -3px;
+    pointer-events: none;
   }
 }
 

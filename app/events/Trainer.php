@@ -112,4 +112,11 @@ class Trainer
         $this->mail->trainerWhyNotCreateFirstClass($trainer);
     }
 
+    public function relaunch($user)
+    {
+        $this->log->info('relaunch message sent ' . $user->id);
+
+        $this->mail->relaunch($user);
+    }
+
 }

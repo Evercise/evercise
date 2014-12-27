@@ -45,7 +45,7 @@
     <li class="list-group-item bg-light-grey">
         <div class="class-info-wrapper  row">
             <div class="col-xs-6">
-                <span class="icon icon-clock"></span><small>{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}</small>
+                <span class="icon icon-clock"></span><small> <time datetime="{{ date('Y-m-d H:i' ,strtotime($class->futuresessions[0]->date_time ) )}}">{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}</time></small>
             </div>
             <div class="col-xs-6">
                 <div class="row no-gutter">
