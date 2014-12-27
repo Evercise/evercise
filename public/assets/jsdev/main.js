@@ -236,6 +236,13 @@ $(function(){
         })
     })
 
+    $('#passwords_reset').exists(function(){
+        $(document).on('submit', '#passwords_reset', function(e){
+            e.preventDefault();
+            new AjaxRequest($(e.target), redirectTo);
+        })
+    })
+
 
 
 
