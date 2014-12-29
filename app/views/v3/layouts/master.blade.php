@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ isset($title)? $title : 'Everyone exercise'}}</title>
-	<meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
+	<title>{{ isset($title)? $title : 'Fitness Classes, Events & Gyms in London | Evercise'}}</title>
+	<?php
+	if(isset($metaDescription)) {
+	$desc = $metaDescription;
+	}
+	?>
+	<meta name="description" content="{{ isset($desc)? $desc : 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and fitness classes all over London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" />

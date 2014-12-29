@@ -80,7 +80,12 @@ class TrainersController extends \BaseController
 
         $user = User::where((is_numeric($id) ? 'id' : 'display_name'), $id)->first();
 
+
+
         if ($user) {
+            if(is_numeric($id)) {
+                return Redirect::route('trainer.show', ['id' => $user->display_name]);
+            }
             try {
                 $trainer = $user->trainer()->first();
             } catch (Exception $e) {
