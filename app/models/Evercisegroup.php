@@ -170,11 +170,15 @@ class Evercisegroup extends \Eloquent
     {
         $venue = $class->venue()->first();
         $name = [
-            slugIt($class->name),
-            slugIt($venue->name),
-            slugIt($venue->town.' UK')
+            slugIt($class->name)
         ];
         $name = implode('_', $name);
+        if(!self::slugTaken($name)) {
+            return $name;
+        }
+
+        $name .= '_'.slugIt($venue->name);
+
         if(!self::slugTaken($name)) {
             return $name;
         }
