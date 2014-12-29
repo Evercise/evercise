@@ -2,6 +2,31 @@
 
 
 
+    if (!function_exists('ga')) {
+
+        /*
+         * Google Event
+         *
+         */
+
+
+
+
+        function ga($url)
+        {
+            $track = "
+            <script>
+             if (typeof ga == 'function') {
+                ga('send', 'pageview', '".$url."');
+            }
+            </script>
+
+            ";
+
+            return $track;
+        }
+    }
+
     if (!function_exists('uniqueFile')) {
 
         /*

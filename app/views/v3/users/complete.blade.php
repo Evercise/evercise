@@ -18,4 +18,6 @@
             </div>
         </div>
     </div>
+
+    {{ ga('/users/create') }}
 @stop
