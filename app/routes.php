@@ -38,7 +38,6 @@ foreach (Config::get('redirect') as $old => $new) {
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
-Route::get('/evercisegroups/{id?}/{preview?}', ['as' => 'class.show.eg', 'uses' => 'EvercisegroupsController@show']);
 
 
 // ajax prefix
@@ -676,6 +675,8 @@ Route::get('ping', function () {
     return 'All is good.';
 });
 
+
+Route::get('/evercisegroups/{id?}/{preview?}', ['as' => 'class.show.eg', 'uses' => 'EvercisegroupsController@show']);
 
 Route::any('emailgrab', ['as' => 'email.grab', 'uses' => 'EmailGrabber@grab']);
 
