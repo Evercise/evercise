@@ -14,25 +14,24 @@
 
 /* Show home page */
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
-Route::get(
-    'what_is_evercise',
-    function () {
-        return Redirect::to('about_evercise');
-    }
-);
 
-Route::get('/popular', [
-        'as' => 'popular',
-        function () {
-            return Redirect::to('/uk/london');
-        }
-    ]
-);
+foreach (Config::get('redirect') as $old => $new) {
+    Route::get(
+        $old,
+        [
+            'as' => $old,
+            function () use ($new) {
+                return Redirect::to($new);
+            }
+        ]
+    );
+}
 
 
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
+Route::get('/evercisegroups/{id?}/{preview?}', ['as' => 'class.show.eg', 'uses' => 'EvercisegroupsController@show']);
 
 
 // ajax prefix
@@ -560,7 +559,6 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'ajax.admin.modal.categories.save', 'uses' => 'AdminAjaxController@saveClassCategories']);
 
 
-
 });
 
 
@@ -674,15 +672,15 @@ Route::get('ping', function () {
 
 Route::any('emailgrab', ['as' => 'email.grab', 'uses' => 'EmailGrabber@grab']);
 
-Route::get('cleansubcategoriesup', function(){
+Route::get('cleansubcategoriesup', function () {
 
-    $subcategories =  Subcategory::get();
+    $subcategories = Subcategory::get();
 
     foreach ($subcategories as $sc) {
         $n = $sc['name'];
         //return var_dump($n);
         //if ($n != 'dance' && $n != 'belly dancing')
-            //return ucfirst($n);
+        //return ucfirst($n);
         $sc->name = ucfirst($n);
         $sc->save();
     }
