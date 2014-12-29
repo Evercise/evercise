@@ -14,12 +14,19 @@
 
 /* Show home page */
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
-
+Route::get(
+    'popular',
+    [
+        'as' => 'popular',
+        function () {
+            return Redirect::to('uk/london');
+        }
+    ]
+);
 foreach (Config::get('redirect') as $old => $new) {
     Route::get(
         $old,
         [
-            'as' => $old,
             function () use ($new) {
                 return Redirect::to($new);
             }
@@ -398,7 +405,7 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     ['as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer']
 );
 
-Route::get('/packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
+Route::get('/fitness-packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
 
 
 // widgets
@@ -434,10 +441,10 @@ Route::get('terms', [
     }
 ]);
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
-Route::get('the_team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
+Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
 Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
 Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
-Route::get('class_guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
+Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);
 Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
 Route::post('/postPdf', ['as' => 'postPdf', 'uses' => 'PdfController@postPdf']);
