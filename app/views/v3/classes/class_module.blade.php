@@ -27,7 +27,7 @@
 </div>
 -->
 
-<ul class="list-group class-module">
+<ul class="list-group class-module" onclick="ga('send', 'event', 'View Class', 'click', 'Home Page View Class ',20)">
     <div class="class-image-wrapper">
          {{ HTML::decode( HTML::linkRoute('class.show', image($class->user->directory. '/module_'. $class->image,  $class->name . ' cover image', ['class' => 'img-responsive img-full-width']) , $class->slug)  )}}
     </div>
