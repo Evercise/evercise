@@ -162,7 +162,7 @@
     <div class="container-fluid bg-grey">
         <div class="container mt20">
             <div class="underline">
-                 <h1 class="text-center">Featured classes</h1>
+                 <h1 class="text-center">Featured Fitness Classes</h1>
             </div>
             <div class="row">
 
