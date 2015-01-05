@@ -119,7 +119,7 @@
             <div class="row mt25 mb50">
                 <div class="col-sm-6 col-sm-offset-3">
                     {{ Form::open(['route' => 'sessions.update', 'method' => 'put', 'id' => 'update-sessions']) }}
-                        {{ Form::hidden('$evercisegoupId', $data['evercisegroup_id']) }}
+                        {{ Form::hidden('evercisegroup_id', $data['evercisegroup_id']) }}
                         {{ Form::hidden('preview', 'yes') }}
                         <div class="row">
                             <div class="col-sm-4">

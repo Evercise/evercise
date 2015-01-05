@@ -135,7 +135,7 @@
                         {{ image('img/home/hiw.png', 'how it works', ['class' => 'img-responsive center-block']) }}
                     </div>
                     <div class="caption">
-                         <p>Whether you’re a trainer or a participant Evcercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
+                         <p>Whether you’re a trainer or a participant Evercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
                     </div>
                 </div>
 

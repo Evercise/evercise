@@ -43,14 +43,16 @@ class SessionsController extends AjaxBaseController
      */
     public function update()
     {
+
         $preview = Input::get('preview');
         $sessionIds = Input::get('id');
         $time_array = Input::get('time');
         $duration_array = Input::get('duration');
         $tickets_array = Input::get('tickets');
         $price_array = Input::get('price');
-        $evercisegoupId = Input::get('$evercisegoupId');
+        $evercisegroupId = Input::get('evercisegroup_id');
 
+        //return 'id:'.\Evercisegroup::getSlug($evercisegroupId);
 
 
         $userId = \Sentry::getUser()->id;
@@ -113,10 +115,11 @@ class SessionsController extends AjaxBaseController
         if (isset($preview) && $preview == 'yes') {
             return Response::json(
                 [
-                    'url' => route('class.show', [Evercisegroup::getSlug($evercisegoupId), 'preview'])
+                    'url' => route('class.show', [\Evercisegroup::getSlug($evercisegroupId), 'preview'])
                 ]
             );
         } else {
+            //return 'here: '.$preview;
             return Response::json(
                 [
                     'view' => View::make('v3.layouts.positive-alert')->with('message',

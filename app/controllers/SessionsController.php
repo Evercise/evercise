@@ -41,7 +41,7 @@ class SessionsController extends \BaseController
         $class = Evercisegroup::find($class_id);
 
         if(!isset($class->user_id) || !isset($this->user->id)) {
-            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
+            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page. '.$class_id);
         }
 
         if($class->user_id != $this->user->id) {
