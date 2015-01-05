@@ -44,7 +44,8 @@ class HomeController extends BaseController {
             'location' => 'London'
         ]);
 
-        if(count($featured) < 6) {
+
+        if(count($featured->hits) < 6) {
             Log::error('Add More featured Classes');
         }
 

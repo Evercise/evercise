@@ -26,7 +26,13 @@
 
 @section('body')
 
+
+
     <div class="row">
+
+{{ Form::open(['route' => 'admin.ajax.searchstats.download', 'method' => 'post']) }}
+ {{ Form::submit('download', ['class' => 'btn btn-success btn-sm']) }}
+ {{Form::close()}}
         <div class="col-md-12">
             <table id="search_table" class="table table-yuk2 " cellspacing="0" width="100%">
 
