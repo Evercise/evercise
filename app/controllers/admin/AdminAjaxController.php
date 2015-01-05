@@ -115,7 +115,7 @@ class AdminAjaxController extends AdminController
         $search = $this->input->get('search');
 
         $from = $this->input->get('start', 0);
-        $size = $this->input->get('lenght', 50);
+        $size = $this->input->get('length', 200000);
 
 
         $results = $this->elastic->searchStats(['size' => $size, 'from' => $from, 'search' => $search['value']]);
