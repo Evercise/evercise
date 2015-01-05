@@ -259,7 +259,7 @@ Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchContro
     'allsegments',
     '(.*)?'
 );
-Route::any('/uk/', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
+Route::any('/uk/london', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
 
 
 // VenuesController

@@ -89,7 +89,7 @@
         <hr>
         <div id="schedule" class="row">
             <div class="col-sm-12">
-                <h1>Upcoming sessions</h1>
+                <h2 class="h1">Upcoming sessions</h2>
             </div>
 
             <div class="col-sm-12">
@@ -188,7 +188,7 @@
                 <div class="col-sm-12">
                     @if(count($facilities = $data['venue']->getFacilities()))
                         <div class="page-header">
-                            <h1>Venue Facilities</h1>
+                            <h2 class="h1">Venue Facilities</h2>
                         </div>
 
                         <ul class="row custom-list">
@@ -202,7 +202,7 @@
 
                     @if(count($amenities = $data['venue']->getAmenities()))
                         <div class="page-header">
-                            <h1>Venue Amenties</h1>
+                            <h2 class="h1">Venue Amenties</h2>
                         </div>
                         <ul class="row custom-list">
                             @foreach($amenities as $amenity)
@@ -220,7 +220,7 @@
         <div id="ratings" class="row sm-text-center">
             <div class="col-sm-12">
                 <div class="page-header">
-                    <h1>Reviews</h1>
+                    <h2 class="h1">Reviews</h2>
                 </div>
             </div>
             @foreach ($data['ratings'] as $rating)
