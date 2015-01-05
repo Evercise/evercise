@@ -116,6 +116,12 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt10 mb30">
+                <div class="col-sm-8 col-sm-offset-2 text-right">
+                    {{$sessions->links()}}
+                </div>
+
+            </div>
             <div class="row mt25 mb50">
                 <div class="col-sm-6 col-sm-offset-3">
                     {{ Form::open(['route' => 'sessions.update', 'method' => 'put', 'id' => 'update-sessions']) }}
@@ -137,6 +143,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 

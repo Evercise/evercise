@@ -796,10 +796,10 @@ class Evercisegroup extends \Eloquent
      */
     public function futuresessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '>=', Carbon::now())->orderBy(
-            'date_time',
-            'asc'
-        );
+        return $this
+            ->hasMany('Evercisesession')
+            ->where('date_time', '>=', Carbon::now())
+            ->orderBy('date_time', 'asc');
     }
 
     /**

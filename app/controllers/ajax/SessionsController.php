@@ -2,6 +2,7 @@
 
 use DateTime;
 use Input, Response, Evercisegroup, Evercisesession, View;
+use Carbon\Carbon;
 
 class SessionsController extends AjaxBaseController
 {
@@ -10,7 +11,13 @@ class SessionsController extends AjaxBaseController
     {
         $evercisegroupId = Input::get('groupId');
         $id = Input::get('id');
-        $sessions = Evercisegroup::find($evercisegroupId)->Futuresessions;
+        //$sessions = Evercisegroup::find($evercisegroupId)->futuresessions;
+
+        $sessions = Evercisesession::where('evercisegroup_id', $evercisegroupId)
+            ->where('date_time', '>=', Carbon::now())
+            ->orderBy('date_time', 'asc')
+            ->paginate(5);
+
         $userId = \Sentry::getUser()->id;
 
         if ($id != $userId) {

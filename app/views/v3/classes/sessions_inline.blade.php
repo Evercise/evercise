@@ -210,6 +210,13 @@
 
             </div>
         </div>
+        <div class="row mt20 mb20">
+        {{-- $sessions->links() --}}
+            <div class="col-sm-4 col-sm-offset-4">
+                {{ Html::linkRoute('sessions.add', 'Edit more sessions', $evercisegroup_id, ['class' => 'btn btn-default btn-block'] ) }}
+            </div>
+
+        </div>
 @endif
 <!--
 @if( isset($mode) && $mode == 'user')
