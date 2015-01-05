@@ -530,7 +530,8 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
     Route::get('/search/stats',
         ['as' => 'admin.ajax.searchstats', 'uses' => 'AdminAjaxController@searchStats']);
-
+    Route::post('/search/stats/download',
+        ['as' => 'admin.ajax.searchstats.download', 'uses' => 'AdminAjaxController@downloadStats']);
 
     Route::post('galleryImageUpload',
         ['as' => 'admin.ajax.gallery_upload', 'uses' => 'AdminAjaxController@galleryUploadFile']);
