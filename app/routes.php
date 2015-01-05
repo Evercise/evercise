@@ -433,7 +433,7 @@ Route::get('about_evercise', [
         return View::make('v3.pages.about');
     }
 ]);
-Route::get('terms', [
+Route::get('terms-of-use', [
     'as' => 'general.terms',
     function () {
         return View::make('v3.pages.terms');

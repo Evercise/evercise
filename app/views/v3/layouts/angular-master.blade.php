@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>{{ isset($title)? $title : 'Everyone exercise'}}</title>
-	<meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
+	<meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and fitness classes all over London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
     <meta name="language" content="en-UK" />
@@ -10,7 +10,6 @@
     	{{ $og->renderTags() }}
     @endif
     <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
-    <meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
