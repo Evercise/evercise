@@ -62,13 +62,13 @@
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle center-block']) , $data['user']->display_name) ) }}
+                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle center-block']) , strtolower($data['user']->display_name)) ) }}
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">
                                     <strong>This class is presented by</strong>
                                 </div>
-                                <span>{{ Html::linkRoute('trainer.show', $data['user']->display_name, $data['user']->display_name) }}</span>
+                                <span>{{ Html::linkRoute('trainer.show', $data['user']->display_name, strtolower($data['user']->display_name) )}}</span>
                             </div>
                         </div>
 
