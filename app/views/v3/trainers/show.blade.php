@@ -8,7 +8,7 @@
                         {{ image( $data['trainer']->user->directory.'/medium_'.$data['trainer']->user->image , 'profile picture', [ 'class' => 'img-responsive img-circle']) }}
                     </div>
                     <div class="col-sm-8 mt20">
-                        <h3>{{ $data['trainer']->user->first_name .' '. $data['trainer']->user->last_name }}<br><small>{{ $data['trainer']->user->display_name }}</small></h3>
+                        <h1 class="h3">{{ $data['trainer']->user->first_name .' '. $data['trainer']->user->last_name }}<br><small>{{ $data['trainer']->user->display_name }}</small></h1>
                     </div>
                 </div>
 
