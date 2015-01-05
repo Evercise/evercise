@@ -1,4 +1,8 @@
 @extends('v3.layouts.master')
+<?php
+    View::share('title', 'Know about Evercise Fitness Trainers Community');
+    View::share('metaDescription', ' Evercise is the exciting new Pay As You Go fitness community. Evercise unites talented trainers for who want more fun and flexibility from their fitness routine.')
+?>
 @section('body')
 <div class="container first-container">
     <div class="row mb40">
@@ -83,3 +87,4 @@
 
     </div>
 </div>
+@stop

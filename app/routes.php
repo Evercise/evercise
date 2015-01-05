@@ -427,7 +427,7 @@ Route::group(['prefix' => 'widgets'], function () {
 Route::get('blog', ['as' => 'blog', 'uses' => 'PagesController@showBlog']);
 
 
-Route::get('about_evercise', [
+Route::get('about-evercise', [
     'as' => 'general.about',
     function () {
         return View::make('v3.pages.about');

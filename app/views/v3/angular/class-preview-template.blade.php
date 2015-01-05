@@ -20,7 +20,7 @@
             </div>
 
             <div class="row text-center mb30">
-                <div class="col-sm-5"><span class="icon icon-clock"></span><small> {[{ preview.nextClassDate }]}</small></div>
+                <div class="col-sm-5"><span class="icon icon-clock"></span><small> <time>{[{ preview.nextClassDate }]}</time></small></div>
                 <div class="col-sm-4"><span class="icon icon-watch"></span><small> {[{ preview.nextClassDuration}]} mins</small></div>
                 <div class="col-sm-3"><span class="icon icon-ticket"></span><small> x {[{ preview.capacity }]}</small></div>
             </div>

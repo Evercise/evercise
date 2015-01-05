@@ -1,6 +1,6 @@
 @extends('v3.layouts.master')
 <?php
-    View::share('title', 'Terms of Use | Evercise')
+    View::share('title', 'Terms of Use | Evercise');
     View::share('metaDescription', ' Please read these Terms of Usecarefully as they apply to your use of www.evercise.com and the service owned and offered by Qin Technology Ltd.')
 ?>
 @section('body')

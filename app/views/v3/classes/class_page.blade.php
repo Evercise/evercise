@@ -62,7 +62,7 @@
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->first_name, ['class' => 'img-responsive img-circle center-block']) , $data['user']->display_name) ) }}
+                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle center-block']) , $data['user']->display_name) ) }}
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">
@@ -109,8 +109,8 @@
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <div class="row">
-                                            <div class="col-sm-7"><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($futuresession->date_time))}}</span></div>
-                                            <div class="col-sm-5"><span class="icon icon-clock mr5"></span><span>{{ (date('g:ia' , strtotime($futuresession->date_time))) }}</span></div>
+                                            <div class="col-sm-7"><span class="icon icon-calendar mr5"></span><span><time datetime="{{ date('Y-m-d H:i' ,strtotime($futuresession->date_time) )}}">{{ date('M jS Y' , strtotime($futuresession->date_time))}}</time></span></div>
+                                            <div class="col-sm-5"><span class="icon icon-clock mr5"></span><span><time datetime="{{ date('Y-m-d H:i' ,strtotime($futuresession->date_time) )}}">{{ (date('g:ia' , strtotime($futuresession->date_time))) }}</time></span></div>
                                         </div>
                                     </div>
                                     <div class="col-xs-7">
