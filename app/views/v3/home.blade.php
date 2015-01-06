@@ -4,8 +4,12 @@
     <div id="hero-carousel" class="carousel slide">
           <div class="carousel-inner">
             @foreach($slider as $index => $sl)
+
                  <div class="item {{ $index == 0 ? 'active': null }}">
                     <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}')">
+                       <ol class="carousel-indicators">
+                           <li data-target="#hero-carousel" data-slide-to="{{$index}}" class="{{ $index == 0 ? 'active' : null }}"></li>
+                       </ol>
                         <div class="jumbotron">
                           <div class="container text-center">
                             <h1 class="text-white"> {{ $sl['name'] }}</h1>
@@ -35,6 +39,7 @@
                     </div>
                  </div>
             @endforeach
+
           </div>
     </div>
 
@@ -135,7 +140,7 @@
                         {{ image('img/home/hiw.png', 'how it works', ['class' => 'img-responsive center-block']) }}
                     </div>
                     <div class="caption">
-                         <p>Whether you’re a trainer or a participant Evcercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
+                         <p>Whether you’re a trainer or a participant Evercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
                     </div>
                 </div>
 

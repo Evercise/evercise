@@ -99,9 +99,7 @@ class MainController extends \BaseController
             $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
         }
 
-
         $this->data['total_referrals'] = Referral::all()->count();
-
 
         return View::make('admin.dashboard', $this->data)->render();
     }
@@ -474,6 +472,32 @@ class MainController extends \BaseController
     public function searchStats()
     {
         return View::make('admin.searchstats');
+    }
+
+    public function salesStats()
+    {
+        $sessionmembers = DB::table('sessionmembers')->orderBy('id', 'desc')->get();
+
+        $sales = [];
+        foreach($sessionmembers as $sm)
+        {
+            $session = Evercisesession::find($sm->evercisesession_id);
+
+            $sales[] = [
+                'id' => $sm->id,
+                'user_id' => $sm->user_id,
+                'user_name' => User::where('id', $sm->user_id)->pluck('display_name'),
+                'class_id' => $session->evercisegroup_id,
+                'class_name' => Evercisegroup::where('id', $session->evercisegroup_id)->pluck('name'),
+                'date' => $sm->created_at,
+                'amount' => Transactions::where('id', $sm->transaction_id)->pluck('total'),
+                'transaction_id' => $sm->transaction_id,
+                'payment_method' => $sm->payment_method,
+            ];
+        }
+
+        return View::make('admin.sales')
+            ->with('sales', $sales);
     }
 
 

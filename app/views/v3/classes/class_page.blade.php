@@ -62,13 +62,13 @@
                     <div class="col-sm-11">
                         <div class="row mt20">
                             <div class="col-sm-3">
-                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->first_name, ['class' => 'img-responsive img-circle center-block']) , $data['user']->display_name) ) }}
+                                {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle center-block']) , strtolower($data['user']->display_name)) ) }}
                             </div>
                             <div class="col-sm-9 mt25">
                                 <div class="condensed">
                                     <strong>This class is presented by</strong>
                                 </div>
-                                <span>{{ Html::linkRoute('trainer.show', $data['user']->display_name, $data['user']->display_name) }}</span>
+                                <span>{{ Html::linkRoute('trainer.show', $data['user']->display_name, strtolower($data['user']->display_name) )}}</span>
                             </div>
                         </div>
 
@@ -89,7 +89,7 @@
         <hr>
         <div id="schedule" class="row">
             <div class="col-sm-12">
-                <h1>Upcoming sessions</h1>
+                <h2 class="h1">Upcoming sessions</h2>
             </div>
 
             <div class="col-sm-12">
@@ -109,8 +109,8 @@
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <div class="row">
-                                            <div class="col-sm-7"><span class="icon icon-calendar mr5"></span><span>{{ date('M jS Y' , strtotime($futuresession->date_time))}}</span></div>
-                                            <div class="col-sm-5"><span class="icon icon-clock mr5"></span><span>{{ (date('g:ia' , strtotime($futuresession->date_time))) }}</span></div>
+                                            <div class="col-sm-7"><span class="icon icon-calendar mr5"></span><span><time datetime="{{ date('Y-m-d H:i' ,strtotime($futuresession->date_time) )}}">{{ date('M jS Y' , strtotime($futuresession->date_time))}}</time></span></div>
+                                            <div class="col-sm-5"><span class="icon icon-clock mr5"></span><span><time datetime="{{ date('Y-m-d H:i' ,strtotime($futuresession->date_time) )}}">{{ (date('g:ia' , strtotime($futuresession->date_time))) }}</time></span></div>
                                         </div>
                                     </div>
                                     <div class="col-xs-7">
@@ -188,7 +188,7 @@
                 <div class="col-sm-12">
                     @if(count($facilities = $data['venue']->getFacilities()))
                         <div class="page-header">
-                            <h1>Venue Facilities</h1>
+                            <h2 class="h1">Venue Facilities</h2>
                         </div>
 
                         <ul class="row custom-list">
@@ -202,7 +202,7 @@
 
                     @if(count($amenities = $data['venue']->getAmenities()))
                         <div class="page-header">
-                            <h1>Venue Amenties</h1>
+                            <h2 class="h1">Venue Amenties</h2>
                         </div>
                         <ul class="row custom-list">
                             @foreach($amenities as $amenity)
@@ -220,7 +220,7 @@
         <div id="ratings" class="row sm-text-center">
             <div class="col-sm-12">
                 <div class="page-header">
-                    <h1>Reviews</h1>
+                    <h2 class="h1">Reviews</h2>
                 </div>
             </div>
             @foreach ($data['ratings'] as $rating)

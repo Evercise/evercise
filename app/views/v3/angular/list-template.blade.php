@@ -44,7 +44,7 @@
                                 <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
                             </div>
 
-                            <div class="pull-left mr15"> <span class="icon icon-clock"></span> {[{ marker.nextClassDate }]}</div>
+                            <div class="pull-left mr15"> <span class="icon icon-clock"></span> <time>{[{ marker.nextClassDate }]}</time></div>
 
                             <div class="pull-left mr15"><span class="icon icon-clock"></span> {[{ marker.nextClassDuration}]} mins</div>
                             <div class="pull-left"><span class="icon icon-ticket"></span> x {[{ marker.capacity }]} left</div>

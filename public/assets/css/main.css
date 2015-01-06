@@ -10053,6 +10053,9 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   width: 100%;
   height: 100%;
 }
+.hero .carousel-indicators {
+  bottom: 0;
+}
 @media screen and (min-width: 768px) {
   .hero-sm {
     height: 308px;
@@ -11662,7 +11665,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   background-position: -214px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
-  padding: 60px 20px 0;
+  padding: 0px 20px 0;
+  height: 135px;
 }
 .package-green .package-title.active {
   background-position: -214px -813px;
@@ -11672,9 +11676,34 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   cursor: pointer;
   background-position: -214px -813px;
 }
-.package-green .package-title h1 {
+@media (max-width: 992px) {
+  .package-green .package-title {
+    background-image: url("../img/ev_site_icons.png");
+    background-position: -427px -733px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .package-green .package-title.active {
+    background-position: -427px -813px;
+  }
+  .package-green .package-title.hover:hover,
+  .package-green .package-title.active:hover {
+    cursor: pointer;
+    background-position: -427px -813px;
+  }
+}
+.package-green .package-title h2 {
   color: #ffffff;
   margin-bottom: 9px;
+  position: absolute;
+  bottom: -5px;
+  width: 70%;
+}
+@media (max-width: 992px) {
+  .package-green .package-title h2 {
+    right: 20px;
+    text-align: right;
+  }
 }
 .package-green .package-description {
   height: 210px;
@@ -11751,7 +11780,8 @@ fieldset[disabled] .package-green .package-pay .btn.active {
   background-position: -214px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
-  padding: 60px 20px 0;
+  padding: 0px 20px 0;
+  height: 135px;
 }
 .package-blue .package-title.active {
   background-position: -214px -813px;
@@ -11761,9 +11791,34 @@ fieldset[disabled] .package-green .package-pay .btn.active {
   cursor: pointer;
   background-position: -214px -813px;
 }
-.package-blue .package-title h1 {
+@media (max-width: 992px) {
+  .package-blue .package-title {
+    background-image: url("../img/ev_site_icons.png");
+    background-position: -427px -733px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .package-blue .package-title.active {
+    background-position: -427px -813px;
+  }
+  .package-blue .package-title.hover:hover,
+  .package-blue .package-title.active:hover {
+    cursor: pointer;
+    background-position: -427px -813px;
+  }
+}
+.package-blue .package-title h2 {
   color: #ffffff;
   margin-bottom: 9px;
+  position: absolute;
+  bottom: -5px;
+  width: 70%;
+}
+@media (max-width: 992px) {
+  .package-blue .package-title h2 {
+    right: 20px;
+    text-align: right;
+  }
 }
 .package-blue .package-description {
   height: 210px;
@@ -11840,7 +11895,8 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
   background-position: -214px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
-  padding: 60px 20px 0;
+  padding: 0px 20px 0;
+  height: 135px;
 }
 .package-pink .package-title.active {
   background-position: -214px -813px;
@@ -11850,9 +11906,34 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
   cursor: pointer;
   background-position: -214px -813px;
 }
-.package-pink .package-title h1 {
+@media (max-width: 992px) {
+  .package-pink .package-title {
+    background-image: url("../img/ev_site_icons.png");
+    background-position: -427px -733px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .package-pink .package-title.active {
+    background-position: -427px -813px;
+  }
+  .package-pink .package-title.hover:hover,
+  .package-pink .package-title.active:hover {
+    cursor: pointer;
+    background-position: -427px -813px;
+  }
+}
+.package-pink .package-title h2 {
   color: #ffffff;
   margin-bottom: 9px;
+  position: absolute;
+  bottom: -5px;
+  width: 70%;
+}
+@media (max-width: 992px) {
+  .package-pink .package-title h2 {
+    right: 20px;
+    text-align: right;
+  }
 }
 .package-pink .package-description {
   height: 210px;

@@ -201,7 +201,7 @@ class Elastic
      * @param int $id
      * @return mixed
      */
-    public function getSingle($id = 0)
+    public  function getSingle($id = 0)
     {
         $searchParams['index'] = $this->elastic_index;
         $searchParams['type'] = $this->elastic_type;

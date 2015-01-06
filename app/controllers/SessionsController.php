@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class SessionsController extends \BaseController
 {
 
@@ -36,21 +38,26 @@ class SessionsController extends \BaseController
      *
      * @return Response
      */
-    public function create($class_id)
+    public function create($evercisegroupId)
     {
-        $class = Evercisegroup::find($class_id);
+        $class = Evercisegroup::find($evercisegroupId);
 
         if(!isset($class->user_id) || !isset($this->user->id)) {
-            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
+            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page. '.$evercisegroupId);
         }
 
         if($class->user_id != $this->user->id) {
             return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
         }
 
-        $sessions = $class->futuresessions;
+        //$sessions = $class->futuresessions;
+        $sessions = Evercisesession::where('evercisegroup_id', $evercisegroupId)
+            ->where('date_time', '>=', Carbon::now())
+            ->orderBy('date_time', 'asc')
+            ->paginate(50);
+
         $data = [
-            'evercisegroup_id' => $class_id
+            'evercisegroup_id' => $evercisegroupId
         ];
 
         return View::make('v3.classes.add_sessions')->with('data', $data)->with('sessions', $sessions);

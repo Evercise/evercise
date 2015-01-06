@@ -34,6 +34,18 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
+/*
+Route::get('emailtest', [
+    'as' => 'test',
+    function(){
+        $user = Sentry::getUser(151);
+        $ids = [262, 331];
+        $data = Evercisegroup::whereIn('id', $ids)->get();
+        event('user.not_returned', [$user, $data]);
+        return 'email sent';
+    }
+]);
+*/
 
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
@@ -427,13 +439,13 @@ Route::group(['prefix' => 'widgets'], function () {
 Route::get('blog', ['as' => 'blog', 'uses' => 'PagesController@showBlog']);
 
 
-Route::get('about_evercise', [
+Route::get('about-evercise', [
     'as' => 'general.about',
     function () {
         return View::make('v3.pages.about');
     }
 ]);
-Route::get('terms', [
+Route::get('terms-of-use', [
     'as' => 'general.terms',
     function () {
         return View::make('v3.pages.terms');
@@ -443,7 +455,7 @@ Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@sho
 Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
 Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
 Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
-Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
+Route::get('class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);
 Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
 Route::post('/postPdf', ['as' => 'postPdf', 'uses' => 'PdfController@postPdf']);
@@ -624,6 +636,9 @@ Route::group(
 
         Route::get('/search/stats',
             ['as' => 'admin.searchstats', 'uses' => 'MainController@searchStats']);
+
+        Route::get('/sales/stats',
+            ['as' => 'admin.sales', 'uses' => 'MainController@salesStats']);
 
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
