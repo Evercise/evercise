@@ -4,8 +4,12 @@
     <div id="hero-carousel" class="carousel slide">
           <div class="carousel-inner">
             @foreach($slider as $index => $sl)
+
                  <div class="item {{ $index == 0 ? 'active': null }}">
                     <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}')">
+                       <ol class="carousel-indicators">
+                           <li data-target="#hero-carousel" data-slide-to="{{$index}}" class="{{ $index == 0 ? 'active' : null }}"></li>
+                       </ol>
                         <div class="jumbotron">
                           <div class="container text-center">
                             <h1 class="text-white"> {{ $sl['name'] }}</h1>
@@ -35,6 +39,7 @@
                     </div>
                  </div>
             @endforeach
+
           </div>
     </div>
 

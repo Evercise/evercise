@@ -134,9 +134,9 @@ return [
         '!!!!!'
     ],
     'blog'                        => [
-        'title'       => 'Evercise Blog',
+        'title'       => 'Evercise Gym and Fitness Events Blog',
         'keywords'    => 'fitness blog, evercise',
-        'description' => 'Pretty cool description'
+        'description' => 'Evercise London Fitness Events blog provides various information related to Fitness programs, Fitness tips and Events information with pictures and videos.'
     ],
     'gallery'                     => [
         'image_counter' => 3,
@@ -147,4 +147,6 @@ return [
 
     ],
     'article_no_img'              => '/files/article/no-img.jpg'
+
+
 ];

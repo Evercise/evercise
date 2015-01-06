@@ -376,4 +376,11 @@ class User
 
         $this->mail->newYear($user);
     }
+
+    public function notReturned($user, $everciseGroups)
+    {
+        $this->log->info('why not returned message sent ' . $user->id);
+
+        $this->mail->notReturned($user, $everciseGroups);
+    }
 }

@@ -1,4 +1,8 @@
 @extends('v3.layouts.master')
+<?php
+    View::share('title', 'Fitness Trainers / Students - Register Here');
+    View::share('metaDescription', 'Register with Evercise, active fitness community in London.')
+?>
 @section('body')
     <div class="container first-container">
         @if($referralCode)

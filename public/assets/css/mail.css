@@ -15,6 +15,7 @@ img{ width: 100%}
 .image-left{ float: left; margin-right: 25px}
 .image-right{ float: right; margin-left: 25px}
 .footer { font-size: 12px; text-align: left;}
+.mt5{ margin-top: 5px;}
 .mb30{ width: 100%; margin-bottom: 30px; float: left;}
 .btn{line-height: 5px; border-radius:4px;color:#ffffff;display:inline-block;font-family:helvetica, arial, sans-serif;font-size:14px;font-weight:bold;text-align:center;text-decoration:none;-webkit-text-size-adjust:none;  }
 .btn-blue{ background: #5ecde8}

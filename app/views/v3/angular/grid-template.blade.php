@@ -49,7 +49,7 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="class-info-wrapper  row">
                                 <div class="col-xs-6">
-                                    <span class="icon icon-clock"></span> <small>{[{ marker.nextClassDate  }]}</small>
+                                    <span class="icon icon-clock"></span> <small><time>{[{ marker.nextClassDate  }]}</time></small>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="row no-gutter">
