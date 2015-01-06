@@ -12,6 +12,7 @@ strong{ font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-heigh
 .text-right{ text-align: right}
 .text-center{ text-align: center}
 img{ width: 100%}
+.img-original{width: auto}
 .image-left{ float: left; margin-right: 25px}
 .image-right{ float: right; margin-left: 25px}
 .footer { font-size: 12px; text-align: left;}

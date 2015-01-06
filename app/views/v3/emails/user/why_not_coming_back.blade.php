@@ -42,7 +42,7 @@
                                 </tr>
                                 <tr height="30%">
                                     <td width="100%" valign="bottom">
-                                        {{ image('assets/img/email/stars_0.png') }}
+                                        {{ image('assets/img/email/stars-0.png', 'class rating', ['class' => 'img-original']) }}
                                     </td>
                                 </tr>
                             </table>
@@ -57,7 +57,7 @@
                                 </tr>
                                 <tr height="30%">
                                     <td width="100%" valign="bottom" align="right">
-                                        button
+                                        {{ Html::decode(Html::linkRoute('class.show', image('assets/img/email/view_class_button.png', 'view class',['class' => 'btn btn-pink']), $everciseGroups->id,  ['class' => 'btn btn-pink'])) }}
                                     </td>
                                 </tr>
                             </table>
