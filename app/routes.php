@@ -34,16 +34,18 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
-
+/*
 Route::get('emailtest', [
     'as' => 'test',
     function(){
         $user = Sentry::getUser(151);
-        $data = Evercisegroup::find(262);
+        $ids = [262, 331];
+        $data = Evercisegroup::whereIn('id', $ids)->get();
         event('user.not_returned', [$user, $data]);
         return 'email sent';
     }
 ]);
+*/
 
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);

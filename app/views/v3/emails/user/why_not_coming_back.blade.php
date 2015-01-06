@@ -17,57 +17,6 @@
             </td>
         </tr>
     </table>
-    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ffffff">
-        <tr>
-            <td>
-                <p>Looking for something in your area? We&apos;ve picked out a few local classes you might enjoy.</p>
-            </td>
-        </tr>
-    </table>
-     <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="20" bgcolor="#ffffff">
-        <tr>
-            <td width="100%">
-                <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="10" bgcolor="#ffffff">
-                    <tr>
-                        <td width="25%">
-                            <!-- {{image($everciseGroups->user->directory.'/search_/'.$everciseGroups->image) }}-->
-                            {{image('/files/u/59/62/search_strikelab-fitnesslondonwingchun51.jpg')}}
-                        </td>
-                        <td width="50%" valign="top">
-                            <table width="100%" height="100%" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-                                <tr height="80px">
-                                    <td width="100%">
-                                        <strong>{{$everciseGroups->name}}</strong>
-                                    </td>
-                                </tr>
-                                <tr height="30%">
-                                    <td width="100%" valign="bottom">
-                                        {{ image('assets/img/email/stars-0.png', 'class rating', ['class' => 'img-original']) }}
-                                    </td>
-                                </tr>
-                            </table>
 
-                        </td>
-                        <td width="25%" align="right" valign="top">
-                            <table width="100%" height="100%" align="right" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
-                                <tr height="80px">
-                                    <td width="100%" align="right">
-                                        <strong class="pink-text">&pound;16</strong>
-                                    </td>
-                                </tr>
-                                <tr height="30%">
-                                    <td width="100%" valign="bottom" align="right">
-                                        {{ Html::decode(Html::linkRoute('class.show', image('assets/img/email/view_class_button.png', 'view class',['class' => 'btn btn-pink']), $everciseGroups->id,  ['class' => 'btn btn-pink'])) }}
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </td>
-                    </tr>
-                </table>
-
-            </td>
-
-        </tr>
-    </table>
+    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups])
 @stop
