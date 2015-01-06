@@ -8,7 +8,7 @@
 
 @stop
 @section('extra')
-    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ff1b7e">
+    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="30" bgcolor="#ffffff">
         <tr>
             <td>
                 <br>
