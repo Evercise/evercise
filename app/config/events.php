@@ -91,6 +91,8 @@ return [
 
         ['user.ppc.signup' => 'User@ppcSignup'], // $user, $transaction, $type // ∑
 
+        ['user.not_returned' => 'User@notReturned'], // $user
+
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
 

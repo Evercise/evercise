@@ -35,6 +35,15 @@ foreach (Config::get('redirect') as $old => $new) {
 }
 
 
+Route::get('emailtest', [
+    'as' => 'test',
+    function(){
+        $user = Sentry::getUser(151);
+        event('user.not_returned', [$user]);
+        return 'email sent';
+    }
+]);
+
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
@@ -259,7 +268,7 @@ Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchContro
     'allsegments',
     '(.*)?'
 );
-Route::any('/uk/london', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
+Route::any('/uk/', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
 
 
 // VenuesController

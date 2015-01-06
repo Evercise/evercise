@@ -121,7 +121,7 @@ class Mail
             'transaction' => $transaction,
             'banner'      => NULL,
             'image'       => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
-            'link_url'    => $this->url->to('/uk/')
+            'link_url'    => $this->url->to('/uk/london')
         ];
 
         $this->send($user->email, $params);
@@ -167,7 +167,7 @@ class Mail
             'balance'      => $balance,
             'banner'      => NULL,
             'image'       => image('/assets/img/email/user_default.jpg', 'topup confirmation'),
-            'link_url'    => $this->url->to('/uk/')
+            'link_url'    => $this->url->to('/uk/london')
         ];
 
         $this->send($user->email, $params);
@@ -187,7 +187,7 @@ class Mail
             'user'     => $user,
             'banner'   => FALSE,
             'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
-            'link_url' => $this->url->to('/uk/')
+            'link_url' => $this->url->to('/uk/london')
         ];
 
         $this->send($user->email, $params);
@@ -779,6 +779,22 @@ class Mail
             'banner'   => FALSE,
             'image'    => image('/assets/img/email/relaunch.png', 'Check out the all new evercise'),
             'link_url' => $this->url->to('/')
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function notReturned($user)
+    {
+        $params = [
+            'subject'  => 'You have&apos;t used you £5 Evercise Balance',
+            'title'    => 'You have&apos;t used you £5 Evercise Balance',
+            'view'     => 'v3.emails.user.why_not_coming_back',
+            'user'     => $user,
+            'banner'   => FALSE,
+            'image'    => image('/assets/img/email/user_default.jpg', 'Why not returned'),
+            'link_url' => $this->url->to('/uk/london')
         ];
 
         $this->send($user->email, $params);
