@@ -80,6 +80,13 @@
                             <span class="menu-title">Search Stats</span>
                         </a>
                     </li>
+
+                    <li class="first_level">
+                        <a href="{{ URL::route('admin.sales') }}">
+                            <span class="icon_currency first_level_icon"></span>
+                            <span class="menu-title">Sales</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="menu_toggle">
                     <span class="icon_menu_toggle">
