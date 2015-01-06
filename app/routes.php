@@ -39,7 +39,8 @@ Route::get('emailtest', [
     'as' => 'test',
     function(){
         $user = Sentry::getUser(151);
-        event('user.not_returned', [$user]);
+        $data = Evercisegroup::find(262);
+        event('user.not_returned', [$user, $data]);
         return 'email sent';
     }
 ]);

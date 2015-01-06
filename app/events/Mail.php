@@ -785,13 +785,14 @@ class Mail
 
     }
 
-    public function notReturned($user)
+    public function notReturned($user, $everciseGroups)
     {
         $params = [
             'subject'  => 'You have&apos;t used you £5 Evercise Balance',
             'title'    => 'You have&apos;t used you £5 Evercise Balance',
             'view'     => 'v3.emails.user.why_not_coming_back',
             'user'     => $user,
+            'everciseGroups' => $everciseGroups,
             'banner'   => FALSE,
             'image'    => image('/assets/img/email/user_default.jpg', 'Why not returned'),
             'link_url' => $this->url->to('/uk/london')
