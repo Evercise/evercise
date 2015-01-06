@@ -99,9 +99,7 @@ class MainController extends \BaseController
             $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
         }
 
-
         $this->data['total_referrals'] = Referral::all()->count();
-
 
         return View::make('admin.dashboard', $this->data)->render();
     }

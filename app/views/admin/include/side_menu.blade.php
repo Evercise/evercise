@@ -84,7 +84,7 @@
                     <li class="first_level">
                         <a href="{{ URL::route('admin.sales') }}">
                             <span class="icon_currency first_level_icon"></span>
-                            <span class="menu-title">Sales</span>
+                            <span class="menu-title">Sales ({{ Sessionmember::todaysSales() }})</span>
                         </a>
                     </li>
                 </ul>
