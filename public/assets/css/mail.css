@@ -20,6 +20,7 @@ img{ width: 100%}
 .mb30{ width: 100%; margin-bottom: 30px; float: left;}
 .btn{line-height: 5px; border-radius:4px;color:#ffffff;display:inline-block;font-family:helvetica, arial, sans-serif;font-size:14px;font-weight:bold;text-align:center;text-decoration:none;-webkit-text-size-adjust:none;  }
 .btn-blue{ background: #5ecde8}
+.btn-pink{ background: #ff1b7e}
 
 @media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
     table{ width: 100%}
