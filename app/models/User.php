@@ -776,7 +776,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             if ($this->token->hasValidFacebookToken()) {
                 $facebookToken = json_decode($this->token->facebook);
                 if ($facebookToken)
-                    return $facebookToken->id;
+                    if (isset($facebookToken->id))
+                        return $facebookToken->id;
             }
         }
         return null;
@@ -788,7 +789,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             if ($this->token->hasValidTwitterToken()) {
                 $twitterToken = json_decode($this->token->twitter);
                 if ($twitterToken)
-                    return $twitterToken->screen_name;
+                    if (isset($twitterToken->screen_name))
+                        return $twitterToken->screen_name;
             }
         }
         return null;
