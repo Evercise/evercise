@@ -89,9 +89,12 @@ return [
         ['user.referral.completed' => 'User@referralCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.signup' => 'User@referralSignup'], // $user, $transaction, $balance // ∑
 
+        ['user.class.rate' => 'User@rateClass'], // $user // ∑
+
         ['user.ppc.signup' => 'User@ppcSignup'], // $user, $transaction, $type // ∑
 
-        ['user.not_returned' => 'User@notReturned'], // $user
+        ['user.not_returned' => 'User@notReturned'], // $user, $everciseGroups
+        ['user.why_not_refer' => 'User@whyNotRefer'], // $user
 
         ['trainer.edit' => 'Trainer@edit'],
         ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session

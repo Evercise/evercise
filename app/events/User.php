@@ -383,4 +383,17 @@ class User
 
         $this->mail->notReturned($user, $everciseGroups);
     }
+
+    public function whyNotRefer($user)
+    {
+        $this->log->info('why not refer a friend sent ' . $user->id);
+
+        $this->mail->whyNotRefer($user);
+    }
+    public function rateClass($user)
+    {
+        $this->log->info('hey rate this class email sent ' . $user->id);
+
+        $this->mail->rateClass($user);
+    }
 }
