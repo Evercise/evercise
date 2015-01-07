@@ -7300,6 +7300,12 @@ a.bg-light-grey:hover {
   padding-left: 40px;
   padding-right: 40px;
 }
+@media (max-width: 1200px) {
+  .navbar-default .navbar-nav li a.nav-list {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 .navbar-default .navbar-nav li .nav-profile {
   padding: 11px 20px;
 }
@@ -9977,6 +9983,20 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   cursor: pointer;
   background-position: -650px -330px;
 }
+.input-wrapper.person:after {
+  background-image: url("../img/ev_site_icons.png");
+  background-position: -570px -290px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.input-wrapper.person:after.active {
+  background-position: -570px -330px;
+}
+.input-wrapper.person:after.hover:hover,
+.input-wrapper.person:after.active:hover {
+  cursor: pointer;
+  background-position: -570px -330px;
+}
 .input-wrapper .form-control {
   height: 100%;
   padding-left: 50px;
@@ -10014,6 +10034,12 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 .toggle-select .switch:hover {
   background-color: #b0babe;
+}
+@media (max-width: 1199px) {
+  .discover-nav #search-classes input[type=submit] {
+    margin-left: -10px;
+    float: left;
+  }
 }
 .cart-row {
   padding: 10px 0;
@@ -12078,6 +12104,9 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 }
 .landing-banner p {
   line-height: 20px;
+}
+.landing-banner ul {
+  margin-left: 52px;
 }
 .landing-popup {
   height: 520px;

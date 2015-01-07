@@ -5,7 +5,7 @@
 
 <p>Hey <span class="blue-text">{{$name}}</span></p>
 
-<p>Don&apos;t forget your upcoming class <span class="blue-text">{{ $group->name }}</span> is coming up on the {{ date('M jS, g:ia', strtotime($dateTime)) }}</p>
+<p>Don&apos;t forget your upcoming class <span class="blue-text">{{ $group->name }}</span> is coming up on the <span class="blue-text">{{ date('M jS, g:ia', strtotime($dateTime)) }}</span></p>
 <p>This class is held by <span class="blue-text">{{ $trainerName }}</span> </p>
 <p>Your transaction ID: <strong class="blue-text">{{ $transactionId }}</strong></p>
 
@@ -20,6 +20,4 @@
 
 <p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank">Facebook</a></p>
 <p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank">Twitter</a></p>
-<p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->gplus()  }}" target="_blank">Google Plus</a></p>
-
 @stop

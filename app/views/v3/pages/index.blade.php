@@ -23,7 +23,7 @@
 
                         <h3><a href="{{ url(Articles::createUrl($a)) }}" alt="{{ $a->title }}">{{ $a->title }}</a></h3>
                         <p>{{ $a->intro }}</p>
-                        <small>published on : {{ strtotime($a->published_on) != '-62169984000' ?  date('D dS Y',strtotime($a->published_on) ) :  date('D dS Y',strtotime($a->created_at) ) }}</small>
+                        <small>published on : {{ strtotime($a->published_on) != '-62169984000' ?  date('D dS M Y',strtotime($a->published_on) ) :  date('D dS Y',strtotime($a->created_at) ) }}</small>
                         <br>
                         {{ Html::link(url(Articles::createUrl($a)), 'Read More...', ['class' => 'text-primary']) }}
                     </div>

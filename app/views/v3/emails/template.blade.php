@@ -40,7 +40,7 @@
                                     @if($title)
                                     <tr>
                                         <td align="{{ $align or 'left' }}">
-                                            <h1 class="pink-text">{{ $title or "" }}</h1>
+                                            <h1 class="{{$style}}-text">{{ $title or "" }}</h1>
                                         </td>
                                     </tr>
                                     @endif

@@ -78,8 +78,19 @@ class Mail
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
                 'url'   => $this->url->to('/'),
                 'title' => 'SignUp Today and Receive £5'
+            ],
+            'refer_someone' => [
+                'image' => $this->url->to('assets/img/email/referal_banner_blue.png'),
+                'url'   => $this->url->to('/uk/london'),
+                'title' => 'refer someone Today and Receive £5'
+            ],
+            'packages' => [
+                'image' => $this->url->to('assets/img/email/user_upsell_package.png'),
+                'url'   => $this->url->to('/packages'),
+                'title' => 'save money by purchasing a 5 or 10 class package'
             ]
         ];
+
 
         $this->data = [
             'config'       => $this->config->get('evercise'),
@@ -92,6 +103,7 @@ class Mail
             'image'        => image('assets/img/email/user_default.jpg', 'Evercise'),
             'banner'       => FALSE,
             'banner_types' => $this->banner_types,
+            'style'        => 'pink',
             'css'          => file_get_contents((php_sapi_name() === 'cli' ? './public/' : './') . 'assets/css/mail.css')
         ];
 
@@ -317,6 +329,7 @@ class Mail
                 'trainerName'   => $trainerName,
                 'trainerEmail'  => $trainerEmail,
                 'classId'       => $classId,
+                'style'         => 'blue',
                 'transactionId' => $details['transactionId'],
                 'image'         => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
                 'link_url'      => $this->url->to('/profile/' . $group->slug)
@@ -383,6 +396,7 @@ class Mail
     {
         $params = [
             'subject'          => 'Thanks for sharing!',
+            'title'            => 'Thanks for sharing!',
             'view'             => 'v3.emails.user.thanks_inviting',
             'email'            => $email,
             'refereeEmail'     => $referreeEmail,
@@ -595,6 +609,7 @@ class Mail
             'trainerEmail' => $trainerEmail,
             'classId'      => $classId,
             'sessionId'    => $sessionId,
+            'style'       => 'blue',
             'image'        => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
             'link_url'     => $this->url->to('/download_user_list/' . $sessionId)
         ];
@@ -788,7 +803,7 @@ class Mail
     public function notReturned($user, $everciseGroups)
     {
         $params = [
-            'subject'  => 'You have&apos;t used you £5 Evercise Balance',
+            'subject'  => 'You have not used you £5 Evercise Balance',
             'title'    => 'You have&apos;t used you £5 Evercise Balance',
             'view'     => 'v3.emails.user.why_not_coming_back',
             'user'     => $user,
@@ -796,6 +811,40 @@ class Mail
             'banner'   => FALSE,
             'image'    => image('/assets/img/email/user_default.jpg', 'Why not returned'),
             'link_url' => $this->url->to('/uk/london')
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function whyNotRefer($user)
+    {
+        $params = [
+            'subject'  => 'why not refer to a friend, enjoy the happiness to do classes together',
+            'title'    => 'Share Evercise with your friends and get £5',
+            'view'     => 'v3.emails.user.why_not_refer',
+            'user'     => $user,
+            'banner'   => $this->banner_types['refer_someone'],
+            'image'    => image('/assets/img/email/user_reffer_friend.jpg', 'Why not refer a friend'),
+            'link_url' => $this->url->to('/uk/london'),
+            'style'    => 'blue',
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function rateClass($user)
+    {
+        $params = [
+            'subject'  => 'How was the class?',
+            'title'    => 'How was the class?',
+            'view'     => 'v3.emails.user.rate_class',
+            'user'     => $user,
+            'banner'   => $this->banner_types['packages'],
+            'image'    => image('/assets/img/email/user_default.jpg', 'rate class'),
+            'link_url' => $this->url->to('/'), // url needs adding
+            'style'    => 'pink',
         ];
 
         $this->send($user->email, $params);

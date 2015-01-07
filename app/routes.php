@@ -34,18 +34,10 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
-/*
-Route::get('emailtest', [
-    'as' => 'test',
-    function(){
-        $user = Sentry::getUser(151);
-        $ids = [262, 331];
-        $data = Evercisegroup::whereIn('id', $ids)->get();
-        event('user.not_returned', [$user, $data]);
-        return 'email sent';
-    }
-]);
-*/
+
+
+
+
 
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
@@ -264,7 +256,11 @@ foreach (Config::get('landing_pages') as $url => $params) {
         ['as' => 'landing_page.' . str_replace('/', '.', $url), 'uses' => 'LandingsController@display']
     );
 }
-
+/* not ready yet
+Route::get('/trainers',
+    ['as' => 'landing.trainer.ppc' , 'uses' => 'LandingsController@trainerPpc']
+);
+*/
 
 //Redirect All UK segments to the same function and we will go from there
 Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchController@parseUrl'])->where(
@@ -467,6 +463,7 @@ Route::get('refer_a_friend/{code}', ['as' => 'referral', 'uses' => 'ReferralsCon
 Route::get('ppc/{category}/{code}', ['as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc']);
 Route::get('ppc_fb/{category}', ['as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc']);
 Route::post('landing/send', ['as' => 'landings.send', 'uses' => 'LandingsController@landingSend']);
+Route::post('landing/enquiry', ['as' => 'landings.enquiry', 'uses' => 'LandingsController@trainerEnquiry']);
 
 Route::post('new_referral', ['as' => 'new_referral', 'uses' => 'ReferralsController@store']);
 

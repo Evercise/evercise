@@ -302,7 +302,7 @@ if(typeof angular != 'undefined') {
             }
         }
 
-        if(window.innerWidth >= 1200) {
+        if(window.innerWidth >= 992) {
             $scope.view = 'mapview';
         }else if(window.innerWidth >= 767) {
             $scope.view = 'listview';
@@ -314,7 +314,7 @@ if(typeof angular != 'undefined') {
         // only display grid view on smaller screens
         $(window).resize(function(){
 
-            if(window.innerWidth < 1200 && window.innerWidth >= 767)
+            if(window.innerWidth < 992 && window.innerWidth >= 767)
             {
                 $scope.$apply(function(){
                     $scope.view = 'listview';
