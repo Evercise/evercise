@@ -53,6 +53,7 @@
                         <th>Email</th>
                         <th>Registered</th>
                         <th>Type</th>
+                        <th>Social</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -78,7 +79,10 @@
                                 {{ ($user->isTrainer() ? 'Trainer':'User') }}</span></td>
 
                             </td>
-
+                            <td>
+                                {{$user->getFacebookId() ? '<a href="http://facebook.com/'.$user->getFacebookId().'" target="_blank">Facebook</a>' : '' }}
+                                {{$user->getTwitterId() ? '<a href="http://twitter.com/'.$user->getTwitterId().'" target="_blank">Twitter</a>' : '' }}
+                            </td>
                             <td>
 
                                 {{ Form::open(array('id' => 'log_in_'.$user->id, 'url' => 'admin/log_in_as', 'method' => 'post', 'class' => '', 'style' => 'float:left;margin-right:5px')) }}

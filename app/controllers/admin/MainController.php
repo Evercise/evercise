@@ -490,7 +490,7 @@ class MainController extends \BaseController
                 'class_id' => $session->evercisegroup_id,
                 'class_name' => Evercisegroup::where('id', $session->evercisegroup_id)->pluck('name'),
                 'date' => $sm->created_at,
-                'amount' => Transactions::where('id', $sm->transaction_id)->pluck('total'),
+                'amount' => $session->price,
                 'transaction_id' => $sm->transaction_id,
                 'payment_method' => $sm->payment_method,
             ];
