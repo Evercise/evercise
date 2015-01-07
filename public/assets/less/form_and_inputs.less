@@ -286,6 +286,11 @@ body:not(:-moz-handler-blocked) .custom-select:after{
       .sprite(-650px, -290px);
     }
   }
+  &.person{
+    &:after{
+      .sprite(-570px, -290px);
+    }
+  }
   .form-control{
     height: 100%;
     padding-left: 50px;
@@ -328,3 +333,16 @@ body:not(:-moz-handler-blocked) .custom-select:after{
     }
   }
 }
+
+// responsive only targeting
+.discover-nav{
+  #search-classes{
+    @media (max-width: @screen-md-max) {
+      input[type=submit]{
+        margin-left: -10px;
+        float: left;
+      }
+    }
+  }
+}
+

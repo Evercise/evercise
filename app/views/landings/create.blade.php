@@ -18,14 +18,14 @@
   <div  class="sign-up">
     {{ Form::open(array('id' => 'send_ppc', 'url' => 'landings', 'method' => 'POST', 'class' => 'create-form milestone-form')) }}
             {{ Form::label( 'email', 'Email Address') }}
-            {{ Form::hidden( 'category' , $category->id , array('id' => 'category')) }}
+
             {{ Form::text( 'email' , '', array('id' => 'email','placeholder' => 'example@domain.com')) }}
             {{ Form::submit('JOIN NOW' , array('class'=>'btn btn-black ')) }}
           {{ Form::close() }}
 
           <a href="URL()">
 
-          {{ HTML::decode(HTML::linkRoute('ppc_fb.category', '<img src="'.url().'/img/facebook_logo.png" /> Log in with Facebook', $category->id , ['alt'=>"facebook icon", 'class' => 'btn btn-fb'] ) )}}
+
   </div>
   <div class="landing-body">
     <h2>{{trans('landing.bodyHeader')}}</h2>
