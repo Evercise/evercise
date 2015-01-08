@@ -54,7 +54,7 @@
 
                             <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
                             {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
-
+                            {{ Form::hidden('city', null) }}
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
                             <div class="custom-select custom-select-white">
                                 {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}

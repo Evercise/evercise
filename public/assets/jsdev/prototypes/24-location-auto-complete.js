@@ -3,11 +3,16 @@ function LocationAutoComplete(input){
     this.autoCompleteStarted = false;
     this.addScript = false;
     this.mapOptions = {};
+    this.address_components = [];
+    this.town = 'london';
     this.init();
 }
 LocationAutoComplete.prototype = {
     constructor: LocationAutoComplete,
     init: function(){
+        // find form
+        this.form = this.input.closest("form");
+
         var self = this;
         //check if we are using angular as angualr ois loading google masp api
         if (typeof angular != 'undefined')
@@ -58,11 +63,18 @@ LocationAutoComplete.prototype = {
                 document.getElementById(self.input.attr('id')),
                 this.mapOptions
             );
-            /*
+
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                console.log(this.types[0]);
+                var place = autocomplete.getPlace();
+
+                self.address_components = place.address_components;
+
+                self.getTown();
+
+                self.updateCity();
+
             });
-            */
+
         }
         else
         {
@@ -71,5 +83,26 @@ LocationAutoComplete.prototype = {
                 self.load();
             }, 500);
         }
+    },
+    getTown : function(){
+        var self = this;
+
+        var result = this.address_components;
+
+        for (var i = 0; i < result.length; ++i) {
+
+            if (result[i].types[0] == "locality") {
+                self.town = result[i].long_name ;
+            }
+            else if(result[i].types[0] == "political") {
+                self.town = result[i].long_name ;
+            }
+            else if(result[i].types[0] == "postal_town"){
+                self.town = result[i].long_name ;
+            }
+        }
+    },
+    updateCity : function(){
+        this.form.find('input[name="city"]').val(this.town);
     }
 }
