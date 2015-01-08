@@ -12,6 +12,7 @@
                     <div class="input-group with-addon">
                         <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
                         {{ Form::text('location',  isset($area->name) ? $area->name : null, ['class' => 'form-control', 'placeholder' => 'Location...', 'id' => 'location-auto-complete']) }}
+                        {{ Form::hidden('city', null) }}
                     </div>
                 </div>
                 <div class="col-sm-3 sm-mb10">

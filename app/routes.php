@@ -451,7 +451,7 @@ Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@sho
 Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
 Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
 Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
-Route::get('class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
+Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);
 Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
 Route::post('/postPdf', ['as' => 'postPdf', 'uses' => 'PdfController@postPdf']);
@@ -634,8 +634,11 @@ Route::group(
         Route::get('/search/stats',
             ['as' => 'admin.searchstats', 'uses' => 'MainController@searchStats']);
 
-        Route::get('/sales/stats',
+        Route::get('/sales',
             ['as' => 'admin.sales', 'uses' => 'MainController@salesStats']);
+
+        Route::get('/transactions',
+            ['as' => 'admin.transactions', 'uses' => 'MainController@transactions']);
 
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);

@@ -500,6 +500,41 @@ class MainController extends \BaseController
             ->with('sales', $sales);
     }
 
+    public function transactions()
+    {
+        $transactions = Transactions::orderBy('id', 'desc')->get();
+
+        $userIds = [];
+        foreach($transactions as $tr)
+        {
+            $userIds[] = $tr->user_id;
+        }
+
+        $userNames = User::whereIn('id', $userIds)->lists('display_name', 'id');
+
+        //return var_dump($userNames);
+
+        $trans = [];
+        foreach($transactions as $tr)
+        {
+            $trans[] =
+                [
+                    'id' => $tr->id,
+                    'user_id' => $tr->user_id,
+                    'user_name' => $userNames[$tr->user_id],
+                    'total' => $tr->total,
+                    'total_after_fees' => $tr->total_after_fees,
+                    'payment_method' => $tr->payment_method,
+                    'token' => $tr->token,
+                    'transaction' => $tr->transaction,
+                    'processed' => $tr->processed,
+                ];
+        }
+
+        return View::make('admin.transactions')
+            ->with('transactions', $trans);
+    }
+
 
     public function listClasses()
     {
