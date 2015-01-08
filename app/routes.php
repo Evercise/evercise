@@ -634,8 +634,11 @@ Route::group(
         Route::get('/search/stats',
             ['as' => 'admin.searchstats', 'uses' => 'MainController@searchStats']);
 
-        Route::get('/sales/stats',
+        Route::get('/sales',
             ['as' => 'admin.sales', 'uses' => 'MainController@salesStats']);
+
+        Route::get('/transactions',
+            ['as' => 'admin.transactions', 'uses' => 'MainController@transactions']);
 
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
