@@ -153,7 +153,10 @@ class SearchController extends \BaseController
             if (!isset($input['location']) || empty($input['location'])) {
                 $input['location'] = 'London';
             }
-            $location = $this->place->getByLocation($input['location']);
+            if (!isset($input['city']) || empty($input['city'])) {
+                $input['city'] = 'London';
+            }
+            $location = $this->place->getByLocation($input['location'], $input['city']);
 
 
             if (is_null($location)) {
@@ -162,6 +165,7 @@ class SearchController extends \BaseController
 
                 $input['allsegments'] = '';
                 unset($input['location']);
+                unset($input['city']);
 
                 return $this->redirect->route(
                     'search.parse',
@@ -170,6 +174,7 @@ class SearchController extends \BaseController
                 );
             } else {
                 unset($input['location']);
+                unset($input['city']);
             }
 
             /** We have save the location to the DB so we can redirect the user to the new URL now */
