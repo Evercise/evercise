@@ -25,7 +25,7 @@ class Place extends \Eloquent
     }
 
 
-    public static function getByLocation($location = '')
+    public static function getByLocation($location = '', $city = false)
     {
 
         /** First Check the Location if it exists  */
@@ -33,7 +33,7 @@ class Place extends \Eloquent
 
             /** We now have to create a lot of shit to get this working */
 
-            $is_london = true;
+            $is_city = true;
             $is_area = true;
             $zip_code = false;
 
@@ -52,13 +52,13 @@ class Place extends \Eloquent
                     $location[$i] = trim(str_ireplace('United Kingdom', '', $val));
                 }
 
-                if (trim($val) == 'London') {
-                    $is_london = true;
+                if (trim($val) == $city) {
+                    $is_city = true;
                     unset($location[$i]);
-                } elseif (stripos($val, 'London') !== false) {
+                } elseif (stripos($val, $city) !== false) {
                     /** London Sometimes at the front of the row London N1 0QH,  Kingdom */
-                    $is_london = true;
-                    $location[$i] = trim(str_ireplace('London', '', $val));
+                    $is_city = true;
+                    $location[$i] = trim(str_ireplace($city, '', $val));
 
                     if ($location[$i] == '') {
                         unset($location[$i]);
@@ -91,20 +91,20 @@ class Place extends \Eloquent
 
             $location = Str::slug($name);
 
-            $name .= ($is_london && strpos($name, 'london') === false ? ' London' : '');
+            $name .= ($is_city && strpos($name, $city) === false ? ' '.ucfirst($city) : '');
             $name .= (!$is_area && strpos($name, 'station') === false ? ' Station' : '');
 
             $return = [];
 
             $type = 'AREA';
-            if ($is_london) {
-                $return[] = 'london';
+            if ($is_city) {
+                $return[] = strtolower($city);
             }
-            if ($is_area && !$zip_code) {
+            if ($is_area && !$zip_code && $city == 'London') {
                 $return[] = 'area';
             }
 
-            if (!$is_area) {
+            if (!$is_area && $city == 'London') {
                 $return[] = 'station';
                 $type = 'STATION';
             }
@@ -125,13 +125,13 @@ class Place extends \Eloquent
                 $location_url = str_replace('/area', '', $location_url);
             }
 
-            return self::checkLocation($location_url, $name, $type, $is_london, $zip_code);
+            return self::checkLocation($location_url, $name, $type, ($is_city ? $city : false), $zip_code);
 
         }
     }
 
 
-    public static function checkLocation($url, $name, $type, $is_london = false, $is_zip = false)
+    public static function checkLocation($url, $name, $type, $is_city = false, $is_zip = false)
     {
         $url = rtrim((string) $url, '/');
         $link = Link::where('permalink', $url)->first();
@@ -141,7 +141,7 @@ class Place extends \Eloquent
             /** This crap is new.. so lets add it and figure out where the f* is it */
 
 
-            $geo = self::getGeo($name, $is_london, $is_zip);
+            $geo = self::getGeo($name, $is_city, $is_zip);
 
             $link = new Link(['permalink' => $url, 'type' => $type]);
 
@@ -165,9 +165,9 @@ class Place extends \Eloquent
     }
 
 
-    public static function getGeo($location, $is_london, $is_zip)
+    public static function getGeo($location, $is_city, $is_zip)
     {
-        $geocode = self::getLocation($location, $is_london, $is_zip);
+        $geocode = self::getLocation($location, $is_city, $is_zip);
 
         if($geocode) {
             return ['lat' => $geocode->getLatitude(), 'lng' => $geocode->getLongitude()];
@@ -179,7 +179,7 @@ class Place extends \Eloquent
         }
     }
 
-    public static function getLocation($location, $is_london, $is_zip)
+    public static function getLocation($location, $is_city, $is_zip)
     {
         $geocoder = new \Geocoder\Geocoder();
         $adapter = new \Geocoder\HttpAdapter\CurlHttpAdapter();
@@ -195,7 +195,7 @@ class Place extends \Eloquent
         $geocoder->registerProvider($chain);
 
         try {
-            $addition = $location . ($is_zip ? ' UK' : '') . ($is_london ? ' London' : '');
+            $addition = $location . ($is_zip ? ' UK' : '') . ($is_city ? ' '.$is_city : '');
             $geocode = $geocoder->geocode($addition);
             return $geocode;
 

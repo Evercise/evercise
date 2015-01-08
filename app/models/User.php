@@ -754,12 +754,46 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function hasTwitter()
     {
-        return $this->token->hasValidTwitterToken();
+        if ($this->token)
+        {
+            return $this->token->hasValidTwitterToken();
+        }
+    else return false;
     }
 
     public function hasFacebook()
     {
-        return $this->token->hasValidFacebookToken();
+        if ($this->token)
+        {
+            return $this->token->hasValidFacebookToken();
+        }
+        else return false;
+    }
+
+    public function getFacebookId()
+    {
+        if ($this->token) {
+            if ($this->token->hasValidFacebookToken()) {
+                $facebookToken = json_decode($this->token->facebook);
+                if ($facebookToken)
+                    if (isset($facebookToken->id))
+                        return $facebookToken->id;
+            }
+        }
+        return null;
+    }
+
+    public function getTwitterId()
+    {
+        if ($this->token) {
+            if ($this->token->hasValidTwitterToken()) {
+                $twitterToken = json_decode($this->token->twitter);
+                if ($twitterToken)
+                    if (isset($twitterToken->screen_name))
+                        return $twitterToken->screen_name;
+            }
+        }
+        return null;
     }
 
 
