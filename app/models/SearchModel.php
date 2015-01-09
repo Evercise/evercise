@@ -154,6 +154,7 @@ class SearchModel
 
         $params = [
             'size' => $size,
+            'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : false),
             'from' => (($page - 1) * $size),
             'sort' => $sort,
             'radius' => (in_array(
@@ -173,6 +174,8 @@ class SearchModel
         $searchResults = $this->search->getResults($area, $params);
 
 
+
+
         $this->elastic->saveStats((!empty($user->id) ? $user->id : 0), $this->input->ip(), $area, $params,
             $searchResults->total);
 
@@ -182,7 +185,7 @@ class SearchModel
 
         $data = [
             'area' => $area,
-            'evercisegroups' => $paginatedResults,
+            'results' => $searchResults,
             'radius' => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
             'page' => $page,

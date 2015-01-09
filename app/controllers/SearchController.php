@@ -131,6 +131,22 @@ class SearchController extends \BaseController
         $input = array_filter($this->input->all());
 
 
+
+
+        /**
+         *
+         * search
+         * location
+         * city
+         * per_page
+         * page
+         * from
+         * distance
+         * venue_id
+         *
+         *
+         */
+
         $results = $this->searchmodel->search($area, $input, $this->user);
 
 
@@ -138,8 +154,11 @@ class SearchController extends \BaseController
             return $results['redirect'];
         }
 
-        $results['mapResults'] = $this->searchmodel->searchMap($area, $input, $this->user);
+        $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
 
+
+
+        d($results);
 
         /**
          *

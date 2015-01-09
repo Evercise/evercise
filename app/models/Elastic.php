@@ -103,6 +103,13 @@ class Elastic
             $search = TRUE;
         }
 
+        if (!empty($params['venue_id'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['venue.id' => $params['venue_id']];
+            $search = TRUE;
+        }
+
+
+
 
         if (!$search) {
             /** Guess not! */
