@@ -150,23 +150,16 @@ class Search
 
         foreach ($results->hits as $r) {
             $fields = (array)$r->fields;
-            $mapResults[$fields['venue.id'][0]][$fields['id'][0]] = $this->formatMapSingle($fields);
+            $id = $fields['id'][0];
+            $venue_id = $fields['venue.id'][0];
+            $mapResults[$venue_id][$id]['location'] = [ $fields['venue.lon'][0] => $fields['venue.lat'][0] ];
+            $mapResults[$venue_id][$id]['classes'][] = $id;
+            $mapResults[$venue_id][$id]['total'] = count($mapResults[$venue_id][$id]['classes']);
         }
 
         return $mapResults;
     }
 
-
-    /**
-     * Format a single Result
-     * @param $row
-     * @return mixed
-     */
-    public function formatMapSingle($fields = [])
-    {
-        return [ $fields['venue.lon'][0] => $fields['venue.lat'][0] ];
-
-    }
 
 
 

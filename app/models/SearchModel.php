@@ -86,7 +86,7 @@ class SearchModel
 
         unset($input['area_id']);
 
-        if (!empty($input['per_page']) && in_array($this->config->get('evercise.per_page'), $input['per_page'])) {
+        if (!empty($input['per_page']) && in_array($input['per_page'], $this->config->get('evercise.per_page'))) {
             $this->session->put('PER_PAGE', $input['per_page']);
             unset($input['per_page']);
         }
@@ -148,9 +148,10 @@ class SearchModel
             //  $radius = $area->min_radius;
         }
 
-        $page = $this->input->get('page', 1);
-        $sort = $this->getSort($area);
-        $search = $this->input->get('search');
+
+        $page = (!empty($input['page']) ? $input['page'] : 1);
+        $sort = $this->getSort($area, (!empty($input['sort']) ? $input['sort'] : 'best'));
+        $search = (!empty($input['search']) ? $input['search'] : '');
 
         $params = [
             'size' => $size,
@@ -180,12 +181,13 @@ class SearchModel
             $searchResults->total);
 
 
-        $paginatedResults = $this->paginator->make($searchResults->hits, $searchResults->total, $size);
-
-
         $data = [
             'area' => $area,
             'results' => $searchResults,
+            'url' => $area->link->permalink,
+            'size' => $size,
+            'sort' => (!empty($input['sort']) ? $input['sort'] : 'best'),
+            'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : ''),
             'radius' => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
             'page' => $page,
@@ -264,27 +266,14 @@ class SearchModel
             $radius = $this->input->get('distance', $this->config->get('evercise.default_radius'));
         }
 
-        $size = $this->session->get('PER_PAGE', $this->config->get('evercise.default_per_page'));
-
-
-        if (!empty($area->min_radius) && str_replace('mi', '', $area->min_radius) > str_replace('mi', '', $radius)) {
-            //  $radius = $area->min_radius;
-        }
-
-        $page = (!empty($input['page']) ? $input['page'] : 1);
-        $sort = $this->getSort($area);
+        $sort = $this->getSort($area, (!empty($input['sort']) ? $input['sort'] : 'best'));
         $search = (!empty($input['search']) ? $input['search'] : '');
 
         $params = [
-            'size' => $size,
-            'from' => (($page - 1) * $size),
+            'size' => $this->config->get('evercise.max_display_map_results'),
+            'from' => 0,
             'sort' => $sort,
-            'radius' => (in_array(
-                $radius,
-                array_values($this->config->get('evercise.radius'))
-            ) ? $radius : $this->config->get(
-                'evercise.default_radius'
-            )),
+            'radius' => '25mi',
             'search' => $search
         ];
 
