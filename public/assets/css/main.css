@@ -12178,3 +12178,6 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
     padding-bottom: 40px;
   }
 }
+.angular-google-map-container {
+  height: 400px;
+}

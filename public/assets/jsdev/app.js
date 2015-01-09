@@ -8,10 +8,12 @@ if(typeof angular != 'undefined') {
 
     app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
         GoogleMapApi.configure({
-            v: '3.16',
-            libraries: 'places'
+            v: '3.17',
+            libraries: 'places',
+            uk: true
         });
     }]);
+
 
 
     app.filter('truncate', function () {

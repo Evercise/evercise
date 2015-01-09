@@ -144,7 +144,7 @@ class SearchController extends \BaseController
         $input = array_filter($this->input->all());
 
 
-        $results = $this->searchmodel->search($area, $input, $this->user);
+        $results['results'] = $this->searchmodel->search($area, $input, $this->user);
 
 
         if(!empty($results['redirect'])) {
@@ -153,9 +153,9 @@ class SearchController extends \BaseController
 
         $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
 
+        JavaScript::put(['results' => $results]);
 
-        return View::make('v3.classes.discover.master')
-            ->with($results);
+        return View::make('v3.classes.discover.search');
 
     }
 

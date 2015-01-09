@@ -365,34 +365,6 @@ if(typeof angular != 'undefined') {
         })
 
 
-        /*
-        $(window).resize(function(){
-            $scope.$apply(function(){
-                google.maps.event.trigger($scope.map, 'resize');
-                $scope.map.center = $scope.currentCenter;
-            });
-        });
-        */
-        /*
-        $scope.$watch('isPreviewOpen',function(open){
-            if(open){
-                $(".map-wrapper").animate({
-                    left: '820px'
-                }, 100, function () {
-                    google.maps.event.trigger($scope.map, 'resize');
-                    $scope.map.center = $scope.currentCenter;
-                });
-            }else{
-                $(".map-wrapper").animate({
-                    left: '410px'
-                }, 100, function () {
-                    google.maps.event.trigger($scope.map, 'resize');
-                    $scope.map.center = $scope.currentCenter;
-                });
-            }
-        });
-        */
-
 
     }]);
 };
