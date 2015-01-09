@@ -82,6 +82,10 @@ class Elastic
             $search = TRUE;
         }
 
+        if(!empty($params['fields'])) {
+            $searchParams['body']['fields'] = $params['fields'];
+        }
+
         if (!isset($params['all'])) {
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => TRUE];
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
