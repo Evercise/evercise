@@ -22,7 +22,7 @@
                 <ul class="list-inline">
                     <li><a title="evercise facebook" target="_blank" href="https://www.facebook.com/evercise"><span class="icon-lg icon-lg-fb hover"></span></a></li>
                     <li><a title="evercise twitter" target="_blank" href="https://twitter.com/Evercise"><span class="icon-lg icon-lg-tweeter hover"></span></a></li>
-                    <li><a title="evercise google plus" target="_blank" href="https://plus.google.com/+Evercisefitness"><span class="icon-lg icon-lg-google hover"></span></a></li>
+                    <li><a title="evercise google plus" target="_blank" href="https://plus.google.com/101137623160353437102" rel="publisher"><span class="icon-lg icon-lg-google hover"></span></a></li>
                     <li><a title="evercise instagram" target="_blank" href="http://instagram.com/evercisefitness"><span class="icon-lg icon-lg-instagram hover"></span></a></li>
                 </ul>
             </div>
