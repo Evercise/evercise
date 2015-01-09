@@ -33,7 +33,7 @@
                     <ul class="list-group class-module">
                         <div class="class-image-wrapper">
                              <a href="{[{ marker.link }]}">
-                                 {{ image('{[{marker.directory}]}/module_{[{ marker.image}]}', '{[{ marker.name}]}', ['class' => 'img-responsive']) }}
+                                <img ng-src="/{[{marker.directory}]}/module_{[{ marker.image}]}" alt="{[{ marker.name}]}" class="img-responsive"/>
                              </a>
                         </div>
                         <li class="list-group-item">

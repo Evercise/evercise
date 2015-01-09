@@ -43,15 +43,9 @@ $(function(){
             scrollSpeed: 50,
             mouseWheelPixels: 50,
             autoHideScrollbar: true,
-            scrollInertia: 0,
-            callbacks:{
-                onScroll:function(){ WhileScrolling(); }
-            }
+            scrollInertia: 0
         });
 
-        function WhileScrolling(){
-            $("img.lazy").lazyload();
-        }
     })
 
     $('.holder').exists(function(){

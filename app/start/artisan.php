@@ -14,7 +14,7 @@
 Artisan::add(new CheckSessions);
 Artisan::add(new CheckPayments);
 Artisan::add(new SendEmails);
-Artisan::add(new SalesForce);
+Artisan::add(new SalesForceCommand);
 Artisan::add(new IndexerCreate);
 Artisan::add(new IndexerIndex);
 Artisan::add(new IndexerImport);

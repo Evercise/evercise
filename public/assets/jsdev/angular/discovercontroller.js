@@ -31,6 +31,8 @@ if(typeof angular != 'undefined') {
         $scope.markers = [];
 
 
+
+
         // create the markers
 
 
@@ -114,7 +116,7 @@ if(typeof angular != 'undefined') {
 
         // when dropdown is closed
         $scope.closeDropdown = function(toggle){
-            $("img.lazy").trigger("sort");
+
             window.setTimeout(function(){
                 $('.tab-pane-sort').removeClass('active');
                 $('.'+toggle+'-btn').removeClass('active');
@@ -212,6 +214,7 @@ if(typeof angular != 'undefined') {
         $scope.lastActiveMarker = '';
 
 
+
         $scope.clicked = function (marker) {
             // zoom out
             $scope.active = marker;
@@ -282,15 +285,7 @@ if(typeof angular != 'undefined') {
             return result;
         }
 
-        $scope.preview = {
-            id: 1,
-            image: '',
-            description: '',
-            nextClassDate: '',
-            nextClassDuration: '',
-            capacity: '',
-            link: ''
-        }
+
 
         // test to see if has sessions
         $scope.hasTickets = function(session){
@@ -335,10 +330,7 @@ if(typeof angular != 'undefined') {
                 $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
             }
             $scope.markers = $scope.myMarkers;
-            $("img.lazy").lazyload({
-                container: $(".snippet-body"),
-                event : "sort"
-            });
+
 
             $scope.scrollHeight();
 
@@ -364,6 +356,15 @@ if(typeof angular != 'undefined') {
             })
         })
 
+        $scope.preview = {
+            id: 1,
+            image: $scope.everciseGroups[0].user.directory+ "/preview_"+ $scope.everciseGroups[0].image,
+            description: '',
+            nextClassDate: '',
+            nextClassDuration: '',
+            capacity: '',
+            link: ''
+        }
 
         /*
         $(window).resize(function(){
@@ -395,4 +396,14 @@ if(typeof angular != 'undefined') {
 
 
     }]);
+    app.directive('backImg', function(){
+        return function(scope, element, attrs){
+            attrs.$observe('backImg', function(value) {
+                element.css({
+                    'background': 'url(' + value +')'
+                });
+            });
+        };
+    });
 };
+

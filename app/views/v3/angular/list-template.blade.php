@@ -35,7 +35,9 @@
                 <div class="col-sm-12" ng-repeat="marker in markers | orderBy: sort:revers | filter: distanceFilter" id = {[{marker.id}]}>
                     <div class="class-list center-block">
                         <div class="class-image-wrapper pull-left">
-                            <a href="{[{ marker.link }]}">{{ image('{[{marker.directory}]}/search_{[{ marker.image}]}', '{[{ marker.name}]}') }}</a>
+                            <a href="{[{ marker.link }]}">
+                                <img ng-src="/{[{marker.directory}]}/search_{[{ marker.image}]}" alt="{[{ marker.name}]}" class="img-responsive"/>
+                            </a>
                         </div>
                         <div class="class-title-wrapper pull-left">
                             <h3><a href="{[{ marker.link }]}" class="text-dark">{[{ marker.name  }]}</a></h3>

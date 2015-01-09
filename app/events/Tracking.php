@@ -5,7 +5,6 @@ use Illuminate\Log\Writer;
 use Illuminate\Http\Request;
 
 
-
 /**
  * Class Tracking
  * @package events
@@ -129,6 +128,7 @@ class Tracking
      */
     public function registerUserTracking($user, $type = 'USER', $func = 'REGISTER')
     {
+
         $user_object = $this->formatUser($user, $type);
 
 
@@ -141,14 +141,13 @@ class Tracking
         if ($this->enabled) {
             switch ($func) {
                 case "REGISTER":
+                    $this->log->info('CASE REGISTER');
                     $res = \Salesforce::create([$user_object], 'Contact');
                     $user->salesforce_id = $res[0]->id;
                     $user->save();
                 case "EDIT":
                     $user_object->id = $user->salesforce_id;
                     $res = \Salesforce::update([$user_object], 'Contact');
-
-                    $this->log->info($res);
                     break;
                 case "LOGIN":
                     $obj = new \stdClass();
@@ -157,8 +156,11 @@ class Tracking
                     $res = \Salesforce::update([$obj], 'Contact');
                     break;
             }
+
+            $this->log->info($res);
+            $this->log->info($func);
+            $this->log->info($type . ' ' . $user->id . ' ' . $user->salesforce_id . ' ' . $func . ' in SalesForce');
         }
-        $this->log->info($type . ' ' . $user->id . ' ' . $user->salesforce_id . ' ' . $func . ' in SalesForce');
 
         return $user;
     }
@@ -198,11 +200,11 @@ class Tracking
      */
     public function registerSessionTracking($session)
     {
+        $this->log->info('REGISTERING USER TRACKING');
         $class_obj = $this->formatSessionClass($session);
 
         if ($this->enabled) {
             $res = \Salesforce::create([$class_obj], 'Class__c');
-
             $session->salesforce_id = $res[0]->id;
             $session->save();
         }
@@ -219,10 +221,12 @@ class Tracking
      */
     public function formatUser($user, $type)
     {
-        $user_arr = $user->toArray();
         $user_data = [];
 
         $user_data['RecordTypeId'] = '01220000000As0T';
+
+
+        $user_arr = $user->toArray();
 
         $trainer = $user->trainer;
         if (!is_null($trainer)) {
@@ -246,6 +250,13 @@ class Tracking
             $user_data[$val] = $user_arr[$key];
         }
 
+        if(empty($user_data['LastName'])) {
+            $user_data['LastName'] = 'none';
+        }
+        if(empty($user_data['FirstName'])) {
+            $user_data['FirstName'] = $user_arr['display_name'];
+        }
+
         if (!empty($user_arr['dob']) && strtotime($user_arr['dob']) > 1000) {
             $user_data['Birthdate'] = gmdate("Y-m-d\TH:i:s\Z", strtotime($user_arr['dob']));
         }
@@ -256,6 +267,7 @@ class Tracking
 
         $user_data['MailingCountry'] = 'United Kingdom';
 
+        unset($user_data['id']);
 
         return (object)$user_data;
     }
@@ -264,7 +276,7 @@ class Tracking
      * @param $session
      * @return \stdClass
      */
-    public static function formatSessionClass($session)
+    public function formatSessionClass($session)
     {
 
         $class = $session->evercisegroup;
@@ -303,6 +315,15 @@ class Tracking
             case "2":
                 $target_gender = 'Female';
                 break;
+        }
+        $this->log->info('SALESFORCE '.$user->salesforce_id);
+        if(empty($user->salesforce_id)) {
+            $this->log->info('SALESFORCE a'.$user->salesforce_id);
+
+            $user_object = $this->formatUser($user, 'REGISTER');
+            $res = \Salesforce::create([$user_object], 'Contact');
+            $user->salesforce_id = $res[0]->id;
+            $user->save();
         }
 
 
