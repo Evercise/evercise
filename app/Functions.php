@@ -1,5 +1,9 @@
 <?php
 
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+
 
 
     if (!function_exists('ga')) {
@@ -90,9 +94,13 @@
 
         function d($var, $die = true)
         {
-            echo "<pre>";
-            print_r($var);
-            echo "</pre>";
+
+
+
+            $dumper = 'cli' === PHP_SAPI ? new CliDumper : new HtmlDumper;
+            $dumper->dump((new VarCloner)->cloneVar($var));
+
+
             if ($die) {
                 die();
             }
