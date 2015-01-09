@@ -51,6 +51,39 @@ class Search
      * @param bool $all
      * @return mixed
      */
+    public function getMapResults(Place $area, $params = [], $all = FALSE)
+    {
+        /**  Set Defaults */
+        $defaults = [
+            'radius' => '10mi',
+            'size'   => 24,
+            'from'   => 0,
+            'fields'   => ['id', 'venue.id','venue.name','venue.lat','venue.lon']
+        ];
+
+
+        foreach ($defaults as $key => $val) {
+            if (!isset($params[$key])) {
+                $params[$key] = $val;
+            }
+        }
+        $results = $this->elastic->searchEvercisegroups($area, $params);
+
+
+
+        return $this->formatMapResults($results, $area);
+
+    }
+
+
+
+    /**
+     * Get results for a specific Place
+     * @param Place $area
+     * @param array $params
+     * @param bool $all
+     * @return mixed
+     */
     public function getResults(Place $area, $params = [], $all = FALSE)
     {
         /**  Set Defaults */
@@ -104,6 +137,38 @@ class Search
 
         return $results;
     }
+
+
+    /**
+     * Format Results
+     * @param $results
+     * @return mixed
+     */
+    public function formatMapResults($results)
+    {
+        $mapResults = [];
+
+        foreach ($results->hits as $r) {
+            $fields = (array)$r->fields;
+            $mapResults[$fields['venue.id'][0]][$fields['id'][0]] = $this->formatMapSingle($fields);
+        }
+
+        return $mapResults;
+    }
+
+
+    /**
+     * Format a single Result
+     * @param $row
+     * @return mixed
+     */
+    public function formatMapSingle($fields = [])
+    {
+        return [ $fields['venue.lon'][0] => $fields['venue.lat'][0] ];
+
+    }
+
+
 
     /**
      * Format a single Result
