@@ -90,6 +90,10 @@ class SearchModel
             $this->session->put('PER_PAGE', $input['per_page']);
             unset($input['per_page']);
         }
+        if (!empty($input['size']) && in_array($input['size'], $this->config->get('evercise.per_page'))) {
+            $this->session->put('PER_PAGE', $input['size']);
+            unset($input['size']);
+        }
 
         /** If Area is not a object lets add it to the database so we have it for later use  */
         if (!$area instanceof Place) {
