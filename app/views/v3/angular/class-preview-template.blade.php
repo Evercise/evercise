@@ -2,7 +2,7 @@
     <div class="preview-return" ng-click="returnPreview()">
         <span class="icon icon-grey-left-arrow"></span>
     </div>
-    <div class="hero hero-sm mb25" style="background-image: url( '{{ url( '{[{ preview.image }]}' ) }} ')">
+    <div class="hero hero-sm mb25"  back-img="/{[{ preview.image }]}">
         <a class="hero-full-link" href="{[{ preview.link }]}"></a>
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
             <ul class="nav navbar-nav nav-justified nav-no-float">
