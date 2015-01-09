@@ -124,28 +124,25 @@ class SearchController extends \BaseController
     /**
      * query eg's based on location
      *
+
+     *
+     * search
+     * location
+     * city
+     * per_page
+     * page
+     * from
+     * distance
+     * venue_id
+     *
+     *
+
      * @return Response
      */
     public function search($area = FALSE)
     {
         $input = array_filter($this->input->all());
 
-
-
-
-        /**
-         *
-         * search
-         * location
-         * city
-         * per_page
-         * page
-         * from
-         * distance
-         * venue_id
-         *
-         *
-         */
 
         $results = $this->searchmodel->search($area, $input, $this->user);
 
@@ -156,22 +153,6 @@ class SearchController extends \BaseController
 
         $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
 
-
-
-        d($results);
-
-        /**
-         *
-         * /*
-         * Override $params arr so it will show the map results only
-         * $params['size'] = $this->config->get('evercise.max_display_map_results');
-         * $params['from'] = 0;
-         * $map_search = $this->search->getResults($area, $params);
-         * $mapResults = $this->search->cleanMapResults($map_search);
-
-         */
-
-        JavaScript::put(['mapResults' => $results['mapResults']]);
 
         return View::make('v3.classes.discover.master')
             ->with($results);

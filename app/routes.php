@@ -62,6 +62,21 @@ Route::group(['prefix' => 'ajax'], function () {
     // login
     Route::post('/auth/login', ['as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin']);
 
+    // Search
+    Route::any('/uk/{allsegments}', ['as' => 'ajax.search.parse', 'uses' => 'ajax\SearchController@parseUrl'])->where(
+        'allsegments',
+        '(.*)?'
+    );
+    Route::any('/uk/', ['as' => 'ajax.evercisegroups.search', 'uses' => 'ajax\SearchController@parseUrl']);
+    Route::any('/map/uk/{allsegments}', ['as' => 'ajax.map.search.parse', 'uses' => 'ajax\SearchController@parseMapUrl'])->where(
+        'allsegments',
+        '(.*)?'
+    );
+    Route::any('/map/uk/', ['as' => 'ajax.map.evercisegroups.search', 'uses' => 'ajax\SearchController@parseMapUrl']);
+
+
+
+
     // cart
 
     // ajax prefix
@@ -268,7 +283,6 @@ Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchContro
     '(.*)?'
 );
 Route::any('/uk/', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
-
 
 // VenuesController
 Route::get('venues', 'VenuesController@index');
