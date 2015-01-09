@@ -24,5 +24,6 @@ return [
         'SendReminderEmails'  => '15 7 * * *',
         'DailyIndexer'        => '*/15 * * * *',
         'CheckPayments'        => '30 5 * * *',
+        'GenerateSalesforceSessionIds'        => '*/5 * * * *',
     ]
 ];
