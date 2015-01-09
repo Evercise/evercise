@@ -153,7 +153,6 @@ class SearchController extends \BaseController
 
         $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
 
-
         JavaScript::put(['results' => $results]);
 
         return View::make('v3.classes.discover.search');

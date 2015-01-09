@@ -86,7 +86,7 @@ class SearchModel
 
         unset($input['area_id']);
 
-        if (!empty($input['per_page']) && in_array($this->config->get('evercise.per_page'), $input['per_page'])) {
+        if (!empty($input['per_page']) && in_array($input['per_page'], $this->config->get('evercise.per_page'))) {
             $this->session->put('PER_PAGE', $input['per_page']);
             unset($input['per_page']);
         }
@@ -273,12 +273,7 @@ class SearchModel
             'size' => $this->config->get('evercise.max_display_map_results'),
             'from' => 0,
             'sort' => $sort,
-            'radius' => (in_array(
-                $radius,
-                array_values($this->config->get('evercise.radius'))
-            ) ? $radius : $this->config->get(
-                'evercise.default_radius'
-            )),
+            'radius' => '25mi',
             'search' => $search
         ];
 
