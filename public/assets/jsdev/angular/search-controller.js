@@ -1,9 +1,6 @@
 if(typeof angular != 'undefined') {
     app.controller('searchController', ["$scope", "$q", function ($scope, $q) {
 
-        // grab original map results
-        $scope.mapResults = laracasts.mapResults;
-
         // map options
         $scope.mapOptions = {
             disableDefaultUI: true,
@@ -16,14 +13,23 @@ if(typeof angular != 'undefined') {
             center:  { latitude: 51, longitude: -1 }
         };
 
-
-
         // map events
         $scope.mapEvents = {
-            click : function(mapModel, eventName, originalEventArgs){
-                alert('clicked map');
-            }
+            // any map events go here
         }
+
+        // grab original results
+        $scope.results = laracasts.results;
+        // then the map results
+        $scope.mapResults = $scope.results.mapResults;
+
+        console.log($scope.mapResults);
+
+        // then add these to the markers scope
+        for (var i = 0; i < $scope.mapResults.length; i++) {
+            console.log(i);
+        }
+        //$scope.markers
 
 
     }])

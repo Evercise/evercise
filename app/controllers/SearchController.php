@@ -158,7 +158,7 @@ class SearchController extends \BaseController
 
 
 
-        d($results);
+
 
         /**
          *
@@ -171,7 +171,10 @@ class SearchController extends \BaseController
 
          */
 
-        JavaScript::put(['mapResults' => $results['mapResults']]);
+
+        JavaScript::put([
+            'results' => $results
+        ]);
 
         return View::make('v3.classes.discover.search')
             ->with($results);
