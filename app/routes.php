@@ -640,6 +640,9 @@ Route::group(
         Route::get('/transactions',
             ['as' => 'admin.transactions', 'uses' => 'MainController@transactions']);
 
+        Route::get('/packages',
+            ['as' => 'admin.packages', 'uses' => 'MainController@userPackages']);
+
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
 

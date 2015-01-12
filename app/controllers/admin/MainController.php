@@ -536,6 +536,29 @@ class MainController extends \BaseController
             ->with('transactions', $trans);
     }
 
+    public function userPackages()
+    {
+        $userPackages = UserPackages::with('user')
+            ->with('classes')
+            ->get();
+
+        $packages = [];
+        foreach ($userPackages as $up) {
+            $numClassesUsed = count($up->classes);
+            $packages[] = [
+                'user_id' => $up->user_id,
+                'package_id' => $up->package_id,
+                'package_name' => $up->package->name,
+                'active' => ($numClassesUsed < $up->package->classes ? '1' : '0'),
+                'used' => $numClassesUsed,
+            ];
+        }
+
+
+        return View::make('admin.packages')
+            ->with('userPackages', $packages);
+    }
+
 
     public function listClasses()
     {
