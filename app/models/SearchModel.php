@@ -331,8 +331,8 @@ class SearchModel
         $options = [
             'price_asc' => ['default_price' => 'asc'],
             'price_desc' => ['default_price' => 'desc'],
-            'duration_asc' => ['duration_price' => 'asc'],
-            'duration_desc' => ['duration_price' => 'desc'],
+            'duration_asc' => ['default_duration' => 'asc'],
+            'duration_desc' => ['default_duration' => 'desc'],
             'viewed_asc' => ['counter' => 'asc'],
             'viewed_desc' => ['counter' => 'desc'],
             'nearme' => [
