@@ -4,7 +4,7 @@
 
 @section('body')
 
-  <div id="angular" ng-controller="searchController">
+  <div id="angular" ng-controller="searchController" ng-cloak>
     @include('v3.classes.discover.filters')
     @include('v3.landing.popup')
 

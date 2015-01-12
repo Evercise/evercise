@@ -18,11 +18,23 @@ if(typeof angular != 'undefined') {
             // any map events go here
         }
 
+
         // grab original results
         $scope.results = laracasts.results;
+        $scope.location = $scope.results.area.name;
+
         // then the map results
 
         $scope.mapResults = $scope.results.mapResults;
+
+        $scope.pageResultNumber = {
+            page : $scope.results.page,
+            temp : 0
+        };
+
+        // set fetch data for all http calls
+
+        $scope.fetchData = {};
 
         // and populate the markers
 
@@ -30,17 +42,6 @@ if(typeof angular != 'undefined') {
         $scope.markers = [];
 
         // watch for the map been drawn then loop though the map results creating the markers
-
-        function searchForEverciseGroup(nameKey, myArray){
-            var results = [];
-            for (var i=0; i < myArray.length; i++) {
-                if (myArray[i].venue_id == nameKey) {
-                    results.push(myArray[i]) ;
-                }
-            }
-            return results;
-        }
-
 
         $scope.$watch(function () {
             return $scope.map.bounds;
@@ -61,7 +62,10 @@ if(typeof angular != 'undefined') {
                                 id: key,
                                 latitude: latitude,
                                 longitude: longitude,
-                                icon: '/assets/img/icon_default_small_pin.png'
+                                icon: '/assets/img/icon_default_small_pin.png',
+                                onClicked: function () {
+                                    onMarkerClicked(this.model);
+                                }
                             }
                         );
                     }
@@ -70,34 +74,126 @@ if(typeof angular != 'undefined') {
 
             $scope.markers = firstMarkers;
 
-            setTimeout($scope.moreResults, 1000);
-
         })
+
 
         // now lets create the classes
         $scope.everciseGroups = $scope.results.results.hits;
 
-        // used to get more data
-        $scope.moreResults = function(){
+        // venue results
+        $scope.venue_id = false;
+
+        $scope.venueResults = false;
+
+        // sort options
+
+
+        $scope.sortOptions = [
+            {
+                value : 'best',
+                name: 'Best'
+            },
+            {
+                value : 'price_asc',
+                name : 'Price Asc'
+            },
+            {
+                value : 'price_desc',
+                name : 'Price Desc'
+            },
+            {
+                value : 'duration_asc',
+                name : 'Duration Asc'
+            },
+            {
+                value : 'duration_desc',
+                name : 'Duration Desc'
+            },
+            {
+                value : 'viewed_asc',
+                name : 'Viewed Asc'
+            },
+            {
+                value : 'viewed_desc',
+                name : 'Viewed Desc'
+            }
+
+        ]
+
+        $scope.sort = {
+            type: $scope.sortOptions[0].value
+        }
+
+        $scope.refreshResults = false;
+
+        // http events
+
+        // marker clicked
+
+        var onMarkerClicked = function (marker) {
+            $scope.venue_id =  marker.id
+            $scope.getData();
+            $scope.refreshResults = false;
+        };
+
+        // get next page of classes
+        $scope.nextPage = function(){
+            $scope.venue_id = false;
+            $scope.pageResultNumber.page = $scope.pageResultNumber.page + 1;
+            $scope.getData();
+            $scope.refreshResults = false;
+        }
+
+        // sort
+
+        $scope.sortChanged = function(option){
+            $scope.venue_id = false;
+            $scope.fetchData = {
+                'sort': option.type
+            }
+            $scope.refreshResults = true;
+            $scope.pageResultNumber.temp = $scope.pageResultNumber.page;
+            $scope.pageResultNumber.page = 1;
+            $scope.getData();
+        }
+
+        // function used for getting data from the server
+
+        $scope.getData = function(){
+
             var req = {
                 method: 'POST',
-                url: '/ajax/map/uk/london',
+                url: '/ajax/uk/'+$scope.location,
                 headers: {
                     'X-CSRF-Token': TOKEN
                 },
                 data: {
-                    'page': 3
+                    'page' : $scope.pageResultNumber.page,
+                    'venue_id': $scope.venue_id,
+                    'sort' : $scope.sort.type
                 }
             }
             var responsePromise = $http(req);
 
             responsePromise.success(function(data, status, headers, config) {
-                //$scope.myData.fromServer = data.title;
-                console.log(data);
+                if(data.venue_id){
+                    $scope.venueResults = data.results.hits;
+                    // reset page number
+                    $scope.pageResultNumber.page = $scope.pageResultNumber.temp;
+                    $scope.pageResultNumber.temp = 0;
+                }
+                else if($scope.refreshResults){
+                    $scope.everciseGroups = data.results.hits;
+                    $scope.pageResultNumber.page = data.page;
+                }
+                else{
+                    $scope.everciseGroups = $scope.everciseGroups.concat(data.results.hits);
+                    $scope.pageResultNumber.page = data.page;
+                }
             });
 
             responsePromise.error(function(data, status, headers, config) {
-                co
+
                 console.log("AJAX failed!");
             });
         }
