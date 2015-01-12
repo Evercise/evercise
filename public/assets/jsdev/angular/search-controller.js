@@ -21,6 +21,7 @@ if(typeof angular != 'undefined') {
 
         // grab original results
         $scope.results = laracasts.results;
+
         $scope.location = $scope.results.area.name;
 
         // then the map results
@@ -31,10 +32,6 @@ if(typeof angular != 'undefined') {
             page : $scope.results.page,
             temp : 0
         };
-
-        // set fetch data for all http calls
-
-        $scope.fetchData = {};
 
         // and populate the markers
 
@@ -87,7 +84,6 @@ if(typeof angular != 'undefined') {
 
         // sort options
 
-
         $scope.sortOptions = [
             {
                 value : 'best',
@@ -121,7 +117,44 @@ if(typeof angular != 'undefined') {
         ]
 
         $scope.sort = {
-            type: $scope.sortOptions[0].value
+            type: $scope.results.sort
+        }
+
+        // distance options
+
+        $scope.distanceOptions = [
+            {
+                value : '1/2 mile',
+                name: 'Up to half a mile'
+            },
+            {
+                value : '1mi',
+                name: '1 mile'
+            },
+            {
+                value : '2mi',
+                name: '2 miles'
+            },
+            {
+                value : '3mi',
+                name: '3 mile'
+            },
+            {
+                value : '5mi',
+                name: '5 miles'
+            },
+            {
+                value : '10mi',
+                name : '10 miles'
+            },
+            {
+                value : '25mi',
+                name : '25 miles'
+            }
+        ]
+
+        $scope.distance = {
+            type: $scope.results.radius
         }
 
         $scope.refreshResults = false;
@@ -131,30 +164,44 @@ if(typeof angular != 'undefined') {
         // marker clicked
 
         var onMarkerClicked = function (marker) {
-            $scope.venue_id =  marker.id
-            $scope.getData();
+            $scope.venue_id =  marker.id;
+            togglePage();
             $scope.refreshResults = false;
+            $scope.getData();
+
+
         };
 
         // get next page of classes
         $scope.nextPage = function(){
             $scope.venue_id = false;
             $scope.pageResultNumber.page = $scope.pageResultNumber.page + 1;
-            $scope.getData();
             $scope.refreshResults = false;
+            $scope.getData();
         }
 
         // sort
 
-        $scope.sortChanged = function(option){
+        $scope.sortChanged = function(){
             $scope.venue_id = false;
-            $scope.fetchData = {
-                'sort': option.type
-            }
             $scope.refreshResults = true;
+            togglePage();
+            $scope.getData();
+        }
+
+        // change distance
+
+        $scope.distanceChanged = function(){
+            $scope.venue_id = false;
+            $scope.refreshResults = true;
+            togglePage();
+            $scope.getData();
+        }
+
+        // handle page number change
+        var togglePage = function(){
             $scope.pageResultNumber.temp = $scope.pageResultNumber.page;
             $scope.pageResultNumber.page = 1;
-            $scope.getData();
         }
 
         // function used for getting data from the server
@@ -170,7 +217,8 @@ if(typeof angular != 'undefined') {
                 data: {
                     'page' : $scope.pageResultNumber.page,
                     'venue_id': $scope.venue_id,
-                    'sort' : $scope.sort.type
+                    'sort' : $scope.sort.type,
+                    'distance' : $scope.distance.type
                 }
             }
             var responsePromise = $http(req);

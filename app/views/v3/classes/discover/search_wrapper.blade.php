@@ -26,9 +26,11 @@
         <button ng-click="nextPage()" class="btn btn-info btn-block">Add page {[{ pageResultNumber.page}]}</button>
     </div>
     <div class="col-sm-2">
-        <select class="form-control" ng-model="sort.type" ng-options="option.value as option.name for option in sortOptions" ng-change="sortChanged(sort)"></select>
+        <select class="form-control" ng-model="sort.type" ng-options="option.value as option.name for option in sortOptions" ng-change="sortChanged()"></select>
     </div>
-    <div class="col-sm-2"></div>
+    <div class="col-sm-2">
+        <select class="form-control" ng-model="distance.type" ng-options="option.value as option.name for option in distanceOptions" ng-change="distanceChanged()"></select>
+    </div>
     <div class="col-sm-2"></div>
     <div class="col-sm-2"></div>
     <div class="col-sm-2"></div>
