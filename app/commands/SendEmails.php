@@ -20,6 +20,8 @@ class SendEmails extends Command {
 	 */
 	protected $description = 'Command description.';
 
+	protected $cutOff;
+
 	/**
 	 * Create a new command instance.
 	 *
@@ -27,7 +29,13 @@ class SendEmails extends Command {
 	 */
 	public function __construct()
 	{
+
 		parent::__construct();
+
+		$cutOffDate = Config::get('pardot.reminders.usercutoff');
+		$this->cutOff = new DateTime();
+		$this->cutOff->setDate($cutOffDate['year'], $cutOffDate['month'], $cutOffDate['day']);
+
 	}
 
 	/**
@@ -35,10 +43,172 @@ class SendEmails extends Command {
 	 *
 	 * @return mixed
 	 */
-		// Check for sessions happening in less than 2 days
-		//    Send a reminder email to all users
-		//    Send a participant list to the trainer
 	public function fire()
+	{
+		$this->remindSessions();
+		//$this->whyNoUseFreeCreditEh();
+		//$this->whyNotRefer();
+		//$this->whyNotReview();
+	}
+
+
+	/**
+	 * 	check for users who:
+	 *		have attended a class > 4 hours ago
+	 * 		does not have an entry in 'email_out' matching type 'mail.rateclass'
+	 * 		signed up  after 01/12/14
+	 *
+	 *  If user has no active package,
+	 *
+	 * @return mixed
+	 */
+	public function whyNotReview()
+	{
+		$numHours = Config::get('pardot.reminders.whynotreview.hourssinceclass');
+
+		$this->info('Searching for users who have bought a class which took place '.$numHours.' hours ago');
+
+		$afewhoursago = (new DateTime())->sub(new DateInterval('PT'.$numHours.'H'));
+		$yesterday = (new DateTime())->sub(new DateInterval('P1D'));
+
+		$users = User::whereHas('sessions', function($query) use (&$afewhoursago, &$yesterday){
+				$query->where('date_time', '<', $afewhoursago)->orWhere('date_time', '>', $yesterday);
+			})
+			->where('created_at', '>', $this->cutOff)
+			->with(['emailOut' => function($query){
+				$query->where('type', '=', 'mail.rateclass');
+			}])
+			->get();
+
+		$emailsSent = 0;
+		foreach($users as $user) {
+			if(! count($user->emailOut)) {
+				if (! \UserPackages::hasActivePackage($user)) {
+					$emailsSent++;
+					$this->info('user: ' . $user->id);
+					event('user.class.rate', [$user]);
+				}
+				else
+				{
+					event('user.class.rate.haspackage', [$user]);
+				}
+			}
+		}
+
+		$this->info('user count: '.$emailsSent);
+	}
+
+	/**
+	 * 	check for users who:
+	 *		do not have an activity of type ppcstatic or ppcunique (have not registered through a ppc campaign)
+	 * 		have bought a class, which took place 4 days ago
+	 * 		does not have an entry in 'email_out' matching type 'mail.rateclass'
+	 * 		signed up  after 01/12/14
+	 *
+	 * @return mixed
+	 */
+	public function whyNotRefer()
+	{
+		$numDays = Config::get('pardot.reminders.whynotreferafriend.dayssinceclass');
+
+		$this->info('Searching for users who have not been registered through a PPC, and have bought a class which took place '.$numDays.' days ago');
+
+		$afewdaysago = (new DateTime())->sub(new DateInterval('P'.$numDays.'D'));
+
+		$users = User::whereHas('sessions', function($query) use (&$afewdaysago){
+				$query->where('date_time', '<', $afewdaysago);
+			})
+			->with(['activities' => function($query){
+				$query->where('type', 'ppcstatic')->orWhere('type', 'ppcunique');
+			}])
+			->where('created_at', '>', $this->cutOff)
+			->with(['emailOut' => function($query){
+				$query->where('type', '=', 'mail.rateclass');
+			}])
+			->get();
+
+		$emailsSent = 0;
+		foreach($users as $user) {
+			if(! count($user->emailOut)) {
+				if (! count($user->activities)) {
+					$emailsSent++;
+					$this->info('user: ' . $user->id);
+					event('user.class.rate', [$user]);
+				}
+			}
+		}
+
+		$this->info('user count: '.$emailsSent);
+	}
+
+	/**
+	 * 	check for users who:
+	 *		have not logged in for 10 days
+	 *		have an activity of type ppcstatic or ppcunique (signed up through PPC)
+     *      have > 5 credit in wallet
+     *      have never bought a class
+	 * 		does not have an entry in 'email_out' matching type 'whynotusefreecredit'
+	 * 		signed up  after 01/12/14
+	 *
+	 * @return mixed
+    */
+	public function whyNoUseFreeCreditEh()
+	{
+		$numDays = Config::get('pardot.reminders.whynotusefreecredit.daysinactive'); // How many days user must be inactive before email is fired. should be 10
+
+		$this->info('Searching for users who have not used their free credit, and have been inactive for '.$numDays.' days');
+
+		$afewdaysago = (new DateTime())->sub(new DateInterval('P'.$numDays.'D'));
+
+		$users = User::where('last_login', '<', $afewdaysago)
+			->whereHas('activities', function($query){
+				$query->where('type', 'ppcstatic')->orWhere('type', 'ppcunique');
+			})
+			->whereHas('wallet', function($query){
+				$query->where('balance', '>=', '5');
+			})
+			->has('sessions', '<', 1)
+			->where('created_at', '>', $this->cutOff)
+			->with(['emailOut' => function($query){
+				$query->where('type', '=', 'mail.notreturned');
+			}])
+			->get();
+
+		$everciseGroups = Evercisegroup::whereHas('featuredClasses', function($query){})
+			->get();
+
+		$this->info('featured group count: '.count($everciseGroups));
+
+		$groups = [];
+		foreach($everciseGroups as $group)
+			$groups[] = $group;
+
+		$emailsSent = 0;
+		foreach($users as $user) {
+			if(! count($user->emailOut)) {
+				$emailsSent++;
+				$randomGroups = [];
+				foreach (array_rand($groups, 3) as $key)
+					$randomGroups[] = $groups[$key];
+
+				if (count($randomGroups) > 2)
+					$this->info('user: ' . $user->id . ' | featured groups: ' . $randomGroups[0]->id . ', ' . $randomGroups[1]->id . ', ' . $randomGroups[2]->id);
+				event('user.not_returned', [$user, $randomGroups]);
+			}
+		}
+
+		$this->info('user count: '.$emailsSent);
+
+	}
+
+	/**
+	 * Check for sessions happening in less than 2 days
+	 * Send a reminder email to all users
+	 * Send a participant list to the trainer
+	 *
+	 * @return mixed
+	 */
+	public function remindSessions()
 	{
 		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
 		
@@ -121,8 +291,6 @@ class SendEmails extends Command {
 		{
 			$this->info('No sessions found which have not already sent out emails');
 		}
-
-
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 
 use App;
+use Cartalyst\Sentry\Sentry;
 use Illuminate\Config\Repository;
 use Illuminate\Log\Writer;
 use Illuminate\Events\Dispatcher;
@@ -9,6 +10,7 @@ use Illuminate\Mail\Mailer;
 use Illuminate\View\Factory as View;
 use Illuminate\Routing\UrlGenerator;
 use Exception;
+use EmailOut;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
@@ -803,8 +805,8 @@ class Mail
     public function notReturned($user, $everciseGroups)
     {
         $params = [
-            'subject'  => 'You have not used you £5 Evercise Balance',
-            'title'    => 'You have&apos;t used you £5 Evercise Balance',
+            'subject'  => 'You have not used your £5 Evercise Balance',
+            'title'    => 'You have&apos;t used your £5 Evercise Balance',
             'view'     => 'v3.emails.user.why_not_coming_back',
             'user'     => $user,
             'everciseGroups' => $everciseGroups,
@@ -820,7 +822,7 @@ class Mail
     public function whyNotRefer($user)
     {
         $params = [
-            'subject'  => 'why not refer to a friend, enjoy the happiness to do classes together',
+            'subject'  => 'Share Evercise with your friends and get £5',
             'title'    => 'Share Evercise with your friends and get £5',
             'view'     => 'v3.emails.user.why_not_refer',
             'user'     => $user,
@@ -848,6 +850,13 @@ class Mail
         ];
 
         $this->send($user->email, $params);
+
+    }
+
+    public function rateClassHasPackage($user)
+    {
+        // Send the rate class email, for users that have already have an active package
+        // (the standard email recommends buying a package)
 
     }
 
@@ -934,11 +943,24 @@ class Mail
         $plain_text = $this->plainText($content);
 
 
+        $trace = debug_backtrace();
+        $name = $this->formatName(get_called_class(), next($trace)['function']);
+
+        // If params contain user or user_id, take user ID from there.  Otherwise query the email address to find user ID
+        if (isset($params['user']))
+            if ($params['user'] instanceof User || $params['user'] instanceof Sentry)
+                $user_id = $params['user']->id;
+
+        if (isset($params['user_id']))
+            $user_id = $params['user_id'];
+
+        if(! isset($user_id))
+            $user_id = \User::where('email', $email)->pluck('id');
+
+        EmailOut::addRecord($user_id, $name);
+
+
         if ($this->config->get('pardot.active')) {
-
-            $trace = debug_backtrace();
-            $name = $this->formatName(get_called_class(), next($trace)['function']);
-
             $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
 

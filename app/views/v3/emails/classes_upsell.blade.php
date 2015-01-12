@@ -30,7 +30,7 @@
                                         </tr>
                                         <tr height="30%">
                                             <td width="100%" valign="bottom">
-                                                {{ image('assets/img/email/stars-0.png', 'class rating', ['class' => 'img-original']) }}
+                                                {{ image('assets/img/email/stars-'.$everciseGroup->getStars().'.png', 'class rating', ['class' => 'img-original']) }}
                                                 <!--{{ image('assets/img/email/stars-[ class ratiing ].png', 'class rating', ['class' => 'img-original']) }}-->
                                             </td>
                                         </tr>

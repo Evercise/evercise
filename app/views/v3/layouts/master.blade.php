@@ -16,6 +16,7 @@
     @endif
     <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="p:domain_verify" content="0b3c57d3323d503fbdced8d18b0c64d3"/>
     {{ HTML::style('assets/css/main.min.css?vs='.$version) }}
     {{ HTML::style('assets/css/cropper.min.css') }}
     <!-- load jquery -->

@@ -674,5 +674,15 @@ class Elastic
 
         return TRUE;
     }
+
+
+    /**
+     * Ping ElasticSearch Instance
+     * @return bool
+     */
+    public function ping() {
+
+        return $this->elasticsearch->ping();
+    }
 }
 
