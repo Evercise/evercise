@@ -36,5 +36,11 @@ return [
             'classCreatedFirstTime' => 4182, //
             'adminSendReminderForPayments' => 4184, //
         ]
+    ],
+    'reminders' => [
+        'whynotusefreecredit' => ['daysinactive' => 10],
+        'whynotreferafriend' => ['dayssinceclass' => 4],
+        'whynotreview' => ['hourssinceclass' => 4],
+        'usercutoff' => ['year'=>2014, 'month'=>12, 'day'=>01],
     ]
 ];
