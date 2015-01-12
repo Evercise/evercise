@@ -1,5 +1,5 @@
 if(typeof angular != 'undefined') {
-    app.controller('searchController', ["$scope", "$q", function ($scope, $q) {
+    app.controller('searchController', ["$scope",  "$http" , function ($scope, $http) {
 
         // map options
         $scope.mapOptions = {
@@ -69,10 +69,38 @@ if(typeof angular != 'undefined') {
             }
 
             $scope.markers = firstMarkers;
+
+            setTimeout($scope.moreResults, 1000);
+
         })
 
         // now lets create the classes
         $scope.everciseGroups = $scope.results.results.hits;
+
+        // used to get more data
+        $scope.moreResults = function(){
+            var req = {
+                method: 'POST',
+                url: '/ajax/map/uk/london',
+                headers: {
+                    'X-CSRF-Token': TOKEN
+                },
+                data: {
+                    'page': 3
+                }
+            }
+            var responsePromise = $http(req);
+
+            responsePromise.success(function(data, status, headers, config) {
+                //$scope.myData.fromServer = data.title;
+                console.log(data);
+            });
+
+            responsePromise.error(function(data, status, headers, config) {
+                co
+                console.log("AJAX failed!");
+            });
+        }
 
     }])
 }
