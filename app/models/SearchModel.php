@@ -62,9 +62,9 @@ class SearchModel
          * search
          * location
          * city
-         * per_page
+         * per_page or size
          * page
-         * from
+         * sort
          * distance
          * venue_id
          *
@@ -192,6 +192,7 @@ class SearchModel
             'size' => $size,
             'sort' => (!empty($input['sort']) ? $input['sort'] : 'best'),
             'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : ''),
+            'venue' => (!empty($input['venue_id']) ? Venue::find($input['venue_id'])->toArray() : ''),
             'radius' => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
             'page' => $page,
@@ -230,6 +231,7 @@ class SearchModel
          * city
          * per_page
          * page
+         * sort
          * from
          * distance
          * venue_id
