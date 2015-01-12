@@ -223,7 +223,7 @@ if(typeof angular != 'undefined') {
             }
             var responsePromise = $http(req);
 
-            responsePromise.success(function(data, status, headers, config) {
+            responsePromise.success(function(data) {
                 if(data.venue_id){
                     $scope.venueResults = data.results.hits;
                     // reset page number
@@ -240,9 +240,9 @@ if(typeof angular != 'undefined') {
                 }
             });
 
-            responsePromise.error(function(data, status, headers, config) {
-
+            responsePromise.error(function(data) {
                 console.log("AJAX failed!");
+                console.log(data);
             });
         }
 
