@@ -33,9 +33,9 @@ class MainController extends \BaseController
 
         /** Sales */
         $this->data['total_sales'] = Sessionpayment::where('created_at', '>=',
-            Carbon::now()->subDays(300))->where('processed', 1)->sum('total');
+            Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total');
         $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=',
-            Carbon::now()->subDays(300))->where('processed', 1)->sum('total_after_fees');
+            Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total_after_fees');
         $this->data['total_commission'] = ($this->data['total_sales'] - $this->data['total_after_fees']);
 
 
@@ -528,6 +528,7 @@ class MainController extends \BaseController
                     'token' => $tr->token,
                     'transaction' => $tr->transaction,
                     'processed' => $tr->processed,
+                    'date_time' => $tr->created_at,
                 ];
         }
 

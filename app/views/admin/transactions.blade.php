@@ -56,6 +56,7 @@
                         <th>Token</th>
                         <th>3rd party ID</th>
                         <th>Processed</th>
+                        <th>Date / Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +70,7 @@
                             <td>{{ $transaction['token'] }}</td>
                             <td>{{ $transaction['transaction'] }}</td>
                             <td>{{ $transaction['processed'] }}</td>
+                            <td>{{ $transaction['date_time'] }}</td>
                        </tr>
 
                    @endforeach

@@ -45,10 +45,10 @@ class SendEmails extends Command {
 	 */
 	public function fire()
 	{
-		$this->remindSessions();
+		//$this->remindSessions();
 		//$this->whyNoUseFreeCreditEh();
 		//$this->whyNotRefer();
-		//$this->whyNotReview();
+		$this->whyNotReview();
 	}
 
 
@@ -66,13 +66,14 @@ class SendEmails extends Command {
 	{
 		$numHours = Config::get('pardot.reminders.whynotreview.hourssinceclass');
 
-		$this->info('Searching for users who have bought a class which took place '.$numHours.' hours ago');
+		$this->info('whyNotReview - Searching for users who have bought a class which took place '.$numHours.' hours ago');
 
 		$afewhoursago = (new DateTime())->sub(new DateInterval('PT'.$numHours.'H'));
 		$yesterday = (new DateTime())->sub(new DateInterval('P1D'));
 
 		$users = User::whereHas('sessions', function($query) use (&$afewhoursago, &$yesterday){
-				$query->where('date_time', '<', $afewhoursago)->orWhere('date_time', '>', $yesterday);
+				$query->where('date_time', '<', $afewhoursago)
+					  ->where('date_time', '>', $yesterday);
 			})
 			->where('created_at', '>', $this->cutOff)
 			->with(['emailOut' => function($query){
@@ -90,6 +91,7 @@ class SendEmails extends Command {
 				}
 				else
 				{
+					$this->info('user: ' . $user->id . 'has active package');
 					event('user.class.rate.haspackage', [$user]);
 				}
 			}
@@ -111,7 +113,7 @@ class SendEmails extends Command {
 	{
 		$numDays = Config::get('pardot.reminders.whynotreferafriend.dayssinceclass');
 
-		$this->info('Searching for users who have not been registered through a PPC, and have bought a class which took place '.$numDays.' days ago');
+		$this->info('whyNotRefer - Searching for users who have not been registered through a PPC, and have bought a class which took place '.$numDays.' days ago');
 
 		$afewdaysago = (new DateTime())->sub(new DateInterval('P'.$numDays.'D'));
 
@@ -156,7 +158,7 @@ class SendEmails extends Command {
 	{
 		$numDays = Config::get('pardot.reminders.whynotusefreecredit.daysinactive'); // How many days user must be inactive before email is fired. should be 10
 
-		$this->info('Searching for users who have not used their free credit, and have been inactive for '.$numDays.' days');
+		$this->info('whyNoUseFreeCreditEh Searching for users who have not used their free credit, and have been inactive for '.$numDays.' days');
 
 		$afewdaysago = (new DateTime())->sub(new DateInterval('P'.$numDays.'D'));
 
@@ -210,7 +212,7 @@ class SendEmails extends Command {
 	 */
 	public function remindSessions()
 	{
-		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
+		$this->info('remindSessions - Searching for Sessions in the next 1 day, which have not yet fired out emails');
 		
 		$today = new DateTime();
 		$onedaystime = (new DateTime())->add(new DateInterval('P1D'));
