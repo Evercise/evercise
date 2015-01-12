@@ -55,9 +55,9 @@ class Search
     {
         /**  Set Defaults */
         $defaults = [
-            'radius' => '10mi',
-            'size'   => 24,
-            'from'   => 0,
+            'radius' => $params['radius'],
+            'size'   => $params['size'],
+            'from'   => $params['from'],
             'fields'   => ['id', 'venue.id','venue.name','venue.lat','venue.lon']
         ];
 
@@ -88,9 +88,9 @@ class Search
     {
         /**  Set Defaults */
         $defaults = [
-            'radius' => '10mi',
-            'size'   => 24,
-            'from'   => 0
+            'radius' => $params['radius'],
+            'size'   => $params['size'],
+            'from'   => $params['from']
         ];
 
         foreach ($defaults as $key => $val) {
