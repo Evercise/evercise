@@ -61,7 +61,6 @@ if(typeof angular != 'undefined') {
         }
 
 
-
         $scope.setInitialZoom = function(){
             var radius = $scope.results.radius.substring(0, $scope.results.radius.length - 2);
             if(radius <= 2){
@@ -122,7 +121,21 @@ if(typeof angular != 'undefined') {
                 var sw = bounds.getSouthWest();
                 $scope.sw = sw.k + ', '+sw.C;
                 $scope.refreshResults = true;
-                $scope.getData();
+                var viewportPoints = [
+                    ne, new google.maps.LatLng(ne.lat(), sw.lng()),
+                    sw, new google.maps.LatLng(sw.lat(), ne.lng()), ne
+                ];
+
+                    viewportBox = new google.maps.Polyline({
+                        path: viewportPoints,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 1.0,
+                        strokeWeight: 4
+                    });
+                    viewportBox.setMap(map);
+
+
+                //$scope.getData();
             }
         }
 

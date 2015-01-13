@@ -14,6 +14,7 @@
     >
 
     </ui-gmap-circle>
+
     <ui-gmap-markers
         models="markers"
         coords="'self'"
