@@ -135,7 +135,7 @@ if(typeof angular != 'undefined') {
                     viewportBox.setMap(map);
 
 
-                //$scope.getData();
+                $scope.getData();
             }
         }
 
