@@ -7,6 +7,12 @@ if(typeof angular != 'undefined') {
 
         $scope.location = $scope.results.area.name;
 
+        $scope.ne = false;
+        $scope.sw = false;
+
+        // url to use for ajax calls
+        $scope.url = $scope.results.url;
+
         // then the map results
 
         $scope.mapResults = $scope.results.mapResults;
@@ -111,7 +117,12 @@ if(typeof angular != 'undefined') {
                 var map = $scope.map.control.getGMap()
                 var bounds = map.getBounds();
                 var ne = bounds.getNorthEast();
+                $scope.ne = ne.k + ', ' + ne.C;
+                console.log($scope.ne);
                 var sw = bounds.getSouthWest();
+                $scope.sw = sw.k + ', '+sw.C;
+                $scope.refreshResults = true;
+                $scope.getData();
             }
         }
 
@@ -301,7 +312,7 @@ if(typeof angular != 'undefined') {
 
             var req = {
                 method: 'POST',
-                url: '/ajax/uk/'+$scope.location,
+                url: '/ajax/uk/'+$scope.url,
                 headers: {
                     'X-CSRF-Token': TOKEN
                 },
@@ -309,14 +320,15 @@ if(typeof angular != 'undefined') {
                     'page' : $scope.pageResultNumber.page,
                     'venue_id': $scope.venue_id,
                     'sort' : $scope.sort.type,
-                    'distance' : $scope.distance.type
+                    'distance' : $scope.distance.type,
+                    'ne' : $scope.ne,
+                    'sw' : $scope.sw
                 }
             }
             var responsePromise = $http(req);
 
             responsePromise.success(function(data) {
                 if(data.venue_id){
-                    console.log('venue');
                     $scope.venueResults = data.results.hits;
                     // reset page number
                     $scope.pageResultNumber.page = $scope.pageResultNumber.temp;
