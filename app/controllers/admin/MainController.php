@@ -27,6 +27,11 @@ class MainController extends \BaseController
         /** Users */
         $this->data['total_users'] = User::all()->count();
 
+        $today = new DateTime();
+        $today->setTime(0,0,0);
+        $this->data['users_today'] = User::where('created_at', '>', $today)->count();
+        $this->data['trainers_today'] = Trainer::where('created_at', '>', $today)->count();
+
         $trainer = Sentry::findGroupByName('Trainer');
         $this->data['total_trainers'] = Sentry::findAllUsersInGroup($trainer)->count();
 

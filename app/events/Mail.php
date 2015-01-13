@@ -957,7 +957,10 @@ class Mail
         if(! isset($user_id))
             $user_id = \User::where('email', $email)->pluck('id');
 
-        EmailOut::addRecord($user_id, $name);
+        if ($user_id)
+            EmailOut::addRecord($user_id, $name);
+        else
+            $this->log->info('CANNOT FIND USER BY EMAIL: '.$email.'. This is probably a referral to a not-yet-registered address. ');
 
 
         if ($this->config->get('pardot.active')) {

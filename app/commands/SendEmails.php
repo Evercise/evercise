@@ -52,7 +52,7 @@ class SendEmails extends Command {
 
 	/**
 	 * 	check for users who:
-	 *		have attended a class > 4 hours ago but after yesterday
+	 *		have attended a class > 4 hours ago but during the last day
 	 * 		does not have an entry in 'email_out' matching type 'mail.rateclass'
 	 * 		signed up  after 01/12/14
 	 *
