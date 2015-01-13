@@ -13,6 +13,8 @@
         icon = "'icon' "
         fit = "true"
         click="'onClicked'"
+        doCluster = "true"
+        clusterOptions = "map.clusterOptions"
         >
     </ui-gmap-markers>
 

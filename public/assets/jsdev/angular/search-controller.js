@@ -1,36 +1,6 @@
 if(typeof angular != 'undefined') {
     app.controller('searchController', ["$scope",  "$http" , function ($scope, $http) {
 
-        // map options
-        $scope.mapOptions = {
-            disableDefaultUI: true,
-            panControl: false
-        }
-
-        // map object
-        $scope.map = {
-            zoom: 8,
-            center:  { latitude: 51, longitude: -1 },
-            control: {}
-        };
-
-
-
-        // map events
-        $scope.mapEvents = {
-            // any map events go here
-        }
-
-        // refrech annd cennter map function
-
-        $scope.refreshMap = function () {
-            var map = $scope.map.control.getGMap();
-            var center = map.getCenter();
-            google.maps.event.trigger(map, "resize");
-            map.setCenter(center);
-        };
-
-
         // grab original results
         $scope.results = laracasts.results;
         console.log($scope.results);
@@ -45,6 +15,69 @@ if(typeof angular != 'undefined') {
             page : $scope.results.page,
             temp : 0
         };
+
+        // map options
+        $scope.mapOptions = {
+            disableDefaultUI: true,
+            zoomControl : true,
+            backgroundColor: '#383d48',
+            panControl: false
+        }
+
+        $scope.clusterStyles = [
+            {
+                textColor: 'white',
+                url: '/assets/img/icon_default_small_pin_number.png',
+                height: 43,
+                width: 33,
+                anchorText: [-14,9]
+            }
+        ];
+        $scope.clusterOptions = {
+            title: 'click to expand',
+            gridSize: 60,
+            maxZoom: 11,
+            styles: $scope.clusterStyles
+        };
+
+        // map object
+        $scope.map = {
+            zoom: 8,
+            center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
+            control: {},
+            clusterOptions: $scope.clusterOptions
+        };
+
+
+
+        // map events
+        $scope.mapEvents = {
+            // any map events go here
+        }
+
+        // refresh and center map function
+
+        $scope.refreshMap = function () {
+            var map = $scope.map.control.getGMap();
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center);
+        };
+
+        // smooth zoom
+        var smoothZoom = function(map, max, cnt) {
+            if (cnt >= max) {
+                return;
+            }
+            else {
+                z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                    google.maps.event.removeListener(z);
+                    smoothZoom(map, max, cnt + 1);
+                });
+                setTimeout(function(){map.setZoom(cnt)}, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
+            }
+        }
+
 
         // and populate the markers
 
@@ -83,6 +116,10 @@ if(typeof angular != 'undefined') {
             }
 
             $scope.markers = firstMarkers;
+
+            if($scope.results.radius != 25){
+                console.log('do business');
+            }
 
         })
 
@@ -140,46 +177,28 @@ if(typeof angular != 'undefined') {
 
         // distance options
 
-        $scope.distanceOptions = [
-            {
-                value : '1/2 mile',
-                name: 'Up to half a mile'
-            },
-            {
-                value : '1mi',
-                name: '1 mile'
-            },
-            {
-                value : '2mi',
-                name: '2 miles'
-            },
-            {
-                value : '3mi',
-                name: '3 mile'
-            },
-            {
-                value : '5mi',
-                name: '5 miles'
-            },
-            {
-                value : '10mi',
-                name : '10 miles'
-            },
-            {
-                value : '25mi',
-                name : '25 miles'
-            }
-        ]
+         $scope.distanceOptions = [];
+
+         for (var radius in $scope.results.allowed_radius) {
+             $scope.distanceOptions.push({
+                 value : radius,
+                 name: $scope.results.allowed_radius[radius]
+             });
+         }
+
 
         $scope.distance = {
             type: $scope.results.radius
         }
+
 
         $scope.refreshResults = false;
 
         // http events
 
         // marker clicked
+
+        $scope.lastActiveMarker = {}
 
         var onMarkerClicked = function (marker) {
             // current venue been clikced
@@ -191,8 +210,16 @@ if(typeof angular != 'undefined') {
             // grad venue data
             $scope.getData();
             // zoom into marker
-            console.log(marker);
+            var map = $scope.map.control.getGMap();
+            var newlatlng = new google.maps.LatLng(marker.latitude, marker.longitude);
 
+            map.panTo(newlatlng);
+            smoothZoom(map, 12, map.getZoom());
+
+            // toggle markers
+            $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
+            $scope.lastActiveMarker = marker;
+            marker.icon = '/assets/img/icon_default_large_pink.png';
 
         };
 
