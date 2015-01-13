@@ -4,6 +4,7 @@
     options="mapOptions"
     events="mapEvents"
     draggable="true"
+    control="map.control"
 >
     <ui-gmap-markers
         models="markers"
@@ -21,7 +22,7 @@
 </ui-gmap-google-map>
 
 <h4>Event buttons</h4>
-<div class="row">
+<div class="panel-body">
     <div class="col-sm-2">
         <button ng-click="nextPage()" class="btn btn-info btn-block">Add page {[{ pageResultNumber.page}]}</button>
     </div>
@@ -48,9 +49,11 @@
     </li>
 </ul>
 
-<h4>Classes</h4>
+<h4>Classes {[{ everciseGroups.length }]} of {[{ totalHits }]}</h4>
 <ul class="list-group">
     <li ng-repeat="everciseGroup in everciseGroups" class="list-group-item">
+        <img ng-src="/{[{ everciseGroup.user.directory }]}/search_{[{ everciseGroup.image }]}" err-src="/assets/img/icon_default_large_pink.png" >
         {[{ everciseGroup.name }]}
     </li>
+    
 </ul>

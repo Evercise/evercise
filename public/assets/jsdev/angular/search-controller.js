@@ -10,17 +10,30 @@ if(typeof angular != 'undefined') {
         // map object
         $scope.map = {
             zoom: 8,
-            center:  { latitude: 51, longitude: -1 }
+            center:  { latitude: 51, longitude: -1 },
+            control: {}
         };
+
+
 
         // map events
         $scope.mapEvents = {
             // any map events go here
         }
 
+        // refrech annd cennter map function
+
+        $scope.refreshMap = function () {
+            var map = $scope.map.control.getGMap();
+            var center = map.getCenter();
+            google.maps.event.trigger(map, "resize");
+            map.setCenter(center);
+        };
+
 
         // grab original results
         $scope.results = laracasts.results;
+        console.log($scope.results);
 
         $scope.location = $scope.results.area.name;
 
@@ -76,6 +89,11 @@ if(typeof angular != 'undefined') {
 
         // now lets create the classes
         $scope.everciseGroups = $scope.results.results.hits;
+
+        // total results
+        $scope.totalHits =  $scope.results.results.total;
+        // hits per page
+        $scope.hitsPerPage = $scope.results.size;
 
         // venue results
         $scope.venue_id = false;
@@ -164,10 +182,16 @@ if(typeof angular != 'undefined') {
         // marker clicked
 
         var onMarkerClicked = function (marker) {
+            // current venue been clikced
             $scope.venue_id =  marker.id;
+            // toggle the page numbers
             togglePage();
+            // set refresh results as false
             $scope.refreshResults = false;
+            // grad venue data
             $scope.getData();
+            // zoom into marker
+            console.log(marker);
 
 
         };
@@ -245,6 +269,14 @@ if(typeof angular != 'undefined') {
                 console.log(data);
             });
         }
+
+        // window resize events
+
+        $(window).resize(function(){
+            $scope.$apply(function(){
+                $scope.refreshMap();
+            });
+        });
 
     }])
 }
