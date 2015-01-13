@@ -121,40 +121,42 @@ class Elastic
             $searchParams['body']['sort'] = $params['sort'];
         }
 
+        /** Where Are we Searching For the results*/
+        if(!empty($params['bounds'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_bounding_box']['venue.location'] = $params['bounds'];
+        } else {
+            if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
-        /** What Are we Searching For */
-        if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
+                $location_points = [];
 
-            $location_points = [];
+                foreach (json_decode($area->poly_coordinates) as $part) {
+                    try {
+                        $location_points[] = $this->getLocationHash($part[0], $part[1]);
+                    } catch (Exception $e) {
+                        $this->log->error(
+                            'GeoHash cant hash Area ' . $area->id . ' for lat_lon ' . $part[0] . ', ' . $part[1]
+                        );
+                    }
 
-            foreach (json_decode($area->poly_coordinates) as $part) {
-                try {
-                    $location_points[] = $this->getLocationHash($part[0], $part[1]);
-                } catch (Exception $e) {
-                    $this->log->error(
-                        'GeoHash cant hash Area ' . $area->id . ' for lat_lon ' . $part[0] . ', ' . $part[1]
-                    );
                 }
 
-            }
+                if (count($location_points) > 0) {
+                    $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_polygon']['venue.location']['points'] = $location_points;
+                } else {
 
-            if (count($location_points) > 0) {
-                $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_polygon']['venue.location']['points'] = $location_points;
+                    $this->log->error('Area ' . $area->id . ' is set to be Polygon but has 0 valid datapoints');
+                }
+
             } else {
 
-                $this->log->error('Area ' . $area->id . ' is set to be Polygon but has 0 valid datapoints');
-            }
-
-        } else {
-
-            if (!empty($area->lat) && !empty($area->lng)) {
-                $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_distance'] = [
-                    'distance'       => $params['radius'],
-                    'venue.location' => $this->getLocationHash($area->lat, $area->lng)
-                ];
+                if (!empty($area->lat) && !empty($area->lng)) {
+                    $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_distance'] = [
+                        'distance'       => $params['radius'],
+                        'venue.location' => $this->getLocationHash($area->lat, $area->lng)
+                    ];
+                }
             }
         }
-
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
