@@ -176,6 +176,15 @@ class SearchModel
             $params['featured'] = true;
         }
 
+
+
+        if(!empty($input['map_nw']) && !empty($input['map_se'])) {
+            $params['bounds'] = [
+                'top_left' => $input['map_nw'],
+                'bottom_right' => $input['map_se']
+            ];
+        }
+
         $searchResults = $this->search->getResults($area, $params);
 
 
@@ -236,6 +245,9 @@ class SearchModel
          * distance
          * venue_id
          *
+         * map_nw = [lat => '', lon => '']
+         * map_se = [lat => '', lon => '']
+         *
          *
          */
 
@@ -288,6 +300,13 @@ class SearchModel
             $params['featured'] = true;
         }
 
+
+        if(!empty($input['map_nw']) && !empty($input['map_se'])) {
+            $params['bounds'] = [
+                'top_left' => $input['map_nw'],
+                'bottom_right' => $input['map_se']
+            ];
+        }
         $searchResults = $this->search->getMapResults($area, $params);
 
 
