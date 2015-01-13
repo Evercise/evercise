@@ -24,6 +24,61 @@ if(typeof angular != 'undefined') {
             panControl: false
         }
 
+        // distance options
+
+        $scope.distanceOptions = [];
+
+        for (var radius in $scope.results.allowed_radius) {
+            $scope.distanceOptions.push({
+                value : radius,
+                name: $scope.results.allowed_radius[radius]
+            });
+        }
+
+
+        $scope.distance = {
+            type: $scope.results.radius
+        }
+
+        // circle options
+        $scope.circleOptions = {
+            center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
+            stroke: {
+                color: '#50c3e2',
+                weight: 0
+            },
+            fill: {
+                color: '#50c3e2',
+                opacity: 0.5
+            },
+            radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
+        }
+
+
+
+        $scope.setInitialZoom = function(){
+            var radius = $scope.results.radius.substring(0, $scope.results.radius.length - 2);
+            if(radius <= 2){
+                return 13
+            }
+            else if(radius  <= 3)
+            {
+                return 12
+            }
+            else if(radius <= 5){
+                return 11
+            }
+            else if(radius < 25){
+                return 10
+            }
+            else{
+                return 9
+            }
+        }
+
+
+        // cluster options
+
         $scope.clusterStyles = [
             {
                 textColor: 'white',
@@ -36,23 +91,28 @@ if(typeof angular != 'undefined') {
         $scope.clusterOptions = {
             title: 'click to expand',
             gridSize: 60,
-            maxZoom: 11,
+            maxZoom: 13,
             styles: $scope.clusterStyles
         };
 
         // map object
         $scope.map = {
-            zoom: 8,
+            zoom: $scope.setInitialZoom(),
             center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
             control: {},
             clusterOptions: $scope.clusterOptions
         };
 
 
-
         // map events
         $scope.mapEvents = {
             // any map events go here
+            dragend : function () {
+                var map = $scope.map.control.getGMap()
+                var bounds = map.getBounds();
+                var ne = bounds.getNorthEast();
+                var sw = bounds.getSouthWest();
+            }
         }
 
         // refresh and center map function
@@ -74,7 +134,7 @@ if(typeof angular != 'undefined') {
                     google.maps.event.removeListener(z);
                     smoothZoom(map, max, cnt + 1);
                 });
-                setTimeout(function(){map.setZoom(cnt)}, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
+                setTimeout(function(){map.setZoom(cnt)}, 80);
             }
         }
 
@@ -116,10 +176,6 @@ if(typeof angular != 'undefined') {
             }
 
             $scope.markers = firstMarkers;
-
-            if($scope.results.radius != 25){
-                console.log('do business');
-            }
 
         })
 
@@ -175,22 +231,6 @@ if(typeof angular != 'undefined') {
             type: $scope.results.sort
         }
 
-        // distance options
-
-         $scope.distanceOptions = [];
-
-         for (var radius in $scope.results.allowed_radius) {
-             $scope.distanceOptions.push({
-                 value : radius,
-                 name: $scope.results.allowed_radius[radius]
-             });
-         }
-
-
-        $scope.distance = {
-            type: $scope.results.radius
-        }
-
 
         $scope.refreshResults = false;
 
@@ -214,7 +254,7 @@ if(typeof angular != 'undefined') {
             var newlatlng = new google.maps.LatLng(marker.latitude, marker.longitude);
 
             map.panTo(newlatlng);
-            smoothZoom(map, 12, map.getZoom());
+            smoothZoom(map, 14, map.getZoom());
 
             // toggle markers
             $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
@@ -276,6 +316,7 @@ if(typeof angular != 'undefined') {
 
             responsePromise.success(function(data) {
                 if(data.venue_id){
+                    console.log('venue');
                     $scope.venueResults = data.results.hits;
                     // reset page number
                     $scope.pageResultNumber.page = $scope.pageResultNumber.temp;

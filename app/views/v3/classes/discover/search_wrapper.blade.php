@@ -6,12 +6,19 @@
     draggable="true"
     control="map.control"
 >
+    <ui-gmap-circle
+        center="circleOptions.center"
+        radius="circleOptions.radius"
+        stroke="circleOptions.stroke"
+        fill="circleOptions.fill"
+    >
+
+    </ui-gmap-circle>
     <ui-gmap-markers
         models="markers"
         coords="'self'"
         idKey="'id'"
         icon = "'icon' "
-        fit = "true"
         click="'onClicked'"
         doCluster = "true"
         clusterOptions = "map.clusterOptions"
