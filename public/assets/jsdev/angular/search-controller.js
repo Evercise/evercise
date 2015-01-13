@@ -116,10 +116,9 @@ if(typeof angular != 'undefined') {
                 var map = $scope.map.control.getGMap()
                 var bounds = map.getBounds();
                 var ne = bounds.getNorthEast();
-                $scope.ne = ne.k + ', ' + ne.C;
-                console.log($scope.ne);
+                $scope.ne = ne.lng() + ',' + ne.lat();
                 var sw = bounds.getSouthWest();
-                $scope.sw = sw.k + ', '+sw.C;
+                $scope.sw = sw.lng() + ','+sw.lat();
                 $scope.refreshResults = true;
                 var viewportPoints = [
                     ne, new google.maps.LatLng(ne.lat(), sw.lng()),
