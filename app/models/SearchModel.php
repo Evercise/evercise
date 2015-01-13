@@ -301,10 +301,17 @@ class SearchModel
         }
 
 
-        if(!empty($input['map_nw']) && !empty($input['map_se'])) {
+        if(!empty($input['map_ne']) && !empty($input['map_sw'])) {
+            //Fix Bounds Google does NE and Elastic  deos NW
+
+            $bounds_1 = explode(',', $input['map_ne']);
+            $bounds_2 = explode(',', $input['map_sw']);
+
+
+
             $params['bounds'] = [
-                'top_left' => $input['map_nw'],
-                'bottom_right' => $input['map_se']
+                'top_left' => $bounds_1[0], $bounds_2[1],
+                'bottom_right' => $bounds_2[0], $bounds_1[1],
             ];
         }
         $searchResults = $this->search->getMapResults($area, $params);
