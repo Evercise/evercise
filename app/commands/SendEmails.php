@@ -45,10 +45,10 @@ class SendEmails extends Command {
 	 */
 	public function fire()
 	{
-		//$this->remindSessions();
+		$this->remindSessions();
 		//$this->whyNoUseFreeCreditEh();
 		//$this->whyNotRefer();
-		$this->whyNotReview();
+		//$this->whyNotReview();
 	}
 
 

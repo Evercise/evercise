@@ -551,6 +551,7 @@ class MainController extends \BaseController
                 'package_name' => $up->package->name,
                 'active' => ($numClassesUsed < $up->package->classes ? '1' : '0'),
                 'used' => $numClassesUsed,
+                'total' => $up->package->classes,
             ];
         }
 

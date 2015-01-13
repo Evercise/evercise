@@ -60,7 +60,7 @@
                             <td>{{ $userPackage['user_id'] }}</td>
                             <td>{{ $userPackage['package_id'] . ' - ' . $userPackage['package_name'] }}</td>
                             <td>{{ $userPackage['active'] }}</td>
-                            <td>{{ $userPackage['used'] }}</td>
+                            <td>{{ $userPackage['used'] .'/'. $userPackage['total'] }}</td>
                        </tr>
 
                    @endforeach

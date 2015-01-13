@@ -207,7 +207,7 @@ class PaymentController extends BaseController
         $wallet->withdraw($cart['total']['from_wallet'], 'Full payment for classes', 'full_payment');
 
         $coupon = Coupons::processCoupon($coupon, $this->user);
-        $transaction = $this->paid($token, $transactionId, 'stripe', $cart, $coupon);
+        $transaction = $this->paid($token, $transactionId, 'wallet', $cart, $coupon);
 
         $res = [
             'cart'         => $cart,
