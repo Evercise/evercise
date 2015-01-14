@@ -178,18 +178,15 @@ class SearchModel
 
 
 
-        if(!empty($input['map_ne']) && !empty($input['map_sw'])) {
+        if(!empty($input['ne']) && !empty($input['sw'])) {
             //Fix Bounds Google does NE and Elastic  deos NW
-
-            $bounds_1 = explode(',', $input['map_ne']);
-            $bounds_2 = explode(',', $input['map_sw']);
-
 
 
             $params['bounds'] = [
-                'top_left' => $bounds_1[0], $bounds_2[1],
-                'bottom_right' => $bounds_2[0], $bounds_1[1],
+                'top_right' => $input['ne'],
+                'bottom_left' => $input['sw'],
             ];
+
         }
 
         $searchResults = $this->search->getResults($area, $params);
@@ -308,18 +305,15 @@ class SearchModel
         }
 
 
-        if(!empty($input['map_ne']) && !empty($input['map_sw'])) {
+        if(!empty($input['ne']) && !empty($input['sw'])) {
             //Fix Bounds Google does NE and Elastic  deos NW
-
-            $bounds_1 = explode(',', $input['map_ne']);
-            $bounds_2 = explode(',', $input['map_sw']);
-
 
 
             $params['bounds'] = [
-                'top_left' => $bounds_1[0], $bounds_2[1],
-                'bottom_right' => $bounds_2[0], $bounds_1[1],
+                'top_right' => $input['ne'],
+                'bottom_left' => $input['sw'],
             ];
+
         }
         $searchResults = $this->search->getMapResults($area, $params);
 
