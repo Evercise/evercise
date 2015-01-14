@@ -23,6 +23,11 @@ class Sessionpayment extends \Eloquent
         return $this->belongsTo('User');
     }
 
+    public function evercisesession()
+    {
+        return $this->belongsTo('Evercisesession');
+    }
+
     /**
      * Convert Pounds to Pennies
      *

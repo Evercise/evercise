@@ -94,6 +94,13 @@
                             <span class="menu-title">Transactions</span>
                         </a>
                     </li>
+
+                    <li class="first_level">
+                        <a href="{{ URL::route('admin.packages') }}">
+                            <span class="icon_currency first_level_icon"></span>
+                            <span class="menu-title">Packages</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="menu_toggle">
                     <span class="icon_menu_toggle">

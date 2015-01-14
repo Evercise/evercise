@@ -640,6 +640,9 @@ Route::group(
         Route::get('/transactions',
             ['as' => 'admin.transactions', 'uses' => 'MainController@transactions']);
 
+        Route::get('/packages',
+            ['as' => 'admin.packages', 'uses' => 'MainController@userPackages']);
+
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
 
@@ -687,10 +690,7 @@ Route::get('generatestaticlandingemail', function(){
     return 'generated. code: '.$code;
 });
 */
-Route::get('ping', function () {
-    return 'All is good.';
-});
-
+Route::get('ping', ['as' => 'ping.me', 'uses' => 'PingController@check']);
 
 Route::get('/evercisegroups/{id?}/{preview?}', ['as' => 'class.show.eg', 'uses' => 'EvercisegroupsController@show']);
 

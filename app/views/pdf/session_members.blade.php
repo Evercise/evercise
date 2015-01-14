@@ -19,6 +19,7 @@
 					<div class="pdf-wrap">
 						<p>{{ $users['display_name']}}</p>
 						<p>{{ $users['email']}}</p>
+						<p>{{ $users['pivot']['transaction_id']}}</p>
 					</div>
 					
 

@@ -21,8 +21,10 @@ return [
     'lock_limit' => 300,
     'jobs'       => [
         'ReminderForPayments' => '10 9 * 1 *',
-        'SendReminderEmails'  => '15 7 * * *',
+        'SendReminderEmails'  => '15 * * * *',
+        'SendExtraEmails'     => '15 7 * * *',
         'DailyIndexer'        => '*/15 * * * *',
-        'CheckPayments'        => '30 5 * * *',
+        'CheckPayments'       => '30 5 * * *',
+        'GenerateSalesforceSessionIds'        => '*/5 * * * *',
     ]
 ];

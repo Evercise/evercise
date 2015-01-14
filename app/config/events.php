@@ -90,6 +90,7 @@ return [
         ['user.referral.signup' => 'User@referralSignup'], // $user, $transaction, $balance // ∑
 
         ['user.class.rate' => 'User@rateClass'], // $user // ∑
+        ['user.class.rate.haspackage' => 'User@rateClassHasPackage'], // $user // ∑
 
         ['user.ppc.signup' => 'User@ppcSignup'], // $user, $transaction, $type // ∑
 

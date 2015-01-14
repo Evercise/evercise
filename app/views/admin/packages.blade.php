@@ -48,29 +48,19 @@
             <table class="table table-yuk2 toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="10">
                 <thead>
                     <tr>
-                        <th data-toggle="true">ID</th>
-                        <th>User</th>
-                        <th>Total</th>
-                        <th>After fees</th>
-                        <th>Payment method</th>
-                        <th>Token</th>
-                        <th>3rd party ID</th>
-                        <th>Processed</th>
-                        <th>Date / Time</th>
+                        <th data-toggle="true">User ID</th>
+                        <th>Package</th>
+                        <th>Active</th>
+                        <th>Used</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($transactions as $transaction)
+                    @foreach($userPackages as $userPackage)
                         <tr>
-                            <td>{{ $transaction['id'] }}</td>
-                            <td>{{ $transaction['user_id'] . ' - ' . $transaction['user_name'] }}</td>
-                            <td>{{ $transaction['total'] }}</td>
-                            <td>{{ $transaction['total_after_fees'] }}</td>
-                            <td>{{ $transaction['payment_method'] }}</td>
-                            <td>{{ $transaction['token'] }}</td>
-                            <td>{{ $transaction['transaction'] }}</td>
-                            <td>{{ $transaction['processed'] }}</td>
-                            <td>{{ $transaction['date_time'] }}</td>
+                            <td>{{ $userPackage['user_id'] }}</td>
+                            <td>{{ $userPackage['package_id'] . ' - ' . $userPackage['package_name'] }}</td>
+                            <td>{{ $userPackage['active'] }}</td>
+                            <td>{{ $userPackage['used'] .'/'. $userPackage['total'] }}</td>
                        </tr>
 
                    @endforeach

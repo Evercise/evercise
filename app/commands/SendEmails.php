@@ -11,7 +11,7 @@ class SendEmails extends Command {
 	 *
 	 * @var string
 	 */
-	protected $name = 'emails';
+	protected $name = 'email:remind';
 
 	/**
 	 * The console command description.
@@ -20,6 +20,8 @@ class SendEmails extends Command {
 	 */
 	protected $description = 'Command description.';
 
+	protected $cutOff;
+
 	/**
 	 * Create a new command instance.
 	 *
@@ -27,7 +29,13 @@ class SendEmails extends Command {
 	 */
 	public function __construct()
 	{
+
 		parent::__construct();
+
+		$cutOffDate = Config::get('pardot.reminders.usercutoff');
+		$this->cutOff = new DateTime();
+		$this->cutOff->setDate($cutOffDate['year'], $cutOffDate['month'], $cutOffDate['day']);
+
 	}
 
 	/**
@@ -35,12 +43,71 @@ class SendEmails extends Command {
 	 *
 	 * @return mixed
 	 */
-		// Check for sessions happening in less than 2 days
-		//    Send a reminder email to all users
-		//    Send a participant list to the trainer
 	public function fire()
 	{
-		$this->info('Searching for Sessions in the next 1 day, which have not yet fired out emails');
+		$this->remindSessions();
+		$this->whyNotReview();
+	}
+
+
+	/**
+	 * 	check for users who:
+	 *		have attended a class > 4 hours ago but during the last day
+	 * 		does not have an entry in 'email_out' matching type 'mail.rateclass'
+	 * 		signed up  after 01/12/14
+	 *
+	 *  If user has no active package,
+	 *
+	 * @return mixed
+	 */
+	public function whyNotReview()
+	{
+		$numHours = Config::get('pardot.reminders.whynotreview.hourssinceclass');
+
+		$this->info('whyNotReview - Searching for users who have bought a class which took place '.$numHours.' hours ago');
+
+		$afewhoursago = (new DateTime())->sub(new DateInterval('PT'.$numHours.'H'));
+		$yesterday = (new DateTime())->sub(new DateInterval('P1D'));
+
+		$users = User::whereHas('sessions', function($query) use (&$afewhoursago, &$yesterday){
+				$query->where('date_time', '<', $afewhoursago)
+					  ->where('date_time', '>', $yesterday);
+			})
+			->where('created_at', '>', $this->cutOff)
+			->with(['emailOut' => function($query){
+				$query->where('type', '=', 'mail.rateclass');
+			}])
+			->get();
+
+		$emailsSent = 0;
+		foreach($users as $user) {
+			if(! count($user->emailOut)) {
+				if (! \UserPackages::hasActivePackage($user)) {
+					$emailsSent++;
+					$this->info('user: ' . $user->id);
+					event('user.class.rate', [$user]);
+				}
+				else
+				{
+					$this->info('user: ' . $user->id . 'has active package');
+					event('user.class.rate.haspackage', [$user]);
+				}
+			}
+		}
+
+		$this->info('user count: '.$emailsSent);
+	}
+
+	/**
+	 * Check for sessions happening in less than 2 days
+	 * Send a reminder email to all users
+	 * Send a participant list to the trainer
+	 *
+	 * @return mixed
+	 */
+	public function remindSessions()
+	{
+		$this->info('remindSessions - Searching for Sessions in the next 1 day, which have not yet fired out emails');
 		
 		$today = new DateTime();
 		$onedaystime = (new DateTime())->add(new DateInterval('P1D'));
@@ -121,8 +188,6 @@ class SendEmails extends Command {
 		{
 			$this->info('No sessions found which have not already sent out emails');
 		}
-
-
 	}
 
 	/**

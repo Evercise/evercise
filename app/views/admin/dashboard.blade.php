@@ -262,7 +262,19 @@
                     <span class="countUpMe" data-endVal="{{ $total_users }}">{{ $total_users }}</span>
                 </div>
                 <div class="info_box_footer">
-                    Total users including {{ $total_trainers }} trainers
+                    Total users including {{ $total_trainers }} trainers.
+                 </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="info_box_var_1 box_bg_b">
+                <div class="info_box_body">
+                    <span class="info_box_icon el-icon-user"></span>
+                    <span class="countUpMe" data-endVal="{{ $users_today }}">{{ $users_today }}</span>
+                </div>
+                <div class="info_box_footer">
+                    Users registered today including {{ $trainers_today }} trainers.
                  </div>
             </div>
         </div>

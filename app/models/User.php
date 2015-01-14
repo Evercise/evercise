@@ -169,6 +169,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->hasMany('Evercisegroup');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function emailOut()
+    {
+        return $this->hasMany('EmailOut');
+    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

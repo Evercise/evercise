@@ -396,4 +396,10 @@ class User
 
         $this->mail->rateClass($user);
     }
+    public function rateClassHasPackage($user)
+    {
+        $this->log->info('hey rate this class email NOT SENT AS USER HAS PACKAGES ' . $user->id);
+
+        $this->mail->rateClassHasPackage($user);
+    }
 }

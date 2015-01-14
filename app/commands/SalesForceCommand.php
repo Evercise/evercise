@@ -6,7 +6,7 @@ use Symfony\Component\Console\Input\InputArgument;
 
 // php artisan check:sessions
 
-class SalesForce extends Command {
+class SalesForceCommand extends Command {
 
 	/**
 	 * The console command name.

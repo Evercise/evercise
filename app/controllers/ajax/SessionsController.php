@@ -269,7 +269,7 @@ class SessionsController extends AjaxBaseController
             ]);
         }
 
-        $sessionmembers = $evercisesession->getSessionmembers();
+        $sessionmembers = $evercisesession->users;
 
         return Response::json([
             'view' => View::make('v3.classes.sessions_list_users',
