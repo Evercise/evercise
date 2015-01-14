@@ -423,6 +423,8 @@ if(typeof angular != 'undefined') {
                 else{
                     $scope.everciseGroups = $scope.everciseGroups.concat(data.results.hits);
                     $scope.pageResultNumber.page = data.page;
+                    $scope.totalHits =  data.results.total;
+                    $scope.hitsPerPage = data.size;
                 }
             });
 
