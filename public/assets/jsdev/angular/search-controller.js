@@ -1,15 +1,13 @@
 if(typeof angular != 'undefined') {
-    app.controller('searchController', ["$scope",  "$http" , function ($scope, $http) {
+    app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", function ($scope, $http, uiGmapGoogleMapApi) {
+
 
         // grab original results
         $scope.results = laracasts.results;
         console.log($scope.results);
 
         $scope.location = $scope.results.area.name;
-
-        $scope.ne = false;
-        $scope.sw = false;
-
+        $scope.lastBounds = {}
         // url to use for ajax calls
         $scope.url = $scope.results.url;
 
@@ -113,29 +111,81 @@ if(typeof angular != 'undefined') {
         $scope.mapEvents = {
             // any map events go here
             dragend : function () {
-                var map = $scope.map.control.getGMap()
+                // map instance
+                var map = $scope.map.control.getGMap();
+                // bounds of viewport of map
                 var bounds = map.getBounds();
+
                 var ne = bounds.getNorthEast();
-                $scope.ne = ne.lng() + ',' + ne.lat();
                 var sw = bounds.getSouthWest();
-                $scope.sw = sw.lng() + ','+sw.lat();
+                // check if bounds outside of original map bounds
+                var originalNe = $scope.originalBounds.getNorthEast();
+                var originalSw = $scope.originalBounds.getSouthWest();
+
+                // map bounds object
+                var mapBounds = {};
+                mapBounds.ne = ne.lat() + ',' + ne.lng();
+                mapBounds.sw = sw.lat() + ','+sw.lng();
+
+                // used to only grab new results if the bounding box is out side the previous one
+                /*
+                if($.isEmptyObject($scope.lastBounds)){
+                    drawBounds(map, ne, sw);
+                    $scope.refreshResults = true;
+                    $scope.getData(mapBounds);
+                }
+                else{
+                    if( $scope.lastBounds.ne.lat <  ne.lat() || $scope.lastBounds.ne.lng <  ne.lng() || $scope.lastBounds.sw.lat >  sw.lat() || $scope.lastBounds.sw.lng >  sw.lng()){
+                        drawBounds(map, ne, sw);
+                        $scope.refreshResults = true;
+                        $scope.getData(mapBounds);
+                    }
+                }
+                */
                 $scope.refreshResults = true;
-                var viewportPoints = [
-                    ne, new google.maps.LatLng(ne.lat(), sw.lng()),
-                    sw, new google.maps.LatLng(sw.lat(), ne.lng()), ne
-                ];
-
-                    viewportBox = new google.maps.Polyline({
-                        path: viewportPoints,
-                        strokeColor: '#FF0000',
-                        strokeOpacity: 1.0,
-                        strokeWeight: 4
-                    });
-                    viewportBox.setMap(map);
+                // check if map is outside original bounds, if so load map results aswell
+                if(originalNe.lat() < ne.lat() ||originalNe.lng() < ne.lng() || originalSw.lat() > sw.lat() || originalSw.lng() > sw.lng()){
+                    drawBounds(map, originalNe, originalSw);
+                    $scope.getData(mapBounds);
+                }
+                else{
+                    drawBounds(map, ne, sw);
+                    $scope.getData(mapBounds);
+                }
 
 
-                $scope.getData();
+
+
+
+
+                $scope.lastBounds = {
+                    ne : {
+                        lat : ne.lat(),
+                        lng : ne.lng()
+                    },
+                    sw : {
+                        lat : sw.lat(),
+                        lng : sw.lng()
+                    }
+                }
+
             }
+        }
+
+
+        var drawBounds = function(map, ne, sw){
+            var viewportPoints = [
+                ne, new google.maps.LatLng(ne.lat(), sw.lng()),
+                sw, new google.maps.LatLng(sw.lat(), ne.lng()), ne
+            ];
+
+            viewportBox = new google.maps.Polyline({
+                path: viewportPoints,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 3
+            });
+            viewportBox.setMap(map);
         }
 
         // refresh and center map function
@@ -167,10 +217,13 @@ if(typeof angular != 'undefined') {
         var firstMarkers = []
         $scope.markers = [];
 
+
+
+
         // watch for the map been drawn then loop though the map results creating the markers
 
         $scope.$watch(function () {
-            return $scope.map.bounds;
+            return $scope.map;
         }, function () {
             for (var key in $scope.mapResults) {
                 var obj = $scope.mapResults[key];
@@ -199,6 +252,11 @@ if(typeof angular != 'undefined') {
             }
 
             $scope.markers = firstMarkers;
+            uiGmapGoogleMapApi.then(function(maps) {
+                var latlng = new maps.LatLng($scope.results.area.lat, $scope.results.area.lng);
+                $scope.originalBounds =  new google.maps.Circle({center:latlng , radius:$scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344 }).getBounds();
+                console.log($scope.originalBounds);
+            });
 
         })
 
@@ -320,11 +378,12 @@ if(typeof angular != 'undefined') {
 
         // function used for getting data from the server
 
-        $scope.getData = function(){
-
+        $scope.getData = function( bounds ){
+            bounds = typeof bounds !== 'undefined' ? bounds : false;
+            path : '/ajax/uk/';
             var req = {
                 method: 'POST',
-                url: '/ajax/uk/'+$scope.url,
+                url: path+$scope.url,
                 headers: {
                     'X-CSRF-Token': TOKEN
                 },
@@ -333,10 +392,11 @@ if(typeof angular != 'undefined') {
                     'venue_id': $scope.venue_id,
                     'sort' : $scope.sort.type,
                     'distance' : $scope.distance.type,
-                    'ne' : $scope.ne,
-                    'sw' : $scope.sw
+                    'ne' : bounds.ne,
+                    'sw' : bounds.sw
                 }
             }
+
             var responsePromise = $http(req);
 
             responsePromise.success(function(data) {
@@ -369,6 +429,9 @@ if(typeof angular != 'undefined') {
                 $scope.refreshMap();
             });
         });
+
+
+
 
     }])
 }
