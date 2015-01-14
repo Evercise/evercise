@@ -146,7 +146,7 @@ if(typeof angular != 'undefined') {
                 // check if map is outside original bounds, if so load map results aswell
                 if(originalNe.lat() < ne.lat() ||originalNe.lng() < ne.lng() || originalSw.lat() > sw.lat() || originalSw.lng() > sw.lng()){
                     drawBounds(map, originalNe, originalSw);
-                    $scope.getData(mapBounds);
+                    $scope.getData(mapBounds, true);
                 }
                 else{
                     drawBounds(map, ne, sw);
@@ -225,6 +225,15 @@ if(typeof angular != 'undefined') {
         $scope.$watch(function () {
             return $scope.map;
         }, function () {
+            createMarkers();
+            uiGmapGoogleMapApi.then(function(maps) {
+                var latlng = new maps.LatLng($scope.results.area.lat, $scope.results.area.lng);
+                $scope.originalBounds =  new google.maps.Circle({center:latlng , radius:$scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344 }).getBounds();
+            });
+
+        })
+
+        var createMarkers = function(){
             for (var key in $scope.mapResults) {
                 var obj = $scope.mapResults[key];
                 for (var class_id in obj) {
@@ -252,13 +261,7 @@ if(typeof angular != 'undefined') {
             }
 
             $scope.markers = firstMarkers;
-            uiGmapGoogleMapApi.then(function(maps) {
-                var latlng = new maps.LatLng($scope.results.area.lat, $scope.results.area.lng);
-                $scope.originalBounds =  new google.maps.Circle({center:latlng , radius:$scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344 }).getBounds();
-                console.log($scope.originalBounds);
-            });
-
-        })
+        }
 
 
         // now lets create the classes
@@ -378,9 +381,10 @@ if(typeof angular != 'undefined') {
 
         // function used for getting data from the server
 
-        $scope.getData = function( bounds ){
+        $scope.getData = function( bounds , map){
             bounds = typeof bounds !== 'undefined' ? bounds : false;
-            path : '/ajax/uk/';
+            map = typeof map !== 'undefined' ? map : false;
+            var path = '/ajax/uk/';
             var req = {
                 method: 'POST',
                 url: path+$scope.url,
@@ -393,7 +397,8 @@ if(typeof angular != 'undefined') {
                     'sort' : $scope.sort.type,
                     'distance' : $scope.distance.type,
                     'ne' : bounds.ne,
-                    'sw' : bounds.sw
+                    'sw' : bounds.sw,
+                    'map' : map
                 }
             }
 
@@ -407,8 +412,13 @@ if(typeof angular != 'undefined') {
                     $scope.pageResultNumber.temp = 0;
                 }
                 else if($scope.refreshResults){
+                    if(map){
+                        $scope.mapResults = data.mapResults;
+                    }
                     $scope.everciseGroups = data.results.hits;
                     $scope.pageResultNumber.page = data.page;
+                    $scope.totalHits =  data.results.total;
+                    $scope.hitsPerPage = data.size;
                 }
                 else{
                     $scope.everciseGroups = $scope.everciseGroups.concat(data.results.hits);
@@ -429,6 +439,12 @@ if(typeof angular != 'undefined') {
                 $scope.refreshMap();
             });
         });
+
+        $scope.$watch('mapResults', function(newVal, oldVal) {
+            if(newVal != oldVal){
+                createMarkers();
+            }
+        }, true);
 
 
 
