@@ -150,6 +150,10 @@ class SearchController extends AjaxBaseController {
 
         $results = $this->searchmodel->search($area, $input, $this->user);
 
+        if(!empty($input['map']) && $input['map'] == 'true') {
+            $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
+        }
+
         return Response::json($results);
 
     }
