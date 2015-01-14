@@ -83,7 +83,6 @@
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                         </div>
-
                         <button class="btn btn-primary center-block md-btn-block" type="submit">
                              Find a Class
                         </button>
@@ -102,12 +101,10 @@
                     <div class="home-assets">
                         {{ image('img/home/wie.png', 'what is evercise', ['class' => 'img-responsive center-block']) }}
                     </div>
-
                     <div class="caption">
                         <p>Evercise is the exciting new Pay As You Go fitness community that’s flexible enough to fit in with your modern lifestyle. Evercise unites talented trainers with an active community who want more fun and freedom from their fitness routine. </p>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-4 text-center">
                 <div class="panel-body">
@@ -121,7 +118,6 @@
                          <p>We want fitness to be fun and flexible rather than routine and restricted. By bringing together trainers and a keen community of fitness enthusiasts Evercise really does benefit everyone. Evercise makes fitness fun again, emphasising social, group exercise that fits in with your life</p>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-4 text-center">
                 <div class="panel-body">
@@ -135,7 +131,6 @@
                          <p>Whether you’re a trainer or a participant Evercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
                     </div>
                 </div>
-
             </div>
 
         <!--
@@ -162,7 +157,6 @@
                  <h1 class="text-center">Featured Fitness Classes</h1>
             </div>
             <div class="row">
-
                 <div id="image-carousel" class="carousel slide" data-interval="true">
                     <!-- Indicators -->
                       <ol class="carousel-indicators">
@@ -197,7 +191,6 @@
                                 @endif
                             @endforeach
                       </div>
-
                 </div>
             </div>
         </div>

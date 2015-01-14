@@ -171,8 +171,6 @@ if(typeof angular != 'undefined') {
             zoom: 12
         };
 
-
-
         // used for marker clusters
         $scope.clusterStyles = [
             {
