@@ -56,7 +56,7 @@
                             {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
                             {{ Form::hidden('city', null) }}
                             <div class="input-group-addon"><span class="icon icon-distance"></span></div>
-                            <div class="custom-select custom-select-white">
+                            <div class="custom-select">
                                 {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                             </div>
                             <span class="input-group-btn">
@@ -65,10 +65,7 @@
                                 </button>
                             </span>
                         </div>
-
-
                     </div>
-
                 {{ Form::close() }}
             </div>
             <div class="row no-gutter hidden-md hidden-lg">
@@ -87,15 +84,10 @@
                             {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
                         </div>
 
-                                <button class="btn btn-primary center-block md-btn-block" type="submit">
-                                     Find a Class
-                                </button>
-
-
-
-
+                        <button class="btn btn-primary center-block md-btn-block" type="submit">
+                             Find a Class
+                        </button>
                     </div>
-
                 {{ Form::close() }}
             </div>
         </div>
