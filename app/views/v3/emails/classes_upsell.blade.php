@@ -34,19 +34,8 @@
                                         </tr>
                                         <tr height="30%">
                                             <td width="100%" valign="bottom">
-<?php
- /** THIS WILL BE REMOVED I just need to get it running now!!! Iggy */
- $rating = 0;
- if(is_array($everciseGroup->rating)) {
-     $stars = 0;
-     foreach ($everciseGroup->rating as $r) {
 
-         $stars += (is_object($r) ? $r->stars : $r['stars']);
-     }
-     $rating = count($everciseGroup->rating) ? $stars / count($everciseGroup->rating) : 0;
- }
- ?>
-                                                {{ image('assets/img/email/stars-'.$rating.'.png', 'class rating', ['class' => 'img-original']) }}
+                                                {{-- image('assets/img/email/stars-'.$rating.'.png', 'class rating', ['class' => 'img-original']) --}}
                                             </td>
                                         </tr>
                                     </table>

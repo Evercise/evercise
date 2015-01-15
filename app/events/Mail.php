@@ -145,7 +145,7 @@ class Mail
         if ($cart['packages'])
         {
             /** Pick 3 classes which are priced appropriately for the package purchased. NEEDS WORK!!! */
-            $packagePrice = round($cart['packages'][0]['price'], 2);
+            $upperPrice = round($cart['packages'][0]['price'], 2) + 0.01;
             //Log::live()
            /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
                 $query->where('price', '<', $packagePrice);
@@ -153,9 +153,8 @@ class Mail
 
             $searchController = App::make('SearchController');
             $everciseGroups = $searchController->getClasses([
-                'sort' => 'price_asc',
-                'price_under' => $packagePrice,
-                'price_over' => $packagePrice-5,
+                'sort' => 'price_desc',
+                'price_under' => $upperPrice,
                 'size' => '3'
             ]);
 
