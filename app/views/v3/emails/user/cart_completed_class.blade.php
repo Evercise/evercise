@@ -12,7 +12,7 @@
 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF">
     <tbody>
         <tr>
-            <th>
+            <td>
                 <table class="table" width="100%" height="auto" align="left" cellspacing="" cellpadding="0" bgcolor="#FFFFFF">
                     <tbody>
                         <tr align="left" height="50">
@@ -108,7 +108,7 @@
                         @endif
                     </tbody>
                 </table>
-            </th>
+            </td>
         </tr>
     </tbody>
 </table>
