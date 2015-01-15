@@ -319,8 +319,7 @@ class SearchController extends \BaseController
             'radius'      => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
             'search'      => (!empty($params['search']) ? $params['sort'] : ''),
             'featured'    => (isset($params['featured']) ? $params['featured'] : ''),
-            'price_under' => (isset($params['price_under']) ? $params['price_under'] : ''),
-            'price_over'  => (isset($params['price_over']) ? $params['price_over'] : '')
+            'price' => (isset($params['price']) ? $params['price'] : '')
         ];
 
         $searchResults = $this->search->getResults($location, $query);
