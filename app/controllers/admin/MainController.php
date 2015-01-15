@@ -35,6 +35,17 @@ class MainController extends \BaseController
         $trainer = Sentry::findGroupByName('Trainer');
         $this->data['total_trainers'] = Sentry::findAllUsersInGroup($trainer)->count();
 
+        $this->data['new_sessions_today'] = Evercisesession::where('created_at', '>', $today)->count();
+        $this->data['new_groups_today'] = Evercisegroup::where('created_at', '>', $today)->count();
+
+        $sevenDaysTime = new DateTime();
+        $sevenDaysTime->add(new DateInterval('P7D'));
+        $this->data['upcoming_sessions_7'] = Evercisesession::where('date_time', '>', (new DateTime()))->where('date_time', '<', $sevenDaysTime)->count();
+
+        $thirtyDaysTime = new DateTime();
+        $thirtyDaysTime->add(new DateInterval('P30D'));
+        $this->data['upcoming_sessions_30'] = Evercisesession::where('date_time', '>', (new DateTime()))->where('date_time', '<', $thirtyDaysTime)->count();
+
 
         /** Sales */
         $this->data['total_sales'] = Sessionpayment::where('created_at', '>=',
@@ -42,6 +53,10 @@ class MainController extends \BaseController
         $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=',
             Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total_after_fees');
         $this->data['total_commission'] = ($this->data['total_sales'] - $this->data['total_after_fees']);
+
+        $this->data['session_sold_today'] = Sessionmember::todaysSales();
+
+        $this->data['transactions_today'] = DB::table('transactions')->where('created_at', '>=', Carbon::now()->setTime(0, 0, 0))->count();
 
 
         $this->data['total_year'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subYear())
@@ -104,7 +119,8 @@ class MainController extends \BaseController
             $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
         }
 
-        $this->data['total_referrals'] = Referral::all()->count();
+        $this->data['complete_referrals'] = Referral::where('referee_id', '>', 0)->count();
+        $this->data['pending_referrals'] = Referral::where('referee_id', '=', 0)->count();
 
         return View::make('admin.dashboard', $this->data)->render();
     }
