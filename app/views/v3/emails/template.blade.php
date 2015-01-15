@@ -77,9 +77,6 @@
                                         <td class="sm-hidden"  height="50">
 
                                             <p class="footer">&copy; Copyright 2015 Evercise</p>
-                                            <p class="footer">&copy; First Floor, The Link</p>
-                                            <p class="footer">&copy; 4 Wellesley Terrace, London</p>
-                                            <p class="footer">&copy; N1 7NA</p>
 
                                         </td>
                                         <td width="100"  height="40" align="center">
