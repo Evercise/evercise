@@ -7,7 +7,7 @@
         p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
         b { font-weight: bold; color:#768690; }
         table{ max-width: 640px; width: 100%; table-layout: fixed}
-        th{ font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
+        th{ font-family: helvetica, arial,  sans-serif; border-bottom:1px solid #ccc;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
         strong{ font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
         .container{ }
         .pink-text{ color: #ff1b7e}
@@ -83,70 +83,79 @@
                         <table width="100%" height="auto" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
                             <tr>
                                 <td align="left">
-
                                     <p>Dear lewis_mewis</p>
                                     <p>Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
                                     <strong><p>Transaction ID: 5318074</p></strong>
                                 </td>
                             </tr>
                         </table>
-
-                        <table class="table" width="100%" height="20" align="left" cellspacing="30" cellpadding="0" bgcolor="#FFFFFF">
-                            <tbody>
-                            <tr align="left">
-                                <th colspan="2">
-                                    Name
-                                </th>
-                                <th colspan="2">
-                                    Date
-                                </th>
-                                <th>
-                                    Duration
-                                </th>
-                                <th>
-                                    QTY
-                                </th>
-                                <th>
-                                    Price
-                                </th>
-                                <th>
-                                    Code
-                                </th>
-                            </tr>
-                            <tr  align="left">
-                                <td colspan="2">
-                                    <p><a href="http://evercise.dev/classes/reading-test" class="blue-text">reading test</a></p>
-                                </td>
-                                <td  colspan="2">
-                                    <p>Sat, Jan 31, 2015 12:00 PM</p>
-                                </td>
-                                <td>
-                                    <p>30 mins</p>
-                                </td>
-                                <td>
-                                    <p>x 2</p>
-                                </td>
-                                <td>
-                                    <p>&pound;20</p>
-                                </td>
-                                <td>
-                                    <p>
-                                        8smh83<br>
-                                    </p>
-                                </td>
-                            </tr>
+                        <table width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF">
                             <tr>
-                                <td colspan="7" >
-                                    <strong>Sub-total <span class="blue-text">&pound;20</span></strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="7" align="right">
-                                    <strong>Total <span class="blue-text">&pound;20</span></strong>
-                                </td>
+                                <td>
+                                    <table class="table" width="100%" height="auto" align="left"  cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
+                                        <tbody>
+                                        <tr align="left" height="50">
+                                            <th colspan="2">
+                                                Name
+                                            </th>
+                                            <th colspan="3">
+                                                Date
+                                            </th>
 
+                                            <th>
+                                                Price
+                                            </th>
+                                            <th>
+                                                Code
+                                            </th>
+                                        </tr>
+                                        <tr  align="left">
+                                            <td colspan="2" valign="top">
+                                                <p><a href="http://evercise.dev/classes/reading-test" class="blue-text">reading test</a> x2</p>
+                                            </td>
+                                            <td  colspan="3" valign="top">
+                                                <p>Sat, Jan 31, 2015 12:00 PM</p>
+                                            </td>
+                                            <td valign="top">
+                                                <p>&pound;20</p>
+                                            </td>
+                                            <td valign="top">
+                                                <p>8smh83, 8smh83</p>
+                                            </td>
+                                        </tr>
+                                        <tr align="left">
+                                            <td colspan="2" valign="top">
+                                                <p><a href="http://evercise.dev/classes/reading-test" class="blue-text">reading test</a> x2</p>
+                                            </td>
+                                            <td  colspan="3" valign="top">
+                                                <p>Sat, Jan 31, 2015 12:00 PM</p>
+                                            </td>
+                                            <td valign="top">
+                                                <p>&pound;20</p>
+                                            </td>
+                                            <td valign="top">
+                                                <p>8smh83</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" align="">
+                                                <br>
+                                                <br>
+                                                <strong>Sub-total <span class="blue-text">&pound;20</span></strong>
+                                                <br>
+                                                <br>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" align="">
+                                                <strong>Total <span class="blue-text">&pound;20</span></strong>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
                             </tr>
-                            </tbody>
                         </table>
 
 
@@ -196,3 +205,4 @@
 </table>
 </body>
 </html>
+

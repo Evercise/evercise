@@ -15,14 +15,8 @@
             <th colspan="2">
                 Name
             </th>
-            <th colspan="2">
+            <th colspan="3">
                 Date
-            </th>
-            <th>
-                Duration
-            </th>
-            <th>
-                QTY
             </th>
             <th>
                 Price
@@ -39,14 +33,8 @@
                 <td colspan="2">
                     <p>{{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}</p>
                 </td>
-                <td  colspan="2">
+                <td  colspan="3">
                     <p>{{ $date->toDayDateTimeString() }}</p>
-                </td>
-                <td>
-                    <p>{{$row['duration']}} mins</p>
-                </td>
-                <td>
-                    <p>x {{$row['qty']}}</p>
                 </td>
                 <td>
                     <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</p>
