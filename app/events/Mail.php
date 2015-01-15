@@ -11,6 +11,7 @@ use Illuminate\View\Factory as View;
 use Illuminate\Routing\UrlGenerator;
 use Exception;
 use EmailOut;
+use Evercisegroup;
 
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
@@ -137,9 +138,35 @@ class Mail
             'link_url'    => $this->url->to('/uk/london')
         ];
 
-        if ($cart['sessions'] && $cart['packages']) $params['view'] = 'v3.emails.user.cart_completed_both';
-        else if ($cart['sessions']) $params['view'] = 'v3.emails.user.cart_completed_class';
-        else if ($cart['packages']) $params['view'] = 'v3.emails.user.cart_completed_package';
+
+        $params['search'] = App::make('SearchController');
+
+
+        if ($cart['packages'])
+        {
+            /** Pick 3 classes which are priced appropriately for the package purchased. NEEDS WORK!!! */
+            $packagePrice = $cart['packages'][0]['price'];
+           /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+                $query->where('price', '<', $packagePrice);
+            })->take(3)->get();*/
+
+            $searchController = App::make('SearchController');
+            $everciseGroups = $searchController->getClasses([
+                'sort' => 'price_asc',
+            ]);
+
+            $params['everciseGroups'] = array_slice($everciseGroups->hits, 0, 3);
+
+            if ($cart['sessions'])
+            {
+                $params['view'] = 'v3.emails.user.cart_completed_both';
+            }
+            else
+            {
+                $params['view'] = 'v3.emails.user.cart_completed_package';
+            }
+        }
+        else $params['view'] = 'v3.emails.user.cart_completed_class';
 
         $this->send($user->email, $params);
     }

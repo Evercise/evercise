@@ -112,4 +112,6 @@
     </tbody>
 </table>
 
+    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups])
+
 @stop

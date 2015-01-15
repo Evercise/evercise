@@ -539,6 +539,8 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.add_subcategory', 'uses' => 'AdminAjaxController@addSubcategory']);
     Route::post('/edit_group_subcats',
         ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminAjaxController@editGroupSubcats']);
+    Route::post('/subcategory/delete',
+        ['as' => 'ajax.admin.subcategory.delete', 'uses' => 'AdminAjaxController@deleteSubcategory']);
 
     Route::post('/unapprove_trainer',
         ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
@@ -579,6 +581,11 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
     Route::put('modal/categories',
         ['as' => 'ajax.admin.modal.categories.save', 'uses' => 'AdminAjaxController@saveClassCategories']);
+
+
+
+    Route::post('runindexer',
+        ['as' => 'ajax.admin.indexall', 'uses' => 'AdminAjaxController@runIndexer']);
 
 
 });
@@ -715,4 +722,24 @@ Route::get('cleansubcategoriesup', function () {
         $sc->save();
     }
 
+});
+
+Route::get('test', function(){
+
+    $packagePrice = 10.99;
+/*    $evercisegroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+        $query->where('price', '<', $packagePrice);
+    })->take(3)->lists('name');*/
+
+    $searchController = App::make('SearchController');
+    $everciseGroups = $searchController->getClasses([
+        'sort' => 'price_asc',
+    ]);
+
+/*    foreach($everciseGroups->hits as $everciseGroup)
+    {
+        return var_dump($everciseGroup);
+    }*/
+
+    return var_dump($everciseGroups->hits);
 });
