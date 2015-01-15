@@ -59,14 +59,14 @@
                                 Code
                             </th>
                         </tr>
-                        @foreach($cart['sessions_grouped'] as $row)
+                        @foreach($cart['sessions_grouped'] as $sessionId => $row)
                             @foreach($transaction->makeBookingHashBySession($sessionId) as $hash)
                                 <?php
                                     $date = new \Carbon\Carbon($row['date_time']);
                                 ?>
                                 <tr  align="left">
                                     <td colspan="2">
-                                        {{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}
+                                        <p>{{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}</p>
                                     </td>
                                     <td  colspan="3">
                                         <p>{{ $date->toDayDateTimeString() }}</p>
