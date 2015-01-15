@@ -170,6 +170,7 @@ class SessionsController extends AjaxBaseController
         $tickets = isset($inputs['tickets']) ? $inputs['tickets'] : $inputs['members'];
         $price = $inputs['price'];
 
+
         if (Input::get('session_array', FALSE)) {
             $sessionArray = explode(',', $inputs['session_array']);
         } elseif (Input::get('date', FALSE)) {
@@ -180,8 +181,6 @@ class SessionsController extends AjaxBaseController
                         'No sessions specified')->with('fixed', TRUE)->render()
                 ]);
         }
-
-        //return $sessionArray;
 
         foreach ($sessionArray as $date) {
 

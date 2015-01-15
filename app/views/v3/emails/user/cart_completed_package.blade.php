@@ -19,8 +19,8 @@
                             <th colspan="2">
                                 Name
                             </th>
-                            <th colspan="3">
-                                Date
+                            <th colspan="2">
+                                Package type
                             </th>
                             <th>
                                 Price
@@ -35,7 +35,6 @@
                                     <td  colspan="3">
                                         <p>{{ $row['classes'] }} classes</p>
                                     </td>
-
                                     <td>
                                         <p>&pound;{{ $row['price'] }}</p>
                                     </td>
@@ -72,7 +71,6 @@
                             <td colspan="7" align="left">
                                 <strong>Total <span class="blue-text">&pound;{{$cart['total']['final_cost']}}</span></strong>
                             </td>
-
                         </tr>
                         @endif
                     </tbody>
