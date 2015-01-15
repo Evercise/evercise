@@ -726,27 +726,9 @@ Route::get('cleansubcategoriesup', function () {
 
 Route::get('test1', function(){
 
-/*    $evercisegroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
-        $query->where('price', '<', $packagePrice);
-    })->take(3)->lists('name');*/
+    $user = \User::find(572);
+    return \UserPackages::hasActivePackage($user);
 
-    $upperPrice = (6.45);
-    //return var_dump($upperPrice);
-    $searchController = App::make('SearchController');
-    $everciseGroups = $searchController->getClasses([
-        'sort' => 'price_desc',
-        'price' => ['under'=>$upperPrice, 'over'=>round(($upperPrice-10))],
-        'size' => '3'
-    ]);
-
-/*    foreach($everciseGroups->hits as $everciseGroup)
-    {
-        return var_dump($everciseGroup);
-    }*/
-
-
-
-    return var_dump($everciseGroups->hits);
 });
 Route::get('test2', function(){
 
