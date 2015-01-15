@@ -82,6 +82,14 @@ class Elastic
             $search = TRUE;
         }
 
+        if(!empty($params['price_under'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['default_price' => ['lte' => $params['price_under']]];
+        }
+        if(!empty($params['price_over'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['default_price' => ['gte' => $params['price_under']]];
+        }
+
+
         if (!isset($params['all'])) {
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => TRUE];
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
