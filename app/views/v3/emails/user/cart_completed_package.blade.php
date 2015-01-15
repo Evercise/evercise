@@ -28,28 +28,6 @@
                 Price
             </th>
         </tr>
-        @foreach($cart['sessions_grouped'] as $row)
-            <?php
-                $date = new \Carbon\Carbon($row['date_time']);
-            ?>
-            <tr  align="left">
-                <td colspan="2">
-                    {{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}
-                </td>
-                <td  colspan="2">
-                    <p>{{ $date->toDayDateTimeString() }}</p>
-                </td>
-                <td>
-                    <p>{{$row['duration']}} mins</p>
-                </td>
-                <td>
-                    <p>x {{$row['qty']}}</p>
-                </td>
-                <td>
-                    <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</p>
-                </td>
-            </tr>
-        @endforeach
         @if(isset($cart['packages']))
             @foreach($cart['packages'] as $row)
                 <tr  align="left">
@@ -103,5 +81,7 @@
         @endif
     </tbody>
 </table>
+
+    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Here are a few classes you could attend using your new package'])
 
 @stop

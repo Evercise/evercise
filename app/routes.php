@@ -717,3 +717,23 @@ Route::get('cleansubcategoriesup', function () {
     }
 
 });
+
+Route::get('test', function(){
+
+    $packagePrice = 10.99;
+/*    $evercisegroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+        $query->where('price', '<', $packagePrice);
+    })->take(3)->lists('name');*/
+
+    $searchController = App::make('SearchController');
+    $everciseGroups = $searchController->getClasses([
+        'sort' => 'price_asc',
+    ]);
+
+/*    foreach($everciseGroups->hits as $everciseGroup)
+    {
+        return var_dump($everciseGroup);
+    }*/
+
+    return var_dump($everciseGroups->hits);
+});
