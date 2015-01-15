@@ -145,7 +145,8 @@ class Mail
         if ($cart['packages'])
         {
             /** Pick 3 classes which are priced appropriately for the package purchased. NEEDS WORK!!! */
-            $packagePrice = $cart['packages'][0]['price'];
+            $packagePrice = round($cart['packages'][0]['price'], 2);
+            //Log::live()
            /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
                 $query->where('price', '<', $packagePrice);
             })->take(3)->get();*/
