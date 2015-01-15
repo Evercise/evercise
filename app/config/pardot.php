@@ -29,11 +29,11 @@ return [
 //            'topupcompleted' => 4170, //
 //            'thanksforreview' => 4172, //
 //            'thanksforinviting' => 4186, //
-//            'ppc' => 4174, //
+            'ppc' => 4174, //
 //            'mailtrainer' => 4176, //
             'invite' => 4178, //
 //            'generatestaticlandingemail' => 4180, //
-//            'classCreatedFirstTime' => 4182, //
+            'classCreatedFirstTime' => 4182, //
 //            'adminSendReminderForPayments' => 4184, //
         ]
     ],

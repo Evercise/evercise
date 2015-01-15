@@ -1,4 +1,4 @@
-<?php  namespace events;
+<?php namespace events;
 
 
 use App;
@@ -87,7 +87,7 @@ class Mail
                 'url'   => $this->url->to('/uk/london'),
                 'title' => 'refer someone Today and Receive £5'
             ],
-            'packages' => [
+            'packages'      => [
                 'image' => $this->url->to('assets/img/email/user_upsell_package.png'),
                 'url'   => $this->url->to('/packages'),
                 'title' => 'save money by purchasing a 5 or 10 class package'
@@ -142,34 +142,31 @@ class Mail
         $params['search'] = App::make('SearchController');
 
 
-        if ($cart['packages'])
-        {
+        if ($cart['packages']) {
             /** Pick 3 classes which are priced appropriately for the package purchased. NEEDS WORK!!! */
             $upperPrice = round($cart['packages'][0]['price'], 2) + 0.01;
             //Log::live()
-           /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
-                $query->where('price', '<', $packagePrice);
-            })->take(3)->get();*/
+            /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+                 $query->where('price', '<', $packagePrice);
+             })->take(3)->get();*/
 
             $searchController = App::make('SearchController');
             $everciseGroups = $searchController->getClasses([
-                'sort' => 'price_desc',
-                'price' => ['under'=>$upperPrice, 'over'=>round(($upperPrice-10))],
-                'size' => '3'
+                'sort'  => 'price_desc',
+                'price' => ['under' => $upperPrice, 'over' => round(($upperPrice - 10))],
+                'size'  => '3'
             ]);
 
             $params['everciseGroups'] = $everciseGroups->hits;
 
-            if ($cart['sessions'])
-            {
+            if ($cart['sessions']) {
                 $params['view'] = 'v3.emails.user.cart_completed_both';
-            }
-            else
-            {
+            } else {
                 $params['view'] = 'v3.emails.user.cart_completed_package';
             }
+        } else {
+            $params['view'] = 'v3.emails.user.cart_completed_class';
         }
-        else $params['view'] = 'v3.emails.user.cart_completed_class';
 
         $this->send($user->email, $params);
     }
@@ -188,7 +185,7 @@ class Mail
             'view'        => 'v3.emails.user.topup_completed',
             'user'        => $user,
             'transaction' => $transaction,
-            'balance'      => $balance,
+            'balance'     => $balance,
             'banner'      => NULL,
             'image'       => image('/assets/img/email/user_default.jpg', 'Topup Confirmation'),
             'link_url'    => $this->url->to('/uk/london')
@@ -211,7 +208,7 @@ class Mail
             'view'        => 'v3.emails.user.withdraw_completed',
             'user'        => $user,
             'transaction' => $transaction,
-            'balance'      => $balance,
+            'balance'     => $balance,
             'banner'      => NULL,
             'image'       => image('/assets/img/email/user_default.jpg', 'topup confirmation'),
             'link_url'    => $this->url->to('/uk/london')
@@ -473,15 +470,15 @@ class Mail
 
 
         $params = [
-            'subject'          => 'GET ACTIVE, GET SOCIAL, GET FIT',
-            'title'            => 'GET ACTIVE, GET SOCIAL, GET FIT!',
-            'view'             => 'v3.emails.user.landing_email',
-            'email'            => $email,
-            'categoryId'       => $categoryId,
-            'ppcCode'          => $ppcCode,
-            'image'            => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
-            'link_url'         => $this->url->to('/uk/'),
-            'banner'           => FALSE
+            'subject'    => 'GET ACTIVE, GET SOCIAL, GET FIT',
+            'title'      => 'GET ACTIVE, GET SOCIAL, GET FIT!',
+            'view'       => 'v3.emails.user.landing_email',
+            'email'      => $email,
+            'categoryId' => $categoryId,
+            'ppcCode'    => $ppcCode,
+            'image'      => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url'   => $this->url->to('/uk/'),
+            'banner'     => FALSE
         ];
 
         $this->send($email, $params);
@@ -644,7 +641,7 @@ class Mail
             'trainerEmail' => $trainerEmail,
             'classId'      => $classId,
             'sessionId'    => $sessionId,
-            'style'       => 'blue',
+            'style'        => 'blue',
             'image'        => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
             'link_url'     => $this->url->to('/download_user_list/' . $sessionId)
         ];
@@ -724,7 +721,8 @@ class Mail
             'evercisegroup' => $evercisegroup,
             'transaction'   => $transaction,
             'link_url'      => $this->url->to('/'),
-            'image'         => image('assets/img/email/user_booking_confirmation.jpg', 'someone has joined your classs'),
+            'image'         => image('assets/img/email/user_booking_confirmation.jpg',
+                'someone has joined your classs'),
         ];
 
         $this->send($trainer->email, $params);
@@ -793,10 +791,10 @@ class Mail
     public function generateStaticLandingEmail($ppcCode, $categoryId = 0)
     {
         $params = [
-            'subject'        => 'Static Landing Email',
-            'view'           => 'v3.emails.user.static_landing_email',
-            'ppcCode'        => $ppcCode,
-            'categoryId'     => $categoryId,
+            'subject'    => 'Static Landing Email',
+            'view'       => 'v3.emails.user.static_landing_email',
+            'ppcCode'    => $ppcCode,
+            'categoryId' => $categoryId,
         ];
 
         $this->send('test@test.com', $params);
@@ -838,14 +836,14 @@ class Mail
     public function notReturned($user, $everciseGroups)
     {
         $params = [
-            'subject'  => 'You have not used your £5 Evercise Balance',
-            'title'    => 'You have&apos;t used your £5 Evercise Balance',
-            'view'     => 'v3.emails.user.why_not_coming_back',
-            'user'     => $user,
+            'subject'        => 'You have not used your £5 Evercise Balance',
+            'title'          => 'You have&apos;t used your £5 Evercise Balance',
+            'view'           => 'v3.emails.user.why_not_coming_back',
+            'user'           => $user,
             'everciseGroups' => $everciseGroups,
-            'banner'   => FALSE,
-            'image'    => image('/assets/img/email/user_default.jpg', 'Why not returned'),
-            'link_url' => $this->url->to('/uk/london')
+            'banner'         => FALSE,
+            'image'          => image('/assets/img/email/user_default.jpg', 'Why not returned'),
+            'link_url'       => $this->url->to('/uk/london')
         ];
 
         $this->send($user->email, $params);
@@ -909,11 +907,11 @@ class Mail
 
         foreach ($emails as $email) {
             $params = [
-                'subject' => 'You have ' . $total . ' pending payments',
-                'view'    => 'v3.emails.admin.payments_reminder',
-                'total'   => $total,
-                'link_url'     => $this->url->route('admin.pending_withdrawal'),
-                'image'        => image('assets/img/email/admin.jpg', 'Evercise'),
+                'subject'  => 'You have ' . $total . ' pending payments',
+                'view'     => 'v3.emails.admin.payments_reminder',
+                'total'    => $total,
+                'link_url' => $this->url->route('admin.pending_withdrawal'),
+                'image'    => image('assets/img/email/admin.jpg', 'Evercise'),
             ];
 
             $this->send($email, $params);
@@ -960,7 +958,6 @@ class Mail
 
         $view = $this->view->make($this->data['view'], $this->data)->render();
 
-        $this->log->info($view);
 
         // Parse it all Inline
         $parse = new CssToInlineStyles($view, $this->data['css']);
@@ -980,26 +977,32 @@ class Mail
         $name = $this->formatName(get_called_class(), next($trace)['function']);
 
         // If params contain user or user_id, take user ID from there.  Otherwise query the email address to find user ID
-        if (isset($params['user']))
-            if ($params['user'] instanceof User || $params['user'] instanceof Sentry)
+        if (isset($params['user'])) {
+            if ($params['user'] instanceof User || $params['user'] instanceof Sentry) {
                 $user_id = $params['user']->id;
+            }
+        }
 
-        if (isset($params['user_id']))
+        if (isset($params['user_id'])) {
             $user_id = $params['user_id'];
+        }
 
-        if(! isset($user_id))
+        if (!isset($user_id)) {
             $user_id = \User::where('email', $email)->pluck('id');
+        }
 
-        if ($user_id)
+        if ($user_id) {
             EmailOut::addRecord($user_id, $name);
-        else
-            $this->log->info('CANNOT FIND USER BY EMAIL: '.$email.'. This is probably a referral to a not-yet-registered address. ');
+        } else {
+            $this->log->info('CANNOT FIND USER BY EMAIL: ' . $email . '. This is probably a referral to a not-yet-registered address. ');
+        }
 
 
         if ($this->config->get('pardot.active')) {
             $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
 
+        $sent = FALSE;
         if (!empty($campayn_id)) {
             $pardotEmail = new \PardotEmail([
                 'subject'   => $subject,
@@ -1011,13 +1014,15 @@ class Mail
 
             try {
                 $pardot->send($email, $campayn_id, $pardotEmail);
+                $sent = TRUE;
             } catch (Exception $e) {
                 $this->log->error('Pardot Email could not be sent ' . $e->getMessage());
                 /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
 
             }
+        }
 
-        } else {
+        if (!$sent) {
             try {
 
                 /** Remove Unsubscribe for now! */
@@ -1034,21 +1039,22 @@ class Mail
                             }
                         }
                     });
-
-                /** Output email to file so we can check it out */
-                if(!empty($_ENV['SAVE_EMAILS']) && $_ENV['SAVE_EMAILS']) {
-                    if(!is_dir(storage_path().'/emails')) {
-                        mkdir(storage_path().'/emails');
-                    }
-                    file_put_contents(storage_path().'/emails/' . $name . '.html', $content);
-                }
-
+                $this->log->info('Email sent with basic sending');
             } catch (Exception $e) {
                 $this->log->error('Email could not be sent ' . $e->getMessage());
 
                 /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
 
             }
+        }
+
+
+        /** Output email to file so we can check it out */
+        if (!empty($_ENV['SAVE_EMAILS']) && $_ENV['SAVE_EMAILS']) {
+            if (!is_dir(storage_path() . '/emails')) {
+                mkdir(storage_path() . '/emails');
+            }
+            file_put_contents(storage_path() . '/emails/' . $name . '.html', $content);
         }
 
     }
