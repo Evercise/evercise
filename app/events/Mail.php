@@ -1038,7 +1038,7 @@ class Mail
                 /** Output email to file so we can check it out */
                 if(!empty($_ENV['SAVE_EMAILS']) && $_ENV['SAVE_EMAILS']) {
                     if(!is_dir(storage_path().'/emails')) {
-                        mkdir(storage_path().'/emails'));
+                        mkdir(storage_path().'/emails');
                     }
                     file_put_contents(storage_path().'/emails/' . $name . '.html', $content);
                 }
