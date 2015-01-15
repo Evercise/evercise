@@ -117,8 +117,6 @@ class Pardot
     public function send($user_email, $campaign_id, PardotEmail $mail)
     {
 
-        throw new Exception('No Message Sent');
-
         $user = $this->getUser($user_email);
 
         $pardot_id = FALSE;
