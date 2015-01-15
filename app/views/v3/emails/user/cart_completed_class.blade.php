@@ -30,27 +30,29 @@
                             </th>
                         </tr>
                         @foreach($cart['sessions_grouped'] as $sessionId => $row)
-                            <?php
-                                $date = new \Carbon\Carbon($row['date_time']);
-                            ?>
-                            <tr  align="left">
-                                <td colspan="2">
-                                    <p>{{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}</p>
-                                </td>
-                                <td  colspan="3">
-                                    <p>{{ $date->toDayDateTimeString() }}</p>
-                                </td>
-                                <td>
-                                    <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</p>
-                                </td>
-                                <td>
-                                    <p>
-                                        @foreach($transaction->makeBookingHashBySession($sessionId) as $hash)
-                                            {{ $hash }}<br>
-                                        @endforeach
-                                    </p>
-                                </td>
-                            </tr>
+                            @foreach($transaction->makeBookingHashBySession($sessionId) as $hash)
+                                <?php
+                                    $date = new \Carbon\Carbon($row['date_time']);
+                                ?>
+                                <tr  align="left">
+                                    <td colspan="2">
+                                        <p>{{ Html::linkRoute('class.show', $row['name'], [Evercisegroup::getSlug( $row['evercisegroup_id'] ) ], ['class' => 'blue-text'] ) }}</p>
+                                    </td>
+                                    <td  colspan="3">
+                                        <p>{{ $date->toDayDateTimeString() }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound;'.$row['grouped_price'].'</strike> &pound;'.$row['grouped_price_discount'] : '&pound;'.$row['grouped_price']) }}</p>
+                                    </td>
+                                    <td>
+                                        <p>
+
+                                                {{ $hash }}<br>
+
+                                        </p>
+                                    </td>
+                                </tr>
+                            @endforeach
                         @endforeach
                         @if(isset($cart['packages']))
                             @foreach($cart['packages'] as $row)
