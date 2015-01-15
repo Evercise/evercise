@@ -434,7 +434,7 @@ class Elastic
 
         $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return $total_indexed . ' ' . $with_session;
+        return 'classes: '.$total_indexed . ' sessions: ' . $with_session;
 
 
     }
