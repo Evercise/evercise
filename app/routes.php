@@ -724,7 +724,7 @@ Route::get('cleansubcategoriesup', function () {
 
 });
 
-Route::get('test', function(){
+Route::get('test1', function(){
 
     $packagePrice = 10.99;
 /*    $evercisegroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
@@ -744,5 +744,19 @@ Route::get('test', function(){
         return var_dump($everciseGroup);
     }*/
 
+
+
     return var_dump($everciseGroups->hits);
+});
+Route::get('test2', function(){
+
+    $transaction = \Transactions::find(5318091);
+    $hashes = $transaction->makeBookingHashBySession('1479');
+
+    $output = '';
+    foreach($hashes as $hash)
+    {
+        $output .= $hash . ',';
+    }
+    return $output;
 });
