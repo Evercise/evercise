@@ -10,7 +10,7 @@
 <?php $bookingCodes = $transaction->makeBookingHashBySession($session->id) ?>
 @if(! empty($bookingCodes))
     <p>Below are the booking codes:</p>
-    @foreach( as $hash)
+    @foreach($bookingCodes as $hash)
         <p>{{ $hash }}</p>
     @endforeach
 @endif

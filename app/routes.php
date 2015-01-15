@@ -734,6 +734,9 @@ Route::get('test', function(){
     $searchController = App::make('SearchController');
     $everciseGroups = $searchController->getClasses([
         'sort' => 'price_asc',
+        'price_under' => $packagePrice,
+        'price_over' => $packagePrice-5,
+        'size' => '3'
     ]);
 
 /*    foreach($everciseGroups->hits as $everciseGroup)

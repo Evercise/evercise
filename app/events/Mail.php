@@ -153,9 +153,12 @@ class Mail
             $searchController = App::make('SearchController');
             $everciseGroups = $searchController->getClasses([
                 'sort' => 'price_asc',
+                'price_under' => $packagePrice,
+                'price_over' => $packagePrice-5,
+                'size' => '3'
             ]);
 
-            $params['everciseGroups'] = array_slice($everciseGroups->hits, 0, 3);
+            $params['everciseGroups'] = $everciseGroups->hits;
 
             if ($cart['sessions'])
             {

@@ -72,18 +72,18 @@
         @endif
         <tr>
             <td colspan="7" >
-                <strong>Sub-total <span class="blue-text">&pound;{{ $cart['total']['subtotal'] }}</span></strong>
+                <strong>Sub-total <span class="blue-text">&pound;{{ number_format($cart['total']['subtotal'], 2) }}</span></strong>
                 @if($cart['total']['package_deduct'] > 0)
-                    <strong>Package deduct: <span class="blue-text"> &pound;{{ $cart['total']['package_deduct']  }}</span></strong>
+                    <strong>Package deduct: <span class="blue-text"> &pound;{{ number_format($cart['total']['package_deduct'], 2)  }}</span></strong>
                     <br/>
                 @endif
                 @if($cart['total']['from_wallet'] > 0)
-                    <strong>From Wallet: <span class="blue-text"> &pound;{{ $cart['total']['from_wallet']  }}</span></strong>
+                    <strong>From Wallet: <span class="blue-text"> &pound;{{ number_format($cart['total']['from_wallet'], 2)  }}</span></strong>
                     <br/>
                 @endif
                 @if(!empty($cart['discount']['amount']) && $cart['discount']['amount'] > 0)
                     <strong>
-                        Voucher discount: <span class="blue-text">-  &pound;{{ $cart['discount']['amount'] }}</span>
+                        Voucher discount: <span class="blue-text">-  &pound;{{ number_format($cart['discount']['amount'], 2) }}</span>
                          @if($cart['discount']['type'] == 'percentage')
                              <span class="blue-text">{{ $cart['discount']['percentage']}}%</span>
                          @endif
@@ -94,7 +94,7 @@
         @if($cart['total']['final_cost'] > 0)
         <tr>
             <td colspan="7" align="right">
-                <strong>Total <span class="blue-text">&pound;{{$cart['total']['final_cost']}}</span></strong>
+                <strong>Total <span class="blue-text">&pound;{{number_format($cart['total']['final_cost'], 2)}}</span></strong>
             </td>
 
         </tr>
