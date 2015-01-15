@@ -60,10 +60,10 @@
 
                                     <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Dear lewis_mewis</p>
                                     <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
-                                    <strong style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;"><p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Transaction ID: 5318080</p></strong>
+                                    <strong style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;"><p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Transaction ID: 5318084</p></strong>
                                 </td>
-                            </tr></table><table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><th style="border-bottom: 1px solid #768690; color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">
-                                    <table class="table" width="100%" height="auto" align="left" cellspacing="" cellpadding="0" bgcolor="#FFFFFF" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr align="left"><th colspan="2" style="border-bottom: 1px solid #768690; color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">
+                            </tr></table><table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr><td>
+                                    <table class="table" width="100%" height="20" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" style="max-width: 640px; table-layout: fixed; width: 100%;"><tbody><tr align="left"><th colspan="2" style="border-bottom: 1px solid #768690; color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">
                                                 Name
                                             </th>
                                             <th colspan="3" style="border-bottom: 1px solid #768690; color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">
@@ -72,30 +72,30 @@
                                             <th style="border-bottom: 1px solid #768690; color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">
                                                 Price
                                             </th>
-                                            <th style="border-bottom: 1px solid #768690; color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">
-                                                Code
-                                            </th>
                                         </tr><tr align="left"><td colspan="2">
-                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;"><a href="http://evercise.dev/classes/reading-test" class="blue-text" style="color: #5ECDE8;">reading test</a></p>
+                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">WARM UP</p>
                                             </td>
                                             <td colspan="3">
-                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Sat, Jan 31, 2015 12:00 PM</p>
+                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">5 classes</p>
                                             </td>
+
                                             <td>
-                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">£10.00</p>
-                                            </td>
-                                            <td>
-                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">
-                                                    8smhoz<br></p>
+                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">£27.99</p>
                                             </td>
                                         </tr><tr><td colspan="7" align="left">
-                                                <br><br><strong style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">Sub-total <span class="blue-text" style="color: #5ECDE8;">£10.00</span></strong>
+                                                <br><br><strong style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">Sub-total <span class="blue-text" style="color: #5ECDE8;">£27.99</span></strong>
                                                 <br><br></td>
                                         </tr><tr><td colspan="7" align="left">
-                                                <strong style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">Total <span class="blue-text" style="color: #5ECDE8;">£10.00</span></strong>
+                                                <strong style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 18px; font-weight: 500; line-height: 26px; margin: 0;">Total <span class="blue-text" style="color: #5ECDE8;">£27.99</span></strong>
                                             </td>
-                                        </tr></tbody></table></th>
-                            </tr></tbody></table><!-- Footer --><table width="100%" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width: 640px; table-layout: fixed; width: 100%;"><tr><td class="sm-hidden" width="30" height="85"></td>
+
+                                        </tr></tbody></table></td>
+                            </tr></tbody></table><table width="100%" height="auto" align="center" cellspacing="0" cellpadding="20" bgcolor="#f2f2f2" style="max-width: 640px; table-layout: fixed; width: 100%;"><tr><td width="100%">
+                                    <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="10" bgcolor="#f2f2f2" style="max-width: 640px; table-layout: fixed; width: 100%;"><tr><td>
+                                                <p style="color: #768690; font-family: helvetica, arial, sans-serif; font-size: 14px; font-weight: normal; line-height: 26px;">Here are a few classes you could attend using your new package</p>
+                                            </td>
+                                        </tr></table><table width="100%" height="auto" align="center" cellspacing="0" cellpadding="10" bgcolor="#f2f2f2" style="max-width: 640px; table-layout: fixed; width: 100%;"><tr><td></td></tr></table></td>
+                            </tr></table><!-- Footer --><table width="100%" height="85" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width: 640px; table-layout: fixed; width: 100%;"><tr><td class="sm-hidden" width="30" height="85"></td>
 
                                 <td class="sm-hidden" height="50">
 

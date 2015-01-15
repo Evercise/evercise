@@ -46,36 +46,12 @@
                                     </td>
                                     <td>
                                         <p>
-
-                                                {{ $hash }}<br>
-
+                                            {{ $hash }}
                                         </p>
                                     </td>
                                 </tr>
                             @endforeach
                         @endforeach
-                        @if(isset($cart['packages']))
-                            @foreach($cart['packages'] as $row)
-                                <tr  align="left">
-                                    <td colspan="2">
-                                        <p>{{ $row['name'] }}</p>
-                                    </td>
-                                    <td  colspan="2">
-                                        <p>{{ $row['classes'] }} classes</p>
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                    <td>
-                                        <p>1</p>
-                                    </td>
-                                    <td>
-                                        <p>&pound;{{ $row['price'] }}</p>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endif
                         <tr>
                             <td colspan="7" align="left">
                                 <br>
