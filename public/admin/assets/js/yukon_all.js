@@ -11,6 +11,7 @@
  *
  * */
 
+var currentRequest;
 
     $(function () {
 
@@ -22,6 +23,7 @@
 
         /* side menu */
         yukon_side_menu.init();
+        evercise.init();
 
         /* style switcher */
         yukon_style_switcher.init();
@@ -1722,3 +1724,31 @@
 
 		}
 	};
+
+
+evercise = {
+    init: function() {
+
+        $('.run_indexer').on('click',function() {
+
+            $('.index_message').html('<img src="/assets/img/spinning-circles.svg" style="height:30px;float:right;margin-right:80px"/>');
+
+            currentRequest = $.ajax({
+                type: "POST",
+                url: BASE_URL + "ajax/admin/runindexer",
+                cache: false,
+                beforeSend: function (html) {
+                    if (currentRequest != null) {
+                            currentRequest.abort();
+                            $('.index_message').html(' ');
+                    }
+                },
+                success: function (data) {
+
+                   $('.index_message').html(data);
+                }
+            });
+        });
+    }
+};
+
