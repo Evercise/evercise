@@ -373,7 +373,7 @@ class PaymentController extends BaseController
         $item = new TransactionItems([
             'user_id'            => $this->user->id,
             'type'               => 'topup',
-            'evercisesession_id' => 0,
+            'sessionmember_id' => 0,
             'amount'             => round(abs($amount), 2),
             'final_price'        => round(abs($amount), 2),
             'name'               => 'Wallet TopUp',
@@ -558,7 +558,7 @@ class PaymentController extends BaseController
             $item = new TransactionItems([
                 'user_id'            => $this->user->id,
                 'type'               => 'session',
-                'evercisesession_id' => $created->id,
+                'sessionmember_id' => $created->id,
                 'amount'             => round(abs($session['price']), 2),
                 'final_price'        => round($free ? 0 : abs($session['price']), 2),
                 'name'               => $evercisesession->evercisegroup()->first()->name,

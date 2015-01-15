@@ -74,12 +74,12 @@ class Mail
             'upsell_signup' => [
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
                 'url'   => $this->url->to('/'),
-                'title' => 'SignUp Today and Receive £5'
+                'title' => 'Sign Up Today and Receive £5'
             ],
             'welcome'       => [
                 'image' => $this->url->to('assets/img/email/user_upsell_signup_today.png'),
                 'url'   => $this->url->to('/'),
-                'title' => 'SignUp Today and Receive £5'
+                'title' => 'Sign Up Today and Receive £5'
             ],
             'refer_someone' => [
                 'image' => $this->url->to('assets/img/email/referal_banner_blue.png'),
@@ -129,7 +129,6 @@ class Mail
     {
         $params = [
             'subject'     => 'Confirmation of booking',
-            'view'        => 'v3.emails.user.cart_completed',
             'user'        => $user,
             'cart'        => $cart,
             'transaction' => $transaction,
@@ -137,6 +136,10 @@ class Mail
             'image'       => image('/assets/img/email/user_booking_confirmation.jpg', 'booking confirmation'),
             'link_url'    => $this->url->to('/uk/london')
         ];
+
+        if ($cart['sessions'] && $cart['packages']) $params['view'] = 'v3.emails.user.cart_completed_both';
+        else if ($cart['sessions']) $params['view'] = 'v3.emails.user.cart_completed_class';
+        else if ($cart['packages']) $params['view'] = 'v3.emails.user.cart_completed_package';
 
         $this->send($user->email, $params);
     }
@@ -689,7 +692,7 @@ class Mail
             'trainer'       => $trainer,
             'session'       => $session,
             'evercisegroup' => $evercisegroup,
-            'transaction' => $transaction,
+            'transaction'   => $transaction,
             'link_url'      => $this->url->to('/'),
             'image'         => image('assets/img/email/user_booking_confirmation.jpg', 'someone has joined your classs'),
         ];
@@ -1001,6 +1004,10 @@ class Mail
                             }
                         }
                     });
+
+                /** Output email to file so we can check it out */
+                file_put_contents('../app/storage/emails/'.$name.'.html', $content);
+
             } catch (Exception $e) {
                 $this->log->error('Email could not be sent ' . $e->getMessage());
 

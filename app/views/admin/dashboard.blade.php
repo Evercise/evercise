@@ -212,6 +212,8 @@
 
                 <script type="text/javascript">
 
+                    /*** Shout bad words
+
                     (function($){
 
                         $.extend({
@@ -221,6 +223,7 @@
                         });
 
                     })(jQuery);
+                    */
 
 
 
@@ -279,6 +282,30 @@
             </div>
         </div>
 
+        <div class="col-lg-3 col-sm-6">
+            <div class="info_box_var_1 box_bg_b">
+                <div class="info_box_body">
+                    <span class="info_box_icon el-icon-user"></span>
+                    <span class="countUpMe" data-endVal="{{ $new_groups_today }}">{{ $new_groups_today }}</span>
+                </div>
+                <div class="info_box_footer">
+                    Groups, and {{ $new_sessions_today }} Sessions added today
+                 </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="info_box_var_1 box_bg_b">
+                <div class="info_box_body">
+                    <span class="info_box_icon el-icon-user"></span>
+                    <span class="countUpMe" data-endVal="{{ $upcoming_sessions_7 }}">{{ $upcoming_sessions_7 }}</span>
+                </div>
+                <div class="info_box_footer">
+                    Sessions in the next 7 days, and {{ $upcoming_sessions_30 }} in the next 30 days
+                 </div>
+            </div>
+        </div>
+
 
         <div class="col-lg-3 col-sm-6">
             <div class="info_box_var_1 box_bg_c">
@@ -292,21 +319,49 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-3 col-sm-6">
             <div class="info_box_var_1 box_bg_d">
                 <div class="info_box_body">
                     <span class="info_box_icon el-icon-slideshare"></span>
-                    <span class="countUpMe" data-endVal="{{ $total_referrals }}">{{ $total_referrals }}</span>
+                    <span class="countUpMe" data-endVal="{{ $complete_referrals }}">{{ $complete_referrals }}</span>
                 </div>
                 <div class="info_box_footer">
-                    Total Referrals
+                    Completed Referrals, plus {{ $pending_referrals }} Pending
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="info_box_var_1 box_bg_d">
+                <div class="info_box_body">
+                    <span class="info_box_icon el-icon-slideshare"></span>
+                    <span class="countUpMe" data-endVal="{{ $session_sold_today }}">{{ $session_sold_today }}</span>
+                </div>
+                <div class="info_box_footer">
+                    Sessions sold today
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="info_box_var_1 box_bg_d">
+                <div class="info_box_body">
+                    <span class="info_box_icon el-icon-slideshare"></span>
+                    <span class="countUpMe" data-endVal="{{ $transactions_today }}">{{ $transactions_today }}</span>
+                </div>
+                <div class="info_box_footer">
+                    Transactions today
                 </div>
             </div>
         </div>
     </div>
-    
 
-
+    <div class="row">
+        <div class="col-md-8">
+        <a href="https://docs.google.com/a/evercise.com/spreadsheets/d/1psCS48w4SdN-QDedDzVX7Ol_PvjJIgBnVk0LPxwWcrM/edit?usp=sharing">View more in Google Doc</a>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-8">
