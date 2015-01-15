@@ -5,7 +5,7 @@
 @section('body')
 
 <p>Dear {{ $user->display_name }}</p>
-<p>Thank for your Evercise booking! Please take note of your unique booking code (below). Your trainer will require this and another form of ID.</p>
+<p>This is an email to confirm that your package has been purchased successfully.</p>
 <strong><p>Transaction ID: {{$transaction->id}}</p></strong>
 @stop
 @section('extra')
@@ -80,6 +80,6 @@
     </tbody>
 </table>
 
-    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Here are a few classes you could attend using your new package'])
+    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Why not take a moment to book your next class or check out our latest recommendations?'])
 
 @stop
