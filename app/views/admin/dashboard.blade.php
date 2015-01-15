@@ -232,7 +232,7 @@
                         console.log(data);
 
                         if(data.level == 'error') {
-                            $.playSound('http://www.soundboard.com/mediafiles/nd/NDY5NzQxMTQ2OTc0Mw_HqhAfKAPHhs');
+                            $.playSound('/admin/assets/lib/jBox-0.3.0/Source/audio/bling2');
                         }
 
 
