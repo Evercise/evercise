@@ -34,7 +34,13 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
-
+Route::get('email',
+    [
+        function(){
+            return View::make('hello');
+        }
+    ]
+);
 
 
 
