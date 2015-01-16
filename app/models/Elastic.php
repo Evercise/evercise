@@ -82,6 +82,18 @@ class Elastic
             $search = TRUE;
         }
 
+        if(!empty($params['price'])) {
+
+            $price = [];
+            if(!empty($params['price']['under'])) {
+                $price['lte'] = $params['price']['under'];
+            }
+            if(!empty($params['price']['over'])) {
+                $price['gte'] = $params['price']['over'];
+            }
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['default_price' => $price];
+        }
+
         if (!isset($params['all'])) {
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => TRUE];
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
@@ -434,7 +446,7 @@ class Elastic
 
         $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return $total_indexed . ' ' . $with_session;
+        return 'classes: '.$total_indexed . ' sessions: ' . $with_session;
 
 
     }

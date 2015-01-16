@@ -114,16 +114,43 @@ AddSessionsToCalendar.prototype = {
     },
     submitForm: function(e){
         e.preventDefault();
+        $('#duplicate').remove()
         var self =this;
-
+        var checkDates =  JSON.parse(self.form.find('input[name="checkDates"]').val());
+        var dontSubmit;
         $.each(this.calendar.datepicker('getDates') , function(i,v){
             var day = v.getDate();
             var month = (v.getMonth() + 1);
             var year = v.getFullYear();
+
             self.submitDates.push(year + '-'+ month + '-' + day);
+            if( self.checkDates(checkDates, year + '-'+ month + '-' + day + ' ' + $('select[name="time"]').val()) ){
+                dontSubmit = true;
+                return false;
+            }
+
         })
-        $('input[name="session_array"]').val( this.submitDates );
-        this.ajaxUpload();
+        if(dontSubmit){
+            self.form.find('input[type="submit"]').parent().before('<div class="alert alert-danger text-center"  id="duplicate">Duplicate Time and date found, please check</div>')
+        }
+        else{
+            $('input[name="session_array"]').val( this.submitDates );
+            this.ajaxUpload();
+        }
+
+    },
+    checkDates: function(checkDates, selectedDate){
+        var duplicate;
+        $.each(checkDates, function(i, val){
+            var ch = new Date(val.date);
+            var sd = new Date(selectedDate);
+            if(ch.valueOf() == sd.valueOf()){
+                duplicate = true;
+                return false;
+            }
+        })
+
+        return duplicate;
     },
     ajaxUpload: function () {
         var self = this;

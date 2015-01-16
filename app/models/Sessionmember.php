@@ -37,4 +37,9 @@ class Sessionmember extends \Eloquent
         return count(DB::table('sessionmembers')->where('created_at', '>=', Carbon::now()->setTime(0, 0, 0))->get());
     }
 
+    public function session()
+    {
+        return $this->belongsTo('Evercisesession', 'evercisesession_id');
+    }
+
 }

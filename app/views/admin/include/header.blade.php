@@ -45,9 +45,9 @@
                             <li><a href="{{ URL::route('auth.logout') }}">Log Out</a></li>
                         </ul>
                     </div>
-                    <div class="search_section hidden-sm hidden-xs hide">
-                        <input type="text" class="form-control input-sm">
-                        <button class="btn btn-link btn-sm" type="button"><span class="icon_search"></span></button>
+                    <div class="search_section" style="width:440px">
+                        <span class="cp btn btn-sm btn-primary run_indexer">Index All</span>
+                        <span class="index_message" style="color:#fff"> </span>
                     </div>
                 </div>
             </header>

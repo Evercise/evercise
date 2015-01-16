@@ -34,7 +34,13 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
-
+Route::get('email',
+    [
+        function(){
+            return View::make('hello');
+        }
+    ]
+);
 
 
 
@@ -533,6 +539,8 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.add_subcategory', 'uses' => 'AdminAjaxController@addSubcategory']);
     Route::post('/edit_group_subcats',
         ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminAjaxController@editGroupSubcats']);
+    Route::post('/subcategory/delete',
+        ['as' => 'ajax.admin.subcategory.delete', 'uses' => 'AdminAjaxController@deleteSubcategory']);
 
     Route::post('/unapprove_trainer',
         ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
@@ -573,6 +581,11 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
     Route::put('modal/categories',
         ['as' => 'ajax.admin.modal.categories.save', 'uses' => 'AdminAjaxController@saveClassCategories']);
+
+
+
+    Route::post('runindexer',
+        ['as' => 'ajax.admin.indexall', 'uses' => 'AdminAjaxController@runIndexer']);
 
 
 });
@@ -640,6 +653,9 @@ Route::group(
         Route::get('/transactions',
             ['as' => 'admin.transactions', 'uses' => 'MainController@transactions']);
 
+        Route::get('/packages',
+            ['as' => 'admin.packages', 'uses' => 'MainController@userPackages']);
+
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
 
@@ -706,4 +722,23 @@ Route::get('cleansubcategoriesup', function () {
         $sc->save();
     }
 
+});
+
+Route::get('test1', function(){
+
+    $user = \User::find(572);
+    return \UserPackages::hasActivePackage($user);
+
+});
+Route::get('test2', function(){
+
+    $transaction = \Transactions::find(5318091);
+    $hashes = $transaction->makeBookingHashBySession('1479');
+
+    $output = '';
+    foreach($hashes as $hash)
+    {
+        $output .= $hash . ',';
+    }
+    return $output;
 });

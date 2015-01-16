@@ -3,7 +3,7 @@ h3 {font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-s
 p { font-family: helvetica, arial, sans-serif; font-size: 14px;  line-height: 26px; font-weight: normal; color:#768690; }
 b { font-weight: bold; color:#768690; }
 table{ max-width: 640px; width: 100%; table-layout: fixed}
-th{ font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
+th{border-bottom: 1px solid #768690;  font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
 strong{ font-family: helvetica, arial, sans-serif;  font-size: 18px;  line-height: 26px; font-weight: 500; color:#768690; margin: 0}
 .container{ }
 .pink-text{ color: #ff1b7e}

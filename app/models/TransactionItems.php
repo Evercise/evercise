@@ -4,7 +4,7 @@ class TransactionItems extends Eloquent
 {
 
     protected $table = 'transaction_items';
-    protected $fillable = ['id', 'user_id', 'transaction_id', 'type', 'evercisesession_id', 'package_id', 'amount', 'name', 'final_price'];
+    protected $fillable = ['id', 'user_id', 'transaction_id', 'type', 'sessionmember_id', 'package_id', 'amount', 'name', 'final_price'];
 
 
     /**
@@ -15,9 +15,9 @@ class TransactionItems extends Eloquent
         return $this->belongsTo('Transactions', 'transaction_id');
     }
 
-    public function session()
+    public function sessionmember()
     {
-        return $this->belongsTo('Evercisesession', 'evercisesession_id');
+        return $this->belongsTo('Sessionmember', 'sessionmember_id');
     }
 
     public function package()

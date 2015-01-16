@@ -63,7 +63,7 @@ class PaymentController extends BaseController
             'payment_type' => 'stripe',
             'coupon'       => $coupon,
             'transaction'  => $transaction->id,
-            'track_cart'  => true,
+            'track_cart'   => TRUE,
             'user'         => $this->user,
             'balance'      => ($wallet ? $wallet->balance : 0),
         ];
@@ -148,29 +148,44 @@ class PaymentController extends BaseController
 
             return Redirect::route('payment.error');
         }
-        //return var_dump($response);
+
 
         if ($response->isSuccessful()) {
             $data = $response->getData(); // this is the raw response object
 
-            if ($cart['total']['from_wallet'] > 0) {
-                $wallet = $this->user->getWallet();
-                $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', 'part_payment');
-            }
-
             $coupon = Coupons::processCoupon($coupon, $this->user);
-            $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
-            $transaction = $this->paid($data['TOKEN'], $transactionId, 'paypal', $cart, $coupon, $data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID']);
+            $trans = Transactions::where('transaction', $data['PAYMENTINFO_0_TRANSACTIONID'])->first();
+            if (!empty($trans->id)) {
+                $res = [
+                    'cart'         => $cart,
+                    'payment_type' => 'paypal',
+                    'coupon'       => $coupon,
+                    'transaction'  => $trans,
+                    'track_cart'   => TRUE,
+                    'user'         => $this->user,
+                    'balance'      => $this->user->getWallet()->balance,
+                ];
+            } else {
 
-            $res = [
-                'cart'         => $cart,
-                'payment_type' => 'paypal',
-                'coupon'       => $coupon,
-                'transaction'  => $transaction->id,
-                'track_cart'  => true,
-                'user'         => $this->user,
-                'balance'      => $this->user->getWallet()->balance,
-            ];
+                if ($cart['total']['from_wallet'] > 0) {
+                    $wallet = $this->user->getWallet();
+                    $wallet->withdraw($cart['total']['from_wallet'], 'Part payment for classes', 'part_payment');
+                }
+
+                $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
+                $transaction = $this->paid($data['TOKEN'], $transactionId, 'paypal', $cart, $coupon,
+                    $data['PAYMENTINFO_0_SECUREMERCHANTACCOUNTID']);
+
+                $res = [
+                    'cart'         => $cart,
+                    'payment_type' => 'paypal',
+                    'coupon'       => $coupon,
+                    'transaction'  => $transaction->id,
+                    'track_cart'   => TRUE,
+                    'user'         => $this->user,
+                    'balance'      => $this->user->getWallet()->balance,
+                ];
+            }
 
             return Redirect::route('checkout.confirmation')->with('res', $res);
 
@@ -192,14 +207,14 @@ class PaymentController extends BaseController
         $wallet->withdraw($cart['total']['from_wallet'], 'Full payment for classes', 'full_payment');
 
         $coupon = Coupons::processCoupon($coupon, $this->user);
-        $transaction = $this->paid($token, $transactionId, 'stripe', $cart, $coupon);
+        $transaction = $this->paid($token, $transactionId, 'wallet', $cart, $coupon);
 
         $res = [
             'cart'         => $cart,
             'payment_type' => 'wallet',
             'coupon'       => $coupon,
             'transaction'  => $transaction->id,
-            'track_cart'  => true,
+            'track_cart'   => TRUE,
             'user'         => $this->user,
             'balance'      => $wallet->balance,
         ];
@@ -303,7 +318,8 @@ class PaymentController extends BaseController
             $transactionId = $data['PAYMENTINFO_0_TRANSACTIONID'];
 
 
-            $newBalance = $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'], $transactionId,
+            $newBalance = $this->user->wallet->deposit($amount, 'Top up with Paypal', 'deposit', 0, $data['TOKEN'],
+                $transactionId,
                 'paypal', 0);
 
 
@@ -357,13 +373,14 @@ class PaymentController extends BaseController
         $item = new TransactionItems([
             'user_id'            => $this->user->id,
             'type'               => 'topup',
-            'evercisesession_id' => 0,
+            'sessionmember_id' => 0,
             'amount'             => round(abs($amount), 2),
-            'final_price'       => round(abs($amount), 2),
+            'final_price'        => round(abs($amount), 2),
             'name'               => 'Wallet TopUp',
         ]);
 
         $transaction->items()->save($item);
+
         return $transaction;
     }
 
@@ -409,7 +426,8 @@ class PaymentController extends BaseController
         }
 
         $transactionId = $charge['id'];
-        $newBalance = $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId, 'stripe',
+        $newBalance = $this->user->wallet->deposit($amount, 'top up with Stripe', 'deposit', 0, $token, $transactionId,
+            'stripe',
             0);
 
 
@@ -474,12 +492,12 @@ class PaymentController extends BaseController
 
 
             $item = new TransactionItems([
-                'user_id'      => $this->user->id,
-                'type'         => 'package',
-                'package_id'   => $p->id,
-                'amount'       => round($p->package()->first()->price, 2),
+                'user_id'     => $this->user->id,
+                'type'        => 'package',
+                'package_id'  => $p->id,
+                'amount'      => round($p->package()->first()->price, 2),
                 'final_price' => round($p->package()->first()->price, 2),
-                'name'         => $p->package()->first()->name,
+                'name'        => $p->package()->first()->name,
             ]);
 
             $transaction->items()->save($item);
@@ -540,9 +558,9 @@ class PaymentController extends BaseController
             $item = new TransactionItems([
                 'user_id'            => $this->user->id,
                 'type'               => 'session',
-                'evercisesession_id' => $created->id,
-                'amount'             => round(abs( $session['price']), 2),
-                'final_price'       => round($free ? 0 : abs( $session['price']), 2),
+                'sessionmember_id' => $created->id,
+                'amount'             => round(abs($session['price']), 2),
+                'final_price'        => round($free ? 0 : abs($session['price']), 2),
                 'name'               => $evercisesession->evercisegroup()->first()->name,
             ]);
 

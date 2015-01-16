@@ -27,16 +27,36 @@ class MainController extends \BaseController
         /** Users */
         $this->data['total_users'] = User::all()->count();
 
+        $today = new DateTime();
+        $today->setTime(0,0,0);
+        $this->data['users_today'] = User::where('created_at', '>', $today)->count();
+        $this->data['trainers_today'] = Trainer::where('created_at', '>', $today)->count();
+
         $trainer = Sentry::findGroupByName('Trainer');
         $this->data['total_trainers'] = Sentry::findAllUsersInGroup($trainer)->count();
+
+        $this->data['new_sessions_today'] = Evercisesession::where('created_at', '>', $today)->count();
+        $this->data['new_groups_today'] = Evercisegroup::where('created_at', '>', $today)->count();
+
+        $sevenDaysTime = new DateTime();
+        $sevenDaysTime->add(new DateInterval('P7D'));
+        $this->data['upcoming_sessions_7'] = Evercisesession::where('date_time', '>', (new DateTime()))->where('date_time', '<', $sevenDaysTime)->count();
+
+        $thirtyDaysTime = new DateTime();
+        $thirtyDaysTime->add(new DateInterval('P30D'));
+        $this->data['upcoming_sessions_30'] = Evercisesession::where('date_time', '>', (new DateTime()))->where('date_time', '<', $thirtyDaysTime)->count();
 
 
         /** Sales */
         $this->data['total_sales'] = Sessionpayment::where('created_at', '>=',
-            Carbon::now()->subDays(300))->where('processed', 1)->sum('total');
+            Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total');
         $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=',
-            Carbon::now()->subDays(300))->where('processed', 1)->sum('total_after_fees');
+            Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total_after_fees');
         $this->data['total_commission'] = ($this->data['total_sales'] - $this->data['total_after_fees']);
+
+        $this->data['session_sold_today'] = Sessionmember::todaysSales();
+
+        $this->data['transactions_today'] = DB::table('transactions')->where('created_at', '>=', Carbon::now()->setTime(0, 0, 0))->count();
 
 
         $this->data['total_year'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subYear())
@@ -99,7 +119,8 @@ class MainController extends \BaseController
             $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
         }
 
-        $this->data['total_referrals'] = Referral::all()->count();
+        $this->data['complete_referrals'] = Referral::where('referee_id', '>', 0)->count();
+        $this->data['pending_referrals'] = Referral::where('referee_id', '=', 0)->count();
 
         return View::make('admin.dashboard', $this->data)->render();
     }
@@ -528,11 +549,36 @@ class MainController extends \BaseController
                     'token' => $tr->token,
                     'transaction' => $tr->transaction,
                     'processed' => $tr->processed,
+                    'date_time' => $tr->created_at,
                 ];
         }
 
         return View::make('admin.transactions')
             ->with('transactions', $trans);
+    }
+
+    public function userPackages()
+    {
+        $userPackages = UserPackages::with('user')
+            ->with('classes')
+            ->get();
+
+        $packages = [];
+        foreach ($userPackages as $up) {
+            $numClassesUsed = count($up->classes);
+            $packages[] = [
+                'user_id' => $up->user_id,
+                'package_id' => $up->package_id,
+                'package_name' => $up->package->name,
+                'active' => ($numClassesUsed < $up->package->classes ? '1' : '0'),
+                'used' => $numClassesUsed,
+                'total' => $up->package->classes,
+            ];
+        }
+
+
+        return View::make('admin.packages')
+            ->with('userPackages', $packages);
     }
 
 

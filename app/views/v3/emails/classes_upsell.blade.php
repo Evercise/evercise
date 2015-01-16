@@ -5,7 +5,11 @@
             <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="10" bgcolor="#f2f2f2">
                 <tr>
                     <td>
-                        <p>Looking for something in your area? We&apos;ve picked out a few local classes you might enjoy.</p>
+                        @if(isset($upsellText))
+                            <p>{{$upsellText}}</p>
+                        @else
+                            <p>Looking for something in your area? We&apos;ve picked out a few local classes you might enjoy.</p>
+                        @endif
                     </td>
                 </tr>
             </table>
@@ -19,7 +23,7 @@
                         <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="10" bgcolor="#ffffff">
                             <tr >
                                 <td width="25%">
-                                    {{image($everciseGroup->user->directory.'/search_/'.$everciseGroup->image) }}
+                                    {{image($everciseGroup->user->directory.'/search_'.$everciseGroup->image) }}
                                 </td>
                                 <td width="50%" valign="top">
                                     <table width="100%" height="100%" align="center" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
@@ -30,8 +34,8 @@
                                         </tr>
                                         <tr height="30%">
                                             <td width="100%" valign="bottom">
-                                                {{ image('assets/img/email/stars-'.$everciseGroup->getStars().'.png', 'class rating', ['class' => 'img-original']) }}
-                                                <!--{{ image('assets/img/email/stars-[ class ratiing ].png', 'class rating', ['class' => 'img-original']) }}-->
+
+                                                {{-- image('assets/img/email/stars-'.$rating.'.png', 'class rating', ['class' => 'img-original']) --}}
                                             </td>
                                         </tr>
                                     </table>

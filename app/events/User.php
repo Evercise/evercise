@@ -135,8 +135,6 @@ class User
      */
     public function facebookRegistered($user)
     {
-
-
         $this->log->info('User ' . $user->id . ' has registered with Facebook');
         $this->track->userFacebookRegistered($user);
     }
@@ -150,14 +148,9 @@ class User
      */
     public function cartCompleted($user, $cart, $transaction)
     {
-
-
         $this->log->info('User ' . $user->id . ' cart completed');
-
         $this->mail->userCartCompleted($user, $cart, $transaction);
-
         $this->activity->userCartCompleted($user, $cart, $transaction);
-
     }
 
     /**
