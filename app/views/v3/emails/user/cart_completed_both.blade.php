@@ -14,6 +14,9 @@
         <tr>
             <td>
             @if(isset($cart['packages']))
+                <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF">
+                    <tr><td>Below is a list of the packages you have purchased</td></tr>
+                </table>
                 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                     <tbody>
                         <tr align="left">
@@ -42,7 +45,11 @@
                         @endforeach
                     </tbody>
                 </table>
+
             @endif
+                <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF">
+                    <tr><td>Below is a list of the Classes you have purchased</td></tr>
+                </table>
                 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                     <tbody>
                         <tr align="left">
