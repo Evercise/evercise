@@ -146,12 +146,7 @@ class Pardot
 
             $send = $this->connector->post('email', 'send', $params);
 
-
             if (!empty($send['id'])) {
-
-                Log::info('PARDOT_USER: '.$pardot_id);
-                Log::info('PARDOT_SEND: '.$send['id']);
-                Log::info('PARDOT_SEND: '.$send);
                 Log::info('Pardot Campaign  ' . $campaign_id . ' : ' . $send['id'] . ' Sent to user ' . $user_email);
                 return TRUE;
             }
