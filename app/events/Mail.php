@@ -889,6 +889,17 @@ class Mail
         // Send the rate class email, for users that have already have an active package
         // (the standard email recommends buying a package)
 
+        $params = [
+            'subject'  => 'How was the class?',
+            'title'    => 'How was the class?',
+            'view'     => 'v3.emails.user.rate_class',
+            'user'     => $user,
+            'image'    => image('/assets/img/email/user_default.jpg', 'rate class'),
+            'link_url' => $this->url->to('/'), // url needs adding
+            'style'    => 'pink',
+        ];
+
+        $this->send($user->email, $params);
     }
 
 

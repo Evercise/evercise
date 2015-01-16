@@ -82,7 +82,7 @@ class SendEmails extends Command {
 		$emailsSent = 0;
 		foreach($users as $user) {
 			if(! count($user->emailOut)) {
-				if (! \UserPackages::hasActivePackage($user)) {
+				if (! \UserPackages::hasActivePackage($user)) {  /** hasActivePackage FUNCTION IS DODGY - NEEDS FIXING */
 					$emailsSent++;
 					$this->info('user: ' . $user->id);
 					event('user.class.rate', [$user]);
