@@ -140,7 +140,7 @@ AddSessionsToCalendar.prototype = {
 
     },
     checkDates: function(checkDates, selectedDate){
-        var duplicates;
+        var duplicate;
         $.each(checkDates, function(i, val){
             var ch = new Date(val.date);
             var sd = new Date(selectedDate);
