@@ -15,7 +15,7 @@
             <td>
             @if(isset($cart['packages']))
                 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF">
-                    <tr><td>Below is a list of the packages you have purchased</td></tr>
+                    <tr><td><p>Below is a list of the packages you have purchased</p></td></tr>
                 </table>
                 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                     <tbody>
@@ -48,7 +48,7 @@
 
             @endif
                 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="30" bgcolor="#FFFFFF">
-                    <tr><td>Below is a list of the Classes you have purchased</td></tr>
+                    <tr><td><p>Below is a list of the Classes you have purchased</p></td></tr>
                 </table>
                 <table class="table" width="100%" height="auto" align="left" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                     <tbody>
@@ -124,6 +124,6 @@
     </tbody>
 </table>
 
-    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Why not take a moment to book your next class or check out our latest recommendations?'])
+    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Why not take a moment to check out our latest recommendations?'])
 
 @stop

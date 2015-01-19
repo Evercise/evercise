@@ -742,3 +742,21 @@ Route::get('test2', function(){
     }
     return $output;
 });
+Route::get('test3', function(){
+    $cart = EverciseCart::getCart();
+
+    $upperPrice = round($cart['packages'][0]['max_class_price'], 2) + 0.01;
+    //Log::live()
+    /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+         $query->where('price', '<', $packagePrice);
+     })->take(3)->get();*/
+
+    $searchController = App::make('SearchController');
+    $everciseGroups = $searchController->getClasses([
+        'sort'  => 'price_desc',
+        'price' => ['under' => round($upperPrice, 2), 'over' => round(($upperPrice - 10))],
+        'size'  => '3'
+    ]);
+
+    return var_dump($everciseGroups);
+});

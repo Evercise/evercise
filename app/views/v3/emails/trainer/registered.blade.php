@@ -11,6 +11,6 @@
 </p>
 <p>Thank you for your patience.</p>
 
-{{ Html::decode(Html::linkRoute('evercisegroups.create', image('/assets/img/email/btns/btn_get_started.png', 'Create your first class'), [], ['class' => 'btn btn-blue'])) }}
+{{ Html::decode(Html::linkRoute('evercisegroups.create', image('/assets/img/email/btns/btn_get_started_nobg.png', 'Create your first class'), [], ['class' => 'btn btn-blue'])) }}
 
 @stop

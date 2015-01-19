@@ -12,6 +12,6 @@
 
 
 
-{{ Html::decode(Html::linkRoute('trainer', image('/assets/img/email/btns/btn_get_started.png', 'Manage your class'), [], ['class' => 'btn btn-blue'])) }}
+{{ Html::decode(Html::linkRoute('trainer', image('/assets/img/email/btns/btn_manage_blue.png', 'Manage your class'), [], ['class' => 'btn btn-blue'])) }}
 
 @stop

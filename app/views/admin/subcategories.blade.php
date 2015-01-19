@@ -62,12 +62,12 @@
         <thead>
             <tr class="table-header">
                 <th>Subcategory</th>
+                <th>Options</th>
+                <th>Associations</th>
                 <th>Category 1</th>
                 <th>Category 2</th>
                 <th>Category 3</th>
                 <th>Associated Words</th>
-                <th>Options</th>
-                <th>Associations</th>
             </tr>
         </thead>
         <tbody>
@@ -75,19 +75,19 @@
                 <tr data-subid="{{$subcategory->id}}" class="sub_{{ $subcategory->id}}">
                     <td>{{$subcategory->name}}</td>
 
-                    <td>{{ Form::select( ''.$subcategory->id.'_1' , $categories, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_2' , $categories, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_3' , $categories, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
-
-                    <td>
-                        <label class="associations_label">{{$subcategory->associations ? $subcategory->associations : '...'}}</label>
-                        <input data-id="{{$subcategory->id}}" style="display:none;" type="text" class="form-control associations" data-value="{{$subcategory->associations}}" value="" id="associations_{{$subcategory->id}}" name="associations_{{$subcategory->id}}">
-                    </td>
                     <td>
                         <span class="el-icon-remove cp delete_subcategory bs_ttip"  style="color:#c00" title="" data-original-title="Remove Subcategory" data-subcategory_id="{{ $subcategory->id }}"></span>
                     </td>
                     <td>
                         {{ DB::table('evercisegroup_subcategories')->where('subcategory_id', $subcategory->id)->count() }}
+                    </td>
+                    <td>{{ Form::select( ''.$subcategory->id.'_1' , $cat, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
+                    <td>{{ Form::select( ''.$subcategory->id.'_2' , $cat, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
+                    <td>{{ Form::select( ''.$subcategory->id.'_3' , $cat, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
+
+                    <td>
+                        <label class="associations_label">{{$subcategory->associations ? $subcategory->associations : '...'}}</label>
+                        <input data-id="{{$subcategory->id}}" style="display:none;" type="text" class="form-control associations" data-value="{{$subcategory->associations}}" value="" id="associations_{{$subcategory->id}}" name="associations_{{$subcategory->id}}">
                     </td>
                 </tr>
             @endforeach

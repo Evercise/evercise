@@ -292,11 +292,10 @@ class User
         $this->log->info('Sending forgoten password ' . $user->id);
 
         /** @var Forgotten Password Code Generate $resetCode */
-        $resetCode = $user->getResetPasswordCode();
-        $link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . urlencode($resetCode));
+        $resetCode = urlencode($user->getResetPasswordCode());
+        //$link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . $resetCode);
 
-
-        $this->mail->userForgotPassword($user, $link);
+        $this->mail->userForgotPassword($user, $resetCode);
     }
 
 
