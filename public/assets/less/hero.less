@@ -1,14 +1,13 @@
 .hero{
-  background: @hero-bg;
+  background: @gray-darker;
   background-size: cover ;
   background-repeat: no-repeat;
   background-position: center center;
-  height: @hero-height;
-  padding-top: @hero-top-padding;
+  height: 332px;
+  padding-top: 30px;
   position: relative;
-  @media screen and (min-width: @screen-sm-min) {
-    height: ceil(@hero-height * 1.6);
-    padding-top: ceil(@hero-top-padding * 2.5);
+  h1{
+    margin-bottom: 0px;
   }
   &.small-padding{
     padding-top: 10px;
@@ -22,12 +21,6 @@
   }
   .carousel-indicators{
     bottom: 0;
-  }
-}
-.hero-sm{
-  @media screen and (min-width: @screen-sm-min) {
-    height: ceil(@hero-height * 0.9);
-    padding-top: ceil(@hero-top-padding * 2.5);
   }
 }
 
