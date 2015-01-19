@@ -294,8 +294,6 @@ class MainController extends \BaseController
 
         array_unshift($cat, '');
 
-        d($cat);
-
 
         return View::make('admin.subcategories', compact('categories', 'subcategories', 'cat'))->render();
 
