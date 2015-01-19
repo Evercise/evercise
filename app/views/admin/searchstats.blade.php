@@ -41,6 +41,7 @@
                         <th>Query</th>
                         <th>Size</th>
                         <th>Results</th>
+                        <th>Radius</th>
                         <th>User</th>
                         <th>Location</th>
                         <th>Date</th>
@@ -52,6 +53,7 @@
                         <th>Query</th>
                         <th>Size</th>
                         <th>Results</th>
+                        <th>Radius</th>
                         <th>User</th>
                         <th>Location</th>
                         <th>Date</th>
