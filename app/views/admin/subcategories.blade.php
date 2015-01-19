@@ -81,9 +81,9 @@
                     <td>
                         {{ DB::table('evercisegroup_subcategories')->where('subcategory_id', $subcategory->id)->count() }}
                     </td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_1' , $categories, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_2' , $categories, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_3' , $categories, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
+                    <td>{{ Form::select( ''.$subcategory->id.'_1' , $cat, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
+                    <td>{{ Form::select( ''.$subcategory->id.'_2' , $cat, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
+                    <td>{{ Form::select( ''.$subcategory->id.'_3' , $cat, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
 
                     <td>
                         <label class="associations_label">{{$subcategory->associations ? $subcategory->associations : '...'}}</label>
