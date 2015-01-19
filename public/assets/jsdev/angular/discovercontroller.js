@@ -356,7 +356,6 @@ if(typeof angular != 'undefined') {
 
         $scope.preview = {
             id: 1,
-            image: $scope.everciseGroups[0].user.directory+ "/preview_"+ $scope.everciseGroups[0].image,
             description: '',
             nextClassDate: '',
             nextClassDuration: '',
