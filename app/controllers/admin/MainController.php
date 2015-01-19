@@ -285,11 +285,19 @@ class MainController extends \BaseController
     public function subcategories()
     {
         $subcategories = \Subcategory::with('categories')->get();
-        $categories = \Category::lists('name');
+        $categories = \Category::all();
 
-        array_unshift($categories, '');
+        $cat = [];
+        foreach($categories as $c) {
+            $cat[$c->id] = $c->name;
+        }
 
-        return View::make('admin.subcategories', compact('categories', 'subcategories'))->render();
+        array_unshift($cat, '');
+
+        d($cat);
+
+
+        return View::make('admin.subcategories', compact('categories', 'subcategories', 'cat'))->render();
 
     }
 
