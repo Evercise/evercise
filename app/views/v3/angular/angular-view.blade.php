@@ -12,7 +12,7 @@
         <div class="row" >
             <div class="col-sm-12 mt50" >
                 <div class="mt50 text-center alert alert-danger fade in" role="alert">
-                      <strong>No results!</strong> try again using the seach box above
+                      <strong>Sorry</strong> we can not find any any results based on your search criteria, try widening your search radius or try another type of class.
                 </div>
             </div>
         </div>
