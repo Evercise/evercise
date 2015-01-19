@@ -69,8 +69,6 @@ class Search
         }
         $results = $this->elastic->searchEvercisegroups($area, $params);
 
-
-
         return $this->formatMapResults($results, $area);
 
     }
@@ -149,9 +147,10 @@ class Search
         $mapResults = [];
 
         foreach ($results->hits as $r) {
-            $fields = (array)$r->fields;
+            d($r);
+            $fields = (array)$r->_source;
             $id = $fields['id'][0];
-            $venue_id = $fields['venue.id'][0];
+            $venue_id = $fields['venue_id'][0];
             $mapResults[$venue_id][$id]['location'] = [ $fields['venue.lon'][0] => $fields['venue.lat'][0] ];
             $mapResults[$venue_id][$id]['classes'][] = $id;
             $mapResults[$venue_id][$id]['total'] = count($mapResults[$venue_id][$id]['classes']);
