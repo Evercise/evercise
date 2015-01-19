@@ -70,11 +70,13 @@ class Elastic
 
 
         if (!empty($params['search'])) {
+
+            $configIndex = implode(', ', array_map(function ($v, $k) { return $k.'^'. $v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
 
-                'flt' => [
-                    'like_text'       => $params['search'],
-                    'max_query_terms' => 12,
+                'multi_match' => [
+                    'query'  => $params['search'],
+                    'fields' => explode(',',$configIndex),
 
                 ],
 
@@ -82,8 +84,16 @@ class Elastic
             $search = TRUE;
         }
 
-        if(!empty($params['fields'])) {
-            $searchParams['body']['fields'] = $params['fields'];
+        if (!empty($params['price'])) {
+
+            $price = [];
+            if (!empty($params['price']['under'])) {
+                $price['lte'] = $params['price']['under'];
+            }
+            if (!empty($params['price']['over'])) {
+                $price['gte'] = $params['price']['over'];
+            }
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['default_price' => $price];
         }
 
         if (!isset($params['all'])) {
@@ -108,9 +118,6 @@ class Elastic
             $search = TRUE;
         }
 
-
-
-
         if (!$search) {
             /** Guess not! */
             $searchParams['body']['query']['filtered']['query']['match_all'] = [];
@@ -121,45 +128,45 @@ class Elastic
             $searchParams['body']['sort'] = $params['sort'];
         }
 
-        /** Where Are we Searching For the results*/
-        if(!empty($params['bounds'])) {
-            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_bounding_box']['venue.location'] = $params['bounds'];
-        } else {
-            if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
-                $location_points = [];
+        /** What Are we Searching For */
+        if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
-                foreach (json_decode($area->poly_coordinates) as $part) {
-                    try {
-                        $location_points[] = $this->getLocationHash($part[0], $part[1]);
-                    } catch (Exception $e) {
-                        $this->log->error(
-                            'GeoHash cant hash Area ' . $area->id . ' for lat_lon ' . $part[0] . ', ' . $part[1]
-                        );
-                    }
+            $location_points = [];
 
+            foreach (json_decode($area->poly_coordinates) as $part) {
+                try {
+                    $location_points[] = $this->getLocationHash($part[0], $part[1]);
+                } catch (Exception $e) {
+                    $this->log->error(
+                        'GeoHash cant hash Area ' . $area->id . ' for lat_lon ' . $part[0] . ', ' . $part[1]
+                    );
                 }
 
-                if (count($location_points) > 0) {
-                    $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_polygon']['venue.location']['points'] = $location_points;
-                } else {
+            }
 
-                    $this->log->error('Area ' . $area->id . ' is set to be Polygon but has 0 valid datapoints');
-                }
-
+            if (count($location_points) > 0) {
+                $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_polygon']['venue.location']['points'] = $location_points;
             } else {
 
-                if (!empty($area->lat) && !empty($area->lng)) {
-                    $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_distance'] = [
-                        'distance'       => $params['radius'],
-                        'venue.location' => $this->getLocationHash($area->lat, $area->lng)
-                    ];
-                }
+                $this->log->error('Area ' . $area->id . ' is set to be Polygon but has 0 valid datapoints');
+            }
+
+        } else {
+
+            if (!empty($area->lat) && !empty($area->lng)) {
+                $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_distance'] = [
+                    'distance'       => $params['radius'],
+                    'venue.location' => $this->getLocationHash($area->lat, $area->lng)
+                ];
             }
         }
 
+
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
+
+        d($result);
         $result_object = json_decode(json_encode($result), FALSE);
 
         return $result_object;
@@ -214,7 +221,7 @@ class Elastic
      * @param int $id
      * @return mixed
      */
-    public  function getSingle($id = 0)
+    public function getSingle($id = 0)
     {
         $searchParams['index'] = $this->elastic_index;
         $searchParams['type'] = $this->elastic_type;
@@ -410,7 +417,7 @@ class Elastic
             foreach ($a->subcategories()->get() as $sub) {
                 if (!in_array($sub->name, $categories)) {
                     $categories[] = $sub->name;
-                    if(!empty($sub->associations)) {
+                    if (!empty($sub->associations)) {
                         $categories[] = $sub->associations;
                     }
 
@@ -447,7 +454,7 @@ class Elastic
 
         $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return $total_indexed . ' ' . $with_session;
+        return 'classes: ' . $total_indexed . ' sessions: ' . $with_session;
 
 
     }
@@ -686,6 +693,17 @@ class Elastic
         }
 
         return TRUE;
+    }
+
+
+    /**
+     * Ping ElasticSearch Instance
+     * @return bool
+     */
+    public function ping()
+    {
+
+        return $this->elasticsearch->ping();
     }
 }
 
