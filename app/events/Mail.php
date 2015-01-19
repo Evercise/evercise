@@ -340,10 +340,14 @@ class Mail
      *
      * Event session.upcoming_session
      */
-    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId)
     {
         foreach ($userList as $name => $details) {
             $email = $details['email'];
+
+            $transaction = \Transactions::find($details['transactionId']);
+            $bookingCodes = $transaction->makeBookingHashBySession($sessionId);
+
             $params = [
                 'subject'       => 'Evercise class reminder',
                 'title'         => 'EVERCISE CLASS REMINDER',
@@ -359,6 +363,7 @@ class Mail
                 'classId'       => $classId,
                 'style'         => 'blue',
                 'transactionId' => $details['transactionId'],
+                'bookingCodes'  => $bookingCodes,
                 'image'         => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
                 'link_url'      => $this->url->to('/profile/' . $group->slug)
             ];

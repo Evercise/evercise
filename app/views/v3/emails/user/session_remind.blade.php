@@ -9,6 +9,11 @@
 <p>This class is held by <span class="blue-text">{{ $trainerName }}</span> </p>
 <p>Your transaction ID: <strong class="blue-text">{{ $transactionId }}</strong></p>
 
+@foreach($bookingCodes as $code)
+    <p> - Code: <strong class="blue-text">{{ $code }}</strong></p>
+@endforeach
+
+<p>Location: <strong class="blue-text">{{ $location }}</strong></p>
 
 <p>Take note of your unique booking code. Your trainer will need this - along with another form of ID - to identify you.</p>
 <p>Please try to arrive 15 minutes before the specified start time. Late arrivals can be rejected.</p>
@@ -18,6 +23,8 @@
 <p>Fitness is even more fun with friends! Click on the links below to share this class.</p>
 
 
-<p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank">Facebook</a></p>
-<p>Share this class on <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank">Twitter</a></p>
+<p>Share this class on</p>
+<a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank">{{image('/assets/img/email/btns/btn_fb.png')}}</a>
+<a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank">{{image('/assets/img/email/btns/btn_twitter.png')}}</a>
+<a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->gplus()  }}" target="_blank">{{image('/assets/img/email/btns/btn_gplus.png')}}</a>
 @stop
