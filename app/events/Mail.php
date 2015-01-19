@@ -279,9 +279,9 @@ class Mail
 
     /**
      * @param $user
-     * @param string $link
+     * @param string $resetCode
      */
-    public function userForgotPassword($user, $link = '')
+    public function userForgotPassword($user, $resetCode = '')
     {
 
 
@@ -292,7 +292,7 @@ class Mail
             'user'     => $user,
             'banner'   => FALSE,
             'image'    => image('/assets/img/email/user_default.jpg', 'reset your password'),
-            'link_url' => $link
+            'resetCode' => $resetCode
         ];
 
         $this->send($user->email, $params);
