@@ -70,11 +70,13 @@ class Elastic
 
 
         if (!empty($params['search'])) {
+
+            $configIndex = implode(', ', array_map(function ($v, $k) { return $k.'^'. $v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
 
-                'flt' => [
-                    'like_text'       => $params['search'],
-                    'max_query_terms' => 12,
+                'multi_match' => [
+                    'query'  => $params['search'],
+                    'fields' => explode(',',$configIndex),
 
                 ],
 
@@ -82,13 +84,13 @@ class Elastic
             $search = TRUE;
         }
 
-        if(!empty($params['price'])) {
+        if (!empty($params['price'])) {
 
             $price = [];
-            if(!empty($params['price']['under'])) {
+            if (!empty($params['price']['under'])) {
                 $price['lte'] = $params['price']['under'];
             }
-            if(!empty($params['price']['over'])) {
+            if (!empty($params['price']['over'])) {
                 $price['gte'] = $params['price']['over'];
             }
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['default_price' => $price];
@@ -213,7 +215,7 @@ class Elastic
      * @param int $id
      * @return mixed
      */
-    public  function getSingle($id = 0)
+    public function getSingle($id = 0)
     {
         $searchParams['index'] = $this->elastic_index;
         $searchParams['type'] = $this->elastic_type;
@@ -409,7 +411,7 @@ class Elastic
             foreach ($a->subcategories()->get() as $sub) {
                 if (!in_array($sub->name, $categories)) {
                     $categories[] = $sub->name;
-                    if(!empty($sub->associations)) {
+                    if (!empty($sub->associations)) {
                         $categories[] = $sub->associations;
                     }
 
@@ -446,7 +448,7 @@ class Elastic
 
         $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return 'classes: '.$total_indexed . ' sessions: ' . $with_session;
+        return 'classes: ' . $total_indexed . ' sessions: ' . $with_session;
 
 
     }
@@ -692,7 +694,8 @@ class Elastic
      * Ping ElasticSearch Instance
      * @return bool
      */
-    public function ping() {
+    public function ping()
+    {
 
         return $this->elasticsearch->ping();
     }
