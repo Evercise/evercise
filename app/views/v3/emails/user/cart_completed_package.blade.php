@@ -80,6 +80,6 @@
     </tbody>
 </table>
 
-    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Why not take a moment to book your next class or check out our latest recommendations?'])
+    @include('v3.emails.classes_upsell', ['everciseGroups' => $everciseGroups, 'upsellText' => 'Why not take a moment to check out our latest recommendations?'])
 
 @stop

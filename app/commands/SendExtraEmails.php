@@ -45,7 +45,7 @@ class SendExtraEmails extends Command {
 	public function fire()
 	{
 		//$this->whyNoUseFreeCreditEh();
-		//$this->whyNotRefer();
+		$this->whyNotRefer();
 	}
 
 	public function whyNotRefer()
@@ -74,7 +74,7 @@ class SendExtraEmails extends Command {
 				if (! count($user->activities)) {
 					$emailsSent++;
 					$this->info('user: ' . $user->id);
-					event('user.class.rate', [$user]);
+					event('user.why_not_refer', [$user]);
 				}
 			}
 		}

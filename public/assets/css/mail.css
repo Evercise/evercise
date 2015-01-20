@@ -24,6 +24,11 @@ img{ width: 100%}
 .btn-grey{ background: #768690;}
 .bottom-border{ border-bottom: 1px solid #f2f2f2}
 
+table .blue-rounded-box { margin-bottom: 10px; }
+table .blue-rounded-box tr{background-color: #0000dd; color:#ffffff; width:100px; }
+table .blue-rounded-box tr td{padding:0;}
+table .blue-rounded-box tr td p{margin:0;}
+
 @media only screen and (max-device-width: 320px) and (max-device-height: 568px) {
     table{ width: 100%}
     h1 { font-family: helvetica, arial, sans-serif; text-transform: uppercase; font-size: 30px; line-height: 42px; font-weight: 500; color:#768690; margin: 0 }

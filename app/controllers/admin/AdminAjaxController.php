@@ -85,6 +85,7 @@ class AdminAjaxController extends AdminController
                 $r->_source->search,
                 $r->_source->size,
                 $r->_source->results,
+                $r->_source->radius,
                 $r->_source->user_id,
                 $r->_source->name,
                 $r->_source->date

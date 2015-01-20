@@ -13,9 +13,10 @@
 
 <p>We&apos;ll make sure your class gets excellent exposure across the Evercise community. Why not give it an extra boost by sharing it with your friends and contacts? Evercise makes it easy to share your classes, just click on the link below to get started.</p>
 
-<p>Share you class on FACEBOOK, TWITTER, GOOGLE PLUS:</p>
-<p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->facebook()  }}" target="_blank">Facebook</a></p>
-<p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->twitter()  }}" target="_blank">Twitter</a></p>
-<p><a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->gplus()  }}" target="_blank">Google Plus</a></p>
+<p>Share this class on:</p>
+<a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->facebook()  }}" target="_blank">{{image('/assets/img/email/btns/btn_fb.png', 'Facebook', ['class'=>'img-original'])}}</a>
+<a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->twitter()  }}" target="_blank">{{image('/assets/img/email/btns/btn_twitter.png', 'Twitter', ['class'=>'img-original'])}}</a>
+<a class="blue-text" href="{{ Share::load(URL::to('class/'.$class->slug)  , $class->name)->gplus()  }}" target="_blank">{{image('/assets/img/email/btns/btn_gplus.png', 'Google+', ['class'=>'img-original'])}}</a>
+
 
 @stop

@@ -91,7 +91,7 @@ class Sessions
         $this->log->info('Sending Upcomming Sessions email');
         $this->mail->trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId);
 
-        $this->mail->usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId);
+        $this->mail->usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId);
     }
 
     /**

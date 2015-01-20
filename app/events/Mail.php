@@ -144,16 +144,12 @@ class Mail
 
         if ($cart['packages']) {
             /** Pick 3 classes which are priced appropriately for the package purchased. NEEDS WORK!!! */
-            $upperPrice = round($cart['packages'][0]['price'], 2) + 0.01;
-            //Log::live()
-            /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
-                 $query->where('price', '<', $packagePrice);
-             })->take(3)->get();*/
+            $upperPrice = round($cart['packages'][0]['max_class_price'], 2) + 0.01;
 
             $searchController = App::make('SearchController');
             $everciseGroups = $searchController->getClasses([
                 'sort'  => 'price_desc',
-                'price' => ['under' => $upperPrice, 'over' => round(($upperPrice - 10))],
+                'price' => ['under' => round($upperPrice, 2), 'over' => round(($upperPrice - 10))],
                 'size'  => '3'
             ]);
 
@@ -283,9 +279,9 @@ class Mail
 
     /**
      * @param $user
-     * @param string $link
+     * @param string $resetCode
      */
-    public function userForgotPassword($user, $link = '')
+    public function userForgotPassword($user, $resetCode = '')
     {
 
 
@@ -296,7 +292,7 @@ class Mail
             'user'     => $user,
             'banner'   => FALSE,
             'image'    => image('/assets/img/email/user_default.jpg', 'reset your password'),
-            'link_url' => $link
+            'resetCode' => $resetCode
         ];
 
         $this->send($user->email, $params);
@@ -344,10 +340,14 @@ class Mail
      *
      * Event session.upcoming_session
      */
-    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId)
     {
         foreach ($userList as $name => $details) {
             $email = $details['email'];
+
+            $transaction = \Transactions::find($details['transactionId']);
+            $bookingCodes = $transaction->makeBookingHashBySession($sessionId);
+
             $params = [
                 'subject'       => 'Evercise class reminder',
                 'title'         => 'EVERCISE CLASS REMINDER',
@@ -363,6 +363,7 @@ class Mail
                 'classId'       => $classId,
                 'style'         => 'blue',
                 'transactionId' => $details['transactionId'],
+                'bookingCodes'  => $bookingCodes,
                 'image'         => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
                 'link_url'      => $this->url->to('/profile/' . $group->slug)
             ];
@@ -837,7 +838,7 @@ class Mail
     {
         $params = [
             'subject'        => 'You have not used your £5 Evercise Balance',
-            'title'          => 'You have&apos;t used your £5 Evercise Balance',
+            'title'          => 'You haven&apos;t used your £5 Evercise Balance',
             'view'           => 'v3.emails.user.why_not_coming_back',
             'user'           => $user,
             'everciseGroups' => $everciseGroups,
@@ -874,10 +875,10 @@ class Mail
             'title'    => 'How was the class?',
             'view'     => 'v3.emails.user.rate_class',
             'user'     => $user,
-            'banner'   => $this->banner_types['packages'],
-            'image'    => image('/assets/img/email/user_default.jpg', 'rate class'),
-            'link_url' => $this->url->to('/'), // url needs adding
+            'image'    => image('/assets/img/email/user_how_was_the_class.jpg', 'rate class'),
+            'link_url' => $this->url->to('/profile/' . $user->display_name . '/attended'),
             'style'    => 'pink',
+            'banner'   => $this->banner_types['packages'],
         ];
 
         $this->send($user->email, $params);
@@ -894,8 +895,8 @@ class Mail
             'title'    => 'How was the class?',
             'view'     => 'v3.emails.user.rate_class',
             'user'     => $user,
-            'image'    => image('/assets/img/email/user_default.jpg', 'rate class'),
-            'link_url' => $this->url->to('/'), // url needs adding
+            'image'    => image('/assets/img/email/user_how_was_the_class.jpg', 'rate class'),
+            'link_url' => $this->url->to('/profile/' . $user->display_name . '/attended'),
             'style'    => 'pink',
         ];
 
