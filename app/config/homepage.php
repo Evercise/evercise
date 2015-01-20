@@ -5,13 +5,13 @@
 
 return [
     'popular_searches' => [
-        'Cardio',
-        'Rope Climbing',
-        'Hula',
         'Yoga',
-        'Martial Arts',
-        'Krav Maga',
-        'Zumba'
+        'Zumba',
+        'Insanity',
+        'Fight klub',
+        'Bootcamp',
+        'Boxing',
+        'Pilates'
     ],
     'category_blocks'  => [
         [
@@ -31,24 +31,28 @@ return [
         ]
     ],
     'category_tags'    => [
-        'martial arts',
+        'kettlebell',
+        'hiit',
+        'mma',
+        'workout',
+        'suspension training',
+        'belly dancing',
+        'pilates',
+        'pregnancy yoga',
         'yoga',
-        'zumba',
-        'swiming',
-        'peanuts',
-        'to the pub',
-        'tofu',
-        'martial arts',
-        'yoga',
-        'zumba',
-        'swiming',
-        'peanuts',
-        'tofu',
-        'martial arts',
-        'zumba',
-        'swiming',
-        'peanuts',
-        'tofu',
+        'insanity', 
+        'running',
+        'total body bootcamp',
+        'salsa',
+        'strength and conditioning',
+        'self defence',
+        'circuit',
+        'latin dance',
+        'balance',
+        'aerobics',
+        'hatha yoga',
+        'crossfit',
+        'zumba'
     ],
     'blocks'           => [
         [
