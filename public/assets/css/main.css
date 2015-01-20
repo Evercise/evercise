@@ -9573,9 +9573,6 @@ fieldset[disabled] .stripe-button-el.active {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#38ffffff', endColorstr='#80efbc00', GradientType=0);
 }
-.category-block.black {
-  border: 1px solid #d8d8d8;
-}
 .category-block.black .mask {
   border-radius: 6px;
   position: absolute;
