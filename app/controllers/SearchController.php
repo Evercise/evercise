@@ -279,10 +279,12 @@ class SearchController extends \BaseController
         $options = [
             'price_asc'     => ['default_price' => 'asc'],
             'price_desc'    => ['default_price' => 'desc'],
-            'duration_asc'  => ['duration_price' => 'asc'],
-            'duration_desc' => ['duration_price' => 'desc'],
+            'duration_asc'  => ['default_duration' => 'asc'],
+            'duration_desc' => ['default_duration' => 'desc'],
             'viewed_asc'    => ['counter' => 'asc'],
             'viewed_desc'   => ['counter' => 'desc'],
+            'newest'        => ['created_at' => 'desc'],
+            'oldest'        => ['created_at' => 'asc'],
             'nearme'        => [
                 "_geo_distance" => [
                     'venue.location' => $this->elastic->getLocationHash($area->lat, $area->lng),
@@ -301,7 +303,7 @@ class SearchController extends \BaseController
     }
 
 
-    public function getClasses($params)
+    public function getClasses($params, $clean = false)
     {
 
         /*
@@ -309,20 +311,42 @@ class SearchController extends \BaseController
          * location = 'london';
          *
          */
-
-
         $location = $this->place->getByLocation((!empty($params['location']) ? $params['location'] : 'London'));
         $query = [
-            'size'        => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
-            'from'        => (!empty($params['from']) ? $params['from'] : 0),
-            'sort'        => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
-            'radius'      => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
-            'search'      => (!empty($params['search']) ? $params['sort'] : ''),
-            'featured'    => (isset($params['featured']) ? $params['featured'] : ''),
-            'price' => (isset($params['price']) ? $params['price'] : '')
+            'size'     => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
+            'from'     => (!empty($params['from']) ? $params['from'] : 0),
+            'sort'     => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
+            'radius'   => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
+            'search'   => (!empty($params['search']) ? $params['sort'] : ''),
+            'featured' => (isset($params['featured']) ? $params['featured'] : ''),
+            'price'    => (isset($params['price']) ? $params['price'] : '')
         ];
 
         $searchResults = $this->search->getResults($location, $query);
+
+
+        if($clean) {
+
+            foreach($searchResults->hits as $key => $row) {
+
+                $futuresessions = [];
+                if(count($row->futuresessions) > 4) {
+                    $total = 0;
+                    foreach($row->futuresessions as $s) {
+                        if($total > 3) {
+                            $searchResults->hits[$key]->futuresessions = $futuresessions;
+                            break;
+                        }
+
+                        if($s->remaining > 0) {
+                            $futuresessions[] = $s;
+                            $total++;
+                        }
+                    }
+                }
+
+            }
+        }
 
 
         return $searchResults;

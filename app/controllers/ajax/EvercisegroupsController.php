@@ -68,37 +68,37 @@ class EvercisegroupsController extends AjaxBaseController
 
         $group = Evercisegroup::find($id);
 
-        if ($group->user_id != $this->user->id) {
+        if ($group->user_id == $this->user->id || $this->user->hasPermission('admin')) {
+            if ($group) {
+                $group->publish($publish);
+
+                event('class.' . ($publish ? 'published' : 'unpublished'), [$group, $this->user]);
+
+            } else {
+                return Response::json(
+                    [
+                        'view'  => View::make('v3.layouts.negative-alert')->with('message',
+                            'Class not found')->with('fixed', TRUE)->render(),
+                        'state' => 'error'
+                    ]
+                );
+            }
+
+
             return Response::json(
                 [
-                    'view'  => View::make('v3.layouts.negative-alert')->with('message',
-                        'Class does not belong to user')->with('fixed', TRUE)->render(),
-                    'state' => 'hack'
-                ]
-            );
-        }
-
-
-        if ($group) {
-            $group->publish($publish);
-
-            event('class.' . ($publish ? 'published' : 'unpublished'), [$group, $this->user]);
-
-        } else {
-            return Response::json(
-                [
-                    'view'  => View::make('v3.layouts.negative-alert')->with('message',
-                        'Class not found')->with('fixed', TRUE)->render(),
-                    'state' => 'error'
+                    'view'  => View::make('v3.layouts.positive-alert')->with('message',
+                        'Class ' . ($publish ? '' : 'un') . 'published')->with('fixed', TRUE)->render(),
+                    'state' => $publish
                 ]
             );
         }
 
         return Response::json(
             [
-                'view'  => View::make('v3.layouts.positive-alert')->with('message',
-                    'Class ' . ($publish ? '' : 'un') . 'published')->with('fixed', TRUE)->render(),
-                'state' => $publish
+                'view'  => View::make('v3.layouts.negative-alert')->with('message',
+                    'Class does not belong to user')->with('fixed', TRUE)->render(),
+                'state' => 'hack'
             ]
         );
     }
