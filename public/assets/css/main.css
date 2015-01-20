@@ -8679,8 +8679,19 @@ fieldset[disabled] .btn-grey.active {
   outline: 0;
   background-color: transparent;
 }
-.trapezium .btn {
+.trapezium {
+  text-align: center;
+}
+.trapezium .trapezium-item {
+  display: inline;
+}
+.trapezium .trapezium-item a {
   margin: 0 10px;
+}
+@media (max-width: 992px) {
+  .trapezium .trapezium-item a {
+    margin: 10px;
+  }
 }
 .btn-form-control {
   display: block;

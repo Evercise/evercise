@@ -67,7 +67,7 @@ return [
             ]
         ],
         [
-            'title'      => 'Martial Arts Sessions For less then 10£',
+            'title'      => 'Martial Arts Sessions For less then £10',
             'link'       => '/uk/london?sort=newest',
             'link_title' => 'View all new this week',
             'params'     => [

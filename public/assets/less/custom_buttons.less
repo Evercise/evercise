@@ -41,8 +41,15 @@
 }
 
 .trapezium{
-  .btn{
-    margin: 0 10px;
+  text-align: center;
+  .trapezium-item{
+    display: inline;
+    a{
+      margin: 0 10px;
+      @media (max-width: @grid-float-breakpoint){
+        margin: 10px;
+      }
+    }
   }
 }
 
