@@ -12,6 +12,11 @@ h1, h2, h3, h4, h5, h6,
   text-transform: @headings-case;
 }
 
+.page-header {
+  margin-top: 55px;
+  margin-bottom: 0;
+}
+
 // Links
 
 a {
@@ -89,6 +94,10 @@ strong{ color: @gray-darker}
 .jumbotron{
   h2{
     font-size: 46px;
+  }
+  @media (max-width: @grid-float-breakpoint){
+    h1{ font-size: 47px}
+    h2{ font-size: 27px }
   }
 }
 

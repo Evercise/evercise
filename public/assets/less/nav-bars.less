@@ -1,38 +1,70 @@
 .navbar-default {
   transition: all 0.4s;
-
+  border-bottom: 0;
+  .navbar-header{
+    @media (max-width: @grid-float-breakpoint) {
+      float: left;
+    }
+  }
   .navbar-brand {
     width: 96px;
     z-index: 9999;
     margin: 0!important;
     .logo-sprite();
+
   }
   .navbar-nav{
+    &.navbar-right{
+      @media (max-width: @grid-float-breakpoint) {
+        float: right;
+      }
+    }
     li{
-      margin: 0 10px;
+      margin: 0 8px;
+      @media (max-width: @grid-float-breakpoint) {
+        float: left;
+      }
       a{
-        color: @gray-darker;
+        color: @brand-primary;
         font-family: @headings-font-family;
-        font-size: 26px;
-        padding: 6px 15px;
+        font-size: 20px;
+        padding: 5px 18px;
       }
       &.nav-btn{
-        border: 1px solid @gray-darker;
+        border: 1px solid @brand-primary;
         border-radius: 3px;
-        &:hover{
+        &:hover, &:focus{
           border: 1px solid @brand-primary;
+          background: @brand-primary;
           a{
-            color: @brand-primary;
+            color: @white;
+          }
+        }
+      }
+      .nav-cart{
+        background: @brand-primary;
+        color: @white;
+        font-size: 16px;
+        border-radius: @border-radius-base;
+        &:hover, &:focus{
+          .icon{
+            .sprite(-890px, -370px);
           }
         }
       }
     }
+
   }
+
 }
 
 .nav-hero{
   background: transparent;
   border-color: transparent;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  z-index: 999;
   .navbar-nav {
     li {
       a {
@@ -41,15 +73,16 @@
       &.nav-btn{
         border: 1px solid @white;
         &:hover{
-          border: 1px solid @brand-primary;
           a{
-            color: @brand-primary;
+            color: @white;
           }
         }
       }
     }
   }
 }
+
+
 /*
 .navbar-default{
   transition: all 0.4s;

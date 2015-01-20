@@ -4,9 +4,14 @@ label{
 .form-control{
   box-shadow: none;
   line-height: 16px;
+  height: @input-height;
   &:focus{
     .box-shadow(none);
     border-color: initial;
+  }
+  &.input-lg{
+    height: 49px;
+    line-height: 24px;
   }
 }
 .input-group-addon {
@@ -90,7 +95,7 @@ label{
     &:after{
       position: absolute;
       content: '';
-      height: 40px;
+      height: 38px;
       width: 20px;
       top: 0;
       right: 3px;

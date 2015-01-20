@@ -1,4 +1,38 @@
 .category-block{
+  position: relative;
   text-align: center;
-  background: #000;
+  background: @gray-darker;
+  border-radius:  @border-radius-base*2;
+  height: 150px;
+  margin: 50px 0;
+  &.pink{
+    .mask{
+      border-radius:  @border-radius-base*2;
+      .gradient-mask(@white, @brand-primary);
+    }
+  }
+  &.yellow{
+    .mask{
+      border-radius:  @border-radius-base*2;
+      .gradient-mask(@white, @brand-warning);
+    }
+  }
+  &.black{
+    border: 1px solid @gray-dark;
+    .mask{
+      border-radius:  @border-radius-base*2;
+      .gradient-mask(@white, #000);
+    }
+  }
+
+  .content{
+    position: absolute;
+    top: 10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  h3{
+    margin-bottom: 18px;
+  }
 }

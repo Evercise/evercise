@@ -1,5 +1,10 @@
 // new class block
 .class-block{
+  margin: 0;
+  @media (max-width: @grid-float-breakpoint) {
+    height: 170px;
+    margin-bottom: 30px;
+  }
   .list-group-item{
     overflow: hidden;
     h4{
@@ -13,35 +18,77 @@
     }
   }
   .class-img-wrapper{
+    @media (max-width: @grid-float-breakpoint) {
+      display: none;
+    }
     height: 170px;
     padding: 0;
-
+    border: 0;
     img{
       width:  100%;
+    }
+  }
+  .class-body{
+    .icon{
+      display: none;
+      @media (max-width: @grid-float-breakpoint) {
+        display: inline-block;
+      }
+    }
+    img{
+      display: none;
+      @media (max-width: @grid-float-breakpoint) {
+        display: block;
+        height: 170px;
+        float: left;
+        border-right: 1px solid @list-group-border;
+        border-top-left-radius: @border-radius-base;
+        border-bottom-left-radius: @border-radius-base;
+      }
+    }
+  }
+  .class-title{
+    @media (max-width: @grid-float-breakpoint) {
+      border-top-right-radius: @border-radius-base;
+      padding: 34px 20px 20px;
+      text-align: left;
+      h4{
+        margin-bottom: 26px;
+      }
     }
   }
   .class-footer{
     padding: 0;
     border: 0;
     border-left: 1px solid @list-group-border;
+    @media (max-width: @grid-float-breakpoint) {
+      border-bottom-left-radius: 0;
+    }
     aside{
       border-top: 1px solid @list-group-border;
       border-bottom: 1px solid @list-group-border;
       float: left;
       width: 50%;
-      line-height: 40px;
+      line-height: 38px;
+      @media (max-width: @grid-float-breakpoint) {
+        line-height: 53px;
+      }
     }
     .btn-wrapper{
       border-top: 1px solid @brand-primary;
       border-bottom: 1px solid #cb507f;
       border-right: 1px solid #cb507f;
       line-height: inherit;
+      border-bottom-right-radius: @border-radius-base;
     }
     .btn{
       width: 100%;
-      padding:4px 0;
       border-radius: 0;
-      height: 40px;
+      height: 38px;
+      @media (max-width: @grid-float-breakpoint) {
+        height: 53px;
+        line-height: 40px;
+      }
     }
   }
 }

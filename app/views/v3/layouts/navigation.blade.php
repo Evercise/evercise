@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="nav">
+<nav class="navbar navbar-default" role="navigation" id="nav">
   <div class="container-fluid">
     <div class="navbar-header">
 
@@ -14,7 +14,7 @@
             </ul>
         </li>
         <li class="dropdown cart-dropdown">
-            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
+            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(0)</a>
             {{ isset($cart) ? $cart : '' }}
         </li>
       </ul>

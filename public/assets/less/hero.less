@@ -6,8 +6,15 @@
   height: 332px;
   padding-top: 30px;
   position: relative;
+  @media (max-width: @grid-float-breakpoint){
+    height: 320px;
+  }
   h1{
     margin-bottom: 0px;
+    @media (max-width: @grid-float-breakpoint){
+      margin-top: 45px;
+      margin-bottom: 10px;
+    }
   }
   &.small-padding{
     padding-top: 10px;
