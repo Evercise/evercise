@@ -1,5 +1,6 @@
 function myLocation(){
     this.town = 'london';
+    this.btn;
     this.form;
     this.addListeners();
 }
@@ -12,6 +13,7 @@ myLocation.prototype = {
         //this.btn.on('click', $.proxy(this.init, this));
     },
     init: function(e){
+        this.btn = $(e.target);
         this.form = $(e.target).closest('form');
         e.preventDefault();
         e.stopPropagation();
@@ -41,7 +43,10 @@ myLocation.prototype = {
 
                 self.form.find('input[name="location"]').val(address);
                 self.getTown(results[0].address_components);
-                self.form.find('input[name="city"]').val(this.town);
+                self.form.find('input[name="city"]').val(self.town);
+                if(self.btn.is('#mobile-sub')) {
+                    self.form.trigger('submit');
+                }
             }
             else{
                 console.log(status);

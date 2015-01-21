@@ -40,7 +40,11 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
-                                {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete' ]) }}
+                                {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
+                                <ul id="locaction-autocomplete" class="dropdown-menu category-select" >
+                                    <li id="near-me" class="heading locator"><span class="icon icon-locator-pink-small"></span>Use my Current Location</li>
+                                    <div class="autocomplete-content"></div>
+                                </ul>
                             </div>
                         </div>
 
@@ -63,7 +67,7 @@
                         <div class="btn-find-me">
                             {{ Form::hidden('location', null ) }}
                             {{ Form::hidden('city', null) }}
-                            {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator']) }}
+                            {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator', 'id' => 'mobile-sub']) }}
                         </div>
 
                     </div>

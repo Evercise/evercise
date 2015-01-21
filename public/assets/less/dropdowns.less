@@ -71,14 +71,16 @@
   border-top-right-radius: 0;
   .box-shadow(0 3px 8px -3px rgba(0,0,0,.2));
   li{
-
     border-bottom: 1px solid @input-border;
+    font-size: 12px;
     &.heading{
-      padding-left: 5px;
+      padding-left: 10px;
       color: @brand-primary;
+      cursor: pointer;
     }
     a{
-      padding: 1px 15px;
+      padding: 3px 15px;
+      display: block;
       &:hover, &:focus, &:active{
         background: @brand-primary;
         color: @white;
@@ -86,4 +88,3 @@
     }
   }
 }
-
