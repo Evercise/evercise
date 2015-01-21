@@ -15,13 +15,13 @@ return [
     ],
     'category_blocks'  => [
         [
-            'title' => 'Dance Classes',
-            'image' => '/img/home/Dance.jpg',
-            'link'  => '/uk/london?search=dance'
+            'title' => 'Yoga Classes',
+            'image' => '/img/home/yoga.jpg',
+            'link'  => '/uk/london?search=yoga'
         ],
         [
             'title' => 'Martial Arts',
-            'image' => '/img/home/MA.jpg',
+            'image' => '/img/home/ma.jpg',
             'link'  => '/uk/london?search=martial+arts'
         ],
         [
@@ -67,14 +67,14 @@ return [
             ]
         ],
         [
-            'title'      => 'Yoga Classes For less then £10',
-            'link'       => '/uk/london?search=yoga',
-            'link_title' => 'View all martial arts fitness classes',
+            'title'      => 'Move your body for under £10',
+            'link'       => '/uk/london?search=dance',
+            'link_title' => 'View all dance classes',
             'params'     => [
                 'size'     => 4,
                 'radius'   => '10mi',
                 'location' => 'London',
-                'search'   => 'martial arts',
+                'search'   => 'dance',
                 'sort'     => 'best',
                 'price'    => [
                     'under' => 10
@@ -82,7 +82,7 @@ return [
             ]
         ],
         [
-            'title'      => 'Fitness classes',
+            'title'      => 'Get active, get fit, get inspired',
             'link'       => '/uk/london?search=fitness',
             'link_title' => 'View all fitness classes',
             'background' => '/img/home/fitness.jpg',
