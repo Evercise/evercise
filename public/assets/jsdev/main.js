@@ -217,12 +217,6 @@ $(function(){
     })
 
 
-    $('.btn-selects').exists(function(){
-        $(this).select2({
-            placeholder: "Select a State"
-        });
-    })
-
     $('.landing-popup').exists(function(){
         $(document).on('click', '.close', function(){
             $('.landing-popup').addClass('hidden');
@@ -237,9 +231,12 @@ $(function(){
         })
     })
 
+    $('.trapezium').exists(function(){
+        new trapezium(this);
+    })
 
-
-
-
+    $('.category-select').exists(function(){
+        new categorySelect(this);
+    })
 
 });

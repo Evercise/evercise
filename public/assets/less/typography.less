@@ -12,6 +12,11 @@ h1, h2, h3, h4, h5, h6,
   text-transform: @headings-case;
 }
 
+.page-header {
+  margin-top: 55px;
+  margin-bottom: 0;
+}
+
 // Links
 
 a {
@@ -84,6 +89,16 @@ strong{ color: @gray-darker}
 .custom-inline-error{
   float: left;
   margin-bottom: -30px;
+}
+
+.jumbotron{
+  h2{
+    font-size: 46px;
+  }
+  @media (max-width: @grid-float-breakpoint){
+    h1{ font-size: 47px}
+    h2{ font-size: 27px }
+  }
 }
 
 @media (max-width: @screen-xs-max) {

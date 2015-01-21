@@ -4,10 +4,18 @@ label{
 .form-control{
   box-shadow: none;
   line-height: 16px;
+  height: @input-height;
   &:focus{
-    box-shadow: none;
+    .box-shadow(none);
     border-color: initial;
   }
+  &.input-lg{
+    height: 49px;
+    line-height: 24px;
+  }
+}
+.input-group-addon {
+  padding: 5px 0 5px 10px;
 }
 .form-group{
   &.required{
@@ -19,21 +27,6 @@ label{
     }
   }
 }
-
-.with-addon{
-  .form-control{
-    border-left: 0;
-  }
-  .input-group-addon{
-    padding: 5px 10px;
-    border-right: none;
-  }
-  select{
-    -webkit-appearance: menulist-button;
-    line-height: 34px;
-  }
-}
-
 
 .help-block{
   color: @gray;
@@ -102,7 +95,7 @@ label{
     &:after{
       position: absolute;
       content: '';
-      height: 40px;
+      height: 38px;
       width: 20px;
       top: 0;
       right: 3px;
@@ -166,14 +159,7 @@ body:not(:-moz-handler-blocked) .custom-select:after{
 
 .input-group{
   .form-control{
-    z-index: 0;
-  }
-  .custom-select{
-
-    select{
-      border-radius: 0;
-    }
-
+    border-left: 0;
   }
 }
 @-moz-document url-prefix() {
@@ -202,51 +188,6 @@ body:not(:-moz-handler-blocked) .custom-select:after{
   }
 }
 
-
-.form-no-gap {
-  .input-group{
-    display: block;
-    margin-bottom: 10px;
-  }
-  .btn{
-    display: block;
-    margin: auto;
-  }
-    @media screen and (min-width: @screen-sm-min) {
-      .input-group {
-        width: 100%;
-        display: inline-table;
-        margin: 0;
-        .input-group-addon {
-          border-color: @white;
-          border-radius: 0;
-          width: 1%;
-          &.first {
-            border-top-left-radius: @border-radius-base;
-            border-bottom-left-radius: @border-radius-base;
-          }
-        }
-        .form-control {
-          border: 0;
-          border-right: 1px solid @gray-darker;
-          border-radius: 0;
-        }
-      }
-      .btn {
-        margin: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-  }
-}
-
-.input-group-addon{
-  padding: 0;
-  .select-addon{
-    padding: 10px 15px;
-    border: 0;
-  }
-}
 
 .landing-form{
   background: fade(@white, 40%);
