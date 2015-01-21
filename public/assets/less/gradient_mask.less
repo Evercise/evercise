@@ -2,15 +2,15 @@
   position: relative;
   background-size: cover;
   .mask{
-    .gradient-mask(@white, #000, 80%);
+    .gradient-mask( #000, 80%);
   }
 }
 
-.gradient-mask(@start-color, @end-colour, @fade : 50%, @start-percent: 0%,@end-percent: 100%){
+.gradient-mask( @color, @fade : 50%, @start-percent: 0%,@end-percent: 100%){
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  #gradient > .vertical( fade(@start-color, 22%) ; fade(@end-colour, @fade));
+  #gradient > .vertical( fade(@color, 22%) ; fade(@color, @fade));
 }

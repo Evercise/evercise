@@ -2,6 +2,7 @@ function categorySelect(select){
     this.elem = select;
     this.inputBox =  this.elem.parent().find('input');
     this.selected = '';
+    this.form
     this.addListenners();
 }
 
@@ -12,8 +13,9 @@ categorySelect.prototype = {
     },
     select: function(e){
         e.preventDefault();
-        var target = $(e.target)
+        var target = $(e.target);
+        this.form = target.closest('form');
         this.selected = target.text();
-        this.inputBox.val( this.selected );
+        this.form.find('input[name="search"]').val( this.selected );
     }
 }
