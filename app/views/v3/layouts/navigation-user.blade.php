@@ -8,12 +8,12 @@
       <ul class="nav navbar-nav navbar-right mt10">
 
 
-        <li class="dropdown cart-dropdown">
-            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(0)</a>
+        <li class="dropdown cart-dropdown nav-list">
+            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(0)</a>
             {{ isset($cart) ? $cart : '' }}
         </li>
-        <li >
-            {{ HTML::decode(HTML::linkRoute('users.edit', $user->display_name.  image( $user->directory.'/small_'.$user->image, $user->display_name.'s image', ['class' => 'img-circle']) , $user->display_name , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-list' : 'nav-list nav-profile'] ) )}}
+        <li class="nav-list">
+            {{ HTML::decode(HTML::linkRoute('users.edit', $user->display_name.  image( $user->directory.'/small_'.$user->image, $user->display_name.'s image', ['class' => 'img-circle']) , $user->display_name , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-link' : 'nav-link nav-profile'] ) )}}
         </li>
       </ul>
   </div>
