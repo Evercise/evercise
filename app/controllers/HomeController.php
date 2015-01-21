@@ -37,17 +37,31 @@ class HomeController extends BaseController {
         $articles = $this->articles->getMainPageArticles(3);
 
         $searchController = App::make('SearchController');
-        $featured = $searchController->getClasses([
-            'size' => 9,
-            'radius' => '10mi',
-            'featured' => true,
-            'location' => 'London'
-        ]);
 
 
-        if(count($featured->hits) < 6) {
-            Log::error('Add More featured Classes');
+        $blocks = [];
+
+        $homepage = Config::get('homepage');
+
+
+
+        foreach($homepage['blocks'] as $key => $block) {
+
+            $blocks[$key] = array_except($block, ['params']);
+            $blocks[$key]['results'] = $searchController->getClasses($block['params'], true);
         }
+
+
+        unset($homepage['blocks']);
+
+
+        /** AVAILABLE */
+        /**
+         *  $blocks  > All class blocks with titles, links and results. Some have Backgrounds attached to them.
+         *  $homepage['popular_searches']  > Dropdown Popular Searches
+         *  $homepage['category_blocks']  > Colored Category blocks on the page
+         *  $homepage['category_tags']  > Tag Cloud of Categories
+         */
 
 
         /**
@@ -58,7 +72,7 @@ class HomeController extends BaseController {
          */
 
 
-		return View::make('v3.home', compact('featured', 'slider', 'articles'));
+		return View::make('v3.home', compact('blocks', 'slider', 'articles', 'homepage'));
 	}
 
 }

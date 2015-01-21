@@ -508,7 +508,35 @@ class MainController extends \BaseController
 
     public function searchStats()
     {
-        return View::make('admin.searchstats');
+
+
+        $from = Carbon::now()->subDays(30);
+        $to = Carbon::now();
+        /** Top Searches The past Week */
+        $top_searches = StatsModel::select(DB::raw('count(*) as total, search, AVG(results) as avg'))
+            ->whereBetween('created_at', array($from, $to))
+            ->groupBy('search')
+            ->orderBy(DB::raw('count(*)'), 'desc')
+            ->limit(20)
+            ->get();
+
+        $top_cities = StatsModel::select(DB::raw('count(*) as total, name, AVG(results) as avg'))
+            ->whereBetween('created_at', array($from, $to))
+            ->where('name', '!=', 'London')
+            ->groupBy('name')
+            ->orderBy(DB::raw('count(*)'), 'desc')
+            ->limit(15)
+            ->get();
+
+        $total_london = StatsModel::whereBetween('created_at', array($from, $to))
+            ->where('name', 'London')
+            ->count();
+
+        $percentage_london = ($total_london / ($top_cities->count() + $total_london)) * 100;
+
+
+
+        return View::make('admin.searchstats', compact('top_searches', 'top_cities', 'percentage_london'));
     }
 
     public function salesStats()

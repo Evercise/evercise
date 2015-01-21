@@ -1,3 +1,7 @@
+.btn{
+  border: 1px solid transparent;
+}
+
 .btn-fb {
   .button-variant(@btn-fb-color; @btn-fb-bg; @btn-fb-border);
 }
@@ -19,11 +23,34 @@
   }
 }
 
+.btn-white-primary{
+  background: @white;
+  color: @brand-primary;
+  border-color: @brand-primary ;
+  &:hover, &:active, &:focus{
+    background: @brand-primary;
+    color: @white;
+  }
+}
+
 .btn-icon{
   padding: 0;
   border: 0;
   outline: 0;
   background-color: transparent;
+}
+
+.trapezium{
+  text-align: center;
+  .trapezium-item{
+    display: inline;
+    a{
+      margin: 0 10px;
+      @media (max-width: @grid-float-breakpoint){
+        margin: 10px;
+      }
+    }
+  }
 }
 
 .btn-form-control{
@@ -89,6 +116,26 @@
 
 .btn-package{
   .sprite(-1291px, -314px);
+}
+
+.btn-find-me{
+  position: relative;
+  &:after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    height:40px;
+    width:40px;
+    pointer-events: none;
+    .sprite(-200px, -760px);
+  }
+}
+.btn-rounded{
+  border-radius: 20px;
 }
 
 .stripe-button-el{
@@ -180,7 +227,11 @@
   }
 }
 
-
+.view-all-btn{
+  color: #4a90e2;
+  float: right;
+  margin-top: 4px;
+}
 
 @media (max-width: @screen-xs-max) {
   .sm-btn-block{
