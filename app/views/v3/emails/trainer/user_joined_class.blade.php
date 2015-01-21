@@ -1,6 +1,6 @@
 @extends('v3.emails.template')
 
-
+{{-- NOT USED. REPLACED BY user_joined_classes --}}
 
 @section('body')
 

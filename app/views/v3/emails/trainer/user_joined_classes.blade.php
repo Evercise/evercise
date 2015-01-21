@@ -1,42 +1,20 @@
 @extends('v3.emails.template')
 
 
+
 @section('body')
 
-<p>Hey <span class="blue-text">{{$name}}</span></p>
-
-<strong>Don&apos;t forget your upcoming class is coming up tomorrow</strong>
-
-<p>Please try to arrive 15 minutes before the specified start time. Late arrivals can be rejected.</p>
-<p>Remember to bring a water bottle, a towel or two and appropriate clothing.</p>
-
-<p>Take note of your unique booking code{{count($bookingCodes) > 1 ? 's' : ''}}:</p>
-
-@foreach($bookingCodes as $code)
-    <table border="0" cellspacing="0" cellpadding="20" class="text-center">
-      <tr align="center">
-        <td class="p0">
-            <table border="0" cellspacing="0" cellpadding="20" class="blue-rounded-box">
-              <tr>
-                <td background="{{URL::to('assets/img/email/blue_rounded_box.png')}}">
-                  <p><strong>{{ $code }}</strong></p>
-                </td>
-              </tr>
-            </table>
-        </td>
-      </tr>
-    </table>
-
-@endforeach
-<p>Your trainer will need this - along with another form of ID - to identify you.</p>
+<strong>Hey <span class="pink-text">{{$trainer->display_name}}</span> </strong>
+<p><span class="pink-text">{{$user->display_name}}</span> has joined your class</p>
 
 @stop
 @section('extra')
 
 <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="20" bgcolor="#f2f2f2">
-
     <tr>
         <td width="100%">
+          @foreach($classes as $evercisegroupId => $sessionDetails)
+          <?php $session = $sessionDetails['session']; $group = $session->evercisegroup; ?>
             <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="20" bgcolor="#ffffff">
                 <tr>
                     <td width="100%" class="bottom-border">
@@ -50,7 +28,7 @@
                                         <tr height="80px">
                                             <td width="100%">
                                                 <a href="{{route('class.show', $group->slug)}}"><strong>{{$group->name}}</strong></a>
-                                                <p>{{ date('M jS, g:ia', strtotime($dateTime)) }}<br>{{ ucwords($group->venue->address) }}<br>{{ ucwords($group->venue->town) . ' ' . strtoupper($group->venue->postcode) }}</p>
+                                                <p>{{ date('M jS, g:ia', strtotime($session->date_time)) }}<br>{{ ucwords($group->venue->address) }}<br>{{ ucwords($group->venue->town) . ' ' . strtoupper($group->venue->postcode) }}</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -60,7 +38,7 @@
                                     <table width="100%" height="100%" align="right" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
                                         <tr height="80px">
                                             <td width="100%" align="right">
-                                                <strong class="pink-text"><b class="pink-text">&pound;{{$group->default_price}}</b></strong>
+                                                <strong class="pink-text"><b class="pink-text">&pound;{{$session->price}}</b></strong>
                                             </td>
                                         </tr>
                                         <tr height="30%">
@@ -75,24 +53,41 @@
                         </table>
                     </td>
                 </tr>
-            </table>
-
-            <table border="0" cellspacing="0" cellpadding="20" class="text-center">
-                <tr align="center">
-                     <td class="p0">
-                        <p>Have fun!</p>
-                        <table width="100%" height="auto" align="center" cellspacing="0" cellpadding="10" bgcolor="#f2f2f2">
-                            <tr><td></td></tr>
+                <tr>
+                    <td>
+                        <p>{{$user->display_name}} has booked {{ count($sessionDetails) }} ticket{{ count($sessionDetails) > 1 ? 's' : '' }}.  Booking codes are below.</p>
+                        <table border="0" cellspacing="0" cellpadding="20" class="text-center">
+                            <tr>
+                      <?php $count=0 ?>
+                      @foreach($sessionDetails['codes'] as $code)
+                          @if($count%3 == 0)
+                            </tr><tr>
+                          @endif
+                                <td class="p0" width="90">
+                                    <table border="0" cellspacing="0" cellpadding="20" class="blue-rounded-box">
+                                      <tr>
+                                        <td background="{{URL::to('assets/img/email/blue_rounded_box.png')}}">
+                                          <p><strong>{{ $code }}</strong></p>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                </td>
+                      <?php $count++ ?>
+                      @endforeach
+                            </tr>
                         </table>
-                        <p>Fitness is even more fun with friends! Click on the links below to share this class.</p>
-                        <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->facebook()  }}" target="_blank">{{image('/assets/img/email/btns/btn_fb.png', 'Facebook', ['class'=>'img-original'])}}</a>
-                        <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->twitter()  }}" target="_blank">{{image('/assets/img/email/btns/btn_twitter.png', 'Twitter', ['class'=>'img-original'])}}</a>
-                        <a class="blue-text" href="{{ Share::load(URL::to('class/'.$group->slug)  , $group->name)->gplus()  }}" target="_blank">{{image('/assets/img/email/btns/btn_gplus.png', 'Google+', ['class'=>'img-original'])}}</a>
                     </td>
                 </tr>
             </table>
+          @endforeach
+        </td>
+    </tr>
+    <tr>
+        <td class="text-center">
+            {{ Html::decode(Html::linkRoute('trainer', image('/assets/img/email/btns/btn_manage_blue.png', 'Manage your class'), [], ['class' => 'btn btn-blue'])) }}
         </td>
     </tr>
  </table>
+
 
 @stop

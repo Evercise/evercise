@@ -98,7 +98,7 @@ return [
         ['user.why_not_refer' => 'User@whyNotRefer'], // $user
 
         ['trainer.edit' => 'Trainer@edit'],
-        ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
+        ['trainer.session.joined' => 'Trainer@sessionsJoined'], // $user, $trainer, $session, $everciseGroup, $transactionId, tickets
 
         ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.complete_profile' => 'Trainer@whyNotCompleteProfile'], //$trainer
@@ -112,7 +112,7 @@ return [
         ['class.unpublished' => 'Classes@classUnPublished'],  // $class, $trainer
 
         ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $session, $everciseGroup, $transactionId
-        ['session.upcoming_session' => 'Sessions@upcommingSessions'],
+        ['session.upcoming_session' => 'Sessions@upcomingSessions'],
         ['session.mail_all' => 'Sessions@mailAll'],
         ['session.mail_trainer' => 'Sessions@mailTrainer'],
         ['session.userLeft' => 'Sessions@userLeaveSession'],

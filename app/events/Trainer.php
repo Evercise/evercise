@@ -119,4 +119,18 @@ class Trainer
         $this->mail->relaunch($user);
     }
 
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $session
+     * @param $everciseGroup
+     * @param $transactionId
+     */
+    public function sessionsJoined($trainerId, $sessionDetails)
+    {
+        $this->log->info('Trainer ' . $trainerId . ' has been notified of someone joining their class. ' . count($sessionDetails));
+
+        $this->mail->userJoinedTrainersSession($trainerId, $sessionDetails);
+    }
+
 }
