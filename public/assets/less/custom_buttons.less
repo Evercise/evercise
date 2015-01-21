@@ -16,6 +16,16 @@
   .button-variant(@btn-white-color; @gray-mob; darken(@gray-mob, 1%));
 }
 
+.btn-black{
+  background: #000;
+  color: @white;
+  border-color: #000 ;
+  &:hover, &:active, &:focus{
+    background: fade(#000, 20%);
+    color: @white;
+  }
+}
+
 .btn-grey {
   .button-variant(@btn-grey-color; @btn-grey-bg; @btn-grey-border);
   &:hover{
@@ -201,7 +211,7 @@
     -moz-appearance: none;
     padding: 0 7px;
     border: 0;
-    height: 40px;
+    height: @input-height-base;
     width: 100%;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;

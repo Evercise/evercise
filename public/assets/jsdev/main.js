@@ -202,7 +202,7 @@ $(function(){
 
     $('#hero-carousel , #image-carousel').exists(function() {
         $(this).carousel({
-            interval: 4000
+            interval: 5000
         })
     })
     $('.mail-popup').exists(function(){
@@ -238,5 +238,9 @@ $(function(){
     $('.category-select').exists(function(){
         new categorySelect(this);
     })
+
+    if (navigator.geolocation) {
+        new myLocation();
+    }
 
 });

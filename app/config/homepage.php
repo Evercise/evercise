@@ -15,19 +15,19 @@ return [
     ],
     'category_blocks'  => [
         [
+            'title' => 'Dance Classes',
+            'image' => '/img/home/Dance.jpg',
+            'link'  => '/uk/london?search=dance'
+        ],
+        [
             'title' => 'Martial Arts',
-            'image' => '/url/to/somewere.png',
+            'image' => '/img/home/MA.jpg',
             'link'  => '/uk/london?search=martial+arts'
         ],
         [
-            'title' => 'Yoga Classes',
-            'image' => '/url/to/somewere.png',
-            'link'  => '/uk/london?search=yoga'
-        ],
-        [
-            'title' => 'Dance Classes',
-            'image' => '/url/to/somewere.png',
-            'link'  => '/uk/london?search=dance'
+            'title' => 'Pilate Classes',
+            'image' => '/img/home/Pilates.jpg',
+            'link'  => '/uk/london?search=pilates'
         ]
     ],
     'category_tags'    => [
@@ -67,9 +67,9 @@ return [
             ]
         ],
         [
-            'title'      => 'Martial Arts Sessions For less then £10',
-            'link'       => '/uk/london?sort=newest',
-            'link_title' => 'View all new this week',
+            'title'      => 'Yoga Classes For less then £10',
+            'link'       => '/uk/london?search=yoga',
+            'link_title' => 'View all martial arts fitness classes',
             'params'     => [
                 'size'     => 4,
                 'radius'   => '10mi',
@@ -82,15 +82,15 @@ return [
             ]
         ],
         [
-            'title'      => 'Ten-Hut! Great Deals on Bootcamp Sessions',
-            'link'       => '/uk/london?search=bootcamp',
-            'link_title' => 'View all',
-            'background' => '/img/background/somehting.png',
+            'title'      => 'Fitness classes',
+            'link'       => '/uk/london?search=fitness',
+            'link_title' => 'View all fitness classes',
+            'background' => '/img/home/fitness.jpg',
             'params'     => [
                 'size'     => 4,
                 'radius'   => '10mi',
                 'location' => 'London',
-                'search'   => 'bootcamp',
+                'search'   => 'fitness',
                 'sort'     => 'best'
             ]
         ],

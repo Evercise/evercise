@@ -5,6 +5,7 @@ function LocationAutoComplete(input){
     this.mapOptions = {};
     this.address_components = [];
     this.town = 'london';
+    this.width = 0;
     this.init();
 }
 LocationAutoComplete.prototype = {
@@ -45,15 +46,7 @@ LocationAutoComplete.prototype = {
         if (google.maps != undefined && !this.autoCompleteStarted) {
             this.autoCompleteStarted = true;
 
-            var latlng  = new google.maps.LatLng(54.8, -4.6);
-
             this.mapOptions = {
-                zoom: 5,
-                center: latlng ,
-                mapTypeControl: false,
-                panControl: false,
-                zoomControl: false,
-                streetViewControl: false,
                 componentRestrictions: {country: "uk"}
             }
 
@@ -63,6 +56,9 @@ LocationAutoComplete.prototype = {
                 document.getElementById(self.input.attr('id')),
                 this.mapOptions
             );
+
+            // event to append find my loctaion to top of autocomplete
+            self.addListeners();
 
             google.maps.event.addListener(autocomplete, 'place_changed', function () {
                 var place = autocomplete.getPlace();
@@ -104,5 +100,27 @@ LocationAutoComplete.prototype = {
     },
     updateCity : function(){
         this.form.find('input[name="city"]').val(this.town);
+    },
+    addListeners : function(){
+        this.input.on('click', $.proxy(this.addNearMe, this))
+    },
+    addNearMe : function(e){
+        this.width = $(e.target).parent().width();
+        var pac = $('.pac-container');
+        if($('#near-me').length == 0) {
+            pac.append('<li id="near-me" class="heading locator"><span class="icon icon-lg icon-locator-pink"></span> my Current Location</li>');
+            this.setWidth(pac);
+        }
+    },
+    setWidth :function(pac){
+        if(pac.is(':visible')) {
+            pac.width(this.width - 2);
+        }
+        else{
+            var self = this
+            setTimeout(function() {
+                self.setWidth(pac);
+            }, 300);
+        }
     }
 }
