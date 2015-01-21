@@ -3,9 +3,9 @@
 
 @section('body')
 
-<p>Hey <span class="blue-text">{{$name}}</span></p>
+<p>Hi <span class="blue-text">{{$name}}</span></p>
 
-<strong>Don&apos;t forget your upcoming class is coming up tomorrow</strong>
+<strong>Don&apos;t forget your class is coming up tomorrow</strong>
 
 <p>Please try to arrive 15 minutes before the specified start time. Late arrivals can be rejected.</p>
 <p>Remember to bring a water bottle, a towel or two and appropriate clothing.</p>

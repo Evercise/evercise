@@ -45,7 +45,7 @@ class SendExtraEmails extends Command {
 	public function fire()
 	{
 		//$this->whyNoUseFreeCreditEh();
-		$this->whyNotRefer();
+		//$this->whyNotRefer();
 	}
 
 	public function whyNotRefer()
