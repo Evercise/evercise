@@ -66,15 +66,16 @@ class Elastic
 
         $search = FALSE;
 
-        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.15;
+//        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.15;
+//        $searchParams['body']['min_score'] = 0.00;
 
 
         if (!empty($params['search'])) {
-            $configIndex = implode(', ', array_map(function ($v, $k) { return $k.'^'. $v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
+            $configIndex = implode(',', array_map(function ($v, $k) { return $k.'^'.$v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
                 'multi_match' => [
                     'query'  => $params['search'],
-                    'fields' => explode(',',$configIndex),
+                    'fields' => explode(',',$configIndex)
                 ],
             ];
             $search = TRUE;
@@ -153,7 +154,6 @@ class Elastic
                 ];
             }
         }
-
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
@@ -421,7 +421,7 @@ class Elastic
                 }
             }
 
-            $index['categories'] = implode(', ', $categories);
+            $index['categories'] = str_replace(',',' , ',implode(',', $categories));
 
             if ($price > 0) {
                 $index['default_price'] = $price;
@@ -541,7 +541,7 @@ class Elastic
                         'venue_id'         => ['type' => 'integer', 'include_in_all' => TRUE],
                         'user_id'          => ['type' => 'integer', 'include_in_all' => TRUE],
                         'gender'           => ['type' => 'integer'],
-                        'categories'       => ['type' => 'string'],
+                        'categories'       => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                         'default_price'    => ['type' => 'integer'],
                         'capacity'         => ['type' => 'integer'],
                         'default_duration' => ['type' => 'integer'],
@@ -553,9 +553,9 @@ class Elastic
                             'dynamic'    => TRUE,
                             'properties' => [
                                 'id'       => ['type' => 'integer'],
-                                'name'     => ['type' => 'string', 'include_in_all' => TRUE],
-                                'address'  => ['type' => 'string', 'include_in_all' => TRUE],
-                                'postcode' => ['type' => 'string', 'include_in_all' => TRUE],
+                                'name'     => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'address'  => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'postcode' => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                                 'town'     => ['type' => 'string', 'include_in_all' => TRUE],
                                 'location' => [
                                     'type'      => 'geo_point',
@@ -571,10 +571,10 @@ class Elastic
                             'dynamic'    => TRUE,
                             'properties' => [
                                 'id'           => ['type' => 'integer'],
-                                'email'        => ['type' => 'string', 'include_in_all' => TRUE],
-                                'first_name'   => ['type' => 'string', 'include_in_all' => TRUE],
-                                'last_name'    => ['type' => 'string', 'include_in_all' => TRUE],
-                                'display_name' => ['type' => 'string', 'include_in_all' => TRUE],
+                                'email'        => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'first_name'   => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'last_name'    => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'display_name' => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                                 'phone'        => ['type' => 'string'],
                                 'image'        => ['type' => 'string'],
                                 'directory'    => ['type' => 'string'],
