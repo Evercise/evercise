@@ -70,14 +70,12 @@ class Elastic
 
 
         if (!empty($params['search'])) {
+            $configIndex = implode(', ', array_map(function ($v, $k) { return $k.'^'. $v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
-
-                'flt' => [
-                    'like_text'       => $params['search'],
-                    'max_query_terms' => 12,
-
+                'multi_match' => [
+                    'query'  => $params['search'],
+                    'fields' => explode(',',$configIndex),
                 ],
-
             ];
             $search = TRUE;
         }
