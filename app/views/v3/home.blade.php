@@ -1,197 +1,170 @@
 @extends('v3.layouts.master')
 @section('body')
-
     <div id="hero-carousel" class="carousel slide">
           <div class="carousel-inner">
             @foreach($slider as $index => $sl)
-
                  <div class="item {{ $index == 0 ? 'active': null }}">
-                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}')">
-                       <ol class="carousel-indicators">
-                           <li data-target="#hero-carousel" data-slide-to="{{$index}}" class="{{ $index == 0 ? 'active' : null }}"></li>
-                       </ol>
+                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}');">
                         <div class="jumbotron">
                           <div class="container text-center">
-                            <h1 class="text-white"> {{ $sl['name'] }}</h1>
-                            <h1 class="text-primary">only &pound; {{ round($sl['price'], 0) }}</h1>
-                            <div class="row mt50 text-center">
-                            {{ Html::linkRoute('evercisegroups.show', 'View Class', Evercisegroup::getSlug($sl['evercisegroup_id']) ,['class' => 'btn btn-primary']) }}
-                            <!--
-                                <div class="col-md-2 col-md-offset-4">
-                                    <button class="btn btn-white btn-transparent mb10">Schedule<span class="icon icon-white-clock"></span></button>
-                                </div>
-
-                                <div class="col-md-3">
-
-
-                                    <div class="btn-group">
-                                        <button class="btn btn-primary">Join Class</button>
-                                        <button type="button" class="btn btn-primary btn-aside" data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                        </button>
-                                    </div>
-
-                                </div>
-                                -->
+                            <h1 class="text-white mb0"> {{ $sl['name'] }}</h1>
+                            <h2 class="text-primary mt0">only &pound; {{ round($sl['price'], 0) }}</h2>
+                            <div class="row mt20 text-center">
+                                {{ Html::linkRoute('evercisegroups.show', 'View Class', Evercisegroup::getSlug($sl['evercisegroup_id']) ,['class' => 'btn btn-primary']) }}
                             </div>
                           </div>
                         </div>
                     </div>
                  </div>
             @endforeach
-
           </div>
     </div>
 
-    <div class="container-fluid panel-body bg-dark-grey">
+    <div class="container-fluid bg-dark-grey mb30 sm-mb0">
         <div class="container">
-            <div class="row no-gutter visible-md-block visible-lg-block">
+            <div class="row mt10 mb10 sm-inline-gutter visible-md-block visible-lg-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
-                    <div class="col-sm-12">
-                        <div class="input-group with-addon">
-                            <div class="input-group-addon first"><span class="icon icon-search"></span></div>
-                            {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...']) }}
-
-                            <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
-                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
-                            {{ Form::hidden('city', null) }}
-                            <div class="input-group-addon"><span class="icon icon-distance"></span></div>
-                            <div class="custom-select">
-                                {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
+                    <div class="mb0">
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                  <div class="input-group-addon"><span class="icon icon-search"></span></div>
+                                  {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...', 'data-toggle' => "dropdown",  'autocomplete' => 'off']) }}
+                                   <ul class="dropdown-menu category-select" >
+                                      <li class="heading">Popular Searches</li>
+                                      @foreach($homepage['popular_searches'] as $search)
+                                            <li><a href="{{$search}}">{{$search}}</a></li>
+                                      @endforeach
+                                  </ul>
                             </div>
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">
-                                     Find a Class
-                                </button>
-                            </span>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
+                                {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
+                                <ul id="locaction-autocomplete" class="dropdown-menu category-select" >
+                                    <li id="near-me" class="heading locator"><span class="icon icon-locator-pink-small"></span>Use my Current Location</li>
+                                    <div class="autocomplete-content"></div>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            {{ Form::hidden('city', null) }}
+                            {{ Form::submit('Find a class' , ['class' => 'btn btn-primary btn-block']) }}
                         </div>
                     </div>
                 {{ Form::close() }}
             </div>
-            <div class="row no-gutter hidden-md hidden-lg">
+            <div class="row mt10 mb10 sm-inline-gutter visible-xs-block visible-sm-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
-                    <div class="col-sm-12">
-                        <div class="input-group with-addon mb10">
-                            <div class="input-group-addon first"><span class="icon icon-search"></span></div>
-                            {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...']) }}
+                    <div class="col-xs-10">
+                        <div class="input-group">
+                            <div class="input-group-addon"><span class="icon icon-search"></span></div>
+                            {{ Form::text('search', null, ['class' => 'form-control input-lg', 'placeholder' => 'I am looking for....Running']) }}
                         </div>
-                        <div class="input-group with-addon mb10">
-                            <div class="input-group-addon"><span class="icon icon-pointer"></span> </div>
-                            {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete']) }}
-                        </div>
-                        <div class="input-group with-addon mb10">
-                            <div class="input-group-addon"><span class="icon icon-distance"></span></div>
-                            {{ Form::select( 'distance' , array_flip(Config::get('evercise.radius')), (!empty($radius) ? $radius : Config::get('evercise.default_radius')), ['class' => 'form-control mr50']) }}
-                        </div>
-                        <button class="btn btn-primary center-block md-btn-block" type="submit">
-                             Find a Class
-                        </button>
                     </div>
+                    <div class="col-xs-2">
+                        <div class="btn-find-me">
+                            {{ Form::hidden('location', null ) }}
+                            {{ Form::hidden('city', null) }}
+                            {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator', 'id' => 'mobile-sub']) }}
+                        </div>
+
+                    </div>
+
                 {{ Form::close() }}
             </div>
         </div>
     </div>
     <div class="container">
-        <div class="row mt10">
-            <div class="col-md-4 text-center">
-                <div class="panel-body">
-                    <div class="underline">
-                        <h2>{{ Html::linkRoute('general.about', 'What is Evercise', null, ['class' => 'text-dark']) }}</h2>
-                    </div>
-                    <div class="home-assets">
-                        {{ image('img/home/wie.png', 'what is evercise', ['class' => 'img-responsive center-block']) }}
-                    </div>
-                    <div class="caption">
-                        <p>Evercise is the exciting new Pay As You Go fitness community that’s flexible enough to fit in with your modern lifestyle. Evercise unites talented trainers with an active community who want more fun and freedom from their fitness routine. </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center">
-                <div class="panel-body">
-                    <div class="underline">
-                        <h2>{{ Html::linkRoute('general.about', 'Why join Evercise', null, ['class' => 'text-dark']) }}</h2>
-                    </div>
-                    <div class="home-assets">
-                        {{ image('img/home/wje.png', 'why join evercise', ['class' => 'img-responsive center-block']) }}
-                    </div>
-                    <div class="caption">
-                         <p>We want fitness to be fun and flexible rather than routine and restricted. By bringing together trainers and a keen community of fitness enthusiasts Evercise really does benefit everyone. Evercise makes fitness fun again, emphasising social, group exercise that fits in with your life</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 text-center">
-                <div class="panel-body">
-                    <div class="underline">
-                        <h2>{{ Html::linkRoute('general.about', 'How it works', null, ['class' => 'text-dark']) }}</h2>
-                    </div>
-                    <div class="home-assets">
-                        {{ image('img/home/hiw.png', 'how it works', ['class' => 'img-responsive center-block']) }}
-                    </div>
-                    <div class="caption">
-                         <p>Whether you’re a trainer or a participant Evercise is all about convenience. Once you’ve created an Evercise profile our smart platform helps trainers to find participants and participants to find their perfect class. All your booking and scheduling is done right here on Evercise.</p>
-                    </div>
-                </div>
-            </div>
-
-        <!--
-            @foreach($articles as $a)
-                <div class="col-sm-4 text-center">
-                    <div class="panel-body">
-                        <div class="underline">
-                            <h2>{{ $a->title }}</h2>
+       @foreach($blocks as $index => $block)
+            @if(!isset($block['background']))
+                <div class="row">
+                   <div class="col-sm-12">
+                       <div class="page-header">
+                           <div class="row">
+                                <div class="col-sm-9">
+                                    <span class="text-primary text-larger">{{ $block['title'] }}</span>
+                                </div>
+                                <div class="col-sm-3 text-right hidden-sm hidden-xs">
+                                    <a class="view-all-btn" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
+                                </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               <div class="row">
+                   @foreach($block['results']->hits as $result)
+                        <div class="col-md-3">
+                            @include('v3.classes.class_block')
                         </div>
-
-                        {{ image($a->main_image, $a->title, ['class' => 'img-responsive']) }}
-                        <div class="caption">
-                            <p>{{ $a->intro }}</p>
+                   @endforeach
+               </div>
+           @endif
+       @endforeach
+       <div class="row visible-lg-block visible-md-block">
+            @foreach($homepage['category_blocks'] as $style => $category)
+                <div class="col-sm-4">
+                    <div class="category-block {{$style == 0 ? 'pink'  : ($style == 1 ? 'yellow' : 'black') }}" style="background-image: url('{{url().$category['image']}}')">
+                        <div class="mask"></div>
+                        <div class="content">
+                            <h3 class="text-white">{{ $category['title'] }}</h3>
+                            <a href="{{$category['link']}}" class="btn {{$style == 0 ? 'btn-primary'  : ($style == 1 ? 'btn-warning' : 'btn-black') }} btn-rounded">View all classes ></a>
                         </div>
                     </div>
                 </div>
             @endforeach
-        -->
-        </div>
+       </div>
     </div>
-    <div class="container-fluid bg-grey">
-        <div class="container mt20">
-            <div class="underline">
-                 <h1 class="text-center">Featured Fitness Classes</h1>
-            </div>
-            <div class="row">
-                <div id="image-carousel" class="carousel slide" data-interval="true">
-                    <!-- Indicators -->
-                      <ol class="carousel-indicators">
-                        @if(count($featured->hits) > 3)
-                            <?php $i = 0 ?>
-                            @foreach($featured->hits as $index => $featured_class)
-
-                                @if($index % 3 === 0)
-                                    <li data-target="#image-carousel" data-slide-to="{{$i}}" class="{{ $index == 0 ? 'active' : null }}"></li>
-                                    <?php $i++ ?>
-                                @endif
-
-                            @endforeach
-                        @endif
-                      </ol>
-                      <div class="carousel-inner mb50">
-                            <?php $i = 0 ?>
-                            @foreach($featured->hits as $index => $featured_class)
-                                @if($index % 3 === 0)
-                                    {{ $index > 0 ? '</div></div>' : null }}
-                                    <div class="item {{ $index === 0 ? 'active' : null }}">
-                                    <?php $i++ ?>
-                                    <div class="row">
-                                @endif
-                                      <div class="col-md-4">
-                                         @include('v3.classes.class_module', ['class' => $featured_class])
-                                     </div>
-
-                                @if($index == count($featured->hits) -1 )
-                                        </div>
+    @foreach($blocks as $block)
+        @if(isset($block['background']))
+            <div class="container-fluid black-gradient-mask" style="background-image: url('{{url().$block['background']}}')">
+                <div class="mask"></div>
+                <div class="container mt15">
+                    <div class="row">
+                       <div class="col-sm-12">
+                           <div class="page-header">
+                               <div class="row">
+                                    <div class="col-sm-9">
+                                        <span class="text-white text-larger">{{ $block['title'] }}</span>
                                     </div>
-                                @endif
-                            @endforeach
-                      </div>
+                                    <div class="col-sm-3 text-right hidden-sm hidden-xs">
+                                        <a class="view-all-btn" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
+                                    </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="row mt20 mb50">
+                        @foreach($block['results']->hits as $result)
+                            <div class="col-md-3 mb20">
+                                @include('v3.classes.class_block')
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
+            </div>
+        @endif
+    @endforeach
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <span class="text-primary text-larger">What are you looking for?</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="trapezium">
+                <div id="row-1" class="col-sm-12 mb30">
+                </div>
+                @foreach($homepage['category_tags'] as $tag)
+                    <div class="trapezium-item">
+                        <a href="/uk/london?search={{$tag}}" class="btn btn-rounded btn-white-primary">{{$tag}}</a>
+                    </div>
+
+                @endforeach
             </div>
         </div>
     </div>

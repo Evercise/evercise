@@ -85,6 +85,7 @@ class AdminAjaxController extends AdminController
                 $r->_source->search,
                 $r->_source->size,
                 $r->_source->results,
+                $r->_source->radius,
                 $r->_source->user_id,
                 $r->_source->name,
                 $r->_source->date
@@ -141,6 +142,70 @@ class AdminAjaxController extends AdminController
         $this->download_send_headers("search_stats_" . date("Y-m-d") . ".csv");
 
         return $this->array2csv($rows);
+    }
+
+
+    public function importStatsToDB()
+    {
+        $this->elastic = new Elastic(
+            Geotools::getFacadeRoot(),
+            $this->evercisegroup,
+            Es::getFacadeRoot(),
+            $this->log
+        );
+        $search = $this->input->get('search');
+
+        $from = $this->input->get('start', 0);
+        $size = $this->input->get('length', 200000);
+
+
+        $results = $this->elastic->searchStats(['size' => $size, 'from' => $from]);
+
+
+        $rows = [];
+
+        $allowed = [
+            'search',
+            'size',
+            'user_id',
+            'user_ip',
+            'radius',
+            'url',
+            'url_type',
+            'name',
+            'lat',
+            'lng',
+            'results'
+        ];
+
+        StatsModel::truncate();
+
+        $split = 1000;
+
+
+        foreach ($results->hits as $r) {
+            $row = [];
+            foreach ($allowed as $key) {
+                $row[$key] = $r->_source->{$key};
+            }
+            $row['created_at'] = $r->_source->date;
+
+            $rows[] = $row;
+
+            if(count($rows) == $split) {
+                StatsModel::insert($rows);
+                $rows = [];
+            }
+        }
+
+        StatsModel::insert($rows);
+
+
+        DB::select( DB::raw("UPDATE search_stats set search = replace(search, '?utm_source=Google', '') WHERE 1") );
+
+
+
+        return Redirect::to('/admin/search/stats');
     }
 
     public function download_send_headers($filename)
@@ -302,8 +367,8 @@ class AdminAjaxController extends AdminController
             $data = DB::table('evercisegroup_subcategories')->where('subcategory_id', $id)->delete();
 
 
-
             DB::table('subcategories')->where('id', $id)->delete();
+
             return Response::json(['success' => TRUE, 'id' => $id]);
         }
 

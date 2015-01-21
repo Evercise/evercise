@@ -571,23 +571,21 @@ class PaymentController extends BaseController
 
             $trainer = $evercisegroup->user()->first();
 
-            /**
-             * $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession];
-             */
+
+            $trainer_notify[$trainer->id][] = ['user' => $this->user, 'trainer' => $trainer, 'session' => $evercisesession, 'group' => $evercisegroup, 'transaction' => $transaction];
+
 
             event('session.joined', [$this->user, $trainer, $evercisesession, $evercisegroup, $transaction]);
 
+            //event('trainer.session.joined', [$this->user, $trainer, $evercisesession, $evercisegroup, $transaction]);
+
         }
 
-        /**
-         * We should do something like this soon!!
-         * Group all Trainer sessions that a single user has joined and send him a email
-         *
-         * foreach($trainer_notify as $trainer_id => $params) {
-         * event('trainer.session.joined', [$params]);
-         * }
 
-         */
+        foreach($trainer_notify as $trainerId => $sessionDetails) {
+            event('trainer.session.joined', [$trainerId, $sessionDetails]);
+        }
+
         //$token, $transactionId, $paymentMethod, $cart = [], $coupon = 0, $payer_id = 0
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 

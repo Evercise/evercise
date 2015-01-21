@@ -13,7 +13,8 @@ use Link;
 use Place;
 use Sentry;
 
-class SearchController extends AjaxBaseController {
+class SearchController extends AjaxBaseController
+{
 
     protected $evercisegroup;
     protected $sentry;
@@ -72,7 +73,7 @@ class SearchController extends AjaxBaseController {
      */
     public function parseUrl($all_segments = '')
     {
-        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', false));
+        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', FALSE));
 
 
         if ($link) {
@@ -88,11 +89,12 @@ class SearchController extends AjaxBaseController {
                     return $this->show($link->getClass);
                     break;
             }
-        } elseif (!$link && !$this->input->get('location', false) && $all_segments != '') {
+        } elseif (!$link && !$this->input->get('location', FALSE) && $all_segments != '') {
 
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
 
             $input['allsegments'] = '';
+
             return $this->redirect->route(
                 'search.parse',
                 $input
@@ -108,12 +110,12 @@ class SearchController extends AjaxBaseController {
      *
      * @return Response
      */
-    public function search($area = false)
+    public function search($area = FALSE)
     {
         $input = array_filter($this->input->all());
 
-        $landing = false;
-        if(!empty($input['landing'])) {
+        $landing = FALSE;
+        if (!empty($input['landing'])) {
             $landing = $input['landing'];
             unset($input['landing']);
         }
@@ -171,7 +173,7 @@ class SearchController extends AjaxBaseController {
         }
 
         $radius = $this->input->get('radius');
-        if(!$radius) {
+        if (!$radius) {
             $radius = $this->input->get('distance', $this->config->get('evercise.default_radius'));
         }
 
@@ -187,9 +189,9 @@ class SearchController extends AjaxBaseController {
         $search = $this->input->get('search');
 
         $params = [
-            'size' => $size,
-            'from' => (($page - 1) * $size),
-            'sort' => $sort,
+            'size'   => $size,
+            'from'   => (($page - 1) * $size),
+            'sort'   => $sort,
             'radius' => (in_array(
                 $radius,
                 array_values($this->config->get('evercise.radius'))
@@ -200,12 +202,11 @@ class SearchController extends AjaxBaseController {
         ];
 
 
-        if(!empty($input['featured'])) {
-            $params['featured'] = true;
+        if (!empty($input['featured'])) {
+            $params['featured'] = TRUE;
         }
 
         $searchResults = $this->search->getResults($area, $params);
-
 
 
         /* Overide $params arr so it will show the map results only */
@@ -222,15 +223,14 @@ class SearchController extends AjaxBaseController {
 
 
         $data = [
-            'area' => $area,
-            'places' => json_encode($mapResults),
+            'area'           => $area,
+            'places'         => json_encode($mapResults),
             'evercisegroups' => $paginatedResults,
-            'radius' => $radius,
+            'radius'         => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
-            'page' => $page,
-            'search' => $search
+            'page'           => $page,
+            'search'         => $search
         ];
-
 
 
     }
@@ -240,17 +240,19 @@ class SearchController extends AjaxBaseController {
         $sort = $this->input->get('sort', $sort);
 
         $options = [
-            'price_asc' => ['default_price' => 'asc'],
-            'price_desc' => ['default_price' => 'desc'],
-            'duration_asc' => ['duration_price' => 'asc'],
-            'duration_desc' => ['duration_price' => 'desc'],
-            'viewed_asc' => ['counter' => 'asc'],
-            'viewed_desc' => ['counter' => 'desc'],
-            'nearme' => [
+            'price_asc'     => ['default_price' => 'asc'],
+            'price_desc'    => ['default_price' => 'desc'],
+            'duration_asc'  => ['default_duration' => 'asc'],
+            'duration_desc' => ['default_duration' => 'desc'],
+            'viewed_asc'    => ['counter' => 'asc'],
+            'viewed_desc'   => ['counter' => 'desc'],
+            'newest'        => ['created_at' => 'asc'],
+            'oldest'        => ['created_at' => 'desc'],
+            'nearme'        => [
                 "_geo_distance" => [
                     'venue.location' => $this->elastic->getLocationHash($area->lat, $area->lng),
-                    "order" => "asc",
-                    "unit" => "mi"
+                    "order"          => "asc",
+                    "unit"           => "mi"
                 ]
             ]
         ];
@@ -259,7 +261,7 @@ class SearchController extends AjaxBaseController {
             return $options[$sort];
         }
 
-        return false;
+        return FALSE;
 
     }
 

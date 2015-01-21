@@ -14,7 +14,7 @@ Navigation.prototype = {
     init: function () {
         if (this.hero.length > 0) {
             this.addHeroClass();
-            this.checkScrollPosition();
+            //this.checkScrollPosition();
         }
     },
     addHeroClass: function () {

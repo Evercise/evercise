@@ -1,8 +1,7 @@
 function profileNav(nav){
     this.nav = nav;
     this.scroll = 0;
-    this.top = $('#nav').height();
-    this.stickyTop = (this.nav.offset().top - this.nav.height());
+    this.stickyTop = this.nav.offset().top;
     this.url = document.URL;
     this.lastOfUrl = '';
     this.init();
@@ -40,12 +39,10 @@ profileNav.prototype = {
     },
     addStickyClass: function(){
         this.nav.addClass('navbar-fixed-top');
-        this.nav.css({'top': this.top })
         $('.profile-panels').css({'margin-top': this.nav.outerHeight(true) })
     },
     removeStickyClass: function(){
         this.nav.removeClass('navbar-fixed-top');
-        this.nav.css({'top':0 })
         $('.profile-panels').css({'margin-top':0 })
     },
     changeTabs: function(e){

@@ -33,7 +33,7 @@
                                         <p>{{ $row['name'] }}</p>
                                     </td>
                                     <td  colspan="3">
-                                        <p>{{ $row['classes'] }} classes</p>
+                                        <p>&pound;{{ $row['max_class_price'] . ' ' . $row['classes'] }} class package</p>
                                     </td>
                                     <td>
                                         <p>&pound;{{ $row['price'] }}</p>

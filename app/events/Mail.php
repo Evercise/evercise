@@ -200,7 +200,7 @@ class Mail
     public function withdrawCompleted($user, $transaction, $balance)
     {
         $params = [
-            'subject'     => 'Confirmation of Withdraw',
+            'subject'     => 'Confirmation of Withdrawal',
             'view'        => 'v3.emails.user.withdraw_completed',
             'user'        => $user,
             'transaction' => $transaction,
@@ -339,14 +339,18 @@ class Mail
      * @param $classId
      *
      * Event session.upcoming_session
+     * Single event fires emails to all users and the trainer involved in the session.
      */
-    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId)
+    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId)
     {
         foreach ($userList as $name => $details) {
             $email = $details['email'];
+
+            $transaction = \Transactions::find($details['transactionId']);
+            $bookingCodes = $transaction->makeBookingHashBySession($sessionId);
+
             $params = [
                 'subject'       => 'Evercise class reminder',
-                'title'         => 'EVERCISE CLASS REMINDER',
                 'view'          => 'v3.emails.user.session_remind',
                 'userList'      => $userList,
                 'group'         => $group,
@@ -359,6 +363,7 @@ class Mail
                 'classId'       => $classId,
                 'style'         => 'blue',
                 'transactionId' => $details['transactionId'],
+                'bookingCodes'  => $bookingCodes,
                 'image'         => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
                 'link_url'      => $this->url->to('/profile/' . $group->slug)
             ];
@@ -532,6 +537,11 @@ class Mail
         $this->send($trainer->email, $params);
     }
 
+    /**
+     * @param $trainer
+     *
+     * Event: trainer.complete_profile
+     */
     public function trainerWhyNotCompleteProfile($trainer)
     {
         $params = [
@@ -580,30 +590,6 @@ class Mail
 
     }
 
-    /**
-     * @param $user
-     * @param $trainer
-     * @param $evercisegroup
-     * @internal param $session
-     */
-    public function userJoinedTrainersSession(
-        $user,
-        $trainer,
-        $evercisegroup
-    ) // Not actually used as it's the same as trainerJoinSession
-    {
-        $params = [
-            'subject'       => 'User Joined Your Class',
-            'view'          => 'v3.emails.trainer.user_joined_class',
-            'trainer'       => $trainer,
-            'evercisegroup' => $evercisegroup,
-            'user'          => $user
-        ];
-
-        $this->send($trainer->email, $params);
-
-    }
-
 
     /**
      * @param $userList
@@ -615,6 +601,7 @@ class Mail
      * @param $classId
      *
      * Event: session.upcoming_session
+     * Single event fires emails to all users and the trainer involved in the session.
      */
     public function trainerSessionRemind(
         $userList,
@@ -703,25 +690,57 @@ class Mail
      * @param $evercisegroup
      * @param $transactionId
      *
-     * Event: session.joined
+     * Event: trainer.session.joined
      */
-    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transaction)
+    public function userJoinedTrainersSession($trainerId, $sessionDetails)
     {
+        // This is fired once for each batch of classes belonging to a single trainer, so the Trainer only gets a single email per booking.
+
+        $classes = [];
+        foreach($sessionDetails as $sd)
+        {
+            $this->log->info('SESSION BOOKED: '.$sd['session']->id);
+
+            $trainer = $sd['trainer'];
+            $user = $sd['user'];
+
+            if (! isset($classes[$sd['group']->id]))
+            {
+                $classes[$sd['group']->id] = [
+                    'transaction' => $sd['transaction'],
+                    'session' => $sd['session'],
+                    'codes' => $sd['transaction']->makeBookingHashBySession($sd['session']->id)
+                ];
+            }
+        }
 
         $params = [
             'subject'       => 'A User just Joined your Class',
-            'view'          => 'v3.emails.trainer.user_joined_class',
-            'user'          => $user,
+            'view'          => 'v3.emails.trainer.user_joined_classes',
             'trainer'       => $trainer,
-            'session'       => $session,
-            'evercisegroup' => $evercisegroup,
-            'transaction'   => $transaction,
+            'user'          => $user,
+            'classes'       => $classes,
             'link_url'      => $this->url->to('/'),
             'image'         => image('assets/img/email/user_booking_confirmation.jpg',
                 'someone has joined your classs'),
         ];
 
         $this->send($trainer->email, $params);
+
+    }
+
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $session
+     * @param $evercisegroup
+     * @param $transactionId
+     *
+     * Event: session.joined
+     */
+    public function trainerJoinSession($user, $trainer, $session, $evercisegroup, $transaction)
+    {
+        // This is fired for every sessionmember that is created.
 
     }
 

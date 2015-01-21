@@ -1,3 +1,7 @@
+.btn{
+  border: 1px solid transparent;
+}
+
 .btn-fb {
   .button-variant(@btn-fb-color; @btn-fb-bg; @btn-fb-border);
 }
@@ -12,9 +16,29 @@
   .button-variant(@btn-white-color; @gray-mob; darken(@gray-mob, 1%));
 }
 
+.btn-black{
+  background: #000;
+  color: @white;
+  border-color: #000 ;
+  &:hover, &:active, &:focus{
+    background: fade(#000, 20%);
+    color: @white;
+  }
+}
+
 .btn-grey {
   .button-variant(@btn-grey-color; @btn-grey-bg; @btn-grey-border);
   &:hover{
+    color: @white;
+  }
+}
+
+.btn-white-primary{
+  background: @white;
+  color: @brand-primary;
+  border-color: @brand-primary ;
+  &:hover, &:active, &:focus{
+    background: @brand-primary;
     color: @white;
   }
 }
@@ -24,6 +48,19 @@
   border: 0;
   outline: 0;
   background-color: transparent;
+}
+
+.trapezium{
+  text-align: center;
+  .trapezium-item{
+    display: inline;
+    a{
+      margin: 0 10px;
+      @media (max-width: @grid-float-breakpoint){
+        margin: 10px;
+      }
+    }
+  }
 }
 
 .btn-form-control{
@@ -91,6 +128,26 @@
   .sprite(-1291px, -314px);
 }
 
+.btn-find-me{
+  position: relative;
+  &:after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -20px;
+    margin-top: -20px;
+    height:40px;
+    width:40px;
+    pointer-events: none;
+    .sprite(-200px, -760px);
+  }
+}
+.btn-rounded{
+  border-radius: 20px;
+}
+
 .stripe-button-el{
   .button-variant(@btn-info-color; @btn-info-bg; @btn-info-border);
   &.btn{
@@ -154,7 +211,7 @@
     -moz-appearance: none;
     padding: 0 7px;
     border: 0;
-    height: 40px;
+    height: @input-height-base;
     width: 100%;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -180,7 +237,11 @@
   }
 }
 
-
+.view-all-btn{
+  color: #4a90e2;
+  float: right;
+  margin-top: 4px;
+}
 
 @media (max-width: @screen-xs-max) {
   .sm-btn-block{

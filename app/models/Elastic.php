@@ -66,29 +66,28 @@ class Elastic
 
         $search = FALSE;
 
-        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.15;
+//        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.15;
+//        $searchParams['body']['min_score'] = 0.00;
 
 
         if (!empty($params['search'])) {
+            $configIndex = implode(',', array_map(function ($v, $k) { return $k.'^'.$v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
-
-                'flt' => [
-                    'like_text'       => $params['search'],
-                    'max_query_terms' => 12,
-
+                'multi_match' => [
+                    'query'  => $params['search'],
+                    'fields' => explode(',',$configIndex)
                 ],
-
             ];
             $search = TRUE;
         }
 
-        if(!empty($params['price'])) {
+        if (!empty($params['price'])) {
 
             $price = [];
-            if(!empty($params['price']['under'])) {
+            if (!empty($params['price']['under'])) {
                 $price['lte'] = $params['price']['under'];
             }
-            if(!empty($params['price']['over'])) {
+            if (!empty($params['price']['over'])) {
                 $price['gte'] = $params['price']['over'];
             }
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['default_price' => $price];
@@ -156,7 +155,6 @@ class Elastic
             }
         }
 
-
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
         $result_object = json_decode(json_encode($result), FALSE);
@@ -213,7 +211,7 @@ class Elastic
      * @param int $id
      * @return mixed
      */
-    public  function getSingle($id = 0)
+    public function getSingle($id = 0)
     {
         $searchParams['index'] = $this->elastic_index;
         $searchParams['type'] = $this->elastic_type;
@@ -331,6 +329,7 @@ class Elastic
                 'capacity'         => round($a->futuresessions()->avg('tickets'), 0),
                 'default_duration' => (int)$a->default_duration,
                 'default_price'    => (double)$a->default_price,
+                'created_at'       => $a->created_at->toDateTimeString(),
                 'published'        => ($a->published == 0 ? FALSE : TRUE),
                 'featured'         => ($a->isfeatured() ? TRUE : FALSE),
                 'user'             => [
@@ -409,7 +408,7 @@ class Elastic
             foreach ($a->subcategories()->get() as $sub) {
                 if (!in_array($sub->name, $categories)) {
                     $categories[] = $sub->name;
-                    if(!empty($sub->associations)) {
+                    if (!empty($sub->associations)) {
                         $categories[] = $sub->associations;
                     }
 
@@ -422,7 +421,7 @@ class Elastic
                 }
             }
 
-            $index['categories'] = implode(', ', $categories);
+            $index['categories'] = str_replace(',',' , ',implode(',', $categories));
 
             if ($price > 0) {
                 $index['default_price'] = $price;
@@ -446,7 +445,7 @@ class Elastic
 
         $this->log->info('Indexing Completed ' . date('d H:i:s'));
 
-        return 'classes: '.$total_indexed . ' sessions: ' . $with_session;
+        return 'classes: ' . $total_indexed . ' sessions: ' . $with_session;
 
 
     }
@@ -542,20 +541,21 @@ class Elastic
                         'venue_id'         => ['type' => 'integer', 'include_in_all' => TRUE],
                         'user_id'          => ['type' => 'integer', 'include_in_all' => TRUE],
                         'gender'           => ['type' => 'integer'],
-                        'categories'       => ['type' => 'string'],
+                        'categories'       => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                         'default_price'    => ['type' => 'integer'],
                         'capacity'         => ['type' => 'integer'],
                         'default_duration' => ['type' => 'integer'],
                         'published'        => ['type' => 'boolean'],
                         'description'      => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                         'image'            => ['type' => 'string'],
+                        'created_at'       => ['type' => 'date', 'format' => 'yyyy-MM-dd HH:mm:ss'],
                         'venue'            => [
                             'dynamic'    => TRUE,
                             'properties' => [
                                 'id'       => ['type' => 'integer'],
-                                'name'     => ['type' => 'string', 'include_in_all' => TRUE],
-                                'address'  => ['type' => 'string', 'include_in_all' => TRUE],
-                                'postcode' => ['type' => 'string', 'include_in_all' => TRUE],
+                                'name'     => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'address'  => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'postcode' => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                                 'town'     => ['type' => 'string', 'include_in_all' => TRUE],
                                 'location' => [
                                     'type'      => 'geo_point',
@@ -571,10 +571,10 @@ class Elastic
                             'dynamic'    => TRUE,
                             'properties' => [
                                 'id'           => ['type' => 'integer'],
-                                'email'        => ['type' => 'string', 'include_in_all' => TRUE],
-                                'first_name'   => ['type' => 'string', 'include_in_all' => TRUE],
-                                'last_name'    => ['type' => 'string', 'include_in_all' => TRUE],
-                                'display_name' => ['type' => 'string', 'include_in_all' => TRUE],
+                                'email'        => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'first_name'   => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'last_name'    => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
+                                'display_name' => ['type' => 'string', 'index' => 'analyzed', 'include_in_all' => TRUE],
                                 'phone'        => ['type' => 'string'],
                                 'image'        => ['type' => 'string'],
                                 'directory'    => ['type' => 'string'],
@@ -692,7 +692,8 @@ class Elastic
      * Ping ElasticSearch Instance
      * @return bool
      */
-    public function ping() {
+    public function ping()
+    {
 
         return $this->elasticsearch->ping();
     }

@@ -146,7 +146,7 @@ class SendEmails extends Command {
 						'dateTime'=>$session->date_time,
 						'userList' =>$userList,
 						'trainer'=>$group->user,
-						'location'=>$group->venue->name,
+						'location'=>$group->venue->address.', '.$group->venue->town.', '.$group->venue->postcode,
 						'classId' => $group->id,
 						'sessionId' => $session->id,
 					];
@@ -182,7 +182,7 @@ class SendEmails extends Command {
 
 			}
 
-			Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
+			//Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
 		}
 		else
 		{

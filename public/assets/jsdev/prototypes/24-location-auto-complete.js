@@ -5,6 +5,8 @@ function LocationAutoComplete(input){
     this.mapOptions = {};
     this.address_components = [];
     this.town = 'london';
+    this.width = 0;
+    this.form;
     this.init();
 }
 LocationAutoComplete.prototype = {
@@ -44,37 +46,7 @@ LocationAutoComplete.prototype = {
     load: function(){
         if (google.maps != undefined && !this.autoCompleteStarted) {
             this.autoCompleteStarted = true;
-
-            var latlng  = new google.maps.LatLng(54.8, -4.6);
-
-            this.mapOptions = {
-                zoom: 5,
-                center: latlng ,
-                mapTypeControl: false,
-                panControl: false,
-                zoomControl: false,
-                streetViewControl: false,
-                componentRestrictions: {country: "uk"}
-            }
-
-            var self = this;
-
-            var autocomplete = new google.maps.places.Autocomplete(
-                document.getElementById(self.input.attr('id')),
-                this.mapOptions
-            );
-
-            google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                var place = autocomplete.getPlace();
-
-                self.address_components = place.address_components;
-
-                self.getTown();
-
-                self.updateCity();
-
-            });
-
+            this.addListeners();
         }
         else
         {
@@ -84,10 +56,45 @@ LocationAutoComplete.prototype = {
             }, 500);
         }
     },
-    getTown : function(){
+    addListeners : function(){
+        var self = this;
+        this.input.keyup( function() {
+            if( this.value.length < 2 ) return;
+            var service =  new google.maps.places.AutocompleteService();
+            var res = service.getPlacePredictions({ input: self.input.val() }, function(predictions, status){
+                if (status != google.maps.places.PlacesServiceStatus.OK) {
+                    return;
+                }
+                $('#locaction-autocomplete .autocomplete-content').html('');
+                for (var i = 0, prediction; prediction = predictions[i]; i++) {
+                    $('#locaction-autocomplete .autocomplete-content').append('<li><a href="'+prediction.description+'">'+ prediction.description +'</a></li>');
+                }
+            });
+        });
+        $(document).on('click', '#locaction-autocomplete .autocomplete-content a', $.proxy(this.changeLocation, this));
+    },
+    changeLocation : function(e){
+        e.preventDefault();
+        var value = $(e.target).attr('href');
+        var self = this;
+        geocoder = new google.maps.Geocoder();
+        this.form = this.input.closest('form');
+        geocoder.geocode({'address': value}, function(results, status) {
+            if (results[0] && status == 'OK') {
+                var address = results[0].formatted_address;
+                self.form.find('input[name="location"]').val(address);
+                self.getTown(results[0].address_components);
+                self.form.find('input[name="city"]').val(self.town);
+            }
+            else{
+                console.log(status);
+            }
+        })
+    },
+    getTown : function(address_components){
         var self = this;
 
-        var result = this.address_components;
+        var result = address_components;
 
         for (var i = 0; i < result.length; ++i) {
 
@@ -101,8 +108,5 @@ LocationAutoComplete.prototype = {
                 self.town = result[i].long_name ;
             }
         }
-    },
-    updateCity : function(){
-        this.form.find('input[name="city"]').val(this.town);
     }
 }
