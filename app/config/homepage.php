@@ -21,7 +21,7 @@ return [
         ],
         [
             'title' => 'Martial Arts',
-            'image' => '/img/home/ma.jpg',
+            'image' => '/img/home/martial-arts.jpg',
             'link'  => '/uk/london?search=martial+arts'
         ],
         [
