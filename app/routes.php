@@ -578,6 +578,9 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
     Route::get('modal/categories/{id?}',
         ['as' => 'ajax.admin.modal.categories', 'uses' => 'AdminAjaxController@modalClassCategories']);
 
+    Route::get('/importStatsToDB',
+        ['as' => 'ajax.admin.import.stats', 'uses' => 'AdminAjaxController@importStatsToDB']);
+
 
     Route::put('modal/categories',
         ['as' => 'ajax.admin.modal.categories.save', 'uses' => 'AdminAjaxController@saveClassCategories']);
