@@ -7322,61 +7322,61 @@ a.bg-light-grey:hover {
     float: right;
   }
 }
-.navbar-default .navbar-nav li {
+.navbar-default .navbar-nav li.nav-list {
   margin: 0 8px;
 }
 @media (max-width: 992px) {
-  .navbar-default .navbar-nav li {
+  .navbar-default .navbar-nav li.nav-list {
     float: left;
   }
 }
-.navbar-default .navbar-nav li a {
+.navbar-default .navbar-nav li.nav-list a.nav-link {
   color: #ff1b7e;
   font-family: 'UniversLTStd59UltraCondensed';
   font-size: 20px;
   padding: 5px 18px;
 }
-.navbar-default .navbar-nav li.nav-btn {
+.navbar-default .navbar-nav li.nav-list.nav-btn {
   border: 1px solid #ff1b7e;
   border-radius: 3px;
 }
-.navbar-default .navbar-nav li.nav-btn:hover,
-.navbar-default .navbar-nav li.nav-btn:focus {
+.navbar-default .navbar-nav li.nav-list.nav-btn:hover,
+.navbar-default .navbar-nav li.nav-list.nav-btn:focus {
   border: 1px solid #ff1b7e;
   background: #ff1b7e;
 }
-.navbar-default .navbar-nav li.nav-btn:hover a,
-.navbar-default .navbar-nav li.nav-btn:focus a {
+.navbar-default .navbar-nav li.nav-list.nav-btn:hover a,
+.navbar-default .navbar-nav li.nav-list.nav-btn:focus a {
   color: #ffffff;
 }
-.navbar-default .navbar-nav li .nav-cart {
+.navbar-default .navbar-nav li.nav-list .nav-cart {
   background: #ff1b7e;
   color: #ffffff;
   font-size: 16px;
   border-radius: 3px;
 }
-.navbar-default .navbar-nav li .nav-cart:hover .icon,
-.navbar-default .navbar-nav li .nav-cart:focus .icon {
+.navbar-default .navbar-nav li.nav-list .nav-cart:hover .icon,
+.navbar-default .navbar-nav li.nav-list .nav-cart:focus .icon {
   background-image: url("../img/ev_site_icons_v2.png");
   background-position: -890px -370px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.navbar-default .navbar-nav li .nav-cart:hover .icon.active,
-.navbar-default .navbar-nav li .nav-cart:focus .icon.active {
+.navbar-default .navbar-nav li.nav-list .nav-cart:hover .icon.active,
+.navbar-default .navbar-nav li.nav-list .nav-cart:focus .icon.active {
   background-position: -890px -410px;
 }
-.navbar-default .navbar-nav li .nav-cart:hover .icon.hover:hover,
-.navbar-default .navbar-nav li .nav-cart:focus .icon.hover:hover,
-.navbar-default .navbar-nav li .nav-cart:hover .icon.active:hover,
-.navbar-default .navbar-nav li .nav-cart:focus .icon.active:hover {
+.navbar-default .navbar-nav li.nav-list .nav-cart:hover .icon.hover:hover,
+.navbar-default .navbar-nav li.nav-list .nav-cart:focus .icon.hover:hover,
+.navbar-default .navbar-nav li.nav-list .nav-cart:hover .icon.active:hover,
+.navbar-default .navbar-nav li.nav-list .nav-cart:focus .icon.active:hover {
   cursor: pointer;
   background-position: -890px -410px;
 }
-.navbar-default .navbar-nav li .nav-profile {
+.navbar-default .navbar-nav li.nav-list .nav-profile {
   height: 50px;
 }
-.navbar-default .navbar-nav li .nav-profile img {
+.navbar-default .navbar-nav li.nav-list .nav-profile img {
   height: 100%;
   float: right;
   margin: -7px 10px;
@@ -7389,14 +7389,23 @@ a.bg-light-grey:hover {
   top: 0;
   z-index: 999;
 }
-.nav-hero .navbar-nav li a {
+.nav-hero .navbar-nav li.nav-list a.nav-link {
   color: #ffffff;
 }
-.nav-hero .navbar-nav li.nav-btn {
+.nav-hero .navbar-nav li.nav-list.nav-btn {
   border: 1px solid #ffffff;
 }
-.nav-hero .navbar-nav li.nav-btn:hover a {
+.nav-hero .navbar-nav li.nav-list.nav-btn:hover a {
   color: #ffffff;
+}
+.nav-hero .nav-cart:hover,
+.nav-hero .nav-cart:focus {
+  color: #ff1b7e;
+}
+.nav-bar-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 /*
 .navbar-default{
@@ -10026,9 +10035,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .jumbotron {
   margin-bottom: 0;
 }
-.no-nav-change {
-  margin-top: 60px;
-}
 /* margins */
 .mt0 {
   margin-top: 0px;
@@ -10326,17 +10332,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
     left: 0!important;
     width: 100%!important;
   }
-}
-.login-drop .dropdown-menu .form-group a {
-  color: #383d48 !important;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  font-size: 14px!important;
-  padding: 0!important;
-}
-.login-drop .dropdown-menu .btn {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-  color: #ffffff !important;
-  font-size: 14px!important;
 }
 .category-select {
   padding: 0;

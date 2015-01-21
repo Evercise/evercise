@@ -19,12 +19,12 @@
         float: right;
       }
     }
-    li{
+    li.nav-list{
       margin: 0 8px;
       @media (max-width: @grid-float-breakpoint) {
         float: left;
       }
-      a{
+      a.nav-link{
         color: @brand-primary;
         font-family: @font-family-condensed;
         font-size: 20px;
@@ -74,8 +74,8 @@
   top: 0;
   z-index: 999;
   .navbar-nav {
-    li {
-      a {
+    li.nav-list {
+      a.nav-link {
         color: @white;
       }
       &.nav-btn{
@@ -88,8 +88,18 @@
       }
     }
   }
+  .nav-cart{
+    &:hover, &:focus{
+        color: @brand-primary;
+    }
+  }
 }
 
+.nav-bar-bottom{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
 
 /*
 .navbar-default{
