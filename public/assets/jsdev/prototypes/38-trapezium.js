@@ -20,8 +20,6 @@ trapezium.prototype = {
             var n = 0;
             this.wrapper.find('.trapezium-item').each(function(i, obj){
                 btnWidth = btnWidth + $(obj).outerWidth(true);
-                console.log(btnWidth);
-                console.log(width);
                 if( btnWidth >= (width -20)){
 
                     remaining = btnWidth - width;

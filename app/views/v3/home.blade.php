@@ -4,7 +4,7 @@
           <div class="carousel-inner">
             @foreach($slider as $index => $sl)
                  <div class="item {{ $index == 0 ? 'active': null }}">
-                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}')">
+                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}');">
                         <div class="jumbotron">
                           <div class="container text-center">
                             <h1 class="text-white mb0"> {{ $sl['name'] }}</h1>
@@ -31,16 +31,20 @@
                                   {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...', 'data-toggle' => "dropdown",  'autocomplete' => 'off']) }}
                                    <ul class="dropdown-menu category-select" >
                                       <li class="heading">Popular Searches</li>
-                                      <li><a href="judo">Judo</a></li>
-                                      <li><a href="something bigger">something bigger</a></li>
+                                      @foreach($homepage['popular_searches'] as $search)
+                                            <li><a href="{{$search}}">{{$search}}</a></li>
+                                      @endforeach
                                   </ul>
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
-                                {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete' ]) }}
-
+                                {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
+                                <ul id="locaction-autocomplete" class="dropdown-menu category-select" >
+                                    <li id="near-me" class="heading locator"><span class="icon icon-locator-pink-small"></span>Use my Current Location</li>
+                                    <div class="autocomplete-content"></div>
+                                </ul>
                             </div>
                         </div>
 
@@ -61,7 +65,9 @@
                     </div>
                     <div class="col-xs-2">
                         <div class="btn-find-me">
-                            {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg']) }}
+                            {{ Form::hidden('location', null ) }}
+                            {{ Form::hidden('city', null) }}
+                            {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator', 'id' => 'mobile-sub']) }}
                         </div>
 
                     </div>
@@ -99,11 +105,11 @@
        <div class="row visible-lg-block visible-md-block">
             @foreach($homepage['category_blocks'] as $style => $category)
                 <div class="col-sm-4">
-                    <div class="category-block {{$style == 1 ? 'pink'  : ($style == 2 ? 'yellow' : 'black') }}" style="background-image: url('{{url().$category['image']}}')">
+                    <div class="category-block {{$style == 0 ? 'pink'  : ($style == 1 ? 'yellow' : 'black') }}" style="background-image: url('{{url().$category['image']}}')">
                         <div class="mask"></div>
                         <div class="content">
                             <h3 class="text-white">{{ $category['title'] }}</h3>
-                            <a href="{{$category['link']}}" class="btn btn-primary btn-rounded">View all classes ></a>
+                            <a href="{{$category['link']}}" class="btn {{$style == 0 ? 'btn-primary'  : ($style == 1 ? 'btn-warning' : 'btn-black') }} btn-rounded">View all classes ></a>
                         </div>
                     </div>
                 </div>

@@ -1,26 +1,26 @@
 .category-block{
+  background-size: cover;
   position: relative;
   text-align: center;
-  background: @gray-darker;
   border-radius:  @border-radius-base*2;
   height: 150px;
   margin: 50px 0;
   &.pink{
     .mask{
       border-radius:  @border-radius-base*2;
-      .gradient-mask(@white, @brand-primary);
+      .gradient-mask(@brand-primary);
     }
   }
   &.yellow{
     .mask{
       border-radius:  @border-radius-base*2;
-      .gradient-mask(@white, @brand-warning);
+      .gradient-mask( @brand-warning);
     }
   }
   &.black{
     .mask{
       border-radius:  @border-radius-base*2;
-      .gradient-mask(@white, #000);
+      .gradient-mask(#000);
     }
   }
 

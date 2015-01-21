@@ -15,6 +15,10 @@ h1, h2, h3, h4, h5, h6,
 .page-header {
   margin-top: 55px;
   margin-bottom: 0;
+  @media (max-width: @grid-float-breakpoint){
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
 }
 
 // Links
@@ -35,7 +39,10 @@ a {
 }
 
 
-strong{ color: @gray-darker}
+strong{
+  color: @gray-darker;
+  -webkit-font-smoothing: antialiased;
+}
 
 .text-large{ font-size: 16px}
 .text-larger{ font-size: 18px}

@@ -27,7 +27,7 @@
         </nav>
 
     @endif
-    <div class="hero no-nav-change" style="background-image: url('{{url().'/'.$data['user']->directory.'/cover_'.$data['image']}}')">
+    <div class="hero" style="background-image: url('{{url().'/'.$data['user']->directory.'/cover_'.$data['image']}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">
               <ul class="nav navbar-nav nav-justified nav-no-float" id="scroll-to">
