@@ -1,13 +1,9 @@
 <nav class="navbar navbar-default" role="navigation" id="nav">
   <div class="container-fluid">
     <div class="navbar-header">
-
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
-
     </div>
-      <ul class="nav navbar-nav navbar-right mt10">
-
-
+      <ul class="nav navbar-nav navbar-right">
         <li class="dropdown cart-dropdown nav-list">
             <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(0)</a>
             {{ isset($cart) ? $cart : '' }}

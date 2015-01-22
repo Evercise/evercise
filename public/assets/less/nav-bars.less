@@ -10,11 +10,13 @@
     width: 96px;
     z-index: 9999;
     margin: 0!important;
+    height: 70px;
     .logo-sprite();
 
   }
   .navbar-nav{
     &.navbar-right{
+      margin-top: 18px;
       @media (max-width: @grid-float-breakpoint) {
         float: right;
       }
@@ -29,7 +31,7 @@
         font-family: @font-family-condensed;
         font-size: 20px;
         padding: 5px 18px;
-
+        line-height: 22px;
       }
       a.nav-cart{
         background: @brand-primary;
@@ -45,8 +47,6 @@
           border: 1px solid @brand-primary;
           background: @brand-primary;
           a{
-            padding: 0px 18px;
-            line-height: 37px;
             color: @white;
           }
         }

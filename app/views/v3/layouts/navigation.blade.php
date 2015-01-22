@@ -5,7 +5,7 @@
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
 
     </div>
-      <ul class="nav navbar-nav navbar-right mt10">
+      <ul class="nav navbar-nav navbar-right">
         <li class="nav-btn nav-list">{{HTML::linkRoute('register', 'Join' , null , ['title'=>'Register Here', 'class' => Route::currentRouteName() == 'register' ? 'nav-link active' : 'nav-link'])}}</li>
         <li class="dropdown  login-drop nav-list">
             <a href="#" title="Login Here" class="dropdown-toggle nav-link" data-toggle="dropdown">Login</a>

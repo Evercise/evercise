@@ -7314,9 +7314,13 @@ a.bg-light-grey:hover {
   width: 96px;
   z-index: 9999;
   margin: 0!important;
+  height: 70px;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -40px -72px;
+  background-position: -40px -68px;
   overflow: hidden;
+}
+.navbar-default .navbar-nav.navbar-right {
+  margin-top: 18px;
 }
 @media (max-width: 992px) {
   .navbar-default .navbar-nav.navbar-right {
@@ -7336,6 +7340,7 @@ a.bg-light-grey:hover {
   font-family: 'UniversLTStd59UltraCondensed';
   font-size: 20px;
   padding: 5px 18px;
+  line-height: 22px;
 }
 .navbar-default .navbar-nav li.nav-list a.nav-cart {
   background: #ff1b7e;
@@ -7355,8 +7360,6 @@ a.bg-light-grey:hover {
 }
 .navbar-default .navbar-nav li.nav-list.nav-btn:hover a,
 .navbar-default .navbar-nav li.nav-list.nav-btn:focus a {
-  padding: 0px 18px;
-  line-height: 37px;
   color: #ffffff;
 }
 .navbar-default .navbar-nav li.nav-list .nav-profile {
