@@ -95,7 +95,7 @@
                </div>
                <div class="row">
                    @foreach($block['results']->hits as $result)
-                        <div class="col-md-3">
+                        <div class="col-sm-3">
                             @include('v3.classes.class_block')
                         </div>
                    @endforeach

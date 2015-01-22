@@ -9193,7 +9193,7 @@ fieldset[disabled] .stripe-button-el.active {
 .class-block {
   margin: 0;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block {
     height: 85px;
     margin-bottom: 15px;
@@ -9216,7 +9216,7 @@ fieldset[disabled] .stripe-button-el.active {
   padding: 0;
   border: 0;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-img-wrapper {
     display: none;
   }
@@ -9227,7 +9227,7 @@ fieldset[disabled] .stripe-button-el.active {
 .class-block .class-body .icon {
   display: none;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-body .icon {
     display: inline-block;
   }
@@ -9235,7 +9235,7 @@ fieldset[disabled] .stripe-button-el.active {
 .class-block .class-body img {
   display: none;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-body img {
     display: block;
     height: 85px;
@@ -9245,7 +9245,7 @@ fieldset[disabled] .stripe-button-el.active {
     border-bottom-left-radius: 3px;
   }
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-title {
     border-top-right-radius: 3px;
     padding: 8px 10px 6px;
@@ -9263,7 +9263,7 @@ fieldset[disabled] .stripe-button-el.active {
   border: 0;
   border-left: 1px solid #dddddd;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-footer {
     border-bottom-left-radius: 0;
   }
@@ -9275,7 +9275,7 @@ fieldset[disabled] .stripe-button-el.active {
   width: 50%;
   line-height: 38px;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-footer aside {
     line-height: 29px;
   }
@@ -9292,7 +9292,7 @@ fieldset[disabled] .stripe-button-el.active {
   border-radius: 0;
   height: 38px;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .class-block .class-footer .btn {
     height: 29px;
     line-height: 16px;
