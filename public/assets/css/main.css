@@ -9241,7 +9241,6 @@ fieldset[disabled] .stripe-button-el.active {
     display: block;
     height: 85px;
     float: left;
-    border-right: 1px solid #dddddd;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
   }
@@ -9276,10 +9275,12 @@ fieldset[disabled] .stripe-button-el.active {
   float: left;
   width: 50%;
   line-height: 38px;
+  overflow: hidden;
 }
 @media (max-width: 767px) {
   .class-block .class-footer aside {
-    line-height: 29px;
+    height: 30px;
+    line-height: 30px;
   }
 }
 .class-block .class-footer .btn-wrapper {
@@ -9297,7 +9298,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 @media (max-width: 767px) {
   .class-block .class-footer .btn {
-    height: 29px;
+    height: 30px;
     line-height: 16px;
   }
 }
