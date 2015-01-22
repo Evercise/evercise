@@ -8,7 +8,7 @@ if(typeof angular != 'undefined') {
 
 
         // set initial sort
-        $scope.sort = 'id';
+        $scope.sort = '-score';
 
 
 
@@ -58,6 +58,7 @@ if(typeof angular != 'undefined') {
                 capacity: data.capacity,
                 sessions: data.futuresessions,
                 distance : data.distance,
+                score : data.score,
                 nextClassDate: data.futuresessions[0].date_time,
                 nextClassDuration: data.futuresessions[0].duration,
                 link: '/classes/' + data.slug,
