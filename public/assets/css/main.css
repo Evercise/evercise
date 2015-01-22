@@ -7355,6 +7355,8 @@ a.bg-light-grey:hover {
 }
 .navbar-default .navbar-nav li.nav-list.nav-btn:hover a,
 .navbar-default .navbar-nav li.nav-list.nav-btn:focus a {
+  padding: 0px 18px;
+  line-height: 37px;
   color: #ffffff;
 }
 .navbar-default .navbar-nav li.nav-list .nav-profile {
@@ -9261,6 +9263,7 @@ fieldset[disabled] .stripe-button-el.active {
   padding: 0;
   border: 0;
   border-left: 1px solid #dddddd;
+  overflow: hidden;
 }
 @media (max-width: 767px) {
   .class-block .class-footer {
@@ -9281,6 +9284,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-block .class-footer .btn-wrapper {
   border-top: 1px solid #ff1b7e;
+  background: #ff1b7e;
   border-bottom: 1px solid #cb507f;
   border-right: 1px solid #cb507f;
   line-height: inherit;
