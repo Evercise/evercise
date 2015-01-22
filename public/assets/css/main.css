@@ -1088,7 +1088,7 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 34px;
+  font-size: 49px;
 }
 h2,
 .h2 {
@@ -7120,6 +7120,7 @@ h6,
 .h5,
 .h6 {
   text-transform: uppercase;
+  margin: 15px 0 22px;
 }
 .page-header {
   margin-top: 55px;
@@ -7146,7 +7147,6 @@ a:focus {
   outline-offset: -2px;
 }
 strong {
-  color: #383d48;
   -webkit-font-smoothing: antialiased;
 }
 .text-large {
@@ -10028,6 +10028,26 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 .jumbotron {
   margin-bottom: 0;
+}
+.class-hero {
+  min-height: 640px;
+  -webkit-box-shadow: 0 0 60px 20px #000000;
+  box-shadow: 0 0 60px 20px #000000;
+}
+.class-hero .mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#38000000', endColorstr='#cc000000', GradientType=0);
+}
+.class-content {
+  margin-top: -567px;
 }
 /* margins */
 .mt0 {

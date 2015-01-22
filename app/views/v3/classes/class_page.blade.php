@@ -27,6 +27,54 @@
         </nav>
 
     @endif
+    <div class="hero hero-nav-change class-hero" style="background-image: url('{{url().'/'.$data['user']->directory.'/cover_'.$data['image']}}')">
+        <div class="mask"></div>
+    </div>
+    <div class="container class-content">
+        <div class="row text-white">
+            <div class="col-sm-12">
+                <span class="text-large">Breadcrumb <span class="text-primary">></span> Where you are</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="text-white lg">{{ $data['name'] }}</h1>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-6 mt15">
+                <strong class="text-white">Overview</strong>
+                <p class="mt1 text-white">{{ $data['description'] }}</p>
+                <div class="row mt50">
+                    <div class="col-xs-3">
+                        {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle']) , strtolower($data['user']->display_name)) ) }}
+                    </div>
+                    <div class="col-xs-9 mt25">
+                        <div class="condensed">
+                            <strong class="text-white">This class is presented by</strong>
+                        </div>
+                        <span>{{ Html::linkRoute('trainer.show', $data['user']->display_name, strtolower($data['user']->display_name), ['class' => 'text-primary'] )}}</span>
+                    </div>
+                </div>
+                <div class="panel panel-default mt40">
+                    <div class="panel-body">
+                        <strong>Location</strong><br>
+                        {{ $data['venue']->name }}<br>
+                        {{ $data['venue']->address }}
+                        <div id="map_canvas" class="map_canvas mt10" data-zoom="12" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lng }}"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                       <strong>Next Session</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
     <div class="hero" style="background-image: url('{{url().'/'.$data['user']->directory.'/cover_'.$data['image']}}')">
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
           <div class="container">
@@ -231,4 +279,6 @@
         </div>
         @endif
     </div>
+
+    -->
 @stop
