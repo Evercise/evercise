@@ -94,8 +94,8 @@
                    </div>
                </div>
                <div class="row">
-                   @foreach($block['results']->hits as $result)
-                        <div class="col-sm-3">
+                   @foreach($block['results']->hits as $index => $result)
+                        <div class="col-sm-3 {{ $index >= 3 ? 'hidden-sm hidden-xs' : null }}">
                             @include('v3.classes.class_block')
                         </div>
                    @endforeach
@@ -136,8 +136,8 @@
                        </div>
                     </div>
                     <div class="row mt20 mb50">
-                        @foreach($block['results']->hits as $result)
-                            <div class="col-md-3 mb20">
+                        @foreach($block['results']->hits as $index => $result)
+                            <div class="col-sm-3 mb20 {{ $index >= 3 ? 'hidden-sm hidden-xs' : null }}">
                                 @include('v3.classes.class_block')
                             </div>
                         @endforeach
