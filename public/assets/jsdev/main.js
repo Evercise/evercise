@@ -243,4 +243,6 @@ $(function(){
         new myLocation();
     }
 
+    $(".select-box").selectbox();
+
 });

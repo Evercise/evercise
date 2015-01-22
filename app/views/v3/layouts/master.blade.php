@@ -55,6 +55,7 @@
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mobile.custom.min.js') }}
     {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
+    {{ HTML::script('/assets/js/jquery.selectbox-0.2.min.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/cropper.min.js') }}
     {{ HTML::script('/assets/js/main.min.js?vs='.$version) }}

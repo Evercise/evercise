@@ -58,17 +58,46 @@
                 </div>
                 <div class="panel panel-default mt40">
                     <div class="panel-body">
-                        <strong>Location</strong><br>
+                        <strong class="text-large">Location</strong><br>
                         {{ $data['venue']->name }}<br>
                         {{ $data['venue']->address }}
-                        <div id="map_canvas" class="map_canvas mt10" data-zoom="12" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lng }}"></div>
+                        <div id="map_canvas" class="map_canvas mt10" data-zoom="8" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lng }}"></div>
                     </div>
                 </div>
+
             </div>
             <div class="col-sm-6">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                       <strong>Next Session</strong>
+                       {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $data['futuresessions'][0]->id, 'class' => 'add-to-class']) }}
+                           <strong class="text-large">Next Session</strong>
+                           <div class="row">
+                                <div class="col-sm-6">{{ date('l M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
+                                <div class="col-sm-3 text-center"><strong class="text-primary">£{{ $data['futuresessions'][0]->price }}</strong> </div>
+                                <div class="col-sm-3">
+                                    <select name="quantity" id="quantity" class="select-box {{isset($preview) ? 'disabled' : null}}">
+                                        @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
+                                            <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                           </div>
+                           <div class="row mt15">
+                                <div class="col-sm-12">
+                                    <div class="pull-right">
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $data['futuresessions'][0]->id)) }}
+                                        {{ Form::hidden('force', true) }}
+                                        {{ Form::submit('Book Class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn']) }}
+
+                                    </div>
+                                </div>
+                           </div>
+                       {{ Form::close() }}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <strong class="text-large">Session Calendar</strong><br>
                     </div>
                 </div>
             </div>

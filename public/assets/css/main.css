@@ -7147,6 +7147,7 @@ a:focus {
   outline-offset: -2px;
 }
 strong {
+  font-weight: 600;
   -webkit-font-smoothing: antialiased;
 }
 .text-large {
@@ -9976,6 +9977,63 @@ body:not(:-moz-handler-blocked) .custom-select:after {
     margin-left: -10px;
     float: left;
   }
+}
+.sbHolder {
+  width: 100%;
+}
+.sbHolder .sbSelector {
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+.sbHolder .sbToggle {
+  display: block;
+  height: 26px;
+  outline: none;
+  position: absolute;
+  right: 12px;
+  top: 0;
+  width: 24px;
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -42px -246px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.sbHolder .sbToggle.active {
+  background-position: -42px -286px;
+}
+.sbHolder .sbToggle.hover:hover,
+.sbHolder .sbToggle.active:hover {
+  cursor: pointer;
+  background-position: -42px -286px;
+}
+.sbHolder .sbOptions {
+  background-color: #ffffff;
+  border: solid 1px #cccccc;
+  list-style: none;
+  left: 0px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 26px;
+  width: 100%;
+  z-index: 1;
+  overflow-y: auto;
+}
+.sbHolder .sbOptions li {
+  padding: 0 7px;
+}
+.sbHolder .sbOptions li a {
+  border-bottom: dotted 1px #cccccc;
+  display: block;
+  outline: none;
+  padding: 0 0 0 3px;
+}
+.sbHolder .sbOptions li:hover {
+  background: #ff1b7e;
+}
+.sbHolder .sbOptions li:hover a {
+  color: #ffffff;
 }
 .cart-row {
   padding: 10px 0;
