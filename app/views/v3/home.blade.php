@@ -118,7 +118,7 @@
     </div>
     @foreach($blocks as $block)
         @if(isset($block['background']))
-            <div class="container-fluid black-gradient-mask" style="background-image: url('{{url().$block['background']}}')">
+            <div class="container-fluid sm-mt30 black-gradient-mask" style="background-image: url('{{url().$block['background']}}')">
                 <div class="mask"></div>
                 <div class="container mt15">
                     <div class="row">
