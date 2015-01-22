@@ -9195,8 +9195,8 @@ fieldset[disabled] .stripe-button-el.active {
 }
 @media (max-width: 992px) {
   .class-block {
-    height: 170px;
-    margin-bottom: 30px;
+    height: 85px;
+    margin-bottom: 15px;
   }
 }
 .class-block .list-group-item {
@@ -9238,7 +9238,7 @@ fieldset[disabled] .stripe-button-el.active {
 @media (max-width: 992px) {
   .class-block .class-body img {
     display: block;
-    height: 170px;
+    height: 85px;
     float: left;
     border-right: 1px solid #dddddd;
     border-top-left-radius: 3px;
@@ -9248,11 +9248,14 @@ fieldset[disabled] .stripe-button-el.active {
 @media (max-width: 992px) {
   .class-block .class-title {
     border-top-right-radius: 3px;
-    padding: 34px 20px 20px;
+    padding: 8px 10px 6px;
     text-align: left;
   }
   .class-block .class-title h4 {
-    margin-bottom: 26px;
+    font-size: 18px;
+  }
+  .class-block .class-title p {
+    font-size: 12px;
   }
 }
 .class-block .class-footer {
@@ -9274,7 +9277,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 @media (max-width: 992px) {
   .class-block .class-footer aside {
-    line-height: 53px;
+    line-height: 29px;
   }
 }
 .class-block .class-footer .btn-wrapper {
@@ -9291,8 +9294,8 @@ fieldset[disabled] .stripe-button-el.active {
 }
 @media (max-width: 992px) {
   .class-block .class-footer .btn {
-    height: 53px;
-    line-height: 40px;
+    height: 29px;
+    line-height: 16px;
   }
 }
 .class-module {
