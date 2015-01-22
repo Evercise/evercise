@@ -9191,13 +9191,12 @@ fieldset[disabled] .stripe-button-el.active {
   background-color: #f2f2f2;
 }
 .class-block {
-  height: 85px;
-  margin-bottom: 15px;
+  margin: 0;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .class-block {
-    margin: 0;
-    height: auto;
+    height: 85px;
+    margin-bottom: 15px;
   }
 }
 .class-block .list-group-item {
@@ -9213,62 +9212,59 @@ fieldset[disabled] .stripe-button-el.active {
   margin: 0;
 }
 .class-block .class-img-wrapper {
+  padding: 0;
+  border: 0;
+}
+@media (max-width: 767px) {
+  .class-block .class-img-wrapper {
+    display: none;
+  }
+}
+.class-block .class-img-wrapper img {
+  width: 100%;
+}
+.class-block .class-body .icon {
   display: none;
 }
-@media (min-width: 768px) {
-  .class-block .class-img-wrapper {
-    padding: 0;
-    border: 0;
-  }
-  .class-block .class-img-wrapper img {
-    width: 100%;
-  }
-}
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .class-block .class-body .icon {
-    display: none;
+    display: inline-block;
   }
 }
 .class-block .class-body img {
-  display: block;
-  height: 85px;
-  float: left;
-  border-right: 1px solid #dddddd;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  display: none;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .class-block .class-body img {
-    display: none;
+    display: block;
+    height: 85px;
+    float: left;
+    border-right: 1px solid #dddddd;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
   }
 }
-.class-block .class-title {
-  border-top-right-radius: 3px;
-  padding: 8px 10px 6px;
-  text-align: left;
-}
-.class-block .class-title h4 {
-  font-size: 18px;
-}
-.class-block .class-title p {
-  font-size: 12px;
-}
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .class-block .class-title {
-    border-radius: 0;
-    padding: 0;
-    text-align: center;
+    border-top-right-radius: 3px;
+    padding: 8px 10px 6px;
+    text-align: left;
   }
-  .class-block .class-title h4,
+  .class-block .class-title h4 {
+    font-size: 18px;
+  }
   .class-block .class-title p {
-    font-size: inherit;
+    font-size: 12px;
   }
 }
-@media (min-width: 768px) {
+.class-block .class-footer {
+  padding: 0;
+  border: 0;
+  border-left: 1px solid #dddddd;
+}
+@media (max-width: 767px) {
   .class-block .class-footer {
-    padding: 0;
-    border: 0;
-    border-left: 1px solid #dddddd;
+    border-bottom-left-radius: 0;
   }
 }
 .class-block .class-footer aside {
@@ -9276,11 +9272,11 @@ fieldset[disabled] .stripe-button-el.active {
   border-bottom: 1px solid #dddddd;
   float: left;
   width: 50%;
-  line-height: 29px;
+  line-height: 38px;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .class-block .class-footer aside {
-    line-height: 38px;
+    line-height: 29px;
   }
 }
 .class-block .class-footer .btn-wrapper {
@@ -9293,12 +9289,12 @@ fieldset[disabled] .stripe-button-el.active {
 .class-block .class-footer .btn {
   width: 100%;
   border-radius: 0;
-  height: 29px;
-  line-height: 16px;
+  height: 38px;
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
   .class-block .class-footer .btn {
-    height: 38px;
+    height: 29px;
+    line-height: 16px;
   }
 }
 .class-module {
