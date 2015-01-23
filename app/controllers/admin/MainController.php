@@ -364,7 +364,7 @@ class MainController extends \BaseController
         }
 
 
-        $paypal = App::make('WithdrawalPayment');
+/*        $paypal = App::make('WithdrawalPayment');
 
         foreach ($payments as $p) {
             $paypal->addUser([
@@ -379,8 +379,26 @@ class MainController extends \BaseController
         if ($res['ACK'] !== 'Success') {
             return Redirect::route('admin.pending_withdrawal')->with('notification',
                 'Check if all the emails are Correct!!!!!');
-        }
+        }*/
 
+        foreach ($payments as $p) {
+
+
+            $transaction = Transactions::create(
+                [
+                    'user_id' => $p->user_id,
+                    'total' => $p->transaction_amount,
+                    'total_after_fees' => $p->transaction_amount,
+                    'coupon_id' => 0,
+                    'commission' => 0,
+                    'token' => 0,
+                    'transaction' => 0,
+                    'payment_method' => 'paypal',
+                    'payer_id' => $p->user_id
+                ]);
+
+            event('user.withdraw.completed', [User::find($p->user_id), $transaction, Wallet::where('user_id', $p->user_id)->pluck('balance')]);
+        }
 
         foreach ($payments as $p) {
             $p->processed = 1;
