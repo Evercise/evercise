@@ -44,8 +44,9 @@ class SendExtraEmails extends Command {
 	 */
 	public function fire()
 	{
-		//$this->whyNoUseFreeCreditEh();
 		//$this->whyNotRefer();
+		//$this->notReturned();
+		//$this->notReturnedTrainer();
 	}
 
 	public function whyNotRefer()
@@ -93,7 +94,7 @@ class SendExtraEmails extends Command {
 	 *
 	 * @return mixed
     */
-	public function whyNoUseFreeCreditEh()
+	public function notReturned()
 	{
 		$numDays = Config::get('pardot.reminders.whynotusefreecredit.daysinactive'); // How many days user must be inactive before email is fired. should be 10
 
@@ -140,6 +141,11 @@ class SendExtraEmails extends Command {
 
 		$this->info('user count: '.$emailsSent);
 
+	}
+
+	public function notReturnedTrainer()
+	{
+		// email trainer if he hasn't been back for 10 days or something
 	}
 
 	/**

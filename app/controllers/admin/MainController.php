@@ -364,7 +364,7 @@ class MainController extends \BaseController
         }
 
 
-/*        $paypal = App::make('WithdrawalPayment');
+        $paypal = App::make('WithdrawalPayment');
 
         foreach ($payments as $p) {
             $paypal->addUser([
@@ -379,11 +379,9 @@ class MainController extends \BaseController
         if ($res['ACK'] !== 'Success') {
             return Redirect::route('admin.pending_withdrawal')->with('notification',
                 'Check if all the emails are Correct!!!!!');
-        }*/
+        }
 
         foreach ($payments as $p) {
-
-
             $transaction = Transactions::create(
                 [
                     'user_id' => $p->user_id,

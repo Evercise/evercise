@@ -111,6 +111,14 @@ class Trainer
         $this->log->info('Trainer ' . $trainer->id . ' has been reminded to create their first class');
         $this->mail->trainerWhyNotCreateFirstClass($trainer);
     }
+    /**
+     * @param $trainer
+     */
+    public function notReturnedTrainer($trainer)
+    {
+        $this->log->info('Trainer ' . $trainer->id . ' has been reminded to return after 10 days or so');
+        $this->mail->notReturnedTrainer($trainer);
+    }
 
     public function relaunch($user)
     {
