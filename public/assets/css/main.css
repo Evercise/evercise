@@ -6192,6 +6192,12 @@ button.close {
   padding-left: 0;
   padding-right: 0;
 }
+@media (max-width: 767px) {
+  .sm-no-gutter [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 .sm-inline-gutter [class*="col-"]:not(:first-of-type) {
   padding-left: 5px;
 }
@@ -10626,6 +10632,9 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 .calendar-selected li:nth-of-type(2) {
   border-color: #9c9c9c;
+}
+.calendar-selected .selectable-btn {
+  padding: 5px 10px 5px 30px;
 }
 div.hub-row {
   border-bottom: 1px solid #e8ebec;

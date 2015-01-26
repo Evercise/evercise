@@ -122,7 +122,7 @@
                         </li>
 
                         <li class="list-group-item" ng-repeat="row in rows| filter:activeFilter">
-                            <div class="row no-gutter sm-mr0">
+                            <div class="row sm-no-gutter sm-mr0">
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ row.id  }]}', 'class' => 'add-to-class']) }}
                                     <div class="col-xs-5">
                                         <div class="row">
@@ -132,16 +132,22 @@
                                     </div>
                                     <div class="col-xs-7">
                                         <div class="row">
-                                            <div class="col-xs-5">
+                                            <div class="col-xs-5 visible-md-block visible-lg-block visible-sm-block">
                                                 <select name="quantity" id="quantity" class="select-box {{isset($preview) ? 'disabled' : null}}">
                                                     <option ng-selected="{[{ n + 1 == row.selected }]}" ng-repeat="n in [] | repeat:row.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
                                                 </select>
                                             </div>
-                                            <div class="col-xs-7">
-                                                <div class="pull-right">
+                                            <div class="col-sm-5 col-xs-6 visible-xs-block selectable-btn">
+                                                <select name="quantity" id="quantity" class="form-control select-default {{isset($preview) ? 'disabled' : null}}">
+                                                    <option ng-selected="{[{ n + 1 == row.selected }]}" ng-repeat="n in [] | repeat:row.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-sm-7 col-xs-6">
+                                                <div class="pull-right sm-no-float">
                                                     {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ row.id}]}')) }}
                                                     {{ Form::hidden('force', true) }}
-                                                    {{ Form::submit('Book Class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn']) }}
+                                                    {{ Form::submit('Book Class', ['class'=> isset($preview) ? 'btn btn-primary disabled sm-btn-block' : 'btn btn-primary add-btn sm-btn-block']) }}
                                                 </div>
                                             </div>
                                         </div>
