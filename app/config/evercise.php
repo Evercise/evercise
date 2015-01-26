@@ -27,7 +27,8 @@ return [
         'wallettoppup',
         'cartcompleted',
         'topupcompleted',
-        'milestonecompleted'
+        'milestonecompleted',
+        'withdrawcompleted'
     ],
     'minimim_withdraw'            => 5,
     'payments_to_trainers'        => 'Monday 4pm',

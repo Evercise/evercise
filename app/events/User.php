@@ -135,8 +135,6 @@ class User
      */
     public function facebookRegistered($user)
     {
-
-
         $this->log->info('User ' . $user->id . ' has registered with Facebook');
         $this->track->userFacebookRegistered($user);
     }
@@ -150,14 +148,9 @@ class User
      */
     public function cartCompleted($user, $cart, $transaction)
     {
-
-
         $this->log->info('User ' . $user->id . ' cart completed');
-
         $this->mail->userCartCompleted($user, $cart, $transaction);
-
         $this->activity->userCartCompleted($user, $cart, $transaction);
-
     }
 
     /**
@@ -299,11 +292,10 @@ class User
         $this->log->info('Sending forgoten password ' . $user->id);
 
         /** @var Forgotten Password Code Generate $resetCode */
-        $resetCode = $user->getResetPasswordCode();
-        $link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . urlencode($resetCode));
+        $resetCode = urlencode($user->getResetPasswordCode());
+        //$link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . $resetCode);
 
-
-        $this->mail->userForgotPassword($user, $link);
+        $this->mail->userForgotPassword($user, $resetCode);
     }
 
 
@@ -395,5 +387,11 @@ class User
         $this->log->info('hey rate this class email sent ' . $user->id);
 
         $this->mail->rateClass($user);
+    }
+    public function rateClassHasPackage($user)
+    {
+        $this->log->info('hey rate this class email NOT SENT AS USER HAS PACKAGES ' . $user->id);
+
+        $this->mail->rateClassHasPackage($user);
     }
 }

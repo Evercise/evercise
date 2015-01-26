@@ -14,8 +14,9 @@
 					{{ HTML::image($user->directory.'/medium_'.$user->image, 'session members profile image' , ['class' => 'session-list-profile']); }}
 					@endif
 					<div class="pdf-wrap">
-						<p>{{ $user['display_name']}}</p>
-						<p>{{ $user['email']}}</p>
+						<p>User Name: {{ $user['display_name']}}</p>
+						<p>User ID: {{ $user['email']}}</p>
+						<p>Transaction ID: {{ $user['pivot']['transaction_id']}}</p>
 					</div>
 					
 

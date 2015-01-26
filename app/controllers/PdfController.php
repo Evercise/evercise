@@ -28,7 +28,7 @@ class PdfController extends \BaseController
 
         $evercisegroup = Evercisegroup::find($evercisesession->evercisegroup_id);
 
-        $sessionmembers = $evercisesession->getSessionmembers();
+        $sessionmembers = $evercisesession->users;
         if(empty($sessionmembers)) return null;
 
         $timestamp = date("d-m-Y");

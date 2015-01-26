@@ -31,15 +31,6 @@ class Evercisesession extends \Eloquent
         return $this->hasMany('Sessionmember');
     }
 
-    public function getSessionmembers()
-    {
-        //return $this->sessionmembers->lists('id');
-        if (count($this->sessionmembers))
-            return User::whereIn('id', $this->sessionmembers->lists('user_id'))->get();
-        else
-            return [];
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -684,6 +675,8 @@ class Evercisesession extends \Eloquent
         else
             return false;
     }
+
+
 
 
 

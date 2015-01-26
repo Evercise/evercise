@@ -29,18 +29,7 @@
             <span class="help-block">Filter</span>
         </div>
         <div class="col-md-3">
-            <select class="form-control input-sm" id="userStatus">
-                <option></option>
-                <option value="user">User</option>
-                <option value="trainer">Trainer</option>
-            </select>
-            <span class="help-block">Status</span>
-        </div>
-        <div class="col-md-3">
             <a class="btn btn-default btn-sm" id="clearFilters">Clear</a>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-default btn-sm" href="{{ URL::route('admin.users.trainerCreate') }}">Create new Trainer</a>
         </div>
     </div>
     <div class="row">
@@ -56,6 +45,7 @@
                         <th>Token</th>
                         <th>3rd party ID</th>
                         <th>Processed</th>
+                        <th>Date / Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +59,7 @@
                             <td>{{ $transaction['token'] }}</td>
                             <td>{{ $transaction['transaction'] }}</td>
                             <td>{{ $transaction['processed'] }}</td>
+                            <td>{{ $transaction['date_time'] }}</td>
                        </tr>
 
                    @endforeach

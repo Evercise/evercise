@@ -15,6 +15,7 @@
     <div role="tabpanel" class="tab-pane tab-pane-sort fade" id="sort">
         <ul class="list-group custom-dropdown" ng-style="dropwdownStyle">
             <li class="list-group-item">Sort by</li>
+            <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = '-score'; reverse=false ; closeDropdown('sort')">Best<span ng-class="{ active : sort == '-score' }" class="pull-right icon icon-checkbox hover"></span></a></li>
             <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-clo" ng-click="sort = 'distance'; reverse=false ; closeDropdown('sort')">Distance - Closest First<span ng-class="{ active : sort == 'distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
             <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#distance-fur" ng-click="sort = '-distance'; reverse=false ; closeDropdown('sort')">Distance - Furthest First<span ng-class="{ active : sort == '-distance' }" class="pull-right icon icon-checkbox hover"></span></a></li>
             <li class="list-group-item"><a role="menuitem" tabindex="-1" href="#price-asc" ng-click="sort = 'price'; reverse=false ; closeDropdown('sort')">Price Ascending<span ng-class="{ active : sort == 'price' }" class="pull-right icon icon-checkbox hover"></span></a></li>

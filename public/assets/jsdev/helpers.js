@@ -16,13 +16,3 @@ function datepick(){
         todayHighlight: true
     });
 }
-
-function objectSize(the_object) {
-    var object_size = 0;
-    for (key in the_object){
-        if (the_object.hasOwnProperty(key)) {
-            object_size++;
-        }
-    }
-    return object_size;
-}

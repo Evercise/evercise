@@ -8,7 +8,7 @@ if(typeof angular != 'undefined') {
 
 
         // set initial sort
-        $scope.sort = 'id';
+        $scope.sort = '-score';
 
 
 
@@ -29,6 +29,8 @@ if(typeof angular != 'undefined') {
         // watch the scope for map loaded
         $scope.myMarkers = [];
         $scope.markers = [];
+
+
 
 
         // create the markers
@@ -56,6 +58,7 @@ if(typeof angular != 'undefined') {
                 capacity: data.capacity,
                 sessions: data.futuresessions,
                 distance : data.distance,
+                score : data.score,
                 nextClassDate: data.futuresessions[0].date_time,
                 nextClassDuration: data.futuresessions[0].duration,
                 link: '/classes/' + data.slug,
@@ -114,7 +117,7 @@ if(typeof angular != 'undefined') {
 
         // when dropdown is closed
         $scope.closeDropdown = function(toggle){
-            $("img.lazy").trigger("sort");
+
             window.setTimeout(function(){
                 $('.tab-pane-sort').removeClass('active');
                 $('.'+toggle+'-btn').removeClass('active');
@@ -169,8 +172,6 @@ if(typeof angular != 'undefined') {
             zoom: 12
         };
 
-
-
         // used for marker clusters
         $scope.clusterStyles = [
             {
@@ -210,6 +211,7 @@ if(typeof angular != 'undefined') {
 
 
         $scope.lastActiveMarker = '';
+
 
 
         $scope.clicked = function (marker) {
@@ -282,15 +284,7 @@ if(typeof angular != 'undefined') {
             return result;
         }
 
-        $scope.preview = {
-            id: 1,
-            image: '',
-            description: '',
-            nextClassDate: '',
-            nextClassDuration: '',
-            capacity: '',
-            link: ''
-        }
+
 
         // test to see if has sessions
         $scope.hasTickets = function(session){
@@ -335,10 +329,7 @@ if(typeof angular != 'undefined') {
                 $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
             }
             $scope.markers = $scope.myMarkers;
-            $("img.lazy").lazyload({
-                container: $(".snippet-body"),
-                event : "sort"
-            });
+
 
             $scope.scrollHeight();
 
@@ -364,7 +355,25 @@ if(typeof angular != 'undefined') {
             })
         })
 
+        $scope.preview = {
+            id: 1,
+            description: '',
+            nextClassDate: '',
+            nextClassDuration: '',
+            capacity: '',
+            link: ''
+        }
 
 
     }]);
+    app.directive('backImg', function(){
+        return function(scope, element, attrs){
+            attrs.$observe('backImg', function(value) {
+                element.css({
+                    'background': 'url(' + value +')'
+                });
+            });
+        };
+    });
 };
+

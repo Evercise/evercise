@@ -1,14 +1,20 @@
 .hero{
-  background: @hero-bg;
+  background: @gray-darker;
   background-size: cover ;
   background-repeat: no-repeat;
   background-position: center center;
-  height: @hero-height;
-  padding-top: @hero-top-padding;
+  height: 332px;
+  padding-top: 30px;
   position: relative;
-  @media screen and (min-width: @screen-sm-min) {
-    height: ceil(@hero-height * 1.6);
-    padding-top: ceil(@hero-top-padding * 2.5);
+  @media (max-width: @grid-float-breakpoint){
+    height: 320px;
+  }
+  h1{
+    margin-bottom: 0px;
+    @media (max-width: @grid-float-breakpoint){
+      margin-top: 45px;
+      margin-bottom: 10px;
+    }
   }
   &.small-padding{
     padding-top: 10px;
@@ -24,16 +30,7 @@
     bottom: 0;
   }
 }
-.hero-sm{
-  @media screen and (min-width: @screen-sm-min) {
-    height: ceil(@hero-height * 0.9);
-    padding-top: ceil(@hero-top-padding * 2.5);
-  }
-}
 
 .jumbotron{
   margin-bottom: 0;
-}
-.no-nav-change{
-  margin-top: @navbar-height;
 }

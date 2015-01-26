@@ -43,15 +43,9 @@ $(function(){
             scrollSpeed: 50,
             mouseWheelPixels: 50,
             autoHideScrollbar: true,
-            scrollInertia: 0,
-            callbacks:{
-                onScroll:function(){ WhileScrolling(); }
-            }
+            scrollInertia: 0
         });
 
-        function WhileScrolling(){
-            $("img.lazy").lazyload();
-        }
     })
 
     $('.holder').exists(function(){
@@ -208,7 +202,7 @@ $(function(){
 
     $('#hero-carousel , #image-carousel').exists(function() {
         $(this).carousel({
-            interval: 4000
+            interval: 5000
         })
     })
     $('.mail-popup').exists(function(){
@@ -222,12 +216,6 @@ $(function(){
         new RemoveSession(this);
     })
 
-
-    $('.btn-selects').exists(function(){
-        $(this).select2({
-            placeholder: "Select a State"
-        });
-    })
 
     $('.landing-popup').exists(function(){
         $(document).on('click', '.close', function(){
@@ -243,9 +231,16 @@ $(function(){
         })
     })
 
+    $('.trapezium').exists(function(){
+        new trapezium(this);
+    })
 
+    $('.category-select').exists(function(){
+        new categorySelect(this);
+    })
 
-
-
+    if (navigator.geolocation) {
+        new myLocation();
+    }
 
 });

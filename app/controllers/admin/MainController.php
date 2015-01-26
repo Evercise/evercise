@@ -27,16 +27,39 @@ class MainController extends \BaseController
         /** Users */
         $this->data['total_users'] = User::all()->count();
 
+        $today = new DateTime();
+        $today->setTime(0, 0, 0);
+        $this->data['users_today'] = User::where('created_at', '>', $today)->count();
+        $this->data['trainers_today'] = Trainer::where('created_at', '>', $today)->count();
+
         $trainer = Sentry::findGroupByName('Trainer');
         $this->data['total_trainers'] = Sentry::findAllUsersInGroup($trainer)->count();
+
+        $this->data['new_sessions_today'] = Evercisesession::where('created_at', '>', $today)->count();
+        $this->data['new_groups_today'] = Evercisegroup::where('created_at', '>', $today)->count();
+
+        $sevenDaysTime = new DateTime();
+        $sevenDaysTime->add(new DateInterval('P7D'));
+        $this->data['upcoming_sessions_7'] = Evercisesession::where('date_time', '>',
+            (new DateTime()))->where('date_time', '<', $sevenDaysTime)->count();
+
+        $thirtyDaysTime = new DateTime();
+        $thirtyDaysTime->add(new DateInterval('P30D'));
+        $this->data['upcoming_sessions_30'] = Evercisesession::where('date_time', '>',
+            (new DateTime()))->where('date_time', '<', $thirtyDaysTime)->count();
 
 
         /** Sales */
         $this->data['total_sales'] = Sessionpayment::where('created_at', '>=',
-            Carbon::now()->subDays(300))->where('processed', 1)->sum('total');
+            Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total');
         $this->data['total_after_fees'] = Sessionpayment::where('created_at', '>=',
-            Carbon::now()->subDays(300))->where('processed', 1)->sum('total_after_fees');
+            Carbon::createFromDate(2015, 1, 1))->where('processed', 1)->sum('total_after_fees');
         $this->data['total_commission'] = ($this->data['total_sales'] - $this->data['total_after_fees']);
+
+        $this->data['session_sold_today'] = Sessionmember::todaysSales();
+
+        $this->data['transactions_today'] = DB::table('transactions')->where('created_at', '>=',
+            Carbon::now()->setTime(0, 0, 0))->count();
 
 
         $this->data['total_year'] = Sessionpayment::where('created_at', '>=', Carbon::now()->subYear())
@@ -99,13 +122,14 @@ class MainController extends \BaseController
             $this->data['total_sessions_count'][$m->month] = round($m->total, 0);
         }
 
-        $this->data['total_referrals'] = Referral::all()->count();
+        $this->data['complete_referrals'] = Referral::where('referee_id', '>', 0)->count();
+        $this->data['pending_referrals'] = Referral::where('referee_id', '=', 0)->count();
 
         return View::make('admin.dashboard', $this->data)->render();
     }
 
 
-    public function expired($date = false)
+    public function expired($date = FALSE)
     {
         if (!$date) {
             $date = date('Y-m-d', strtotime('-1 month', time()));
@@ -125,6 +149,7 @@ class MainController extends \BaseController
             })
             ->orderBy('evercisesessions.date_time', 'desc')
             ->get();
+
         return View::make('admin.expired', compact('expired'))->render();
 
 
@@ -143,26 +168,29 @@ class MainController extends \BaseController
     }
 
 
-    public function trainerCreate() {
+    public function trainerCreate()
+    {
 
         return View::make('admin.users.create')->render();
 
     }
-    public function trainerStore() {
+
+    public function trainerStore()
+    {
 
         $validationRules = array_merge([
-            'first_name' => 'required|max:15|min:2',
-            'last_name' => 'required|max:25|min:2',
-            'email' => 'required|unique:users,email',
+            'first_name'   => 'required|max:15|min:2',
+            'last_name'    => 'required|max:25|min:2',
+            'email'        => 'required|unique:users,email',
             'display_name' => 'required|unique:users,display_name',
-            'phone' => 'numeric',
-            'gender' => 'required',
-            ],
+            'phone'        => 'numeric',
+            'gender'       => 'required',
+        ],
             Trainer::$validationRules
         );
         $validationRules['image'] = 'sometimes';
 
-        $inputs =  Input::except(['_token', 'trainer']);
+        $inputs = Input::except(['_token', 'trainer']);
         $validator = Validator::make(
             $inputs,
             $validationRules
@@ -178,9 +206,9 @@ class MainController extends \BaseController
         } else {
 
             $inputs['display_name'] = str_replace(' ', '_', $inputs['display_name']);
-            $inputs['dob'] = null;
+            $inputs['dob'] = NULL;
             $inputs['password'] = Functions::randomPassword(8);
-            $inputs['activated'] = true;
+            $inputs['activated'] = TRUE;
             $inputs['gender'] = $inputs['gender'] == 'male' ? 1 : 2;
 
             $inputs['areacode'] = '+44';
@@ -198,7 +226,7 @@ class MainController extends \BaseController
 
                     Session::forget('email');
 
-                    if(false) {
+                    if (FALSE) {
                         User::subscribeMailchimpNewsletter(
                             Config::get('mailchimp')['newsletter'],
                             $user->email,
@@ -215,31 +243,32 @@ class MainController extends \BaseController
 
             try {
                 event('user.registered', [$user]);
-            }catch(Exception $e){
+            } catch (Exception $e) {
                 Log::error($e);
             }
 
-            $trainer=['confirmed' => 1, 'user_id' => $user->id];
+            $trainer = ['confirmed' => 1, 'user_id' => $user->id];
 
             $include = ['bio', 'phone', 'website', 'profession'];
 
 
-            foreach($inputs as $key => $val) {
-                if(in_array($key, $include)) {
+            foreach ($inputs as $key => $val) {
+                if (in_array($key, $include)) {
                     $trainer[$key] = $val;
                 }
             }
 
 
-            if($res = Trainer::createOrFail($trainer)) {
+            if ($res = Trainer::createOrFail($trainer)) {
 
 
-                event('trainer.registered', [$user, ]);
+                event('trainer.registered', [$user,]);
 
 
                 event('user.admin.trainerCreate', compact('user', 'trainer'));
 
                 Session::flash('notification', 'Trainer Created');
+
                 return Redirect::route('admin.users');
             }
         }
@@ -264,11 +293,15 @@ class MainController extends \BaseController
     public function subcategories()
     {
         $subcategories = \Subcategory::with('categories')->get();
-        $categories = \Category::lists('name');
+        $categories = \Category::all();
 
-        array_unshift($categories, '');
+        $cat = [];
+        $cat[0] = '';
+        foreach ($categories as $c) {
+            $cat[$c->id] = $c->name;
+        }
 
-        return View::make('admin.subcategories', compact('categories', 'subcategories'))->render();
+        return View::make('admin.subcategories', compact('categories', 'subcategories', 'cat'))->render();
 
     }
 
@@ -307,9 +340,11 @@ class MainController extends \BaseController
     {
 
 
-        $pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->orderBy('created_at', 'desc')->get();
+        $pendingWithdrawals = Withdrawalrequest::where('processed', 0)->with('user')->orderBy('created_at',
+            'desc')->get();
 
-        $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->orderBy('created_at', 'desc')->get();
+        $processedWithdrawals = Withdrawalrequest::where('processed', 1)->with('user')->orderBy('created_at',
+            'desc')->get();
 
         return View::make('admin.pendingwithdrawals')
             ->with('pendingWithdrawals', $pendingWithdrawals)
@@ -317,35 +352,53 @@ class MainController extends \BaseController
     }
 
 
-    public function processWithdrawalMulti() {
+    public function processWithdrawalMulti()
+    {
 
         $process = Input::get('process');
 
         $payments = Withdrawalrequest::whereIn('id', array_keys($process))->get();
 
-        if($payments->count() == 0) {
+        if ($payments->count() == 0) {
             return Redirect::route('admin.pending_withdrawal')->with('notification', 'You need to select somebody !!!');
         }
 
 
         $paypal = App::make('WithdrawalPayment');
 
-        foreach($payments as $p) {
+        foreach ($payments as $p) {
             $paypal->addUser([
-                'id'    => $p->id,
-                'email' => $p->account,
+                'id'     => $p->id,
+                'email'  => $p->account,
                 'amount' => number_format($p->transaction_amount, 2)
             ]);
         }
 
         $res = $paypal->pay();
 
-        if($res['ACK'] !== 'Success') {
-            return Redirect::route('admin.pending_withdrawal')->with('notification', 'Check if all the emails are Correct!!!!!');
+        if ($res['ACK'] !== 'Success') {
+            return Redirect::route('admin.pending_withdrawal')->with('notification',
+                'Check if all the emails are Correct!!!!!');
         }
 
+        foreach ($payments as $p) {
+            $transaction = Transactions::create(
+                [
+                    'user_id' => $p->user_id,
+                    'total' => $p->transaction_amount,
+                    'total_after_fees' => $p->transaction_amount,
+                    'coupon_id' => 0,
+                    'commission' => 0,
+                    'token' => 0,
+                    'transaction' => 0,
+                    'payment_method' => 'paypal',
+                    'payer_id' => $p->user_id
+                ]);
 
-        foreach($payments as $p) {
+            event('user.withdraw.completed', [User::find($p->user_id), $transaction, Wallet::where('user_id', $p->user_id)->pluck('balance')]);
+        }
+
+        foreach ($payments as $p) {
             $p->processed = 1;
             $p->save();
         }
@@ -371,7 +424,7 @@ class MainController extends \BaseController
      */
     public function showLog()
     {
-        $logFile = file_get_contents('../app/storage/logs/laravel.log', true);
+        $logFile = file_get_contents('../app/storage/logs/laravel.log', TRUE);
 
         $logFile = str_replace('[] []', '[] [] < br><br ><br > ', $logFile);
         $logFile = str_replace('#', '<br><span style="color:#c00; margin-left:20px">#</span>', $logFile);
@@ -422,7 +475,7 @@ class MainController extends \BaseController
     {
 
         $fakeusers = Sentry::findGroupById(6);
-        $fakeuserLoggedIn = $this->user ? $this->user->inGroup($fakeusers) : false;
+        $fakeuserLoggedIn = $this->user ? $this->user->inGroup($fakeusers) : FALSE;
 
         if (!$fakeuserLoggedIn) {
             return 'please log in with a fake user';
@@ -471,7 +524,35 @@ class MainController extends \BaseController
 
     public function searchStats()
     {
-        return View::make('admin.searchstats');
+
+
+        $from = Carbon::now()->subDays(30);
+        $to = Carbon::now();
+        /** Top Searches The past Week */
+        $top_searches = StatsModel::select(DB::raw('count(*) as total, search, AVG(results) as avg'))
+            ->whereBetween('created_at', array($from, $to))
+            ->groupBy('search')
+            ->orderBy(DB::raw('count(*)'), 'desc')
+            ->limit(20)
+            ->get();
+
+        $top_cities = StatsModel::select(DB::raw('count(*) as total, name, AVG(results) as avg'))
+            ->whereBetween('created_at', array($from, $to))
+            ->where('name', '!=', 'London')
+            ->groupBy('name')
+            ->orderBy(DB::raw('count(*)'), 'desc')
+            ->limit(15)
+            ->get();
+
+        $total_london = StatsModel::whereBetween('created_at', array($from, $to))
+            ->where('name', 'London')
+            ->count();
+
+        $percentage_london = ($total_london / ($top_cities->count() + $total_london)) * 100;
+
+
+
+        return View::make('admin.searchstats', compact('top_searches', 'top_cities', 'percentage_london'));
     }
 
     public function salesStats()
@@ -479,18 +560,17 @@ class MainController extends \BaseController
         $sessionmembers = DB::table('sessionmembers')->orderBy('id', 'desc')->get();
 
         $sales = [];
-        foreach($sessionmembers as $sm)
-        {
+        foreach ($sessionmembers as $sm) {
             $session = Evercisesession::find($sm->evercisesession_id);
 
             $sales[] = [
-                'id' => $sm->id,
-                'user_id' => $sm->user_id,
-                'user_name' => User::where('id', $sm->user_id)->pluck('display_name'),
-                'class_id' => $session->evercisegroup_id,
-                'class_name' => Evercisegroup::where('id', $session->evercisegroup_id)->pluck('name'),
-                'date' => $sm->created_at,
-                'amount' => $session->price,
+                'id'             => $sm->id,
+                'user_id'        => $sm->user_id,
+                'user_name'      => User::where('id', $sm->user_id)->pluck('display_name'),
+                'class_id'       => $session->evercisegroup_id,
+                'class_name'     => Evercisegroup::where('id', $session->evercisegroup_id)->pluck('name'),
+                'date'           => $sm->created_at,
+                'amount'         => $session->price,
                 'transaction_id' => $sm->transaction_id,
                 'payment_method' => $sm->payment_method,
             ];
@@ -505,8 +585,7 @@ class MainController extends \BaseController
         $transactions = Transactions::orderBy('id', 'desc')->get();
 
         $userIds = [];
-        foreach($transactions as $tr)
-        {
+        foreach ($transactions as $tr) {
             $userIds[] = $tr->user_id;
         }
 
@@ -515,24 +594,48 @@ class MainController extends \BaseController
         //return var_dump($userNames);
 
         $trans = [];
-        foreach($transactions as $tr)
-        {
+        foreach ($transactions as $tr) {
             $trans[] =
                 [
-                    'id' => $tr->id,
-                    'user_id' => $tr->user_id,
-                    'user_name' => $userNames[$tr->user_id],
-                    'total' => $tr->total,
+                    'id'               => $tr->id,
+                    'user_id'          => $tr->user_id,
+                    'user_name'        => $userNames[$tr->user_id],
+                    'total'            => $tr->total,
                     'total_after_fees' => $tr->total_after_fees,
-                    'payment_method' => $tr->payment_method,
-                    'token' => $tr->token,
-                    'transaction' => $tr->transaction,
-                    'processed' => $tr->processed,
+                    'payment_method'   => $tr->payment_method,
+                    'token'            => $tr->token,
+                    'transaction'      => $tr->transaction,
+                    'processed'        => $tr->processed,
+                    'date_time'        => $tr->created_at,
                 ];
         }
 
         return View::make('admin.transactions')
             ->with('transactions', $trans);
+    }
+
+    public function userPackages()
+    {
+        $userPackages = UserPackages::with('user')
+            ->with('classes')
+            ->get();
+
+        $packages = [];
+        foreach ($userPackages as $up) {
+            $numClassesUsed = count($up->classes);
+            $packages[] = [
+                'user_id'      => $up->user_id,
+                'package_id'   => $up->package_id,
+                'package_name' => $up->package->name,
+                'active'       => ($numClassesUsed < $up->package->classes ? '1' : '0'),
+                'used'         => $numClassesUsed,
+                'total'        => $up->package->classes,
+            ];
+        }
+
+
+        return View::make('admin.packages')
+            ->with('userPackages', $packages);
     }
 
 
@@ -542,11 +645,12 @@ class MainController extends \BaseController
         $images = Gallery::where('counter', '>', 0)->get();
 
 
-        return View::make('admin.classes', compact('classes','images'));
+        return View::make('admin.classes', compact('classes', 'images'));
     }
 
 
-    public function landings() {
+    public function landings()
+    {
 
         $landings = LandingPages::all();
 
@@ -555,7 +659,8 @@ class MainController extends \BaseController
 
     }
 
-    public function landing($id) {
+    public function landing($id)
+    {
 
         $page = LandingPages::find($id);
 
@@ -577,9 +682,6 @@ class MainController extends \BaseController
 
 
     }
-
-
-
 
 
 }
