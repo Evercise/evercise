@@ -77,7 +77,8 @@
                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $data['futuresessions'][0]->id, 'class' => 'add-to-class']) }}
                            <strong class="text-large">Next Session</strong>
                            <div class="row">
-                                <div class="col-xs-6">{{ date('l M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
+                                <div class="col-xs-6 visible-md-block visible-lg-block">{{ date('l M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
+                                <div class="col-xs-6 visible-sm-block visible-xs-block">{{ date('D M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
                                 <div class="col-xs-3 text-center"><strong class="text-primary">£{{ $data['futuresessions'][0]->price }}</strong> </div>
                                 <div class="col-xs-3">
                                     <select name="quantity" id="quantity" class="select-box {{isset($preview) ? 'disabled' : null}}">
@@ -101,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default" ng-app="everApp" ng-controller="calendarController">
+                <div class="panel panel-default" ng-app="everApp" ng-controller="calendarController" ng-cloak>
                     <div class="panel-body">
                         <strong class="text-large">Session Calendar</strong><br>
                         <div id="class-calendar" class="class-calendar">
@@ -114,12 +115,12 @@
                         </li>
 
                         <li class="list-group-item" ng-repeat="row in rows| filter:activeFilter">
-                            <div class="row">
+                            <div class="row no-gutter sm-mr0">
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ row.id  }]}', 'class' => 'add-to-class']) }}
                                     <div class="col-xs-5">
                                         <div class="row">
-                                            <div class="col-xs-6">{[{row.date | date: 'hh:mm a' }]}</div>
-                                            <div class="col-xs-6 text-center text-primary">{[{row.price | currency : '£' : 2}]}</div>
+                                            <div class="col-xs-6 sm-text-right">{[{row.date | date: 'hh:mm a' }]}</div>
+                                            <div class="col-xs-6 text-center text-primary sm-text-right">{[{row.price | currency : '£' : 2}]}</div>
                                         </div>
                                     </div>
                                     <div class="col-xs-7">

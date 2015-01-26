@@ -7254,10 +7254,16 @@ a.bg-light-grey:hover {
   .sm-text-center {
     text-align: center;
   }
+  .sm-text-right {
+    text-align: right;
+  }
 }
 @media (max-width: 991px) {
   .md-text-center {
     text-align: center;
+  }
+  .md-text-right {
+    text-align: right;
   }
 }
 .no-border-right {

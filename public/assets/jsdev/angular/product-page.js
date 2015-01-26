@@ -27,9 +27,10 @@ if(typeof angular != 'undefined') {
                 if(result.length > 0){
                     for(var key in result){
                         if (!checkDuplicate(result[key].id)){
+                            var dt = new Date(result[key].date_time.replace(/\s+/, 'T'));
                             $scope.rows.push({
                                 'id' : result[key].id,
-                                'date' : new Date(result[key].date_time.replace(/\s+/, 'T')),
+                                'date' : dt,
                                 'price' :result[key].price,
                                 'remaining' :result[key].remaining,
                                 'default_tickets' :result[key].default_tickets,
@@ -37,7 +38,9 @@ if(typeof angular != 'undefined') {
                                 'show' : false
                             })
                         }
+                        console.log(dt);
                     }
+
 
                     return {
                         enabled : true,
@@ -52,7 +55,6 @@ if(typeof angular != 'undefined') {
                 }
             }
         }).on('changeDate', function(e){
-            console.log(e);
             $scope.activeDate = e.date;
             //$scope.activeDate = d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2);
             $scope.$apply();
