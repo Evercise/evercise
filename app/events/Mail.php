@@ -1005,13 +1005,7 @@ class Mail
         $parse = new CssToInlineStyles($view, $this->data['css']);
 
         $content = $parse->convert();
-
-
-        if ($this->url->to('/') == 'http://dev.evercise.com') {
-            //$content = str_replace('dev.evercise.com', 'evertest.evercise.com', $content);
-        }
-
-
+        
         $plain_text = $this->plainText($content);
 
 
