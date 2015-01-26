@@ -80,15 +80,15 @@
                                 <div class="col-xs-6 visible-md-block visible-lg-block">{{ date('l M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
                                 <div class="col-xs-6 visible-sm-block visible-xs-block">{{ date('D M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
                                 <div class="col-xs-3 text-center"><strong class="text-primary">£{{ $data['futuresessions'][0]->price }}</strong> </div>
-                                <div class="col-xs-3 visible-md-block visible-lg-block">
+                                <div class="col-xs-3 visible-md-block visible-lg-block visible-sm-block">
                                     <select name="quantity" id="quantity" class="select-box {{isset($preview) ? 'disabled' : null}}">
                                         @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
                                             <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                         @endfor
                                     </select>
                                 </div>
-                                <div class="col-xs-3 visible-sm-block visible-xs-block">
-                                    <select name="quantity" id="quantity" class="{{isset($preview) ? 'disabled' : null}}">
+                                <div class="col-xs-3  visible-xs-block">
+                                    <select name="quantity" id="quantity" class="form-control select-default{{isset($preview) ? 'disabled' : null}}">
                                         @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
                                             <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                         @endfor

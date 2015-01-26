@@ -10048,6 +10048,11 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .sbHolder .sbOptions li:hover a {
   color: #ffffff;
 }
+.select-default {
+  padding: 0;
+  height: 26px;
+  line-height: 26px;
+}
 .cart-row {
   padding: 10px 0;
   float: left;
