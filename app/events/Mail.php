@@ -1008,7 +1008,7 @@ class Mail
 
 
         if ($this->url->to('/') == 'http://dev.evercise.com') {
-            $content = str_replace('dev.evercise.com', 'evertest.evercise.com', $content);
+            //$content = str_replace('dev.evercise.com', 'evertest.evercise.com', $content);
         }
 
 

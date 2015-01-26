@@ -165,6 +165,7 @@
                                 </div>
                             </div>
                         </div>
+                        <span>{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '', ['sessionId'=>$session->id], ['class'=>'icon icon-mail mt25 mail-popup'])) }}</span>
                     @endif
                 </div>
             </div>

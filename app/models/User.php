@@ -867,4 +867,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         return count($this->pendingReferrals);
     }
+
+    public static function getIdFromDisplayName($displayName)
+    {
+        return static::where('display_name', $displayName)->pluck('id');
+    }
 }

@@ -70,9 +70,17 @@ class SessionsController extends \BaseController
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function getMailAll($id)
+    public function getMailAll($sessionId)
     {
-        return View::make('sessions.mail_all')->with('sessionId', $id);
+        //$session = Evercisesession::with('evercisegroup')->find($sessionId);
+
+        /*return Response::json(
+            [
+                'view'  => View::make('v3.classes.mail_all_members')
+                    ->with('sessionId', $sessionId)
+            ]
+        );*/
+        return View::make('v3.classes.mail_all_members')->with('sessionId', $sessionId);
     }
 
     /**
@@ -125,7 +133,7 @@ class SessionsController extends \BaseController
     }
 
     /**
-     * Get for to send an email to the trainer of a group
+     * Get form to send an email to the trainer of a group
      *
      * @param $sessionId
      * @param $trainerId
@@ -160,7 +168,13 @@ class SessionsController extends \BaseController
      */
     public function postMailTrainer($sessionId, $trainerId)
     {
-        list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId);
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
+        list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId, $subject, $body);
+
+        /** Add message to TBmsg */
+        Messages::sendMessage($this->user->id, $trainerId, $body);
 
         return Response::json(
             [

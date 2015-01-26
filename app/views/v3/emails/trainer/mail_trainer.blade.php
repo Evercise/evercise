@@ -12,7 +12,8 @@
 <p>{{ $messageBody }}</p>
 <br>
 <p>
-To Reply to this message please contact the user directly at {{$user->email}}
+
+{{ Html::decode(Html::linkRoute('conversation', 'To Reply to this message please click here', [$trainer->display_name], ['class' => ''])) }}
 </p>
 
 

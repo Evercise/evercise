@@ -400,9 +400,9 @@ Route::post(
 
 
 // mail
-Route::get('/sessions/{id}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
+Route::get('/sessions/{sessionId}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
 Route::post(
-    '/sessions/{id}/mail_all',
+    '/sessions/{sessionId}/mail_all',
     ['as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll']
 );
 Route::get('/sessions/{sessionId}/mail_one/{userId}',
@@ -416,6 +416,13 @@ Route::get('/sessions/{sessionId}/mail_trainer/{trainerId}',
 );
 Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     ['as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer']
+);
+
+Route::get('/conversation/{displayName}',
+    ['as' => 'conversation', 'uses' => 'MessageController@getConversation']
+);
+Route::post('/conversation/{displayName}',
+    ['as' => 'conversation.post', 'uses' => 'MessageController@postMessage']
 );
 
 Route::get('/fitness-packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);

@@ -433,5 +433,10 @@ class UsersController extends \BaseController
         return Redirect::route('home')->withCookie($cookie);
     }
 
+    public function replyToMessage($user_slug)
+    {
+
+    }
+
 
 }
