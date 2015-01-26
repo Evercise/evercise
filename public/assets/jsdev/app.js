@@ -1,5 +1,5 @@
 if(typeof angular != 'undefined') {
-    var app = angular.module('DiscoverApp', [
+    var app = angular.module('everApp', [
         'google-maps'.ns()
     ] , ['$interpolateProvider',function ($interpolateProvider) {
             $interpolateProvider.startSymbol('{[{');

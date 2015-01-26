@@ -245,4 +245,7 @@ $(function(){
 
     $(".select-box").selectbox();
 
+    $('#class-calendar').exists(function(){
+        //new classCalendar(this);
+    })
 });

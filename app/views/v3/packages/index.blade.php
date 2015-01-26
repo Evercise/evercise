@@ -20,7 +20,7 @@
                 <div class="col-md-4 text-left">
                     <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                         <li class="list-group-item package-title">
-                            <h2 class="h1">{{ $p->name }} Fitness Classes</h2>
+                            <h2>{{ $p->name }} Fitness Classes</h2>
                         </li>
                         <li class="list-group-item package-description">
                             <h4>£{{ round($p->max_class_price,2) }} {{ $p->classes }} Class Package</h4>
@@ -76,7 +76,7 @@
                 <div class="col-md-4 text-left">
                     <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                         <li class="list-group-item package-title">
-                            <h2 class="h1">{{ $p->name }} Fitness Classes</h2>
+                            <h2>{{ $p->name }} Fitness Classes</h2>
                         </li>
                         <li class="list-group-item package-description">
                             <h4>{{ $p->classes }} Class Package</h4>

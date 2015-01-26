@@ -231,7 +231,8 @@ class CartController extends AjaxBaseController
 
         return Response::json([
             'view'      => View::make('v3.cart.dropdown')->with($data)->render(),
-            'remaining' => $this->setRemaining($data)
+            'remaining' => $this->setRemaining($data),
+            'items'     => count($data['sessions_grouped'])+ count($data['packages'])
         ]);
     }
 
