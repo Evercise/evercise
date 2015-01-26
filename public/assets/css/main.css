@@ -7340,6 +7340,7 @@ a.bg-light-grey:hover {
 @media (max-width: 992px) {
   .navbar-default .navbar-nav li.nav-list {
     float: left;
+    margin: 0;
   }
 }
 .navbar-default .navbar-nav li.nav-list a.nav-link {
@@ -7350,6 +7351,7 @@ a.bg-light-grey:hover {
   line-height: 22px;
 }
 .navbar-default .navbar-nav li.nav-list a.nav-cart {
+  max-width: 75px;
   background: #ff1b7e;
   color: #ffffff;
   font-size: 16px;
