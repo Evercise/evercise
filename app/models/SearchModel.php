@@ -71,6 +71,8 @@ class SearchModel
          *
          */
 
+
+
         $landing = false;
         if(!empty($input['landing'])) {
             $landing = $input['landing'];

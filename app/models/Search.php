@@ -36,7 +36,7 @@ class Search
         $this->cart = EverciseCart::getCart();
 
         $this->cart_items = [];
-        foreach($this->cart['sessions_grouped'] as $key_id => $val) {
+        foreach ($this->cart['sessions_grouped'] as $key_id => $val) {
             $this->cart_items[$key_id] = $val['qty'];
         }
 
@@ -58,7 +58,7 @@ class Search
             'radius' => $params['radius'],
             'size'   => $params['size'],
             'from'   => $params['from'],
-            'fields'   => ['id', 'venue.id','venue.name','venue.lat','venue.lon']
+            'fields' => ['id', 'venue.id', 'venue.name', 'venue.lat', 'venue.lon']
         ];
 
 
@@ -72,7 +72,6 @@ class Search
         return $this->formatMapResults($results, $area);
 
     }
-
 
 
     /**
@@ -147,19 +146,17 @@ class Search
         $mapResults = [];
 
         foreach ($results->hits as $r) {
-            d($r);
             $fields = (array)$r->_source;
-            $id = $fields['id'][0];
-            $venue_id = $fields['venue_id'][0];
-            $mapResults[$venue_id][$id]['location'] = [ $fields['venue.lon'][0] => $fields['venue.lat'][0] ];
+
+            $id = $fields['id'];
+            $venue_id = $fields['venue_id'];
+            $mapResults[$venue_id][$id]['location'] = [$fields['venue']->lon => $fields['venue']->lat];
             $mapResults[$venue_id][$id]['classes'][] = $id;
             $mapResults[$venue_id][$id]['total'] = count($mapResults[$venue_id][$id]['classes']);
         }
 
         return $mapResults;
     }
-
-
 
 
     /**
@@ -303,16 +300,16 @@ class Search
 
             $futuresessions = [];
 
-            if(count($row->futuresessions) > 4) {
+            if (count($row->futuresessions) > 4) {
                 $total = 0;
-                foreach($row->futuresessions as $s) {
+                foreach ($row->futuresessions as $s) {
 
-                    if($total > 3) {
+                    if ($total > 3) {
                         $row->futuresessions = $futuresessions;
                         break;
                     }
 
-                    if($s->remaining > 0) {
+                    if ($s->remaining > 0) {
                         $futuresessions[] = $s;
                         $total++;
                     }
