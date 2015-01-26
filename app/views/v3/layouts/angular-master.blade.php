@@ -55,7 +55,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
 
 </head>
-<body>
+<body ng-app="DiscoverApp">
     <!-- include app navigation  -->
     {{ isset($header) ? $header : '' }}
     <!-- include page body -->
@@ -64,4 +64,5 @@
     @if(isset($footer) && $footer != 'no' || !isset($footer))
         @include('v3.layouts.footer')
     @endif
+    @include('layouts.laracasts')
 </body>

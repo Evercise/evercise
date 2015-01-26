@@ -36,10 +36,40 @@ class Search
         $this->cart = EverciseCart::getCart();
 
         $this->cart_items = [];
-        foreach($this->cart['sessions_grouped'] as $key_id => $val) {
+        foreach ($this->cart['sessions_grouped'] as $key_id => $val) {
             $this->cart_items[$key_id] = $val['qty'];
         }
 
+
+    }
+
+
+    /**
+     * Get results for a specific Place
+     * @param Place $area
+     * @param array $params
+     * @param bool $all
+     * @return mixed
+     */
+    public function getMapResults(Place $area, $params = [], $all = FALSE)
+    {
+        /**  Set Defaults */
+        $defaults = [
+            'radius' => $params['radius'],
+            'size'   => $params['size'],
+            'from'   => $params['from'],
+            'fields' => ['id', 'venue.id', 'venue.name', 'venue.lat', 'venue.lon']
+        ];
+
+
+        foreach ($defaults as $key => $val) {
+            if (!isset($params[$key])) {
+                $params[$key] = $val;
+            }
+        }
+        $results = $this->elastic->searchEvercisegroups($area, $params);
+
+        return $this->formatMapResults($results, $area);
 
     }
 
@@ -55,9 +85,9 @@ class Search
     {
         /**  Set Defaults */
         $defaults = [
-            'radius' => '10mi',
-            'size'   => 24,
-            'from'   => 0
+            'radius' => $params['radius'],
+            'size'   => $params['size'],
+            'from'   => $params['from']
         ];
 
         foreach ($defaults as $key => $val) {
@@ -104,6 +134,30 @@ class Search
 
         return $results;
     }
+
+
+    /**
+     * Format Results
+     * @param $results
+     * @return mixed
+     */
+    public function formatMapResults($results)
+    {
+        $mapResults = [];
+
+        foreach ($results->hits as $r) {
+            $fields = (array)$r->_source;
+
+            $id = $fields['id'];
+            $venue_id = $fields['venue_id'];
+            $mapResults[$venue_id][$id]['location'] = [$fields['venue']->lon => $fields['venue']->lat];
+            $mapResults[$venue_id][$id]['classes'][] = $id;
+            $mapResults[$venue_id][$id]['total'] = count($mapResults[$venue_id][$id]['classes']);
+        }
+
+        return $mapResults;
+    }
+
 
     /**
      * Format a single Result
@@ -246,16 +300,16 @@ class Search
 
             $futuresessions = [];
 
-            if(count($row->futuresessions) > 4) {
+            if (count($row->futuresessions) > 4) {
                 $total = 0;
-                foreach($row->futuresessions as $s) {
+                foreach ($row->futuresessions as $s) {
 
-                    if($total > 3) {
+                    if ($total > 3) {
                         $row->futuresessions = $futuresessions;
                         break;
                     }
 
-                    if($s->remaining > 0) {
+                    if ($s->remaining > 0) {
                         $futuresessions[] = $s;
                         $total++;
                     }

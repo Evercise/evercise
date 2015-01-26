@@ -68,6 +68,21 @@ Route::group(['prefix' => 'ajax'], function () {
     // login
     Route::post('/auth/login', ['as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin']);
 
+    // Search
+    Route::post('/uk/{allsegments}', ['as' => 'ajax.search.parse', 'uses' => 'ajax\SearchController@parseUrl'])->where(
+        'allsegments',
+        '(.*)?'
+    );
+    Route::post('/uk/', ['as' => 'ajax.evercisegroups.search', 'uses' => 'ajax\SearchController@parseUrl']);
+    Route::post('/map/uk/{allsegments}', ['as' => 'ajax.map.search.parse', 'uses' => 'ajax\SearchController@parseMapUrl'])->where(
+        'allsegments',
+        '(.*)?'
+    );
+    Route::post('/map/uk/', ['as' => 'ajax.map.evercisegroups.search', 'uses' => 'ajax\SearchController@parseMapUrl']);
+
+
+
+
     // cart
 
     // ajax prefix
@@ -275,7 +290,6 @@ Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchContro
 );
 Route::any('/uk/', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
 
-
 // VenuesController
 Route::get('venues', 'VenuesController@index');
 Route::get('venues/create', 'VenuesController@create');
@@ -400,9 +414,9 @@ Route::post(
 
 
 // mail
-Route::get('/sessions/{id}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
+Route::get('/sessions/{sessionId}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
 Route::post(
-    '/sessions/{id}/mail_all',
+    '/sessions/{sessionId}/mail_all',
     ['as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll']
 );
 Route::get('/sessions/{sessionId}/mail_one/{userId}',
@@ -416,6 +430,13 @@ Route::get('/sessions/{sessionId}/mail_trainer/{trainerId}',
 );
 Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     ['as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer']
+);
+
+Route::get('/conversation/{displayName}',
+    ['as' => 'conversation', 'uses' => 'MessageController@getConversation']
+);
+Route::post('/conversation/{displayName}',
+    ['as' => 'conversation.post', 'uses' => 'MessageController@postMessage']
 );
 
 Route::get('/fitness-packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);

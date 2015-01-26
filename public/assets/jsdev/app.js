@@ -8,10 +8,12 @@ if(typeof angular != 'undefined') {
 
     app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
         GoogleMapApi.configure({
-            v: '3.16',
-            libraries: 'places'
+            v: '3.17',
+            libraries: 'places',
+            uk: true
         });
     }]);
+
 
 
     app.filter('truncate', function () {
@@ -40,5 +42,17 @@ if(typeof angular != 'undefined') {
             return val;
         };
     });
+    app.directive('errSrc', function() {
+        return {
+            link: function(scope, element, attrs) {
+                element.bind('error', function() {
+                    if (attrs.src != attrs.errSrc) {
+                        attrs.$set('src', attrs.errSrc);
+                    }
+                });
+            }
+        }
+    });
+
 
 }

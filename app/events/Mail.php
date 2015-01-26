@@ -511,6 +511,75 @@ class Mail
         $this->send($email, $params);
     }
 
+    public function notReturned($user, $everciseGroups)
+    {
+        $params = [
+            'subject'        => 'You have not used your £5 Evercise Balance',
+            'title'          => 'You haven&apos;t used your £5 Evercise Balance',
+            'view'           => 'v3.emails.user.why_not_coming_back',
+            'user'           => $user,
+            'everciseGroups' => $everciseGroups,
+            'banner'         => FALSE,
+            'image'          => image('/assets/img/email/user_default.jpg', 'You have not used your £5 Evercise Balance'),
+            'link_url'       => $this->url->to('/uk/london')
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function whyNotRefer($user)
+    {
+        $params = [
+            'subject'  => 'Share Evercise with your friends and get £5',
+            'title'    => 'Share Evercise with your friends and get £5',
+            'view'     => 'v3.emails.user.why_not_refer',
+            'user'     => $user,
+            'banner'   => $this->banner_types['refer_someone'],
+            'image'    => image('/assets/img/email/user_reffer_friend.jpg', 'Why not refer a friend'),
+            'link_url' => $this->url->to('/uk/london'),
+            'style'    => 'blue',
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function rateClass($user)
+    {
+        $params = [
+            'subject'  => 'How was the class?',
+            'title'    => 'How was the class?',
+            'view'     => 'v3.emails.user.rate_class',
+            'user'     => $user,
+            'image'    => image('/assets/img/email/user_how_was_the_class.jpg', 'rate class'),
+            'link_url' => $this->url->to('/profile/' . $user->display_name . '/attended'),
+            'style'    => 'pink',
+            'banner'   => $this->banner_types['packages'],
+        ];
+
+        $this->send($user->email, $params);
+
+    }
+
+    public function rateClassHasPackage($user)
+    {
+        // Send the rate class email, for users that have already have an active package
+        // (the standard email recommends buying a package)
+
+        $params = [
+            'subject'  => 'How was the class?',
+            'title'    => 'How was the class?',
+            'view'     => 'v3.emails.user.rate_class',
+            'user'     => $user,
+            'image'    => image('/assets/img/email/user_how_was_the_class.jpg', 'rate class'),
+            'link_url' => $this->url->to('/profile/' . $user->display_name . '/attended'),
+            'style'    => 'pink',
+        ];
+
+        $this->send($user->email, $params);
+    }
+
 
     /**
      * ########################################################################################
@@ -848,73 +917,20 @@ class Mail
 
     }
 
-    public function notReturned($user, $everciseGroups)
+    public function notReturnedTrainer($trainer)
     {
         $params = [
-            'subject'        => 'You have not used your £5 Evercise Balance',
-            'title'          => 'You haven&apos;t used your £5 Evercise Balance',
-            'view'           => 'v3.emails.user.why_not_coming_back',
-            'user'           => $user,
-            'everciseGroups' => $everciseGroups,
+            'subject'        => 'Don’t be a stranger!',
+            'title'          => 'Don’t be a stranger!',
+            'view'           => 'v3.emails.trainer.why_not_coming_back',
+            'user'           => $trainer,
             'banner'         => FALSE,
-            'image'          => image('/assets/img/email/user_default.jpg', 'Why not returned'),
+            'image'          => image('/assets/img/email/user_default.jpg', 'Don’t be a stranger!'),
             'link_url'       => $this->url->to('/uk/london')
         ];
 
-        $this->send($user->email, $params);
+        $this->send($trainer->email, $params);
 
-    }
-
-    public function whyNotRefer($user)
-    {
-        $params = [
-            'subject'  => 'Share Evercise with your friends and get £5',
-            'title'    => 'Share Evercise with your friends and get £5',
-            'view'     => 'v3.emails.user.why_not_refer',
-            'user'     => $user,
-            'banner'   => $this->banner_types['refer_someone'],
-            'image'    => image('/assets/img/email/user_reffer_friend.jpg', 'Why not refer a friend'),
-            'link_url' => $this->url->to('/uk/london'),
-            'style'    => 'blue',
-        ];
-
-        $this->send($user->email, $params);
-
-    }
-
-    public function rateClass($user)
-    {
-        $params = [
-            'subject'  => 'How was the class?',
-            'title'    => 'How was the class?',
-            'view'     => 'v3.emails.user.rate_class',
-            'user'     => $user,
-            'image'    => image('/assets/img/email/user_how_was_the_class.jpg', 'rate class'),
-            'link_url' => $this->url->to('/profile/' . $user->display_name . '/attended'),
-            'style'    => 'pink',
-            'banner'   => $this->banner_types['packages'],
-        ];
-
-        $this->send($user->email, $params);
-
-    }
-
-    public function rateClassHasPackage($user)
-    {
-        // Send the rate class email, for users that have already have an active package
-        // (the standard email recommends buying a package)
-
-        $params = [
-            'subject'  => 'How was the class?',
-            'title'    => 'How was the class?',
-            'view'     => 'v3.emails.user.rate_class',
-            'user'     => $user,
-            'image'    => image('/assets/img/email/user_how_was_the_class.jpg', 'rate class'),
-            'link_url' => $this->url->to('/profile/' . $user->display_name . '/attended'),
-            'style'    => 'pink',
-        ];
-
-        $this->send($user->email, $params);
     }
 
 
@@ -989,13 +1005,7 @@ class Mail
         $parse = new CssToInlineStyles($view, $this->data['css']);
 
         $content = $parse->convert();
-
-
-        if ($this->url->to('/') == 'http://dev.evercise.com') {
-            $content = str_replace('dev.evercise.com', 'evertest.evercise.com', $content);
-        }
-
-
+        
         $plain_text = $this->plainText($content);
 
 

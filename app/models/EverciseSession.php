@@ -3,6 +3,7 @@
 /**
  * Class Evercisesession
  */
+
 class Evercisesession extends \Eloquent
 {
 
@@ -324,18 +325,18 @@ class Evercisesession extends \Eloquent
      * @param $trainerId
      * @return array
      */
-    public static function mailTrainer($sessionId, $trainerId)
+    public static function mailTrainer($sessionId, $trainerId, $subject, $body)
     {
-        $subject = Input::get('mail_subject');
-        $body = Input::get('mail_body');
+        //$subject = Input::get('mail_subject');
+        //$body = Input::get('mail_body');
 
         $session = Evercisesession::find($sessionId);
         $evercisegroup = $session->evercisegroup()->first();
         $trainer = User::find($trainerId);
         $user = Sentry::getUser();
 
-        event('session.mail_trainer', [$trainer, $user, $evercisegroup, $session, $subject, $body]);
 
+        event('session.mail_trainer', [$trainer, $user, $evercisegroup, $session, $subject, $body]);
 
         return [$evercisegroup->id, $evercisegroup->name];
     }

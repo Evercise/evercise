@@ -85,6 +85,8 @@ return [
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction, $balance // ∑
 
+        ['user.message.reply' => 'User@messageReply'], // $user, $transaction, $balance // ∑
+
         ['user.withdraw.completed' => 'User@withdrawCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.completed' => 'User@referralCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.signup' => 'User@referralSignup'], // $user, $transaction, $balance // ∑
@@ -103,6 +105,8 @@ return [
         ['trainer.registered' => 'Trainer@registered'], //$trainer
         ['trainer.complete_profile' => 'Trainer@whyNotCompleteProfile'], //$trainer
         ['trainer.create_first_class' => 'Trainer@whyNotCreateFirstClass'], //$trainer
+
+        ['trainer.not_returned' => 'Trainer@notReturnedTrainer'], //$trainer
 
 
         ['class.created' => 'Classes@classCreated'],  // $class, $trainer

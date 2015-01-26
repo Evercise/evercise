@@ -126,7 +126,8 @@ return array(
         'Gloudemans\Shoppingcart\ShoppingcartServiceProvider',
         'Igormatkovic\Livelogger\LiveloggerServiceProvider',
         'Davispeixoto\LaravelSalesforce\LaravelSalesforceServiceProvider',
-        'Liebig\Cron\CronServiceProvider'
+        'Liebig\Cron\CronServiceProvider',
+        'Tzookb\TBMsg\TBMsgServiceProvider'
 
 
 
@@ -209,7 +210,8 @@ return array(
         'ES'                 => 'Elasticsearch\Client',
         'Shortcode'          => 'Pingpong\Shortcode\Facades\Shortcode',
         'Cart'               => 'Gloudemans\Shoppingcart\Facades\Cart',
-        'Log'               => 'Igormatkovic\Livelogger\Facades\Livelogger'
+        'Log'                => 'Igormatkovic\Livelogger\Facades\Livelogger',
+        'TBMsg'              => 'Tzookb\TBMsg\Facade\TBMsg'
 
     ),
 

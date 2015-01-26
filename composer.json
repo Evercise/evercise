@@ -40,7 +40,9 @@
         "tijsverkoyen/css-to-inline-styles": "~1.5",
         "liebig/cron": "dev-master",
         "ext-curl": "*",
-        "angelleye/paypal-php-library": "2.0.*"
+        "angelleye/paypal-php-library": "2.0.*",
+        "tzookb/tbmsg": "1.1.*",
+        "symfony/var-dumper": "3.0.*@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
