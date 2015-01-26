@@ -55,11 +55,20 @@
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mobile.custom.min.js') }}
     {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
+    {{ HTML::script('/assets/js/jquery.selectbox-0.2.min.js') }}
     {{ HTML::script('/assets/js/jquery.mCustomScrollbar.concat.min.js') }}
     {{ HTML::script('/assets/js/cropper.min.js') }}
+
+    @if(isset($angular) )
+        {{ HTML::script('//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js') }}
+        {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js') }}
+        {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js') }}
+        {{ HTML::script('/assets/js/angular-google-maps.min.js') }}
+    @endif
+
     {{ HTML::script('/assets/js/main.min.js?vs='.$version) }}
-    <!-- Latest compiled and minified JavaScript of jasny bootstrap -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+
+
 
 
      @yield('script')
@@ -69,9 +78,6 @@
 
 </head>
 <body>
-
-
-
 
     <!-- include app navigation  -->
     {{ isset($header) ? $header : '' }}

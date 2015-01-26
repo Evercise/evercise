@@ -4,6 +4,7 @@ function Map(map) {
     this.lng = map.data('lng');
     this.zoom = map.data('zoom');
     this.icon = '/assets/img/icon_default_small_pin.png';
+    this.panel = map.closest('#map-panel');
     this.init();
 }
 
@@ -32,5 +33,11 @@ Map.prototype = {
             });
             marker.setMap(map);
         }});
+        this.addMobileCheck();
+    },
+    addMobileCheck : function(){
+        if($('#map-panel-mobile').is(":visible")){
+            $('#map-panel-mobile').append(this.panel);
+        }
     }
 }

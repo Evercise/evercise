@@ -1,9 +1,11 @@
-@extends('v3.layouts.angular-master')
+@extends('v3.layouts.master')
+<?php  View::share('angular', 'show') ?>
 @include('layouts.laracasts')
 <?php  View::share('footer', 'no') ?>
 
+
 @section('body')
-  <div id="angular" ng-app="DiscoverApp" ng-controller="DiscoverController">
+  <div id="angular" ng-app="everApp" ng-controller="DiscoverController">
     @include('v3.classes.discover.filters')
     @include('v3.landing.popup')
 

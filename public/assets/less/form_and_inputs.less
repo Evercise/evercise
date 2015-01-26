@@ -288,3 +288,53 @@ body:not(:-moz-handler-blocked) .custom-select:after{
   }
 }
 
+// select box
+
+.sbHolder{
+  width: 100%;
+  .sbSelector{
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+  .sbToggle{
+    display: block;
+    height: 26px;
+    outline: none;
+    position: absolute;
+    right: 12px;
+    top: 0;
+    width: 24px;
+    .sprite(-42px, -246px);
+  }
+  .sbOptions{
+    background-color: @white;
+    border: solid 1px @input-border;
+    list-style: none;
+    left: 0px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 26px;
+    width: 100%;
+    z-index: 1;
+    overflow-y: auto;
+    li{
+      padding: 0 7px;
+      line-height: 26px;
+      a{
+        border-bottom: dotted 1px @input-border;
+        display: block;
+        outline: none;
+        padding: 0 0 0 3px;
+      }
+      &:hover{
+        a{
+          color: @white;
+        }
+        background: @brand-primary;
+      }
+    }
+  }
+}
+

@@ -1088,7 +1088,7 @@ h6 .small,
 }
 h1,
 .h1 {
-  font-size: 34px;
+  font-size: 49px;
 }
 h2,
 .h2 {
@@ -7120,6 +7120,7 @@ h6,
 .h5,
 .h6 {
   text-transform: uppercase;
+  margin: 15px 0 22px;
 }
 .page-header {
   margin-top: 55px;
@@ -7146,7 +7147,7 @@ a:focus {
   outline-offset: -2px;
 }
 strong {
-  color: #383d48;
+  font-weight: 600;
   -webkit-font-smoothing: antialiased;
 }
 .text-large {
@@ -8495,6 +8496,10 @@ a.bg-light-grey:hover {
 }
 .btn {
   border: 1px solid transparent;
+}
+.btn-block {
+  padding-left: 0;
+  padding-right: 0;
 }
 .btn-fb {
   color: #ffffff;
@@ -9977,6 +9982,64 @@ body:not(:-moz-handler-blocked) .custom-select:after {
     float: left;
   }
 }
+.sbHolder {
+  width: 100%;
+}
+.sbHolder .sbSelector {
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+.sbHolder .sbToggle {
+  display: block;
+  height: 26px;
+  outline: none;
+  position: absolute;
+  right: 12px;
+  top: 0;
+  width: 24px;
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -42px -246px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.sbHolder .sbToggle.active {
+  background-position: -42px -286px;
+}
+.sbHolder .sbToggle.hover:hover,
+.sbHolder .sbToggle.active:hover {
+  cursor: pointer;
+  background-position: -42px -286px;
+}
+.sbHolder .sbOptions {
+  background-color: #ffffff;
+  border: solid 1px #cccccc;
+  list-style: none;
+  left: 0px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 26px;
+  width: 100%;
+  z-index: 1;
+  overflow-y: auto;
+}
+.sbHolder .sbOptions li {
+  padding: 0 7px;
+  line-height: 26px;
+}
+.sbHolder .sbOptions li a {
+  border-bottom: dotted 1px #cccccc;
+  display: block;
+  outline: none;
+  padding: 0 0 0 3px;
+}
+.sbHolder .sbOptions li:hover {
+  background: #ff1b7e;
+}
+.sbHolder .sbOptions li:hover a {
+  color: #ffffff;
+}
 .cart-row {
   padding: 10px 0;
   float: left;
@@ -10028,6 +10091,26 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 .jumbotron {
   margin-bottom: 0;
+}
+.class-hero {
+  min-height: 640px;
+  -webkit-box-shadow: 0 0 60px 20px #000000;
+  box-shadow: 0 0 60px 20px #000000;
+}
+.class-hero .mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#38000000', endColorstr='#cc000000', GradientType=0);
+}
+.class-content {
+  margin-top: -567px;
 }
 /* margins */
 .mt0 {
@@ -10472,6 +10555,64 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   margin-top: -20px;
   margin-left: -20px;
   z-index: -1;
+}
+.class-calendar .datepicker-inline {
+  width: 100%;
+}
+.class-calendar .datepicker-inline table {
+  width: 100%;
+}
+.class-calendar .datepicker-inline table th {
+  font-size: 16px;
+  font-weight: 600;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.class-calendar .datepicker-inline table .dow {
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 0;
+}
+.class-calendar .datepicker-inline table tr:first-child td:first-child {
+  border-top-left-radius: 3px;
+}
+.class-calendar .datepicker-inline table tr:first-child td:last-child {
+  border-top-right-radius: 3px;
+}
+.class-calendar .datepicker-inline table tr:last-child td:first-child {
+  border-bottom-left-radius: 3px;
+}
+.class-calendar .datepicker-inline table tr:last-child td:last-child {
+  border-bottom-right-radius: 3px;
+}
+.class-calendar .datepicker-inline table td {
+  border: 1px solid #eaeaea;
+  border-radius: 0;
+  background: #ffffff;
+  color: #768690;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px 0;
+}
+.class-calendar .datepicker-inline table td.disabled {
+  color: #e8ebec;
+  pointer-events: none;
+}
+.class-calendar .datepicker-inline table td.old,
+.class-calendar .datepicker-inline table td.new {
+  background: #f1f1f1;
+  color: #f1f1f1;
+}
+.calendar-selected li {
+  padding-top: 13px;
+  padding-bottom: 13px;
+  line-height: 38px;
+}
+.calendar-selected li .sbToggle {
+  top: 5px;
+}
+.calendar-selected li:nth-of-type(2) {
+  border-color: #9c9c9c;
 }
 div.hub-row {
   border-bottom: 1px solid #e8ebec;
@@ -11652,35 +11793,19 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .package-green .package-title {
   background-color: #7ed321;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -214px -733px;
+  background-position: -434px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-green .package-title.active {
-  background-position: -214px -813px;
+  background-position: -434px -813px;
 }
 .package-green .package-title.hover:hover,
 .package-green .package-title.active:hover {
   cursor: pointer;
-  background-position: -214px -813px;
-}
-@media (max-width: 992px) {
-  .package-green .package-title {
-    background-image: url("../img/ev_site_icons_v2.png");
-    background-position: -427px -733px;
-    background-repeat: no-repeat;
-    overflow: hidden;
-  }
-  .package-green .package-title.active {
-    background-position: -427px -813px;
-  }
-  .package-green .package-title.hover:hover,
-  .package-green .package-title.active:hover {
-    cursor: pointer;
-    background-position: -427px -813px;
-  }
+  background-position: -434px -813px;
 }
 .package-green .package-title h2 {
   color: #ffffff;
@@ -11688,6 +11813,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   position: absolute;
   bottom: -5px;
   width: 70%;
+  right: 0  ;
 }
 @media (max-width: 992px) {
   .package-green .package-title h2 {
@@ -11767,35 +11893,19 @@ fieldset[disabled] .package-green .package-pay .btn.active {
 .package-blue .package-title {
   background-color: #50c3e2;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -214px -733px;
+  background-position: -434px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-blue .package-title.active {
-  background-position: -214px -813px;
+  background-position: -434px -813px;
 }
 .package-blue .package-title.hover:hover,
 .package-blue .package-title.active:hover {
   cursor: pointer;
-  background-position: -214px -813px;
-}
-@media (max-width: 992px) {
-  .package-blue .package-title {
-    background-image: url("../img/ev_site_icons_v2.png");
-    background-position: -427px -733px;
-    background-repeat: no-repeat;
-    overflow: hidden;
-  }
-  .package-blue .package-title.active {
-    background-position: -427px -813px;
-  }
-  .package-blue .package-title.hover:hover,
-  .package-blue .package-title.active:hover {
-    cursor: pointer;
-    background-position: -427px -813px;
-  }
+  background-position: -434px -813px;
 }
 .package-blue .package-title h2 {
   color: #ffffff;
@@ -11803,6 +11913,7 @@ fieldset[disabled] .package-green .package-pay .btn.active {
   position: absolute;
   bottom: -5px;
   width: 70%;
+  right: 0  ;
 }
 @media (max-width: 992px) {
   .package-blue .package-title h2 {
@@ -11882,35 +11993,19 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
 .package-pink .package-title {
   background-color: #ff1b7e;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -214px -733px;
+  background-position: -434px -733px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-pink .package-title.active {
-  background-position: -214px -813px;
+  background-position: -434px -813px;
 }
 .package-pink .package-title.hover:hover,
 .package-pink .package-title.active:hover {
   cursor: pointer;
-  background-position: -214px -813px;
-}
-@media (max-width: 992px) {
-  .package-pink .package-title {
-    background-image: url("../img/ev_site_icons_v2.png");
-    background-position: -427px -733px;
-    background-repeat: no-repeat;
-    overflow: hidden;
-  }
-  .package-pink .package-title.active {
-    background-position: -427px -813px;
-  }
-  .package-pink .package-title.hover:hover,
-  .package-pink .package-title.active:hover {
-    cursor: pointer;
-    background-position: -427px -813px;
-  }
+  background-position: -434px -813px;
 }
 .package-pink .package-title h2 {
   color: #ffffff;
@@ -11918,6 +12013,7 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
   position: absolute;
   bottom: -5px;
   width: 70%;
+  right: 0  ;
 }
 @media (max-width: 992px) {
   .package-pink .package-title h2 {

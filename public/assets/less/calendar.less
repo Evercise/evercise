@@ -36,3 +36,62 @@
     }
   }
 }
+
+.class-calendar{
+  .datepicker-inline{
+    width: 100%;
+    table{
+      width: 100%;
+      //border-collapse: separate;
+      thead{
+
+      }
+      th{
+        font-size: 16px;
+        font-weight: 600;
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+      .dow{
+        font-size: 12px;
+        text-transform: uppercase;
+        padding: 0;
+      }
+      tr:first-child td:first-child { border-top-left-radius: @border-radius-base; }
+      tr:first-child td:last-child { border-top-right-radius: @border-radius-base;  }
+      tr:last-child td:first-child { border-bottom-left-radius: @border-radius-base;  }
+      tr:last-child td:last-child { border-bottom-right-radius: @border-radius-base;  }
+      td{
+        border: 1px solid #eaeaea;
+        border-radius: 0;
+        background: @white;
+        color: @gray;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 5px 0;
+        &.disabled{
+          color: @gray-light;
+          pointer-events: none;
+        }
+        &.old, &.new{
+          background: #f1f1f1;
+          color: #f1f1f1;
+        }
+      }
+    }
+
+  }
+}
+.calendar-selected{
+  li{
+    padding-top: 13px;
+    padding-bottom: 13px;
+    line-height: 38px;
+    .sbToggle{
+      top: 5px;
+    }
+    &:nth-of-type(2){
+      border-color: #9c9c9c;
+    }
+  }
+}
