@@ -117,7 +117,7 @@ Route::filter('guest', function()
 
 Route::filter('csrf', function()
 {
-    $token = Input::ajax() ? Input::header('X-CSRF-Token') : Input::input('_token');
+    $token = Input::header('X-CSRF-Token', Input::input('_token'));
 
     if (Session::token() !== $token)
     {

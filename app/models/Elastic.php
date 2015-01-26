@@ -66,17 +66,20 @@ class Elastic
 
         $search = FALSE;
 
-//        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.15;
-//        $searchParams['body']['min_score'] = 0.00;
+        $searchParams['body']['min_score'] = getenv('ELASTIC_MINIMAL_SCORE') ?: 0.15;
 
 
         if (!empty($params['search'])) {
+
             $configIndex = implode(',', array_map(function ($v, $k) { return $k.'^'.$v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
+
                 'multi_match' => [
                     'query'  => $params['search'],
-                    'fields' => explode(',',$configIndex)
+                    'fields' => explode(',',$configIndex),
+
                 ],
+
             ];
             $search = TRUE;
         }
@@ -110,6 +113,10 @@ class Elastic
             $search = TRUE;
         }
 
+        if (!empty($params['venue_id'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['venue.id' => $params['venue_id']];
+            $search = TRUE;
+        }
 
         if (!$search) {
             /** Guess not! */
@@ -154,6 +161,7 @@ class Elastic
                 ];
             }
         }
+
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
@@ -527,7 +535,6 @@ class Elastic
                 $mapping = [
                     '_source'    => ['enabled' => TRUE],
                     'properties' => [
-
                         '_all'             => ['enabled' => TRUE],
                         'id'               => [
                             'type'           => 'string',
@@ -623,7 +630,6 @@ class Elastic
                         'search'   => ['type' => 'string', 'include_in_all' => TRUE],
                         'size'     => ['type' => 'string', 'include_in_all' => TRUE],
                         'radius'   => ['type' => 'string', 'include_in_all' => TRUE],
-                        'search'   => ['type' => 'string', 'include_in_all' => TRUE],
                         'url'      => ['type' => 'string', 'include_in_all' => TRUE],
                         'url_type' => ['type' => 'string', 'include_in_all' => TRUE],
                         'user_ip'  => ['type' => 'string', 'include_in_all' => TRUE],
@@ -698,4 +704,3 @@ class Elastic
         return $this->elasticsearch->ping();
     }
 }
-

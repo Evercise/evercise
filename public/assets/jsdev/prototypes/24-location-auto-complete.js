@@ -16,7 +16,7 @@ LocationAutoComplete.prototype = {
         this.form = this.input.closest("form");
 
         var self = this;
-        //check if we are using angular as angualr ois loading google masp api
+        //check if we are using angular as angualr is loading google maps api
         if (typeof angular != 'undefined')
         {
             if( window['google'] ){
@@ -25,7 +25,7 @@ LocationAutoComplete.prototype = {
             else{
                 setTimeout(function() {
                     self.init();
-                }, 500);
+                }, 1000);
             }
 
         }
