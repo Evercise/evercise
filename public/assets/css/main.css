@@ -10010,20 +10010,21 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   outline: none;
   position: absolute;
   right: 12px;
-  top: 0;
+  top: 50%;
+  margin-top: -13px;
   width: 24px;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -42px -246px;
+  background-position: -47px -246px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .sbHolder .sbToggle.active {
-  background-position: -42px -286px;
+  background-position: -47px -286px;
 }
 .sbHolder .sbToggle.hover:hover,
 .sbHolder .sbToggle.active:hover {
   cursor: pointer;
-  background-position: -42px -286px;
+  background-position: -47px -286px;
 }
 .sbHolder .sbOptions {
   background-color: #ffffff;
@@ -10078,6 +10079,9 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   width: 100%;
   padding: 9px 0;
   list-style: none;
+}
+.checkout li .sbSelector {
+  line-height: 50px;
 }
 .hero {
   background: #383d48;
