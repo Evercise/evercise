@@ -10072,6 +10072,13 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   border: 0;
   padding-bottom: 0;
 }
+.checkout li {
+  border-bottom: 1px solid #f2f2f2;
+  float: left;
+  width: 100%;
+  padding: 9px 0;
+  list-style: none;
+}
 .hero {
   background: #383d48;
   background-size: cover ;

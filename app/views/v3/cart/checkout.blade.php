@@ -4,6 +4,45 @@
 <script>
     var viewPrice = '{{ isset($total['subtotal']) ? SessionPayment::poundsToPennies($total['final_cost'])  : null }}';
 </script>
+<div class="container">
+    <div class="row">
+        <div class="page-header">
+            <h1 class="h2">Checkout</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10">
+            <ul class="checkout">
+                <li class="title">Review Order</li>
+                <li class="headers">
+                    <div class="col-sm-6">Session</div>
+                    <div class="col-sm-3">Quantity</div>
+                    <div class="col-sm-2">Price</div>
+                    <div class="col-sm-1">op</div>
+                </li>
+                <li class="item">
+                    <div class="col-sm-6">
+                        <strong>Clubbercise</strong><br>
+                        <span>Thu, 19 March 2015 6:40 PM</span>
+                    </div>
+                    <div class="col-sm-3">
+                        <select name="quantity" id="quantity" class="select-box">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">Price</div>
+                    <div class="col-sm-1">op</div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            side thingy
+        </div>
+    </div>
+</div>
+<!--
 <div id="checkout" class="container-fluid bg-grey">
     <div class="container first-container">
         <div class="underline text-center">
@@ -69,40 +108,11 @@
                                 <h3>Class cart </h3>
                             </div>
                             <div class="col-xs-1">
-                            <!--
-                                {{ Form::open(['route' =>'cart.emptyCart', 'method' => 'post', 'id' => 'empty-cart']) }}
-                                    {{ HTML::decode( Form::submit('', ['class' => 'btn btn-icon icon icon-bin hover mt10']) )}}
-                                {{Form::close()}}
-                                -->
-                            </div>
-                        </div>
-                    </li>
-                    <!--
-                    <li class="list-group-item">
-                        <strong class="list-group-item-heading">Ways to pay</strong>
-                        <div class="row mt5">
-                            <div class="col-sm-11 mt5">
-                                <p class="list-group-item-text">Deduct from my Package</p>
-                            </div>
-                            <div class="col-sm-1">
-                                <span class="icon icon-radio"></span>
-                            </div>
-                        </div>
 
-                    </li>
-                    <li class="list-group-item ">
-                        <div class="row">
-                            <div class="col-sm-11">
-                                <strong class="list-group-item-heading mb10">Pay with Debit/Credit Card</strong>
-                                <p class="list-group-item-text">Pay remaining balance by card</p>
-                            </div>
-                            <div class="col-sm-1">
-                                <span class="icon icon-radio"></span>
                             </div>
                         </div>
-
                     </li>
-                    -->
+
                     @if($coupon)
                         <li class="list-group-item list-group-item-success">
                             <span class="text-white">Your voucher has been successfully applied</span>
