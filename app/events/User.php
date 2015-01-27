@@ -394,4 +394,11 @@ class User
 
         $this->mail->rateClassHasPackage($user);
     }
+
+    public function messageReply($sender, $recipient, $body)
+    {
+        $this->log->info('Message sent by ' . $sender->id . ' to ' . $recipient->id);
+
+        $this->mail->messageReply($sender, $recipient, $body); /** NOT SENDING!!?? */
+    }
 }

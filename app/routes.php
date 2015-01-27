@@ -209,7 +209,7 @@ Route::get('/finished-user', [
     ]
 );
 
-Route::get('/profile/{id}/{tab?}', ['as' => 'users.edit', 'uses' => 'UsersController@edit']);
+Route::get('/profile/{id}/{tab?}', ['as' => 'users.edit', 'uses' => 'UsersController@edit', 'before' => 'user']);
 
 
 Route::get(
@@ -433,7 +433,7 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
 );
 
 Route::get('/conversation/{displayName}',
-    ['as' => 'conversation', 'uses' => 'MessageController@getConversation']
+    ['as' => 'conversation', 'uses' => 'MessageController@getConversation', 'before' => 'user']
 );
 Route::post('/conversation/{displayName}',
     ['as' => 'conversation.post', 'uses' => 'MessageController@postMessage']

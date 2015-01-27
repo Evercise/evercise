@@ -28,13 +28,13 @@ class MessageController extends \BaseController
     {
         $body = Input::get('mail_body');
 
+        $recipient = \User::where('display_name', $displayName)->first();
+
         Messages::sendMessageByDisplayName($this->user->id, $displayName, $body);
 
         event('user.message.reply', [
-            'trainer' => $trainerName,
-            'email' => $userList,
-            'name' => $groupName,
-            'subject' => $subject,
+            'sender' => $this->user,
+            'recipient' => $recipient,
             'body' => $body
         ]);
 

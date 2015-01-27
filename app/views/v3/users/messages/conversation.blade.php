@@ -3,7 +3,7 @@
     <div class="container first-container text-center mb50">
         <div class="row">
             <div class="underline">
-                <h1>Title or something</h1>
+                <h1>Conversation with {{ (\User::where('display_name', $buddysDisplayName)->first()) ? Html::linkRoute('trainer.show', $buddysDisplayName, strtolower($buddysDisplayName) ) : $buddysDisplayName }}</h1>
             </div>
                 @foreach ( $messages as $msg )
                     <p><strong>{{$senderId = $msg->getSender()}}: </strong>{{$content = $msg->getContent()}}</p>
