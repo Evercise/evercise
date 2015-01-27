@@ -590,7 +590,7 @@ class Mail
             'messageBody'    => $body
         ];
 
-        $this->send($recipient, $params);
+        $this->send($recipient->email, $params);
     }
 
 

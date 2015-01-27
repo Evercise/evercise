@@ -15,7 +15,10 @@ class MessageController extends \BaseController
         $messages = [];
         foreach ( $conv->getAllMessages() as $msg )
         {
-            array_unshift($messages, $msg);
+            array_unshift($messages, [
+                'display_name'=> ($msg->getSender() == $this->user->id ? $this->user->display_name : $displayName),
+                'message' => $msg
+            ]);
         }
 
         return View::make('v3.users.messages.conversation')

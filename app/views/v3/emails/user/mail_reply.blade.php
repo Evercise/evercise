@@ -11,7 +11,7 @@
 <br>
 <p>
 
-{{ Html::decode(Html::linkRoute('conversation', 'To Reply to this message please click here', [$recipient->display_name], ['class' => ''])) }}
+{{ Html::decode(Html::linkRoute('conversation', 'To Reply to this message please click here', [$sender->display_name], ['class' => ''])) }}
 </p>
 
 
