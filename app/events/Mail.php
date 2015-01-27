@@ -580,6 +580,19 @@ class Mail
         $this->send($user->email, $params);
     }
 
+    public function messageReply($sender, $recipient, $body)
+    {
+        $params = [
+            'subject'        => 'You have a new message',
+            'view'           => 'v3.emails.user.mail_reply',
+            'sender'         => $sender,
+            'recipient'      => $recipient,
+            'messageBody'    => $body
+        ];
+
+        $this->send($recipient, $params);
+    }
+
 
     /**
      * ########################################################################################

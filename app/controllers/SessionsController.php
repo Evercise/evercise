@@ -74,13 +74,12 @@ class SessionsController extends \BaseController
     {
         //$session = Evercisesession::with('evercisegroup')->find($sessionId);
 
-        /*return Response::json(
+        return Response::json(
             [
-                'view'  => View::make('v3.classes.mail_all_members')
-                    ->with('sessionId', $sessionId)
+                'view'  => View::make('v3.classes.mail_all_members')->with('sessionId', $sessionId)->render()
             ]
-        );*/
-        return View::make('v3.classes.mail_all_members')->with('sessionId', $sessionId);
+        );
+        //return View::make('v3.classes.mail_all_members')->with('sessionId', $sessionId);
     }
 
     /**

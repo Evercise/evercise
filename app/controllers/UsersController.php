@@ -191,11 +191,6 @@ class UsersController extends \BaseController
      */
     public function edit($id, $tab = 0)
     {
-
-        if(!$this->checkLogin()) {
-            return Redirect::route('home');
-        }
-
         $activity = Activities::getAll($this->user->id, Config::get('evercise.user.activities', 100));
 
         $activity_group = [];

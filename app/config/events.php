@@ -85,7 +85,7 @@ return [
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction, $balance // ∑
 
-        ['user.message.reply' => 'User@messageReply'], // $user, $transaction, $balance // ∑
+        ['user.message.reply' => 'User@messageReply'], // $sender, $recipient, $body
 
         ['user.withdraw.completed' => 'User@withdrawCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.completed' => 'User@referralCompleted'], // $user, $transaction, $balance // ∑
