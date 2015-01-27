@@ -9,7 +9,7 @@ class Subcategory extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['id', 'name', 'description', 'associations'];
+    protected $fillable = ['id', 'name', 'description', 'associations', 'type'];
 
     /**
      * The database table used by the model.
@@ -70,10 +70,26 @@ class Subcategory extends Eloquent
 		return true;
 	}
 
+	public static function editTypes($changes)
+	{
+		foreach($changes as $sub_id => $type)
+		{
+				if ($subcategory = Subcategory::find($sub_id))
+					$subcategory->update(['type' => $type]);
+
+		}
+
+		return true;
+	}
+
 
 	public static function namesToIds($names)
 	{
 		return static::whereIn('name', $names)->lists('id');
     }
+
+	public static function getRelated($type){
+		return static::where('type', $type)->lists('name');
+	}
 
 }

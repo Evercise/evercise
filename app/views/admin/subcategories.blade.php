@@ -53,8 +53,8 @@
 <div class="row" id="category_list">
     <br>
     {{ Form::open(array('id' => 'edit_subcategories', 'route' => 'admin.edit_subcategories', 'method' => 'post', 'class' => '')) }}
-    {{ Form::hidden('update_categories', null, ['id'=>'update_categories'] )}}
-    {{ Form::hidden('update_associations', null, ['id'=>'update_associations'] )}}
+    {{ Form::hidden('update_categories', NULL, ['id'=>'update_categories'] )}}
+    {{ Form::hidden('update_associations', NULL, ['id'=>'update_associations'] )}}
     {{ Form::submit('Save changes' , array('class'=>'btn')) }}
     <br>
     <br>
@@ -62,8 +62,9 @@
         <thead>
             <tr class="table-header">
                 <th>Subcategory</th>
-                <th>Options</th>
-                <th>Associations</th>
+                <th></th>
+                <th>#</th>
+                <th>TYPE</th>
                 <th>Category 1</th>
                 <th>Category 2</th>
                 <th>Category 3</th>
@@ -76,17 +77,37 @@
                     <td>{{$subcategory->name}}</td>
 
                     <td>
-                        <span class="el-icon-remove cp delete_subcategory bs_ttip"  style="color:#c00" title="" data-original-title="Remove Subcategory" data-subcategory_id="{{ $subcategory->id }}"></span>
+                        <span class="el-icon-remove cp delete_subcategory bs_ttip"  style="color:#c00;padding:4px" title="" data-original-title="Remove Subcategory" data-subcategory_id="{{ $subcategory->id }}"></span>
                     </td>
                     <td>
-                        {{ DB::table('evercisegroup_subcategories')->where('subcategory_id', $subcategory->id)->count() }}
+                        <span style="padding:5px"> {{ DB::table('evercisegroup_subcategories')->where('subcategory_id', $subcategory->id)->count() }} </span>
                     </td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_1' , $cat, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_2' , $cat, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
-                    <td>{{ Form::select( ''.$subcategory->id.'_3' , $cat, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
+                    <td>
+                        <label class="radio-inline">
+                            <input type="radio" name="type[{{ $subcategory->id }}]" value="" {{ ($subcategory->type == '' ? 'checked="checked"' : '') }}>
+                            Non
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type[{{ $subcategory->id }}]"  {{ ($subcategory->type == 'low' ? 'checked="checked"' : '') }} value="low">
+                            Low
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type[{{ $subcategory->id }}]"  {{ ($subcategory->type == 'med' ? 'checked="checked"' : '') }} value="med">
+                            Med
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type[{{ $subcategory->id }}]"  {{ ($subcategory->type == 'high' ? 'checked="checked"' : '') }} value="high">
+                            High
+                        </label>
+                    </td>
+
+
+                    <td>{{ Form::select( $subcategory->id.'_1' , $cat, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
+                    <td>{{ Form::select( $subcategory->id.'_2' , $cat, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
+                    <td>{{ Form::select( $subcategory->id.'_3' , $cat, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
 
                     <td>
-                        <label class="associations_label">{{$subcategory->associations ? $subcategory->associations : '...'}}</label>
+                        <label class="associations_label">{{$subcategory->associations ? str_replace(',', ', ', $subcategory->associations) : '...'}}</label>
                         <input data-id="{{$subcategory->id}}" style="display:none;" type="text" class="form-control associations" data-value="{{$subcategory->associations}}" value="" id="associations_{{$subcategory->id}}" name="associations_{{$subcategory->id}}">
                     </td>
                 </tr>
@@ -94,7 +115,7 @@
         <tbody>
     </table>
     <br>
-    {{ Form::submit('Save changes' , array('class'=>'btn')) }}
+    {{ Form::submit('Save changes' , ['class'=>'btn']) }}
     {{ Form::close() }}
     <br>
 </div>
