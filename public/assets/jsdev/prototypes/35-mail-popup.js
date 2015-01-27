@@ -6,13 +6,6 @@ function MailPopup(link){
     this.validIcon = 'glyphicon glyphicon-ok';
     this.invalidIcon = 'glyphicon glyphicon-remove';
     this.validatingIcon = 'glyphicon glyphicon-refresh';
-    this.subject = {
-        validators: {
-            notEmpty: {
-                message: 'Your message requires a subject'
-            }
-        }
-    };
     this.body = {
         validators: {
             notEmpty: {
@@ -40,10 +33,11 @@ MailPopup.prototype = {
     ajaxGet: function(){
         var self = this;
         $.get( this.target, function(data) {
+            console.log(data);
             self.link.after(data.view);
             $('#mail-trainer-'+self.id).modal('show');
             self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail ml10 mt25" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>')
-            self.form = $('#mail_trainer');
+            self.form = $('#mail-trainer-'+self.id).find('form');
             self.validation();
         })
         .fail(function() {
@@ -64,7 +58,6 @@ MailPopup.prototype = {
             },
 
             fields: {
-                mail_subject: this.subject,
                 mail_body: this.body
             }
         })
