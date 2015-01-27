@@ -8,10 +8,6 @@
       <div class="modal-body">
         {{ Form::open(array('id' => 'mail_trainer', 'url' => 'sessions/'.$sessionId.'/mail_trainer/'.$trainerId, 'method' => 'POST', 'class' => 'create-form')) }}
             <div class="form-group">
-                {{ Form::label('mail_subject', 'Subject', ['class' => 'mb15']) }}
-                {{ Form::text('mail_subject',null, ['placeholder'=>'Type your subject here', 'maxlength'=>1000, 'class' => 'form-control'] ) }}
-            </div>
-            <div class="form-group">
                 {{ Form::label('mail_body', 'Mail Body', ['class' => 'mb15']) }}
                 {{ Form::textarea('mail_body',null, ['placeholder'=>'Type your mail here', 'maxlength'=>1000, 'class' => 'form-control', 'rows' => 6] ) }}
             </div>

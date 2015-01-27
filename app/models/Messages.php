@@ -42,4 +42,9 @@ class Messages
 
         static::sendMessage($currentUserId, User::getIdFromDisplayName($displayName), $body);
     }
+
+    public static function unread($userId)
+    {
+        return TBMsg::getNumOfUnreadMsgs($userId);
+    }
 }

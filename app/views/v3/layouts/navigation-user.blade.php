@@ -4,6 +4,9 @@
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
     </div>
       <ul class="nav navbar-nav navbar-right">
+        <li class="nav-list">
+            <span>{{ HTML::decode(HTML::linkRoute('conversation', '', ['displayName'=>$user->display_name], ['class'=>'icon icon-mail', 'data-id' => $user->display_name])) }}{{ $newMessages }}</span>
+        </li>
         <li class="dropdown cart-dropdown nav-list">
             <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(0)</a>
             {{ isset($cart) ? $cart : '' }}
