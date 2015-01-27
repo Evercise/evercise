@@ -14,13 +14,51 @@
 
 .checkout{
   li{
-    border-bottom: 1px solid #f2f2f2;
+    font-size: 13px;
+
+    color: #9b9b9b;
     float: left;
     width: 100%;
-    padding: 9px 0;
+    padding: 13px 0;
     list-style: none;
-    .sbSelector{
-      line-height: 50px;
+    line-height: 40px;
+    .info{
+      line-height: 20px;
+    }
+    &.title{
+      font-size: 16px;
+      font-weight: 600;
+      color: @brand-primary;
+      line-height: 119%;
+    }
+    &.headers{
+      text-transform: uppercase;
+
+      font-weight: 600;
+      padding: 16px 0 0;
+      color: #bfbfbf;
+    }
+    &.voucher{
+      line-height: 31px;
+      font-weight: 600;
+    }
+    &.total{
+      font-size: 14px;
+    }
+  }
+  hr{
+    float: left;
+    width: 100%;
+    margin: 0;
+    border-color:  #f2f2f2;
+    &.dark{
+      border-color: #d8d8d8;
+    }
+    &.primary{
+      border-color: @brand-primary;
+    }
+    &.up{
+      margin-top: -1px;
     }
   }
 }

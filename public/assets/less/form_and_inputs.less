@@ -3,11 +3,15 @@ label{
 }
 .form-control{
   box-shadow: none;
-  line-height: 16px;
+  line-height: 18px;
   height: @input-height;
   &:focus{
     .box-shadow(none);
     border-color: initial;
+  }
+  &.input-sm{
+    height: 32px;
+    line-height: 16px;
   }
   &.input-lg{
     height: 49px;

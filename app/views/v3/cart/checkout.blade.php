@@ -13,28 +13,101 @@
     <div class="row">
         <div class="col-sm-10">
             <ul class="checkout">
-                <li class="title">Review Order</li>
+                <li class="title"><div class="col-sm-12">Review Order</div></li>
+                <hr class="primary">
                 <li class="headers">
                     <div class="col-sm-6">Session</div>
-                    <div class="col-sm-3">Quantity</div>
-                    <div class="col-sm-2">Price</div>
-                    <div class="col-sm-1">op</div>
+                    <div class="col-sm-3 text-center">Quantity</div>
+                    <div class="col-sm-2 text-center">Price</div>
+                    <div class="col-sm-1"></div>
                 </li>
-                <li class="item">
-                    <div class="col-sm-6">
-                        <strong>Clubbercise</strong><br>
-                        <span>Thu, 19 March 2015 6:40 PM</span>
+                <hr class="dark">
+                @foreach($sessions_grouped as $row)
+
+                    <li class="item">
+                        <div class="col-sm-6 info">
+                            <strong>{{ $row['name']}}</strong><br>
+                            <span>{{ date('D, j F Y g:i A', strtotime($row['date_time']))  }}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="quantity" id="quantity" class="select-box">
+                                @for($i = 1; $i <= ($row['tickets_left']); $i++)
+                                    <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-sm-2 text-right"><b class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.round($row['grouped_price'],2).'</strike> &pound'.round($row['grouped_price_discount'],2) : '&pound'.round($row['grouped_price'],2) ) }}</b></div>
+                        <div class="col-sm-1 text-right"><span class="icon icon-cross"></span></div>
+                    </li>
+                    <hr>
+                @endforeach
+                @foreach($packages as $row)
+                    <li class="item">
+                        <div class="col-sm-6 info">
+                            <strong>{{ $row['name']}}</strong><br>
+                            <span>{{ $row['classes'] }} classes for {{ $row['price'] }}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="quantity" id="quantity" class="select-box">
+                                @for($i = 1; $i <= 10; $i++)
+                                    <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-sm-2 text-right"><b class="text-primary">£{{ $row['price'] }}</b></div>
+                        <div class="col-sm-1 text-right"><span class="icon icon-cross"></span></div>
+                    </li>
+                    <hr>
+                @endforeach
+                <hr class="dark up">
+                <li class="voucher">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    I have a voucher code:
+                                </div>
+                                <div class="col-xs-7">
+                                    {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
+                                </div>
+                            </div>
+                        {{ Form::close() }}
                     </div>
-                    <div class="col-sm-3">
-                        <select name="quantity" id="quantity" class="select-box">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">Price</div>
-                    <div class="col-sm-1">op</div>
                 </li>
+                <hr class="dark">
+                <li class="total">
+                    <div class="col-sm-8"><strong>Sub-Total</strong></div>
+                    <div class="col-sm-4 text-right"><strong class="text-larger text-primary">£{{ round($total['subtotal'], 2) }}</strong></div>
+                </li>
+                @if(!empty($discount['amount']) && $discount['amount'] > 0)
+                <hr class="dark">
+                <li class="total bg-light-grey">
+                    <div class="col-sm-8"><strong class="ml15">Friend Referal Discount</strong></div>
+                    <div class="col-sm-4 text-right">
+                        <strong class="text-larger text-primary">
+                            {{ round($discount['amount'] ,2)}}
+                            @if($discount['type'] == 'percentage')
+                                 <span class="text-primary">{{ $discount['percentage']}}%</span>
+                            @endif
+                        </strong>
+                    </div>
+                </li>
+                 @endif
+                 <hr class="dark">
+                 <li class="total">
+                    <div class="col-sm-8"><strong>Total</strong></div>
+                    <div class="col-sm-4 text-right"><strong class="text-larger text-primary">£{{round($total['final_cost'], 2)}}</strong></div>
+                 </li>
+                 <hr class="dark">
+                 <li class="text-right">
+                    <button class="btn btn-white-primary ">Continue</button>
+                 </li>
+                 <li class="title"><div class="col-sm-12">Payment</div></li>
+                 <hr class="dark">
+                 <li class="title"><div class="col-sm-12">Confirmation</div></li>
             </ul>
         </div>
         <div class="col-sm-2">

@@ -9678,13 +9678,17 @@ label {
 }
 .form-control {
   box-shadow: none;
-  line-height: 16px;
+  line-height: 18px;
   height: 38px;
 }
 .form-control:focus {
   -webkit-box-shadow: none;
   box-shadow: none;
   border-color: initial;
+}
+.form-control.input-sm {
+  height: 32px;
+  line-height: 16px;
 }
 .form-control.input-lg {
   height: 49px;
@@ -10074,14 +10078,50 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   padding-bottom: 0;
 }
 .checkout li {
-  border-bottom: 1px solid #f2f2f2;
+  font-size: 13px;
+  color: #9b9b9b;
   float: left;
   width: 100%;
-  padding: 9px 0;
+  padding: 13px 0;
   list-style: none;
+  line-height: 40px;
 }
-.checkout li .sbSelector {
-  line-height: 50px;
+.checkout li .info {
+  line-height: 20px;
+}
+.checkout li.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff1b7e;
+  line-height: 119%;
+}
+.checkout li.headers {
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 16px 0 0;
+  color: #bfbfbf;
+}
+.checkout li.voucher {
+  line-height: 31px;
+  font-weight: 600;
+}
+.checkout li.total {
+  font-size: 14px;
+}
+.checkout hr {
+  float: left;
+  width: 100%;
+  margin: 0;
+  border-color: #f2f2f2;
+}
+.checkout hr.dark {
+  border-color: #d8d8d8;
+}
+.checkout hr.primary {
+  border-color: #ff1b7e;
+}
+.checkout hr.up {
+  margin-top: -1px;
 }
 .hero {
   background: #383d48;
@@ -10637,9 +10677,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   padding-top: 13px;
   padding-bottom: 13px;
   line-height: 38px;
-}
-.calendar-selected li .sbToggle {
-  top: 5px;
 }
 .calendar-selected li:nth-of-type(2) {
   border-color: #9c9c9c;
