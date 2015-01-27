@@ -313,6 +313,10 @@ class AdminAjaxController extends AdminController
         $categoryChanges = Input::get('update_categories');
         $assNumbers = explode(',', Input::get('update_associations'));
 
+
+        $type = Input::get('type', '');
+
+
         $associations = [];
 
         foreach ($assNumbers as $assId) {
@@ -322,6 +326,7 @@ class AdminAjaxController extends AdminController
 
         Subcategory::editSubcategoryCategories($categoryChanges);
         Subcategory::editAssociations($associations);
+        Subcategory::editTypes($type);
 
         //return Response::json(['callback' => 'adminPopupMessage', 'message' => count($associations).' : '.Input::get('associations_'.'3')]);
         return Response::json(['callback' => 'successAndRefresh']);
