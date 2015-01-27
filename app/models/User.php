@@ -872,4 +872,9 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     {
         return static::where('display_name', $displayName)->pluck('id');
     }
+
+    public static function getDisplayNameFromId($id)
+    {
+        return static::where('id', $id)->pluck('display_name');
+    }
 }
