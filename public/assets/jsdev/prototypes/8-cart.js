@@ -112,7 +112,7 @@ Cart.prototype = {
     updateCart: function(data){
         $('.cart-dropdown:visible').addClass('open');
         $('.cart-dropdown.open .dropdown-cart').replaceWith(data.view);
-        $('#cart-items').html(data.items);
+        $('.cart-items').html(data.items);
     },
     failedValidation: function(data){
         $('body').append('<div class="mt10 alert alert-danger alert-dismissible fixed" >'+data.errors.custom+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');

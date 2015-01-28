@@ -27,6 +27,10 @@ class BaseController extends Controller
             $this->cart_items[$key_id] = $val['qty'];
         }
 
+        foreach($this->cart['packages'] as $key_id => $val) {
+            $this->cart_items[$key_id] = 1;
+        }
+
 
         View::share('cart_items', $this->cart_items);
         View::share('cart', View::make('v3.cart.dropdown')->with($this->cart)->render());
