@@ -7,7 +7,6 @@ function Cart(cart) {
     if($('.checkout').length){
         this.step = 0;
         this.viewPrice = VIEWPRICE;
-        console.log(this.viewPrice);
         this.checkout();
     }
 }
@@ -119,19 +118,36 @@ Cart.prototype = {
         $('body').append('<div class="mt10 alert alert-danger alert-dismissible fixed" >'+data.errors.custom+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
     },
     checkout: function(){
+        this.newUserForm = $('.checkout #new-user-form');
+        this.loginForm = $('.checkout .login-form');
+        this.userType = 'new';
+        var self = this;
         $('#step-2').on('shown.bs.collapse', function (e) {
-            console.log(e);
             $('#step-1').find('.switch').addClass('hidden');
             $('#step-1').find('.switch-back').removeClass('hidden');
             $('.cart-progress').find('#progress-2').addClass('complete');
-            /*setTimeout(function(){
-                $('html, body').animate({
-                    scrollTop: $('#step-2').offset().top
-                }, 500);
-            }, 100)
-            */
+        });
 
+        $(document).on('change', ':checkbox', function(e){
+            var name = $(e.target).attr('name');
+            $(':checkbox').prop("checked", false);
+            $('input[name="'+name+'"]').prop("checked", true);
+            self.userType = name;
         })
+
+        $(document).on('keyup', self.loginForm.find('input[name="email"]') , function(e){
+            self.newUserForm.find('input[name="email"]').val($(e.target).val())
+        })
+        $(document).on('click', '#cart-account', function(e){
+            e.preventDefault();
+            if(self.userType == 'new'){
+                self.newUserForm.trigger('submit');
+            }
+            else{ this
+                self.loginForm.trigger('submit');
+            }
+        })
+        $(document).on( 'submit',self.newUserForm, $.proxy(this.newUser,this));
     },
     openStripe: function(e){
         var self = this;
@@ -145,5 +161,48 @@ Cart.prototype = {
     },
     closeStripe: function(e){
         handler.close();
+    },
+    newUser : function(e){
+        e.preventDefault();
+        var self = this;
+        console.log(self.loginForm.find('input[name="email"]').val());
+        self.newUserForm.find('input[name="email"]').val( self.loginForm.find('input[name="email"]').val());
+        $.ajax(self.newUserForm.attr("action"), {
+            type: "post",
+            data: self.newUserForm.serialize(),
+            dataType: 'json',
+
+            beforeSend: function () {
+                $('.has-error').removeClass('has-error');
+                $('.error-append').remove()
+                self.newUserForm.find("input[type='submit']").prop('disabled', true);
+            },
+
+            success: function (data) {
+                if( data.validation_failed == 1 ){
+                    self.failedValidation(data);
+                }
+                else{
+                    location.reload();
+                }
+
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+            },
+
+            complete: function () {
+                self.newUserForm.find("input[type=submit]").prop('disabled', false);
+            }
+        });
+    },
+    failedValidation : function(data){
+        var self = this;
+        var arr = data.errors;
+        $.each(arr, function(index, value) {
+            self.loginForm.find('input[name="' + index + '"]').parent().addClass('has-error').after('<div class="form-control input-lg input-group has-error error-append">' + value + '</div>');
+        })
+
     }
 }

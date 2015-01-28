@@ -126,6 +126,7 @@ class UsersController extends AjaxBaseController
             $inputs['password'] = str_random(12);
             $inputs['display_name'] = User::uniqueDisplayName(slugIt($slug[0]));
             $inputs['first_name'] = $slug[0];
+            $inputs['last_name'] = '';
             $inputs['activated'] = TRUE;
             $inputs['gender'] = 0;
 
@@ -163,14 +164,7 @@ class UsersController extends AjaxBaseController
 
                 return Response::json(
                     [
-                        'callback' => 'success',
-                        'url'      => route(Input::get('redirect', route('cart.checkout'))),
-                        'user'     => [
-                            'id'           => $user->id,
-                            'email'        => $user->email,
-                            'display_name' => $user->display_name,
-                            'first_name'   => $user->first_name
-                        ]
+                        'callback' => 'success'
                     ]
                 );
 

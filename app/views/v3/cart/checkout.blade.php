@@ -11,6 +11,21 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-sm-3 pull-right visible-md-block visible-lg-block">
+           <ul class="cart-progress">
+                <div id="progress-1" class="progress-box">
+                <li class="title active"><span class="icon icon-cross mr10"></span>Review Order</li>
+                </div>
+                <div id="progress-2" class="progress-box">
+                    <li class="content">Total <strong class="pull-right text-primary">£{{ number_format($total['final_cost'], 2,'.','') }}</strong></li>
+                    <li class="title"><span class="icon icon-cross mr10"></span>Payment Method</li>
+                </div>
+                <div id="progress-3" class="progress-box">
+                    <li class="content"></li>
+                    <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
+                </div>
+           </ul>
+        </div>
         <div class="col-sm-9">
             <ul class="checkout">
 
@@ -20,7 +35,7 @@
                  </div>
                  <hr class="dark">
                  <li class="text-right">
-                    <a data-step="1" class="collapsed btn btn-white-primary continue" data-toggle="collapse"  href="#step-2">Continue</a>
+                    <a data-step="1" class="collapsed btn btn-white-primary continue sm-btn-block" data-toggle="collapse"  href="#step-2">Continue</a>
                  </li>
 
                  <li class="title"><div class="col-sm-12">Details & Payment</div></li>
@@ -32,9 +47,11 @@
                             {{ Form::hidden('redirect_after_login_url', 'cart.checkout') }}
                             <div class="form-group">
                                 <label for="email">What  is your Email Address?</label>
-                                <div class="input-group mt10">
-                                    <div class="input-group-addon"><strong>EMAIL</strong></div>
-                                    {{ Form::email('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
+                                <div class="input-list">
+                                    <div class="input-group mt10">
+                                        <div class="input-group-addon"><strong>EMAIL</strong></div>
+                                        {{ Form::email('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
+                                    </div>
                                 </div>
                             </div>
                             <div class="text-divider mb15">or</div>
@@ -42,7 +59,7 @@
                             <label for="account">Do you have a Evercise account?</label>
                             <div class="input-list">
                                  <div class="custom-checkbox form-control input-lg mt10 input-group">
-                                    {{ Form::checkbox('new', 'yes', false , ['id'=> 'new']) }}
+                                    {{ Form::checkbox('new', 'yes', true , ['id'=> 'new']) }}
                                     <label for="new" >I'm a new customer</label>
                                  </div>
                                  <div class="input-group">
@@ -58,22 +75,17 @@
                             <div class="pull-right mt15">
                                 {{ HTML::linkRoute('auth.forgot', 'Forgot your Password?' , null, ['class' => 'text-right link']) }}
                             </div>
-                            <li class="text-right">
-                                {{ Form::submit('Continue', ['class' => 'btn btn-white-primary']) }}
-                            </li>
                         {{Form::close()}}
+                        {{ Form::open(['route' => 'users.guest.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'new-user-form'] ) }}
+                            {{ Form::hidden('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
+                        {{ Form::close() }}
                         <li class="text-right">
-                            {{ Form::open(['route' => 'users.guest.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form'] ) }}
-                                <div class="form-group">
-                                    <label for="email">What  is your Email Address?</label>
-                                    <div class="input-group mt10">
-                                        <div class="input-group-addon"><strong>EMAIL</strong></div>
-                                        {{ Form::email('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
-                                    </div>
-                                </div>
-                                {{ Form::submit('Continue', ['class' => 'btn btn-white-primary']) }}
-                            {{ Form::close() }}
+                            {{ Form::button('Continue', ['class' => 'btn btn-white-primary', 'id' => 'cart-account']) }}
                         </li>
+
+
+
+
                      </div>
                  </div>
                  @else
@@ -98,18 +110,7 @@
                  <li class="title mb50"><div class="col-sm-12">Confirmation</div></li>
             </ul>
         </div>
-        <div class="col-sm-3">
-           <ul class="cart-progress">
-                <li class="title active"><span class="icon icon-cross mr10"></span>Review Order</li>
-                <div id="progress-2">
-                    <li class="content">Total <strong class="pull-right text-primary">£{{ number_format($total['final_cost'], 2,'.','') }}</strong></li>
-                    <li class="title"><span class="icon icon-cross mr10"></span>Payment Method</li>
-                </div>
 
-                <li class="content"></li>
-                <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
-           </ul>
-        </div>
     </div>
 </div>
 @stop

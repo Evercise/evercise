@@ -1,9 +1,9 @@
 
 <li class="headers">
-    <div class="col-sm-6">Session</div>
-    <div class="col-sm-3 text-center">Quantity</div>
-    <div class="col-sm-2 text-center">Price</div>
-    <div class="col-sm-1"></div>
+    <div class="col-xs-6">Session</div>
+    <div class="col-xs-3 text-center">Quantity</div>
+    <div class="col-xs-2 text-center">Price</div>
+    <div class="col-xs-1"></div>
 </li>
 <hr class="dark">
 @foreach($sessions_grouped as $row)

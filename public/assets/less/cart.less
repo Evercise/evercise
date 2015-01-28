@@ -73,7 +73,9 @@
 
 // progress bar on side
 .cart-progress{
-  position: fixed;
+  @media (min-width: @screen-md-min) {
+    position: fixed;
+  }
   li{
     list-style: none;
     &.title{
@@ -98,4 +100,5 @@
       color: @brand-primary;
     }
   }
+
 }
