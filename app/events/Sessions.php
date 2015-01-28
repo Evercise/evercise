@@ -95,16 +95,16 @@ class Sessions
     }
 
     /**
-     * @param $trainer
      * @param $userList
      * @param $group
+     * @param $session
      * @param $messageSubject
      * @param $messageBody
      */
-    public function mailAll($trainer, $userList, $group, $messageSubject, $messageBody){
+    public function mailAll($userList, $group, $session, $messageSubject, $messageBody){
 
         $this->log->info('Trainer Emailing All');
-        $this->mail->trainerMailAll($trainer, $userList, $group, $messageSubject, $messageBody);
+        $this->mail->trainerMailAll($userList, $group, $session, $messageSubject, $messageBody);
     }
 
 

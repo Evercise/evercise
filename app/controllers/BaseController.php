@@ -38,7 +38,7 @@ class BaseController extends Controller
             $userImage = $this->user->image ? (Config::get('evercise.upload_dir') . 'profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
             View::share('userImage', isset($userImage) ? $userImage : '');
             View::share('user', $this->user);
-            View::share('newMessages', Messages::unread($this->user->id) );
+            View::share('newMessages', ['count' => Messages::unread($this->user->id), 'user' => Messages::getLastMessageDisplayName($this->user->id)] );
 
             $header = $this->setupHeader('user');
         } else {
