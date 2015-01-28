@@ -7354,6 +7354,11 @@ a.bg-light-grey:hover {
     color: #383d48;
   }
 }
+@media (max-width: 1199px) {
+  .container {
+    width: 100%;
+  }
+}
 .navbar-default {
   transition: all 0.4s;
   border-bottom: 0;
