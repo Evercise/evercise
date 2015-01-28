@@ -48,7 +48,7 @@
                     <hr class="dark">
                     <li class="item mb20">
                         <div class="row">
-                            <div class="col-sm-6">Total</div>
+                            <div class="col-sm-6"><strong>Total</strong></div>
                             <div class="col-sm-6 text-right"><strong class="text-primary text-largest">£{{ number_format($cart['total']['final_cost'], 2, '.', '')}}</strong></div>
                         </div>
                     </li>
@@ -72,8 +72,8 @@
                         <li class="content"></li>
                         <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
                     </div>
-                    <b>Thanks for your purchase!</b><br>
-                    <b>Order ID: {{ $transaction }}</b>
+                    <strong>Thanks for your purchase!</strong><br>
+                    <strong>Order ID: {{ $transaction }}</strong>
                </ul>
             </div>
         </div>

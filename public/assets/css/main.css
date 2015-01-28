@@ -10163,6 +10163,38 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   height: 26px;
   line-height: 26px;
 }
+.input-list .form-control {
+  border-radius: 0;
+  border: 0;
+}
+.input-list .input-group {
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  line-height: inherit;
+}
+.input-list .input-group:first-of-type {
+  border-bottom: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+.input-list .input-group .input-group-addon {
+  border: 0;
+  border-radius: 0;
+  line-height: inherit;
+  padding: 0 15px;
+}
+.input-list .input-group:last-of-type {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.input-list .input-group.has-error {
+  border-color: #ebccd1;
+  color: #a94442;
+  background: #f2dede;
+}
+.input-list .input-group.has-error .input-group-addon {
+  background: #ffffff;
+}
 .cart-row {
   padding: 10px 0;
   float: left;

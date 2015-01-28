@@ -51,6 +51,7 @@ Login.prototype = {
         self = this;
         var arr = data.errors;
 
-        self.form.find("input[name = 'password']").after('<div class="mt10 alert alert-danger alert-dismissible" role="alert">' + arr + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
+        //self.form.find("input[name = 'password']").after('<div class="mt10 alert alert-danger alert-dismissible" role="alert">' + arr + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
+        self.form.find("input[name = 'password']").parent().addClass('has-error').after('<div class="form-control input-lg input-group has-error">' + arr + '</div>');
     }
 }
