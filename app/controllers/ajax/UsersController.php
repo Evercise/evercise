@@ -97,7 +97,7 @@ class UsersController extends AjaxBaseController
         $validator = Validator::make(
             $inputs,
             [
-                'email' => 'required|email'
+                'email' => 'required|email|unique:users'
             ]
         );
         // check user passes validation
@@ -121,69 +121,58 @@ class UsersController extends AjaxBaseController
         if ($valid_user['validation_failed'] == 0) {
 
 
-            $user = User::where('email', $inputs['email'])->first();
+            $slug = explode('@', $inputs['email']);
 
-            if (!empty($user->id)) {
+            $inputs['password'] = str_random(12);
+            $inputs['display_name'] = User::uniqueDisplayName(slugIt($slug[0]));
+            $inputs['first_name'] = $slug[0];
+            $inputs['activated'] = TRUE;
+            $inputs['gender'] = 0;
+
+
+            // register user and add to user group
+            $user = User::registerUser($inputs);
+
+            UserHelper::generateUserDefaults($user->id);
+
+            UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
+            UserHelper::checkAndUseLandingCode(Session::get('ppcCode'), $user->id);
+
+            Session::forget('email');
+
+
+            if ($user) {
+
+                User::makeUserDir($user);
+
+                User::createImage($user);
+
+                $user->save();
+
+                $this->user = $user;
+
+                // check for newsletter and if so add to mailchimp
+                $this->setNewsletter(Input::get('userNewsletter'));
 
                 Sentry::login($user, TRUE);
-                Session::put('falseNewUser', $user->email);
-
-            } else {
-
-                $slug = explode('@', $inputs['email']);
-
-                $inputs['password'] = str_random(12);
-                $inputs['display_name'] = User::uniqueDisplayName(slugIt($slug[0]));
-                $inputs['first_name'] = $slug[0];
-                $inputs['activated'] = TRUE;
-                $inputs['gender'] = 0;
 
 
-                // register user and add to user group
-                $user = User::registerUser($inputs);
+                event('user.registered', [$user]);
 
-                UserHelper::generateUserDefaults($user->id);
+                User::sendGuestWelcomeEmail($user);
 
-                UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
-                UserHelper::checkAndUseLandingCode(Session::get('ppcCode'), $user->id);
-
-                Session::forget('email');
-
-
-                if ($user) {
-
-                    User::makeUserDir($user);
-
-                    User::createImage($user);
-
-                    $user->save();
-
-                    $this->user = $user;
-
-                    // check for newsletter and if so add to mailchimp
-                    $this->setNewsletter(Input::get('userNewsletter'));
-
-                    Sentry::login($user, TRUE);
-
-
-                    event('user.registered', [$user]);
-
-                    User::sendGuestWelcomeEmail($user);
-
-                    return Response::json(
-                        [
-                            'callback' => 'success',
-                            'url'      => route(Input::get('redirect', route('cart.checkout'))),
-                            'user'     => [
-                                'id'           => $user->id,
-                                'email'        => $user->email,
-                                'display_name' => $user->display_name,
-                                'first_name'   => $user->first_name
-                            ]
+                return Response::json(
+                    [
+                        'callback' => 'success',
+                        'url'      => route(Input::get('redirect', route('cart.checkout'))),
+                        'user'     => [
+                            'id'           => $user->id,
+                            'email'        => $user->email,
+                            'display_name' => $user->display_name,
+                            'first_name'   => $user->first_name
                         ]
-                    );
-
-                }
+                    ]
+                );
 
             }
         } else {
