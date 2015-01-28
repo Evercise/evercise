@@ -51,8 +51,6 @@ class CartController extends \BaseController
         $data['packages_available'] = $packages;
         $data['cart'] = View::make('v3.cart.dropdown')->with(EverciseCart::getCart())->render();
 
-        d($data);
-
         return View::make('v3.cart.checkout', $data);
 
     }
