@@ -342,9 +342,11 @@ class SearchModel
             'from'      =>(!empty($params['from']) ? $params['from'] : 0),
             'sort'      => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
             'radius'    => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
-            'search'    => (!empty($params['search']) ? $params['sort'] : ''),
+            'search'    => (!empty($params['search']) ? $params['search'] : ''),
             'featured'  => (isset($params['featured']) ? $params['featured'] : '')
         ];
+
+
 
         $searchResults = $this->search->getResults($location, $query);
 
