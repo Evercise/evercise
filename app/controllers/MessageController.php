@@ -21,10 +21,15 @@ class MessageController extends \BaseController
             ]);
         }
 
+        $conversations = Messages::getConversations($this->user->id);
+
+        Messages::markRead($this->user->id, $convId);
+
         return View::make('v3.users.messages.conversation')
             ->with('user', $this->user)
             ->with('buddysDisplayName', $displayName)
-            ->with('messages', $messages);
+            ->with('messages', $messages)
+            ->with('conversations', $conversations);
     }
 
     public function postMessage($displayName)
