@@ -596,7 +596,7 @@ class PaymentController extends BaseController
 
         /* Empty cart */
 
-        //EverciseCart::clearCart();
+        EverciseCart::clearCart();
 
         return $transaction;
     }
