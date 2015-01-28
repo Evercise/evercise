@@ -7336,6 +7336,10 @@ a.bg-light-grey:hover {
 .transparent-border-bottom {
   border-bottom-color: transparent!important;
 }
+.fixed {
+  position: fixed;
+  top: 0;
+}
 @media (max-width: 992px) {
   .hidden-mob {
     display: none!important;
@@ -7354,7 +7358,7 @@ a.bg-light-grey:hover {
     color: #383d48;
   }
 }
-@media (max-width: 1199px) {
+@media (max-width: 992px) {
   .container {
     width: 100%;
   }
@@ -10271,11 +10275,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   overflow: hidden;
   float: left;
   width: 100%;
-}
-@media (min-width: 992px) {
-  .cart-progress {
-    position: fixed;
-  }
 }
 .cart-progress li {
   list-style: none;

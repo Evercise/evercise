@@ -245,6 +245,22 @@ $(function(){
 
     $(".select-box").selectbox();
 
+    $('.sticky').exists(function(){
+        var sticky = this;
+        var top =  sticky.offset().top;
+        $(window).scroll(function(){
+            var y = $(this).scrollTop();
+            if(  y >= top){
+                sticky.addClass('fixed');
+            }
+            else{
+                sticky.removeClass('fixed');
+            }
+        })
+
+        console.log(top);
+    })
+
     $('#class-calendar').exists(function(){
         //new classCalendar(this);
     })

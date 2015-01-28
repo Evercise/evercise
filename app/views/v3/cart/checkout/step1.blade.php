@@ -18,11 +18,21 @@
             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
             {{ Form::hidden('force', true) }}
             {{ Form::hidden('refresh-page', true) }}
-            <select name="quantity" id="quantity" class="select-box btn-select">
-                @for($i = 1; $i <= ($row['tickets_left']); $i++)
-                    <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
-                @endfor
-            </select>
+            <div class="visible-md-block visible-lg-block visible-sm-block">
+                <select name="quantity" id="quantity" class="select-box btn-select">
+                    @for($i = 1; $i <= ($row['tickets_left']); $i++)
+                        <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                    @endfor
+                </select>
+            </div>
+            <div class="visible-xs-block">
+                <select name="quantity" id="quantity" class="form-control form-control select-default btn-select">
+                    @for($i = 1; $i <= ($row['tickets_left']); $i++)
+                        <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                    @endfor
+                </select>
+            </div>
+
         {{Form::close()}}
     </div>
     <div class="col-xs-3 hidden text-center switch-back">{{$cart_items[$row['id']]}}</div>
@@ -62,13 +72,13 @@
 <div class="col-sm-10 col-sm-offset-1">
     {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-md-3">
                 I have a voucher code:
             </div>
-            <div class="col-sm-7">
+            <div class="col-md-7">
                 {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
             </div>
-            <div class="col-sm-2 sm-mt10">
+            <div class="col-md-2 sm-mt10">
                 {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
             </div>
         </div>

@@ -4,7 +4,7 @@
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
     </div>
       <ul class="nav navbar-nav navbar-right">
-        <li class="nav-list">
+        <li class="nav-list hidden">
             <span>{{ HTML::decode(HTML::linkRoute('conversation', '', ['displayName'=>$newMessages['user']], ['class'=>'icon icon-mail'])) }}{{ $newMessages['count'] }}</span>
         </li>
         <li class="dropdown cart-dropdown nav-list">
