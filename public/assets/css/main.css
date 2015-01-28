@@ -7156,6 +7156,9 @@ strong {
   font-weight: 600;
   -webkit-font-smoothing: antialiased;
 }
+.text-sm {
+  font-size: 12px;
+}
 .text-large {
   font-size: 16px;
 }

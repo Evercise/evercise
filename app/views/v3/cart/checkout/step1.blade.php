@@ -43,19 +43,9 @@
         <strong>{{ $row['name']}}</strong><br>
         <span>{{ $row['classes'] }} classes for {{ $row['price'] }}</span>
     </div>
-    <div class="col-xs-3 switch">
-        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
-            {{ Form::hidden('product-id', EverciseCart::toProductCode('package', $row['id'])) }}
-            {{ Form::hidden('force', true) }}
-            {{ Form::hidden('refresh-page', true) }}
-            <select name="quantity" id="quantity" class="select-box btn-select">
-                @for($i = 1; $i <= 10; $i++)
-                    <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
-                @endfor
-            </select>
-        {{Form::close()}}
+    <div class="col-xs-3 text-center">
+        1
     </div>
-    <div class="col-xs-3 hidden text-center switch-back">{{$cart_items[$row['id']]}}</div>
     <div class="col-xs-2 text-right"><b class="text-primary">£{{ $row['price'] }}</b></div>
     <div class="col-xs-1 text-right">
         {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}

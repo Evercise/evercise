@@ -99,6 +99,17 @@
                 <li class="content"></li>
                 <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
            </ul>
+        </div><div class="col-sm-3">
+           <ul class="cart-progress">
+                <li class="title active"><span class="icon icon-cross mr10"></span>Review Order</li>
+                <div id="progress-2">
+                    <li class="content">Total <strong class="pull-right text-primary">£{{ number_format($total['final_cost'], 2,'.','') }}</strong></li>
+                    <li class="title"><span class="icon icon-cross mr10"></span>Payment Method</li>
+                </div>
+
+                <li class="content"></li>
+                <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
+           </ul>
         </div>
     </div>
 </div>
