@@ -90,12 +90,28 @@ class SessionsController extends \BaseController
      */
     public function postMailAll($sessionId)
     {
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
         $userList = [];
-        foreach (Evercisesession::getMembers($sessionId) as $user) {
-            $userList[$user->first_name . ' ' . $user->last_name] = $user->email;
+        $session = Evercisesession::find($sessionId);
+        $participants = Evercisesession::getMembers($sessionId);
+        //Log::info('participants: '.$participants);
+        foreach ($participants as $user) {
+            $userList[$user->pivot->user_id] = $user;
+            //Log::info('USERLIST: '.$user->pivot->user_id);
         }
 
-        return Evercisesession::mailMembers($sessionId, $userList);
+        if ( $response = Evercisesession::validateMail() )
+            return $response;
+
+        /** Add message to TBmsg */
+        foreach ($userList as $id => $user) {
+
+            Messages::sendMessage($this->user->id, $id, $body);
+        }
+
+        return Evercisesession::mailMembers($session, $userList, $subject, $body);
     }
 
     /**
@@ -125,10 +141,13 @@ class SessionsController extends \BaseController
      */
     public function postMailOne($sessionId, $userId)
     {
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
         $userDetails = User::getNameAndEmail($userId);
         $userList = [$userDetails['name'] => $userDetails['email']];
 
-        return Evercisesession::mailMembers($sessionId, $userList);
+        return Evercisesession::mailMembers($sessionId, $userList, $subject, $body);
     }
 
     /**
@@ -220,7 +239,7 @@ class SessionsController extends \BaseController
         }
 
         if (empty($sessionIds)) {
-            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
+            return Redirect::route('class.show', [$evercisegroupId]);
         }
 
         if ($joinParams = Evercisesession::confirmJoinSessions($evercisegroupId, $sessionIds)) {

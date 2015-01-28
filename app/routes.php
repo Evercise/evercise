@@ -48,6 +48,10 @@ Route::get('email',
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
+/** Duplicate Name Added just because of the route URL */
+Route::get('/classes/{id?}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
+
+Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show.redirect', 'uses' => 'EvercisegroupsController@show']);
 
 
 // ajax prefix
@@ -257,9 +261,6 @@ Route::get(
     'evercisegroups/create/{clone_id?}',
     ['as' => 'evercisegroups.create', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@create']
 );
-
-Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
-
 
 Route::get(
     '/clone_class/{id}',

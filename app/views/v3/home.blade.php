@@ -10,7 +10,7 @@
                             <h1 class="text-white mb0"> {{ $sl['name'] }}</h1>
                             <h2 class="text-primary mt0">only &pound; {{ round($sl['price'], 0) }}</h2>
                             <div class="row mt20 text-center">
-                                {{ Html::linkRoute('evercisegroups.show', 'View Class', Evercisegroup::getSlug($sl['evercisegroup_id']) ,['class' => 'btn btn-primary']) }}
+                                {{ Html::linkRoute('class.show', 'View Class', Evercisegroup::getSlug($sl['evercisegroup_id']) ,['class' => 'btn btn-primary']) }}
                             </div>
                           </div>
                         </div>

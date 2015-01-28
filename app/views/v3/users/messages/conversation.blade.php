@@ -7,7 +7,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="col-sm-1">
+                <strong>Conversations</strong>
+                <ul class="list-group">
+                    @foreach ( $conversations as $displayName )
+                        <li>{{ Html::linkRoute('conversation', $displayName, strtolower($displayName) ) }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="col-sm-6 col-sm-offset-2">
                 <ul class="list-group">
                 @foreach ( $messages as $msg )
                     <li class="list-group-item"><strong>{{$msg['display_name']}}: </strong>{{$msg['message']->getContent()}}</li>

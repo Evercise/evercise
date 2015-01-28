@@ -22,7 +22,7 @@
     </div>
     <div class="class-info-wrapper panel-body bg-light-grey row">
         <div class="col-xs-6" ><strong class="text-primary">&pound;{{ $class->futuresessions[0]->price }}</strong></div>
-        <div class="col-xs-6"> {{ HTML::linkRoute('evercisegroups.show', 'Join Class', $class->id, ['class'=>'btn btn-default pull-right']) }}</div>
+        <div class="col-xs-6"> {{ HTML::linkRoute('class.show', 'Join Class', $class->id, ['class'=>'btn btn-default pull-right']) }}</div>
     </div>
 </div>
 -->

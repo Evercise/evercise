@@ -148,7 +148,7 @@
                         <div class="col-xs-12 mt5 text-right hidden-mob">
                             {{ Form::open(['route'=>'session.get.members', 'method'=> 'post', 'class' => 'get-members', 'id'=>'get-members']) }}
                                 <a href="{{route('getPdf', ['session_id' => $session->id])}}" class="icon icon-download mr10 hover"></a>
-                                <span>{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '', ['sessionId'=>$session->id], ['class'=>'icon icon-mail mr10 mail-popup'])) }}</span>
+                                <span>{{ HTML::decode(HTML::linkRoute('sessions.mail_all', '', ['sessionId'=>$session->id], ['class'=>'icon icon-mail mr10 mail-popup', 'data-id' => $session->id])) }}</span>
                                 {{ Form::hidden('session_id', $session->id) }}
                                 {{ Form::submit('', ['class' => 'icon btn-icon icon-people hover']) }}
                             {{ Form::close() }}

@@ -715,29 +715,28 @@ class Mail
     }
 
     /**
-     * @param $trainer
      * @param $userList
-     * @param $group
+     * @param $evercisegroup
+     * @param $session
      * @param $messageSubject
      * @param $messageBody
+     * @internal param $group
      */
-    public function trainerMailAll($trainer, $userList, $group, $messageSubject, $messageBody)
+    public function trainerMailAll($userList, $evercisegroup, $session, $messageSubject, $messageBody)
     {
 
-        foreach ($userList as $name => $email) {
+        foreach ($userList as $id => $user) {
             $params = [
                 'subject'        => 'You have a new message',
                 'view'           => 'v3.emails.trainer.mail_all',
-                'trainer'        => $trainer,
-                'name'           => $name,
-                'email'          => $email,
-                'userList'       => $userList,
-                'group'          => $group,
+                'user'           => $user,
+                'evercisegroup'  => $evercisegroup,
+                'session'        => $session,
                 'messageSubject' => $messageSubject,
                 'messageBody'    => $messageBody
             ];
 
-            $this->send($email, $params);
+            $this->send($user->email, $params);
         }
 
     }
@@ -746,17 +745,17 @@ class Mail
     /**
      * @param $user
      * @param $trainer
-     * @param $everciseGroup
+     * @param $evercisegroup
      * @param $sessionDate
      */
-    public function trainerLeaveSession($user, $trainer, $everciseGroup, $sessionDate)
+    public function trainerLeaveSession($user, $trainer, $evercisegroup, $sessionDate)
     {
         $params = [
             'subject'       => 'Someone has left your class',
             'view'          => 'v3.emails.trainer.session_left',
             'user'          => $user,
             'trainer'       => $trainer,
-            'everciseGroup' => $everciseGroup,
+            'everciseGroup' => $evercisegroup,
             'sessionDate'   => $sessionDate,
         ];
 
