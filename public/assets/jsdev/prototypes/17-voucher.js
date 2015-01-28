@@ -31,7 +31,9 @@ voucher.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
-                self.form.find('input[type="submit"]').prop('disabled', true)
+                self.form.find('input[type="submit"]').prop('disabled', true);
+                $('.has-error').removeClass('has-error');
+                $('.help-block').remove();
             },
 
             success: function (data) {
@@ -39,7 +41,7 @@ voucher.prototype = {
                     location.reload();
                 }
                 else{
-                    self.elem.after('<div class="mt10 alert alert-danger alert-dismissible fixed" role="alert">your voucher is not correct<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button></div>');
+                    self.form.find('input[name="coupon"]').parent().addClass('has-error').append('<span class="help-block mb5">your voucher is not correct</span>');
                 }
             },
 

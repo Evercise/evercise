@@ -47,14 +47,19 @@ strong{
   -webkit-font-smoothing: antialiased;
 }
 
+.text-sm{ font-size: 12px}
 .text-large{ font-size: 16px}
 .text-larger{ font-size: 18px}
+.text-largest{ font-size: 24px}
 
 .custom-list {
   .branded-list();
 }
 
-
+.link{
+  text-decoration: underline;
+  color: #7390e2;
+}
 .text-white {
    .text-emphasis-variant(@white);
  }
@@ -63,6 +68,9 @@ strong{
  }
 .text-grey {
    .text-emphasis-variant(@gray);
+ }
+.text-light-grey {
+   .text-emphasis-variant(@gray-light);
  }
 
 .bg-grey {
@@ -91,6 +99,31 @@ strong{
     height: 1px;
     margin-left: -40px;
     border-bottom: 1px solid @gray-dark;
+  }
+}
+
+.text-divider{
+  text-align: center;
+  width: 100%;
+  position: relative;
+  &:before{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    content: '';
+    border-top: 1px solid #ededed;
+  }
+  &:after{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 20px;
+    margin-top: -14px;
+    margin-left: -30px;
+    content: 'or';
+    background: #fff;
   }
 }
 

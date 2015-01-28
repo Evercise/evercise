@@ -34,11 +34,6 @@ class CartController extends \BaseController
 
     public function checkout()
     {
-        if (!Sentry::check()) {
-            return Redirect::route('cart.guest');
-        }
-
-
         $coupon = Session::get('coupon', FALSE);
         $data = EverciseCart::getCart($coupon);
 
@@ -55,8 +50,6 @@ class CartController extends \BaseController
         $data['user'] = Sentry::getUser();
         $data['packages_available'] = $packages;
         $data['cart'] = View::make('v3.cart.dropdown')->with(EverciseCart::getCart())->render();
-
-
 
         return View::make('v3.cart.checkout', $data);
 

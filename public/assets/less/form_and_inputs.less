@@ -1,20 +1,26 @@
 label{
-  color: @gray-darker;
+  font-weight: 600;
+  font-size: 13px;
 }
 .form-control{
   box-shadow: none;
-  line-height: 16px;
+  line-height: 18px;
   height: @input-height;
   &:focus{
     .box-shadow(none);
     border-color: initial;
   }
+  &.input-sm{
+    height: 32px;
+    line-height: 16px;
+  }
   &.input-lg{
     height: 49px;
-    line-height: 24px;
+    font-size: 14px;
   }
 }
 .input-group-addon {
+  color: #bfbfbf;
   padding: 5px 0 5px 10px;
 }
 .form-group{
@@ -321,8 +327,8 @@ body:not(:-moz-handler-blocked) .custom-select:after{
     z-index: 1;
     overflow-y: auto;
     li{
-      padding: 0 7px;
-      line-height: 26px;
+      padding: 0 7px!important;
+      line-height: 26px!important;
       a{
         border-bottom: dotted 1px @input-border;
         display: block;
@@ -345,3 +351,38 @@ body:not(:-moz-handler-blocked) .custom-select:after{
   line-height: 26px;
 }
 
+.input-list{
+  .form-control{
+    border-radius: 0;
+    border: 0;
+  }
+  .input-group{
+    overflow: hidden;
+    border: 1px solid @input-border ;
+    line-height: inherit;
+    &:first-of-type{
+      border-bottom: 0;
+      border-top-left-radius:@border-radius-base;
+      border-top-right-radius:@border-radius-base;
+    }
+    .input-group-addon{
+      border: 0;
+      border-radius: 0;
+      line-height: inherit;
+      padding:0 15px;
+    }
+    &:last-of-type{
+      border-bottom-left-radius:@border-radius-base;
+      border-bottom-right-radius:@border-radius-base;
+    }
+    &.has-error{
+      border-color: @alert-danger-border;
+      color: @alert-danger-text;
+      background: @alert-danger-bg;
+      .input-group-addon{
+        background: @white;
+      }
+    }
+
+  }
+}

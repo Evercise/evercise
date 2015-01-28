@@ -132,8 +132,21 @@ class EvercisegroupsController extends \BaseController
             /** Overwrite Venue because of amenities */
             $class->venue = Venue::with('facilities')->find($class->venue_id);
 
+
+            $cats = array_map('trim', explode(',', $class->categories));
+
+            $subcats = Subcategory::whereIn('name', $cats)->get()->toArray();
+
+            $types = array_unique(array_values(array_map(function ($sub) {
+                return $sub['type'];
+            }, $subcats)));
+
+
+            $related = Subcategory::whereIn('type', $types)->orderByRaw("RAND()")->limit(6)->get();
+
             $params = [
                 'data'            => (array)$class,
+                'related'         => $related,
                 'title'           => $class->name . ' - ' . trim($class->venue->town) . ' | Evercise',
                 'metaDescription' => $class->name . ' in activity that enhances and maintains overall health and wellness. ' . $class->name . ' Fitness Classes ' . trim($class->venue->town)
 

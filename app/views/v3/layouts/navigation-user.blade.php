@@ -8,7 +8,7 @@
             <span>{{ HTML::decode(HTML::linkRoute('conversation', '', ['displayName'=>$newMessages['user']], ['class'=>'icon icon-mail'])) }}{{ $newMessages['count'] }}</span>
         </li>
         <li class="dropdown cart-dropdown nav-list">
-            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(0)</a>
+            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span id="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
             {{ isset($cart) ? $cart : '' }}
         </li>
         <li class="nav-list">

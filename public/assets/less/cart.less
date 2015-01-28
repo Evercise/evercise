@@ -13,14 +13,89 @@
 }
 
 .checkout{
-  li{
-    border-bottom: 1px solid #f2f2f2;
+  padding: 0;
+  li:not(.list-group-item){
+    font-size: 13px;
+
+    color: #9b9b9b;
     float: left;
     width: 100%;
-    padding: 9px 0;
+    padding: 15px 0;
     list-style: none;
-    .sbSelector{
-      line-height: 50px;
+    line-height: 40px;
+    .info{
+      line-height: 20px;
+    }
+    &.title{
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 119%;
+      padding: 40px 0 20px;
+      border-bottom: 1px solid #d8d8d8;
+      &.active{
+        color: @brand-primary;
+        border-color: @brand-primary;
+      }
+    }
+    &.headers{
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 16px 0 0;
+      color: #bfbfbf;
+    }
+    &.voucher{
+      line-height: 31px;
+      font-weight: 600;
+      padding: 24px 0;
+    }
+    &.total{
+      font-size: 14px;
+    }
+  }
+  hr{
+    float: left;
+    width: 100%;
+    margin: 0;
+    border-color:  #f2f2f2;
+    &.dark{
+      border-color: #d8d8d8;
+    }
+    &.up{
+      margin-top: -1px;
+    }
+  }
+}
+.cart-step{
+  overflow: hidden;
+  float: left;
+  width: 100%;
+}
+
+// progress bar on side
+.cart-progress{
+  position: fixed;
+  li{
+    list-style: none;
+    &.title{
+      margin: -1px 0 -1px -9px;
+      line-height: 16px;
+      font-weight: 600;
+      &.active{
+        color: @brand-primary;
+      }
+    }
+    &.content{
+      height: 80px;
+      border-left: 1px dashed @gray-light;
+      padding: 27px 25px;
+    }
+  }
+  .complete{
+    li.content{
+      border-left: 1px solid @brand-primary;
+    }
+    li.title{
+      color: @brand-primary;
     }
   }
 }

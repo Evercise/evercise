@@ -296,6 +296,12 @@ Route::get('venues/create', 'VenuesController@create');
 Route::get('venues/edit/{id}', 'VenuesController@edit');
 Route::post('venues/update/{id}', 'VenuesController@update');
 
+Route::get('confo', [
+    'as' => 'con',
+    function () {
+        return View::make('v3.cart.confirmation');
+    }
+]);
 
 // Cart
 Route::group(['prefix' => 'cart'], function () {

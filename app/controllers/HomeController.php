@@ -1,6 +1,7 @@
 <?php
 
-class HomeController extends BaseController {
+class HomeController extends BaseController
+{
 
 
     /**
@@ -12,26 +13,28 @@ class HomeController extends BaseController {
      */
     private $articles;
 
-    public function __construct(Slider $slider, Articles $articles){
+    public function __construct(Slider $slider, Articles $articles)
+    {
 
         $this->slider = $slider;
         $this->articles = $articles;
     }
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
 
-	public function showWelcome()
-	{
+    /*
+    |--------------------------------------------------------------------------
+    | Default Home Controller
+    |--------------------------------------------------------------------------
+    |
+    | You may wish to use controllers instead of, or in addition to, Closure
+    | based routes. That's great! Here is an example controller method to
+    | get you started. To route to this controller, just add the route:
+    |
+    |	Route::get('/', 'HomeController@showWelcome');
+    |
+    */
+
+    public function showWelcome()
+    {
         $slider = $this->slider->getItems(5);
 
         $articles = $this->articles->getMainPageArticles(3);
@@ -44,11 +47,9 @@ class HomeController extends BaseController {
         $homepage = Config::get('homepage');
 
 
-
-        foreach($homepage['blocks'] as $key => $block) {
-
+        foreach ($homepage['blocks'] as $key => $block) {
             $blocks[$key] = array_except($block, ['params']);
-            $blocks[$key]['results'] = $searchController->getClasses($block['params'], true);
+            $blocks[$key]['results'] = $searchController->getClasses($block['params'], TRUE);
         }
 
 
@@ -72,7 +73,7 @@ class HomeController extends BaseController {
          */
 
 
-		return View::make('v3.home', compact('blocks', 'slider', 'articles', 'homepage'));
-	}
+        return View::make('v3.home', compact('blocks', 'slider', 'articles', 'homepage'));
+    }
 
 }

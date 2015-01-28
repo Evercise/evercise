@@ -14,7 +14,7 @@
             </ul>
         </li>
         <li class="dropdown cart-dropdown nav-list">
-            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span id="cart-items">{{ isset($cart) ? count($cart) : '0' }}</span>)</a>
+            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span id="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
             {{ isset($cart) ? $cart : '' }}
         </li>
       </ul>
