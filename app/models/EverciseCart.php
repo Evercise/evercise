@@ -343,6 +343,8 @@ class EverciseCart extends Cart
             $cart['total']['final_cost'] = 0;
         }
 
+        $cart['total']['from_wallet'] = 0;
+
         return $cart;
 
 
