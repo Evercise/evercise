@@ -34,11 +34,6 @@ class CartController extends \BaseController
 
     public function checkout()
     {
-        if (!Sentry::check()) {
-            return Redirect::route('cart.guest');
-        }
-
-
         $coupon = Session::get('coupon', FALSE);
         $data = EverciseCart::getCart($coupon);
 

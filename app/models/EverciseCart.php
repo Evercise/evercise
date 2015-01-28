@@ -110,7 +110,7 @@ class EverciseCart extends Cart
         if (!empty($user->id)) {
             foreach ($user->packages as $p) {
                 // &&  $p->created_at->addMonths(2)->format('Y-m-d') >= date('Y-m-d')
-                if(count($p->package)) {
+                if (count($p->package)) {
 
                     $package = $p->package->toArray();
                     $package['available'] = ($p->package()->first()->classes - $p->classes()->count());
@@ -146,7 +146,7 @@ class EverciseCart extends Cart
                 case 'session':
                     for ($i = 0; $i < $row->qty; $i++) {
 
-                        if(!empty($objects['sessions'][$code['id']])) {
+                        if (!empty($objects['sessions'][$code['id']])) {
                             $session = $objects['sessions'][$code['id']];
                         } else {
                             $session = Evercisesession::find($code['id']);
@@ -154,7 +154,7 @@ class EverciseCart extends Cart
                         }
 
 
-                        if(!empty($session->id)) {
+                        if (!empty($session->id)) {
                             $remaining_tickets = $session->remainingTickets();
                             $slug = $session->evercisegroup->slug;
                             $session = $session->toArray();
@@ -178,7 +178,7 @@ class EverciseCart extends Cart
             $sessions[$s]['package'] = 0;
             $sessions[$s]['cart_id'] = $session['id'];
 
-            if(!empty($objects['groups'][$session['evercisegroup_id']])) {
+            if (!empty($objects['groups'][$session['evercisegroup_id']])) {
                 $evercisegroup = $objects['groups'][$session['evercisegroup_id']];
             } else {
                 $evercisegroup = Evercisegroup::find($session['evercisegroup_id']);
@@ -229,7 +229,7 @@ class EverciseCart extends Cart
         foreach ($sessions as $s) {
             if (!empty($cart['sessions_grouped'][$s['id']]['qty'])) {
                 $cart['sessions_grouped'][$s['id']]['qty']++;
-             //   $cart['sessions_grouped'][$s['id']]['tickets_left']--;
+                //   $cart['sessions_grouped'][$s['id']]['tickets_left']--;
                 $cart['sessions_grouped'][$s['id']]['grouped_price'] += $s['price'];
                 if ($s['package'] == 0) {
                     $cart['sessions_grouped'][$s['id']]['grouped_price_discount'] += $s['price'];
@@ -237,7 +237,7 @@ class EverciseCart extends Cart
             } else {
                 $cart['sessions_grouped'][$s['id']] = $s;
                 $cart['sessions_grouped'][$s['id']]['qty'] = 1;
-             //   $cart['sessions_grouped'][$s['id']]['tickets_left'] = $s['tickets'] - 1;
+                //   $cart['sessions_grouped'][$s['id']]['tickets_left'] = $s['tickets'] - 1;
                 $cart['sessions_grouped'][$s['id']]['tickets_left'] = $s['tickets'];
                 $cart['sessions_grouped'][$s['id']]['grouped_price'] = $s['price'];
                 $cart['sessions_grouped'][$s['id']]['grouped_price_discount'] = 0;
@@ -254,6 +254,7 @@ class EverciseCart extends Cart
         $cart['total']['subtotal'] = $subTotal;
         $cart['total']['package_deduct'] = $package_deduct;
         $cart['total']['from_wallet'] = 0;
+        $cart['total']['rewards_deduct'] = 0;
         $cart['total']['final_cost'] = ($subTotal - $package_deduct);
 
         if ($cart['wallet'] > 0) {
@@ -267,6 +268,7 @@ class EverciseCart extends Cart
         }
 
         $cart['discount'] = [];
+        $cart['discount']['amount'] = 0;
 
         /** Check Coupon */
 
@@ -308,6 +310,33 @@ class EverciseCart extends Cart
                 $cart['total']['final_cost'] = ($cart['discount']['new_total']);
             }
 
+        }
+
+        $cart['rewards'] = [];
+
+        $deduct_rewards = 0;
+
+        if (!empty($user->id)) {
+            foreach ($user->rewards as $reward) {
+
+                // &&  $p->created_at->addMonths(2)->format('Y-m-d') >= date('Y-m-d')
+                if ($reward->status == 0) {
+
+                    $cart['rewards'][][$reward->message] = $reward->amount;
+                    $cart['total']['rewards_deduct'] += $reward->amount;
+                    $deduct_rewards += $reward->amount;
+                }
+            };
+
+            if($deduct_rewards > 0) {
+                $cart['total']['final_cost'] -=$deduct_rewards;
+
+
+            }
+        }
+
+        if($cart['total']['final_cost'] < 0) {
+            $cart['total']['final_cost'] = 0;
         }
 
         return $cart;
