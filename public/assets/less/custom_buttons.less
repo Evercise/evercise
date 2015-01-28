@@ -31,6 +31,27 @@
   }
 }
 
+.custom-fb{
+  width: 100%;
+  position: relative;
+  color: @white;
+  background: @btn-fb-bg;
+  float: left;
+  height: 60px;
+  padding: 17px 80px;
+  font-weight: 600;
+  &:before{
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    content: '';
+    width: 22px;
+    height: 22px;
+    margin-top: -11px;
+    .sprite(-50px, -411px, 40)
+  }
+}
+
 .btn-grey {
   .button-variant(@btn-grey-color; @btn-grey-bg; @btn-grey-border);
   &:hover{
@@ -127,6 +148,22 @@
   top: 0 ;
   right: 0;
   z-index: 1;
+}
+
+.btn-paypal{
+  background: @white;
+  border-color: #74c1e5;
+  color: @white;
+  position: relative;
+  &:after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22px;
+    width: 22px;
+    content: '';
+    .sprite(-890px, -250px);
+  }
 }
 
 .btn-package{

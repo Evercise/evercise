@@ -158,7 +158,6 @@
                         </li>
                     </ul>
                 </div>
-                {{ var_dump($related) }}
             </div>
 
         </div>

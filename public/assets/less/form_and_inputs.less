@@ -1,5 +1,6 @@
 label{
-  color: @gray-darker;
+  font-weight: 600;
+  font-size: 13px;
 }
 .form-control{
   box-shadow: none;
@@ -15,10 +16,11 @@ label{
   }
   &.input-lg{
     height: 49px;
-    line-height: 24px;
+    font-size: 14px;
   }
 }
 .input-group-addon {
+  color: #bfbfbf;
   padding: 5px 0 5px 10px;
 }
 .form-group{
@@ -325,8 +327,8 @@ body:not(:-moz-handler-blocked) .custom-select:after{
     z-index: 1;
     overflow-y: auto;
     li{
-      padding: 0 7px;
-      line-height: 26px;
+      padding: 0 7px!important;
+      line-height: 26px!important;
       a{
         border-bottom: dotted 1px @input-border;
         display: block;

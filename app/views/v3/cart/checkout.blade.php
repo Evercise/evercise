@@ -2,116 +2,103 @@
 @section('body')
 @include('v3.layouts.stripe_setup', ['route' => 'stripe.sessions'])
 <script>
-    var viewPrice = '{{ isset($total['subtotal']) ? SessionPayment::poundsToPennies($total['final_cost'])  : null }}';
+    var VIEWPRICE = '{{ isset($total['final_cost']) ? SessionPayment::poundsToPennies($total['final_cost'])  : null }}';
 </script>
 <div class="container">
     <div class="row">
-        <div class="page-header">
+        <div class="page-header col-sm-12">
             <h1 class="h2">Checkout</h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-10">
+        <div class="col-sm-9">
             <ul class="checkout">
-                <li class="title"><div class="col-sm-12">Review Order</div></li>
-                <hr class="primary">
-                <li class="headers">
-                    <div class="col-sm-6">Session</div>
-                    <div class="col-sm-3 text-center">Quantity</div>
-                    <div class="col-sm-2 text-center">Price</div>
-                    <div class="col-sm-1"></div>
-                </li>
-                <hr class="dark">
-                @foreach($sessions_grouped as $row)
 
-                    <li class="item">
-                        <div class="col-sm-6 info">
-                            <strong>{{ $row['name']}}</strong><br>
-                            <span>{{ date('D, j F Y g:i A', strtotime($row['date_time']))  }}</span>
-                        </div>
-                        <div class="col-sm-3">
-                            <select name="quantity" id="quantity" class="select-box">
-                                @for($i = 1; $i <= ($row['tickets_left']); $i++)
-                                    <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="col-sm-2 text-right"><b class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.round($row['grouped_price'],2).'</strike> &pound'.round($row['grouped_price_discount'],2) : '&pound'.round($row['grouped_price'],2) ) }}</b></div>
-                        <div class="col-sm-1 text-right"><span class="icon icon-cross"></span></div>
-                    </li>
-                    <hr>
-                @endforeach
-                @foreach($packages as $row)
-                    <li class="item">
-                        <div class="col-sm-6 info">
-                            <strong>{{ $row['name']}}</strong><br>
-                            <span>{{ $row['classes'] }} classes for {{ $row['price'] }}</span>
-                        </div>
-                        <div class="col-sm-3">
-                            <select name="quantity" id="quantity" class="select-box">
-                                @for($i = 1; $i <= 10; $i++)
-                                    <option value="{{$i}}" {{ (!empty($cart_items[$row['id']]) && $cart_items[$row['id']] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="col-sm-2 text-right"><b class="text-primary">£{{ $row['price'] }}</b></div>
-                        <div class="col-sm-1 text-right"><span class="icon icon-cross"></span></div>
-                    </li>
-                    <hr>
-                @endforeach
-                <hr class="dark up">
-                <li class="voucher">
-                    <div class="col-sm-10 col-sm-offset-1">
-                        {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    I have a voucher code:
-                                </div>
-                                <div class="col-xs-7">
-                                    {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
-                                </div>
-                                <div class="col-xs-2">
-                                    {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
-                                </div>
-                            </div>
-                        {{ Form::close() }}
-                    </div>
-                </li>
-                <hr class="dark">
-                <li class="total">
-                    <div class="col-sm-8"><strong>Sub-Total</strong></div>
-                    <div class="col-sm-4 text-right"><strong class="text-larger text-primary">£{{ round($total['subtotal'], 2) }}</strong></div>
-                </li>
-                @if(!empty($discount['amount']) && $discount['amount'] > 0)
-                <hr class="dark">
-                <li class="total bg-light-grey">
-                    <div class="col-sm-8"><strong class="ml15">Friend Referal Discount</strong></div>
-                    <div class="col-sm-4 text-right">
-                        <strong class="text-larger text-primary">
-                            {{ round($discount['amount'] ,2)}}
-                            @if($discount['type'] == 'percentage')
-                                 <span class="text-primary">{{ $discount['percentage']}}%</span>
-                            @endif
-                        </strong>
-                    </div>
-                </li>
-                 @endif
-                 <hr class="dark">
-                 <li class="total">
-                    <div class="col-sm-8"><strong>Total</strong></div>
-                    <div class="col-sm-4 text-right"><strong class="text-larger text-primary">£{{round($total['final_cost'], 2)}}</strong></div>
-                 </li>
+                 <div id="step-1" class="cart-step">
+                    <li class="title active"><div class="col-sm-12">Review Order</div></li>
+                    @include('v3.cart.checkout.step1')
+                 </div>
                  <hr class="dark">
                  <li class="text-right">
-                    <button class="btn btn-white-primary ">Continue</button>
+                    <a data-step="1" class="collapsed btn btn-white-primary continue" data-toggle="collapse"  href="#step-2">Continue</a>
                  </li>
-                 <li class="title"><div class="col-sm-12">Payment</div></li>
-                 <hr class="dark">
-                 <li class="title"><div class="col-sm-12">Confirmation</div></li>
+
+                 <li class="title"><div class="col-sm-12">Details & Payment</div></li>
+                 @if(!isset($user))
+                 <div id="step-2" class="cart-step collapse">
+                     <div class="col-sm-10 col-sm-offset-1 mt25">
+
+                        <div class="form-group">
+                            <label for="email">What  is your Email Address?</label>
+                            <div class="input-group mt10">
+                                <div class="input-group-addon"><strong>EMAIL</strong></div>
+                                {{ Form::email('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
+                            </div>
+                        </div>
+                        <div class="text-divider mb15">or</div>
+                        {{ Html::linkRoute('users.fb', 'Connect via Facebook', null, ['class' => 'custom-fb mb15']) }}
+                        <label for="account">Do you have a Evercise account?</label>
+                        <ul class="list-group mt10">
+                            <li class="list-group-item">
+                                <div class="custom-checkbox">
+                                    {{ Form::checkbox('new', 'yes', false , ['id'=> 'new']) }}
+                                    <label for="new" >I'm a new customer</label>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="custom-checkbox">
+                                            {{ Form::checkbox('ps', 'yes', false , ['id'=> 'ps']) }}
+                                            <label for="ps" >Yes I have a Password:</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">{{ Form::password('password',['class' => 'form-control input-sm']) }}</div>
+                                </div>
+                            </li>
+                            <div class="pull-right mt15">
+                                {{ HTML::linkRoute('auth.forgot', 'Forgot your Password?' , null, ['class' => 'text-right link']) }}
+                            </div>
+                            <li class="text-right">
+                                <button class="btn btn-white-primary ">Continue</button>
+                            </li>
+                        </ul>
+
+                     </div>
+                 </div>
+                 @else
+                 <div id="step-2" class="cart-step collapse">
+                     <div class="col-sm-8 col-sm-offset-2 text-center mt30">
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                Welcome back, mewis (<a href="{{ URL::route('auth.logout') }}" class="link">not you?</a>), how would you like to pay?
+                                <div class="mt10">
+                                    <strong class="text-largest">Pay with:</strong>
+                                </div>
+                                <div class="row mt20">
+                                    <div class="col-xs-6"><button  id="fb-pay" class="btn btn-paypal btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button></div>
+                                    <div class="col-xs-6"><button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button></div>
+                                </div>
+                            </div>
+                        </div>
+
+                     </div>
+                 </div>
+                 @endif
+                 <li class="title mb50"><div class="col-sm-12">Confirmation</div></li>
             </ul>
         </div>
-        <div class="col-sm-2">
-            side thingy
+        <div class="col-sm-3">
+           <ul class="cart-progress">
+                <li class="title active"><span class="icon icon-cross mr10"></span>Review Order</li>
+                <div id="progress-2">
+                    <li class="content">Total <strong class="pull-right text-primary">£{{ number_format($total['final_cost'], 2,'.','') }}</strong></li>
+                    <li class="title"><span class="icon icon-cross mr10"></span>Payment Method</li>
+                </div>
+
+                <li class="content"></li>
+                <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
+           </ul>
         </div>
     </div>
 </div>
