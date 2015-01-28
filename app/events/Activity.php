@@ -1,4 +1,4 @@
-<?php  namespace events;
+<?php namespace events;
 
 
 use Activities;
@@ -569,20 +569,20 @@ class Activity
      * @param $user
      * @param $transaction
      */
-    public function userReferralCompleted($user, $transaction, $type)
+    public function userReferralCompleted($user, $amount, $type)
     {
         $title = 'Referral completed';
-        $description = 'With ' . $this->fixAmountDisplay($transaction->total);
+        $description = 'With ' . $this->fixAmountDisplay($amount);
 
         $data = [
             'description' => $description,
             'title'       => $title,
-            'link'        => 'transaction/' . $transaction->id,
-            'link_title'  => 'View transaction',
+            'link'        => '',
+            'link_title'  => '',
             'image'       => 'assets/img/activity/Activity_Refferal.png',
             'type'        => $type,
             'user_id'     => $user->id,
-            'type_id'     => $transaction->id
+            'type_id'     => 0
         ];
         $activity = $this->activities->create($data);
     }
@@ -591,20 +591,20 @@ class Activity
      * @param $user
      * @param $transaction
      */
-    public function userReferralSignup($user, $transaction, $type)
+    public function userReferralSignup($user, $amount, $type)
     {
         $title = 'Signup from referral';
-        $description = 'With ' . $this->fixAmountDisplay($transaction->total);
+        $description = 'With ' . $this->fixAmountDisplay($amount);
 
         $data = [
             'description' => $description,
             'title'       => $title,
-            'link'        => 'transaction/' . $transaction->id,
-            'link_title'  => 'View transaction',
+            'link'        => '',
+            'link_title'  => '',
             'image'       => 'assets/img/activity/Activity_Refferal.png',
             'type'        => $type,
             'user_id'     => $user->id,
-            'type_id'     => $transaction->id
+            'type_id'     => 0
         ];
         $activity = $this->activities->create($data);
     }
@@ -674,17 +674,17 @@ class Activity
         ]);
     }
 
-    public function ppcSignup($user, $transaction, $type, $description = 0)
+    public function ppcSignup($user, $amount, $type, $description = 0)
     {
         $this->activities->create([
             'title'       => $description ? $description : 'Signup from PPC',
-            'description' => 'With ' . $this->fixAmountDisplay($transaction->total),
+            'description' => 'With ' . $this->fixAmountDisplay($amount),
             'link'        => FALSE,
             'link_title'  => FALSE,
             'type'        => $type,
             'image'       => 'assets/img/activity/Activity_Milestone.png',
             'user_id'     => $user->id,
-            'type_id'     => $transaction->id
+            'type_id'     => 0
         ]);
     }
 

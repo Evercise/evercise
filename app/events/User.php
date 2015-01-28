@@ -170,22 +170,22 @@ class User
      * @param $user
      * @param $transaction
      */
-    public function referralCompleted($user, $transaction, $balance)
+    public function referralCompleted($user, $amount, $type)
     {
         $this->log->info('User ' . $user->id . ' referral completed');
 
-        $this->activity->userReferralCompleted($user, $transaction, 'referralcompleted');
+        $this->activity->userReferralCompleted($user, $amount, $type);
     }
 
     /**
      * @param $user
      * @param $transaction
      */
-    public function referralSignup($user, $transaction, $balance)
+    public function referralSignup($user, $amount, $type)
     {
         $this->log->info('User ' . $user->id . ' signup through referral');
 
-        $this->activity->userReferralSignup($user, $transaction, 'referralsignup');
+        $this->activity->userReferralSignup($user, $amount, $type);
     }
 
     /**
@@ -194,11 +194,11 @@ class User
      * @param $type
      * @param $description
      */
-    public function ppcSignup($user, $transaction, $type, $description = 0)
+    public function ppcSignup($user, $amount, $type, $description = 0)
     {
         $this->log->info('User ' . $user->id . ' signup through '.$type.' ppc code');
 
-        $this->activity->ppcSignup($user, $transaction, $type, $description);
+        $this->activity->ppcSignup($user, $amount, $type, $description);
     }
 
     /**
