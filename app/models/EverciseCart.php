@@ -96,7 +96,7 @@ class EverciseCart extends Cart
 
         $cart = [];
 
-        $cart['wallet'] = 0;
+        //$cart['wallet'] = 0;
 
 
         $cartRows = parent::instance('main')->content();
@@ -120,7 +120,7 @@ class EverciseCart extends Cart
                 }
             };
 
-            $cart['wallet'] = $user->getWallet()->getBalance();
+            // $cart['wallet'] = $user->getWallet()->getBalance();
         }
 
         /** Get all packages that exist in Cart */
@@ -253,9 +253,12 @@ class EverciseCart extends Cart
         $cart['sessions'] = $sessions;
         $cart['total']['subtotal'] = $subTotal;
         $cart['total']['package_deduct'] = $package_deduct;
-        $cart['total']['from_wallet'] = 0;
+       // $cart['total']['from_wallet'] = 0;
         $cart['total']['rewards_deduct'] = 0;
         $cart['total']['final_cost'] = ($subTotal - $package_deduct);
+
+        /**
+         DISABLE FROM WALLET
 
         if ($cart['wallet'] > 0) {
             if ($cart['wallet'] > $cart['total']['final_cost']) {
@@ -266,6 +269,7 @@ class EverciseCart extends Cart
                 $cart['total']['final_cost'] = ($cart['total']['final_cost'] - $cart['wallet']);
             }
         }
+        */
 
         $cart['discount'] = [];
         $cart['discount']['amount'] = 0;
@@ -339,6 +343,8 @@ class EverciseCart extends Cart
             $cart['total']['final_cost'] = 0;
         }
 
+
+        d($cart);
         return $cart;
 
 
