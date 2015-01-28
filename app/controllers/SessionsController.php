@@ -239,7 +239,7 @@ class SessionsController extends \BaseController
         }
 
         if (empty($sessionIds)) {
-            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
+            return Redirect::route('class.show', [$evercisegroupId]);
         }
 
         if ($joinParams = Evercisesession::confirmJoinSessions($evercisegroupId, $sessionIds)) {

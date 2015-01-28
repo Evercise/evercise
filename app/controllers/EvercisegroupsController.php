@@ -95,6 +95,9 @@ class EvercisegroupsController extends \BaseController
     public function show($id, $preview = NULL)
     {
 
+        if(Request::segment(1) != 'classes') {
+            return Redirect::to('classes/'.Request::segment(2), 301);
+        }
 
         $data = $this->elastic->getSingle($id);
 
