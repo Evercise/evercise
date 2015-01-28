@@ -172,8 +172,14 @@ class UsersController extends AjaxBaseController
 
                     return Response::json(
                         [
-                            'callback' => 'gotoUrl',
-                            'url'      => route(Input::get('redirect', route('cart.checkout')))
+                            'callback' => 'success',
+                            'url'      => route(Input::get('redirect', route('cart.checkout'))),
+                            'user'     => [
+                                'id'           => $user->id,
+                                'email'        => $user->email,
+                                'display_name' => $user->display_name,
+                                'first_name'   => $user->first_name
+                            ]
                         ]
                     );
 
