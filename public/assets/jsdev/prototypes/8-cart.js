@@ -87,6 +87,9 @@ Cart.prototype = {
                 else{
                     self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading"></span>');
                 }
+                if($('.mask').length){
+                    $('.mask').removeClass('hidden');
+                }
                 self.form.find(".switch").addClass('disabled');
 
             },
@@ -94,12 +97,18 @@ Cart.prototype = {
             success: function (data) {
                 if(data.view){
                     self.updateCart(data);
+                    if($('.mask').length){
+                        $('.mask').addClass('hidden');
+                    }
                 }
                 else if(data.refresh){
                     location.reload();
                 }
                 else if(data.validation_failed == 1){
                     self.failedValidation(data);
+                    if($('.mask').length){
+                        $('.mask').addClass('hidden');
+                    }
                 }
             },
 

@@ -160,10 +160,19 @@
                         </li>
                     </ul>
                 </div>
-            </div>
 
+                <div class="ml10">
+                    <strong class="text-large">Related Categories</strong>
+                    <div class="text-center mt20">
+                        @foreach($related as $cat)
+                            <a href="/uk/london?search={{$cat->name}}" class="btn btn-rounded btn-white-primary mb10 mr10 ml10">{{$cat->name}}</a>
+                        @endforeach
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div class="row visible-sm-block visible-xs-block">
+        <div class="row visible-xs-block">
             <div id="map-panel-mobile" class="col-sm-6"></div>
         </div>
         @if(count($facilities = $data['venue']->getFacilities()) || count($amenities = $data['venue']->getAmenities()))

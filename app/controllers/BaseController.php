@@ -36,6 +36,7 @@ class BaseController extends Controller
         View::share('cart', View::make('v3.cart.dropdown')->with($this->cart)->render());
 
 
+
         if (Sentry::check()) {
             $this->user = Sentry::getUser();
 
@@ -47,6 +48,10 @@ class BaseController extends Controller
             $header = $this->setupHeader('user');
         } else {
             $header = $this->setupHeader('none');
+        }
+        if (Request::is('cart/*'))
+        {
+            $header = $this->setupHeader('cart');
         }
 
 
@@ -70,6 +75,10 @@ class BaseController extends Controller
 
             case 'user':
                 return View::make('v3.layouts.navigation-user')->render();
+                break;
+
+            case 'cart':
+                return View::make('v3.layouts.navigation-cart')->render();
                 break;
         }
 

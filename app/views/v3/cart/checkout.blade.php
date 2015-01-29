@@ -32,6 +32,7 @@
                  <div id="step-1" class="cart-step">
                     <li class="title active"><div class="col-sm-12">Review Order</div></li>
                     @include('v3.cart.checkout.step1')
+                    <div class="mask hidden"><div class="loading"></div></div>
                  </div>
                  <hr class="dark">
                  <li class="text-right">

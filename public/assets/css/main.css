@@ -10222,6 +10222,38 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .checkout {
   padding: 0;
 }
+.checkout .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+.checkout .mask .loading {
+  background-image: url("../img/spinning-circles.svg");
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-size: 60px 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  width: 80px;
+  margin-top: -40px;
+  margin-left: -40px;
+  background-color: transparent;
+}
+.checkout .mask .loading.active {
+  background-position: 50% 10%;
+}
+.checkout .mask .loading.hover:hover,
+.checkout .mask .loading.active:hover {
+  cursor: pointer;
+  background-position: 50% 10%;
+}
 .checkout li:not(.list-group-item) {
   font-size: 13px;
   color: #9b9b9b;
@@ -10272,7 +10304,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   margin-top: -1px;
 }
 .cart-step {
-  overflow: hidden;
+  position: relative;
   float: left;
   width: 100%;
 }
