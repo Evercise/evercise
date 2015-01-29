@@ -141,7 +141,9 @@ Cart.prototype = {
         this.userType = 'new';
         var self = this;
         $('#step-2').on('shown.bs.collapse', function (e) {
-            $('#step-1').find('.switch').addClass('hidden');
+            var t = $(e.target).attr('id');
+            $('a[href="#'+t+'"]').addClass('hidden');
+            $('#step-1').find('.switch-cart').addClass('hidden');
             $('#step-1').find('.switch-back').removeClass('hidden');
             $('.cart-progress').find('#progress-2').addClass('complete');
         });

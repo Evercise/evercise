@@ -81,7 +81,7 @@
                             {{ Form::hidden('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
                         {{ Form::close() }}
                         <li class="text-right">
-                            {{ Form::button('Continue', ['class' => 'btn btn-white-primary', 'id' => 'cart-account']) }}
+                            {{ Form::button('Continue', ['class' => 'btn btn-white-primary ', 'id' => 'cart-account']) }}
                         </li>
 
 

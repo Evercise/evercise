@@ -13,7 +13,7 @@
         <strong>{{ $row['name']}}</strong><br>
         <span>{{ date('D, j F Y g:i A', strtotime($row['date_time']))  }}</span>
     </div>
-    <div class="col-xs-3 switch ">
+    <div class="col-xs-3 switch-cart ">
         {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $row['id'], 'class' => 'add-to-class']) }}
             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
             {{ Form::hidden('force', true) }}
@@ -69,7 +69,7 @@
 <hr>
 @endforeach
 <hr class="dark up">
-<li id="voucher" class="voucher switch">
+<li id="voucher" class="voucher switch-cart">
 <div class="col-sm-10 col-sm-offset-1">
     {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
         <div class="row">
@@ -86,7 +86,7 @@
     {{ Form::close() }}
 </div>
 </li>
-<hr class="dark switch">
+<hr class="dark switc-cart">
 <li class="total">
     <div class="col-xs-8"><strong>Sub-Total</strong></div>
     <div class="col-xs-4 text-right"><strong class="text-larger text-primary">£{{ number_format($total['subtotal'], 2,'.','') }}</strong></div>
