@@ -25,3 +25,4 @@ public/files/*
 /app/storage/views/*
 _ide_helper.php
 .vagrant
+npm-debug.log
