@@ -94,14 +94,28 @@
                      <div class="col-sm-8 col-sm-offset-2 text-center mt30">
                         <div class="row">
                             <div class="col-sm-10 col-sm-offset-1">
-                                Welcome back, mewis (<a href="{{ URL::route('auth.logout') }}" class="link">not you?</a>), how would you like to pay?
+                                Welcome back, {{ isset($user->first_name) ? $user->first_name : $user->display_name }} (<a href="{{ URL::route('auth.logout') }}" class="link">not you?</a>), how would you like to pay?
                                 <div class="mt10">
                                     <strong class="text-largest">Pay with:</strong>
                                 </div>
-                                <div class="row mt20">
-                                    <div class="col-xs-6"><button  id="fb-pay" class="btn btn-paypal btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button></div>
-                                    <div class="col-xs-6"><button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button></div>
-                                </div>
+                                @if($total['final_cost'] > 0)
+                                    <div class="row mt20">
+                                        <div class="col-xs-6"><button  id="fb-pay" class="btn btn-paypal btn-block" onclick="window.location = '{{ URL::route('payment.request.paypal') }}'">Pay with paypal</button></div>
+                                        <div class="col-xs-6"><button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button></div>
+                                    </div>
+                                @elseif($total['subtotal'] == $total['package_deduct'])
+                                    <div class="row mt20">
+                                        <div class="col-xs-6 col-sm-offset-3">
+                                            {{ Html::linkRoute('wallet.sessions', 'Pay with Package',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="row mt20">
+                                        <div class="col-xs-6 col-sm-offset-3">
+                                            {{ Html::linkRoute('wallet.sessions', 'Complete Payment',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary btn-block']) }}
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 

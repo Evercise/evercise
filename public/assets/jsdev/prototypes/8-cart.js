@@ -23,6 +23,9 @@ Cart.prototype = {
         $(document).on('change', 'select[name="quantity"]', $.proxy(this.selectQty, this));
     },
     changeSelectDropdown: function(e){
+        if($(e.target).hasClass('qty-select') ){
+            this.selectQty(e);
+        }
         if($(e.target).hasClass('select-box') ){
             $(e.target).closest('.add-to-class').trigger('submit');
         }

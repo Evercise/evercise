@@ -82,14 +82,14 @@
                                 <div class="col-xs-3 text-center"><strong class="text-primary">£{{ $data['futuresessions'][0]->price }}</strong> </div>
                                 <div class="qty-wrapper">
                                     <div class="col-xs-3 visible-md-block visible-lg-block visible-sm-block">
-                                        <select name="quantity" id="quantity" class="qty-select select-box {{isset($preview) ? 'disabled' : null}}">
+                                        <select name="quantity" id="quantity" class="qty-select select-box">
                                             @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
                                                 <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
                                     <div class="col-xs-3 visible-xs-block">
-                                        <select name="quantity" id="quantity" class="qty-select form-control select-default{{isset($preview) ? 'disabled' : null}}">
+                                        <select name="quantity" id="quantity" class="qty-select form-control select-default">
                                             @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
                                                 <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                             @endfor
@@ -102,7 +102,7 @@
                                     <div class="pull-right">
                                         {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $data['futuresessions'][0]->id)) }}
                                         {{ Form::hidden('force', true) }}
-                                        {{ Form::submit('Book Class', ['class'=> isset($preview) ? 'btn btn-primary disabled' : 'btn btn-primary add-btn']) }}
+                                        {{ Form::submit('Book Class', ['class'=>'btn btn-primary add-btn']) }}
 
                                     </div>
                                 </div>
