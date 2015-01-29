@@ -757,8 +757,11 @@ Route::get('cleansubcategoriesup', function () {
 
 Route::get('test1', function(){
 
-    $user = \User::find(572);
-    return \UserPackages::hasActivePackage($user);
+    $trainer = User::find('169');
+
+    event('trainer.registered_ppc', [$trainer]);
+
+    return 'event fired : '.$trainer->display_name;
 
 });
 Route::get('test2', function(){
