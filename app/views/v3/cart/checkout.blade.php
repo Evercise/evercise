@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="text-divider mb15">or</div>
-                            {{ Html::linkRoute('users.fb', 'Connect via Facebook', null, ['class' => 'custom-fb mb15']) }}
+                            {{ Html::linkRoute('users.fb', 'Connect via Facebook', 'cart.checkout', ['class' => 'custom-fb mb15']) }}
                             <label for="account">Do you have a Evercise account?</label>
                             <div class="input-list">
                                  <div class="custom-checkbox form-control input-lg mt10 input-group">
