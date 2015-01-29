@@ -9380,7 +9380,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 @media (max-width: 767px) {
   .class-block {
-    height: 85px;
+    height: 95px;
     margin-bottom: 15px;
   }
 }
@@ -9422,7 +9422,7 @@ fieldset[disabled] .stripe-button-el.active {
 @media (max-width: 767px) {
   .class-block .class-body img {
     display: block;
-    height: 85px;
+    height: 95px;
     float: left;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -9431,11 +9431,12 @@ fieldset[disabled] .stripe-button-el.active {
 @media (max-width: 767px) {
   .class-block .class-title {
     border-top-right-radius: 3px;
-    padding: 8px 10px 6px;
+    padding: 12px 10px 10px;
     text-align: left;
   }
   .class-block .class-title h4 {
     font-size: 18px;
+    margin-bottom: 8px;
   }
   .class-block .class-title p {
     font-size: 12px;
