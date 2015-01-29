@@ -120,10 +120,9 @@ $(function(){
         new AjaxRequest($(e.target), removeSessionRow);
     })
 
+    // always run cart
+    cart = new Cart(this);
 
-    $('.dropdown-cart').exists(function(){
-        cart = new Cart(this);
-    })
     $('#find_gallery_image_by_category').exists(function(){
         new categorySelect($(this) );
     })

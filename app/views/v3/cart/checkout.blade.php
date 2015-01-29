@@ -14,15 +14,15 @@
         <div class="col-sm-3 pull-right visible-sm-block visible-md-block visible-lg-block">
            <ul class="cart-progress sticky">
                 <div id="progress-1" class="progress-box">
-                <li class="title active"><span class="icon icon-cross mr10"></span>Review Order</li>
+                <li class="title active"><span class="icon icon-pink-circle mr10"></span>Review Order</li>
                 </div>
                 <div id="progress-2" class="progress-box">
                     <li class="content">Total <strong class="pull-right text-primary">£{{ number_format($total['final_cost'], 2,'.','') }}</strong></li>
-                    <li class="title"><span class="icon icon-cross mr10"></span>Payment Method</li>
+                    <li class="title"><span class="icon icon-pink-circle mr10"></span>Payment Method</li>
                 </div>
                 <div id="progress-3" class="progress-box">
                     <li class="content"></li>
-                    <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
+                    <li class="title"><span class="icon icon-pink-circle mr10"></span>Confirmation</li>
                 </div>
            </ul>
         </div>

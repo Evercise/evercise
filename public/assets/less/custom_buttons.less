@@ -40,15 +40,29 @@
   height: 60px;
   padding: 17px 80px;
   font-weight: 600;
+  &:hover,&.focus,&.active{
+    color: @white;
+    background: darken( @btn-fb-bg, 5%);
+  }
   &:before{
     position: absolute;
     top: 50%;
-    left: 30px;
+    left: 20px;
     content: '';
-    width: 22px;
-    height: 22px;
-    margin-top: -11px;
-    .sprite(-50px, -411px, 40)
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    .sprite(-604px, -804px, 0);
+  }
+  &:after{
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    content: '';
+    width: 32px;
+    height: 32px;
+    margin-top: -16px;
+    .sprite(-564px, -844px, 0);
   }
 }
 

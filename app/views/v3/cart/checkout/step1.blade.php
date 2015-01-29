@@ -90,20 +90,39 @@
     <div class="col-xs-8"><strong>Sub-Total</strong></div>
     <div class="col-xs-4 text-right"><strong class="text-larger text-primary">£{{ number_format($total['subtotal'], 2,'.','') }}</strong></div>
 </li>
+{{ var_dump($discount) }}
 @if(!empty($discount['amount']) && $discount['amount'] > 0)
-<hr class="dark">
-<li class="total bg-light-grey">
-<div class="col-xs-8"><strong class="ml15">Discounts</strong></div>
-<div class="col-xs-4 text-right">
-    <strong class="text-larger text-primary">
-        £{{ number_format($discount['amount'] ,2, '.', '')}}
-        @if($discount['type'] == 'percentage')
-             <span class="text-primary">{{ $discount['percentage']}}%</span>
-        @endif
-    </strong>
-</div>
-</li>
+      <hr class="dark">
+      <li class="total bg-light-grey">
+      <div class="col-xs-8"><strong class="ml15">Discounts</strong></div>
+      <div class="col-xs-4 text-right">
+          <strong class="text-larger text-primary">
+              -£{{ number_format($discount['amount'] ,2, '.', '')}}
+              @if($discount['type'] == 'percentage')
+                   <span class="text-primary">{{ $discount['percentage']}}%</span>
+              @endif
+          </strong>
+      </div>
+      </li>
 @endif
+@if(!empty($rewards))
+    @foreach($rewards as $reward)
+        <hr class="dark">
+        @foreach($reward as $key => $rew)
+
+            <li class="total bg-light-grey">
+            <div class="col-xs-8"><strong class="ml15">{{$key}}</strong></div>
+            <div class="col-xs-4 text-right">
+                <strong class="text-larger text-primary">
+                    -£{{ number_format($rew ,2, '.', '')}}
+                </strong>
+            </div>
+            </li>
+        @endforeach
+
+    @endforeach
+@endif
+
 <hr class="dark">
 <li class="total">
     <div class="col-xs-8"><strong>Total</strong></div>

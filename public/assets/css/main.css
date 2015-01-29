@@ -7716,17 +7716,17 @@ a.bg-light-grey:hover {
 }
 .icon-cross {
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -90px -250px;
+  background-position: -650px -850px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-cross.active {
-  background-position: -90px -290px;
+  background-position: -650px -850px;
 }
 .icon-cross.hover:hover,
 .icon-cross.active:hover {
   cursor: pointer;
-  background-position: -90px -290px;
+  background-position: -650px -850px;
 }
 .icon-plus {
   background-image: url("../img/ev_site_icons_v2.png");
@@ -8176,6 +8176,20 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -290px -370px;
 }
+.icon-pink-circle {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -610px -850px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-pink-circle.active {
+  background-position: -610px -850px;
+}
+.icon-pink-circle.hover:hover,
+.icon-pink-circle.active:hover {
+  cursor: pointer;
+  background-position: -610px -850px;
+}
 .icon-pink-pointer {
   background-image: url("../img/ev_site_icons_v2.png");
   background-position: -650px -290px;
@@ -8484,6 +8498,20 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -440px -480px;
 }
+.icon-fb-square {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -610px -850px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-fb-square.active {
+  background-position: -610px -850px;
+}
+.icon-fb-square.hover:hover,
+.icon-fb-square.active:hover {
+  cursor: pointer;
+  background-position: -610px -850px;
+}
 .icon-loading {
   background-image: url("../img/spinning-circles.svg");
   background-position: 50% 50%;
@@ -8749,26 +8777,53 @@ fieldset[disabled] .btn-light.active {
   padding: 17px 80px;
   font-weight: 600;
 }
+.custom-fb:hover,
+.custom-fb.focus,
+.custom-fb.active {
+  color: #ffffff;
+  background: #314772;
+}
 .custom-fb:before {
   position: absolute;
   top: 50%;
-  left: 30px;
+  left: 20px;
   content: '';
-  width: 22px;
-  height: 22px;
-  margin-top: -11px;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -50px -411px;
+  background-position: -604px -804px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .custom-fb:before.active {
-  background-position: -50px -451px;
+  background-position: -604px -804px;
 }
 .custom-fb:before.hover:hover,
 .custom-fb:before.active:hover {
   cursor: pointer;
-  background-position: -50px -451px;
+  background-position: -604px -804px;
+}
+.custom-fb:after {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  content: '';
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -564px -844px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.custom-fb:after.active {
+  background-position: -564px -844px;
+}
+.custom-fb:after.hover:hover,
+.custom-fb:after.active:hover {
+  cursor: pointer;
+  background-position: -564px -844px;
 }
 .btn-grey {
   color: #9b9b9b;
@@ -10126,17 +10181,17 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   margin-top: -13px;
   width: 24px;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -47px -246px;
+  background-position: -648px -807px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .sbHolder .sbToggle.active {
-  background-position: -47px -286px;
+  background-position: -648px -847px;
 }
 .sbHolder .sbToggle.hover:hover,
 .sbHolder .sbToggle.active:hover {
   cursor: pointer;
-  background-position: -47px -286px;
+  background-position: -648px -847px;
 }
 .sbHolder .sbOptions {
   background-color: #ffffff;

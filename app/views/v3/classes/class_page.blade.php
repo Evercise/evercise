@@ -88,7 +88,7 @@
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="col-xs-3  visible-xs-block">
+                                    <div class="col-xs-3 visible-xs-block">
                                         <select name="quantity" id="quantity" class="qty-select form-control select-default{{isset($preview) ? 'disabled' : null}}">
                                             @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
                                                 <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
