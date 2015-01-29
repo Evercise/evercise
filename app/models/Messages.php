@@ -88,6 +88,8 @@ class Messages extends TBMsg
 
     public function unreadMessagesInConversation($userId, $convId)
     {
-        return 4;
+        /** TODO - Put a little number next to each conversation in the list */
+
+        return 0;
     }
 }

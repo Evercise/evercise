@@ -7,15 +7,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-1">
-                <strong>Conversations</strong>
-                <ul class="list-group">
-                    @foreach ( $conversations as $displayName )
-                        <li>{{ Html::linkRoute('conversation', $displayName, strtolower($displayName) ) }}</li>
-                    @endforeach
-                </ul>
+            <div class="col-sm-3">
+                <div class="list-group-accordion" id="list-accordion">
+
+                    <div class="list-group-accordion-body">
+                      <div class="list-group-accordion-title">
+                          <a data-toggle="collapse" data-parent="#list-accordion" href="#categories" class=""><strong>Conversations</strong></a>
+                      </div>
+                      <div id="categories" class="panel-collapse">
+                        <ul class="list-group">
+                            @foreach ( $conversations as $displayName )
+                                <li class="list-group-item bg-grey">{{ Html::linkRoute('conversation', $displayName, strtolower($displayName) ) }}</li>
+                            @endforeach
+                        </ul>
+                      </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-6 col-sm-offset-2">
+            <div class="col-sm-6 col-sm-offset-1">
                 <ul class="list-group">
                 @foreach ( $messages as $msg )
                     <li class="list-group-item"><strong>{{$msg['display_name']}}: </strong>{{$msg['message']->getContent()}}</li>

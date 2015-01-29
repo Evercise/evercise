@@ -365,6 +365,7 @@ var activeImageClass;
                         <th>Default price</th>
                         <th>Future Sessions</th>
                         <th>Status</th>
+                        <th>Confirmed</th>
                         <th  style="width:90px !important;">Slider</th>
                         <th data-sort-initial="descending"  width="140">Options</th>
                     </tr>
@@ -384,13 +385,22 @@ var activeImageClass;
                         <td class="warning">{{ round($a->evercisesession()->avg('tickets'),0) }}</td>
                         <td>{{ $a->default_price }}</td>
                         <td>{{ $a->futuresessions()->count() }}</td>
+
                         <td>
-                        @if($a->published == 1)
-                        <span class="label label-warning status-active" title="Active">Published</span></td>
-                        @endif
-                        @if($a->published == 0)
-                        <span class="label label-default status-disabled" title="Unpublished">Unpublished</span></td>
-                        @endif
+                            @if($a->published == 1)
+                            <span class="label label-warning status-active" title="Active">Published</span>
+                            @elseif($a->published == 0)
+                            <span class="label label-default status-disabled" title="Unpublished">Unpublished</span>
+                            @endif
+                        </td>
+
+                        <td>
+                            @if($a->confirmed == 1)
+                            <span class="label label-warning status-active" title="Active">Confirmed</span>
+                            @elseif($a->confirmed == 0)
+                            <span class="label label-default status-disabled" title="Unpublished">Unconfirmed</span>
+                            @endif
+                        </td>
 
 
                         <td>
