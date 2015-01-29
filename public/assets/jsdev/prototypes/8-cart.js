@@ -20,6 +20,7 @@ Cart.prototype = {
         $(document).on('click', '.toggle-select .switch a', $.proxy(this.switchQty, this));
         $(document).on('click','#stripe-button' ,$.proxy(this.openStripe, this));
         $(window).on('popstate', $.proxy(this.closeStripe, this));
+        $(document).on('change', 'select[name="quantity"]', $.proxy(this.selectQty, this));
     },
     changeSelectDropdown: function(e){
         if($(e.target).hasClass('select-box') ){
@@ -61,6 +62,10 @@ Cart.prototype = {
             $(e.target).closest('.add-to-class').trigger('submit');
         }
 
+    },
+    selectQty : function(e){
+        var qty = $(e.target).val();
+        $(e.target).closest('.qty-wrapper').find('.qty-select').val(qty);
     },
     submit: function(e){
         e.preventDefault();

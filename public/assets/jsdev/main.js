@@ -257,8 +257,6 @@ $(function(){
                 sticky.removeClass('fixed');
             }
         })
-
-        console.log(top);
     })
 
     $('#class-calendar').exists(function(){

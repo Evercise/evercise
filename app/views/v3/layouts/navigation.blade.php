@@ -13,9 +13,12 @@
                 @include('v3.auth.login')
             </ul>
         </li>
-        <li class="dropdown cart-dropdown nav-list">
-            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span id="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
+        <li class="dropdown cart-dropdown nav-list visible-md-block visible-lg-block">
+            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
             {{ isset($cart) ? $cart : '' }}
+        </li>
+        <li class="nav-list visible-xs-block visible-sm-block">
+            <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
         </li>
       </ul>
 

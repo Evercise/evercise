@@ -278,11 +278,11 @@ foreach (Config::get('landing_pages') as $url => $params) {
         ['as' => 'landing_page.' . str_replace('/', '.', $url), 'uses' => 'LandingsController@display']
     );
 }
-/* not ready yet
+
 Route::get('/trainers',
     ['as' => 'landing.trainer.ppc' , 'uses' => 'LandingsController@trainerPpc']
 );
-*/
+
 
 //Redirect All UK segments to the same function and we will go from there
 Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchController@parseUrl'])->where(
