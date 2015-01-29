@@ -90,7 +90,8 @@ Cart.prototype = {
                 else{
                     self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading"></span>');
                 }
-                if($('.mask').length){
+                console.log($('.checkout .mask').length);
+                if($('.checkout .mask').length){
                     $('.mask').removeClass('hidden');
                 }
                 self.form.find(".switch").addClass('disabled');
