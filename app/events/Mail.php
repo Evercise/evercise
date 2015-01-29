@@ -604,6 +604,25 @@ class Mail
     /**
      * @param $trainer
      */
+    public function trainerRegisteredPpc($trainer)
+    {
+        $params = [
+            'subject'  => 'Welcome to Evercise!',
+            'title'    => 'Welcome to Evercise!',
+            'view'     => 'v3.emails.trainer.registered_ppc',
+            'trainer'  => $trainer,
+            'banner'   => NULL,
+            'image'    => image('/assets/img/email/evercise-welcome.jpg', 'welcome to evercise'),
+            'link_url' => $this->url->to('/profile/' . $trainer->display_name)
+        ];
+
+        $this->send($trainer->email, $params);
+    }
+
+
+    /**
+     * @param $trainer
+     */
     public function trainerRegistered($trainer)
     {
         $params = [

@@ -25,6 +25,11 @@ class MilestoneRewards extends \Eloquent
         return $this->belongsTo('User');
     }
 
+    public static function clearUser($userId) {
+
+        return static::where('user_id', $userId)->where('status', 0)->update('status', '1');
+
+    }
 
     public static function add($type, $amount, $user)
     {

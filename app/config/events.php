@@ -103,6 +103,7 @@ return [
         ['trainer.session.joined' => 'Trainer@sessionsJoined'], // $user, $trainer, $session, $everciseGroup, $transactionId, tickets
 
         ['trainer.registered' => 'Trainer@registered'], //$trainer
+        ['trainer.registered_ppc' => 'Trainer@registeredPpc'], //$trainer
         ['trainer.complete_profile' => 'Trainer@whyNotCompleteProfile'], //$trainer
         ['trainer.create_first_class' => 'Trainer@whyNotCreateFirstClass'], //$trainer
 

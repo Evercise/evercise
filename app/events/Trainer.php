@@ -88,6 +88,22 @@ class Trainer
     /**
      * @param $trainer
      */
+    public function registeredPpc($trainer)
+    {
+        $this->log->info('Trainer ' . $trainer->id . ' has registered');
+
+
+        $this->activity->userRegistered($trainer);
+
+        $this->activity->trainerRegistered($trainer);
+
+        $this->mail->trainerRegisteredPpc($trainer);
+    }
+
+
+    /**
+     * @param $trainer
+     */
     public function edit($trainer)
     {
         $this->log->info('Trainer ' . $trainer->id . ' has edited his account');

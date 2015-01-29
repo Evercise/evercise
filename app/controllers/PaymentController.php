@@ -589,8 +589,9 @@ class PaymentController extends BaseController
         //$token, $transactionId, $paymentMethod, $cart = [], $coupon = 0, $payer_id = 0
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
-       // EverciseCart::clearCart();
-        //EverciseCart::clearWalletPayment();
+        EverciseCart::clearCart();
+        EverciseCart::clearWalletPayment();
+        MilestoneRewards::clearUser($this->user->id);
 
         Session::forget('coupon');
 
