@@ -11,15 +11,13 @@
 |
 */
 
-App::before(function($request)
-{
-	//
+App::before(function ($request) {
+    //
 });
 
 
-App::after(function($request, $response)
-{
-	//
+App::after(function ($request, $response) {
+    //
 });
 
 /*
@@ -33,58 +31,50 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
-    if ( ! Sentry::check())
-    {
+Route::filter('auth', function () {
+    if (!Sentry::check()) {
         return Redirect::route('home');
     }
 });
 
 
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+Route::filter('auth.basic', function () {
+    return Auth::basic();
 });
 
 
-Route::filter('admin', function()
-{
-	if (! App::environment('local'))
-	{
+Route::filter('admin', function () {
+    if (!App::environment('local')) {
 
-		// Find the user using the user id
-		if($user = Sentry::getUser())
-		{
-			// Find the Administrator group
-			$admin = Sentry::findGroupByName('Admin');
+        // Find the user using the user id
+        if ($user = Sentry::getUser()) {
+            // Find the Administrator group
+            $admin = Sentry::findGroupByName('Admin');
 
-			// Check if the user is in the administrator group
-			if (!$user->inGroup($admin))
-			{
-				return Redirect::route('home')->with('notification', 'you do not have the correct privilages to view this page');
-			}
-		}
-		else
-		{
-			return Redirect::route('home')->with('notification', 'You have been logged out');
-		}
-	}
+            // Check if the user is in the administrator group
+            if (!$user->inGroup($admin)) {
+                return Redirect::route('home')->with('notification',
+                    'you do not have the correct privilages to view this page');
+            }
+        } else {
+            return Redirect::route('home')->with('notification', 'You have been logged out');
+        }
+    }
 
 });
 
-Route::filter('user', function()
-{
+Route::filter('user', function () {
     // Kick out if not logged in
-    if ( ! Sentry::check())
+    if (!Sentry::check()) {
         return Redirect::route('home')->with('notification', 'You have been logged out');
+    }
 });
 
-Route::filter('trainer', function()
-{
+Route::filter('trainer', function () {
     // Kick out if not a trainer - send to trainer sign up page
-    if (! Trainer::isTrainerLoggedIn())
+    if (!Trainer::isTrainerLoggedIn()) {
         return Redirect::route('trainers.create');
+    }
 });
 
 
@@ -99,9 +89,10 @@ Route::filter('trainer', function()
 |
 */
 
-Route::filter('guest', function()
-{
-	if (Auth::check()) return Redirect::to('/');
+Route::filter('guest', function () {
+    if (Auth::check()) {
+        return Redirect::to('/');
+    }
 });
 
 /*
@@ -115,12 +106,10 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
-{
+Route::filter('csrf', function () {
     $token = Input::header('X-CSRF-Token', Input::input('_token'));
 
-    if (Session::token() !== $token)
-    {
+    if (Session::token() !== $token) {
         throw new Illuminate\Session\TokenMismatchException;
     }
 
@@ -129,19 +118,17 @@ Route::filter('csrf', function()
 
 /* 404 handler */
 
-App::missing(function($exception)
-{
+App::missing(function ($exception) {
     //Since we have a fuckup here.. we need to do this one manually
-    if (Request::is('trainer/*'))
-    {
+    if (Request::is('trainer/*')) {
         return Redirect::to(str_replace('trainer/', 'trainers/', Request::url()), 301);
     }
 
     $redirects = Config::get('evercise.301_REDIRECTS');
 
-    $current_url= ltrim($_SERVER['REQUEST_URI'],'/');
+    $current_url = ltrim($_SERVER['REQUEST_URI'], '/');
 
-    if($redirects) {
+    if ($redirects) {
         foreach ($redirects as $url => $route) {
             if ($url == $current_url) {
                 return Redirect::route($route, [], 301);
@@ -149,12 +136,11 @@ App::missing(function($exception)
         }
     }
 
-    return Response::view('v3.errors.missing', array(), 404);
+    return Response::view('v3.errors.missing', ['title' => 'Whoops | 404 Page Not Found'], 404);
 });
 
-View::composer('*', function($view)
-{
-		// Share the name of the view, to be passed to the locatlisations (it's used to load the correct localisation file)
+View::composer('*', function ($view) {
+    // Share the name of the view, to be passed to the locatlisations (it's used to load the correct localisation file)
     View::share('view_name', $view->getName());
 
 });
