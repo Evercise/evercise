@@ -72,10 +72,10 @@
 <div class="col-sm-10 col-sm-offset-1">
     {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 I have a voucher code:
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
             </div>
             <div class="col-md-2 sm-mt10">
