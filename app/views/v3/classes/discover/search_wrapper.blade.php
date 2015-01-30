@@ -1,3 +1,4 @@
+<!--
 <ui-gmap-google-map center='map.center'
     zoom="map.zoom"
     pan="true"
@@ -26,7 +27,6 @@
         >
     </ui-gmap-markers>
 
-    </ui-gmap-markers>
 
 
 </ui-gmap-google-map>
@@ -46,6 +46,7 @@
     <div class="col-sm-2"></div>
     <div class="col-sm-2"></div>
 </div>
+-->
 
 
 

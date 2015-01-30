@@ -595,10 +595,6 @@ class PaymentController extends BaseController
 
         Session::forget('coupon');
 
-        /* Empty cart */
-
-        //EverciseCart::clearCart();
-
         return $transaction;
     }
 

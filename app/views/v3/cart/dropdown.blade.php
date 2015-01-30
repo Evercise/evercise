@@ -1,5 +1,5 @@
 @if( !empty($sessions_grouped) || !empty($packages))
-    <ul class="dropdown-menu dropdown-cart" role="menu">
+    <ul class="dropdown-menu dropdown-cart" role="menu" id="cart-dropdown">
         <div class="col-xs-10 sm-mt10">
             <h4>Your classes cart</h4>
         </div>

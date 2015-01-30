@@ -1,6 +1,8 @@
 .navbar-default {
   transition: all 0.4s;
   border-bottom: 0;
+  height: 70px;
+  z-index: 100;
   .navbar-header{
     @media (max-width: @grid-float-breakpoint) {
       float: left;
@@ -9,8 +11,8 @@
   .navbar-brand {
     width: 96px;
     z-index: 9999;
-    margin: 0!important;
-    height: 70px;
+    margin: 0 20px 0 0!important;
+    height: 69px;
     .logo-sprite();
 
   }
@@ -98,188 +100,62 @@
   width: 100%;
 }
 
-/*
-.navbar-default{
-  transition: all 0.4s;
-
-  .navbar-brand{
-    width:96px;
-    z-index: 9999;
-    .logo-sprite();
-  }
-  .navbar-nav{
-    li{
-      .dropdown-menu{
-        border-radius: 4px;
-      }
-      a.nav-list{
-        font-weight: 700;
-        padding-left: 40px;
-        padding-right: 40px;
-        @media (max-width: @screen-lg-min){
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-      }
-      .nav-profile{
-        padding: 11px 20px;
-        img{
-          height: 40px;
-          margin-left: 15px;
-        }
-      }
-    }
-    .nav-cart{
-      padding: 20px 10px 12px;
-    }
-  }
-}
-
-@media (max-width: @grid-float-breakpoint) {
-  .navbar-brand{
-    margin-left: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-  #navy {
-    text-align: center;
-    background-color: @gray-darker;
-    max-height: 100%;
-
-    li {
-      text-align: left;
-      a {
-        padding: 10px;
-        color: @white;
-        :hover, .active {
-          color: @brand-primary;
-        }
-        &.nav-profile{
-          border-top: 1px solid @white;
-          padding-top: 15px;
-        }
-      }
-    }
-    .no-mob{
-      display: none;
-    }
-
-
-
-    .login-drop{
-      margin: auto;
-      width: 100%;
-
-      display: inline-block;
-      &:after{
-        display: none;
-      }
-      &:before{
-        display: none;
-      }
-      .dropdown-menu{
-        min-width: 100px;
-      }
-    }
-  }
-
-
-}
-
-
-.nav-hero{
-  background: transparent;
-  border-color: transparent;
-  .navbar-brand{
-    .logo-sprite(-40px, -113px);
-  }
-  .navbar-nav{
-    li{
-      a.nav-list{
-        color: @white;
-        &:hover,&.active{
-          color: @brand-primary;
-        }
-      }
-
-    }
-  }
-  .nav-cart {
-    .icon-cart {
-      .sprite(-890px, -330px);
-    }
-  }
-}
-
-.navbar-fixed-top{
-  z-index: 100;
-
-}
-
-.sticky-fixed-nav{
-  padding-top: 11px;
+.nav-search{
   z-index: 10;
-  transition: 0;
-}
-
-.sticky-wrapper{
-  z-index: 1;
-  @media( max-width: @grid-float-breakpoint){
-    position: relative;
-    top: 0!important;
-  }
-}
-
-.profile-panels{
-  @media( max-width: @grid-float-breakpoint){
-    margin-top: 0!important;
-  }
-}
-
-.nav-pills{
-  li{
-    text-align: center;
-    a{
-      padding: 5px 15px;
-      display: inline-block;
-    }
-  }
-}
-
-.navbar-inverse{
-  border: 0;
-}
-
-.nav-bar-bottom{
   position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-*/
-.discover-nav{
-  height: 216px;
-  top: @navbar-height-outer;
-  padding: @discover-navbar-padding;
-  border-bottom: 1px solid @gray-light;
-  position: fixed;
-  width: 100%;
-  background: @white;
-  z-index: 10;
-  @media (min-width: @screen-sm-min) {
-    height: @discover-navbar-height;
-  }
-  @media( max-width: @grid-float-breakpoint){
-    position: relative;
-  }
+  left: 130px;
+  right: 270px;
+  background: @gray-darker;
+  height: 100%;
+  padding: 15px 20px;
 }
 
-.discover-nav-spacer{
+.nav-categories{
+  position: absolute;
+  top: 69px;
+  left: 0;
+  width:  100%;
+  .items{
+    padding: 20px 0;
+    background: fade(@gray-darker, 90%);
+    li{
+      list-style: none;
+      padding: 0;
+      a{
+        position: relative;
+        padding: 4px 0 4px  39px;
+        margin-left: 1px;
+        color: @white;
+        display: block;
+        &.active{
+          background: #5980af;
+        }
+        .caret-right{
+          position: absolute;
+          top: 50%;
+          margin-top: -3px;
+          right: 30px;
+        }
+      }
 
-    margin-top: @navbar-height-outer + @discover-navbar-height;
-
-  @media( max-width: @grid-float-breakpoint){
-    margin-top: @navbar-height-outer;;
+    }
+  }
+  .tab{
+    background: #5980af;
+    color: @white;
+    height: 448px;
+    padding: 40px 30px;
+    ul{
+      padding: 0;
+      li{
+        list-style: none;
+        padding: 1px 0;
+      }
+      a{
+        color: @white;
+        text-decoration: underline;
+      }
+    }
   }
 }
 

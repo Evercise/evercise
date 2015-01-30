@@ -14,9 +14,7 @@
   .button-variant(@btn-twitter-color; @btn-twitter-bg; @btn-twitter-border);
 }
 
-.btn-white {
-  .button-variant(@btn-white-color; fade(@btn-grey-bg, 20%); @btn-white-border);
-}
+
 .btn-light {
   .button-variant(@btn-white-color; @gray-mob; darken(@gray-mob, 1%));
 }
@@ -27,6 +25,15 @@
   border-color: #000 ;
   &:hover, &:active, &:focus{
     background: fade(#000, 20%);
+    color: @white;
+  }
+}
+
+.btn-white {
+  background: transparent;
+  color: @white;
+  border-color: @white ;
+  &:hover, &:active, &:focus{
     color: @white;
   }
 }
@@ -182,6 +189,16 @@
 
 .btn-package{
   .sprite(-1291px, -314px);
+}
+
+.custom-cat-select{
+  font-size: 12px;
+  line-height: 16px;
+  padding-top: 2px;
+  a{color: @white;}
+  strong{
+    font-size: 16px;
+  }
 }
 
 .btn-find-me{

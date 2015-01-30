@@ -1,2 +1,31 @@
-.angular-google-map{ margin-top: 131px}
-.angular-google-map-container { height: 400px; }
+.angular-google-map{
+  position: absolute;
+  top: 35px;
+  bottom: 0;
+  width: 100%;
+}
+.angular-google-map-container {
+  height: 100%;
+  width: 100%;
+}
+.results{
+  position: absolute;
+  right: 25px;
+  top: 95px;
+  bottom: 40px;
+  background: @white;
+  width: 430px;
+  .box-shadow(5px 5px 13px -5px #000);
+  .heading{
+    background: @gray-lighter;
+    padding: 7px 20px;
+    border-bottom: 1px solid @input-border;
+  }
+  .nav{
+    li{
+     &:first-of-type{
+       border-right: 1px solid @input-border;
+     }
+    }
+  }
+}
