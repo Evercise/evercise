@@ -318,6 +318,12 @@ if(typeof angular != 'undefined') {
 
         $scope.refreshResults = false;
 
+        // date picker
+        var d = new Date()
+        var d = d.setDate(d.getDate() + 5);
+
+
+
         // http events
 
         // marker clicked
