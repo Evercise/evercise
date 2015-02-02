@@ -388,3 +388,49 @@ body:not(:-moz-handler-blocked) .custom-select:after{
 
   }
 }
+
+.filter-slider{
+  width: 435px;
+  margin-left: -38px;
+  position: relative;
+  display: inline-block;
+  &:before{
+    position: absolute;
+    content: '';
+    top: 0px;
+    width: 46px;
+    height: 2px;
+    background: @white;
+    right: 0;
+    z-index: 1;
+  }
+  &:after{
+    position: absolute;
+    content: '';
+    top: 0px;
+    width: 46px;
+    height: 2px;
+    background: @white;
+    left: 0;
+  }
+  a{
+    position: relative;
+    width: 25%;
+    float: left;
+    padding-top: 10px;
+    border-top: 2px solid #ebebeb;
+    text-align: center;
+    &:after{
+      position: absolute;
+      content: '';
+      top: -8px;
+      z-index: 1;
+      width: 14px;
+      height: 14px;
+      background: @brand-primary;
+      border-radius: 50% 50%;
+      left: 50%;
+      margin-left: -7px;
+    }
+  }
+}

@@ -7,6 +7,18 @@
   padding-right: 0;
 }
 
+.btn-smallest{
+  font-size: 10px;
+  padding: 2px 7px;
+}
+.smallest-btn-wrapper{
+  strong{
+    line-height: 24px;
+    vertical-align: middle;
+    color: #bfbcbc;
+  }
+}
+
 .btn-fb {
   .button-variant(@btn-fb-color; @btn-fb-bg; @btn-fb-border);
 }
@@ -37,6 +49,36 @@
     color: @white;
   }
 }
+
+
+.filter-btn{
+   position: relative;
+   &:after{
+     position: absolute;
+     left: 20px;
+     top: 50%;
+     height: 22px;
+     width: 22px;
+     margin-top: -11px;
+     content: '';
+     .sprite(-1170px, -250px);
+   }
+ }
+
+.sort-btn{
+   position: relative;
+   &:after{
+     position: absolute;
+     left: 20px;
+     top: 50%;
+     height: 22px;
+     width: 22px;
+     margin-top: -11px;
+     content: '';
+     .sprite(-1130px, -250px);
+   }
+ }
+
 
 .custom-fb{
   width: 100%;

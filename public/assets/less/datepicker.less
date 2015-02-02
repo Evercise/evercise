@@ -1,3 +1,78 @@
+.date-picker-inline{
+  position: relative;
+  padding: 0;
+  border-right: 1px solid @input-border;
+  li{
+    float: left;
+    list-style: none;
+    text-align: center;
+    width: 62px;
+    height: 90px;
+    border-left: 1px solid @input-border;
+    border-bottom: 1px solid @input-border;
+    &:first-of-type{
+      border-left: 0;
+    }
+    .day{
+      border-bottom: 1px solid @input-border;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: @gray-light;
+    }
+    a{
+      font-size: 26px;
+      font-weight: 700;
+      height: 62px;
+      display: block;
+      line-height: 42px;
+      color: @gray-light;
+    }
+    &:hover{
+      a{
+        color: @gray;
+      }
+    }
+    .month{
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 6px;
+    }
+    &.active{
+      background: @brand-primary;
+      .day{
+        border-bottom: 1px solid #b31e57;
+        background: #b31e57;
+        color: @white;
+      }
+      a{
+        color: @white;
+      }
+    }
+  }
+  .scroll{
+    position: absolute;
+    top: 46px;
+    height: 20px;
+    width: 20px;
+    color: #0b0b0a;
+    background: @white;
+    text-align: center;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 600;
+    &.left{
+      left: -10px;
+      .box-shadow(1px 1px 1px #000);
+    }
+    &.right{
+      right: -10px;
+      .box-shadow(-1px 1px 1px #000);
+    }
+  }
+
+}
+
 /*!
  * Datepicker for Bootstrap
  *
