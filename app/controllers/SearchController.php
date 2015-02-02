@@ -161,8 +161,6 @@ class SearchController extends \BaseController
         $results['available_dates'] = $dates;
 
 
-        d($results);
-
 
         if (!empty($results['redirect'])) {
             return $results['redirect'];
