@@ -1,11 +1,9 @@
 <nav class="navbar navbar-default" role="navigation" id="nav">
   <div class="container-fluid">
     <div class="navbar-header">
-
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
-
     </div>
-    <ul class="nav navbar-nav nav-search">
+    <ul class="nav navbar-nav nav-browse hidden">
         <div class="row">
             <div class="col-xs-2">
                 <li class="custom-cat-select dropdown">
