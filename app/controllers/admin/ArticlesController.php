@@ -105,6 +105,7 @@ class ArticlesController extends \BaseController
             $data,
             [
                 'title'       => 'required|max:160|min:5',
+                'meta_title'  => 'required|max:160|min:5',
                 'description' => 'required|max:5000|min:100',
                 'category_id' => 'required|numeric',
                 'main_image'  => 'image|mimes:jpeg,jpg,png,gif',

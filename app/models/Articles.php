@@ -15,6 +15,7 @@ class Articles extends Eloquent
         'page',
         'title',
         'main_image',
+        'meta_title',
         'thumb_image',
         'onmain',
         'description',

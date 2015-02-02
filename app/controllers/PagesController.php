@@ -215,6 +215,7 @@ class PagesController extends \BaseController
 
         /** Categories */
         $categories = $this->articleCategories->where('status', 1)->get();
+        
 
         return $this->view->make('v3.pages.category', compact('articles', 'category', 'articles_latest', 'categories'));
     }
@@ -249,7 +250,7 @@ class PagesController extends \BaseController
 
 
         $metaDescription = $article->description;
-        $title = $article->title;
+        $title = (!empty($article->meta_title) ? $article->meta_title : $article->title);
         $keywords = $article->keywords;
 
 
