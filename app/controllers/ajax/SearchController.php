@@ -30,7 +30,7 @@ class SearchController extends AjaxBaseController {
     private $place;
     private $elastic;
     private $search;
-    private $searchModel;
+    private $searchmodel;
 
     public function __construct(
         Evercisegroup $evercisegroup,
@@ -148,11 +148,25 @@ class SearchController extends AjaxBaseController {
         $input = array_filter($this->input->all());
 
 
+        $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
+
+        $search_date = array_keys($dates)[0];
+
+        if (!empty($input['date']) && !empty($dates[$input['date']])) {
+            $search_date = $input['date'];
+        }
+
+
+        $input['date'] = $search_date;
+
+
         $results = $this->searchmodel->search($area, $input, $this->user);
 
-        if(!empty($input['map']) && $input['map'] == 'true') {
-            $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
-        }
+
+        $results['selected_date'] = $search_date;
+        $results['available_dates'] = $dates;
+
+
 
         return Response::json($results);
 
@@ -160,12 +174,7 @@ class SearchController extends AjaxBaseController {
 
     public function searchMap($area = FALSE)
     {
-        $input = array_filter($this->input->all());
-
-
-        $results =  $this->searchmodel->searchMap($area, $input, $this->user);
-
-        return Response::json($results);
+        return $this->search($area);
 
     }
 
