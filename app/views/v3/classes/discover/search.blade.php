@@ -58,52 +58,24 @@
                 </div>
             </div>
         </div>
-        <ul class="date-picker-inline">
-            <a href="#" class="scroll left"><</a>
-            <a href="#" class="scroll right">></a>
-            <li class="date-btn active">
-                <div class="day">Mon</div>
-                <a href="#">
-                    28<span class="month">JAN</span>
-                </a>
-            </li>
-            <li class="date-btn">
-                <div class="day">Tue</div>
-                <a href="#">
-                    29<span class="month">JAN</span>
-                </a>
-            </li>
-            <li class="date-btn">
-                <div class="day">Wed</div>
-                <a href="#">
-                    30<span class="month">JAN</span>
-                </a>
-            </li>
-            <li class="date-btn">
-                <div class="day">Thu</div>
-                <a href="#">
-                    31<span class="month">JAN</span>
-                </a>
-            </li>
-            <li class="date-btn">
-                <div class="day">Fri</div>
-                <a href="#">
-                    1<span class="month">FEB</span>
-                </a>
-            </li>
-            <li class="date-btn">
-                <div class="day">Sat</div>
-                <a href="#">
-                    2<span class="month">FEB</span>
-                </a>
-            </li>
-            <li class="date-btn">
-                <div class="day">Sun</div>
-                <a href="#">
-                    3<span class="month">FEB</span>
-                </a>
-            </li>
-        </ul>
+
+        <div class="date-picker-inline">
+            <div class="wrapper">
+                <div class="content">
+                     <li class="date-btn" ng-repeat="(date, value) in availableDates">
+                        <div class="day">{[{ date | date : 'EEE'}]}</div>
+                        <a href="#">
+                            {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
+                        </a>
+                     </li>
+                </div>
+
+            </div>
+
+             <a href="#"  ng-click="scroll_clicked || scrollDates('left', $event)" class="scroll left" ng-disabled="scroll_clicked" ><</a>
+             <a href="#" ng-click="scroll_clicked || scrollDates('right', $event)" class="scroll right" ng-disabled="scroll_clicked">></a>
+         </div>
+
         <div class="list-results">
             <div class="row class-stacked">
                 <div class="col-sm-9">
@@ -138,7 +110,5 @@
 
 
     </div>
-
-
 
 @stop

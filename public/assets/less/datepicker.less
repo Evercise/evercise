@@ -2,6 +2,14 @@
   position: relative;
   padding: 0;
   border-right: 1px solid @input-border;
+
+  .wrapper{
+    overflow: hidden;
+    .content{
+      display: inline-flex;
+      .transition(all linear 0.2s );
+    }
+  }
   li{
     float: left;
     list-style: none;

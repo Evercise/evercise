@@ -33,7 +33,6 @@ if(typeof angular != 'undefined') {
 
         };
     });
-
     app.filter('repeat', function() {
         return function(val, range) {
             range = parseInt(range);

@@ -10908,6 +10908,15 @@ div.hub-row.last {
   padding: 0;
   border-right: 1px solid #cccccc;
 }
+.date-picker-inline .wrapper {
+  overflow: hidden;
+}
+.date-picker-inline .wrapper .content {
+  display: inline-flex;
+  -webkit-transition: all linear 0.2s;
+  -o-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
 .date-picker-inline li {
   float: left;
   list-style: none;

@@ -51,7 +51,6 @@
 
 
 
-
     {{ HTML::script('/assets/js/holder.js') }}
     {{ HTML::script('/assets/js/jquery.mobile.custom.min.js') }}
     {{ HTML::script('/assets/js/bootstrap-datepicker.js') }}
@@ -64,6 +63,7 @@
         {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js') }}
         {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js') }}
         {{ HTML::script('/assets/js/angular-google-maps.min.js') }}
+        {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.2/angular-filter.min.js') }}
     @endif
 
     {{ HTML::script('/assets/js/main.min.js?vs='.$version) }}
