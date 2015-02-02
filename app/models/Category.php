@@ -9,7 +9,15 @@ class Category extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = array('id', 'name', 'image');
+    protected $fillable = array(
+        'id',
+        'name',
+        'image',
+        'order',
+        'visible',
+        'description',
+        'popular'
+    );
 
     /**
      * The database table used by the model.
@@ -29,5 +37,16 @@ class Category extends Eloquent
             'category_id',
             'subcategory_id'
         )->withTimestamps();
+    }
+
+    public static function editOrder($newOrder)
+    {
+        foreach ($newOrder as $id => $place)
+        {
+            $cat = static::where('id', $id);
+            if($cat) {
+                $cat->update(['order' => $place]);
+            }
+        }
     }
 }

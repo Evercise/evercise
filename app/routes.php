@@ -157,7 +157,12 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('withdrawal/process',
         ['as' => 'ajax.process.withdrawal', 'before' => 'trainer', 'uses' => 'ajax\UsersController@makeWithdrawal']);
 
+
+    Route::post('categories',
+        ['as' => 'ajax.categories', 'uses' => 'CategoryController@getCategories']);
+
 });
+
 
 // auth / login
 
@@ -561,6 +566,9 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.fakeratings.addrating', 'uses' => 'AdminAjaxController@addRating']);
 
 
+    Route::post('/update_categories',
+        ['as' => 'admin.update_categories', 'uses' => 'AdminAjaxController@updateCategories']);
+
     Route::post('/edit_subcategories',
         ['as' => 'admin.edit_subcategories', 'uses' => 'AdminAjaxController@editSubcategories']);
     Route::post('/add_subcategory',
@@ -614,7 +622,6 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'ajax.admin.modal.categories.save', 'uses' => 'AdminAjaxController@saveClassCategories']);
 
 
-
     Route::post('runindexer',
         ['as' => 'ajax.admin.indexall', 'uses' => 'AdminAjaxController@runIndexer']);
 
@@ -652,7 +659,7 @@ Route::group(
 
 
         Route::get('/categories',
-            ['as' => 'admin.categories', 'uses' => 'MainController@categories']);
+            ['as' => 'admin.categories', 'uses' => 'MainController@editCategories']);
         Route::get('/subcategories',
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 

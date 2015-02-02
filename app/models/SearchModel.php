@@ -54,7 +54,8 @@ class SearchModel
     }
 
 
-    public function search($area = false, $input = [], $user = false) {
+    public function search($area = FALSE, $input = [], $user = FALSE, $dates = FALSE)
+    {
 
 
         /**
@@ -72,9 +73,8 @@ class SearchModel
          */
 
 
-
-        $landing = false;
-        if(!empty($input['landing'])) {
+        $landing = FALSE;
+        if (!empty($input['landing'])) {
             $landing = $input['landing'];
             unset($input['landing']);
         }
@@ -119,11 +119,13 @@ class SearchModel
                 unset($input['city']);
 
 
-                return ['redirect' => $this->redirect->route(
-                    'search.parse',
-                    $input,
-                    301
-                )];
+                return [
+                    'redirect' => $this->redirect->route(
+                        'search.parse',
+                        $input,
+                        301
+                    )
+                ];
 
             } else {
                 unset($input['location']);
@@ -135,15 +137,17 @@ class SearchModel
             $this->log->info('Redirect TO: ' . $location->link->permalink . '?' . http_build_query($input));
             $input['allsegments'] = $location->link->permalink;
 
-            return ['redirect' => $this->redirect->route(
-                'search.parse',
-                $input,
-                301
-            )];
+            return [
+                'redirect' => $this->redirect->route(
+                    'search.parse',
+                    $input,
+                    301
+                )
+            ];
         }
 
         $radius = $this->input->get('radius');
-        if(!$radius) {
+        if (!$radius) {
             $radius = $this->input->get('distance', $this->config->get('evercise.default_radius'));
         }
 
@@ -151,7 +155,7 @@ class SearchModel
 
 
         if (!empty($area->min_radius) && str_replace('mi', '', $area->min_radius) > str_replace('mi', '', $radius)) {
-            //  $radius = $area->min_radius;
+            $radius = $area->min_radius;
         }
 
 
@@ -160,71 +164,91 @@ class SearchModel
         $search = (!empty($input['search']) ? $input['search'] : '');
 
         $params = [
-            'size' => $size,
-            'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : false),
-            'from' => (($page - 1) * $size),
-            'sort' => $sort,
-            'radius' => (in_array(
+            'clean'     => true,
+            'size'     => $size,
+            'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : FALSE),
+            'from'     => (($page - 1) * $size),
+            'sort'     => $sort,
+            'radius'   => (in_array(
                 $radius,
                 array_values($this->config->get('evercise.radius'))
             ) ? $radius : $this->config->get(
                 'evercise.default_radius'
             )),
-            'search' => $search
+            'search'   => $search
         ];
 
 
-        if(!empty($input['featured'])) {
-            $params['featured'] = true;
+        if (!empty($input['featured'])) {
+            $params['featured'] = TRUE;
         }
 
 
-
-        if(!empty($input['ne']) && !empty($input['sw'])) {
+        if (!empty($input['ne']) && !empty($input['sw'])) {
             //Fix Bounds Google does NE and Elastic  deos NW
 
 
             $params['bounds'] = [
-                'top_right' => $input['ne'],
+                'top_right'   => $input['ne'],
                 'bottom_left' => $input['sw'],
             ];
 
         }
 
+
+        if ($dates) {
+
+            $cache_params = array_except($params, 'date');
+            $cache_id = md5((!empty($area->id) ? $area->id : '') . '_' . serialize($cache_params));
+
+            if (Cache::has($cache_id)) {
+                return Cache::get($cache_id);
+            }
+
+            $searchResults = $this->search->getResults($area, $params, $dates);
+
+            Cache::put($cache_id, $searchResults, 60);
+
+            return $searchResults;
+        }
+
+
+
+        if (!empty($input['date'])) {
+            $params['date'] = $input['date'];
+        }
+
+
         $searchResults = $this->search->getResults($area, $params);
-
-
-
 
         $this->elastic->saveStats((!empty($user->id) ? $user->id : 0), $this->input->ip(), $area, $params,
             $searchResults->total);
 
 
         $data = [
-            'area' => $area,
-            'results' => $searchResults,
-            'url' => $area->link->permalink,
-            'size' => $size,
-            'sort' => (!empty($input['sort']) ? $input['sort'] : 'best'),
-            'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : ''),
-            'venue' => (!empty($input['venue_id']) ? Venue::find($input['venue_id'])->toArray() : ''),
-            'radius' => $radius,
+            'area'           => $area,
+            'results'        => $searchResults,
+            'url'            => $area->link->permalink,
+            'size'           => $size,
+            'sort'           => (!empty($input['sort']) ? $input['sort'] : 'best'),
+            'venue_id'       => (!empty($input['venue_id']) ? $input['venue_id'] : ''),
+            'venue'          => (!empty($input['venue_id']) ? Venue::find($input['venue_id'])->toArray() : ''),
+            'radius'         => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
-            'page' => $page,
-            'search' => $search
+            'page'           => $page,
+            'search'         => $search
         ];
 
 
+        if ($landing) {
 
-        if($landing) {
-
-            foreach($this->config->get('landing_pages') as $url => $params) {
-                if(str_replace('/uk/london/', '', $url) == $landing) {
+            foreach ($this->config->get('landing_pages') as $url => $params) {
+                if (str_replace('/uk/london/', '', $url) == $landing) {
                     $item = $params;
                 }
             }
 
-            if(!empty($item)) {
+            if (!empty($item)) {
                 $data['landing'] = $item;
             }
 
@@ -235,8 +259,8 @@ class SearchModel
     }
 
 
-
-    public function searchMap($area = false, $input = [], $user = false) {
+    public function searchMap($area = FALSE, $input = [], $user = FALSE)
+    {
 
 
         /**
@@ -257,8 +281,8 @@ class SearchModel
          *
          */
 
-        $landing = false;
-        if(!empty($input['landing'])) {
+        $landing = FALSE;
+        if (!empty($input['landing'])) {
             $landing = $input['landing'];
             unset($input['landing']);
         }
@@ -286,7 +310,7 @@ class SearchModel
         }
 
         $radius = $this->input->get('radius');
-        if(!$radius) {
+        if (!$radius) {
             $radius = $this->input->get('distance', $this->config->get('evercise.default_radius'));
         }
 
@@ -294,25 +318,25 @@ class SearchModel
         $search = (!empty($input['search']) ? $input['search'] : '');
 
         $params = [
-            'size' => $this->config->get('evercise.max_display_map_results'),
-            'from' => 0,
-            'sort' => $sort,
+            'size'   => $this->config->get('evercise.max_display_map_results'),
+            'from'   => 0,
+            'sort'   => $sort,
             'radius' => '25mi',
             'search' => $search
         ];
 
 
-        if(!empty($input['featured'])) {
-            $params['featured'] = true;
+        if (!empty($input['featured'])) {
+            $params['featured'] = TRUE;
         }
 
 
-        if(!empty($input['ne']) && !empty($input['sw'])) {
+        if (!empty($input['ne']) && !empty($input['sw'])) {
             //Fix Bounds Google does NE and Elastic  deos NW
 
 
             $params['bounds'] = [
-                'top_right' => $input['ne'],
+                'top_right'   => $input['ne'],
                 'bottom_left' => $input['sw'],
             ];
 
@@ -326,8 +350,8 @@ class SearchModel
     }
 
 
-
-    public function getClasses($params) {
+    public function getClasses($params)
+    {
 
         /*
          *
@@ -338,14 +362,13 @@ class SearchModel
 
         $location = $this->place->getByLocation((!empty($params['location']) ? $params['location'] : 'London'));
         $query = [
-            'size'      => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
-            'from'      =>(!empty($params['from']) ? $params['from'] : 0),
-            'sort'      => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
-            'radius'    => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
-            'search'    => (!empty($params['search']) ? $params['search'] : ''),
-            'featured'  => (isset($params['featured']) ? $params['featured'] : '')
+            'size'     => (!empty($params['size']) ? $params['size'] : $this->config->get('evercise.default_per_page')),
+            'from'     => (!empty($params['from']) ? $params['from'] : 0),
+            'sort'     => $this->getSort($location, (!empty($params['sort']) ? $params['sort'] : 'nearme')),
+            'radius'   => (!empty($params['radius']) ? $params['radius'] : $this->config->get('evercise.default_radius')),
+            'search'   => (!empty($params['search']) ? $params['search'] : ''),
+            'featured' => (isset($params['featured']) ? $params['featured'] : '')
         ];
-
 
 
         $searchResults = $this->search->getResults($location, $query);
@@ -360,17 +383,17 @@ class SearchModel
     {
 
         $options = [
-            'price_asc' => ['default_price' => 'asc'],
-            'price_desc' => ['default_price' => 'desc'],
-            'duration_asc' => ['default_duration' => 'asc'],
+            'price_asc'     => ['default_price' => 'asc'],
+            'price_desc'    => ['default_price' => 'desc'],
+            'duration_asc'  => ['default_duration' => 'asc'],
             'duration_desc' => ['default_duration' => 'desc'],
-            'viewed_asc' => ['counter' => 'asc'],
-            'viewed_desc' => ['counter' => 'desc'],
-            'nearme' => [
+            'viewed_asc'    => ['counter' => 'asc'],
+            'viewed_desc'   => ['counter' => 'desc'],
+            'nearme'        => [
                 "_geo_distance" => [
                     'venue.location' => $this->elastic->getLocationHash($area->lat, $area->lng),
-                    "order" => "asc",
-                    "unit" => "mi"
+                    "order"          => "asc",
+                    "unit"           => "mi"
                 ]
             ]
         ];
@@ -379,7 +402,7 @@ class SearchModel
             return $options[$sort];
         }
 
-        return false;
+        return FALSE;
 
     }
 

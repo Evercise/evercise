@@ -283,10 +283,11 @@ class MainController extends \BaseController
     }
 
 
-    public function categories()
+    public function editCategories()
     {
+        $cats = \Category::orderBy('order', 'asc')->get();
 
-        return View::make('admin.categories', compact('categories'))->render();
+        return View::make('admin.categories', compact('cats'))->render();
     }
 
 
