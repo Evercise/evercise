@@ -333,6 +333,23 @@ class AdminAjaxController extends AdminController
 
     }
 
+    public function updateCategories()
+    {
+        $order = explode(',',Input::get('order'));
+
+        $newOrder = [];
+        $count=0;
+        foreach($order as $id)
+        {
+            $count++;
+            $newOrder[$id] = $count;
+        }
+        Category::editOrder($newOrder);
+
+        //return Response::json($newOrder);
+        return Response::json(['callback' => 'successAndRefresh']);
+    }
+
     /**
      * @return \Illuminate\Http\JsonResponse
      */
