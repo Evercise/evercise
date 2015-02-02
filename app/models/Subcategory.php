@@ -88,8 +88,16 @@ class Subcategory extends Eloquent
 		return static::whereIn('name', $names)->lists('id');
     }
 
-	public static function getRelated($type){
+	public static function getRelated($type)
+	{
 		return static::where('type', $type)->lists('name');
+	}
+
+	public function getRelatedFromSearch($searchTerm)
+	{
+		
+
+		return $subcategories;
 	}
 
 }

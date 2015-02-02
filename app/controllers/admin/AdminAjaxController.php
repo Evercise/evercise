@@ -336,6 +336,15 @@ class AdminAjaxController extends AdminController
     public function updateCategories()
     {
         $order = explode(',',Input::get('order'));
+        //$visible = Input::get('visible');
+
+        $cats = Category::get();
+
+        foreach ($cats as $cat) {
+            $cat->visible = Input::get('visible_'.$cat->id);
+            $cat->save();
+        }
+
 
         $newOrder = [];
         $count=0;
@@ -346,8 +355,30 @@ class AdminAjaxController extends AdminController
         }
         Category::editOrder($newOrder);
 
-        //return Response::json($newOrder);
+
         return Response::json(['callback' => 'successAndRefresh']);
+    }
+
+    public function updateCategory()
+    {
+        $id = Input::get('id');
+        if(! $id)
+            return false;
+
+        $name = Input::get('name');
+        $description = Input::get('description');
+        $popular = Input::get('popular_groups');
+
+        $popularCSV = implode(',', $popular);
+
+        $category = Category::find($id);
+
+        $category->name = $name;
+        $category->description = $description;
+        $category->popular = $popularCSV;
+        $category->save();
+
+        return Redirect::route('admin.categories');
     }
 
     /**

@@ -684,5 +684,20 @@ class MainController extends \BaseController
 
     }
 
+    public function categoriesManage($id)
+    {
+        $category = Category::find($id);
+
+        $groups = Evercisegroup::where('published', 1)->has('futuresessions')
+            ->whereHas('subcategories', function ($query) use ($id) {
+                $query->whereHas('categories', function ($query) use ($id) {
+                        $query->where('categories.id', $id);
+                    });
+            })
+            ->lists('name', 'id');
+
+        return View::make('admin.edit_category', compact('category', 'groups'));
+    }
+
 
 }

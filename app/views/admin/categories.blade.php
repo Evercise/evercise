@@ -20,7 +20,7 @@
   });
 
    $("#sortable").sortable({stop: function(event, ui) {
-        //console.log($("#sortable").sortable("toArray"));
+        console.log($("#sortable").sortable("toArray"));
         $('#order').val($("#sortable").sortable("toArray"));
   }});
 
@@ -43,7 +43,6 @@
 {{ Form::open(array('id' => 'update_categories', 'route' => 'admin.update_categories', 'method' => 'post', 'class' => '', 'style' => 'float:left;margin-right:5px')) }}
     {{ Form::hidden( 'order' , '', ['id' => 'order']) }}
     {{ Form::submit('Save Changes' , array('class'=>'btn btn-sm btn-info')) }}
-{{ Form::close() }}
 
 <br>
 <br>
@@ -60,17 +59,18 @@
         </thead>
         <tbody id="sortable">
             @foreach($cats as $category)
-                <tr>
+                <tr id="{{$category->id}}">
                     <td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><p>{{$category->name}}</p></td>
-                    <td><p>{{ Form::checkbox('visible', $category->id, $category->visible )}}</p></td>
-                    <td><p>{{$category->popular}}</p></td>
+                    <td><p>{{ Form::checkbox('visible_'.$category->id, '1', $category->visible, ['id'=>'visible_'.$category->id] )}}</p></td>
+                    <td>{{$category->getPopularClasses()}}</td>
                     <td><p>{{$category->description}}</p></td>
-                    <td><p><a  title="Edit" href=""><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a></p></td>
+                    <td><p><a  title="Edit" href="{{URL::route('admin.categories.manage', [$category->id]) }}"><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a></p></td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </div>
+{{ Form::close() }}
 
 
 
