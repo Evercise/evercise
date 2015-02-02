@@ -54,7 +54,7 @@ class Elastic
      * @return array
      * @throws Exception
      */
-    public function searchEvercisegroups(Place $area, $params = [])
+    public function searchEvercisegroups(Place $area, $params = [], $dates = FALSE)
     {
         $searchParams['index'] = $this->elastic_index;
         $searchParams['type'] = $this->elastic_type;
@@ -71,12 +71,14 @@ class Elastic
 
         if (!empty($params['search'])) {
 
-            $configIndex = implode(',', array_map(function ($v, $k) { return $k.'^'.$v; }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
+            $configIndex = implode(',', array_map(function ($v, $k) {
+                return $k . '^' . $v;
+            }, Config::get('searchindex'), array_keys(Config::get('searchindex'))));
             $searchParams['body']['query']['filtered']['query'] = [
 
                 'multi_match' => [
                     'query'  => $params['search'],
-                    'fields' => explode(',',$configIndex),
+                    'fields' => explode(',', $configIndex),
 
                 ],
 
@@ -98,13 +100,41 @@ class Elastic
 
         if (!isset($params['all'])) {
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["term"] = ['published' => TRUE];
-            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
+            //  $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
             $searchParams['body']['query']['filtered']['filter']['bool']['must_not']['missing'] = [
                 'field'      => 'futuresessions.members',
                 'existence'  => TRUE,
                 'null_value' => TRUE
             ];
             $search = TRUE;
+        }
+
+
+        if (!empty($params['date'])) {
+
+            if ($params['date'] == date('Y-m-d')) {
+                $from = date('Y-m-d H:') . '00:00';
+            } else {
+                $from = $params['date'] . ' 00:00:00';
+            }
+
+            $to = date('Y-m-d', strtotime($params['date'] . ' +1 day')) . ' 00:00:00';
+
+
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = [
+                'futuresessions.date_time' => [
+                    'gte' => $from,
+                    'lte' => $to
+                ]
+            ];
+        }
+
+
+        if ($dates) {
+
+            $searchParams['size'] = '200';
+            $searchParams['body']['fields'] = ['futuresessions.date_time'];
+
         }
 
 
@@ -429,7 +459,7 @@ class Elastic
                 }
             }
 
-            $index['categories'] = str_replace(',',' , ',implode(',', $categories));
+            $index['categories'] = str_replace(',', ' , ', implode(',', $categories));
 
             if ($price > 0) {
                 $index['default_price'] = $price;

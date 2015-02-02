@@ -124,7 +124,6 @@ class SearchController extends \BaseController
     /**
      * query eg's based on location
      *
-
      *
      * search
      * location
@@ -136,7 +135,6 @@ class SearchController extends \BaseController
      * venue_id
      *
      *
-
      * @return Response
      */
     public function search($area = FALSE)
@@ -144,16 +142,29 @@ class SearchController extends \BaseController
         $input = array_filter($this->input->all());
 
 
+        $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
+
+        $search_date = array_keys($dates)[0];
+
+        if (!empty($input['date']) && !empty($dates[$input['date']])) {
+            $search_date = $input['date'];
+        }
+
+
+        $input['date'] = $search_date;
+
+
         $results = $this->searchmodel->search($area, $input, $this->user);
 
 
-        if(!empty($results['redirect'])) {
+        $results['selected_date'] = $search_date;
+        $results['available_dates'] = $dates;
+
+
+        if (!empty($results['redirect'])) {
             return $results['redirect'];
         }
 
-        $results['mapResults'] = $this->searchmodel->searchMap($results['area'], $input, $this->user);
-
-        JavaScript::put(['results' => $results]);
 
         /**
          *

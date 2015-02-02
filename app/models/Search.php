@@ -81,7 +81,7 @@ class Search
      * @param bool $all
      * @return mixed
      */
-    public function getResults(Place $area, $params = [], $all = FALSE)
+    public function getResults(Place $area, $params = [], $dates = FALSE)
     {
         /**  Set Defaults */
         $defaults = [
@@ -95,8 +95,12 @@ class Search
                 $params[$key] = $val;
             }
         }
-        $results = $this->elastic->searchEvercisegroups($area, $params);
+        $results = $this->elastic->searchEvercisegroups($area, $params, $dates);
 
+
+        if ($dates) {
+            return $this->formatDates($results, $area);
+        }
 
         return $this->formatResults($results, $area);
 
@@ -133,6 +137,33 @@ class Search
         $results->hits = $all_results;
 
         return $results;
+    }
+
+
+    public function formatDates($results)
+    {
+
+        $all_dates = [];
+
+        foreach ($results->hits as $r) {
+            $fields = (array)$r->fields;
+            foreach ($fields['futuresessions.date_time'] as $date) {
+                $date = date('Y-m-d', strtotime($date));
+
+                if($date > date('Y-m-d', strtotime('+3 months')) || $date < date('Y-m-d')) {
+                    continue;
+                }
+                if (!isset($all_dates[$date])) {
+                    $all_dates[$date] = 0;
+                }
+                $all_dates[$date]++;
+            }
+        }
+        ksort($all_dates);
+
+        return $all_dates;
+
+
     }
 
 
