@@ -164,6 +164,7 @@ class SearchModel
         $search = (!empty($input['search']) ? $input['search'] : '');
 
         $params = [
+            'clean'     => true,
             'size'     => $size,
             'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : FALSE),
             'from'     => (($page - 1) * $size),
@@ -196,7 +197,9 @@ class SearchModel
 
 
         if ($dates) {
-            $cache_id = md5((!empty($area->id) ? $area->id : '') . '_' . serialize($params));
+
+            $cache_params = array_except($params, 'date');
+            $cache_id = md5((!empty($area->id) ? $area->id : '') . '_' . serialize($cache_params));
 
             if (Cache::has($cache_id)) {
                 return Cache::get($cache_id);

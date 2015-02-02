@@ -102,7 +102,7 @@ class Search
             return $this->formatDates($results, $area);
         }
 
-        return $this->formatResults($results, $area);
+        return $this->formatResults($results, $area, $params);
 
     }
 
@@ -126,12 +126,12 @@ class Search
      * @param $results
      * @return mixed
      */
-    public function formatResults($results, $area = FALSE)
+    public function formatResults($results, $area = FALSE, $params)
     {
         $all_results = [];
 
         foreach ($results->hits as $r) {
-            $all_results[] = $this->formatSingle($r, $area);
+            $all_results[] = $this->formatSingle($r, $area, $params);
         }
 
         $results->hits = $all_results;
@@ -147,19 +147,25 @@ class Search
 
         foreach ($results->hits as $r) {
             $fields = (array)$r->fields;
+
             foreach ($fields['futuresessions.date_time'] as $date) {
                 $date = date('Y-m-d', strtotime($date));
 
-                if($date > date('Y-m-d', strtotime('+3 months')) || $date < date('Y-m-d')) {
+                if ($date > date('Y-m-d', strtotime('+2 months')) || $date < date('Y-m-d')) {
                     continue;
                 }
                 if (!isset($all_dates[$date])) {
-                    $all_dates[$date] = 0;
+                    $all_dates[$date] = [];
                 }
-                $all_dates[$date]++;
+                if(!in_array($fields['id'], $all_dates[$date])) {
+                    $all_dates[$date][] = $fields['id'];
+                }
             }
         }
         ksort($all_dates);
+        foreach($all_dates as $date => $ids) {
+            $all_dates[$date] = count($ids);
+        }
 
         return $all_dates;
 
@@ -195,18 +201,28 @@ class Search
      * @param $row
      * @return mixed
      */
-    public function formatSingle($row, $area)
+    public function formatSingle($row, $area, $params = [])
     {
 
-
-        $i = 0;
         $row->_source->score = $row->_score;
 
-        foreach ($row->_source->futuresessions as $s) {
-            $row->_source->futuresessions[$i]->date_time = (new Carbon($s->date_time))->format('M jS, g:ia');
 
-            $i++;
+        $times = [];
+
+        foreach ($row->_source->futuresessions as $key => $s) {
+
+            $date = new Carbon($s->date_time);
+
+            $row->_source->futuresessions[$key]->date_time = $date->format('M jS, g:ia');
+
+            if (!empty($params['date'])) {
+                if ($params['date'] == $date->format('Y-m-d')) {
+                    $times[$date->format('g:ia')] = 1;
+                }
+            }
         }
+
+        $row->_source->times = array_keys($times);
 
         /** Add Lat and Lon to the venue */
         if (!empty($row->_source->venue->location->geohash) && $area) {
@@ -243,6 +259,11 @@ class Search
                 $row->_source->futuresessions[$i]->default_tickets = $this->cart_items[$s->id];
             }
             $i++;
+        }
+
+
+        if (!empty($params['clean'])) {
+            unset($row->_source->futuresessions);
         }
 
         return $row->_source;

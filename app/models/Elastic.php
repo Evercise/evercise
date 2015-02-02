@@ -133,7 +133,7 @@ class Elastic
         if ($dates) {
 
             $searchParams['size'] = '200';
-            $searchParams['body']['fields'] = ['futuresessions.date_time'];
+            $searchParams['body']['fields'] = ['id','futuresessions.date_time'];
 
         }
 
