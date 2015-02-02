@@ -229,7 +229,6 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                 initPut('{"selector": "#add_subcategory"}');
                 initPut('{"selector": "#edit_classes"}');
 
-                alert('fuck you');
 
             });
 

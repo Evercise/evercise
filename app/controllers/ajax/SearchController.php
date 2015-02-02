@@ -17,7 +17,8 @@ use Search;
 use SearchModel;
 use Elastic;
 
-class SearchController extends AjaxBaseController {
+class SearchController extends AjaxBaseController
+{
 
     private $evercisegroup;
     private $sentry;
@@ -82,7 +83,7 @@ class SearchController extends AjaxBaseController {
      */
     public function parseUrl($all_segments = '')
     {
-        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', false));
+        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', FALSE));
 
 
         if ($link) {
@@ -98,11 +99,12 @@ class SearchController extends AjaxBaseController {
                     return $this->show($link->getClass);
                     break;
             }
-        } elseif (!$link && !$this->input->get('location', false) && $all_segments != '') {
+        } elseif (!$link && !$this->input->get('location', FALSE) && $all_segments != '') {
 
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
 
             $input['allsegments'] = '';
+
             return $this->redirect->route(
                 'search.parse',
                 $input
@@ -115,7 +117,7 @@ class SearchController extends AjaxBaseController {
 
     public function parseMapUrl($all_segments = '')
     {
-        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', false));
+        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', FALSE));
 
 
         if ($link) {
@@ -128,11 +130,12 @@ class SearchController extends AjaxBaseController {
                     return $this->searchMap($link->getArea);
                     break;
             }
-        } elseif (!$link && !$this->input->get('location', false) && $all_segments != '') {
+        } elseif (!$link && !$this->input->get('location', FALSE) && $all_segments != '') {
 
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
 
             $input['allsegments'] = '';
+
             return $this->redirect->route(
                 'search.parse',
                 $input
@@ -165,7 +168,19 @@ class SearchController extends AjaxBaseController {
 
         $results['selected_date'] = $search_date;
         $results['available_dates'] = $dates;
-
+        $results['related_categories'] = [
+            'i',
+            'will',
+            'add',
+            'more',
+            'categories',
+            'here',
+            'when',
+            'tris',
+            'finishes',
+            'the',
+            'function'
+        ];
 
 
         return Response::json($results);

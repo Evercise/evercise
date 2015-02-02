@@ -202,7 +202,7 @@ class SearchModel
             $cache_id = md5((!empty($area->id) ? $area->id : '') . '_' . serialize($cache_params));
 
             if (Cache::has($cache_id)) {
-                return Cache::get($cache_id);
+                //return Cache::get($cache_id);
             }
 
             $searchResults = $this->search->getResults($area, $params, $dates);

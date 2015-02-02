@@ -107,6 +107,12 @@
     </div>
 
     <div class="form-group">
+          <label>Meta title:</label>
+          {{ Form::textarea('meta_title', (!empty($article->meta_title) ? $article->meta_title : null), ['rows'=> '3', 'placeholder'=> 'Meta Title', 'class' => 'form-control', 'id'=>'meta_description']) }}
+
+    </div>
+
+    <div class="form-group">
           <label>Meta description:</label>
           {{ Form::textarea('description', (!empty($article->description) ? $article->description : null), ['rows'=> '3', 'placeholder'=> 'Meta Desc', 'class' => 'form-control', 'id'=>'meta_description']) }}
 

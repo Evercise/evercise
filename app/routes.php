@@ -568,6 +568,8 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
 
     Route::post('/update_categories',
         ['as' => 'admin.update_categories', 'uses' => 'AdminAjaxController@updateCategories']);
+    Route::post('/update_category',
+        ['as' => 'admin.update_category', 'uses' => 'AdminAjaxController@updateCategory']);
 
     Route::post('/edit_subcategories',
         ['as' => 'admin.edit_subcategories', 'uses' => 'AdminAjaxController@editSubcategories']);
@@ -660,6 +662,9 @@ Route::group(
 
         Route::get('/categories',
             ['as' => 'admin.categories', 'uses' => 'MainController@editCategories']);
+        Route::get('categories/{id?}',
+            ['as' => 'admin.categories.manage', 'uses' => 'MainController@categoriesManage']);
+
         Route::get('/subcategories',
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 

@@ -49,4 +49,11 @@ class Category extends Eloquent
             }
         }
     }
+
+    public function getPopularClasses()
+    {
+        $groups = Evercisegroup::whereIn('id', explode(',', $this->popular))->lists('name');
+
+        return implode(',', $groups);
+    }
 }

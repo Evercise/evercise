@@ -36,8 +36,8 @@ return [
     'commission'                  => 10, //Default commission
     'upload_dir'                  => 'files/',
     'testing_ips'                 => ['188.39.12.12', '192.168', '127.0.0'],
-    'per_page'                    => [3, 12, 18, 24],
-    'default_per_page'            => 12,
+    'per_page'                    => [3, 12, 24, 48],
+    'default_per_page'            => 24,
     'max_display_map_results'     => 300,
     'radius'                      => [
         '1/2 mile' => '0.5mi',
