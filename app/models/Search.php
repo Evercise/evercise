@@ -131,6 +131,7 @@ class Search
         $all_results = [];
 
         foreach ($results->hits as $r) {
+
             $all_results[] = $this->formatSingle($r, $area, $params);
         }
 
@@ -143,29 +144,37 @@ class Search
     public function formatDates($results)
     {
 
+
         $all_dates = [];
+
+        $now = date('Y-m-d H:i:s');
+
 
         foreach ($results->hits as $r) {
             $fields = (array)$r->fields;
 
             foreach ($fields['futuresessions.date_time'] as $date) {
-                $date = date('Y-m-d', strtotime($date));
+                $short_date = date('Y-m-d', strtotime($date));
 
-                if ($date > date('Y-m-d', strtotime('+2 months')) || $date < date('Y-m-d')) {
+                if ($short_date > date('Y-m-d', strtotime('+2 months')) || $short_date < date('Y-m-d')) {
                     continue;
                 }
-                if (!isset($all_dates[$date])) {
-                    $all_dates[$date] = [];
+                if (!isset($all_dates[$short_date])) {
+                    $all_dates[$short_date] = [];
                 }
-                if(!in_array($fields['id'], $all_dates[$date])) {
-                    $all_dates[$date][] = $fields['id'];
+                if (!in_array($fields['id'][0], $all_dates[$short_date])) {
+
+                    if ($date > $now) {
+                        array_push($all_dates[$short_date], $fields['id'][0]);
+                    }
                 }
             }
         }
         ksort($all_dates);
-        foreach($all_dates as $date => $ids) {
+        foreach ($all_dates as $date => $ids) {
             $all_dates[$date] = count($ids);
         }
+
 
         return $all_dates;
 
@@ -263,7 +272,7 @@ class Search
 
 
         if (!empty($params['clean'])) {
-            unset($row->_source->futuresessions);
+            // unset($row->_source->futuresessions);
         }
 
         return $row->_source;
