@@ -173,10 +173,16 @@ if(typeof angular != 'undefined') {
 
         // update filter results
 
-        $scope.updateResults = function(e){
-            console.log(e);
-            console.log($scope.results.radius);
-        }
+        $('.filter-btn, .sort-btn').click(function (e) {
+            e.preventDefault();
+            var tab = $(this);
+            if(tab.parent('li').hasClass('active')){
+                window.setTimeout(function(){
+                    $(".tab-pane").removeClass('active');
+                    tab.parent('li').removeClass('active');
+                },1);
+            }
+        });
 
         // url to use for ajax calls
         $scope.url = $scope.results.url;

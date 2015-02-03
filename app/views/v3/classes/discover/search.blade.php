@@ -57,13 +57,13 @@
                                 -->
                                 <strong class="h4">Distance</strong>
                                 <div class="filter-slider mt25 mb25">
-                                    <a href="#" ng-click="results.radius = '1mi'; $event.preventDefault();">1 mi</a>
-                                    <a href="#" ng-click="results.radius = '3mi'; $event.preventDefault();">3 mi</a>
-                                    <a href="#" ng-click="results.radius = '5mi'; $event.preventDefault();">5 mi</a>
-                                    <a href="#" ng-click="results.radius = '10mi'; $event.preventDefault();">10 mi</a>
+                                    <a href="#" ng-class="(results.radius == '1mi') ? 'active' : ''" ng-click="results.radius = '1mi'; $event.preventDefault();">1 mi</a>
+                                    <a href="#" ng-class="(results.radius == '3mi') ? 'active' : ''" ng-click="results.radius = '3mi'; $event.preventDefault();">3 mi</a>
+                                    <a href="#" ng-class="(results.radius == '5mi') ? 'active' : ''" ng-click="results.radius = '5mi'; $event.preventDefault();">5 mi</a>
+                                    <a href="#" ng-class="(results.radius == '10mi') ? 'active' : ''" ng-click="results.radius = '10mi'; $event.preventDefault();">10 mi</a>
                                 </div>
                                 <div class="text-center mb20">
-                                    <button class="btn btn-white-primary" ng-click="updateResults($event)">Update Results</button>
+                                    <button class="btn btn-white-primary" ng-click="getData()">Update Results</button>
                                 </div>
 
                             </div>
