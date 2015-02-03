@@ -225,13 +225,13 @@ class Search
             $row->_source->futuresessions[$key]->date_time = $date->format('M jS, g:ia');
 
             if (!empty($params['date'])) {
-                if ($params['date'] == $date->format('Y-m-d')) {
-                    $times[$date->format('g:ia')] = 1;
+                if ($params['date'] == $date->format('Y-m-d') && !isset($times[$date->format('g:ia')])) {
+                    $times[$date->format('g:ia')] = $s->id;
                 }
             }
         }
 
-        $row->_source->times = array_keys($times);
+        $row->_source->times = $times;
 
         /** Add Lat and Lon to the venue */
         if (!empty($row->_source->venue->location->geohash) && $area) {
