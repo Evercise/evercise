@@ -119,6 +119,9 @@ class SearchModel
                 unset($input['city']);
 
 
+                $input = array_filter($input);
+
+
                 return [
                     'redirect' => $this->redirect->route(
                         'search.parse',
@@ -130,7 +133,9 @@ class SearchModel
             } else {
                 unset($input['location']);
                 unset($input['city']);
+                unset($input['date']);
             }
+
 
             /** We have save the location to the DB so we can redirect the user to the new URL now */
 

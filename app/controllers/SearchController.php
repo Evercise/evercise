@@ -111,6 +111,7 @@ class SearchController extends \BaseController
 
             $input['allsegments'] = '';
 
+
             return $this->redirect->route(
                 'search.parse',
                 $input
@@ -176,6 +177,7 @@ class SearchController extends \BaseController
 
 
         if (!empty($results['redirect'])) {
+
             return $results['redirect'];
         }
 

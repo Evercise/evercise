@@ -73,7 +73,7 @@ class PagesController extends \BaseController
             $cat[$c->id] = $c;
 
             if(is_null($c->permalink)) {
-                dd($c);
+                continue;
             }
             $this->route->get($c->permalink,
                 ['as' => $this->route_prefix_category . $c->id, 'uses' => 'PagesController@showCategory']);
@@ -254,6 +254,10 @@ class PagesController extends \BaseController
         $keywords = $article->keywords;
 
 
-        return $this->view->make($view, compact('article', 'categories', 'metaDescription', 'title', 'keywords', 'articles_latest', 'categories'));
+
+        $canonical = $this->articles->createUrl($article, true);
+
+
+        return $this->view->make($view, compact('article', 'categories', 'metaDescription', 'title', 'keywords', 'articles_latest', 'categories', 'canonical'));
     }
 }
