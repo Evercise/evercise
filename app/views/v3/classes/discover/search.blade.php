@@ -17,12 +17,25 @@
         draggable="true"
         control="map.control"
     >
-
+        <ui-gmap-markers
+            models="everciseGroups"
+            coords="'venue'"
+            idKey="'id'"
+            id="'venue.id'"
+            icon = "'icon'"
+            click="'onClicked'"
+            doCluster = "true"
+            clusterOptions = "map.clusterOptions"
+            clusterEvents = "clusterEvents"
+            >
+        </ui-gmap-markers>
 
     </ui-gmap-google-map>
 
     <div class="results">
+
         <div class="inner">
+            <div ng-if="resultsLoading" class="mask"><div class="loading"></div></div>
             <div class="heading"><span class="text-primary">{[{ results.size}]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div>
             <div role="tabpanel">
                 <ul class="nav nav-tabs nav-justified">
@@ -33,22 +46,24 @@
                     <div role="tabpanel" class="tab-pane" id="filter">
                         <div class="row mt25">
                             <div class="col-xs-10 col-xs-offset-1">
+                                <!--
                                 <strong class="h4">Class time</strong>
                                 <div class="filter-slider mt25 mb15">
-                                    <a href="#">All</a>
+                                    <a href="#" class="active">All</a>
                                     <a href="#">Morning</a>
                                     <a href="#">Afternoon</a>
                                     <a href="#">Evening</a>
                                 </div>
+                                -->
                                 <strong class="h4">Distance</strong>
                                 <div class="filter-slider mt25 mb25">
-                                    <a href="#">1 mi</a>
-                                    <a href="#">3 mi</a>
-                                    <a href="#">5 mi</a>
-                                    <a href="#">10 mi</a>
+                                    <a href="#" ng-click="results.radius = '1mi'; $event.preventDefault();">1 mi</a>
+                                    <a href="#" ng-click="results.radius = '3mi'; $event.preventDefault();">3 mi</a>
+                                    <a href="#" ng-click="results.radius = '5mi'; $event.preventDefault();">5 mi</a>
+                                    <a href="#" ng-click="results.radius = '10mi'; $event.preventDefault();">10 mi</a>
                                 </div>
                                 <div class="text-center mb20">
-                                    <button class="btn btn-white-primary">Update Results</button>
+                                    <button class="btn btn-white-primary" ng-click="updateResults($event)">Update Results</button>
                                 </div>
 
                             </div>
@@ -63,9 +78,9 @@
             <div class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content">
-                         <li class="date-btn" ng-repeat="(date, value) in availableDates">
+                         <li class="date-btn" ng-repeat="(date, value) in availableDates" ng-class="(date == selectedDate) ? 'active' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
-                            <a href="#">
+                            <a href="#" ng-click="changeSelectedDate($event, date)">
                                 {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
                             </a>
                          </li>
@@ -77,19 +92,19 @@
                  <a href="#" ng-click="scroll_clicked || scrollDates('right', $event)" class="scroll right" ng-disabled="scroll_clicked">></a>
              </div>
             <div class="groups mb-scroll" ng-style="groupHeight()">
-                <div class="list-results" ng-repeat="group in everciseGroups">
+                <div class="list-results" ng-repeat="group in everciseGroups track by group.id">
                     <div class="row class-stacked">
                         <div class="col-sm-9">
-                            <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name }]}</a></h2>
-                            <small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
+                            <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
+                            <small id="venue-{[{group.venue.id}]}">{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
                                 <strong class="h5">AVAILABLE CLASSES:</strong>
-                                <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml10 mr10 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
+                                <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="btn-group-vertical btn-block">
-                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.default_price | currency :  '£' : 2  }]}</a>
+                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.price | currency :  '£' : 2  }]}</a>
                                  <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">View Class</a>
                             </div>
                         </div>

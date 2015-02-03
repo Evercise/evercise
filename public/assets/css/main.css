@@ -7345,6 +7345,29 @@ a.bg-light-grey:hover {
   margin-left: 2px;
   vertical-align: middle;
 }
+.loading {
+  background-image: url("../img/spinning-circles.svg");
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-size: 60px 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  width: 80px;
+  margin-top: -40px;
+  margin-left: -40px;
+  background-color: transparent;
+}
+.loading.active {
+  background-position: 50% 10%;
+}
+.loading.hover:hover,
+.loading.active:hover {
+  cursor: pointer;
+  background-position: 50% 10%;
+}
 @media (max-width: 992px) {
   .hidden-mob {
     display: none!important;
@@ -10218,7 +10241,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   border-top: 2px solid #ebebeb;
   text-align: center;
 }
-.filter-slider a:after {
+.filter-slider a.active:after {
   position: absolute;
   content: '';
   top: -8px;
@@ -10254,29 +10277,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   height: 100%;
   background: rgba(0, 0, 0, 0.1);
   z-index: 10;
-}
-.checkout .mask .loading {
-  background-image: url("../img/spinning-circles.svg");
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  background-size: 60px 60px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  height: 80px;
-  width: 80px;
-  margin-top: -40px;
-  margin-left: -40px;
-  background-color: transparent;
-}
-.checkout .mask .loading.active {
-  background-position: 50% 10%;
-}
-.checkout .mask .loading.hover:hover,
-.checkout .mask .loading.active:hover {
-  cursor: pointer;
-  background-position: 50% 10%;
 }
 .checkout li:not(.list-group-item) {
   font-size: 13px;
@@ -12648,6 +12648,15 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   background: #ffffff;
   -webkit-box-shadow: 5px 5px 13px -5px #000000;
   box-shadow: 5px 5px 13px -5px #000000;
+}
+.results .mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
 }
 .results .heading {
   background: #f0f0f0;
