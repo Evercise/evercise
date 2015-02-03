@@ -2,6 +2,17 @@ if(typeof angular != 'undefined') {
 
     app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", function ($scope, $http, uiGmapGoogleMapApi) {
 
+        $scope.groupHeight = function(){
+            var resultsHeight = $('.results').outerHeight();
+            var headHeight = $('.results .heading').outerHeight();
+            var tabHeight = $('.results .nav-tabs').outerHeight();
+            var dateHeight = $('.results .date-picker-inline').outerHeight();
+            var groupHeight = resultsHeight - headHeight - tabHeight - dateHeight;
+            return{
+                height : groupHeight+'px'
+            }
+        }
+
         $scope.results = laracasts.results;
         console.log($scope.results);
 

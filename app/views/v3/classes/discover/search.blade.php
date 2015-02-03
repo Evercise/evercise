@@ -23,7 +23,7 @@
 
     <div class="results">
         <div class="inner">
-            <div class="heading"><span class="text-primary">200 Yoga</span> Classes found in <span class="text-primary">Holloway</span></div>
+            <div class="heading"><span class="text-primary">{[{ results.size}]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div>
             <div role="tabpanel">
                 <ul class="nav nav-tabs nav-justified">
                   <li role="presentation"><a href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
@@ -76,11 +76,11 @@
                  <a href="#"  ng-click="scroll_clicked || scrollDates('left', $event)" class="scroll left" ng-disabled="scroll_clicked" ><</a>
                  <a href="#" ng-click="scroll_clicked || scrollDates('right', $event)" class="scroll right" ng-disabled="scroll_clicked">></a>
              </div>
-            <div class="groups mb-scroll">
+            <div class="groups mb-scroll" ng-style="groupHeight()">
                 <div class="list-results" ng-repeat="group in everciseGroups">
                     <div class="row class-stacked">
                         <div class="col-sm-9">
-                            <h2 class="h4 mt0 mb0">{[{ group.name }]}</h2>
+                            <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name }]}</a></h2>
                             <small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
                                 <strong class="h5">AVAILABLE CLASSES:</strong>
@@ -89,8 +89,8 @@
                         </div>
                         <div class="col-sm-3">
                             <div class="btn-group-vertical btn-block">
-                                 <button class="btn btn-white-primary btn-block">£10</button>
-                                 <button class="btn btn-white-primary btn-block">View Class</button>
+                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.default_price | currency :  '£' : 2  }]}</a>
+                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">View Class</a>
                             </div>
                         </div>
                     </div>

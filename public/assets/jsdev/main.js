@@ -42,7 +42,7 @@ $(function(){
         $(this).mCustomScrollbar({
             scrollSpeed: 50,
             mouseWheelPixels: 50,
-            autoHideScrollbar: true,
+            autoHideScrollbar: false,
             scrollInertia: 0
         });
 
