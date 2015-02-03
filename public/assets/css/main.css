@@ -12629,8 +12629,23 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   right: 25px;
   top: 95px;
   bottom: 40px;
+  padding: 0 10px 9px;
+  overflow: hidden;
+}
+.results:after {
+  content: '';
+  position: absolute;
+  height: 9px;
   background: #ffffff;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+.results .inner {
+  height: 100%;
   width: 435px;
+  background: #ffffff;
   -webkit-box-shadow: 5px 5px 13px -5px #000000;
   box-shadow: 5px 5px 13px -5px #000000;
 }

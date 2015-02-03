@@ -13,9 +13,25 @@
   right: 25px;
   top: 95px;
   bottom: 40px;
-  background: @white;
-  width: 435px;
-  .box-shadow(5px 5px 13px -5px #000);
+  padding: 0 10px 9px;
+  overflow: hidden;
+  &:after{
+    content: '';
+    position: absolute;
+    height: 9px;
+    background: @white;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
+  }
+  .inner{
+    height: 100%;
+    width: 435px;
+    background: @white;
+    .box-shadow(5px 5px 13px -5px #000);
+  }
+
   .heading{
     background: @gray-lighter;
     padding: 7px 20px;

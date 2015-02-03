@@ -1,4 +1,5 @@
 if(typeof angular != 'undefined') {
+
     app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", function ($scope, $http, uiGmapGoogleMapApi) {
 
         $scope.results = laracasts.results;
@@ -25,6 +26,11 @@ if(typeof angular != 'undefined') {
         // set available dates
 
         $scope.availableDates = $scope.results.available_dates;
+
+        // class results
+
+        $scope.everciseGroups = $scope.results.results.hits;
+
 
         // scroll dates
 
@@ -56,4 +62,5 @@ if(typeof angular != 'undefined') {
 
 
     }])
+
 }
