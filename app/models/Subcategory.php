@@ -107,50 +107,79 @@ class Subcategory extends Eloquent
 	 * @param $searchTerm
 	 * @return $this|string
      */
-	public static function getRelatedFromSearch($searchTerm)
+	public static function getRelatedFromSearch($searchTerm = false)
 	{
-		//$subcategories = Subcategory::where('name', 'LIKE', $searchTerm)->lists('name');
-		//return $subcategories;
 
-		$subcategory = Subcategory::where('name', 'LIKE', '%'.$searchTerm.'%')
-			->first();
-
-		if(! $subcategory) return 'No Subcategory found';
-
-		$catIds = [];
-		foreach ($subcategory->categories as $category) {
-			$catIds[] = $category->id;
+		$cacheId = 'category_' . ($searchTerm ?: 'nosearch');
+		if(Cache::has($cacheId))
+		{
+			$subcategoryNames = Cache::get($cacheId);
 		}
+		else
+		{
 
-		$subcategories = static::
-			whereHas('categories', function($query) use($catIds) {
-				$query->whereIn('categories.id', $catIds);
-			})
-			->whereHas('evercisegroups', function($query){
-				$query->whereHas('futuresessions', function($query){
 
+			$subcategory = static::where('name', 'LIKE', '%' . $searchTerm . '%')
+				->first();
+			//return $subcategory->name;
+
+
+			if ($subcategory) {
+				$catIds = [];
+				foreach ($subcategory->categories as $category) {
+					$catIds[] = $category->id;
+				}
+			}
+			else
+			{
+				$catIds = Category::lists('id');
+			}
+
+			$subcategories = static::
+			whereHas('categories', function ($query) use ($catIds) {
+					$query->whereIn('categories.id', $catIds);
+				})
+				->whereHas('evercisegroups', function ($query) {
+					$query->whereHas('futuresessions', function ($query) {
+
+					});
+				})
+				->take(10)
+				->get()
+				->sortBy(function ($subcats) {
+					return $subcats->evercisegroups->count();
 				});
-			})
-			->take(10)
-			->get()
-			->sortBy(function($groups){
-				return $groups->futuresessions;
-			});
 
-		/** ---------- prepare output for testing --------- */
-		/*$output = '<strong>Categories: '.count($subcategory->categories).'</strong>';
-		foreach ($subcategory->categories as $cat) {
-			$output .= '<br>'.$cat->name;
+			$subcategoryNames = [];
+			foreach($subcategories as $subcat){
+				$subcategoryNames[] = $subcat->name;
+			}
+
+			Cache::put($cacheId, $subcategoryNames, 180);
+
+			/** ---------- prepare output for testing --------- */
+/*			$subcategoryName = $subcategory ? $subcategory->name : 'no Subcategory. Categories: ' . implode(',', $catIds);
+			$subcategoryCategories = $subcategory ? $subcategory->categories : [];
+
+			$output = '<strong>Subcategory: '.$subcategoryName.'</strong>';
+			$output .= '<br><br><strong>Categories: '.count($subcategoryCategories).'</strong>';
+			foreach ($subcategoryCategories as $cat) {
+				$output .= '<br>'.$cat->name;
+			}
+
+			$output .= '<br><br><strong>Subcategories: '.count($subcategories).'</strong>';
+			foreach ($subcategories as $subcat) {
+				$output .= '<br>'.$subcat->id.' - '.$subcat->name;
+			}
+			return $output;*/
+			/** ------------------------------------------------ */
+
 		}
 
-		$output .= '<br><br><strong>Subcategories: '.count($subcategories).'</strong>';
-		foreach ($subcategories as $subcat) {
-			$output .= '<br>'.$subcat->name;
-		}
-		return $output;*/
-		/** ------------------------------------------------ */
 
-		return $subcategories;
+
+
+		return $subcategoryNames;
 	}
 
 }
