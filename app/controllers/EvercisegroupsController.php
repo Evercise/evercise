@@ -102,6 +102,8 @@ class EvercisegroupsController extends \BaseController
         $data = $this->elastic->getSingle($id);
 
 
+
+
         if (!empty($data->hits[0]->_source)) {
 
             $class = $data->hits[0]->_source;
@@ -145,6 +147,19 @@ class EvercisegroupsController extends \BaseController
             }, $subcats)));
 
 
+
+            $class->next_session = false;
+
+            if(count($class->futuresessions) > 0) {
+                $class->next_session = $class->futuresessions[0];
+            }
+
+            foreach($class->futuresessions as $s) {
+                if($s->id == Input::get('t')) {
+                    $class->next_session = $s;
+                }
+            }
+
             $related = Subcategory::whereIn('type', $types)->orderByRaw("RAND()")->limit(6)->get();
 
             $params = [
@@ -154,6 +169,9 @@ class EvercisegroupsController extends \BaseController
                 'metaDescription' => $class->name . ' in activity that enhances and maintains overall health and wellness. ' . $class->name . ' Fitness Classes ' . trim($class->venue->town)
 
             ];
+
+
+            $params['canonical'] = URL::route('class.show', ['id' => $class->slug, 'preview' => '']);
 
 
             if (Sentry::check() && ($class->user_id == $this->user->id || $this->user->hasAccess('admin'))) // This Group belongs to this User/Trainer
