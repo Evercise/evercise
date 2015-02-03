@@ -95,13 +95,11 @@ class EvercisegroupsController extends \BaseController
     public function show($id, $preview = NULL)
     {
 
-        if(Request::segment(1) != 'classes') {
-            return Redirect::to('classes/'.Request::segment(2), 301);
+        if (Request::segment(1) != 'classes') {
+            return Redirect::to('classes/' . Request::segment(2), 301);
         }
 
         $data = $this->elastic->getSingle($id);
-
-
 
 
         if (!empty($data->hits[0]->_source)) {
@@ -147,22 +145,35 @@ class EvercisegroupsController extends \BaseController
             }, $subcats)));
 
 
+            $class->next_session = FALSE;
 
-            $class->next_session = false;
-
-            if(count($class->futuresessions) > 0) {
+            if (count($class->futuresessions) > 0) {
                 $class->next_session = $class->futuresessions[0];
             }
 
-            foreach($class->futuresessions as $s) {
-                if($s->id == Input::get('t')) {
+            foreach ($class->futuresessions as $s) {
+                if ($s->id == Input::get('t')) {
                     $class->next_session = $s;
                 }
             }
 
             $related = Subcategory::whereIn('type', $types)->orderByRaw("RAND()")->limit(6)->get();
 
+            if ($last = URL::previous()) {
+                $breadcrumbs = ['SEARCH' => $last];
+
+            } else {
+                $categories = array_map('trim', explode(',', $class->categories));
+
+                $breadcrumbs = [
+                    ucfirst($categories[0]) => URL::route('search.parse',
+                        ['allsegments' => 'london', 'search' => $categories[0]])
+                ];
+            }
+
+
             $params = [
+                'breadcrumbs'     => $breadcrumbs,
                 'data'            => (array)$class,
                 'related'         => $related,
                 'title'           => $class->name . ' - ' . trim($class->venue->town) . ' | Evercise',

@@ -806,3 +806,7 @@ Route::get('test3', function(){
 
     return var_dump($everciseGroups);
 });
+
+Route::get('test4/{term}', function($term) {
+    return Subcategory::getRelatedFromSearch($term);
+});

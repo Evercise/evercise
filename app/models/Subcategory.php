@@ -93,11 +93,93 @@ class Subcategory extends Eloquent
 		return static::where('type', $type)->lists('name');
 	}
 
-	public function getRelatedFromSearch($searchTerm)
+	public function evercisegroups()
 	{
-		
+		return $this->belongsToMany('Evercisegroup', 'evercisegroup_subcategories', 'subcategory_id', 'evercisegroup_id');
+	}
 
-		return $subcategories;
+	/**
+	 * Takes the search term and returns a collection of up to 10 classes which:
+	 * 		- share a category
+	 * 		- Have future sessions
+	 * 	- Ordered by number of future sessions
+	 *
+	 * @param $searchTerm
+	 * @return $this|string
+     */
+	public static function getRelatedFromSearch($searchTerm = false)
+	{
+
+		$cacheId = 'category_' . ($searchTerm ?: 'nosearch');
+		if(Cache::has($cacheId))
+		{
+			$subcategoryNames = Cache::get($cacheId);
+		}
+		else
+		{
+
+
+			$subcategory = static::where('name', 'LIKE', '%' . $searchTerm . '%')
+				->first();
+			//return $subcategory->name;
+
+
+			if ($subcategory) {
+				$catIds = [];
+				foreach ($subcategory->categories as $category) {
+					$catIds[] = $category->id;
+				}
+			}
+			else
+			{
+				$catIds = Category::lists('id');
+			}
+
+			$subcategories = static::
+			whereHas('categories', function ($query) use ($catIds) {
+					$query->whereIn('categories.id', $catIds);
+				})
+				->whereHas('evercisegroups', function ($query) {
+					$query->whereHas('futuresessions', function ($query) {
+
+					});
+				})
+				->take(10)
+				->get()
+				->sortBy(function ($subcats) {
+					return $subcats->evercisegroups->count();
+				});
+
+			$subcategoryNames = [];
+			foreach($subcategories as $subcat){
+				$subcategoryNames[] = $subcat->name;
+			}
+
+			Cache::put($cacheId, $subcategoryNames, 180);
+
+			/** ---------- prepare output for testing --------- */
+/*			$subcategoryName = $subcategory ? $subcategory->name : 'no Subcategory. Categories: ' . implode(',', $catIds);
+			$subcategoryCategories = $subcategory ? $subcategory->categories : [];
+
+			$output = '<strong>Subcategory: '.$subcategoryName.'</strong>';
+			$output .= '<br><br><strong>Categories: '.count($subcategoryCategories).'</strong>';
+			foreach ($subcategoryCategories as $cat) {
+				$output .= '<br>'.$cat->name;
+			}
+
+			$output .= '<br><br><strong>Subcategories: '.count($subcategories).'</strong>';
+			foreach ($subcategories as $subcat) {
+				$output .= '<br>'.$subcat->id.' - '.$subcat->name;
+			}
+			return $output;*/
+			/** ------------------------------------------------ */
+
+		}
+
+
+
+
+		return $subcategoryNames;
 	}
 
 }

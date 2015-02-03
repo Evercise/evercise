@@ -160,19 +160,6 @@ class SearchController extends \BaseController
 
         $results['selected_date'] = $search_date;
         $results['available_dates'] = $dates;
-        $results['related_categories'] = [
-            'i',
-            'will',
-            'add',
-            'more',
-            'categories',
-            'here',
-            'when',
-            'tris',
-            'finishes',
-            'the',
-            'function'
-        ];
 
 
 
@@ -181,6 +168,7 @@ class SearchController extends \BaseController
             return $results['redirect'];
         }
 
+        $results['related_categories'] = \Subcategory::getRelatedFromSearch($input['search'] ?: '');
 
         /**
          *
