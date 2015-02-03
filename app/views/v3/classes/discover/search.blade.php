@@ -69,8 +69,13 @@
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="sort">
-                        sort
+                    <div role="tabpanel" class="tab-pane sort-box open" id="sort">
+                        <ul class="dropdown-menu open" role="menu" aria-labelledby="dropdownMenu1">
+                            <li ng-class="(results.sort == 'best') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'best')">Best</a></li>
+                            <li ng-class="(results.sort == 'distance') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'distance')">Distance</a></li>
+                            <li ng-class="(results.sort == 'price_desc') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'price_desc')">Price (high to low)</a></li>
+                            <li ng-class="(results.sort == 'price_asc') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'price_asc')">Price (low to high)</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>

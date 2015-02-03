@@ -12670,6 +12670,24 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 .results .nav li a {
   font-weight: 600;
 }
+.results .sort-box {
+  width: 214px;
+  border: 1px solid #cccccc;
+  position: absolute;
+  right: 10px;
+  background: #ffffff;
+  z-index: 1;
+  -webkit-box-shadow: 5px 5px 13px -5px #000000;
+  box-shadow: 5px 5px 13px -5px #000000;
+}
+.results .sort-box .dropdown-menu {
+  min-width: 100%;
+  top: -4px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  left: -1px;
+  right: -1px;
+}
 .results .tab-pane {
   border-bottom: 1px solid #cccccc;
 }

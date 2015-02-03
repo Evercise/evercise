@@ -175,14 +175,24 @@ if(typeof angular != 'undefined') {
 
         $('.filter-btn, .sort-btn').click(function (e) {
             e.preventDefault();
-            var tab = $(this);
+            closeTab($(this));
+        });
+
+        var closeTab = function(tab){
             if(tab.parent('li').hasClass('active')){
                 window.setTimeout(function(){
                     $(".tab-pane").removeClass('active');
                     tab.parent('li').removeClass('active');
                 },1);
             }
-        });
+        }
+
+        // sort results
+        $scope.sortChanged = function(e, sort){
+            e.preventDefault();
+            $scope.results.sort = sort;
+            $scope.getData();
+        }
 
         // url to use for ajax calls
         $scope.url = $scope.results.url;
@@ -199,11 +209,14 @@ if(typeof angular != 'undefined') {
                 },
                 data: {
                     date : $scope.selectedDate,
-                    radius : $scope.results.radius
+                    radius : $scope.results.radius,
+                    sort : $scope.results.sort
                 }
             }
 
             var responsePromise = $http(req);
+            // close tab
+            closeTab($('.filter-btn, .sort-btn'));
             // bring up mask
             $scope.resultsLoading = true;
 
