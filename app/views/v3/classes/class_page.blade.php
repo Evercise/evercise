@@ -38,7 +38,7 @@
     <div class="container class-content">
         <div class="row text-white">
             <div class="col-sm-12">
-                <span class="text-large">Breadcrumb <span class="text-primary">></span> Where you are</span>
+                @include('v3.layouts.breadcrumb')
             </div>
         </div>
         <div class="row">
