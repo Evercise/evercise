@@ -74,24 +74,29 @@
             <div class="col-sm-6 sm-mt30">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                       {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $data['futuresessions'][0]->id, 'class' => 'add-to-class']) }}
-                           <strong class="text-large">Next Session</strong>
+                       {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $data['next_session']->id, 'class' => 'add-to-class']) }}
+                           @if(Input::has('t'))
+                                <strong class="text-large">Selected Session</strong>
+                           @else
+                                <strong class="text-large">Next Session</strong>
+                           @endif
+
                            <div class="row">
-                                <div class="col-xs-6 visible-md-block visible-lg-block">{{ date('l M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
-                                <div class="col-xs-6 visible-sm-block visible-xs-block">{{ date('D M dS, g:iA' , strtotime($data['futuresessions'][0]->date_time)) }}</div>
-                                <div class="col-xs-3 text-center"><strong class="text-primary">£{{ $data['futuresessions'][0]->price }}</strong> </div>
+                                <div class="col-xs-6 visible-md-block visible-lg-block">{{ date('l M dS, g:iA' , strtotime($data['next_session']->date_time)) }}</div>
+                                <div class="col-xs-6 visible-sm-block visible-xs-block">{{ date('D M dS, g:iA' , strtotime($data['next_session']->date_time)) }}</div>
+                                <div class="col-xs-3 text-center"><strong class="text-primary">£{{ $data['next_session']->price }}</strong> </div>
                                 <div class="qty-wrapper">
                                     <div class="col-xs-3 visible-md-block visible-lg-block visible-sm-block">
                                         <select name="quantity" id="quantity" class="qty-select select-box">
-                                            @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
-                                                <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                            @for($i=1; $i<($data['next_session']->remaining  + 1 ); $i++)
+                                                <option value="{{$i}}" {{ (!empty($cart_items[$data['next_session']->id]) && $cart_items[$data['next_session']->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
                                     <div class="col-xs-3 visible-xs-block">
                                         <select name="quantity" id="quantity" class="qty-select form-control select-default">
-                                            @for($i=1; $i<($data['futuresessions'][0]->remaining  + 1 ); $i++)
-                                                <option value="{{$i}}" {{ (!empty($cart_items[$data['futuresessions'][0]->id]) && $cart_items[$data['futuresessions'][0]->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
+                                            @for($i=1; $i<($data['next_session']->remaining  + 1 ); $i++)
+                                                <option value="{{$i}}" {{ (!empty($cart_items[$data['next_session']->id]) && $cart_items[$data['next_session']->id] == $i ? 'selected="selected"' : '') }}>{{$i}}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -100,7 +105,7 @@
                            <div class="row mt15">
                                 <div class="col-sm-12">
                                     <div class="pull-right">
-                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $data['futuresessions'][0]->id)) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $data['next_session']->id)) }}
                                         {{ Form::hidden('force', true) }}
                                         {{ Form::submit('Book Class', ['class'=>'btn btn-primary add-btn']) }}
 

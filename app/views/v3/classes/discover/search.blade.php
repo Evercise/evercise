@@ -84,7 +84,7 @@
                             <small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
                                 <strong class="h5">AVAILABLE CLASSES:</strong>
-                                <button class="ml10 mr20 btn btn-smallest btn-primary btn-rounded">8 am</button><button class="btn btn-smallest btn-primary btn-rounded">11 am</button>
+                                <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml10 mr10 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>
                         </div>
                         <div class="col-sm-3">
