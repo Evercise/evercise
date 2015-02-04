@@ -24,10 +24,10 @@
             idKey="'id'"
             id="'venue.id'"
             icon = "'icon'"
-            click="'onClicked'"
             doCluster = "true"
             clusterOptions = "map.clusterOptions"
             clusterEvents = "clusterEvents"
+            events = "markerEvents"
             >
         </ui-gmap-markers>
 
@@ -99,11 +99,13 @@
              </div>
 
             <div class="groups mb-scroll" ng-style="groupHeight()">
-                <div class="list-results" ng-repeat="group in everciseGroups track by group.id" ng-class="(lastActiveMarker == group) ? 'active' : ''">
-                    <div class="row class-stacked">
+                <div ng-show="selectedVenueIds" class="heading"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
+                <div ng-show="selectedVenueIds" class="heading">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
+                <div class="list-results" ng-repeat="group in everciseGroups track by group.id" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
+                    <div class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                         <div class="col-sm-9">
                             <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
-                            <small id="venue-{[{group.venue.id}]}">{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
+                            <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
                                 <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>

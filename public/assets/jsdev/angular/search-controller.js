@@ -40,14 +40,44 @@ if(typeof angular != 'undefined') {
         ];
         $scope.clusterOptions = {
             title: 'click to expand',
-            gridSize: 60,
+            gridSize: 5,
             maxZoom: 20,
             styles: $scope.clusterStyles,
             zoomOnClick: false
         };
 
+        $scope.markerEvents = {
+            click: function (marker,e,model) {
+                // remove select venue
+                $scope.selectedVenueIds = false;
+                // toggle markers
+                $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
+                $scope.lastActiveMarker = model;
+                model.icon = '/assets/img/icon_default_large_pink.png';
+
+                panToMarker(model);
+                setTimeout(function() {
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+model.id), {
+                        scrollInertia: 500,
+                        timeout: 20
+                    });
+                }, 500)
+            },
+            mouseover: function (marker,e,model) {
+                $('#venue-'+model.id).addClass('active');
+            },
+            mouseout: function (marker,e,model) {
+                $('#venue-'+model.id).removeClass('active');
+            }
+        }
+
+        $scope.selectedVenueIds = false;
+        $scope.selectedVenueName = false;
+
         $scope.clusterEvents = {
             click: function (cluster, clusterModels) {
+
+                $scope.selectedVenueIds = false;
 
                 var center = cluster.getCenter();
 
@@ -58,15 +88,27 @@ if(typeof angular != 'undefined') {
 
                 map.panTo(newlatlng);
 
+
+                var svi = [];
+
+                angular.forEach(clusterModels,function(value,key){
+                    svi.push(value.id);
+                } )
+                $scope.selectedVenueIds = svi;
+                $scope.selectedVenueName = clusterModels[0].venue.name;
+                // toggle markers
+                $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
+                $scope.lastActiveMarker = cluster;
+
             },
             mouseover: function (cluster, clusterModels) {
                 angular.forEach(clusterModels,function(value,key){
-                    $('#venue-'+value.id).addClass('text-primary');
+                    $('#venue-'+value.id).addClass('active');
                 } )
             },
             mouseout: function (cluster, clusterModels) {
                 angular.forEach(clusterModels,function(value,key){
-                    $('#venue-'+value.id).removeClass('text-primary');
+                    $('#venue-'+value.id).removeClass('active');
                 } )
             }
         };
@@ -114,15 +156,7 @@ if(typeof angular != 'undefined') {
                     },
                     slug: v.slug,
                     times : v.times,
-                    price : v.default_price,
-                    onClicked: function () {
-                        var marker = this.model;
-                        // toggle markers
-                        $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
-                        $scope.lastActiveMarker = marker;
-                        marker.icon = '/assets/img/icon_default_large_pink.png';
-                        panToMarker(marker);
-                    }
+                    price : v.default_price
                 })
             })
             return groups;
@@ -138,6 +172,8 @@ if(typeof angular != 'undefined') {
 
             map.panTo(newlatlng);
         }
+
+
 
 
         // scroll dates
@@ -230,13 +266,16 @@ if(typeof angular != 'undefined') {
             $scope.resultsLoading = true;
 
             responsePromise.success(function(data) {
-                console.log(data);
 
                 $scope.results = data;
                 $scope.availableDates = $scope.results.available_dates;
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.everciseGroups = shapeEverciseGroups();
                 $scope.resultsLoading = false;
+
+                // reset zoom
+                var map = $scope.map.control.getGMap();
+                map.setZoom(12);
             });
 
             responsePromise.error(function(data) {

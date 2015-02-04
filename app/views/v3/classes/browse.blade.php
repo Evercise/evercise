@@ -44,7 +44,7 @@
                         <p>{[{ browse.description }]}</p>
                         <strong class="text-larger">Popular Classes</strong>
                         <div class="mt10 mb15">
-                            <button ng-repeat="(key, pop) in browse.popular_subcategories track by key" class="btn btn-rounded btn-white mr20">{[{ pop.name }]}({[{ pop.classes }]})</button>
+                            <button ng-repeat="(key, pop) in browse.popular_subcategories track by key" class="btn btn-rounded btn-white mr20">{[{ pop.name }]}</button>
                         </div>
                         <strong class="text-larger">Types of {[{ browse.name }]}</strong>
 

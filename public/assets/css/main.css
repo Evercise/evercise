@@ -7107,6 +7107,9 @@ yx-axis
   src: url('/fonts/universltstd-ultracn.eot');
   src: url('/fonts/universltstd-ultracn.eot') format('embedded-opentype'), url('/fonts/universltstd-ultracn.woff') format('woff'), url('/fonts/universltstd-ultracn.ttf') format('truetype'), url('/fonts/universltstd-ultracn.svg#UniversLTStd59UltraCondensed') format('svg');
 }
+html {
+  font-weight: 300;
+}
 h1,
 h2,
 h3,
@@ -7529,6 +7532,7 @@ a.bg-light-grey:hover {
   margin-left: 1px;
   color: #ffffff;
   display: block;
+  font-size: 16px;
 }
 .nav-categories .items li a:hover,
 .nav-categories .items li a.active {
@@ -7543,11 +7547,12 @@ a.bg-light-grey:hover {
 .nav-categories .tab {
   background: #5980af;
   color: #ffffff;
-  height: 482px;
+  height: 521px;
   padding: 40px 30px;
 }
 .nav-categories .tab p {
   line-height: 21px;
+  font-size: 16px;
 }
 .nav-categories .tab ul {
   padding: 0;
@@ -8181,6 +8186,20 @@ a.bg-light-grey:hover {
 .icon-locator-pink-small.active:hover {
   cursor: pointer;
   background-position: -290px -770px;
+}
+.icon-sm-marker {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -1014px -455px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-sm-marker.active {
+  background-position: -1014px -415px;
+}
+.icon-sm-marker.hover:hover,
+.icon-sm-marker.active:hover {
+  cursor: pointer;
+  background-position: -1014px -415px;
 }
 .icon-checkbox {
   background-image: url("../img/ev_site_icons_v2.png");
@@ -9477,6 +9496,11 @@ fieldset[disabled] .stripe-button-el.active {
   padding: 15px 20px;
   clear: both;
   border-bottom: 1px solid #cccccc;
+}
+.class-stacked.active {
+  margin: 0px 0 3px;
+  -webkit-box-shadow: 0 0 8px -2px #000000;
+  box-shadow: 0 0 8px -2px #000000;
 }
 .class-module {
   max-width: 325px;

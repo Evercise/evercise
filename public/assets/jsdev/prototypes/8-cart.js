@@ -101,8 +101,8 @@ Cart.prototype = {
             success: function (data) {
                 if(data.view){
                     self.updateCart(data);
-                    if($('.mask').length){
-                        $('.mask').addClass('hidden');
+                    if($('.checkout .mask').length){
+                        $('.checkout .mask').addClass('hidden');
                     }
                 }
                 else if(data.refresh){
