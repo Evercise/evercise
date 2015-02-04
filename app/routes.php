@@ -159,7 +159,10 @@ Route::group(['prefix' => 'ajax'], function () {
 
 
     Route::post('categories',
-        ['as' => 'ajax.categories', 'uses' => 'CategoryController@getCategories']);
+        ['as' => 'ajax.categories', 'uses' => 'ajax\CategoryController@getCategories']);
+
+    Route::post('categories/browse',
+        ['as' => 'categories.browse', 'uses' => 'ajax\CategoryController@browse']);
 
 });
 
