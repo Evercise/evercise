@@ -145,14 +145,22 @@ class SearchController extends \BaseController
 
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
 
-        $search_date = array_keys($dates)[0];
+
+        $search_date_keys = array_keys($dates);
+        $search_date = false;
+
+        if (!empty($search_date_keys[0])) {
+            $search_date = $search_date_keys[0];
+        }
 
         if (!empty($input['date']) && !empty($dates[$input['date']])) {
             $search_date = $input['date'];
         }
 
 
-        $input['date'] = $search_date;
+        if ($search_date) {
+            $input['date'] = $search_date;
+        }
 
 
         $results = $this->searchmodel->search($area, $input, $this->user);
@@ -162,13 +170,12 @@ class SearchController extends \BaseController
         $results['available_dates'] = $dates;
 
 
-
         if (!empty($results['redirect'])) {
 
             return $results['redirect'];
         }
 
-        $results['related_categories'] = \Subcategory::getRelatedFromSearch($input['search'] ?: '');
+        $results['related_categories'] = \Subcategory::getRelatedFromSearch(!empty($input['search']) ? $input['search'] : FALSE);
 
         /**
          *
