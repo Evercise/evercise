@@ -7530,8 +7530,9 @@ a.bg-light-grey:hover {
   color: #ffffff;
   display: block;
 }
+.nav-categories .items li a:hover,
 .nav-categories .items li a.active {
-  background: #5980af;
+  background: rgba(89, 128, 175, 0.8);
 }
 .nav-categories .items li a .caret-right {
   position: absolute;
@@ -7542,7 +7543,7 @@ a.bg-light-grey:hover {
 .nav-categories .tab {
   background: #5980af;
   color: #ffffff;
-  height: 448px;
+  height: 482px;
   padding: 40px 30px;
 }
 .nav-categories .tab ul {
@@ -8670,22 +8671,36 @@ fieldset[disabled] .btn-light.active {
   position: absolute;
   left: 20px;
   top: 50%;
-  height: 22px;
-  width: 22px;
-  margin-top: -11px;
+  height: 12px;
+  width: 12px;
+  margin-top: -6px;
   content: '';
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -1170px -250px;
+  background-position: -1174px -454px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .filter-btn:after.active {
-  background-position: -1170px -290px;
+  background-position: -1174px -494px;
 }
 .filter-btn:after.hover:hover,
 .filter-btn:after.active:hover {
   cursor: pointer;
-  background-position: -1170px -290px;
+  background-position: -1174px -494px;
+}
+.filter-btn:hover:after {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -1174px -414px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.filter-btn:hover:after.active {
+  background-position: -1174px -454px;
+}
+.filter-btn:hover:after.hover:hover,
+.filter-btn:hover:after.active:hover {
+  cursor: pointer;
+  background-position: -1174px -454px;
 }
 .sort-btn {
   position: relative;
@@ -8694,22 +8709,36 @@ fieldset[disabled] .btn-light.active {
   position: absolute;
   left: 20px;
   top: 50%;
-  height: 22px;
-  width: 22px;
-  margin-top: -11px;
+  height: 12px;
+  width: 12px;
+  margin-top: -6px;
   content: '';
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -1130px -250px;
+  background-position: -1214px -454px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .sort-btn:after.active {
-  background-position: -1130px -290px;
+  background-position: -1214px -494px;
 }
 .sort-btn:after.hover:hover,
 .sort-btn:after.active:hover {
   cursor: pointer;
-  background-position: -1130px -290px;
+  background-position: -1214px -494px;
+}
+.sort-btn:hover:after {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -1214 -414px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.sort-btn:hover:after.active {
+  background-position: -1214 -454px;
+}
+.sort-btn:hover:after.hover:hover,
+.sort-btn:hover:after.active:hover {
+  cursor: pointer;
+  background-position: -1214 -454px;
 }
 .custom-fb {
   width: 100%;

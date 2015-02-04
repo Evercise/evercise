@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Sentry;
+use Input, Sentry, Category,Response;
 
 
 class CategoryController extends AjaxBaseController
@@ -28,6 +28,8 @@ class CategoryController extends AjaxBaseController
      */
     public function browse()
     {
-        return \Category::browse();
+        $results = Category::browse();
+
+        return Response::json($results);
     }
 }

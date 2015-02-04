@@ -1,4 +1,4 @@
-function categorySelect(select){
+function categoryAutoComplete(select){
     this.elem = select;
     this.inputBox =  this.elem.parent().find('input');
     this.selected = '';
@@ -6,8 +6,8 @@ function categorySelect(select){
     this.addListenners();
 }
 
-categorySelect.prototype = {
-    constructor : categorySelect,
+categoryAutoComplete.prototype = {
+    constructor : categoryAutoComplete,
     addListenners : function(){
         this.elem.find('a').on('click', $.proxy(this.select, this));
     },

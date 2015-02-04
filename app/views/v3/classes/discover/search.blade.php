@@ -1,11 +1,12 @@
 @extends('v3.layouts.master')
 <?php  View::share('angular', 'show') ?>
 <?php  View::share('footer', 'no') ?>
+<?php  View::share('angularApp', 'ng-app="everApp"') ?>
 @include('layouts.laracasts')
 
 @section('body')
 
-  <div id="angular-wrapper" ng-app="everApp" ng-controller="searchController" ng-cloak>
+  <div id="angular-wrapper"  ng-controller="searchController" ng-cloak>
 
     @include('v3.landing.popup')
 
@@ -96,8 +97,9 @@
                  <a href="#"  ng-click="scroll_clicked || scrollDates('left', $event)" class="scroll left" ng-disabled="scroll_clicked" ><</a>
                  <a href="#" ng-click="scroll_clicked || scrollDates('right', $event)" class="scroll right" ng-disabled="scroll_clicked">></a>
              </div>
+
             <div class="groups mb-scroll" ng-style="groupHeight()">
-                <div class="list-results" ng-repeat="group in everciseGroups track by group.id">
+                <div class="list-results" ng-repeat="group in everciseGroups track by group.id" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                     <div class="row class-stacked">
                         <div class="col-sm-9">
                             <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>

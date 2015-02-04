@@ -127,8 +127,8 @@
         margin-left: 1px;
         color: @white;
         display: block;
-        &.active{
-          background: #5980af;
+        &:hover, &.active{
+          background: fade(#5980af, 80%);
         }
         .caret-right{
           position: absolute;
@@ -143,7 +143,7 @@
   .tab{
     background: #5980af;
     color: @white;
-    height: 448px;
+    height: 482px;
     padding: 40px 30px;
     ul{
       padding: 0;

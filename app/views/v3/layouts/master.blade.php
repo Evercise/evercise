@@ -81,7 +81,7 @@
 	@include('v3.layouts.tracking')
 
 </head>
-<body>
+<body {{ isset($angularApp) ? $angularApp : '' }}>
 
 <!-- include app navigation  -->
 {{ isset($header) ? $header : '' }}

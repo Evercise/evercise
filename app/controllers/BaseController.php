@@ -32,6 +32,7 @@ class BaseController extends Controller
         }
 
 
+
         View::share('cart_items', $this->cart_items);
         View::share('cart', View::make('v3.cart.dropdown')->with($this->cart)->render());
 
@@ -67,14 +68,19 @@ class BaseController extends Controller
 
     protected function setupHeader($user_type = 'none')
     {
+        $browse = false;
+        if (Request::is('uk/*'))
+        {
+            $browse = true;
+        }
 
         switch ($user_type) {
             case 'none':
-                return View::make('v3.layouts.navigation')->render();
+                return View::make('v3.layouts.navigation')->with('browse',$browse)->render();
                 break;
 
             case 'user':
-                return View::make('v3.layouts.navigation-user')->render();
+                return View::make('v3.layouts.navigation-user')->with('browse',$browse)->render();
                 break;
 
             case 'cart':

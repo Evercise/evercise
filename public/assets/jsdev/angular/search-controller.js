@@ -42,7 +42,8 @@ if(typeof angular != 'undefined') {
             title: 'click to expand',
             gridSize: 60,
             maxZoom: 20,
-            styles: $scope.clusterStyles
+            styles: $scope.clusterStyles,
+            zoomOnClick: false
         };
 
         $scope.clusterEvents = {
@@ -56,13 +57,6 @@ if(typeof angular != 'undefined') {
                 var newlatlng = new google.maps.LatLng(center.lat(), center.lng());
 
                 map.panTo(newlatlng);
-                var currentZoom = map.getZoom();
-                if(currentZoom >= 14){
-                    map.setZoom(18);
-                }
-                else{
-                    map.setZoom(14);
-                }
 
             },
             mouseover: function (cluster, clusterModels) {
@@ -102,6 +96,8 @@ if(typeof angular != 'undefined') {
 
         // class results
 
+        $scope.lastActiveMarker = {};
+
         shapeEverciseGroups = function(){
             var groups = [];
             angular.forEach($scope.results.results.hits, function(v,k){
@@ -120,7 +116,12 @@ if(typeof angular != 'undefined') {
                     times : v.times,
                     price : v.default_price,
                     onClicked: function () {
-                        onMarkerClicked(this.model);
+                        var marker = this.model;
+                        // toggle markers
+                        $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
+                        $scope.lastActiveMarker = marker;
+                        marker.icon = '/assets/img/icon_default_large_pink.png';
+                        panToMarker(marker);
                     }
                 })
             })
@@ -129,8 +130,13 @@ if(typeof angular != 'undefined') {
 
         $scope.everciseGroups = shapeEverciseGroups();
 
-        var onMarkerClicked = function (marker) {
-            console.log(marker)
+        // pan to
+
+        var panToMarker = function(marker){
+            var map = $scope.map.control.getGMap();
+            var newlatlng = new google.maps.LatLng(marker.venue.latitude, marker.venue.longitude);
+
+            map.panTo(newlatlng);
         }
 
 

@@ -222,7 +222,7 @@ $(function(){
     })
 
     $('.category-select').exists(function(){
-        new categorySelect(this);
+        new categoryAutoComplete(this);
     })
 
     if (navigator.geolocation) {

@@ -3,6 +3,9 @@
     <div class="navbar-header">
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
     </div>
+    @if(isset($browse) && $browse)
+        @include('v3.classes.browse')
+    @endif
       <ul class="nav navbar-nav navbar-right">
         <li class="nav-list hidden">
             <span>{{ HTML::decode(HTML::linkRoute('conversation', '', ['displayName'=>$newMessages['user']], ['class'=>'icon icon-mail'])) }}{{ $newMessages['count'] }}</span>
