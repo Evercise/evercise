@@ -110,6 +110,7 @@ class SearchModel
             $location = $this->place->getByLocation($input['location'], $input['city']);
 
 
+
             if (is_null($location)) {
 
                 $this->log->info('Address ERROR: ' . $input['location'] . '?' . http_build_query($input));
@@ -170,6 +171,19 @@ class SearchModel
             $radius = $area->min_radius;
         } elseif (!$radius && empty($area->min_radius)) {
             $radius = $this->config->get('evercise.default_radius');
+
+            if(!empty($area->link->type)) {
+
+                switch($area->link->type) {
+                    case 'ZIP':
+                        $radius = '1mi';
+                        break;
+                    case 'STATION':
+                        $radius = '2mi';
+                        break;
+
+                }
+            }
         }
 
 
