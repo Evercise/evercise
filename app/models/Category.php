@@ -110,9 +110,7 @@ class Category extends Eloquent
 
             $output = [];
             foreach ($subcats as $subcat) {
-                $output[$subcat->id] = [
-                    'name' => $subcat->name,
-                ];
+                $output[$subcat->id] = $subcat->name;
             }
 
             return $output;
