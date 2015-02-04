@@ -112,7 +112,6 @@ class Category extends Eloquent
             foreach ($subcats as $subcat) {
                 $output[$subcat->id] = [
                     'name' => $subcat->name,
-                    'classes' => 57,
                 ];
             }
 
@@ -136,7 +135,7 @@ class Category extends Eloquent
             })
             ->take(15)
             ->get()
-            ->sortBy(function ($subcats) {
+            ->sortByDesc(function ($subcats) {
                 return $subcats->evercisegroups->count();
             });
 
@@ -144,7 +143,7 @@ class Category extends Eloquent
         foreach ($subcategories as $subcat) {
             $output[$subcat->id] = [
                 'name' => $subcat->name,
-                'classes' => 6,
+                'classes' => $subcat->evercisegroups->count(),
             ];
         }
 
