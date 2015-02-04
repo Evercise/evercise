@@ -816,6 +816,6 @@ Route::get('test4/{term}', function($term) {
 });
 Route::get('test5', function() {
 
-    return Category::browse();
+    return d(Category::browse());
 });
 
