@@ -7546,6 +7546,9 @@ a.bg-light-grey:hover {
   height: 482px;
   padding: 40px 30px;
 }
+.nav-categories .tab p {
+  line-height: 21px;
+}
 .nav-categories .tab ul {
   padding: 0;
 }
