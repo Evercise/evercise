@@ -111,7 +111,7 @@ class Category extends Eloquent
         }
 
 
-        return var_dump($output);
+        return d($output);
     }
 }
 
