@@ -127,20 +127,36 @@ class Category extends Eloquent
     {
         /**  Needs Doing */
 
-        $subcategories = Subcategory::take(15)->lists('name', 'id');
+        $subcategories = Subcategory::
+              take(15)
+            ->get()
+            ->sortBy(function ($subcats) {
+                return $subcats->evercisegroups->count();
+            });
 
-        return $subcategories;
+        $output = [];
+        foreach ($subcategories as $subcat) {
+            $output[$subcat->id] = $subcat->name;
+        }
+
+
+        return $output;
     }
 
     /** return all categorys
      *      - description
-     *      - popular classes (the chosen ones)
+     *      - popular subcategories (the chosen ones)
      *      - subcategories (order by num classes, limit 15)
      *
      */
     public static function browse()
     {
-        $categories = static::with('subcategories')->get();
+        $categories = static::
+              with('subcategories')
+            ->get()
+            ->sortBy(function ($subcats) {
+                return $subcats->order;
+            });
 
         $output = [];
         foreach ($categories as $category) {
