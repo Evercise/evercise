@@ -696,7 +696,13 @@ class MainController extends \BaseController
             })
             ->lists('name', 'id');
 
-        return View::make('admin.edit_category', compact('category', 'groups'));
+        $subcategories = [];
+        foreach ($category->subcategories as $subcat) {
+            $subcategories[$subcat->id] = $subcat->name;
+        }
+
+
+        return View::make('admin.edit_category', compact('category', 'groups', 'subcategories'));
     }
 
 

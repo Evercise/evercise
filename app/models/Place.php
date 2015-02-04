@@ -140,6 +140,9 @@ class Place extends \Eloquent
         if (count($link) == 0) {
             /** This crap is new.. so lets add it and figure out where the f* is it */
 
+            if($is_zip) {
+                $min_radius = '1mi';
+            }
 
             $geo = self::getGeo($name, $is_city, $is_zip);
 

@@ -373,15 +373,18 @@ class AdminAjaxController extends AdminController
 
         $name = Input::get('name');
         $description = Input::get('description');
-        $popular = Input::get('popular_groups');
+        $popularGroups = Input::get('popular_groups');
+        $popularSubcats = Input::get('popular_subcategories');
 
-        $popularCSV = implode(',', $popular);
+        $popularGroupsCSV = $popularGroups ? implode(',', $popularGroups) : '';
+        $popularSubcatsCSV = $popularSubcats ? implode(',', $popularSubcats) : '';
 
         $category = Category::find($id);
 
         $category->name = $name;
         $category->description = $description;
-        $category->popular = $popularCSV;
+        $category->popular_classes = $popularGroupsCSV;
+        $category->popular_subcategories = $popularSubcatsCSV;
         $category->save();
 
         return Redirect::route('admin.categories');

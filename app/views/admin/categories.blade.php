@@ -53,7 +53,8 @@
         <thead>
             <td><p>Category</p></td>
             <td><p>visible</p></td>
-            <td><p>popular</p></td>
+            <td><p>popular categories</p></td>
+            <td><p>popular groups</p></td>
             <td><p>description</p></td>
             <td><p>options</p></td>
         </thead>
@@ -62,7 +63,8 @@
                 <tr id="{{$category->id}}">
                     <td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><p>{{$category->name}}</p></td>
                     <td><p>{{ Form::checkbox('visible_'.$category->id, '1', $category->visible, ['id'=>'visible_'.$category->id] )}}</p></td>
-                    <td>{{$category->getPopularClasses()}}</td>
+                    <td>{{$category->getPopularClassesString()}}</td>
+                    <td>{{$category->getPopularSubcategoriesString()}}</td>
                     <td><p>{{$category->description}}</p></td>
                     <td><p><a  title="Edit" href="{{URL::route('admin.categories.manage', [$category->id]) }}"><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a></p></td>
                 </tr>

@@ -18,7 +18,12 @@
     
         </div>
         <div class="form-group">
-        {{ Form::select( 'popular_groups[]' , $groups, explode(',', $category->popular), ['class'=>'popular', 'multiple'=>'multiple', 'style'=>'width:600px;background-color:#ccc']) }}
+              <label>Popular Subcategories:</label>
+            {{ Form::select( 'popular_subcategories[]' , $subcategories,explode(',', $category->popular_subcategories), ['class'=>'popular', 'multiple'=>'multiple', 'style'=>'width:600px;background-color:#ccc']) }}
+        </div>
+        <div class="form-group">
+              <label>Popular Classes:</label>
+            {{ Form::select( 'popular_groups[]' , $groups, explode(',', $category->popular_classes), ['class'=>'popular', 'multiple'=>'multiple', 'style'=>'width:600px;background-color:#ccc']) }}
         </div>
         <div class="form-group">
         </div>
