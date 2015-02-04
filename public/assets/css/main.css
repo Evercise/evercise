@@ -7123,6 +7123,20 @@ h6,
   margin: 15px 0 22px;
   color: #797979;
 }
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+.h1 a,
+.h2 a,
+.h3 a,
+.h4 a,
+.h5 a,
+.h6 a {
+  color: #797979;
+}
 .page-header {
   margin-top: 55px;
   margin-bottom: 0;
@@ -12687,6 +12701,8 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   border-top-right-radius: 0;
   left: -1px;
   right: -1px;
+  padding: 0;
+  text-align: center;
 }
 .results .tab-pane {
   border-bottom: 1px solid #cccccc;

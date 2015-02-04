@@ -47,10 +47,13 @@ if(typeof angular != 'undefined') {
 
         $scope.clusterEvents = {
             click: function (cluster, clusterModels) {
+
+                var center = cluster.getCenter();
+
                 // zoom into cluster
 
                 var map = $scope.map.control.getGMap();
-                var newlatlng = new google.maps.LatLng(cluster.center_.k, cluster.center_.C);
+                var newlatlng = new google.maps.LatLng(center.lat(), center.lng());
 
                 map.panTo(newlatlng);
                 var currentZoom = map.getZoom();
@@ -83,7 +86,7 @@ if(typeof angular != 'undefined') {
         $scope.map = {
             zoom: 12,
             maxZoom: 18,
-            center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng + 0.07},
+            center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
             control: {},
             clusterOptions: $scope.clusterOptions
         };

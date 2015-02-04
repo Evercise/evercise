@@ -3,7 +3,7 @@
     <div class="navbar-header">
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
     </div>
-    <ul class="nav navbar-nav nav-browse hidden">
+    <ul class="nav navbar-nav nav-browse ">
         <div class="row">
             <div class="col-xs-2">
                 <li class="custom-cat-select dropdown">
@@ -37,7 +37,7 @@
                 </div>
             </div>
         </div>
-        <div class="nav-categories" id="browse-cats">
+        <div class="nav-categories hidden" id="browse-cats">
             <div class="row no-gutter ml0 mr0">
                 <div class="col-xs-4">
                     <ul class="items">

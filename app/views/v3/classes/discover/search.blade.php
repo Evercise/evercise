@@ -36,7 +36,7 @@
 
         <div class="inner">
             <div ng-if="resultsLoading" class="mask"><div class="loading"></div></div>
-            <div class="heading"><span class="text-primary">{[{ results.size}]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div>
+            <div class="heading"><span class="text-primary">{[{ results.results.total }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div>
             <div role="tabpanel">
                 <ul class="nav nav-tabs nav-justified">
                   <li role="presentation"><a href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
@@ -103,7 +103,7 @@
                             <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <small id="venue-{[{group.venue.id}]}">{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
-                                <strong class="h5">AVAILABLE CLASSES:</strong>
+                                <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
                                 <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>
                         </div>
