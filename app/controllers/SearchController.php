@@ -142,31 +142,15 @@ class SearchController extends \BaseController
     {
         $input = array_filter($this->input->all());
 
-
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
 
-
-        $search_date_keys = array_keys($dates);
-        $search_date = false;
-
-        if (!empty($search_date_keys[0])) {
-            $search_date = $search_date_keys[0];
-        }
-
-        if (!empty($input['date']) && !empty($dates[$input['date']])) {
-            $search_date = $input['date'];
-        }
-
-
-        if ($search_date) {
-            $input['date'] = $search_date;
-        }
+        $input['date'] = $this->searchmodel->getSearchDate($dates, $input);
 
 
         $results = $this->searchmodel->search($area, $input, $this->user);
 
 
-        $results['selected_date'] = $search_date;
+        $results['selected_date'] = $input['date'];
         $results['available_dates'] = $dates;
 
 
@@ -175,18 +159,8 @@ class SearchController extends \BaseController
             return $results['redirect'];
         }
 
+
         $results['related_categories'] = \Subcategory::getRelatedFromSearch(!empty($input['search']) ? $input['search'] : FALSE);
-
-        /**
-         *
-         * /*
-         * Override $params arr so it will show the map results only
-         * $params['size'] = $this->config->get('evercise.max_display_map_results');
-         * $params['from'] = 0;
-         * $map_search = $this->search->getResults($area, $params);
-         * $mapResults = $this->search->cleanMapResults($map_search);
-
-         */
 
         JavaScript::put(['results' => $results]);
 
