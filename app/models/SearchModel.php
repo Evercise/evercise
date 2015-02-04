@@ -121,6 +121,9 @@ class SearchModel
 
                 $input = array_filter($input);
 
+                if ($dates) {
+                    return FALSE;
+                }
 
                 return [
                     'redirect' => $this->redirect->route(
@@ -142,6 +145,10 @@ class SearchModel
             $this->log->info('Redirect TO: ' . $location->link->permalink . '?' . http_build_query($input));
             $input['allsegments'] = $location->link->permalink;
 
+            if ($dates) {
+                return FALSE;
+            }
+
             return [
                 'redirect' => $this->redirect->route(
                     'search.parse',
@@ -151,16 +158,18 @@ class SearchModel
             ];
         }
 
-        $radius = $this->input->get('radius');
+        $radius = (!empty($input['radius']) ? $input['radius'] : FALSE);
         if (!$radius) {
-            $radius = $this->input->get('distance', $this->config->get('evercise.default_radius'));
+            $radius = (!empty($input['distance']) ? $input['distance'] : FALSE);
         }
 
         $size = $this->session->get('PER_PAGE', $this->config->get('evercise.default_per_page'));
 
 
-        if (!empty($area->min_radius) && str_replace('mi', '', $area->min_radius) > str_replace('mi', '', $radius)) {
+        if (!$radius && !empty($area->min_radius)) {
             $radius = $area->min_radius;
+        } elseif (!$radius && empty($area->min_radius)) {
+            $radius = $this->config->get('evercise.default_radius');
         }
 
 
@@ -169,7 +178,7 @@ class SearchModel
         $search = (!empty($input['search']) ? $input['search'] : '');
 
         $params = [
-            'clean'     => true,
+            'clean'    => TRUE,
             'size'     => $size,
             'venue_id' => (!empty($input['venue_id']) ? $input['venue_id'] : FALSE),
             'from'     => (($page - 1) * $size),
@@ -218,8 +227,7 @@ class SearchModel
         }
 
 
-
-        if (!empty($input['date'])) {
+        if (!empty($input['date']) && $input['date']) {
             $params['date'] = $input['date'];
         }
 
@@ -408,6 +416,51 @@ class SearchModel
         }
 
         return FALSE;
+
+    }
+
+
+    public function getSearchDate($dates, $input = [])
+    {
+
+        if (!$dates) {
+            return FALSE;
+        }
+
+
+        $search_date_keys = array_keys($dates);
+        $search_date = FALSE;
+
+
+        /** Check if we have enough of classes to Show for the next 7 days */
+        $days = 7;
+        $minimum = 20;
+        $total = 0;
+        $i = 0;
+        foreach ($dates as $date => $amount) {
+            $i++;
+            if ($i > $days) {
+                break;
+            }
+
+            $total += $amount;
+        }
+
+
+        if ($minimum > $total) {
+            return FALSE;
+        }
+
+
+        if (!empty($search_date_keys[0])) {
+            $search_date = $search_date_keys[0];
+        }
+
+        if (!empty($input['date']) && !empty($dates[$input['date']])) {
+            return $input['date'];
+        }
+
+        return $search_date;
 
     }
 

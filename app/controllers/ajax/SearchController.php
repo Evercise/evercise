@@ -154,27 +154,13 @@ class SearchController extends AjaxBaseController
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
 
 
-        $search_date_keys = array_keys($dates);
-        $search_date = FALSE;
-
-        if (!empty($search_date_keys[0])) {
-            $search_date = $search_date_keys[0];
-        }
-
-        if (!empty($input['date']) && !empty($dates[$input['date']])) {
-            $search_date = $input['date'];
-        }
-
-
-        if ($search_date) {
-            $input['date'] = $search_date;
-        }
+        $input['date'] = $this->searchmodel->getSearchDate($dates, $input);
 
 
         $results = $this->searchmodel->search($area, $input, $this->user);
 
 
-        $results['selected_date'] = $search_date;
+        $results['selected_date'] = $input['date'];
         $results['available_dates'] = $dates;
 
 
