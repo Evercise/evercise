@@ -16,7 +16,8 @@ class Category extends Eloquent
         'order',
         'visible',
         'description',
-        'popular'
+        'popular_classes',
+        'popular_subcategories',
     );
 
     /**
@@ -50,13 +51,6 @@ class Category extends Eloquent
         }
     }
 
-    public function getPopularClasses()
-    {
-        $groups = Evercisegroup::whereIn('id', explode(',', $this->popular))->lists('name');
-
-        return implode(',', $groups);
-    }
-
     public static function assignVisible($visibleSettings)
     {
         foreach ($visibleSettings as $id => $v)
@@ -68,9 +62,16 @@ class Category extends Eloquent
         }
 
     }
-    public function getPopularClassesArray()
+    public function getPopularClassesString()
     {
-        $groups = Evercisegroup::whereIn('id', explode(',', $this->popular))->get();
+        $groups = Evercisegroup::whereIn('id', explode(',', $this->popular_classes))->lists('name');
+
+        return implode(',', $groups);
+    }
+
+    public function getPopularClasses()
+    {
+        $groups = Evercisegroup::whereIn('id', explode(',', $this->popular_classes))->get();
 
         $output = [];
         foreach ($groups as $group) {
@@ -83,8 +84,49 @@ class Category extends Eloquent
         return $output;
     }
 
+    public function getPopularSubcategoriesString()
+    {
+        if ($this->popular_subcategories)
+        {
+            $subcats = Subcategory::whereIn('id', explode(',', $this->popular_subcategories))->lists('name');
+
+            //return $this->popular_subcategories
+            return implode(',', $subcats);
+        }
+        else
+        {
+            return '';
+        }
+    }
     public function getPopularSubcategories()
     {
+        //$subcategories = Subcategory::take(15)->lists('name', 'id');
+
+        //return $this->popular_subcategories;
+
+        if ($this->popular_subcategories)
+        {
+            $subcats = Subcategory::whereIn('id', explode(',', $this->popular_subcategories))->get();
+
+            $output = [];
+            foreach ($subcats as $subcat) {
+                $output[$subcat->id] = [
+                    'name' => $subcat->name,
+                ];
+            }
+
+            return $output;
+        }
+        else
+        {
+            return [];
+        }
+    }
+
+    public function generatePopularSubcategories()
+    {
+        /**  Needs Doing */
+
         $subcategories = Subcategory::take(15)->lists('name', 'id');
 
         return $subcategories;
@@ -105,13 +147,13 @@ class Category extends Eloquent
             $output[] = [
                 'name' => $category->name,
                 'description' => $category->description,
-                'popular' => $category->getPopularClassesArray(),
-                'subcategories' => $category->getPopularSubcategories(),
+                'popular_subcategories' => $category->getPopularSubcategories(),
+                'generated_subcategories' => $category->generatePopularSubcategories(),
             ];
         }
 
 
-        return var_dump($output);
+        return d($output);
     }
 }
 
