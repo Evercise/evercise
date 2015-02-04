@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateCategoriesTable extends Migration {
+class UpdateCategoriesPopular extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class UpdateCategoriesTable extends Migration {
 	 */
 	public function up()
 	{
+		DB::statement('ALTER TABLE categories CHANGE COLUMN popular popular_classes TEXT;');
+
 		Schema::table('categories', function(Blueprint $table) {
-			$table->integer('order');
-			$table->tinyInteger('visible');
-			$table->text('description');
-			$table->text('popular');
+			$table->text('popular_subcategories');
 		});
 	}
 
@@ -28,11 +27,10 @@ class UpdateCategoriesTable extends Migration {
 	 */
 	public function down()
 	{
+		DB::statement('ALTER TABLE categories CHANGE COLUMN popular_classes popular TEXT;');
+
 		Schema::table('categories', function(Blueprint $table) {
-			$table->dropColumn('order');
-			$table->dropColumn('visible');
-			$table->dropColumn('description');
-			$table->dropColumn('popular');
+			$table->dropColumn('popular_subcategories');
 		});
 	}
 
