@@ -127,8 +127,13 @@ class Category extends Eloquent
     {
         /**  Needs Doing */
 
+        $categoryId = $this->id;
+
         $subcategories = Subcategory::
-              take(15)
+            whereHas('categories', function ($query) use ($categoryId) {
+                $query->where('categories.id', $categoryId);
+            })
+            ->take(15)
             ->get()
             ->sortBy(function ($subcats) {
                 return $subcats->evercisegroups->count();
