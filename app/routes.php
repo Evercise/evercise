@@ -808,5 +808,11 @@ Route::get('test3', function(){
 });
 
 Route::get('test4/{term}', function($term) {
+
     return Subcategory::getRelatedFromSearch($term);
 });
+Route::get('test5', function() {
+
+    return Category::browse();
+});
+

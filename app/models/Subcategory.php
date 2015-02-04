@@ -38,23 +38,21 @@ class Subcategory extends Eloquent
      */
 	public static function editSubcategoryCategories($categoryChanges)
 	{
-		foreach (explode('-', $categoryChanges) as $change) {
-			$ch = explode('=', $change);
-			if (count($ch) > 1) {
-				$subcat = $ch[0];
+		foreach ($categoryChanges as $subcategoryId => $change) {
 
-				$subcategory = Subcategory::find($subcat);
+			$subcategory = Subcategory::find($subcategoryId);
+			if($subcategory && is_array($change)) {
 				$subcategory->categories()->detach();
 
 				$catArray = [];
-				foreach (explode('_', $ch[1]) as $cat) {
+				foreach ($change as $cat) {
 					if (!in_array($cat, $catArray))
 						array_push($catArray, $cat);
 				}
 				$subcategory->categories()->attach($catArray);
 			}
 		}
-		return true;
+		return 1;
 	}
 
 	public static function editAssociations($associationChanges)

@@ -183,7 +183,7 @@
                 });
 
                 // ----- SUBCATEGORIES -----
-                $('#category_list select').change(function(){
+ /*               $('#category_list select').change(function(){
                     //trace( $(this).val() );
                     //trace( $(this).attr('name') );
                     var row = $(this).closest('tr');
@@ -208,7 +208,7 @@
                     console.debug(output);
 
 
-                });
+                });*/
 
                 //yukon_select2.p_forms_extended();
 
@@ -269,8 +269,26 @@
                 $('select.popular').select2({
                 maximumSelectionSize: 3,
                 placeholder: 'click here'
-                }
-                );
+                });
+
+                $('.category_label').click(function(e){
+                    var select = $(this).next('select');
+                    trace(select);
+                    $(this).hide();
+                    select.show();
+                    select.select2({
+                        maximumSelectionSize: 3,
+                        placeholder: 'click here'
+                    });
+
+
+                });
+                $('select.categories').change(function(){
+
+                    var update_categories = $('#update_categories');
+                    update_categories.val(update_categories.val() + $(this).data('id')+',');
+                    console.debug($('#update_categories').val());
+                });
 
             });
 

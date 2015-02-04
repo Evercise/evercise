@@ -65,9 +65,7 @@
                 <th></th>
                 <th>#</th>
                 <th>TYPE</th>
-                <th>Category 1</th>
-                <th>Category 2</th>
-                <th>Category 3</th>
+                <th>Categories</th>
                 <th>Associated Words</th>
             </tr>
         </thead>
@@ -101,10 +99,11 @@
                         </label>
                     </td>
 
-
-                    <td>{{ Form::select( $subcategory->id.'_1' , $cat, count($subcategory->categories) > 0 ? ($subcategory->categories[0]->id) : 0) }}</td>
-                    <td>{{ Form::select( $subcategory->id.'_2' , $cat, count($subcategory->categories) > 1 ? ($subcategory->categories[1]->id) : 0) }}</td>
-                    <td>{{ Form::select( $subcategory->id.'_3' , $cat, count($subcategory->categories) > 2 ? ($subcategory->categories[2]->id) : 0) }}</td>
+                    <?php $cats = []; foreach($subcategory->categories as $cat){ $cats[] = $cat->id; } ?>
+                    <td>
+                        <label class="category_label" data-id="{{$subcategory->id}}">edit</label>
+                        {{ Form::select( 'categories_'.$subcategory->id.'[]' , $category, $cats, ['class'=>'categories', 'multiple'=>'multiple', 'style'=>'width:600px;background-color:#ccc;display:none;', 'data-id'=>$subcategory->id]) }}
+                    </td>
 
                     <td>
                         <label class="associations_label">{{$subcategory->associations ? str_replace(',', ', ', $subcategory->associations) : '...'}}</label>

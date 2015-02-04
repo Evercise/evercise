@@ -19,4 +19,15 @@ class CategoryController extends AjaxBaseController
         return $categories;
         //return var_dump($categories[0]->subcategories[0]);
     }
+
+    /** return all categorys
+     *      - description
+     *      - popular classes (the chosen ones)
+     *      - subcategories (order by num classes, limit 15)
+     *
+     */
+    public function browse()
+    {
+        return \Category::browse();
+    }
 }

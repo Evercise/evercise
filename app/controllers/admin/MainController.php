@@ -296,13 +296,13 @@ class MainController extends \BaseController
         $subcategories = \Subcategory::with('categories')->get();
         $categories = \Category::all();
 
-        $cat = [];
-        $cat[0] = '';
+        $category = [];
+        $category[0] = '';
         foreach ($categories as $c) {
-            $cat[$c->id] = $c->name;
+            $category[$c->id] = $c->name;
         }
 
-        return View::make('admin.subcategories', compact('categories', 'subcategories', 'cat'))->render();
+        return View::make('admin.subcategories', compact('categories', 'subcategories', 'category', 'subcatCats'))->render();
 
     }
 

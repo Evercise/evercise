@@ -310,9 +310,18 @@ class AdminAjaxController extends AdminController
      */
     public function editSubcategories()
     {
-        $categoryChanges = Input::get('update_categories');
         $assNumbers = explode(',', Input::get('update_associations'));
 
+        $editsubcategoryIds = explode(',', Input::get('update_categories'));
+
+        $subcategoryChanges = [];
+        foreach($editsubcategoryIds as $subcatId)
+        {
+            $subcategoryChanges[$subcatId] = Input::get('categories_'.$subcatId);
+        }
+
+
+        //return $subcategoryChanges;
 
         $type = Input::get('type', '');
 
@@ -323,8 +332,7 @@ class AdminAjaxController extends AdminController
             array_push($associations, [$assId => Input::get('associations_' . $assId)]);
         }
 
-
-        Subcategory::editSubcategoryCategories($categoryChanges);
+        Subcategory::editSubcategoryCategories($subcategoryChanges);
         Subcategory::editAssociations($associations);
         Subcategory::editTypes($type);
 
@@ -336,10 +344,8 @@ class AdminAjaxController extends AdminController
     public function updateCategories()
     {
         $order = explode(',',Input::get('order'));
-        //$visible = Input::get('visible');
 
         $cats = Category::get();
-
         foreach ($cats as $cat) {
             $cat->visible = Input::get('visible_'.$cat->id);
             $cat->save();
@@ -354,7 +360,7 @@ class AdminAjaxController extends AdminController
             $newOrder[$id] = $count;
         }
         Category::editOrder($newOrder);
-
+        //return $visibleSettings;
 
         return Response::json(['callback' => 'successAndRefresh']);
     }
