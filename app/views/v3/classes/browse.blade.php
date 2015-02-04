@@ -44,12 +44,12 @@
                         <p>{[{ browse.description }]}</p>
                         <strong class="text-larger">Popular Classes</strong>
                         <div class="mt10 mb15">
-                            <button ng-repeat="(key, pop) in browse.popular track by key" class="btn btn-rounded btn-white mr20">{[{ pop.name }]}</button>
+                            <button ng-repeat="(key, pop) in browse.popular_subcategories track by key" class="btn btn-rounded btn-white mr20">{[{ pop.name }]}</button>
                         </div>
                         <strong class="text-larger">Types of {[{ browse.name }]}</strong>
 
                         <ul class="mt10 row">
-                            <li class="col-xs-4" ng-repeat="subCat in browse.subcategories track by $index"><a href="#">{[{ subCat }]}</a></li>
+                            <li class="col-xs-4" ng-repeat="subCat in browse.generated_subcategories track by $index"><a href="#">{[{ subCat }]}</a></li>
                         </ul>
                     </div>
                 </div>

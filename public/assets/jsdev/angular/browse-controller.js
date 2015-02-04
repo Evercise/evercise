@@ -35,6 +35,7 @@ if(typeof angular != 'undefined') {
 
             responsePromise.success(function(data) {
                 $scope.categories = data;
+                console.log($scope.categories);
             });
 
             responsePromise.error(function(data) {
