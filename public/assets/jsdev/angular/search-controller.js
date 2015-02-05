@@ -140,9 +140,6 @@ if(typeof angular != 'undefined') {
         // map events
         $scope.mapEvents = {}
 
-        // set available dates
-
-        $scope.availableDates = $scope.results.available_dates;
 
         // class results
 
@@ -188,6 +185,15 @@ if(typeof angular != 'undefined') {
 
 
         // scroll dates
+
+
+        $scope.scrollWidth = function(){
+            var singleWidth = $('.date-picker-inline li .day').outerWidth();
+            var noOfDates = Object.keys($scope.results.available_dates).length;
+            return {
+                width: (singleWidth * noOfDates) + 'px'
+            }
+        }
 
         $scope.scroll_clicked = false;
 
@@ -278,7 +284,6 @@ if(typeof angular != 'undefined') {
 
             responsePromise.success(function(data) {
                 $scope.results = data;
-                $scope.availableDates = $scope.results.available_dates;
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.everciseGroups = shapeEverciseGroups();
                 $scope.resultsLoading = false;

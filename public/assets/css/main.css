@@ -10997,13 +10997,11 @@ div.hub-row.last {
   }
 }
 .date-picker-inline .wrapper .content {
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
   float: left;
   -webkit-transition: all linear 0.2s;
   -o-transition: all linear 0.2s;
   transition: all linear 0.2s;
+  width: 1000%;
 }
 .date-picker-inline li {
   float: left;

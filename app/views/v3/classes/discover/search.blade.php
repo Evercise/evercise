@@ -82,8 +82,8 @@
 
             <div ng-if="selectedDate" class="date-picker-inline">
                 <div class="wrapper">
-                    <div class="content">
-                         <li class="date-btn" ng-repeat="(date, value) in availableDates" ng-class="(date == selectedDate) ? 'active' : ''">
+                    <div class="content" ng-style="scrollWidth()">
+                         <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
                             <a href="#" ng-click="changeSelectedDate($event, date)">
                                 {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
