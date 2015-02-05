@@ -22,6 +22,9 @@ class AdminGalleryController extends AdminController
         foreach(Category::all() as $c) {
             $this->data['categories'][] = $c->name;
         }
+        foreach(Subcategory::all() as $c) {
+            $this->data['categories'][] = $c->name;
+        }
 
         $this->data['categories'] = array_unique($this->data['categories']);
 
