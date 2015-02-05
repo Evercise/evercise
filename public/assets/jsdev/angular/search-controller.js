@@ -155,14 +155,17 @@ if(typeof angular != 'undefined') {
                         longitude : v.venue.lng
                     },
                     slug: v.slug,
-                    times : v.times,
+                    times : v.times ,
+                    futuresessions : v.futuresessions,
                     price : v.default_price
                 })
             })
+            console.log(groups);
             return groups;
         }
 
         $scope.everciseGroups = shapeEverciseGroups();
+
 
         // pan to
 
@@ -266,7 +269,6 @@ if(typeof angular != 'undefined') {
             $scope.resultsLoading = true;
 
             responsePromise.success(function(data) {
-
                 $scope.results = data;
                 $scope.availableDates = $scope.results.available_dates;
                 $scope.selectedDate = $scope.results.selected_date;

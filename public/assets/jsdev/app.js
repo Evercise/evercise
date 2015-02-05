@@ -1,5 +1,6 @@
 if(typeof angular != 'undefined') {
     var app = angular.module('everApp', [
+        "ng.deviceDetector",
         'google-maps'.ns()
     ] , ['$interpolateProvider',function ($interpolateProvider) {
             $interpolateProvider.startSymbol('{[{');

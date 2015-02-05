@@ -58,15 +58,11 @@
                                 -->
                                 <strong class="h4">Distance</strong>
                                 <div class="filter-slider mt25 mb25">
-                                    <a href="#" ng-class="(results.radius == '1mi') ? 'active' : ''" ng-click="results.radius = '1mi'; $event.preventDefault();">1 mi</a>
-                                    <a href="#" ng-class="(results.radius == '3mi') ? 'active' : ''" ng-click="results.radius = '3mi'; $event.preventDefault();">3 mi</a>
-                                    <a href="#" ng-class="(results.radius == '5mi') ? 'active' : ''" ng-click="results.radius = '5mi'; $event.preventDefault();">5 mi</a>
-                                    <a href="#" ng-class="(results.radius == '10mi') ? 'active' : ''" ng-click="results.radius = '10mi'; $event.preventDefault();">10 mi</a>
+                                    <a href="#" ng-class="(results.radius == '1mi') ? 'active' : ''" ng-click="results.radius = '1mi'; $event.preventDefault(); getData();">1 mi</a>
+                                    <a href="#" ng-class="(results.radius == '3mi') ? 'active' : ''" ng-click="results.radius = '3mi'; $event.preventDefault();getData();">3 mi</a>
+                                    <a href="#" ng-class="(results.radius == '5mi') ? 'active' : ''" ng-click="results.radius = '5mi'; $event.preventDefault();getData();">5 mi</a>
+                                    <a href="#" ng-class="(results.radius == '10mi') ? 'active' : ''" ng-click="results.radius = '10mi'; $event.preventDefault();getData();">10 mi</a>
                                 </div>
-                                <div class="text-center mb20">
-                                    <button class="btn btn-white-primary" ng-click="getData()">Update Results</button>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -81,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="date-picker-inline">
+            <div ng-if="selectedDate" class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content">
                          <li class="date-btn" ng-repeat="(date, value) in availableDates" ng-class="(date == selectedDate) ? 'active' : ''">
@@ -104,11 +100,19 @@
                 <div class="list-results" ng-repeat="group in everciseGroups track by group.id" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                         <div class="col-sm-9">
-                            <h2 class="h4 mt0 mb0"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
+                            <h2 class="h4"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
-                            <div class="smallest-btn-wrapper">
+                            <div ng-if="selectedDate" class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
                                 <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
+                            </div>
+                            <div ng-if="!selectedDate" class="smallest-btn-wrapper">
+                                <strong class="h5 text-large">UPCOMING CLASSES:</strong>
+                                <div  ng-repeat="session in group.futuresessions | limitTo:3">
+                                    <span>{[{ session.date_time }]} - {[{session.remaining }]} tickets left</span>
+                                </div>
+                                <a class="link" href="/classes/{[{ group.slug }]}" ng-if="group.futuresessions.length > 3">{[{ group.futuresessions.length - 3}]} dates more</a>
+
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -119,7 +123,14 @@
                         </div>
                     </div>
                 </div>
+                <div ng-if="!selectedDate" class="panel-body text-center">
+                    <strong class="text-larger">Sorry</strong>
+                    <p>Looks like we couldn't find any more classes.<br>
+                    How about trying one of these instead</p>
+                    <a ng-repeat="tag in results.related_categories" href="/uk/{[{ results.url}]}?search={[{ tag }]}" class="btn btn-rounded btn-white-primary mb10 ml5 mr5">{[{ tag }]}</a>
+                </div>
             </div>
+
         </div>
 
     </div>
