@@ -1,8 +1,6 @@
 if(typeof angular != 'undefined') {
 
-    app.controller('browseController', ["$scope",  "$http" , "deviceDetector", function ($scope, $http, deviceDetector) {
-
-        $scope.deviceDetector = deviceDetector;
+    app.controller('browseController', ["$scope",  "$http" , function ($scope, $http) {
 
         angular.element(document).ready(function () {
             $scope.getCats();

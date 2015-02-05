@@ -10287,6 +10287,12 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   position: relative;
   display: inline-block;
 }
+@media (max-width: 991px) {
+  .filter-slider {
+    width: 115%;
+    margin-left: -25px;
+  }
+}
 .filter-slider:before {
   position: absolute;
   content: '';
@@ -10984,7 +10990,7 @@ div.hub-row.last {
 .date-picker-inline .wrapper {
   overflow: hidden;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .date-picker-inline .wrapper {
     padding: 0 20px;
     border-top: 1px solid #cccccc;
@@ -11064,7 +11070,7 @@ div.hub-row.last {
   -webkit-box-shadow: -1px 1px 1px #000000;
   box-shadow: -1px 1px 1px #000000;
 }
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .date-picker-inline .scroll {
     top: 0;
     height: 100%;
@@ -12248,19 +12254,19 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .package-green .package-title {
   background-color: #7ed321;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -434px -735px;
+  background-position: -434px -643px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-green .package-title.active {
-  background-position: -434px -735px;
+  background-position: -434px -643px;
 }
 .package-green .package-title.hover:hover,
 .package-green .package-title.active:hover {
   cursor: pointer;
-  background-position: -434px -735px;
+  background-position: -434px -643px;
 }
 .package-green .package-title h2 {
   color: #ffffff;
@@ -12348,19 +12354,19 @@ fieldset[disabled] .package-green .package-pay .btn.active {
 .package-blue .package-title {
   background-color: #50c3e2;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -434px -735px;
+  background-position: -434px -643px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-blue .package-title.active {
-  background-position: -434px -735px;
+  background-position: -434px -643px;
 }
 .package-blue .package-title.hover:hover,
 .package-blue .package-title.active:hover {
   cursor: pointer;
-  background-position: -434px -735px;
+  background-position: -434px -643px;
 }
 .package-blue .package-title h2 {
   color: #ffffff;
@@ -12448,19 +12454,19 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
 .package-pink .package-title {
   background-color: #ff1b7e;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -434px -735px;
+  background-position: -434px -643px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-pink .package-title.active {
-  background-position: -434px -735px;
+  background-position: -434px -643px;
 }
 .package-pink .package-title.hover:hover,
 .package-pink .package-title.active:hover {
   cursor: pointer;
-  background-position: -434px -735px;
+  background-position: -434px -643px;
 }
 .package-pink .package-title h2 {
   color: #ffffff;
@@ -12721,12 +12727,9 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   width: 100%;
 }
 .results {
-  position: absolute;
-  right: 25px;
-  top: 95px;
-  bottom: 40px;
-  padding: 0 10px 9px;
-  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 0;
 }
 .results:after {
   content: '';
@@ -12739,8 +12742,7 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   border-bottom: 2px solid rgba(0, 0, 0, 0.3);
 }
 .results .inner {
-  height: 100%;
-  width: 435px;
+  width: 100%;
   background: #ffffff;
   -webkit-box-shadow: 5px 5px 13px -5px #000000;
   box-shadow: 5px 5px 13px -5px #000000;
@@ -12749,8 +12751,8 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 10px;
-  right: 10px;
+  left: 0px;
+  right: 0px;
   background: rgba(0, 0, 0, 0.2);
   z-index: 10;
 }
@@ -12759,12 +12761,21 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   padding: 7px 20px;
   border-bottom: 1px solid #cccccc;
   height: 40px;
+  display: inline-block;
+  width: 100%;
 }
 .results .nav li:first-of-type {
   border-right: 1px solid #cccccc;
 }
 .results .nav li a {
   font-weight: 600;
+}
+@media (max-width: 991px) {
+  .results .nav li a {
+    width: 50%;
+    float: left;
+    margin: 0;
+  }
 }
 .results .sort-box {
   width: 214px;
@@ -12789,16 +12800,22 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 .results .tab-pane {
   border-bottom: 1px solid #cccccc;
 }
-@media (max-width: 992px) {
+@media (min-width: 992px) {
   .results {
-    position: relative;
-    width: 100%;
-    left: 0;
-    right: 0;
-    top: 0;
-    padding: 0;
+    position: absolute;
+    right: 25px;
+    top: 95px;
+    bottom: 40px;
+    padding: 0 10px 9px;
+    overflow: hidden;
+    width: auto;
   }
   .results .inner {
-    width: 100%;
+    height: 100%;
+    width: 435px;
+  }
+  .results .mask {
+    left: 10px;
+    right: 10px;
   }
 }

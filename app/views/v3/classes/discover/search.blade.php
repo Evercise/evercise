@@ -98,8 +98,8 @@
              </div>
 
             <div class="groups mb-scroll" ng-style="groupHeight()">
-                <div ng-show="selectedVenueIds" class="heading"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
-                <div ng-show="selectedVenueIds" class="heading">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
+                <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
+                <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
                 <div class="list-results" ng-repeat="group in everciseGroups track by group.id" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                         <div class="col-xs-9">

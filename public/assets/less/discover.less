@@ -9,12 +9,10 @@
   width: 100%;
 }
 .results{
-  position: absolute;
-  right: 25px;
-  top: 95px;
-  bottom: 40px;
-  padding: 0 10px 9px;
-  overflow: hidden;
+
+  position: relative;
+  width: 100%;
+  padding: 0;
 
   &:after{
     content: '';
@@ -27,8 +25,7 @@
     border-bottom: 2px solid rgba(0,0,0,0.3);
   }
   .inner{
-    height: 100%;
-    width: 435px;
+    width: 100%;
     background: @white;
     .box-shadow(5px 5px 13px -5px #000);
   }
@@ -36,8 +33,8 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 10px;
-    right: 10px;
+    left: 0px;
+    right: 0px;
     background: fade(#000, 20%);
     z-index: 10;
   }
@@ -47,6 +44,8 @@
     padding: 7px 20px;
     border-bottom: 1px solid @input-border;
     height: 40px;
+    display: inline-block;
+    width: 100%;
   }
   .nav{
     li{
@@ -55,6 +54,11 @@
      }
       a{
         font-weight: 600;
+        @media (max-width: @screen-sm-max){
+          width: 50%;
+          float: left;
+          margin: 0;
+        }
       }
     }
   }
@@ -80,15 +84,22 @@
   .tab-pane{
     border-bottom: 1px solid @input-border;
   }
-  @media (max-width: @grid-float-breakpoint){
-    position: relative;
-    width: 100%;
-    left: 0;
-    right: 0;
-    top: 0;
-    padding: 0;
+  @media (min-width: @screen-md-min){
+    position: absolute;
+    right: 25px;
+    top: 95px;
+    bottom: 40px;
+    padding: 0 10px 9px;
+    overflow: hidden;
+    width: auto;
     .inner{
-      width: 100%;
+
+      height: 100%;
+      width: 435px;
+    }
+    .mask{
+      left: 10px;
+      right: 10px;
     }
   }
 }

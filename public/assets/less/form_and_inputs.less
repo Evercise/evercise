@@ -394,6 +394,10 @@ body:not(:-moz-handler-blocked) .custom-select:after{
   margin-left: -38px;
   position: relative;
   display: inline-block;
+  @media (max-width: @screen-sm-max){
+    width: 115%;
+    margin-left: -25px;
+  }
 
   &:before{
     position: absolute;
