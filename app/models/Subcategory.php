@@ -180,4 +180,13 @@ class Subcategory extends Eloquent
 		return $subcategoryNames;
 	}
 
+	public function getCategoriesString()
+	{
+		$output = '';
+		foreach ($this->categories as $cat) {
+			$output .= $cat->name . ', ';
+		}
+		return $output;
+	}
+
 }
