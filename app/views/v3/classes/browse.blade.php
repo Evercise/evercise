@@ -48,7 +48,7 @@
                         </div>
                         <strong class="text-larger">Types of {[{ browse.name }]}</strong>
 
-                        <ul class="mt10 row">
+                        <ul class="mt10">
                             <li class="col-xs-4" ng-repeat="subCat in browse.generated_subcategories track by $index"><a href="#">{[{ subCat.name }]}({[{ subCat.classes }]})</a></li>
                         </ul>
                     </div>

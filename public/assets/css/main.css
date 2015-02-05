@@ -7411,7 +7411,7 @@ a.bg-light-grey:hover {
 .navbar-default {
   transition: all 0.4s;
   border-bottom: 0;
-  height: 70px;
+  height: 62px;
   z-index: 100;
 }
 @media (max-width: 992px) {
@@ -7423,13 +7423,13 @@ a.bg-light-grey:hover {
   width: 96px;
   z-index: 9999;
   margin: 0 20px 0 0!important;
-  height: 69px;
+  height: 61px;
   background-image: url("../img/ev_site_icons_v2.png");
   background-position: -40px -68px;
   overflow: hidden;
 }
 .navbar-default .navbar-nav.navbar-right {
-  margin-top: 18px;
+  margin-top: 15px;
 }
 @media (max-width: 992px) {
   .navbar-default .navbar-nav.navbar-right {
@@ -7510,11 +7510,11 @@ a.bg-light-grey:hover {
   right: 270px;
   background: #383d48;
   height: 100%;
-  padding: 15px 20px;
+  padding: 12px 20px;
 }
 .nav-categories {
   position: absolute;
-  top: 69px;
+  top: 61px;
   left: 0;
   width: 100%;
 }
@@ -12718,7 +12718,7 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 }
 .angular-google-map {
   position: absolute;
-  top: 35px;
+  top: 31px;
   bottom: 0;
   width: 100%;
 }
