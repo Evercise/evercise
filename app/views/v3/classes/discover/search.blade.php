@@ -10,28 +10,31 @@
 
     @include('v3.landing.popup')
 
-    <ui-gmap-google-map center='map.center'
-        zoom="map.zoom"
-        pan="true"
-        options="mapOptions"
-        events="mapEvents"
-        draggable="true"
-        control="map.control"
-    >
-        <ui-gmap-markers
-            models="everciseGroups"
-            coords="'venue'"
-            idKey="'id'"
-            id="'venue.id'"
-            icon = "'icon'"
-            doCluster = "true"
-            clusterOptions = "map.clusterOptions"
-            clusterEvents = "clusterEvents"
-            events = "markerEvents"
-            >
-        </ui-gmap-markers>
+    <div class="hidden-xs hidden-sm">
+        <ui-gmap-google-map center='map.center'
+            zoom="map.zoom"
+            pan="true"
+            options="mapOptions"
+            events="mapEvents"
+            draggable="true"
+            control="map.control"
+        >
+            <ui-gmap-markers
+                models="everciseGroups"
+                coords="'venue'"
+                idKey="'id'"
+                id="'venue.id'"
+                icon = "'icon'"
+                doCluster = "true"
+                clusterOptions = "map.clusterOptions"
+                clusterEvents = "clusterEvents"
+                events = "markerEvents"
+                >
+            </ui-gmap-markers>
 
-    </ui-gmap-google-map>
+        </ui-gmap-google-map>
+    </div>
+
 
     <div class="results">
 
@@ -99,7 +102,7 @@
                 <div ng-show="selectedVenueIds" class="heading">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
                 <div class="list-results" ng-repeat="group in everciseGroups track by group.id" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
-                        <div class="col-sm-9">
+                        <div class="col-xs-9">
                             <h2 class="h4"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div ng-if="selectedDate" class="smallest-btn-wrapper">
@@ -115,7 +118,7 @@
 
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-xs-3">
                             <div class="btn-group-vertical btn-block">
                                  <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.price | currency :  '£' : 2  }]}</a>
                                  <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">View Class</a>

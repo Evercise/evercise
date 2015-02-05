@@ -15,6 +15,7 @@
   bottom: 40px;
   padding: 0 10px 9px;
   overflow: hidden;
+
   &:after{
     content: '';
     position: absolute;
@@ -78,5 +79,16 @@
   }
   .tab-pane{
     border-bottom: 1px solid @input-border;
+  }
+  @media (max-width: @grid-float-breakpoint){
+    position: relative;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 0;
+    .inner{
+      width: 100%;
+    }
   }
 }

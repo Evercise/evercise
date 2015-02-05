@@ -5,6 +5,10 @@
 
   .wrapper{
     overflow: hidden;
+    @media (max-width: @grid-float-breakpoint){
+      padding: 0 20px;
+      border-top: 1px solid @input-border;
+    }
     .content{
       display: inline-flex;
       .transition(all linear 0.2s );
@@ -76,6 +80,19 @@
     &.right{
       right: -10px;
       .box-shadow(-1px 1px 1px #000);
+    }
+    @media (max-width: @grid-float-breakpoint){
+      top: 0;
+      height: 100%;
+      border: 1px solid @input-border;
+      &.left{
+        left: 0;
+        .box-shadow(none);
+      }
+      &.right{
+        right: 0;
+        .box-shadow(none);
+      }
     }
   }
 

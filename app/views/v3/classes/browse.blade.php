@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav nav-browse"ng-controller="browseController" ng-cloak>
+<ul class="nav navbar-nav nav-browse hidden-xs hidden-sm"ng-controller="browseController" ng-cloak>
         <div class="row">
             <div class="col-xs-2">
                 <li class="custom-cat-select">

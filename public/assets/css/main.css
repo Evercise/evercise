@@ -10984,6 +10984,12 @@ div.hub-row.last {
 .date-picker-inline .wrapper {
   overflow: hidden;
 }
+@media (max-width: 992px) {
+  .date-picker-inline .wrapper {
+    padding: 0 20px;
+    border-top: 1px solid #cccccc;
+  }
+}
 .date-picker-inline .wrapper .content {
   display: inline-flex;
   -webkit-transition: all linear 0.2s;
@@ -11057,6 +11063,23 @@ div.hub-row.last {
   right: -10px;
   -webkit-box-shadow: -1px 1px 1px #000000;
   box-shadow: -1px 1px 1px #000000;
+}
+@media (max-width: 992px) {
+  .date-picker-inline .scroll {
+    top: 0;
+    height: 100%;
+    border: 1px solid #cccccc;
+  }
+  .date-picker-inline .scroll.left {
+    left: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .date-picker-inline .scroll.right {
+    right: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
 }
 /*!
  * Datepicker for Bootstrap
@@ -12225,19 +12248,19 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .package-green .package-title {
   background-color: #7ed321;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -434px -643px;
+  background-position: -434px -735px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-green .package-title.active {
-  background-position: -434px -643px;
+  background-position: -434px -735px;
 }
 .package-green .package-title.hover:hover,
 .package-green .package-title.active:hover {
   cursor: pointer;
-  background-position: -434px -643px;
+  background-position: -434px -735px;
 }
 .package-green .package-title h2 {
   color: #ffffff;
@@ -12325,19 +12348,19 @@ fieldset[disabled] .package-green .package-pay .btn.active {
 .package-blue .package-title {
   background-color: #50c3e2;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -434px -643px;
+  background-position: -434px -735px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-blue .package-title.active {
-  background-position: -434px -643px;
+  background-position: -434px -735px;
 }
 .package-blue .package-title.hover:hover,
 .package-blue .package-title.active:hover {
   cursor: pointer;
-  background-position: -434px -643px;
+  background-position: -434px -735px;
 }
 .package-blue .package-title h2 {
   color: #ffffff;
@@ -12425,19 +12448,19 @@ fieldset[disabled] .package-blue .package-pay .btn.active {
 .package-pink .package-title {
   background-color: #ff1b7e;
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -434px -643px;
+  background-position: -434px -735px;
   background-repeat: no-repeat;
   overflow: hidden;
   padding: 0px 20px 0;
   height: 135px;
 }
 .package-pink .package-title.active {
-  background-position: -434px -643px;
+  background-position: -434px -735px;
 }
 .package-pink .package-title.hover:hover,
 .package-pink .package-title.active:hover {
   cursor: pointer;
-  background-position: -434px -643px;
+  background-position: -434px -735px;
 }
 .package-pink .package-title h2 {
   color: #ffffff;
@@ -12765,4 +12788,17 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 }
 .results .tab-pane {
   border-bottom: 1px solid #cccccc;
+}
+@media (max-width: 992px) {
+  .results {
+    position: relative;
+    width: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding: 0;
+  }
+  .results .inner {
+    width: 100%;
+  }
 }
