@@ -6,6 +6,9 @@ if(typeof angular != 'undefined') {
             $scope.getCats();
         });
 
+        $scope.searchTerm = laracasts.results.search;
+        $scope.location = laracasts.results.area.name;
+
         $scope.activeCatSwitch = function(cat){
             $scope.activeCat = cat;
         };
@@ -21,6 +24,7 @@ if(typeof angular != 'undefined') {
         $scope.closeBrowse = function(e){
             $scope.browseIsVisible = false;
         }
+
 
         $scope.getCats = function(){
             var path = '/ajax/categories/browse';
@@ -43,6 +47,14 @@ if(typeof angular != 'undefined') {
                 console.log("AJAX failed!");
                 console.log(data);
             });
+        }
+
+        $scope.submit = function(term){
+            $scope.searchTerm = term;
+            setTimeout(function() {
+                $('#search-form').trigger('submit');
+            }, 500)
+
         }
     }])
 
