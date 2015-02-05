@@ -161,7 +161,6 @@ if(typeof angular != 'undefined') {
                     },
                     slug: v.slug,
                     times : v.times ,
-                    futuresessions : v.futuresessions,
                     price : v.default_price
                 })
             })
@@ -299,6 +298,12 @@ if(typeof angular != 'undefined') {
                 $scope.resultsLoading = false;
             });
         }
+
+        $scope.$watch(function(){
+            return window.innerWidth;
+        }, function(value) {
+            $scope.width = value;
+        });
 
     }])
 

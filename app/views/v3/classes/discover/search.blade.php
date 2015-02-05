@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <div ng-if="selectedDate" class="date-picker-inline">
+            <div class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
                          <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
@@ -97,7 +97,7 @@
                  <a href="#" ng-click="scroll_clicked || scrollDates('right', $event)" class="scroll right" ng-disabled="scroll_clicked">></a>
              </div>
 
-            <div class="groups mb-scroll" ng-style="groupHeight()">
+            <div class="groups mb-scroll" ng-class="width > 991 ?  'mb-scroll' : ''" ng-style="groupHeight()">
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
                 <div class="list-results" ng-repeat="group in everciseGroups track by group.id" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
@@ -105,17 +105,9 @@
                         <div class="col-xs-9">
                             <h2 class="h4"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
-                            <div ng-if="selectedDate" class="smallest-btn-wrapper">
+                            <div class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
                                 <a ng-repeat="(time, link) in group.times" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
-                            </div>
-                            <div ng-if="!selectedDate" class="smallest-btn-wrapper">
-                                <strong class="h5 text-large">UPCOMING CLASSES:</strong>
-                                <div  ng-repeat="session in group.futuresessions | limitTo:3">
-                                    <span>{[{ session.date_time }]} - {[{session.remaining }]} tickets left</span>
-                                </div>
-                                <a class="link" href="/classes/{[{ group.slug }]}" ng-if="group.futuresessions.length > 3">{[{ group.futuresessions.length - 3}]} dates more</a>
-
                             </div>
                         </div>
                         <div class="col-xs-3">
