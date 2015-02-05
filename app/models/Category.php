@@ -123,9 +123,14 @@ class Category extends Eloquent
         }
     }
 
+    /**
+     * Returns an array of subcategories
+     *     - up to 15 results
+     *     - linked to category instance
+     *     - ordered by num of classes in that category
+     */
     public function generatePopularSubcategories()
     {
-        /**  Needs Doing */
 
         $categoryId = $this->id;
 
