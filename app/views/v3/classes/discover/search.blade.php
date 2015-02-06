@@ -82,11 +82,13 @@
             <div class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
-                         <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''; value == 0 ? 'disabled' : '';">
+                         <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
+                            <div ng-class="value == 0 ? 'disabled' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
-                            <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeSelectedDate($event, date)">
-                                {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
-                            </a>
+                                <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeSelectedDate($event, date)">
+                                    {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
+                                </a>
+                            </div>
                          </li>
                     </div>
 

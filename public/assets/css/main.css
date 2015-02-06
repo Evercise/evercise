@@ -11035,7 +11035,7 @@ div.hub-row.last {
   border-left: 1px solid #e6e6e6;
   border-bottom: 1px solid #e6e6e6;
 }
-.date-picker-inline li.disabled {
+.date-picker-inline li .disabled {
   opacity: 0.7;
   pointer-events: none;
   cursor: default;
