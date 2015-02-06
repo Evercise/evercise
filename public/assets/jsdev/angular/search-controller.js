@@ -27,6 +27,8 @@ if(typeof angular != 'undefined') {
 
         $scope.resultsLoading = false;
 
+        $scope.view = 'grid';
+
         // map options
         $scope.mapOptions = {
             disableDefaultUI: true,
@@ -161,7 +163,8 @@ if(typeof angular != 'undefined') {
                     },
                     slug: v.slug,
                     times : v.times ,
-                    price : v.default_price
+                    price : v.default_price,
+                    image : '/'+v.user.directory+'/preview_'+v.image
                 })
             })
             return groups;

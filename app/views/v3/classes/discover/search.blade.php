@@ -101,7 +101,24 @@
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
                 <div class="list-results" ng-repeat="group in everciseGroups track by group.id" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
-                    <div class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
+                    <div class="col-xs-6 mt10">
+                        <ul class="list-group class-block" ng-if="view == 'grid'">
+                             <li class="list-group-item class-img-wrapper">
+                                 <img ng-src="{[{group.image}]}" alt="{[{group.name}]}" class="img-responsive">
+                             </li>
+                             <div class="class-body">
+                                 <li class="list-group-item text-center class-title">
+                                     <h4><a href="/classes/{[{ group.slug }]}">{[{group.name | truncate:24  }]}</a></h4>
+                                     <p>{[{ group.venue.postcode }]}</p>
+                                 </li>
+                                 <li class="list-group-item class-footer">
+                                     <aside class="text-center"><strong class="text-primary">{[{ group.price | currency :  '£' : 2  }]}</strong></aside>
+                                     <aside class="btn-wrapper"><a href="/classes/{[{ group.slug }]}" class="btn btn-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a></aside>
+                                 </li>
+                             </div>
+                         </ul>
+                     </div>
+                    <div ng-if="view == 'list'" class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                         <div class="col-xs-9">
                             <h2 class="h4"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
