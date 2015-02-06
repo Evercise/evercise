@@ -138,15 +138,16 @@ class Category extends Eloquent
             whereHas('categories', function ($query) use ($categoryId) {
                 $query->where('categories.id', $categoryId);
             })
+            ->whereHas('evercisegroups', function($query){})
             ->take(15)
             ->get()
             ->sortByDesc(function ($subcats) {
                 return $subcats->evercisegroups->count();
-            });
+        });
 
         $output = [];
         foreach ($subcategories as $subcat) {
-            $output[$subcat->id] = [
+            $output[] = [
                 'name' => $subcat->name,
                 'classes' => $subcat->evercisegroups->count(),
             ];
