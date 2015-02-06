@@ -7572,13 +7572,14 @@ a.bg-light-grey:hover {
   .login-drop.open .dropdown-menu {
     position: fixed;
     top: 40%;
-    margin-top: -150px !important;
+    margin-top: -170px !important;
     left: 20px;
     right: 20px;
-    height: 300px;
+    height: 340px;
     background: #ffffff;
     -webkit-box-shadow: 0 0 8px -2px #000000;
     box-shadow: 0 0 8px -2px #000000;
+    min-width: 100%;
   }
 }
 .nav-tabs.nav-justified > .active > a,
