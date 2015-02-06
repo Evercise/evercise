@@ -213,7 +213,54 @@ class Search
     public function formatSingle($row, $area, $params = [])
     {
 
+        $not_needed = [
+            'global'  => [
+                'default_duration',
+                'published',
+                'created_at',
+                'updated_at',
+                'venue_id',
+                'title',
+                'gender'
+            ],
+            'user'    => ['id', 'display_name', 'first_name', 'last_name', 'email', 'image', 'phone'],
+            'venue'   => [ 'image'],
+            'ratings' => ['user_id', 'comment']
+        ];
+
+
         $row->_source->score = $row->_score;
+
+
+
+
+        /** UNSET everything else that we don't need! */
+
+        foreach ($not_needed['global'] as $n) {
+            if (isset($row->_source->{$n})) {
+                unset($row->_source->{$n});
+            }
+        }
+
+        foreach ($not_needed['user'] as $n) {
+            if (isset($row->_source->user->{$n})) {
+                unset($row->_source->user->{$n});
+            }
+        }
+
+        foreach ($not_needed['venue'] as $n) {
+            if (isset($row->_source->venue->{$n})) {
+                unset($row->_source->venue->{$n});
+            }
+        }
+
+
+        foreach ($not_needed['ratings'] as $n) {
+            if (isset($row->_source->ratings->{$n})) {
+                unset($row->_source->ratings->{$n});
+            }
+        }
+
 
 
         $times = [];
