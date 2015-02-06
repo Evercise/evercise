@@ -43,6 +43,22 @@ Route::get('email',
 );
 
 
+Route::get('ttt',
+    [
+        function(){
+
+
+
+            $mindbody = new Mindbody(-99);
+
+
+            d($mindbody->getClassSchedules());
+
+        }
+    ]
+);
+
+
 
 
 /** SEO URLS */

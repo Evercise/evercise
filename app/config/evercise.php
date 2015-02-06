@@ -17,7 +17,10 @@ foreach (range(1, 300) as $pounds) {
 
 
 return [
-
+    'mindbody' => [
+        'api_key' => 'Evercise',
+        'api_secret' => 'XxMOJiEWIn0UYOWoY6nPKK8wWrE=',
+    ],
     'stripe_testing'           => false,
     'stripe_api_key'        => getenv('STRIPE_API_KEY') ?: false,
     'stripe_pub_key'        => getenv('STRIPE_PUB_KEY') ?: false,
