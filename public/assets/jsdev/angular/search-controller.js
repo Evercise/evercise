@@ -164,7 +164,6 @@ if(typeof angular != 'undefined') {
                     price : v.default_price
                 })
             })
-            console.log(groups);
             return groups;
         }
 

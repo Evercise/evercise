@@ -40,7 +40,7 @@
                     </ul>
                 </div>
                 <div ng-init="browseIsVisible = false" ng-show="browseIsVisible"  class="col-xs-8">
-                    <div class="tab">
+                    <div class="tab" ng-style="browseTabHeight()">
                         <p>{[{ browse.description }]}</p>
                         <strong class="text-larger">Popular Classes</strong>
                         <div class="mt10 mb15">

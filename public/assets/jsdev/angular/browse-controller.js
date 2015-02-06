@@ -6,6 +6,12 @@ if(typeof angular != 'undefined') {
             $scope.getCats();
         });
 
+        // set height of tab bar
+        $scope.browseTabHeight = function(){
+            var sideBarHeight = $('.nav-browse .items').outerHeight();
+
+        }
+
         $scope.searchTerm = laracasts.results.search;
         $scope.location = laracasts.results.area.name;
 
@@ -40,7 +46,6 @@ if(typeof angular != 'undefined') {
 
             responsePromise.success(function(data) {
                 $scope.categories = data;
-                console.log($scope.categories);
             });
 
             responsePromise.error(function(data) {

@@ -7521,6 +7521,7 @@ a.bg-light-grey:hover {
 .nav-categories .items {
   padding: 20px 0;
   background: rgba(56, 61, 72, 0.9);
+  height: 521px;
 }
 .nav-categories .items li {
   list-style: none;
