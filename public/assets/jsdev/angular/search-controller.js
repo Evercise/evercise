@@ -301,11 +301,20 @@ if(typeof angular != 'undefined') {
             });
         }
 
-        $scope.$watch(function(){
-            return window.innerWidth;
-        }, function(value) {
-            $scope.width = value;
+        $scope.width = window.innerWidth;
+
+        console.log($scope.width);
+
+        $(window).resize(function(){
+            $scope.width = window.innerWidth;
         });
+
+        $scope.$watch('width', function(value) {
+            if(value < 768){
+                $scope.view = 'list';
+            }
+        });
+
 
     }])
 

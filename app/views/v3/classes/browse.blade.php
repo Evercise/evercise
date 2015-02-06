@@ -49,7 +49,7 @@
                         <strong class="text-larger">Types of {[{ browse.name }]}</strong>
 
                         <ul class="mt10">
-                            <li class="col-xs-4" ng-repeat="subCat in browse.generated_subcategories track by $index"><a href="#" ng-click="$event.preventDefault();submit(subCat.name);">{[{ subCat.name }]}({[{ subCat.classes }]})</a></li>
+                            <li class="col-xs-4" ng-repeat="subCat in browse.generated_subcategories track by $index"><a href="#" ng-click="$event.preventDefault();submit(subCat.name);">{[{ subCat.name }]} ({[{ subCat.classes }]})</a></li>
                         </ul>
                     </div>
                 </div>
