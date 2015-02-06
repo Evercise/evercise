@@ -176,10 +176,8 @@ class SearchModel
 
                 switch($area->link->type) {
                     case 'ZIP':
-                        $radius = '1mi';
-                        break;
                     case 'STATION':
-                        $radius = '2mi';
+                        $radius = '3mi';
                         break;
 
                 }
@@ -448,7 +446,7 @@ class SearchModel
 
         /** Check if we have enough of classes to Show for the next 7 days */
         $days = 7;
-        $minimum = 20;
+        $minimum = 10;
         $total = 0;
         $i = 0;
         foreach ($dates as $date => $amount) {
@@ -462,7 +460,7 @@ class SearchModel
 
 
         if ($minimum > $total) {
-            //return FALSE;
+            return FALSE;
         }
 
 
