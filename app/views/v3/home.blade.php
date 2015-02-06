@@ -23,7 +23,7 @@
     <div class="container-fluid bg-dark-grey mb30 sm-mb0">
         <div class="container">
             <div class="row mt10 mb10 sm-inline-gutter visible-md-block visible-lg-block">
-                {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
+                {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'post',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="mb0">
                         <div class="col-sm-6">
                             <div class="input-group">

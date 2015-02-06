@@ -7,7 +7,7 @@
             </div>
             <div class="col-xs-10" >
                 <div class="row">
-                    {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
+                    {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'post',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-6">
                         <div class="input-group">
                               <div class="input-group-addon"><span class="icon icon-search"></span></div>

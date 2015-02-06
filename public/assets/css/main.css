@@ -7825,31 +7825,31 @@ a.bg-light-grey:hover {
 }
 .icon-search {
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -610px -250px;
+  background-position: -1048px -451px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-search.active {
-  background-position: -610px -290px;
+  background-position: -1048px -411px;
 }
 .icon-search.hover:hover,
 .icon-search.active:hover {
   cursor: pointer;
-  background-position: -610px -290px;
+  background-position: -1048px -411px;
 }
 .icon-pointer {
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -650px -250px;
+  background-position: -968px -451px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .icon-pointer.active {
-  background-position: -650px -290px;
+  background-position: -968px -411px;
 }
 .icon-pointer.hover:hover,
 .icon-pointer.active:hover {
   cursor: pointer;
-  background-position: -650px -290px;
+  background-position: -968px -411px;
 }
 .icon-expand {
   background-image: url("../img/ev_site_icons_v2.png");
@@ -9441,9 +9441,6 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-block .class-img-wrapper img {
   width: 100%;
-}
-.class-block .class-body {
-  display: inline-block;
 }
 .class-block .class-body img {
   display: none;

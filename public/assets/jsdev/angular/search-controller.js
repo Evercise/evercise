@@ -23,8 +23,6 @@ if(typeof angular != 'undefined') {
 
         $scope.results = laracasts.results;
 
-        console.log($scope.results);
-
         $scope.resultsLoading = false;
 
         $scope.view = 'list';
@@ -326,8 +324,6 @@ if(typeof angular != 'undefined') {
             });
 
             responsePromise.error(function(data) {
-                console.log("AJAX failed!");
-                console.log(data);
                 $scope.resultsLoading = false;
             });
         }
