@@ -175,6 +175,25 @@
   }
 }
 
+.login-drop{
+  &.open{
+    .dropdown-menu {
+      @media (max-width: @screen-sm-max) {
+        position: fixed;
+        top: 50%;
+        margin-top: -150px !important;
+        left: 10px;
+        right: 10px;
+        height: 300px;
+        background: @white;
+        .box-shadow(0 0 8px -2px #000);
+      }
+    }
+
+  }
+
+}
+
 
 .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover{
   border: 0;
