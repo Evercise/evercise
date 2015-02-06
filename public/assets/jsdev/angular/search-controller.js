@@ -303,7 +303,8 @@ if(typeof angular != 'undefined') {
                 data: {
                     date : $scope.selectedDate,
                     radius : $scope.results.radius,
-                    sort : $scope.results.sort
+                    sort : $scope.results.sort,
+                    search : $scope.results.search
                 }
             }
 

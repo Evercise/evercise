@@ -107,7 +107,7 @@
                              <div class="class-body">
                                  <li class="list-group-item text-center class-title">
                                      <h4><a href="/classes/{[{ group.slug }]}">{[{group.name | truncate:24  }]}</a></h4>
-                                     <p>{[{ group.venue.postcode }]}</p>
+                                     <p><span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span>{[{ group.venue.postcode }]}</p>
                                  </li>
                                  <li class="list-group-item class-footer">
                                      <aside class="text-center"><strong class="text-primary">{[{ group.price | currency :  '£' : 2  }]}</strong></aside>

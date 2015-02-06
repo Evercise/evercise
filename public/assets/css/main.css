@@ -7437,6 +7437,7 @@ a.bg-light-grey:hover {
   font-size: 20px;
   padding: 5px 18px;
   line-height: 22px;
+  text-transform: uppercase;
 }
 .navbar-default .navbar-nav li.nav-list a.nav-cart {
   max-width: 75px;
@@ -9441,13 +9442,8 @@ fieldset[disabled] .stripe-button-el.active {
 .class-block .class-img-wrapper img {
   width: 100%;
 }
-.class-block .class-body .icon {
-  display: none;
-}
-@media (max-width: 767px) {
-  .class-block .class-body .icon {
-    display: inline-block;
-  }
+.class-block .class-body {
+  display: inline-block;
 }
 .class-block .class-body img {
   display: none;
@@ -11049,7 +11045,7 @@ div.hub-row.last {
   border-bottom: 1px solid #e6e6e6;
   text-transform: uppercase;
   font-weight: 600;
-  color: #96a2ab;
+  color: #797979;
 }
 .date-picker-inline li a {
   font-size: 26px;
@@ -11057,9 +11053,6 @@ div.hub-row.last {
   height: 62px;
   display: block;
   line-height: 42px;
-  color: #96a2ab;
-}
-.date-picker-inline li:hover a {
   color: #797979;
 }
 .date-picker-inline li .month {
