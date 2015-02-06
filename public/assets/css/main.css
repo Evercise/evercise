@@ -7571,7 +7571,7 @@ a.bg-light-grey:hover {
 @media (max-width: 991px) {
   .login-drop.open .dropdown-menu {
     position: fixed;
-    top: 50%;
+    top: 40%;
     margin-top: -150px !important;
     left: 20px;
     right: 20px;
