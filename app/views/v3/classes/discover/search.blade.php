@@ -113,7 +113,7 @@
                         <div class="col-xs-3">
                             <div class="btn-group-vertical btn-block">
                                  <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.price | currency :  '£' : 2  }]}</a>
-                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">View Class</a>
+                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a>
                             </div>
                         </div>
                     </div>
