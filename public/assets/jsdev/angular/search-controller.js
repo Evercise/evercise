@@ -161,7 +161,7 @@ if(typeof angular != 'undefined') {
         // map object
         $scope.map = {
             zoom: $scope.initialZoom(),
-            maxZoom: 18,
+            maxZoom: 16,
             center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
             control: {},
             clusterOptions: $scope.clusterOptions

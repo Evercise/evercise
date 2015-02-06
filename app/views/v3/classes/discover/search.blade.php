@@ -29,6 +29,7 @@
                 clusterOptions = "map.clusterOptions"
                 clusterEvents = "clusterEvents"
                 events = "markerEvents"
+                fit = "true"
                 >
             </ui-gmap-markers>
 
