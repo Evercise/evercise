@@ -7237,6 +7237,9 @@ a.bg-dark-grey:hover {
 a.bg-light-grey:hover {
   background-color: #dddde3;
 }
+.drop-shadow {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+}
 .underline {
   position: relative;
   margin-bottom: 42px;
@@ -7435,7 +7438,7 @@ a.bg-light-grey:hover {
   color: #ff1b7e;
   font-family: 'UniversLTStd59UltraCondensed';
   font-size: 20px;
-  padding: 5px 18px;
+  padding: 7px 18px 5px;
   line-height: 22px;
   text-transform: uppercase;
 }

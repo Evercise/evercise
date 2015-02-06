@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation" id="nav">
+<nav class="navbar navbar-default {{(isset($browse) && $browse) ? 'bg-dark' : null}}" role="navigation" id="nav">
   <div class="container-fluid">
     <div class="navbar-header">
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}

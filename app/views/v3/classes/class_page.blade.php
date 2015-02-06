@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-sm-6 mt15">
                 <strong class="text-white">Overview</strong>
-                <p class="mt1 text-white">{{ $data['description'] }}</p>
+                <p class="mt1 text-white drop-shadow">{{ $data['description'] }}</p>
                 <div class="row mt50">
                     <div class="col-xs-3">
                         {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle']) , strtolower($data['user']->display_name)) ) }}
@@ -66,7 +66,7 @@
                         <strong class="text-large">Location</strong><br>
                         {{ $data['venue']->name }}<br>
                         {{ $data['venue']->address }}
-                        <div id="map_canvas" class="map_canvas mt10" data-zoom="8" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lng }}"></div>
+                        <div id="map_canvas" class="map_canvas mt10" data-zoom="14" data-lat="{{ $data['venue']->lat }}" data-lng="{{ $data['venue']->lng }}"></div>
                     </div>
                 </div>
 
