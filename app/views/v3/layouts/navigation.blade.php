@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" role="navigation" id="nav">
+<nav class="navbar navbar-default {{(isset($browse) && $browse) ? 'bg-dark' : null}}" role="navigation" id="nav">
   <div class="container-fluid">
     <div class="navbar-header">
       {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
@@ -22,6 +22,5 @@
             <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
         </li>
     </ul>
-
   </div>
 </nav>

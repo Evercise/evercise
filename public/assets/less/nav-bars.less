@@ -3,6 +3,8 @@
   border-bottom: 0;
   height: 62px;
   z-index: 100;
+  border-radius: 0;
+
   .navbar-header{
     @media (max-width: @grid-float-breakpoint) {
       float: left;
@@ -11,7 +13,7 @@
   .navbar-brand {
     width: 96px;
     z-index: 9999;
-    margin: 0 20px 0 0!important;
+    margin: 0 60px 0 0!important;
     height: 61px;
     .logo-sprite();
 
@@ -70,7 +72,7 @@
 
 }
 
-.nav-hero{
+.nav-hero,.navbar-default.bg-dark{
   background: transparent;
   border-color: transparent;
   position: absolute;
@@ -94,6 +96,13 @@
   }
 }
 
+.navbar-default.bg-dark{
+  background: @gray-darker;
+  .navbar-brand {
+    .logo-sprite(-40px, -152px);
+
+  }
+}
 .nav-bar-bottom{
   position: absolute;
   bottom: 0;

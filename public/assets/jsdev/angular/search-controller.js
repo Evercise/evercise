@@ -27,7 +27,15 @@ if(typeof angular != 'undefined') {
 
         $scope.resultsLoading = false;
 
-        $scope.view = 'grid';
+        $scope.view = 'list';
+
+        // switch the view
+
+        $scope.switchView = function(view){
+            $scope.resultsLoading = true;
+            $scope.view = view;
+            $scope.resultsLoading = false;
+        }
 
         // map options
         $scope.mapOptions = {
@@ -127,10 +135,32 @@ if(typeof angular != 'undefined') {
         // current search radius
         $scope.radius = $scope.results.radius;
 
+        // set initial zoom
+        $scope.initialZoom = function(){
+            var radius = $scope.results.radius.substring(0, $scope.results.radius.length  - 2);
+            console.log(radius);
+            if(radius <= 2){
+                return 15
+            }
+            else if(radius  <= 3)
+            {
+                return 13
+            }
+            else if(radius <= 5){
+                return 12
+            }
+            else if(radius < 25){
+                return 11
+            }
+            else{
+                return 10
+            }
+        }
+
 
         // map object
         $scope.map = {
-            zoom: 12,
+            zoom: $scope.initialZoom(),
             maxZoom: 18,
             center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
             control: {},
@@ -291,7 +321,7 @@ if(typeof angular != 'undefined') {
 
                 // reset zoom
                 var map = $scope.map.control.getGMap();
-                map.setZoom(12);
+                map.setZoom($scope.initialZoom());
             });
 
             responsePromise.error(function(data) {
@@ -301,9 +331,9 @@ if(typeof angular != 'undefined') {
             });
         }
 
+
         $scope.width = window.innerWidth;
 
-        console.log($scope.width);
 
         $(window).resize(function(){
             $scope.width = window.innerWidth;

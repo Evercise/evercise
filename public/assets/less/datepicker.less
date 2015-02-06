@@ -74,6 +74,17 @@
     font-size: 18px;
     line-height: 18px;
     font-weight: 600;
+    &:after{
+      position: absolute;
+      height: 12px;
+      width: 12px;
+      top: 50%;
+      left: 50%;
+      margin-left: -6px;
+      margin-top: -6px;
+      .sprite(-1135px, -494px, 0);
+      content: '';
+    }
     &.left{
       left: -10px;
       .box-shadow(1px 1px 1px #000);
@@ -81,6 +92,9 @@
     &.right{
       right: -10px;
       .box-shadow(-1px 1px 1px #000);
+      &:after{
+        .sprite(-1173px, -494px, 0);
+      }
     }
     @media (max-width: @screen-sm-max){
       top: 0;

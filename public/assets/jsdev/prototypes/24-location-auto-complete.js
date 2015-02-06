@@ -81,10 +81,12 @@ LocationAutoComplete.prototype = {
         this.form = this.input.closest('form');
         geocoder.geocode({'address': value}, function(results, status) {
             if (results[0] && status == 'OK') {
+
                 var address = results[0].formatted_address;
                 self.form.find('input[name="location"]').val(address);
                 self.getTown(results[0].address_components);
                 self.form.find('input[name="city"]').val(self.town);
+                self.form.find('input[name="fullLocation"]').val(JSON.stringify(results[0]));
             }
             else{
                 console.log(status);
