@@ -49,14 +49,16 @@
 <br>
 
 <div class="row" id="category-list">
-    <table id="cat-table">
+    <table id="cat-table" class="table-yuk table-categories">
         <thead>
-            <td><p>Category</p></td>
-            <td><p>visible</p></td>
-            <td><p>popular categories</p></td>
-            <td><p>popular groups</p></td>
-            <td><p>description</p></td>
-            <td><p>options</p></td>
+            <tr class="table-header">
+                <th>Category</th>
+                <th>Visible</th>
+                <th>Popular Categories</th>
+                <th>Popular Groups</th>
+                <th>Description</th>
+                <th>Options</th>
+            </tr>
         </thead>
         <tbody id="sortable">
             @foreach($cats as $category)
