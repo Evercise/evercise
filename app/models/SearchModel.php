@@ -462,7 +462,7 @@ class SearchModel
 
 
         if ($minimum > $total) {
-            return FALSE;
+            //return FALSE;
         }
 
 
