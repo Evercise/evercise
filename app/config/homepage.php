@@ -6,12 +6,11 @@
 return [
     'popular_searches' => [
         'Yoga',
-        'Zumba',
-        'Insanity',
-        'Fight klub',
+        'Dance',
+        'Workout',
         'Bootcamp',
         'Boxing',
-        'Pilates'
+        'Martial Arts'
     ],
     'category_blocks'  => [
         [

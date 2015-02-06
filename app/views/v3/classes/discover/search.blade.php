@@ -79,12 +79,12 @@
                     </div>
                 </div>
             </div>
-            <div class="date-picker-inline" ng-if="results.results.total > 0">
+            <div class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
-                         <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
+                         <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''; value == 0 ? 'disabled' : '';">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
-                            <a href="#" ng-click="changeSelectedDate($event, date)">
+                            <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeSelectedDate($event, date)">
                                 {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
                             </a>
                          </li>
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="!selectedDate" class="panel-body text-center">
+                <div ng-if="results.results.total < 3" class="panel-body text-center">
                     <strong class="text-larger">Sorry</strong>
                     <p>Looks like we couldn't find any more classes.<br>
                     How about trying one of these instead</p>

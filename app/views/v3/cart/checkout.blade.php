@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3 pull-right visible-sm-block visible-md-block visible-lg-block">
+        <div class="col-md-3 pull-right visible-md-block visible-lg-block">
            <ul class="cart-progress sticky">
                 <div id="progress-1" class="progress-box">
                 <li class="title active"><span class="icon icon-pink-circle mr10"></span>Review Order</li>
@@ -26,7 +26,7 @@
                 </div>
            </ul>
         </div>
-        <div class="col-sm-9">
+        <div class="col-md-9">
             <ul class="checkout">
 
                  <div id="step-1" class="cart-step">
