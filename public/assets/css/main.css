@@ -12810,6 +12810,7 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   position: relative;
   width: 100%;
   padding: 0;
+  top: 25px;
 }
 .results:after {
   content: '';
