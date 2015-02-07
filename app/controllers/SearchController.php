@@ -89,7 +89,14 @@ class SearchController extends \BaseController
      */
     public function parseUrl($all_segments = '')
     {
-        $link = $this->link->checkLink($all_segments, $this->input->get('area_id', FALSE));
+
+        $link = false;
+        $fullLocation = $this->input->get('fullLocation', FALSE);
+
+
+        if(!$fullLocation) {
+            $link = $this->link->checkLink($all_segments, $this->input->get('area_id', FALSE));
+        }
 
 
         if ($link) {
@@ -110,7 +117,6 @@ class SearchController extends \BaseController
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
 
             $input['allsegments'] = '';
-
 
             return $this->redirect->route(
                 'search.parse',
@@ -144,17 +150,13 @@ class SearchController extends \BaseController
 
 
 
-
-        if(!empty($input['area_id'])) {
-            $area = Place::find($input['area_id']);
-        }
-
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
 
         $input['date'] = $this->searchmodel->getSearchDate($dates, $input);
 
 
         $results = $this->searchmodel->search($area, $input, $this->user);
+
 
 
         $results['selected_date'] = $input['date'];
