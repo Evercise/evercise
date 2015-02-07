@@ -142,6 +142,13 @@ class SearchController extends \BaseController
     {
         $input = array_filter($this->input->all());
 
+
+
+
+        if(!empty($input['area_id'])) {
+            $area = Place::find($input['area_id']);
+        }
+
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
 
         $input['date'] = $this->searchmodel->getSearchDate($dates, $input);

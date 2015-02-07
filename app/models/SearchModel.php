@@ -96,6 +96,14 @@ class SearchModel
             $this->session->put('PER_PAGE', $input['size']);
             unset($input['size']);
         }
+        $fullLocation = $this->input->get('fullLocation', FALSE);
+
+        $google_location = [];
+        if ($fullLocation) {
+
+            $google_location = $this->parseGoogleLocation(json_decode($fullLocation));
+        }
+        $input = array_except($input, ['fullLocation']);
 
         /** If Area is not a object lets add it to the database so we have it for later use  */
         if (!$area instanceof Place) {
@@ -107,8 +115,10 @@ class SearchModel
             if (!isset($input['city']) || empty($input['city'])) {
                 $input['city'] = 'London';
             }
-            $location = $this->place->getByLocation($input['location'], $input['city']);
 
+            if (!$location = $this->place->getByGoogleLocation($google_location)) {
+                $location = $this->place->getByLocation($input['location'], 'London');
+            }
 
 
             if (is_null($location)) {
@@ -116,8 +126,8 @@ class SearchModel
                 $this->log->info('Address ERROR: ' . $input['location'] . '?' . http_build_query($input));
 
                 $input['allsegments'] = '';
-                unset($input['location']);
-                unset($input['city']);
+
+                $input = array_except($input, ['location', 'city']);
 
 
                 $input = array_filter($input);
@@ -135,9 +145,7 @@ class SearchModel
                 ];
 
             } else {
-                unset($input['location']);
-                unset($input['city']);
-                unset($input['date']);
+                $input = array_except($input, ['location', 'city', 'date']);
             }
 
 
@@ -172,11 +180,12 @@ class SearchModel
         } elseif (!$radius && empty($area->min_radius)) {
             $radius = $this->config->get('evercise.default_radius');
 
-            if(!empty($area->link->type)) {
+            if (!empty($area->link->type)) {
 
-                switch($area->link->type) {
+                switch ($area->link->type) {
                     case 'ZIP':
                     case 'STATION':
+                    case 'BOROUGH':
                         $radius = '3mi';
                         break;
 
@@ -431,6 +440,83 @@ class SearchModel
 
     }
 
+
+    public function parseGoogleLocation($location)
+    {
+        $res = [];
+
+
+        if (!empty($location->types[0])) {
+            $res['type'] = $location->types[0];
+
+            $res['formatted'] = $location->formatted_address;
+            if ($res['type'] == 'postal_code_prefix') {
+                $res['type'] = 'postal_code';
+            }
+            if ($res['type'] == 'administrative_area_level_3') {
+                $res['type'] = 'neighborhood';
+            }
+
+            foreach ($location->address_components as $component) {
+
+                if (!empty($component->types)) {
+                    foreach ($component->types as $type) {
+
+                        switch ($type) {
+                            case 'train_station':
+                            case 'subway_station':
+                                $res['station'] = $component->long_name;
+                                break;
+                            case 'postal_town':
+                            case 'administrative_area_level_2':
+                                $res['city'] = ($component->long_name == 'Greater London' ? 'London' : $component->long_name);
+                                break;
+                            case 'locality':
+                                $res['locality'] = $component->long_name;
+                                break;
+                            case 'postal_code':
+                            case 'postal_code_prefix':
+                                $res['postcode'] = $component->long_name;
+                                break;
+                            case 'country':
+                            case 'administrative_area_level_1':
+                                $res['country'] = $component->long_name;
+                                break;
+                            case 'route':
+                                $res['route'] = $component->long_name;
+                                break;
+                            case 'point_of_interest':
+                                $res['point'] = $component->long_name;
+                                break;
+                            case 'park':
+                                $res['park'] = $component->long_name;
+                                break;
+                            case 'neighborhood':
+                            case 'administrative_area_level_3':
+                                $res['neighborhood'] = $component->long_name;
+                                break;
+                            case 'establishment':
+                                $res['establishment'] = $component->long_name;
+                                break;
+
+                        }
+                    }
+
+                }
+
+            }
+
+
+            if (!empty($location->geometry->location->k)) {
+                $res['lat'] = $location->geometry->location->k;
+                $res['lng'] = $location->geometry->location->C;
+            }
+        }
+
+        return $res;
+
+
+    }
 
     public function getSearchDate($dates, $input = [])
     {

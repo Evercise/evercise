@@ -12,6 +12,7 @@ class CreateEvercisegroupImportTable extends Migration {
 	 */
 	public function up()
 	{
+		Schema::dropIfExists('venue_import');
 		Schema::create('venue_import', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id');
@@ -36,7 +37,7 @@ class CreateEvercisegroupImportTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('venue_import');
+		Schema::dropIfExists('venue_import');
 	}
 
 }
