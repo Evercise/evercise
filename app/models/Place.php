@@ -32,7 +32,6 @@ class Place extends \Eloquent
         }
 
 
-
         $location = [];
         $type = 'AREA';
 
@@ -55,7 +54,10 @@ class Place extends \Eloquent
             case 'subway_station':
                 $type = 'STATION';
 
-                $location = [$params['city'], (!empty($params['point']) ? $params['point'] : $params['station']. ' Station')];
+                $location = [
+                    $params['city'],
+                    (!empty($params['point']) ? $params['point'] : $params['station'] . ' Station')
+                ];
                 break;
             case 'park':
                 $location = [$params['city'], $params['establishment']];
@@ -67,7 +69,7 @@ class Place extends \Eloquent
             default:
                 $location = [$params['formatted']];
 
-                if(!empty($params['establishment']) && !empty($params['city'])) {
+                if (!empty($params['establishment']) && !empty($params['city'])) {
                     $location = [$params['city'], $params['establishment']];
                 }
 
@@ -81,7 +83,8 @@ class Place extends \Eloquent
 
 
     }
-    public static function getByLocation($location = '', $city = '')
+
+    public static function getByLocation($location = '', $city = 'London')
     {
 
 
@@ -150,7 +153,7 @@ class Place extends \Eloquent
 
             $name .= ($is_city && strpos($name, $city) === FALSE ? ' ' . ucfirst($city) : '');
             $name .= (!$is_area && strpos($name, 'station') === FALSE ? ' Station' : '');
-
+         
             $return = [];
 
             $type = 'AREA';
