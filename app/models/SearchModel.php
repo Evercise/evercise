@@ -506,10 +506,19 @@ class SearchModel
 
             }
 
-
-            if (!empty($location->geometry->location->k)) {
-                $res['lat'] = $location->geometry->location->k;
-                $res['lng'] = $location->geometry->location->C;
+            $res['lat'] = '';
+            $res['lng'] = '';
+            if (!empty($location->geometry->location)) {
+                $i = 0;
+                foreach ($location->geometry->location as $key => $val) {
+                    if ($i == 0) {
+                        $res['lat'] = $val;
+                    }
+                    if ($i == 1) {
+                        $res['lng'] = $val;
+                    }
+                    $i++;
+                }
             }
         }
 
