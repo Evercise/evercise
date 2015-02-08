@@ -14,6 +14,13 @@ if(typeof angular != 'undefined') {
 
         $scope.searchTerm = laracasts.results.search;
         $scope.location = laracasts.results.area.name;
+        $scope.area = laracasts.results.area.id;
+
+        // area clear
+        $('input[name="location"]').change(function(){
+            $scope.area = '';
+            $scope.$apply();
+        })
 
         $scope.activeCatSwitch = function(cat){
             $scope.activeCat = cat;

@@ -27,6 +27,7 @@
                     </div>
                     <div class="col-sm-2">
                         {{ Form::hidden('city', null) }}
+                        <input name="area" type="hidden"value="{[{ area}]}">
                         {{ Form::submit('Find a class' , ['class' => 'btn btn-primary btn-block']) }}
                     </div>
                     {{ Form::close() }}

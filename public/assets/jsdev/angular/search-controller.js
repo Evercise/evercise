@@ -304,8 +304,7 @@ if(typeof angular != 'undefined') {
                     date : $scope.selectedDate,
                     radius : $scope.results.radius,
                     sort : $scope.results.sort,
-                    search : $scope.results.search,
-                    area : $scope.results.area.id
+                    search : $scope.results.search
                 }
             }
 
