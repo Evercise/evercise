@@ -1,5 +1,5 @@
-<div id="profile-nav" class="sticky-wrapper" data-name="{{$user->display_name}}">
-    <nav id="user-nav-bar" class="navbar navbar-default mb0 sticky-fixed-nav" role="navigation">
+<div id="profile-nav" data-name="{{$user->display_name}}">
+    <nav id="user-nav-bar" class="navbar mb0" role="navigation">
         <div class="container mt10 mb10">
             <ul class="nav nav-pills nav-justified">
                 <li class="{{ ($tab === 0 ? 'active' : ($tab === 'hub' ? 'active' : null)) }}"><a href="#hub">Class Hub</a></li>

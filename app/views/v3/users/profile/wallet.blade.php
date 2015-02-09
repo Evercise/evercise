@@ -6,71 +6,7 @@
         </div>
         <div id="" class="row">
             <div class="col-md-6">
-                {{--
-                <ul class="list-group mb20">
 
-                  <li class="list-group-item ">
-                    <div class="row">
-                        <div class="col-sm-7 sm-mb10">
-                            <h3>Current Balance: <span class="text-primary">£{{round($data['user']->getWallet()->getBalance(), 2)}}</span> </h3>
-                        </div>
-                        @if($data['user']->getWallet()->balance > 0 && $data['user']->isTrainer())
-                        <div class="col-sm-5 text-right">
-                            {{ Form::open(['route' => 'ajax.request.withdrawal', 'method' => 'post', 'id' => 'withdraw-funds']) }}
-                                {{ Form::submit('Withdraw Funds', ['class' => 'btn btn-default sm-btn-block']) }}
-                            {{Form::close()}}
-                        </div>
-                        @endif
-                    </div>
-                  </li>
-                  {{ Form::open(['id' => 'add-topup', 'route' => 'cart.add', 'method' => 'post', 'class' => '']) }}
-                      <li class="list-group-item ">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <strong>How much would you like to top up?</strong>
-                            </div>
-                        </div>
-                        <div class="row mt20">
-                            <div class="col-sm-2 sm-mb10">
-                                <div class="btn-group btn-block">
-                                    <button data-amount="10" class="btn btn-default btn-sm btn-block add-btn" type="button">&pound;10</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 sm-mb10">
-                                <div class="btn-group btn-block">
-                                    <button data-amount="25" class="btn btn-default btn-sm btn-block add-btn" type="button">&pound;25</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 sm-mb10">
-                                <div class="btn-group  btn-block">
-                                    <button data-amount="50" class="btn btn-default btn-sm btn-block add-btn" type="button">&pound;50</button>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                {{ HTML::decode( Form::text('custom', null, ['class' => 'form-control input-sm', 'placeholder' => '&pound Custom amount' ]) )  }}
-
-                                {{ Form::hidden( 'product-id' , 'T', array('id' => 'product-id')) }}
-                                {{ Form::hidden( 'amount' , 0 , array('id' => 'amount')) }}
-                            </div>
-                        </div>
-
-                      </li>
-                      <li id="topup-option" class="list-group-item">
-                        <div class="row">
-                            <div class="col-sm-5 sm-mb10">
-                                {{ Html::linkRoute('payment.request.paypal.topup', 'Pay with paypal', null,  ['class' =>'btn btn-info btn-block', 'id' =>'fb-pay']) }}
-                            </div>
-                            <div class="col-sm-2 text-center mt5 hidden-mob">
-                                Or
-                            </div>
-                            <div class="col-sm-5">
-                                <button id="stripe-button" class="btn btn-primary btn-block">Pay with card</button>
-                            </div>
-                        </div>
-                      </li>
-                  {{ Form::close() }}
-                </ul>
-                --}}
                 <ul class="list-group">
 
                   <li class="list-group-item ">

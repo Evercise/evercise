@@ -14,7 +14,7 @@ profileNav.prototype = {
         new Masonry( $('.masonry') );
     },
     addListeners : function(){
-        $(window).scroll($.proxy(this.checkScrollPosition, this) );
+        //$(window).scroll($.proxy(this.checkScrollPosition, this) );
         $(window).on('popstate',$.proxy(this.checkHistoryState, this) );
         this.nav.find('a').on('click', $.proxy( this.changeTabs, this));
     },
