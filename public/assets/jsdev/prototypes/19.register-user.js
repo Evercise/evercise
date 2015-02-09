@@ -16,7 +16,7 @@ function registerUser(form){
             },
             regexp: {
                 regexp: /^[a-zA-Z0-9_]+$/,
-                message: 'Your display name can only consist of alphabetical, number and underscore'
+                message: 'Your display name must consist of alphanumeric characters and underscores'
             }
         }
     };
