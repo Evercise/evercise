@@ -6,6 +6,7 @@
         </div>
         <div id="" class="row">
             <div class="col-md-6">
+                {{--
                 <ul class="list-group mb20">
 
                   <li class="list-group-item ">
@@ -69,6 +70,7 @@
                       </li>
                   {{ Form::close() }}
                 </ul>
+                --}}
                 <ul class="list-group">
 
                   <li class="list-group-item ">
