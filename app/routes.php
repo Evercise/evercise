@@ -256,10 +256,6 @@ Route::post(
     '/users/resetpassword',
     ['as' => 'users.resetpassword.post', 'uses' => 'UsersController@postResetPassword']
 );
-Route::get(
-    '/users/{display_name}/changepassword',
-    ['as' => 'users.changepassword', 'uses' => 'UsersController@getChangePassword']
-);
 Route::post(
     '/users/changepassword',
     ['as' => 'users.changepassword.post', 'uses' => 'UsersController@postChangePassword']

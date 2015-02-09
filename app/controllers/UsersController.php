@@ -250,18 +250,6 @@ class UsersController extends \BaseController
      * Reset the user's password using the emailed hash
      *
      * @param  int $id
-     * @return View
-     */
-    public function getChangePassword($display_name)
-    {
-        // Init JS from composer as used for trainers as well as users
-        return View::make('users.changepassword');
-    }
-
-    /**
-     * Reset the user's password using the emailed hash
-     *
-     * @param  int $id
      * @return Response
      */
     public function postChangePassword()
