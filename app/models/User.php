@@ -42,6 +42,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'last_name'  => 'required|max:15|min:2',
         'phone'      => 'numeric',
         'password'   => 'confirmed|min:6|max:32',
+        'email'      => 'email',
     ];
 
     /**
@@ -354,7 +355,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function validateUserEdit($inputs, $dateAfter, $dateBefore, $isTrainer)
     {
 
-        if($isTrainer) {
+        if ($isTrainer) {
             $validationRules = array_merge(
                 static::$validationRules,
                 Trainer::$validationRules
@@ -770,20 +771,20 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function hasTwitter()
     {
-        if ($this->token)
-        {
+        if ($this->token) {
             return $this->token->hasValidTwitterToken();
+        } else {
+            return FALSE;
         }
-    else return false;
     }
 
     public function hasFacebook()
     {
-        if ($this->token)
-        {
+        if ($this->token) {
             return $this->token->hasValidFacebookToken();
+        } else {
+            return FALSE;
         }
-        else return false;
     }
 
     public function getFacebookId()
@@ -791,12 +792,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         if ($this->token) {
             if ($this->token->hasValidFacebookToken()) {
                 $facebookToken = json_decode($this->token->facebook);
-                if ($facebookToken)
-                    if (isset($facebookToken->id))
+                if ($facebookToken) {
+                    if (isset($facebookToken->id)) {
                         return $facebookToken->id;
+                    }
+                }
             }
         }
-        return null;
+
+        return NULL;
     }
 
     public function getTwitterId()
@@ -804,12 +808,15 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         if ($this->token) {
             if ($this->token->hasValidTwitterToken()) {
                 $twitterToken = json_decode($this->token->twitter);
-                if ($twitterToken)
-                    if (isset($twitterToken->screen_name))
+                if ($twitterToken) {
+                    if (isset($twitterToken->screen_name)) {
                         return $twitterToken->screen_name;
+                    }
+                }
             }
         }
-        return null;
+
+        return NULL;
     }
 
 
@@ -871,6 +878,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->hasMany('Referral')
             ->where('referee_id', 0);
     }
+
     public function countPendingReferrals()
     {
         return count($this->pendingReferrals);
