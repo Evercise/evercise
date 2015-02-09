@@ -9947,6 +9947,15 @@ label {
 .form-control.input-lg {
   height: 49px;
   font-size: 14px;
+  line-height: inherit;
+}
+.form-control.has-error {
+  border-color: #ebccd1;
+  color: #a94442;
+  background: #f2dede;
+}
+.form-control.has-error .input-group-addon {
+  background: #ffffff;
 }
 .input-group-addon {
   color: #bfbfbf;
@@ -10345,14 +10354,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .input-list .input-group:last-of-type {
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
-}
-.input-list .input-group.has-error {
-  border-color: #ebccd1;
-  color: #a94442;
-  background: #f2dede;
-}
-.input-list .input-group.has-error .input-group-addon {
-  background: #ffffff;
 }
 .filter-slider {
   width: 435px;
