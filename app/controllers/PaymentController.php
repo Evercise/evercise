@@ -254,6 +254,7 @@ class PaymentController extends BaseController
                 $gateway->setPassword(getenv('PAYPAL_PASS'));
                 $gateway->setSignature(getenv('PAYPAL_SIGNATURE'));
                 $gateway->setTestMode(getenv('PAYPAL_TESTMODE'));
+                $gateway->setNoShipping(1);
 
 
                 $response = $gateway->purchase(
