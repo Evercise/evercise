@@ -9502,8 +9502,9 @@ fieldset[disabled] .stripe-button-el.active {
 @media (max-width: 767px) {
   .class-block .class-title {
     border-top-right-radius: 3px;
-    padding: 15px 10px 14px;
+    padding: 15px 10px 15px;
     text-align: left;
+    height: 66px;
   }
   .class-block .class-title h4 {
     font-size: 18px;
