@@ -166,6 +166,9 @@ $(function(){
     $('#add-topup').exists(function(){
         new topUp(this);
     })
+    $('#change-password').exists(function(){
+        new changePassword(this);
+    })
     $('#location-auto-complete').exists(function(){
         autocomplete = new LocationAutoComplete(this);
     })

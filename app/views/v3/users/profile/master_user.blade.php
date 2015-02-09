@@ -45,6 +45,9 @@
         <div id="edit" class="{{ $tab === 'edit' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.edit')
         </div>
+        <div id="password" class="{{ $tab === 'password' ? 'profile-panels' : 'hidden profile-panels' }}">
+            @include('v3.users.profile.change_password')
+        </div>
 
 
     </div>

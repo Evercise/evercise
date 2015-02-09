@@ -30,20 +30,7 @@
                        </div>
                     </div>
                 </div>
-                <div class="row  mt10">
-                    <div class="col-sm-6">
-                       <div class="form-group mb50">
-                         {{ Form::label('password', 'Password' , ['class' => 'mb15'])  }}
-                         {{ Form::password('password',['class' => 'form-control', 'placeholder' => 'Enter a password']) }}
-                       </div>
-                    </div>
-                    <div class="col-sm-6">
-                       <div class="form-group mb50">
-                         {{ Form::label('password_confirmation', 'Confirmed Password' , ['class' => 'mb15'])  }}
-                         {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'confirm your password']) }}
-                       </div>
-                    </div>
-                </div>
+
                 <div class="row  mt10">
                     <div class="col-sm-6 mb50">
                         <label class="mb15" for="phone">Phone Number<small> (Get alerts about classes)</small></label>

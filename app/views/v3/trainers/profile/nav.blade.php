@@ -8,6 +8,7 @@
                 <li class="{{ $tab === 'activity' ? 'active' : null }}"><a href="#activity">Activity</a></li>
                 <li class="{{ $tab === 'wallet' ? 'active' : null }}"><a href="#wallet">Wallet</a></li>
                 <li class="{{ $tab === 'edit' ? 'active' : null }}"><a href="#edit">Edit Profile</a></li>
+                <li class="{{ $tab === 'password' ? 'active' : null }}"><a href="#password">Edit Password</a></li>
             </ul>
         </div>
     </nav>
