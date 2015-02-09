@@ -61,9 +61,13 @@ if(typeof angular != 'undefined') {
 
         $scope.submit = function(term){
             $scope.searchTerm = term;
+            $scope.location = '';
+            $scope.area = '';
+
             setTimeout(function() {
                 $('#search-form').trigger('submit');
             }, 500)
+
 
         }
     }])
