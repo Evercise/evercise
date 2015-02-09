@@ -27,7 +27,7 @@ class MilestoneRewards extends \Eloquent
 
     public static function clearUser($userId) {
 
-        return static::where('user_id', $userId)->where('status', 0)->update('status', '1');
+        return static::where('user_id', $userId)->where('status', 0)->update(['status' => '1']);
 
     }
 
