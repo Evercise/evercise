@@ -14,11 +14,11 @@ function changePassword(form){
                 message: 'Your Password must be more than 6 and less than 32 characters long'
             },
             identical: {
-                field: 'confirmed_password',
+                field: 'new_password_confirmation',
                 message: 'Your passwords do not match'
             }
         }
-    };
+    },
     this.confirmed_password = {
         validators: {
             notEmpty: {
@@ -30,7 +30,7 @@ function changePassword(form){
                 message: 'Your Password must be more than 6 and less than 32 characters long'
             },
             identical: {
-                field: 'password',
+                field: 'new_password',
                 message: 'Your passwords do not match'
             }
         }
@@ -51,12 +51,37 @@ changePassword.prototype = {
 
             fields: {
                 new_password: this.password,
-                new_confirmed_password: this.confirmed_password
+                new_password_confirmation: this.confirmed_password
             }
         })
         .on('success.form.bv', function(e) {
             e.preventDefault();
             console.log(e);
+                self.ajaxUpload()
+;        });
+    },
+    ajaxUpload: function(){
+        var  self = this;
+        $.ajax(self.form.attr("action"), {
+            type: "post",
+            data: self.form.serialize(),
+            dataType: 'json',
+
+            beforeSend: function () {
+                self.form.find("input[type='submit']").prop('disabled', true);
+            },
+
+            success: function (data) {
+                console.log(data)
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+            },
+
+            complete: function () {
+
+            }
         });
     }
 }
