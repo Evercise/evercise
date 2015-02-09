@@ -590,7 +590,6 @@ class PaymentController extends BaseController
         event('user.cart.completed', [$this->user, $cart, $transaction]);
 
         EverciseCart::clearCart();
-        EverciseCart::clearWalletPayment();
         MilestoneRewards::clearUser($this->user->id);
 
         Session::forget('coupon');
