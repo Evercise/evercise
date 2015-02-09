@@ -103,7 +103,7 @@ class SearchModel
 
             $google_location = $this->parseGoogleLocation(json_decode($fullLocation));
         }
-        $input = array_except($input, ['fullLocation']);
+        $input = array_except($input, ['fullLocation', 'area']);
 
         /** If Area is not a object lets add it to the database so we have it for later use  */
         if (!$area instanceof Place) {

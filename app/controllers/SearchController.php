@@ -95,11 +95,13 @@ class SearchController extends \BaseController
 
 
         if(!$fullLocation) {
-            $link = $this->link->checkLink($all_segments, $this->input->get('area', FALSE), $this->input->get('location', FALSE));
+
+            $link = $this->link->checkLink($all_segments, $this->input->get('area', FALSE));
         }
 
 
-        if ($link) {
+
+        if ($link && !$this->input->get('area', FALSE)) {
 
             switch ($link->type) {
                 case 'AREA':
@@ -112,11 +114,25 @@ class SearchController extends \BaseController
                     return $this->show($link->getClass);
                     break;
             }
+        } elseif ($link && $this->input->get('area', FALSE)) {
+            $input = array_filter($this->input->except(['area', '_token', 'location']));
+            $input['allsegments'] = $link->permalink;
+
+
+            return $this->redirect->route(
+                'search.parse',
+                $input
+            );
+
         } elseif (!$link && !$this->input->get('location', FALSE) && $all_segments != '') {
 
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
 
             $input['allsegments'] = '';
+
+            $input = array_filter(array_except($input, ['area']));
+
+
 
             return $this->redirect->route(
                 'search.parse',

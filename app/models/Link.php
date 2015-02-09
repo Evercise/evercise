@@ -25,20 +25,21 @@ class Link extends \Eloquent
     }
 
 
-    public static function checkLink($url, $area_id = false)
+    public static function checkLink($url = false, $area_id = false)
     {
-
-        if($url == '') {
-            return false;
-        }
 
         if($area_id == '') $area_id = false;
         if($area_id) {
             $place = Place::find($area_id);
             $check = $place->link;
-        } else {
+
+        } elseif($url) {
             $check = Link::where('permalink', $url)->first();
+        } else {
+            return false;
         }
+
+
 
         if (!empty($check->permalink)) {
             return $check;
