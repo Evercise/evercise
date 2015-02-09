@@ -56,9 +56,8 @@ changePassword.prototype = {
         })
         .on('success.form.bv', function(e) {
             e.preventDefault();
-            console.log(e);
-                self.ajaxUpload()
-;        });
+            self.ajaxUpload();
+        });
     },
     ajaxUpload: function(){
         var  self = this;
@@ -72,7 +71,12 @@ changePassword.prototype = {
             },
 
             success: function (data) {
-                console.log(data)
+                if( data.validation_failed == 1 ){
+                    self.failedValidation(data);
+                }
+                else{
+                    location.reload();
+                }
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -80,8 +84,20 @@ changePassword.prototype = {
             },
 
             complete: function () {
-
+                self.form.find("input[type='submit']").prop('disabled', false);
             }
         });
+    },
+    failedValidation: function(data){
+        self = this;
+        var arr = data.errors;
+        $.each(arr, function(index, value)
+        {
+            self.form.find('input[name="' + index + '"]').parent().addClass('has-error');
+            self.form.find('input[name="' + index + '"]').parent().find('.glyphicon').remove();
+            self.form.find('input[name="' + index + '"]').parent().find('.help-block:visible').remove();
+            self.form.find('input[name="' + index + '"]').after('<small class="help-block" data-bv-validator="notEmpty" data-bv-for="' + index + '" data-bv-result="INVALID">' + value + '</small>');
+            self.form.find('input[name="' + index + '"]').after('<i class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="' + index + '"></i>');
+        })
     }
 }

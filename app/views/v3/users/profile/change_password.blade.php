@@ -10,6 +10,7 @@
                    <div class="form-group mb50">
                      {{ Form::label('old_password', 'Current Password' , ['class' => 'mb15'])  }}
                      {{ Form::password('old_password',['class' => 'form-control', 'placeholder' => 'Enter you current password']) }}
+                     {{ HTML::linkRoute('auth.forgot', 'Forgot your Password?' , null, ['class' => 'text-right link']) }}
                    </div>
                 </div>
             </div>
