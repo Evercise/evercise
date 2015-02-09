@@ -167,7 +167,7 @@ Cart.prototype = {
                 self.loginForm.trigger('submit');
             }
         })
-        $(document).on( 'submit',self.newUserForm, $.proxy(this.newUser,this));
+        $(document).on( 'submit','.checkout #new-user-form', $.proxy(this.newUser,this));
     },
     openStripe: function(e){
         var self = this;
@@ -185,7 +185,6 @@ Cart.prototype = {
     newUser : function(e){
         e.preventDefault();
         var self = this;
-        console.log(self.loginForm.find('input[name="email"]').val());
         self.newUserForm.find('input[name="email"]').val( self.loginForm.find('input[name="email"]').val());
         $.ajax(self.newUserForm.attr("action"), {
             type: "post",
@@ -216,6 +215,8 @@ Cart.prototype = {
                 self.newUserForm.find("input[type=submit]").prop('disabled', false);
             }
         });
+
+
     },
     failedValidation : function(data){
         var self = this;
