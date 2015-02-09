@@ -32,14 +32,13 @@ label{
   color: #bfbfbf;
   padding: 5px 0 5px 10px;
 }
-.form-group{
-  &.required{
-    label{
-      &:after{
-        content:"*";
-        color:red;
-      }
-    }
+
+
+label.required{
+  &:after{
+    content:"*";
+    color:red;
+    margin-left: 5px;
   }
 }
 
@@ -142,6 +141,11 @@ label{
     }
     .input-sm{
       line-height: 20px;
+    }
+    &.disabled{
+      opacity: 0.6;
+      pointer-events: none;
+      cursor: default;
     }
   }
   &.btn-primary{

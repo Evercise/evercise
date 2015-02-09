@@ -61,13 +61,13 @@
                         <div class="row  mt10">
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('first_name', 'Forename', ['class' => 'mb15'] )  }}
+                                 {{ Form::label('first_name', 'Forename', ['class' => 'mb15 required'] )  }}
                                  {{ Form::text('first_name', null, ['class' => 'form-control', 'placeholder' => 'Enter your first name']) }}
                                </div>
                             </div>
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('last_name', 'Surname' , ['class' => 'mb15'])  }}
+                                 {{ Form::label('last_name', 'Surname' , ['class' => 'mb15 required'])  }}
                                  {{ Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Enter your second name']) }}
                                </div>
                             </div>
@@ -75,14 +75,14 @@
                         <div class="row  mt10">
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('display_name', 'Your Evercise Display Name', ['class' => 'mb15'] )  }}
+                                 {{ Form::label('display_name', 'Your Evercise Display Name', ['class' => 'mb15 required'] )  }}
                                  {{ Form::text('display_name', null, ['class' => 'form-control', 'placeholder' => 'This will be your name on Evercise']) }}
                                   <!--<em class="help-block">evercise.com/users/</em>-->
                                </div>
                             </div>
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('email', 'Email Address', ['class' => 'mb15'] )  }}
+                                 {{ Form::label('email', 'Email Address', ['class' => 'mb15 required'] )  }}
                                  {{ Form::email('email', isset($email) ? $email : '', ['class' => 'form-control', 'placeholder' => 'Enter your current email address']) }}
                                </div>
                             </div>
@@ -90,25 +90,49 @@
                         <div class="row  mt10">
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('password', 'Password' , ['class' => 'mb15'])  }}
+                                 {{ Form::label('password', 'Password' , ['class' => 'mb15 required'])  }}
                                  {{ Form::password('password',['class' => 'form-control', 'placeholder' => 'Enter a password']) }}
                                </div>
                             </div>
                             <div class="col-sm-6">
                                <div class="form-group mb50">
-                                 {{ Form::label('password_confirmation', 'Confirmed Password' , ['class' => 'mb15'])  }}
+                                 {{ Form::label('password_confirmation', 'Confirmed Password' , ['class' => 'mb15 required'])  }}
                                  {{ Form::password('password_confirmation', ['class' => 'form-control', 'placeholder' => 'confirm your password']) }}
                                </div>
                             </div>
                         </div>
                         <div class="row  mt10">
-                            <div class="form-group col-sm-6">
+                            <div class="form-group col-sm-8">
                                 <label class="mb15" for="phone">Mobile Number <small>(Get alerts about your classes)</small></label>
                                 <div class="input-group">
+                                    {{--
                                     <div class="input-group-addon custom-select">
                                        {{ Form::select('areacode', Config::get('countrycodes.pretty')
 
                                         , '+44', ['class' => 'select-addon'] ) }}
+                                    </div>
+                                    --}}
+                                     <div class="input-group-addon custom-select">
+                                     <select  name="areacode">
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="US">United States</option>
+                                        <option value="BR">Brazil</option>
+                                        <option value="CN">China</option>
+                                        <option value="CZ">Czech Republic</option>
+                                        <option value="DK">Denmark</option>
+                                        <option value="FR">France</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="IN">India</option>
+                                        <option value="MA">Morocco</option>
+                                        <option value="PK">Pakistan</option>
+                                        <option value="RO">Romania</option>
+                                        <option value="RU">Russia</option>
+                                        <option value="SK">Slovakia</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="TH">Thailand</option>
+                                        <option value="AE">United Arab Emirates</option>
+                                        <option value="VE">Venezuela</option>
+                                    </select>
                                     </div>
                                     {{ Form::text('phone', null, ['class' => 'form-control']) }}
                                 </div>
@@ -127,7 +151,7 @@
                                 </div>
                             </div>
                             -->
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                <div class="form-group mb50">
                                    <label class="mb15" for="forename">Gender</label>
                                    <div class="custom-select">

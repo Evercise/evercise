@@ -8588,8 +8588,7 @@ a.bg-light-grey:hover {
   top: 0;
 }
 .bv-form .bv-icon-input-group {
-  top: 0;
-  z-index: 100;
+  z-index: 2;
 }
 .has-error .form-control:focus,
 .has-success .form-control:focus {
@@ -8597,6 +8596,7 @@ a.bg-light-grey:hover {
 }
 .form-control-feedback {
   top: 41px;
+  right: 10px;
   z-index: 0;
 }
 .form-control-feedback.bv-no-label {
@@ -8604,6 +8604,7 @@ a.bg-light-grey:hover {
 }
 .btn {
   border: 1px solid transparent;
+  font-weight: 600;
 }
 .btn-block {
   padding-left: 0;
@@ -9961,9 +9962,10 @@ label {
   color: #bfbfbf;
   padding: 5px 0 5px 10px;
 }
-.form-group.required label:after {
+label.required:after {
   content: "*";
   color: red;
+  margin-left: 5px;
 }
 .help-block {
   color: #797979;
@@ -10093,6 +10095,11 @@ label {
 }
 .btn .custom-select .input-sm {
   line-height: 20px;
+}
+.btn .custom-select.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: default;
 }
 .btn.btn-primary .custom-select select {
   background: #ff1b7e;

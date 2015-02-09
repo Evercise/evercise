@@ -30,6 +30,7 @@ Cart.prototype = {
             $(e.target).closest('.add-to-class').trigger('submit');
         }
         else if( $(e.target).val() ){
+
             $(e.target).css('z-index', 1);
             $(e.target).closest('.add-to-class').trigger('submit');
         }else{
@@ -84,8 +85,12 @@ Cart.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
+                if(self.form.find('select[name="quantity"]') ){
+                    self.form.find('select[name="quantity"]').parent().addClass('disabled');
+                }
                 if(self.form.find('input[type="submit"]').hasClass('add-btn') ){
-                    self.form.find("input[type='submit']").prop('disabled', true);;
+                    self.form.find("input[type='submit']").prop('disabled', true);
+
                 }
                 else{
                     self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading"></span>');

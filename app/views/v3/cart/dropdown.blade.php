@@ -47,7 +47,7 @@
                     {{ Form::hidden('force', true) }}
 
                         <div class="btn-group btn-block">
-                            {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
+                            <label for="quantity" class="btn btn-primary add-btn">{{$row['qty']}}</label>
                             <div class="btn btn-primary btn-aside">
                                 <div class="custom-select btn-drop">
                                     <select name="quantity" id="quantity" class="btn-primary btn-select ">
