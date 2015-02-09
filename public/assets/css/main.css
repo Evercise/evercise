@@ -11996,9 +11996,10 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 }
 .alert.fixed {
   position: fixed;
-  top: 100px;
-  right: 80px;
+  top: 50px;
+  left: 0px;
   z-index: 9999;
+  min-width: 200px;
 }
 @media (max-width: 992px) {
   .alert.fixed {
