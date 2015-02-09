@@ -186,6 +186,7 @@ class SearchModel
                     case 'ZIP':
                     case 'STATION':
                     case 'BOROUGH':
+                    case 'AREA':
                         $radius = '3mi';
                         break;
 
