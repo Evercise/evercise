@@ -23,8 +23,6 @@ if(typeof angular != 'undefined') {
 
         $scope.results = laracasts.results;
 
-        console.log($scope.results);
-
         $scope.resultsLoading = false;
 
         $scope.view = 'list';

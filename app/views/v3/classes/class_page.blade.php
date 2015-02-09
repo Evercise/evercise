@@ -47,9 +47,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 mt15">
+            <div class="col-sm-6">
                 <strong class="text-white">Overview</strong>
-                <p class="mt1 text-white drop-shadow">{{ $data['description'] }}</p>
+                <p class="mt1 text-white drop-shadow mt15">{{ $data['description'] }}</p>
                 <div class="row mt50">
                     <div class="col-xs-3">
                         {{ Html::decode( Html::linkRoute('trainer.show', image($data['user']->directory.'/small_'.$data['user']->image, $data['user']->display_name, ['class' => 'img-responsive img-circle']) , strtolower($data['user']->display_name)) ) }}

@@ -38,7 +38,6 @@ if(typeof angular != 'undefined') {
                                 'show' : false
                             })
                         }
-                        console.log(dt);
                     }
 
 

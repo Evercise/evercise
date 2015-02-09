@@ -56,8 +56,6 @@ if(typeof angular != 'undefined') {
             });
 
             responsePromise.error(function(data) {
-                console.log("AJAX failed!");
-                console.log(data);
             });
         }
 
