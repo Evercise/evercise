@@ -6,7 +6,7 @@
                 </li>
             </div>
             <div class="col-xs-10" >
-                <div class="row">
+                <div class="row" ng-click="catsIsVisible = false">
                     {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
                     <div class="col-sm-6">
                         <div class="input-group">
