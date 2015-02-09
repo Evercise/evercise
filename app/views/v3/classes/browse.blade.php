@@ -2,7 +2,7 @@
         <div class="row">
             <div class="col-xs-2">
                 <li class="custom-cat-select">
-                    <a href="#" ng-click="catsIsVisible = !catsIsVisible">Classes by<br><strong>Category </strong><span ng-class="(catsIsVisible) ? 'dropup' :  ''"><span class="caret ml5"></span></span></a>
+                    <a href="#" ng-click="catsIsVisible = !catsIsVisible; $event.preventDefault()">Classes by<br><strong>Category </strong><span ng-class="(catsIsVisible) ? 'dropup' :  ''"><span class="caret ml5"></span></span></a>
                 </li>
             </div>
             <div class="col-xs-10" >
@@ -46,7 +46,7 @@
                         <p>{[{ browse.description }]}</p>
                         <strong class="text-larger">Popular Classes</strong>
                         <div class="mt10 mb15">
-                            <button ng-repeat="(key, pop) in browse.popular_subcategories track by key" ng-click="$event.preventDefault();submit(pop.name);" class="btn btn-rounded btn-white mr20">{[{ pop.name }]}</button>
+                            <button ng-repeat="(key, pop) in browse.popular_subcategories track by key" ng-click="$event.preventDefault();submit(pop.name);" class="btn btn-rounded btn-white mr20 mb10">{[{ pop.name }]}</button>
                         </div>
                         <strong class="text-larger">Types of {[{ browse.name }]}</strong>
 
