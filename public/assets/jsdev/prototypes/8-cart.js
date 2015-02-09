@@ -153,6 +153,9 @@ Cart.prototype = {
             $(':checkbox').prop("checked", false);
             $('input[name="'+name+'"]').prop("checked", true);
             self.userType = name;
+            if(self.userType == 'ps'){
+                $('input[name="password"]').focus();
+            }
         })
 
         $(document).on('keyup', self.loginForm.find('input[name="email"]') , function(e){
