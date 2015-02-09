@@ -95,7 +95,7 @@ class SearchController extends \BaseController
 
 
         if(!$fullLocation) {
-            $link = $this->link->checkLink($all_segments, $this->input->get('area_id', FALSE));
+            $link = $this->link->checkLink($all_segments, $this->input->get('area', FALSE), $this->input->get('location', FALSE));
         }
 
 
