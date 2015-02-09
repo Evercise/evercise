@@ -266,9 +266,8 @@ class UsersController extends \BaseController
             Input::all(),
             [
                 'old_password' => 'required',
-                'new_password' => 'required|confirmed|min:6|max:32|has:letter,num',
-            ],
-            ['new_password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+                'new_password' => 'required|confirmed|min:6|max:32',
+            ]
         );
 
         $oldPassword = Input::get('old_password');
