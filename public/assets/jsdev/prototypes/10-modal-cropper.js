@@ -54,7 +54,6 @@ imageCropper.prototype = {
         $(document).on("change", '#get_file_content' ,$.proxy(this.getFileContent, this));
     },
     upload: function(e){
-        this.modal.modal('show');
         this.uploadButton.trigger('click');
     },
     getImage: function(e){
@@ -65,18 +64,18 @@ imageCropper.prototype = {
         if (e.target.files && e.target.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                console.log(e.target.result);
                 self.modalImage.attr('src', e.target.result);
             }
 
             reader.readAsDataURL(e.target.files[0]);
-
         }
 
     },
     getFileContent : function(e){
         var form = $(e.target).closest('form'),
-            data = new FormData(form[0]);
+            file = $(e.target),
+            data = new FormData(form[0]),
+            self = this;
         $.ajax(form.attr('action'), {
             type: "post",
             data: data,
@@ -87,7 +86,12 @@ imageCropper.prototype = {
             },
 
             success: function (data) {
-                self.openModal();
+
+                self.modalImage.attr('src','/'+data.file);
+                self.modal.find("input[name='file']").replaceWith(file);
+                
+
+               // self.openModal();
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
