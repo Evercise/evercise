@@ -38,8 +38,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     ];
 
     public static $validationRules = [
-        'first_name' => 'required|max:15|min:2',
-        'last_name'  => 'required|max:15|min:2',
+        'first_name' => 'required|alpha|max:15|min:2',
+        'last_name'  => 'required|alpha|max:15|min:2',
         'phone'      => 'numeric',
         'password'   => 'confirmed|min:6|max:32',
         'email'      => 'email',

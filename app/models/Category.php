@@ -110,7 +110,7 @@ class Category extends Eloquent
 
             $output = [];
             foreach ($subcats as $subcat) {
-                $output[$subcat->id] = [
+                $output[] = [
                     'name' => $subcat->name,
                 ];
             }
@@ -121,6 +121,23 @@ class Category extends Eloquent
         {
             return [];
         }
+    }
+    public function getPopularClassSubcatMix()
+    {
+        $subcats = $this->getPopularSubcategories();
+        $mix = $this->getPopularClasses();
+
+        $i = 0;
+        while (count($mix) < 3)
+        {
+            if( isset( $subcats[$i] ) )
+                array_push( $mix, $subcats[$i] );
+            else
+                break;
+            $i++;
+        }
+
+        return $mix;
     }
 
     /**
@@ -177,7 +194,7 @@ class Category extends Eloquent
             $output[] = [
                 'name' => $category->name,
                 'description' => $category->description,
-                'popular_subcategories' => $category->getPopularSubcategories(),
+                'popular_subcategories' => $category->getPopularClassSubcatMix(),
                 'generated_subcategories' => $category->generatePopularSubcategories(),
             ];
         }
