@@ -288,6 +288,17 @@ class UploadController extends AjaxBaseController
 
         }
 
+        // If file has been temporarily uploaded with uploadWithoutCrop(),
+        // then the name of the temporary upload will be sent through to be deleted here.
+        if($this->request->has('deletion'))
+        {
+            $deletion = $this->request->get('deletion');
+            if( file_exists( $deletion ) )
+            {
+                unlink( $deletion );
+            }
+        }
+
         return $this->response->json(['file' => $folder . '/' . $real_name, 'filename' => $real_name, 'folder' => $folder]);
 
 
@@ -325,7 +336,7 @@ class UploadController extends AjaxBaseController
         /** New Slug for the Image */
         $slug = slugIt($user->display_name);
 
-        $file_name = uniqueFile(public_path() . '/' . $folder . '/', $slug,
+        $file_name = uniqueFile(public_path() . '/' . $folder . '/', 'temp_'.$slug,
             $upload_file->getClientOriginalExtension());
 
         //$image = $file->crop(100, 100, 0, 0);
