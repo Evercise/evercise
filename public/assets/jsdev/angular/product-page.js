@@ -1,5 +1,5 @@
 if(typeof angular != 'undefined') {
-    app.controller('calendarController', ["$scope" ,function ($scope) {
+    app.controller('calendarController', ["$scope", "$filter" ,function ($scope, $filter) {
 
         $scope.sessions = JSON.parse($('input[name="sessions"]').val());
 
@@ -18,9 +18,13 @@ if(typeof angular != 'undefined') {
 
                 var date = d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2);
                 var result = $.grep($scope.sessions, function(e){
-                    var dt = e.date_time;
-                    dt = dt.split(/\s+/);
-                    return dt[0] == date;
+                    if(e.remaining  > 0){
+                        var dt = e.date_time;
+                        dt = dt.split(/\s+/);
+
+                        return dt[0] == date;
+                    }
+
                 });
 
 
@@ -28,15 +32,21 @@ if(typeof angular != 'undefined') {
                     for(var key in result){
                         if (!checkDuplicate(result[key].id)){
                             var dt = new Date(result[key].date_time.replace(/\s+/, 'T'));
-                            $scope.rows.push({
-                                'id' : result[key].id,
-                                'date' : dt,
-                                'price' :result[key].price,
-                                'remaining' :result[key].remaining,
-                                'default_tickets' :result[key].default_tickets,
-                                'selected' : $scope.cartItems[result[key].id],
-                                'show' : false
-                            })
+                            var time = $filter('date')(dt, 'hh:mm a');
+
+                            if(result[key].remaining > 0){
+                                $scope.rows.push({
+                                    'id' : result[key].id,
+                                    'date' : dt,
+                                    'time' : time,
+                                    'price' :result[key].price,
+                                    'remaining' :result[key].remaining,
+                                    'default_tickets' :result[key].default_tickets,
+                                    'selected' : $scope.cartItems[result[key].id],
+                                    'show' : false
+                                })
+                            }
+
                         }
                     }
 
@@ -61,7 +71,6 @@ if(typeof angular != 'undefined') {
         })
 
         function checkDuplicate(id){
-
             for ( var i=0; i < $scope.rows.length; i++ ){
                 if ($scope.rows[i].id == id) return true;
             }

@@ -133,7 +133,7 @@
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class-{[{ row.id  }]}', 'class' => 'add-to-class']) }}
                                     <div class="col-xs-5">
                                         <div class="row">
-                                            <div class="col-xs-6 sm-text-right">{[{row.date | date: 'hh:mm a' }]}</div>
+                                            <div class="col-xs-6 sm-text-right">{[{row.time }]}</div>
                                             <div class="col-xs-6 text-center text-primary sm-text-right">{[{row.price | currency : '£' : 2}]}</div>
                                         </div>
                                     </div>
