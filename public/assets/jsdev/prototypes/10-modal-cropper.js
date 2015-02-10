@@ -87,7 +87,7 @@ imageCropper.prototype = {
             },
 
             success: function (data) {
-
+                file.addClass('opacity');
                 self.modalImage.attr('src','/'+data.file);
                 self.modal.find("input[name='file']").replaceWith(file);
                 self.modal.find("input[name='deletion']").val(data.file);
@@ -126,7 +126,7 @@ imageCropper.prototype = {
         self.modalImage.attr('src',null);
         this.uploadButton.val('');
         if(self.modal.find('#get_file_content').length){
-            $('#no-file-reader-form').append(self.modal.find('#get_file_content'));
+            $('#no-file-reader-form').append(self.modal.find('#get_file_content').removeClass('opacity'));
         }
     },
     submitForm: function(e){
