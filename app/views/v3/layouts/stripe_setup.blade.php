@@ -2,7 +2,7 @@
 <script>
   var handler = StripeCheckout.configure({
     key: "{{  getenv('STRIPE_PUB_KEY') }}",
-    image: '{{url()}}/img/evercoin.png',
+    /*image: '{{url()}}/img/evercoin.png',*/
     currency: "GBP",
     allowRememberMe: false,
     token: function(token) {

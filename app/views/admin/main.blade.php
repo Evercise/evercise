@@ -267,7 +267,7 @@
                 initPut('{"selector": "#edit_classes"}');
 
                 $('select.popular').select2({
-                maximumSelectionSize: 3,
+                maximumSelectionSize: 4,
                 placeholder: 'click here'
                 });
 
