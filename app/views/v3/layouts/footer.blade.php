@@ -3,17 +3,18 @@
         <div class="row">
             <div class="col-sm-4">
                 <h3>Evercise Classes</h3>
-                <li>{{HTML::linkRoute('evercisegroups.search', 'Discover Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.serach' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.class_guidelines', 'Evercise Class Guidelines' , null , ['class' => Route::currentRouteName() == 'static.class_guidelines' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.faq', 'Need Help' , null , ['class' => Route::currentRouteName() == 'static.faq' ? 'active' : ''])}}</li>
-                <!--<li>{{HTML::linkRoute('popular', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'popular' ? 'active' : ''])}}</li>-->
+                <li>{{HTML::linkRoute('evercisegroups.search', 'Discover Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.serach' ? 'text-primary' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.class_guidelines', 'Evercise Class Guidelines' , null , ['class' => Route::currentRouteName() == 'static.class_guidelines' ? 'text-primary' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.faq', 'Need Help' , null , ['class' => Route::currentRouteName() == 'static.faq' ? 'text-primary' : ''])}}</li>
+                <!--<li>{{HTML::linkRoute('popular', 'Popular Classes' , null , ['class' => Route::currentRouteName() == 'popular' ? 'text-primary' : ''])}}</li>-->
             </div>
             <div class="col-sm-4">
                 <h3>About Evercise</h3>
-                <li>{{HTML::linkRoute('general.about', 'What is Evercise' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('general.terms', 'Terms' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.the_team', 'Meet the Team' , null , ['class' => Route::currentRouteName() == 'static.the_team' ? 'active' : ''])}}</li>
-                <li>{{HTML::linkRoute('static.careers', 'Evercise Careers' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'active' : ''])}}</li>
+                <li>{{HTML::linkRoute('general.about', 'What is Evercise' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'text-primary' : ''])}}</li>
+                <li>{{HTML::linkRoute('general.terms', 'Terms' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'text-primary' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.the_team', 'Meet the Team' , null , ['class' => Route::currentRouteName() == 'static.the_team' ? 'text-primary' : ''])}}</li>
+                <li>{{HTML::linkRoute('static.careers', 'Evercise Careers' , null , ['class' => Route::currentRouteName() == 'static.about' ? 'text-primary' : ''])}}</li>
+                <li>{{HTML::linkRoute('blog', 'Evercise Blog' , null , ['class' => Route::currentRouteName() == 'blog' ? 'text-primary' : ''])}}</li>
             </div>
             <div class="col-sm-4">
                 <h3>Contact Us</h3>

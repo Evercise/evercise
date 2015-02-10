@@ -177,7 +177,7 @@
                         <div class="text-center mt40">
                             <div class="custom-checkbox">
                                 {{ Form::checkbox('terms', 'yes', true , ['id'=> 'terms']) }}
-                                <label for="terms" class="text-grey">I Agree With the <a href="{{ url('terms_of_use') }}" target="_blank" class="text-primary">Terms of Use</a>, <a href="{{ url('privacy') }}" target="_blank" class="text-primary">Privacy Policy</a> and <a href="{{ url('cookie-policy') }}" target="_blank" class="text-primary">Cookie Policy</a></label>
+                                <label for="terms" class="text-grey">I Agree With the <a href="{{ url('terms-of-use') }}" target="_blank" class="text-primary">Terms of Use</a>, <a href="{{ url('privacy') }}" target="_blank" class="text-primary">Privacy Policy</a> and <a href="{{ url('cookie-policy') }}" target="_blank" class="text-primary">Cookie Policy</a></label>
                             </div>
                         </div>
                         <div class="text-center form-group mt20">

@@ -32,6 +32,10 @@ function registerUser(form){
     };
     this.first_name = {
         validators: {
+            regexp: {
+                regexp: /^[a-zA-Z]+$/,
+                message: 'Your first name can only contain letters'
+            },
             notEmpty: {
                 message: 'Your first name is required and cannot be empty'
             },
@@ -44,6 +48,10 @@ function registerUser(form){
     };
     this.last_name = {
         validators: {
+            regexp: {
+                regexp: /^[a-zA-Z]+$/,
+                message: 'Your surname name can only contain letters'
+            },
             notEmpty: {
                 message: 'Your surname is required and cannot be empty'
             },
