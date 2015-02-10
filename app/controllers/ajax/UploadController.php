@@ -322,7 +322,11 @@ class UploadController extends AjaxBaseController
 
         $folder = $user->directory;
 
-        $file_name = 'temp';
+        /** New Slug for the Image */
+        $slug = slugIt($user->display_name);
+
+        $file_name = uniqueFile(public_path() . '/' . $folder . '/', $slug,
+            $upload_file->getClientOriginalExtension());
 
         return $this->response->json(['file' => $folder . '/' . $file_name, 'filename' => $file_name, 'folder' => $folder]);
 
