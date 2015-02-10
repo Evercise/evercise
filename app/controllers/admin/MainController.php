@@ -696,6 +696,11 @@ class MainController extends \BaseController
             })
             ->lists('name', 'id');
 
+        foreach ($groups as $id => $group) {
+            $groups[$id] = $id.' - '.$group;
+        }
+
+
         $subcategories = [];
         foreach ($category->subcategories as $subcat) {
             $subcategories[$subcat->id] = $subcat->name;
