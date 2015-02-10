@@ -292,7 +292,7 @@ class UploadController extends AjaxBaseController
 
 
     }
-    private function uploadWithoutCrop()
+    public function uploadWithoutCrop()
     {
 
         $validator = $this->validator->make(
@@ -322,7 +322,7 @@ class UploadController extends AjaxBaseController
 
         $folder = $user->directory;
 
-        $file_name = false;
+        $file_name = 'temp';
 
         return $this->response->json(['file' => $folder . '/' . $file_name, 'filename' => $file_name, 'folder' => $folder]);
 
