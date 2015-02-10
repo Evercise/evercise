@@ -88,7 +88,7 @@
                                     <span class="text-primary text-larger">{{ $block['title'] }}</span>
                                 </div>
                                 <div class="col-sm-3 text-right hidden-sm hidden-xs">
-                                    <a class="view-all-btn" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
+                                    <a class="view-all-btn text-blue" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
                                 </div>
                            </div>
                        </div>
@@ -130,7 +130,7 @@
                                         <span class="text-white text-larger">{{ $block['title'] }}</span>
                                     </div>
                                     <div class="col-sm-3 text-right hidden-sm hidden-xs">
-                                        <a class="view-all-btn" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
+                                        <a class="view-all-btn text-white" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
                                     </div>
                                </div>
                            </div>

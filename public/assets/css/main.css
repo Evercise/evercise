@@ -7195,6 +7195,12 @@ strong {
 a.text-white:hover {
   color: #e6e6e6;
 }
+.text-blue {
+  color: #4a90e2;
+}
+a.text-blue:hover {
+  color: #2275d7;
+}
 .text-dark {
   color: #383d48;
 }
@@ -9402,7 +9408,6 @@ fieldset[disabled] .stripe-button-el.active {
   pointer-events: none;
 }
 .view-all-btn {
-  color: #4a90e2;
   float: right;
   margin-top: 4px;
 }

@@ -11,13 +11,14 @@ if(typeof angular != 'undefined') {
 
         $('#class-calendar').datepicker({
             format: "yyyy-mm-dd",
-            startDate: "+1d",
+            startDate: "+0d",
             weekStart : 1,
             multidate: false,
             beforeShowDay: function(d) {
 
                 var date = d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2);
                 var result = $.grep($scope.sessions, function(e){
+
                     if(e.remaining  > 0){
                         var dt = e.date_time;
                         dt = dt.split(/\s+/);

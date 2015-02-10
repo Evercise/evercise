@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div class="date-picker-inline">
+            <div ng-if="results.results.total > 0" class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
                          <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
