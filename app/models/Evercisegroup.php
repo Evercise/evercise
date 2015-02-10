@@ -798,7 +798,7 @@ class Evercisegroup extends \Eloquent
     {
         return $this
             ->hasMany('Evercisesession')
-            ->where('date_time', '>=', Carbon::now())
+            ->where('date_time', '>', Carbon::now())
             ->orderBy('date_time', 'asc');
     }
 
@@ -817,7 +817,9 @@ class Evercisegroup extends \Eloquent
      */
     public function pastsessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '<', Carbon::now())->orderBy(
+        return $this->hasMany('Evercisesession')
+            ->where('date_time', '<', Carbon::now())
+            ->orderBy(
             'date_time',
             'asc'
         );

@@ -290,16 +290,18 @@ class UploadController extends AjaxBaseController
 
         // If file has been temporarily uploaded with uploadWithoutCrop(),
         // then the name of the temporary upload will be sent through to be deleted here.
+        $deleted = 'none';
         if($this->request->has('deletion'))
         {
             $deletion = $this->request->get('deletion');
             if( file_exists( $deletion ) )
             {
                 unlink( $deletion );
+                $deleted = $deletion;
             }
         }
 
-        return $this->response->json(['file' => $folder . '/' . $real_name, 'filename' => $real_name, 'folder' => $folder]);
+        return $this->response->json(['file' => $folder . '/' . $real_name, 'filename' => $real_name, 'folder' => $folder, 'deleted' => $deleted]);
 
 
     }

@@ -149,6 +149,12 @@ class EvercisegroupsController extends \BaseController
 
             if (count($class->futuresessions) > 0) {
                 $class->next_session = $class->futuresessions[0];
+                $i = 0;
+                while ( $class->futuresessions[$i]->remaining == 0)
+                {
+                    $i++;
+                    $class->next_session = $class->futuresessions[$i];
+                }
             }
 
             foreach ($class->futuresessions as $s) {
