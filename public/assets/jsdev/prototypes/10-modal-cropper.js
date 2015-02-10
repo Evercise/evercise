@@ -75,6 +75,29 @@ imageCropper.prototype = {
 
     },
     getFileContent : function(e){
+        var form = $(e.target).closest('form'),
+            data = new FormData(form[0]);
+        $.ajax(form.attr('action'), {
+            type: "post",
+            data: data,
+            processData: false,
+            contentType: false,
+
+            beforeSend: function () {
+            },
+
+            success: function (data) {
+                console.log(data);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+            },
+
+            complete: function () {
+
+            }
+        });
 
 
     },
