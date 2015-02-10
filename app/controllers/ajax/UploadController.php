@@ -292,6 +292,42 @@ class UploadController extends AjaxBaseController
 
 
     }
+    private function uploadWithoutCrop()
+    {
+
+        $validator = $this->validator->make(
+            $this->request->except('_token'),
+            [
+                'file' => 'required|mimes:jpeg,gif,png'
+            ]
+        );
+
+
+        /** Did it faiL? */
+        if ($validator->fails()) {
+            $this->data = [
+                'error' => true,
+                'messages' => $validator->messages()
+            ];
+            return $this->response->json($this->data);
+        }
+
+        $upload_file = $this->request->file('file');
+
+        $user_id = $this->request->get('user_id', $this->user->id);
+
+        $user = Sentry::findUserById($user_id);
+
+        $file = $this->image->make($upload_file->getRealPath());
+
+        $folder = $user->directory;
+
+        $file_name = false;
+
+        return $this->response->json(['file' => $folder . '/' . $file_name, 'filename' => $file_name, 'folder' => $folder]);
+
+
+    }
 
     /**
      * @param string $file

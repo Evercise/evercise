@@ -156,6 +156,10 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('upload/profile',
         ['as' => 'ajax.upload.profile', 'uses' => 'ajax\UploadController@uploadProfilePicture']);
 
+    // Upload file only (no crop stuff) for the stupid Safari workaround
+    Route::post('upload/basic',
+        ['as' => 'ajax.upload.basic', 'uses' => 'ajax\UploadController@uploadWithoutCrop']);
+
     //Gallery
     Route::post('gallery/getDefaults',
         ['as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults']);
