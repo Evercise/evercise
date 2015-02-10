@@ -90,6 +90,7 @@ imageCropper.prototype = {
 
                 self.modalImage.attr('src','/'+data.file);
                 self.modal.find("input[name='file']").replaceWith(file);
+                self.modal.find("input[name='deletion']").val(data.file);
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

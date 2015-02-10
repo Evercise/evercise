@@ -26,6 +26,7 @@
                       <div class="modal-footer">
                         {{ Form::open(['route' => 'ajax.upload.profile', 'enctype' => 'multipart/form-data' , 'method' => 'post', 'id' => 'cropped-image']) }}
                             {{ Form::file('file', ['class' => 'opacity', 'accept'=>'image/x-png, image/gif, image/jpeg' ]) }}
+                            {{ Form::hidden('deletion',null) }}
                             {{ Form::hidden('x',null) }}
                             {{ Form::hidden('y',null) }}
                             {{ Form::hidden('width',null) }}
