@@ -12,7 +12,7 @@
                         @endif
                     </div>
                     <div class="col-sm-8 mt20">
-                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
+                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br></h3><p>{{ $data['user']->display_name }}</p>
                     </div>
                     <a href="{{ URL::route('auth.logout') }}">Log out</a>
                 </div>
