@@ -136,7 +136,6 @@ if(typeof angular != 'undefined') {
         // set initial zoom
         $scope.initialZoom = function(){
             var radius = $scope.results.radius.substring(0, $scope.results.radius.length  - 2);
-            console.log(radius);
             if(radius <= 2){
                 return 15
             }
@@ -190,6 +189,7 @@ if(typeof angular != 'undefined') {
                         longitude : v.venue.lng
                     },
                     slug: v.slug,
+                    remaining: v.futuresessions[0].remaining,
                     times : v.times ,
                     price : v.default_price,
                     image : '/'+v.user.directory+'/preview_'+v.image
@@ -261,6 +261,7 @@ if(typeof angular != 'undefined') {
 
             $scope.getData();
         }
+
 
         // update filter results
 
