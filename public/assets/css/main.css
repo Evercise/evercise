@@ -10416,6 +10416,9 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   left: 50%;
   margin-left: -7px;
 }
+.cropper-container {
+  top: 0px!important;
+}
 .cart-row {
   padding: 10px 0;
   float: left;

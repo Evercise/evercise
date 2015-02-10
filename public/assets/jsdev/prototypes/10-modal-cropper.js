@@ -30,12 +30,12 @@ function imageCropper(elem){
 imageCropper.prototype = {
     constructor: imageCropper,
     init: function(){
-        /*if(typeof(window.FileReader)!="undefined"){
-            $('#get_file_content').remove();
+        if(typeof(window.FileReader)!="undefined"){
+            $('#get_file_content').closest('form').remove();
         }
         else{
             $('#image-select').remove();
-        }*/
+        }
         this.addListener();
         if($('input[name="cloned"]').val() != ''){
             this.galleryImage = '<img src="/'+$('input[name="cloned"]').val()+'"  alt="cover photo" class="img-responsive">';
@@ -76,6 +76,7 @@ imageCropper.prototype = {
             file = $(e.target),
             data = new FormData(form[0]),
             self = this;
+        console.log(file.val());
         $.ajax(form.attr('action'), {
             type: "post",
             data: data,
@@ -89,17 +90,10 @@ imageCropper.prototype = {
 
                 self.modalImage.attr('src','/'+data.file);
                 self.modal.find("input[name='file']").replaceWith(file);
-                
-
-               // self.openModal();
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
-            },
-
-            complete: function () {
-
             }
         });
 
@@ -114,6 +108,7 @@ imageCropper.prototype = {
     crop: function(){
         self = this;
         this.image = this.modal.find(".bootstrap-modal-cropper img");
+
         this.image.cropper({
             data: this.originalData,
             aspectRatio: this.ratio,
@@ -129,6 +124,9 @@ imageCropper.prototype = {
         this.image.cropper("destroy");
         self.modalImage.attr('src',null);
         this.uploadButton.val('');
+        if(self.modal.find('#get_file_content').length){
+            $('#no-file-reader-form').append(self.modal.find('#get_file_content'));
+        }
     },
     submitForm: function(e){
         e.preventDefault();
@@ -175,6 +173,7 @@ imageCropper.prototype = {
                     $('input[name="gallery_image"]').val(false);
                 }
                 $('input[name="image"]').val(self.galleryValue).trigger('change');
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -45,10 +45,11 @@
     </div>
     <div class="col-sm-9 mt25 sm-text-center">
         <button id="image-select" type="button" class="image-select btn btn-primary mb20 sm-btn-block">Select an Image</button>
-        <p>Image must be a JPG, JPEG, PNG or GIF with a maximum file size of 10MB</p>
-        {{ Form::open(['route' => 'ajax.upload.basic', 'method' => 'post']) }}
+        {{ Form::open(['route' => 'ajax.upload.basic', 'method' => 'post', 'id' => 'no-file-reader-form']) }}
             {{ Form::file('file', ['id' => 'get_file_content', 'accept'=>'image/x-png, image/gif, image/jpeg' ]) }}
         {{ Form::close() }}
+        <p>Image must be a JPG, JPEG, PNG or GIF with a maximum file size of 10MB</p>
+
     </div>
 </div>
 
