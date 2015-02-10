@@ -101,7 +101,7 @@
 
                     <?php $cats = []; foreach($subcategory->categories as $cat){ $cats[] = $cat->id; } ?>
                     <td>
-                        <label class="category_label" data-id="{{$subcategory->id}}">{{$subcategory->getCategoriesString()}}</label>
+                        <label class="category_label" data-id="{{$subcategory->id}}">{{$subcategory->getCategoriesString() ?: '...'}}</label>
                         {{ Form::select( 'categories_'.$subcategory->id.'[]' , $category, $cats, ['class'=>'categories', 'multiple'=>'multiple', 'style'=>'width:300px;background-color:#ccc;display:none;', 'data-id'=>$subcategory->id]) }}
                     </td>
 
