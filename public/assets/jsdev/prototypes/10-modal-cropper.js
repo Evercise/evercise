@@ -30,12 +30,12 @@ function imageCropper(elem){
 imageCropper.prototype = {
     constructor: imageCropper,
     init: function(){
-        if(typeof(window.FileReader)!="undefined"){
+        /*if(typeof(window.FileReader)!="undefined"){
             $('#get_file_content').remove();
         }
         else{
             $('#image-select').remove();
-        }
+        }*/
         this.addListener();
         if($('input[name="cloned"]').val() != ''){
             this.galleryImage = '<img src="/'+$('input[name="cloned"]').val()+'"  alt="cover photo" class="img-responsive">';
