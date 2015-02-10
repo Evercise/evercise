@@ -292,7 +292,7 @@ class UploadController extends AjaxBaseController
 
 
     }
-    private function uploadWithoutCrop()
+    public function uploadWithoutCrop()
     {
 
         $validator = $this->validator->make(
