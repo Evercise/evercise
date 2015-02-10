@@ -12889,7 +12889,7 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   background: #f0f0f0;
   padding: 7px 20px;
   border-bottom: 1px solid #e6e6e6;
-  height: 40px;
+  min-height: 40px;
   display: inline-block;
   width: 100%;
 }
