@@ -328,6 +328,9 @@ class UploadController extends AjaxBaseController
         $file_name = uniqueFile(public_path() . '/' . $folder . '/', $slug,
             $upload_file->getClientOriginalExtension());
 
+        //$image = $file->crop(100, 100, 0, 0);
+        $file->save(public_path() . '/' . $folder . '/'.$file_name);
+
         return $this->response->json(['file' => $folder . '/' . $file_name, 'filename' => $file_name, 'folder' => $folder]);
 
 
