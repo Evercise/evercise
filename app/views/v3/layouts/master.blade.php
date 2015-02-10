@@ -68,7 +68,6 @@
 	{{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.min.js') }}
 	{{ HTML::script('/assets/js/angular-google-maps.min.js') }}
 	{{ HTML::script('/assets/js/angular-device-detect.min.js') }}
-	{{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.2/angular-filter.min.js') }}
 @endif
 
 	{{ HTML::script('/assets/js/main.min.js?vs='.$version) }}

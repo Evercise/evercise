@@ -30,10 +30,17 @@ function imageCropper(elem){
 imageCropper.prototype = {
     constructor: imageCropper,
     init: function(){
+        if(typeof(window.FileReader)!="undefined"){
+            $('#get_file_content').remove();
+        }
+        else{
+            $('#image-select').remove();
+        }
         this.addListener();
         if($('input[name="cloned"]').val() != ''){
             this.galleryImage = '<img src="/'+$('input[name="cloned"]').val()+'"  alt="cover photo" class="img-responsive">';
         }
+
     },
     addListener: function () {
         $(document).on("click", '.image-select' ,$.proxy(this.upload, this));
@@ -44,22 +51,32 @@ imageCropper.prototype = {
         this.modal.on("hidden.bs.modal", $.proxy(this.destroyCrop, this));
         this.croppedForm.on("submit", $.proxy(this.submitForm, this));
         $(document).on("click", '.gallery-option' ,$.proxy(this.clickGalleryOption, this));
+        $(document).on("change", '#get_file_content' ,$.proxy(this.getFileContent, this));
     },
-    upload: function(){
+    upload: function(e){
+        this.modal.modal('show');
         this.uploadButton.trigger('click');
     },
     getImage: function(e){
-        self = this;
-        if (e.target.files && e.target.files[0]) {
 
+
+        self = this;
+
+        if (e.target.files && e.target.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
+                console.log(e.target.result);
                 self.modalImage.attr('src', e.target.result);
             }
 
             reader.readAsDataURL(e.target.files[0]);
 
         }
+
+    },
+    getFileContent : function(e){
+
+
     },
     openModal: function(){
         this.modal.modal('show');

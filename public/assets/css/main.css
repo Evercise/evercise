@@ -7340,6 +7340,9 @@ a.bg-light-grey:hover {
   position: fixed;
   top: 0;
 }
+.opacity {
+  opacity: 0;
+}
 .caret-right {
   border-bottom: 4px solid transparent;
   border-top: 4px solid transparent;

@@ -11,7 +11,7 @@
                 {{ Form::open(['method' => 'post', 'id' => 'image-upload-form' ]) }}
                 {{ Form::close() }}
             </div>
-            <div class="modal modal-cropper" id="create-image" data-backdrop="static" data-ratio="1">
+            <div class="modal modal-cropper in" id="create-image" data-backdrop="static" data-ratio="1">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -25,7 +25,7 @@
                       </div>
                       <div class="modal-footer">
                         {{ Form::open(['route' => 'ajax.upload.profile', 'enctype' => 'multipart/form-data' , 'method' => 'post', 'id' => 'cropped-image']) }}
-                            {{ Form::file('file', ['class' => 'hidden', 'accept'=>'image/x-png, image/gif, image/jpeg' ]) }}
+                            {{ Form::file('file', ['class' => 'opacity', 'accept'=>'image/x-png, image/gif, image/jpeg' ]) }}
                             {{ Form::hidden('x',null) }}
                             {{ Form::hidden('y',null) }}
                             {{ Form::hidden('width',null) }}
@@ -45,7 +45,10 @@
     </div>
     <div class="col-sm-9 mt25 sm-text-center">
         <button id="image-select" type="button" class="image-select btn btn-primary mb20 sm-btn-block">Select an Image</button>
+        {{ Form::file('file', ['id' => 'get_file_content', 'accept'=>'image/x-png, image/gif, image/jpeg' ]) }}
         <p>Image must be a JPG, JPEG, PNG or GIF with a maximum file size of 10MB</p>
+
+
     </div>
 </div>
 
