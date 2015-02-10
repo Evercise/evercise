@@ -87,7 +87,7 @@ imageCropper.prototype = {
             },
 
             success: function (data) {
-                console.log(data);
+                self.openModal();
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
