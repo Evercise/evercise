@@ -1,9 +1,14 @@
 @extends('v3.layouts.master')
 @section('body')
+
+
+    @if($tester)
+        {{ $tester }}
+    @endif
     <div id="hero-carousel" class="carousel slide">
           <div class="carousel-inner">
             @foreach($slider as $index => $sl)
-                 <div class="item {{ $index == 0 ? 'active': null }}">
+                 <div class="item {{ $index == 0 ? 'active': NULL }}">
                     <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}');">
                         <div class="jumbotron">
                           <div class="container text-center">
@@ -28,7 +33,7 @@
                         <div class="col-sm-6">
                             <div class="input-group">
                                   <div class="input-group-addon"><span class="icon icon-search"></span></div>
-                                  {{ Form::text('search', null, ['class' => 'form-control', 'placeholder' => 'Search for Classes...', 'data-toggle' => "dropdown",  'autocomplete' => 'off']) }}
+                                  {{ Form::text('search', NULL, ['class' => 'form-control', 'placeholder' => 'Search for Classes...', 'data-toggle' => "dropdown",  'autocomplete' => 'off']) }}
                                    <ul class="dropdown-menu category-select" >
                                       <li class="heading">Popular Searches</li>
                                       @foreach($homepage['popular_searches'] as $search)
@@ -40,8 +45,8 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
-                                {{ Form::text('location', null, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
-                                {{ Form::hidden('fullLocation', null) }}
+                                {{ Form::text('location', NULL, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
+                                {{ Form::hidden('fullLocation', NULL) }}
                                 <ul id="locaction-autocomplete" class="dropdown-menu category-select" >
                                     <li id="near-me" class="heading locator"><span class="icon icon-locator-pink-small"></span>Use my Current Location</li>
                                     <div class="autocomplete-content"></div>
@@ -50,7 +55,7 @@
                         </div>
 
                         <div class="col-sm-2">
-                            {{ Form::hidden('city', null) }}
+                            {{ Form::hidden('city', NULL) }}
                             {{ Form::submit('Find a class' , ['class' => 'btn btn-primary btn-block']) }}
                         </div>
                     </div>
@@ -61,13 +66,13 @@
                     <div class="col-xs-10">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="icon icon-search"></span></div>
-                            {{ Form::text('search', null, ['class' => 'form-control input-lg', 'placeholder' => 'I am looking for....Running']) }}
+                            {{ Form::text('search', NULL, ['class' => 'form-control input-lg', 'placeholder' => 'I am looking for....Running']) }}
                         </div>
                     </div>
                     <div class="col-xs-2">
                         <div class="btn-find-me">
-                            {{ Form::hidden('location', null ) }}
-                            {{ Form::hidden('city', null) }}
+                            {{ Form::hidden('location', NULL ) }}
+                            {{ Form::hidden('city', NULL) }}
                             {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator', 'id' => 'mobile-sub']) }}
                         </div>
 
@@ -96,7 +101,7 @@
                </div>
                <div class="row">
                    @foreach($block['results']->hits as $index => $result)
-                        <div class="col-md-3 col-sm-4 {{ $index >= 3 ? 'hidden-sm' : null }}">
+                        <div class="col-md-3 col-sm-4 {{ $index >= 3 ? 'hidden-sm' : NULL }}">
                             @include('v3.classes.class_block')
                         </div>
                    @endforeach
@@ -138,7 +143,7 @@
                     </div>
                     <div class="row mt20 mb50">
                         @foreach($block['results']->hits as $index => $result)
-                            <div class="col-md-3 col-sm-4 mb20 {{ $index >= 3 ? 'hidden-sm' : null }}">
+                            <div class="col-md-3 col-sm-4 mb20 {{ $index >= 3 ? 'hidden-sm' : NULL }}">
                                 @include('v3.classes.class_block')
                             </div>
                         @endforeach

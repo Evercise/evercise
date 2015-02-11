@@ -7,6 +7,20 @@
 		$desc = $metaDescription;
 	}
 	?>
+	<!-- Begin Inspectlet Embed Code -->
+	<script type="text/javascript" id="inspectletjs">
+		window.__insp = window.__insp || [];
+		__insp.push(['wid', 362025054]);
+		(function() {
+			function __ldinsp(){var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js'; var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); }
+			if (window.attachEvent){
+				window.attachEvent('onload', __ldinsp);
+			}else{
+				window.addEventListener('load', __ldinsp, false);
+			}
+		})();
+	</script>
+	<!-- End Inspectlet Embed Code -->
 	<meta name="description" content="{{ $desc or 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and fitness classes all over London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 	<meta charset="UTF-8">
