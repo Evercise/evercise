@@ -20,7 +20,7 @@
           </div>
     </div>
 
-    <div class="container-fluid bg-dark-grey mb30 sm-mb0">
+    <div class="container-fluid bg-dark-grey sm-mb0">
         <div class="container">
             <div class="row mt10 mb10 sm-inline-gutter visible-md-block visible-lg-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
@@ -162,7 +162,7 @@
                 </div>
                 @foreach($homepage['category_tags'] as $tag)
                     <div class="trapezium-item">
-                        <a href="/uk/london?search={{$tag}}" class="btn btn-rounded btn-white-primary">{{$tag}}</a>
+                        <a href="/uk/london?search={{$tag}}" class="btn btn-rounded btn-pill">{{$tag}}</a>
                     </div>
 
                 @endforeach

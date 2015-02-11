@@ -111,7 +111,7 @@
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>
                         <ul class="list-group class-block">
                              <li class="list-group-item class-img-wrapper">
-                                 <img ng-src="{[{group.image}]}" alt="{[{group.name}]}" class="img-responsive">
+                                 <a href="/classes/{[{ group.slug }]}"><img ng-src="{[{group.image}]}" alt="{[{group.name}]}" class="img-responsive"></a>
                              </li>
                              <div class="class-body">
                                  <li class="list-group-item text-center class-title">
@@ -146,7 +146,7 @@
                     <strong class="text-larger">Sorry</strong>
                     <p>Looks like we couldn't find any more classes.<br>
                     How about trying one of these instead</p>
-                    <a ng-repeat="tag in results.related_categories" href="/uk/{[{ results.url}]}?search={[{ tag }]}" class="btn btn-rounded btn-white-primary mb10 ml5 mr5">{[{ tag }]}</a>
+                    <a ng-repeat="tag in results.related_categories" href="/uk/{[{ results.url}]}?search={[{ tag }]}" class="btn btn-rounded btn-pill mb10 ml5 mr5">{[{ tag }]}</a>
                 </div>
             </div>
 
