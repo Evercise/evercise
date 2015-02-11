@@ -7,6 +7,9 @@
 		$desc = $metaDescription;
 	}
 	?>
+
+
+	@if(getenv('ENABLE_RECORDING'))
 	<!-- Begin Inspectlet Embed Code -->
 	<script type="text/javascript" id="inspectletjs">
 		window.__insp = window.__insp || [];
@@ -20,6 +23,7 @@
 			}
 		})();
 	</script>
+	@endif
 	<!-- End Inspectlet Embed Code -->
 	<meta name="description" content="{{ $desc or 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and fitness classes all over London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">

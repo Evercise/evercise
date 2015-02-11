@@ -7,10 +7,11 @@
 			</div>
 			<div class="modal-body">
 				<p>For your Information. We are recording this session. All sensitive data like passwords and credit card info are NOT recorder.</p>
-				<p style="font-size:30px"> {{ $email }}</p>
+				<p style="font-size:30px">
+					<input type="text" placeholder="Enter Full Name" style="text-align: center;width:100%"/></p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Continue</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
