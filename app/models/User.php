@@ -69,6 +69,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
+    public function mindbody() {
+        return $this->hasOne('ExternalService')->where('service', 'mindbody');
+    }
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

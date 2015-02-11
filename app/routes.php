@@ -47,12 +47,19 @@ Route::get('ttt',
     [
         function(){
 
+            $user = Sentry::findUserById(323);
 
 
-            $mindbody = new Mindbody(-99);
+            $mindbody = new Mindbody($user);
 
-
-            d($mindbody->getClassSchedules());
+            echo "<h4>getClassVisits</h4>";
+            d($mindbody->getClassVisits(), false);
+            echo "<h4>getSchedules</h4>";
+            d($mindbody->getSchedules(), false);
+            echo "<h4>getEnrollments</h4>";
+            d($mindbody->getEnrollments(), false);
+            echo "<h4>getClassSchedules</h4>";
+            d($mindbody->getClassSchedules(), false);
 
         }
     ]
