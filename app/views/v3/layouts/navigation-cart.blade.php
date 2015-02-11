@@ -6,7 +6,7 @@
 
     </div>
       <ul class="nav navbar-nav navbar-right">
-           <h3 class="mt5 mb0 mr50 sm-mr0 text-grey">secure shopping</h3>
+           <span class="icon icon-padlock"></span><h3 class="mt5 ml10 mb0 mr50 sm-mr0 text-grey pull-left">secure shopping</h3>
       </ul>
 
   </div>

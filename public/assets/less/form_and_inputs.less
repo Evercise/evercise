@@ -432,18 +432,29 @@ body:not(:-moz-handler-blocked) .custom-select:after{
     padding-top: 10px;
     border-top: 2px solid #ebebeb;
     text-align: center;
+    &:after{
+      position: absolute;
+      content: '';
+      top: -6px;
+      z-index: 1;
+      width: 10px;
+      height: 10px;
+      background: @gray-lighter;
+      border-radius: 50% 50%;
+      left: 50%;
+      margin-left: -7px;
+    }
+    &:hover{
+      &:after{
+        background: @brand-primary;
+      }
+    }
     &.active{
       &:after{
-        position: absolute;
-        content: '';
         top: -8px;
-        z-index: 1;
         width: 14px;
         height: 14px;
         background: @brand-primary;
-        border-radius: 50% 50%;
-        left: 50%;
-        margin-left: -7px;
       }
     }
 

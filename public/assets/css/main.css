@@ -8258,6 +8258,22 @@ a.bg-light-grey:hover {
   cursor: pointer;
   background-position: -1014px -415px;
 }
+.icon-padlock {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -569px -810px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin-top: 6px;
+  float: left;
+}
+.icon-padlock.active {
+  background-position: -569px -810px;
+}
+.icon-padlock.hover:hover,
+.icon-padlock.active:hover {
+  cursor: pointer;
+  background-position: -569px -810px;
+}
 .icon-sm-grid {
   background-image: url("../img/ev_site_icons_v2.png");
   background-position: -1090px -451px;
@@ -9579,6 +9595,7 @@ fieldset[disabled] .stripe-button-el.active {
   margin: 5px 0;
 }
 .class-stacked.active {
+  background: #f9f9fa;
   margin: 0px 0 3px;
   -webkit-box-shadow: 0 0 8px -2px #000000;
   box-shadow: 0 0 8px -2px #000000;
@@ -10409,17 +10426,26 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   border-top: 2px solid #ebebeb;
   text-align: center;
 }
-.filter-slider a.active:after {
+.filter-slider a:after {
   position: absolute;
   content: '';
-  top: -8px;
+  top: -6px;
   z-index: 1;
-  width: 14px;
-  height: 14px;
-  background: #ff1b7e;
+  width: 10px;
+  height: 10px;
+  background: #f0f0f0;
   border-radius: 50% 50%;
   left: 50%;
   margin-left: -7px;
+}
+.filter-slider a:hover:after {
+  background: #ff1b7e;
+}
+.filter-slider a.active:after {
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  background: #ff1b7e;
 }
 .cropper-container {
   top: 0px!important;
