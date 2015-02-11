@@ -32,7 +32,16 @@ if(typeof angular != 'undefined') {
                 if(result.length > 0){
                     for(var key in result){
                         if (!checkDuplicate(result[key].id)){
-                            var dt = new Date(result[key].date_time.replace(/\s+/, 'T'));
+                            var date = result[key].date_time,
+                                values = date.split(/[^0-9]/),
+                                year = parseInt(values[0], 10),
+                                month = parseInt(values[1], 10) - 1, // Month is zero based, so subtract 1
+                                day = parseInt(values[2], 10),
+                                hours = parseInt(values[3], 10),
+                                minutes = parseInt(values[4], 10),
+                                seconds = parseInt(values[5], 10),
+                                dt;
+                            dt = new Date(year, month, day, hours, minutes, seconds);
                             var time = $filter('date')(dt, 'hh:mm a');
 
                             if(result[key].remaining > 0){
@@ -80,8 +89,11 @@ if(typeof angular != 'undefined') {
 
         $scope.activeFilter = function (rows) {
             if (typeof $scope.activeDate !== 'undefined') {
+                console.log('let do this');
                 var start = rows.date;
+                console.log(start);
                 start.setHours(0,0,0,0);
+                console.log(start);
                 return start.toString() == $scope.activeDate.toString();
             }
         };
