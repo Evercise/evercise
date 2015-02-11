@@ -592,7 +592,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
         $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : 2) : 0;
+        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : ($inputs['gender'] == 'female' ? 2 : 0) ) : 0;
+
 
         $user = Sentry::register(
             [
@@ -771,7 +772,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function getGender()
     {
-        return ($this->gender == 1 ? 'male' : 'female');
+        return ($this->gender == 1 ? 'male' : ($this->gender == 2 ? 'female' : '') );
     }
 
     public function hasTwitter()

@@ -424,6 +424,10 @@ class UsersController extends \BaseController
     {
 
     }
+    public function fuck()
+    {
+        return 'COCK';
+    }
 
 
 }

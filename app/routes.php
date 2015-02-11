@@ -269,7 +269,7 @@ Route::post(
 );
 Route::post(
     '/users/changepassword',
-    ['as' => 'users.changepassword.post', 'uses' => 'UsersController@postChangePassword']
+    ['as' => 'users.changepassword.post', 'before' => 'user', 'uses' => 'UsersController@postChangePassword']
 );
 Route::get('/users/{display_name}/logout', ['as' => 'users.logout', 'uses' => 'UsersController@logout']);
 
@@ -514,7 +514,7 @@ Route::get('terms-of-use', [
 ]);
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
 Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
-Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
+Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@dickface']);
 Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
 Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);

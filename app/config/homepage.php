@@ -30,7 +30,24 @@ return [
         ]
     ],
     'category_tags'    => [
-        'kettlebell',
+
+        'Belly dance',
+        'Vinyasa yoga',
+        'Workout',
+        'Karate',
+        'Insanity',
+        'Pregnancy Yoga',
+        'Bootcamp',
+        'Tai Chi',
+        'Salsa',
+        'Pilates',
+        'Aqua cycling',
+        'Hiit',
+        'Boxing',
+        'Suspension training',
+        'Body conditioning',
+
+/*        'kettlebell',
         'hiit',
         'mma',
         'workout',
@@ -51,7 +68,7 @@ return [
         'aerobics',
         'hatha yoga',
         'crossfit',
-        'zumba'
+        'zumba'*/
     ],
     'blocks'           => [
         [
