@@ -123,7 +123,7 @@
                              </li>
                              <div class="class-body">
                                  <li class="list-group-item text-center class-title">
-                                     <h4><a href="/classes/{[{ group.slug }]}">{[{group.name | truncate:24  }]}</a></h4>
+                                     <h4><a href="/classes/{[{ group.slug }]}">{[{group.name | truncate:22  }]}</a></h4>
                                      <p><span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span>{[{ group.venue.postcode }]}</p>
                                  </li>
                                  <li class="list-group-item class-footer">
@@ -139,7 +139,7 @@
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
-                                <a ng-repeat="(time, link) in group.times | limitTo:3" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
+                                <a ng-repeat="(time, link) in group.times | objLimitTo:3" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>
                         </div>
                         <div class="col-xs-3">
