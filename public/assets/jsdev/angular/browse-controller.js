@@ -17,6 +17,10 @@ if(typeof angular != 'undefined') {
         $scope.area = laracasts.results.area.id;
 
         // area clear
+        $('#near-me').click(function(){
+            $scope.area = '';
+            $scope.$apply();
+        })
         $('input[name="location"]').change(function(){
             $scope.area = '';
             $scope.$apply();
