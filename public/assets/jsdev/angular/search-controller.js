@@ -136,23 +136,46 @@ if(typeof angular != 'undefined') {
         // set initial zoom
         $scope.initialZoom = function(){
             var radius = $scope.results.radius.substring(0, $scope.results.radius.length  - 2);
-            if(radius <= 2){
-                return 15
+            var results = $scope.results.results.total;
+            if(results == 1){
+                var distance = $scope.results.results.hits[0].distance;
+                if(distance > 7){
+                    return 10
+                }
+                else if(distance > 5){
+                    return 12
+                }
+                else if(distance > 2){
+                    return 14
+                }
             }
-            else if(radius  <= 3)
+            if(radius == 1){
+                return 14
+            }
+            else if(radius  == 3)
             {
                 return 13
             }
-            else if(radius <= 5){
+            else if(radius == 5){
                 return 12
             }
-            else if(radius < 25){
+            else if(radius == 10){
                 return 11
             }
-            else{
-                return 10
-            }
         }
+
+        $scope.circleOptions = {
+            center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
+            stroke: {
+                color: '#50c3e2',
+                weight: 2
+            },
+            fill: {
+                opacity: 0
+            },
+            radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
+        }
+
 
 
         // map object
@@ -265,17 +288,23 @@ if(typeof angular != 'undefined') {
 
         // update filter results
 
-        $('.filter-btn, .sort-btn').click(function (e) {
+        $scope.openFilter = null;
+
+        $(document).on('click','.filter-btn, .sort-btn', function(e){
             e.preventDefault();
             closeTab($(this));
-        });
+
+        } )
 
         var closeTab = function(tab){
-            if(tab.parent('li').hasClass('active')){
+            if(tab.attr('class') == $scope.openFilter){
+                $scope.openFilter = null;
                 window.setTimeout(function(){
                     $(".tab-pane").removeClass('active');
                     tab.parent('li').removeClass('active');
                 },1);
+            }else{
+                $scope.openFilter = tab.attr('class');
             }
         }
 
@@ -309,7 +338,9 @@ if(typeof angular != 'undefined') {
 
             var responsePromise = $http(req);
             // close tab
-            closeTab($('.filter-btn, .sort-btn'));
+            $scope.openFilter = null;
+            $(".tab-pane").removeClass('active');
+            $('.filter-btn, .sort-btn').parent().removeClass('active');
             // bring up mask
             $scope.resultsLoading = true;
 
@@ -318,6 +349,17 @@ if(typeof angular != 'undefined') {
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.everciseGroups = shapeEverciseGroups();
                 $scope.resultsLoading = false;
+                $scope.circleOptions = {
+                    center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
+                    stroke: {
+                        color: '#50c3e2',
+                        weight: 2
+                    },
+                    fill: {
+                        opacity: 0
+                    },
+                    radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
+                }
 
                 // reset zoom
                 var map = $scope.map.control.getGMap();
