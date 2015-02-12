@@ -69,6 +69,8 @@ Cart.prototype = {
     },
     selectQty : function(e){
         var qty = $(e.target).val();
+        console.log($(e.target));
+        console.log($(e.target).val());
         $(e.target).closest('.qty-wrapper').find('.qty-select').val(qty);
     },
     submit: function(e){
