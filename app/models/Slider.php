@@ -27,19 +27,22 @@
 
                 $class = $slider->evercisegroup()->first();
 
-                $session = $class->evercisesession()->where('date_time', '>=',
-                    DB::raw('NOW()'))->orderBy(
-                    'price',
-                    'asc'
-                )->first();
+                if ($class) {
 
-                if ($session) {
-                    $items[] = $this->formatItem($slider, $session, $class);
-                    $i++;
-                }
+                    $session = $class->evercisesession()->where('date_time', '>=',
+                        DB::raw('NOW()'))->orderBy(
+                        'price',
+                        'asc'
+                    )->first();
 
-                if ($i == $limit) {
-                    break;
+                    if ($session) {
+                        $items[] = $this->formatItem($slider, $session, $class);
+                        $i++;
+                    }
+
+                    if ($i == $limit) {
+                        break;
+                    }
                 }
             }
 

@@ -4,7 +4,7 @@ use Carbon\Carbon;
 /**
  * Class Evercisegroup
  */
-class Evercisegroup extends \Eloquent
+class EvercisegroupImport extends \Eloquent
 {
 
     /**
