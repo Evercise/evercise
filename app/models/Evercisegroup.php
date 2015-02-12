@@ -170,11 +170,15 @@ class Evercisegroup extends \Eloquent
     {
         $venue = $class->venue()->first();
         $name = [
-            slugIt($class->name),
-            slugIt($venue->name),
-            slugIt($venue->town.' UK')
+            slugIt($class->name)
         ];
         $name = implode('_', $name);
+        if(!self::slugTaken($name)) {
+            return $name;
+        }
+
+        $name .= '_'.slugIt($venue->name);
+
         if(!self::slugTaken($name)) {
             return $name;
         }
@@ -792,10 +796,10 @@ class Evercisegroup extends \Eloquent
      */
     public function futuresessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '>=', Carbon::now())->orderBy(
-            'date_time',
-            'asc'
-        );
+        return $this
+            ->hasMany('Evercisesession')
+            ->where('date_time', '>', Carbon::now())
+            ->orderBy('date_time', 'asc');
     }
 
     /**
@@ -813,7 +817,9 @@ class Evercisegroup extends \Eloquent
      */
     public function pastsessions()
     {
-        return $this->hasMany('Evercisesession')->where('date_time', '<', Carbon::now())->orderBy(
+        return $this->hasMany('Evercisesession')
+            ->where('date_time', '<', Carbon::now())
+            ->orderBy(
             'date_time',
             'asc'
         );

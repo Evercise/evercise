@@ -1,3 +1,119 @@
+.date-picker-inline{
+  position: relative;
+  padding: 0;
+  border-right: 1px solid @input-border;
+
+  .wrapper{
+    overflow: hidden;
+    @media (max-width: @screen-sm-max){
+      padding: 0 20px;
+      border-top: 1px solid @input-border;
+    }
+    .content{
+      float: left;
+      .transition(all linear 0.2s );
+      width: 1000%;
+    }
+  }
+  li{
+    float: left;
+    list-style: none;
+    text-align: center;
+    width: 62px;
+    height: 90px;
+    border-left: 1px solid @input-border;
+    border-bottom: 1px solid @input-border;
+    .disabled{
+      opacity: 0.7;
+      pointer-events: none;
+      cursor: default;
+    }
+    &:first-of-type{
+      border-left: 0;
+    }
+    .day{
+      border-bottom: 1px solid @input-border;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: @gray;
+    }
+    a{
+      font-size: 26px;
+      font-weight: 700;
+      height: 62px;
+      display: block;
+      line-height: 42px;
+      color: @gray;
+    }
+    .month{
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 6px;
+    }
+    &.active{
+      background: @brand-primary;
+      .day{
+        border-bottom: 1px solid #b31e57;
+        background: #b31e57;
+        color: @white;
+      }
+      a{
+        color: @white;
+      }
+
+    }
+  }
+  .scroll{
+    position: absolute;
+    top: 46px;
+    height: 20px;
+    width: 20px;
+    color: #0b0b0a;
+    background: @white;
+    text-align: center;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 600;
+    &:after{
+      position: absolute;
+      height: 12px;
+      width: 12px;
+      top: 50%;
+      left: 50%;
+      margin-left: -6px;
+      margin-top: -6px;
+      .sprite(-1135px, -494px, 0);
+      content: '';
+    }
+    &.left{
+      left: -10px;
+      .box-shadow(1px 1px 1px #000);
+    }
+    &.right{
+      right: -10px;
+      .box-shadow(-1px 1px 1px #000);
+      &:after{
+        .sprite(-1173px, -494px, 0);
+      }
+    }
+    @media (max-width: @screen-sm-max){
+      top: 0;
+      height: 100%;
+      border: 1px solid @input-border;
+      &.left{
+        left: 0;
+        .box-shadow(none);
+      }
+      &.right{
+        right: 0;
+        .box-shadow(none);
+      }
+    }
+  }
+
+}
+
 /*!
  * Datepicker for Bootstrap
  *

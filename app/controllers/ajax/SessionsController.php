@@ -2,6 +2,7 @@
 
 use DateTime;
 use Input, Response, Evercisegroup, Evercisesession, View;
+use Carbon\Carbon;
 
 class SessionsController extends AjaxBaseController
 {
@@ -10,7 +11,13 @@ class SessionsController extends AjaxBaseController
     {
         $evercisegroupId = Input::get('groupId');
         $id = Input::get('id');
-        $sessions = Evercisegroup::find($evercisegroupId)->Futuresessions;
+        //$sessions = Evercisegroup::find($evercisegroupId)->futuresessions;
+
+        $sessions = Evercisesession::where('evercisegroup_id', $evercisegroupId)
+            ->where('date_time', '>=', Carbon::now())
+            ->orderBy('date_time', 'asc')
+            ->paginate(5);
+
         $userId = \Sentry::getUser()->id;
 
         if ($id != $userId) {
@@ -43,14 +50,16 @@ class SessionsController extends AjaxBaseController
      */
     public function update()
     {
+
         $preview = Input::get('preview');
         $sessionIds = Input::get('id');
         $time_array = Input::get('time');
         $duration_array = Input::get('duration');
         $tickets_array = Input::get('tickets');
         $price_array = Input::get('price');
-        $evercisegoupId = Input::get('$evercisegoupId');
+        $evercisegroupId = Input::get('evercisegroup_id');
 
+        //return 'id:'.\Evercisegroup::getSlug($evercisegroupId);
 
 
         $userId = \Sentry::getUser()->id;
@@ -113,10 +122,11 @@ class SessionsController extends AjaxBaseController
         if (isset($preview) && $preview == 'yes') {
             return Response::json(
                 [
-                    'url' => route('class.show', [Evercisegroup::getSlug($evercisegoupId), 'preview'])
+                    'url' => route('class.show', [\Evercisegroup::getSlug($evercisegroupId), 'preview'])
                 ]
             );
         } else {
+            //return 'here: '.$preview;
             return Response::json(
                 [
                     'view' => View::make('v3.layouts.positive-alert')->with('message',
@@ -160,6 +170,7 @@ class SessionsController extends AjaxBaseController
         $tickets = isset($inputs['tickets']) ? $inputs['tickets'] : $inputs['members'];
         $price = $inputs['price'];
 
+
         if (Input::get('session_array', FALSE)) {
             $sessionArray = explode(',', $inputs['session_array']);
         } elseif (Input::get('date', FALSE)) {
@@ -170,8 +181,6 @@ class SessionsController extends AjaxBaseController
                         'No sessions specified')->with('fixed', TRUE)->render()
                 ]);
         }
-
-        //return $sessionArray;
 
         foreach ($sessionArray as $date) {
 
@@ -259,7 +268,7 @@ class SessionsController extends AjaxBaseController
             ]);
         }
 
-        $sessionmembers = $evercisesession->getSessionmembers();
+        $sessionmembers = $evercisesession->users;
 
         return Response::json([
             'view' => View::make('v3.classes.sessions_list_users',

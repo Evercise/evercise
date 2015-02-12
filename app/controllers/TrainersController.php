@@ -72,19 +72,26 @@ class TrainersController extends \BaseController
     {
         if ($id == 'me') {
             $user = Sentry::getUser();
-            if (!$user) return Redirect::route('home')->with('notification', 'Please log in');
+            if (!$user) {
+                return Redirect::route('home')->with('notification', 'Please log in');
+            }
             $id = $user->id;
         }
 
         $user = User::where((is_numeric($id) ? 'id' : 'display_name'), $id)->first();
 
-        if($user) {
+
+
+        if ($user) {
+            if(is_numeric($id)) {
+                return Redirect::route('trainer.show', ['id' => $user->display_name]);
+            }
             try {
                 $trainer = $user->trainer()->first();
             } catch (Exception $e) {
                 return Redirect::route('home')->with('notification', 'this trainer does not exist');
             }
-        }else{
+        } else {
             return Redirect::route('home')->with('notification', 'this trainer does not exist');
         }
 
@@ -119,17 +126,20 @@ class TrainersController extends \BaseController
             $ratings = [];
         }
 
-        $data = [
-            'trainer'        => $trainer,
-            'evercisegroups' => $evercisegroups,
-            'stars'          => $stars,
-            'totalStars'     => $totalStars,
-            'ratings'        => $ratings
+        $params = [
+            'title' => (!empty($user->first_name) ? $user->first_name.' '.$user->last_name : $user->display_name).' '.$trainer->profession.' | Evercise',
+            'metaDescription' => str_limit($trainer->bio, 160, $end = '...'),
+            'tab' => 0,
+            'data' => [
+                'trainer'        => $trainer,
+                'evercisegroups' => $evercisegroups,
+                'stars'          => $stars,
+                'totalStars'     => $totalStars,
+                'ratings'        => $ratings,
+            ]
         ];
 
-        return View::make('v3.trainers.show')
-            ->with('data', $data)
-            ->with('tab', 0);
+        return View::make('v3.trainers.show', $params);
     }
 
     /**

@@ -17,7 +17,10 @@ foreach (range(1, 300) as $pounds) {
 
 
 return [
-
+    'mindbody' => [
+        'api_key' => 'Evercise',
+        'api_secret' => 'XxMOJiEWIn0UYOWoY6nPKK8wWrE=',
+    ],
     'stripe_testing'           => false,
     'stripe_api_key'        => getenv('STRIPE_API_KEY') ?: false,
     'stripe_pub_key'        => getenv('STRIPE_PUB_KEY') ?: false,
@@ -27,7 +30,8 @@ return [
         'wallettoppup',
         'cartcompleted',
         'topupcompleted',
-        'milestonecompleted'
+        'milestonecompleted',
+        'withdrawcompleted'
     ],
     'minimim_withdraw'            => 5,
     'payments_to_trainers'        => 'Monday 4pm',
@@ -35,8 +39,8 @@ return [
     'commission'                  => 10, //Default commission
     'upload_dir'                  => 'files/',
     'testing_ips'                 => ['188.39.12.12', '192.168', '127.0.0'],
-    'per_page'                    => [12, 18, 24],
-    'default_per_page'            => 12,
+    'per_page'                    => [3, 12, 24, 48, 96],
+    'default_per_page'            => 96,
     'max_display_map_results'     => 300,
     'radius'                      => [
         '1/2 mile' => '0.5mi',
@@ -134,9 +138,9 @@ return [
         '!!!!!'
     ],
     'blog'                        => [
-        'title'       => 'Evercise Blog',
+        'title'       => 'Evercise Gym and Fitness Events Blog',
         'keywords'    => 'fitness blog, evercise',
-        'description' => 'Pretty cool description'
+        'description' => 'Evercise London Fitness Events blog provides various information related to Fitness programs, Fitness tips and Events information with pictures and videos.'
     ],
     'gallery'                     => [
         'image_counter' => 3,
@@ -147,4 +151,6 @@ return [
 
     ],
     'article_no_img'              => '/files/article/no-img.jpg'
+
+
 ];

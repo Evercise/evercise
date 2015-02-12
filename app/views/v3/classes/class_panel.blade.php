@@ -88,33 +88,38 @@
                     <strong class="text-primary">&pound;{{ $data['future_sessions'][$data['next_sessions'][$session->id]]->price }}</strong>
                 </div>
             </div>
-        @elseif($session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
+        @elseif($nextSession = $session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
             <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
                 <div class=" col-sm-5 sm-text-center mt10">
-                    <span><span class="icon icon-clock"></span> {{ $session->evercisegroup->getNextFutureSession()->formattedDate().', '.$session->evercisegroup->getNextFutureSession()->formattedTime() }}</span>
+                    <span><span class="icon icon-clock"></span> {{ $nextSession->formattedDate().', '.$nextSession->formattedTime() }}</span>
                 </div>
                 <div class=" col-sm-7">
                     <div class="row">
                         <div class="col-sm-3 sm-text-center">
-                            <strong class="text-primary">&pound;{{$session->evercisegroup->getNextFutureSession()->price}}</strong>
+                            <strong class="text-primary">&pound;{{$nextSession->price}}</strong>
                         </div>
                         <div class="col-sm-9 sm-text-center">
-                            @if($session->remainingTickets()  > 0)
-                                {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $session->id, 'class' => 'add-to-class']) }}
+                            @if($nextSession->remainingTickets()  > 10)
+                                {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $nextSession->id, 'class' => 'add-to-class']) }}
                                     <div class="btn-group btn-block">
                                         {{ Form::submit('Join class', ['class'=> 'btn btn-primary add-btn']) }}
-                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $session->id)) }}
+                                        {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $nextSession->id)) }}
                                         <div class="btn btn-primary btn-aside">
-                                          <select name="quantity" id="quantity" class="btn-primary btn-select btn-aside">
-                                            @for($i=1; $i<($session->remainingTickets()  + 1 ); $i++)
-                                            <option value="{{$i}}">{{$i}}</option>
-                                            @endfor
-                                          </select>
+                                            <div class="custom-select">
+                                                <select name="quantity" id="quantity" class="btn-primary btn-select ">
+                                                    @for($i=1; $i<($nextSession->remainingTickets()  + 1 ); $i++)
+                                                    <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                                 </select>
+                                            </div>
+
                                         </div>
                                     </div>
                                 {{ Form::close() }}
                             @else
-                                <span class="text-danger">Class Full</span>
+                                <div class="col-sm-7 sm-text-center">
+                                    <strong class="text-primary">Class Full</strong>
+                                </div>
                             @endif
                         </div>
                     </div>

@@ -1,0 +1,106 @@
+.angular-google-map{
+  position: absolute;
+  top: 31px;
+  bottom: 0;
+  width: 100%;
+}
+.angular-google-map-container {
+  height: 100%;
+  width: 100%;
+}
+.results{
+
+  position: relative;
+  width: 100%;
+  padding: 0;
+  top: 25px;
+
+  &:after{
+    content: '';
+    position: absolute;
+    height: 9px;
+    background: @white;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    border-bottom: 2px solid rgba(0,0,0,0.3);
+  }
+  .inner{
+    width: 100%;
+    background: @white;
+    .box-shadow(5px 5px 13px -5px #000);
+  }
+  .mask{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0px;
+    right: 0px;
+    background: fade(#000, 20%);
+    z-index: 10;
+  }
+
+  .heading{
+    background: @gray-lighter;
+    padding: 7px 20px;
+    border-bottom: 1px solid @input-border;
+    min-height: 40px;
+    display: inline-block;
+    width: 100%;
+  }
+  .nav{
+    li{
+     &:first-of-type{
+       border-right: 1px solid @input-border;
+     }
+      a{
+        font-weight: 600;
+        @media (max-width: @screen-sm-max){
+          width: 50%;
+          float: left;
+          margin: 0;
+        }
+      }
+    }
+  }
+  .sort-box{
+    width: 214px;
+    border: 1px solid @input-border;
+    position: absolute;
+    right: 10px;
+    background: @white;
+    z-index: 1;
+    .box-shadow(5px 5px 13px -5px #000;);
+    .dropdown-menu{
+      min-width: 100%;
+      top: -4px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      left: -1px;
+      right: -1px;
+      padding: 0;
+      text-align: center;
+    }
+  }
+  .tab-pane{
+    border-bottom: 1px solid @input-border;
+  }
+  @media (min-width: @screen-md-min){
+    position: absolute;
+    right: 25px;
+    top: 95px;
+    bottom: 40px;
+    padding: 0 10px 9px;
+    overflow: hidden;
+    width: auto;
+    .inner{
+
+      height: 100%;
+      width: 435px;
+    }
+    .mask{
+      left: 10px;
+      right: 10px;
+    }
+  }
+}

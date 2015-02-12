@@ -164,6 +164,12 @@ class LandingsController extends \BaseController
 
     }
 
+    public function trainerPpc()
+    {
+
+        return View::make('v3.landing.trainer');
+    }
+
 
     public function landingSend()
     {
@@ -312,6 +318,33 @@ class LandingsController extends \BaseController
     public function categoryLanding($cat)
     {
 
+    }
+
+    public function trainerEnquiry()
+    {
+        $validator = Validator::make(
+            Input::all(),
+            [
+                'email'    => 'required|email|unique:users,email',
+                'name' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            if (Request::ajax()) {
+                $result = [
+                    'validation_failed' => 1,
+                    'errors'            => $validator->errors()->toArray()
+                ];
+
+                return Response::json($result);
+            } else {
+                return Redirect::route('landing.trainer.ppc')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        } else {
+            return 'good';
+        }
     }
 
 }

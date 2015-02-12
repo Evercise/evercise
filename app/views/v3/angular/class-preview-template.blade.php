@@ -2,7 +2,7 @@
     <div class="preview-return" ng-click="returnPreview()">
         <span class="icon icon-grey-left-arrow"></span>
     </div>
-    <div class="hero hero-sm mb25" style="background-image: url( {{ url( '{[{ preview.image }]}' ) }} )">
+    <div class="hero hero-sm mb25"  back-img="/{[{ preview.image }]}">
         <a class="hero-full-link" href="{[{ preview.link }]}"></a>
         <nav class="navbar navbar-inverse nav-bar-bottom" role="navigation">
             <ul class="nav navbar-nav nav-justified nav-no-float">
@@ -20,9 +20,9 @@
             </div>
 
             <div class="row text-center mb30">
-                <div class="col-sm-5"><span class="icon icon-clock"></span>{[{ preview.nextClassDate }]}</div>
-                <div class="col-sm-4"><span class="icon icon-watch"></span> {[{ preview.nextClassDuration}]} mins</div>
-                <div class="col-sm-3"><span class="icon icon-ticket"></span> x {[{ preview.capacity }]}</div>
+                <div class="col-sm-5"><span class="icon icon-clock"></span><small> <time>{[{ preview.nextClassDate }]}</time></small></div>
+                <div class="col-sm-4"><span class="icon icon-watch"></span><small> {[{ preview.nextClassDuration}]} mins</small></div>
+                <div class="col-sm-3"><span class="icon icon-ticket"></span><small> x {[{ preview.capacity }]}</small></div>
             </div>
             <div class="row mb40">
                 <div class="col-sm-12 text-center">
@@ -37,7 +37,7 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="schedule">
 
-            <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets | orderBy: date_time:reverse | limitTo:4">
+            <div class="row preview-row" ng-repeat="session in preview.sessions | filter:hasTickets |  limitTo:4">
                 <div class="col-sm-6 mt5">
                     <span class="icon icon-clock"></span>
                     {[{ session.date_time }]}
@@ -48,10 +48,13 @@
                             {{ Form::submit('Join Class', ['class'=> 'btn btn-primary add-btn']) }}
                             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', '{[{ session.id  }]}')) }}
                             {{ Form::hidden('force', true) }}
-<div class="btn btn-primary btn-aside">
-                            <select name="quantity" id="quantity" class="btn-primary btn-select">
-                                <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
-                            </select>
+                            <div class="btn btn-primary btn-aside ">
+                                <div class="custom-select">
+                                    <select name="quantity" id="quantity" class="btn-primary btn-select">
+                                        <option ng-selected="{[{ n + 1 == session.default_tickets}]}" ng-repeat="n in [] | repeat:session.remaining" value="{[{ n + 1 }]}">{[{ n + 1}]}</option>
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                     {{ Form::close() }}

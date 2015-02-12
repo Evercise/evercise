@@ -2,10 +2,7 @@
 @section('body')
 <div class="container first-container article">
     <div class="row">
-
-
         @include('v3.pages.sidebar')
-
 
         <div class="col-sm-8 sm-text-center">
             <div class="article-block">

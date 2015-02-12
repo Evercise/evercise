@@ -153,7 +153,12 @@ class UsersController extends \BaseController
                 }
 
                 //$result = User::facebookRedirectHandler($redirect_url, $user);
+
                 $result = Redirect::route('users.edit', ['id'=>$user->display_name]);
+
+                if(!is_null($redirect_url)) {
+                    $result = Redirect::route($redirect_url);
+                }
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
                 Log::error($e->getMessage());
@@ -191,11 +196,6 @@ class UsersController extends \BaseController
      */
     public function edit($id, $tab = 0)
     {
-
-        if(!$this->checkLogin()) {
-            return Redirect::route('home');
-        }
-
         $activity = Activities::getAll($this->user->id, Config::get('evercise.user.activities', 100));
 
         $activity_group = [];
@@ -250,18 +250,6 @@ class UsersController extends \BaseController
      * Reset the user's password using the emailed hash
      *
      * @param  int $id
-     * @return View
-     */
-    public function getChangePassword($display_name)
-    {
-        // Init JS from composer as used for trainers as well as users
-        return View::make('users.changepassword');
-    }
-
-    /**
-     * Reset the user's password using the emailed hash
-     *
-     * @param  int $id
      * @return Response
      */
     public function postChangePassword()
@@ -278,9 +266,8 @@ class UsersController extends \BaseController
             Input::all(),
             [
                 'old_password' => 'required',
-                'new_password' => 'required|confirmed|min:6|max:32|has:letter,num',
-            ],
-            ['new_password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+                'new_password' => 'required|confirmed|min:6|max:32',
+            ]
         );
 
         $oldPassword = Input::get('old_password');
@@ -348,7 +335,7 @@ class UsersController extends \BaseController
             Input::all(),
             array(
                 'email' => 'required|email',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'password' => 'required|confirmed|min:6|max:32',
             ),
             ['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
         );
@@ -431,6 +418,15 @@ class UsersController extends \BaseController
         $cookie = Cookie::forget('PHPSESSID');
 
         return Redirect::route('home')->withCookie($cookie);
+    }
+
+    public function replyToMessage($user_slug)
+    {
+
+    }
+    public function fuck()
+    {
+        return 'COCK';
     }
 
 

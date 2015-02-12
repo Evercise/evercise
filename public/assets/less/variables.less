@@ -1,17 +1,25 @@
 // custom colour scheme
+
 @gray-darker:            #383d48;
-@gray-dark:              #d8d8d8;
-@gray:                   #768690;
-@gray-light:             #e8ebec;
-@gray-lighter:           #f1f2f3;
+@gray-dark:              #d6d6d6;
+@gray:                   #797979;
+@gray-light:             #96a2ab;
+//@gray-lighter:           #f1f2f3;
+@gray-lighter:           #f0f0f0;
 @gray-lightest:          #f9f9fa;
 
-@gray-mob:              #d8d8d8;
+@blue:                  #4a90e2;
+@gray-mob:              @gray-dark;
 
 @brand-primary:         #ff1b7e;
+//@brand-primary:         #41C5C5;
 @brand-success:         #7ed321;
 @brand-info:            #50c3e2;
-@brand-warning:         #ffd21e;
+@brand-warning:         #efbc00;
+
+@input-border:          #e6e6e6;
+
+@list-group-border:     @input-border;
 
 @white:                 #ffffff;
 @fb:                    #395284;
@@ -26,8 +34,10 @@
 
 @font-family-condensed:       'UniversLTStd59UltraCondensed';
 
-@font-size-h1:            ceil((@font-size-base * 2.4)); // ~36px
-@font-size-h4:            ceil((@font-size-base * 1.4)); // ~20px
+@font-family-sans-serif:  "Helvetica Neue",  'Segoe UI', Helvetica, Arial, sans-serif;
+
+@font-size-h1:            ceil((@font-size-base * 3.5)); // ~49px
+@font-size-h4:            ceil((@font-size-base * 1.28)); // ~20px
 
 @line-height-base:        1.8571428; // 26/14
 @line-height-computed:    floor((@font-size-base * @line-height-base)); // ~26px
@@ -36,6 +46,8 @@
 @headings-font-family:    @font-family-condensed;
 @headings-color:          @gray-darker;
 @headings-case:           uppercase;
+
+
 
 @headings-small-color:        @gray;
 
@@ -257,18 +269,17 @@
 // Forms
 
 @input-color-placeholder:        @gray-dark;
-@input-height-base:               40px;
+@input-height-base:               38px;
 
 @input-group-addon-bg:          @white;
 
+@input-height:                  38px;
 @input-height-small:            34px;
 
+@input-border-focus:             @input-border;
 
-// hero
-
-@hero-height:                    342px;
-@hero-top-padding:               45px;
-@hero-bg:                        @gray-darker;
+@padding-large-vertical:         12px;
+@padding-large-horizontal:       16px;
 
 // wrappers
 

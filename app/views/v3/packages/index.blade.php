@@ -6,7 +6,7 @@
 <div class="container first-container">
     <div class="row text-center mb40">
         <div class="underline">
-            <h1>High Five</h1>
+            <h1>High Five Fitness</h1>
         </div>
         <strong>Get fit and stay active with an Evercise 5 class package</strong>
         <br>
@@ -20,7 +20,7 @@
                 <div class="col-md-4 text-left">
                     <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                         <li class="list-group-item package-title">
-                            <h1>{{ $p->name }}</h1>
+                            <h2>{{ $p->name }} Fitness Classes</h2>
                         </li>
                         <li class="list-group-item package-description">
                             <h4>£{{ round($p->max_class_price,2) }} {{ $p->classes }} Class Package</h4>
@@ -62,7 +62,7 @@
     </div>
     <div class="row text-center mb40">
         <div class="underline">
-            <h1>Perfect Ten</h1>
+            <h1>Perfect Ten Fitness Classes</h1>
         </div>
         <strong>Feel the burn! Become an Evercise fitness VIP with a 10 class package</strong>
         <br>
@@ -76,7 +76,7 @@
                 <div class="col-md-4 text-left">
                     <ul class="list-group package-block-module package-{{ isset($p->style) ? $p->style : 'blue' }}">
                         <li class="list-group-item package-title">
-                            <h1>{{ $p->name }}</h1>
+                            <h2>{{ $p->name }} Fitness Classes</h2>
                         </li>
                         <li class="list-group-item package-description">
                             <h4>{{ $p->classes }} Class Package</h4>

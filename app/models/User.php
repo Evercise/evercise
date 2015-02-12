@@ -37,6 +37,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         'custom_commission'
     ];
 
+    public static $validationRules = [
+        'first_name' => 'required|alpha|max:15|min:2',
+        'last_name'  => 'required|alpha|max:15|min:2',
+        'phone'      => 'numeric',
+        'password'   => 'confirmed|min:6|max:32',
+        'email'      => 'email',
+    ];
+
     /**
      * The database table used by the model.
      *
@@ -61,12 +69,25 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
+    public function mindbody() {
+        return $this->hasOne('ExternalService')->where('service', 'mindbody');
+    }
+
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function trainer()
     {
         return $this->hasOne('Trainer');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rewards()
+    {
+        return $this->hasMany('MilestoneRewards');
     }
 
     public function isAdmin()
@@ -160,6 +181,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public function evercisegroups()
     {
         return $this->hasMany('Evercisegroup');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function emailOut()
+    {
+        return $this->hasMany('EmailOut');
     }
 
 
@@ -269,19 +298,16 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     public static function validateUserSignup($inputs/*, $dateAfter, $dateBefore*/)
     {
 
-
         // validation rules for input field on register form
         $validator = Validator::make(
             $inputs,
-            [
-                'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name'   => 'required|max:15|min:2',
-                'last_name'    => 'required|max:15|min:2',
-                //'dob' => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email'        => 'required|email|unique:users',
-                'password'     => 'required|min:6|max:32',
-                'phone'        => 'numeric',
-            ]
+            array_merge(
+                static::$validationRules,
+                [
+                    'display_name' => 'required|max:20|min:5|unique:users',
+                    'email'        => 'required|email|unique:users',
+                ]
+            )
         );
 
         return $validator;
@@ -328,20 +354,20 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $inputs
      * @param $dateAfter
      * @param $dateBefore
+     * @param $isTrainer
      * @return \Illuminate\Validation\Validator
      */
-    public static function validateUserEdit($inputs, $dateAfter, $dateBefore)
+    public static function validateUserEdit($inputs, $dateAfter, $dateBefore, $isTrainer)
     {
-        $validationRules = array_merge([
-                'first_name' => 'required|max:15|min:2',
-                'last_name'  => 'required|max:15|min:2',
-                'dob'        => 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'phone'      => 'numeric',
-                'password'   => 'confirmed|min:6|max:32',
-            ],
-            Trainer::$validationRules
-        );
+
+        if ($isTrainer) {
+            $validationRules = array_merge(
+                static::$validationRules,
+                Trainer::$validationRules
+            );
+        }
         $validationRules['image'] = 'sometimes';
+        $validationRules['dob'] = 'date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore;
 
         $validator = Validator::make(
             $inputs,
@@ -543,11 +569,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @return \Illuminate\Validation\Validator
      */
-    public static function validUserEdit($inputs)
+    public static function validUserEdit($inputs, $isTrainer)
     {
         list($dateBefore, $dateAfter) = self::validDatesUserDob();
 
-        $validator = self::validateUserEdit($inputs, $dateAfter, $dateBefore);
+        $validator = self::validateUserEdit($inputs, $dateAfter, $dateBefore, $isTrainer);
 
         return self::handleUserValidation($inputs, $validator);
     }
@@ -566,7 +592,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
         $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 0 : 1) : NULL;
+        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : ($inputs['gender'] == 'female' ? 2 : 0) ) : 0;
+
 
         $user = Sentry::register(
             [
@@ -745,17 +772,57 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function getGender()
     {
-        return ($this->gender == 1 ? 'male' : 'female');
+        return ($this->gender == 1 ? 'male' : ($this->gender == 2 ? 'female' : '') );
     }
 
     public function hasTwitter()
     {
-        return $this->token->hasValidTwitterToken();
+        if ($this->token) {
+            return $this->token->hasValidTwitterToken();
+        } else {
+            return FALSE;
+        }
     }
 
     public function hasFacebook()
     {
-        return $this->token->hasValidFacebookToken();
+        if ($this->token) {
+            return $this->token->hasValidFacebookToken();
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function getFacebookId()
+    {
+        if ($this->token) {
+            if ($this->token->hasValidFacebookToken()) {
+                $facebookToken = json_decode($this->token->facebook);
+                if ($facebookToken) {
+                    if (isset($facebookToken->id)) {
+                        return $facebookToken->id;
+                    }
+                }
+            }
+        }
+
+        return NULL;
+    }
+
+    public function getTwitterId()
+    {
+        if ($this->token) {
+            if ($this->token->hasValidTwitterToken()) {
+                $twitterToken = json_decode($this->token->twitter);
+                if ($twitterToken) {
+                    if (isset($twitterToken->screen_name)) {
+                        return $twitterToken->screen_name;
+                    }
+                }
+            }
+        }
+
+        return NULL;
     }
 
 
@@ -817,8 +884,19 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         return $this->hasMany('Referral')
             ->where('referee_id', 0);
     }
+
     public function countPendingReferrals()
     {
         return count($this->pendingReferrals);
+    }
+
+    public static function getIdFromDisplayName($displayName)
+    {
+        return static::where('display_name', $displayName)->pluck('id');
+    }
+
+    public static function getDisplayNameFromId($id)
+    {
+        return static::where('id', $id)->pluck('display_name');
     }
 }

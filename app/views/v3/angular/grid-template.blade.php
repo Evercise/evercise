@@ -33,13 +33,13 @@
                     <ul class="list-group class-module">
                         <div class="class-image-wrapper">
                              <a href="{[{ marker.link }]}">
-                                 {{ image('{[{marker.directory}]}/module_{[{ marker.image}]}', '{[{ marker.name}]}', ['class' => 'img-responsive']) }}
+                                <img ng-src="/{[{marker.directory}]}/module_{[{ marker.image}]}" alt="{[{ marker.name}]}" class="img-responsive"/>
                              </a>
                         </div>
                         <li class="list-group-item">
 
                             <div class="class-title-wrapper text-center">
-                                <a href="{[{ marker.link }]}"><h3>{[{ marker.name | truncate:31  }]}</h3></a>
+                                <a href="{[{ marker.link }]}"><h3>{[{ marker.name | truncate:28  }]}</h3></a>
                                 <div class="class-rating-wrapper">
                                     <span ng-class="n + 1 <= marker.stars ? 'icon-full-star' : 'icon-empty-star'"  class="icon" ng-repeat="n in [] | repeat:5"></span>
 
@@ -49,7 +49,7 @@
                         <li class="list-group-item bg-light-grey">
                             <div class="class-info-wrapper  row">
                                 <div class="col-xs-6">
-                                    <span class="icon icon-clock"></span> <small>{[{ marker.nextClassDate  }]}</small>
+                                    <span class="icon icon-clock"></span> <small><time>{[{ marker.nextClassDate  }]}</time></small>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="row no-gutter">

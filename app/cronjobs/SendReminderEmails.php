@@ -25,7 +25,7 @@ class SendReminderEmails
     {
         $this->log->info('Reminder Email Command has Run!');
 
-        $this->artisan->call('emails');
+        $this->artisan->call('email:remind');
 
     }
 }

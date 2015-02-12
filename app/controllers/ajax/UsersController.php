@@ -93,14 +93,11 @@ class UsersController extends AjaxBaseController
 
     public function storeGuest()
     {
-        $inputs = Input::except(['_token']);
+        $inputs = Input::except(['_token', 'redirect', 'userNewsletter']);
         $validator = Validator::make(
             $inputs,
             [
-                'first_name' => 'required|max:15|min:2',
-                'last_name'  => 'required|max:15|min:2',
-                'email'      => 'required|email|unique:users',
-                'phone'      => 'numeric',
+                'email' => 'required|email|unique:users'
             ]
         );
         // check user passes validation
@@ -114,15 +111,6 @@ class UsersController extends AjaxBaseController
             // log errors
             Log::notice($validator->errors()->toArray());
 
-        } elseif ($inputs['phone'] != '' && $inputs['areacode'] == '') {
-            // is user has filled in the area code but no number fail validation
-            $valid_user =
-                [
-                    'callback'          => 'error',
-                    'validation_failed' => 1,
-                    'errors'            => ['areacode' => 'Please select a country']
-                ];
-            Log::notice('Please select a country');
         } else {
             // if validation passes return validation_failed false
             $valid_user = [
@@ -132,8 +120,13 @@ class UsersController extends AjaxBaseController
 
         if ($valid_user['validation_failed'] == 0) {
 
+
+            $slug = explode('@', $inputs['email']);
+
             $inputs['password'] = str_random(12);
-            $inputs['display_name'] = User::uniqueDisplayName(slugIt($inputs['first_name'] . ' ' . $inputs['last_name']));
+            $inputs['display_name'] = User::uniqueDisplayName(slugIt($slug[0]));
+            $inputs['first_name'] = $slug[0];
+            $inputs['last_name'] = '';
             $inputs['activated'] = TRUE;
             $inputs['gender'] = 0;
 
@@ -164,37 +157,17 @@ class UsersController extends AjaxBaseController
 
                 Sentry::login($user, TRUE);
 
+
                 event('user.registered', [$user]);
 
-                if (Input::has('redirect')) {
-                    return Response::json(
-                        [
-                            'callback' => 'gotoUrl',
-                            'url'      => route(Input::get('redirect'))
-                        ]
-                    );
-                } else {
-                    if (Input::get('trainer', 'no') == 'yes') {
-                        return Response::json(
-                            [
-                                'callback' => 'gotoUrl',
-                                'url'      => route('trainer')
-                            ]
-                        );
-                    } else {
+                User::sendGuestWelcomeEmail($user);
 
-                        User::sendGuestWelcomeEmail($user);
+                return Response::json(
+                    [
+                        'callback' => 'success'
+                    ]
+                );
 
-
-                        return Response::json(
-                            [
-                                'callback' => 'gotoUrl',
-                                'url'      => route('cart.checkout')
-                            ]
-                        );
-
-                    }
-                }
             }
         } else {
             return Response::json($valid_user);
@@ -215,29 +188,29 @@ class UsersController extends AjaxBaseController
             return Redirect::route('home');
         }
 
-        $valid_user = User::validUserEdit(Input::all());
+        $valid_user = User::validUserEdit(Input::all(), $this->user->isTrainer());
 
-        if (! $valid_user['validation_failed']) {
+        if (!$valid_user['validation_failed']) {
             // Actually update the user record
             $params = [
-                'first_name'    => Input::get('first_name'),
-                'last_name'     => Input::get('last_name'),
-                'dob'           => Input::get('dob'),
-                'gender'        => (Input::get('gender') == 'male' ? 1 : 2),
-                'image'         => Input::get('image'),
-                'area_code'     => Input::get('areacode'),
-                'phone'         => Input::get('phone'),
-                'password'      => Input::get('password'),
-                'email'         => Input::get('email'),
+                'first_name' => Input::get('first_name'),
+                'last_name'  => Input::get('last_name'),
+                'dob'        => Input::get('dob'),
+                'gender'     => (Input::get('gender') == 'male' ? 1 : (Input::get('gender') == 'female' ? 2 : -1) ),
+                'image'      => Input::get('image'),
+                'area_code'  => Input::get('areacode'),
+                'phone'      => Input::get('phone'),
+                'password'   => Input::get('password'),
+                'email'      => Input::get('email'),
             ];
 
             $this->user->updateUser($params);
 
-            if($this->user->isTrainer()) {
+            if ($this->user->isTrainer()) {
                 $this->user->trainer->updateTrainer([
                     'profession' => Input::get('profession', 0),
-                    'bio' => Input::get('bio', 0),
-                    'website' => Input::get('website', 0),
+                    'bio'        => Input::get('bio', 0),
+                    'website'    => Input::get('website', 0),
                 ]);
             }
 
@@ -319,7 +292,7 @@ class UsersController extends AjaxBaseController
         if ($newsletter) {
             $this->user->marketingpreferences()->sync([1]);
 
-            if(false) {
+            if (FALSE) {
                 User::subscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
                     $this->user->email,
                     $this->user->first_name,
@@ -328,7 +301,7 @@ class UsersController extends AjaxBaseController
             }
         } else {
             $this->user->marketingpreferences()->sync([2]);
-            if(false) {
+            if (FALSE) {
                 User::unSubscribeMailchimpNewsletter(Config::get('mailchimp')['newsletter'],
                     $this->user->email
                 );
@@ -339,7 +312,7 @@ class UsersController extends AjaxBaseController
 
     public function requestWithdrawal()
     {
-        if(!empty($this->user->id)) {
+        if (!empty($this->user->id)) {
             $res = [
                 'user'         => $this->user,
                 'wallet'       => $this->user->getWallet(),
@@ -356,19 +329,20 @@ class UsersController extends AjaxBaseController
 
     public function makeWithdrawal()
     {
-        if(!Sentry::check()) {
+        if (!Sentry::check()) {
             return Response::json(['error' => 'You need to be logged in to use this feature']);
         }
 
         $inputs = Input::all();
 
         $messages = [
-            'min' => 'Minimum amount you can withdraw is £'.Config::get('evercise.minimim_withdraw'),
-            'max' => 'Max amount you can withdraw is £'.number_format($this->user->getWallet()->balance)
+            'min' => 'Minimum amount you can withdraw is £' . Config::get('evercise.minimim_withdraw'),
+            'max' => 'Max amount you can withdraw is £' . number_format($this->user->getWallet()->balance)
         ];
         $validations = [
             'paypal' => 'required|email',
-            'amount' => 'required|integer|min:'.Config::get('evercise.minimim_withdraw').'|max:'.round($this->user->getWallet()->balance, 0)
+            'amount' => 'required|integer|min:' . Config::get('evercise.minimim_withdraw') . '|max:' . round($this->user->getWallet()->balance,
+                    0)
         ];
         $validator = Validator::make(
             $inputs,

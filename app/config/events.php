@@ -85,18 +85,29 @@ return [
         ['user.cart.completed' => 'User@cartCompleted'], // $user, $cart, $transaction // ∑
         ['user.topup.completed' => 'User@topupCompleted'], // $user, $transaction, $balance // ∑
 
+        ['user.message.reply' => 'User@messageReply'], // $sender, $recipient, $body
+
         ['user.withdraw.completed' => 'User@withdrawCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.completed' => 'User@referralCompleted'], // $user, $transaction, $balance // ∑
         ['user.referral.signup' => 'User@referralSignup'], // $user, $transaction, $balance // ∑
 
+        ['user.class.rate' => 'User@rateClass'], // $user // ∑
+        ['user.class.rate.haspackage' => 'User@rateClassHasPackage'], // $user // ∑
+
         ['user.ppc.signup' => 'User@ppcSignup'], // $user, $transaction, $type // ∑
 
+        ['user.not_returned' => 'User@notReturned'], // $user, $everciseGroups
+        ['user.why_not_refer' => 'User@whyNotRefer'], // $user
+
         ['trainer.edit' => 'Trainer@edit'],
-        ['trainer.session.joined' => 'Trainer@sessionJoined'], // $user, $trainer, $session
+        ['trainer.session.joined' => 'Trainer@sessionsJoined'], // $user, $trainer, $session, $everciseGroup, $transactionId, tickets
 
         ['trainer.registered' => 'Trainer@registered'], //$trainer
+        ['trainer.registered_ppc' => 'Trainer@registeredPpc'], //$trainer
         ['trainer.complete_profile' => 'Trainer@whyNotCompleteProfile'], //$trainer
         ['trainer.create_first_class' => 'Trainer@whyNotCreateFirstClass'], //$trainer
+
+        ['trainer.not_returned' => 'Trainer@notReturnedTrainer'], //$trainer
 
 
         ['class.created' => 'Classes@classCreated'],  // $class, $trainer
@@ -106,7 +117,7 @@ return [
         ['class.unpublished' => 'Classes@classUnPublished'],  // $class, $trainer
 
         ['session.joined' => 'Sessions@joinedClass'], // $user, $trainer, $session, $everciseGroup, $transactionId
-        ['session.upcoming_session' => 'Sessions@upcommingSessions'],
+        ['session.upcoming_session' => 'Sessions@upcomingSessions'],
         ['session.mail_all' => 'Sessions@mailAll'],
         ['session.mail_trainer' => 'Sessions@mailTrainer'],
         ['session.userLeft' => 'Sessions@userLeaveSession'],
@@ -120,6 +131,8 @@ return [
 
         ['user.facebook.connected' => 'User@connectedFacebook'], // $user
         ['user.twitter.connected' => 'User@connectedTwitter'], // $user
+        ['marketing.newYear' => 'User@newYear'], // $user
+        ['marketing.relaunch' => 'Trainer@relaunch'], // $user
 
 
     ],

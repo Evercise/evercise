@@ -35,16 +35,18 @@
                 <div class="col-sm-12" ng-repeat="marker in markers | orderBy: sort:revers | filter: distanceFilter" id = {[{marker.id}]}>
                     <div class="class-list center-block">
                         <div class="class-image-wrapper pull-left">
-                            {{ image('{[{marker.directory}]}/search_{[{ marker.image}]}', '{[{ marker.name}]}') }}
+                            <a href="{[{ marker.link }]}">
+                                <img ng-src="/{[{marker.directory}]}/search_{[{ marker.image}]}" alt="{[{ marker.name}]}" class="img-responsive"/>
+                            </a>
                         </div>
                         <div class="class-title-wrapper pull-left">
-                            <h3>{[{ marker.name  }]}</h3>
+                            <h3><a href="{[{ marker.link }]}" class="text-dark">{[{ marker.name  }]}</a></h3>
                             <div class="class-rating-wrapper">
                                 <span class="icon icon-full-star" ng-repeat="n in [] | repeat:marker.stars"></span>
                                 <span class="icon icon-empty-star" ng-repeat="n in [] | repeat:5 - marker.stars"></span>
                             </div>
 
-                            <div class="pull-left mr15"> <span class="icon icon-clock"></span> {[{ marker.nextClassDate }]}</div>
+                            <div class="pull-left mr15"> <span class="icon icon-clock"></span> <time>{[{ marker.nextClassDate }]}</time></div>
 
                             <div class="pull-left mr15"><span class="icon icon-clock"></span> {[{ marker.nextClassDuration}]} mins</div>
                             <div class="pull-left"><span class="icon icon-ticket"></span> x {[{ marker.capacity }]} left</div>
@@ -52,7 +54,7 @@
                         </div>
                         <div class="class-info-wrapper pull-right bg-light-grey text-center">
                             <strong class="text-primary center-block">{[{ marker.price | currency:"£": 2 }]}</strong>
-                            <a href="{[{ marker.link }]}" class="btn btn-default center-block">Join Class</a>
+                            <a href="{[{ marker.link }]}" class="btn btn-default center-block">Read more</a>
                         </div>
                     </div>
                 </div>

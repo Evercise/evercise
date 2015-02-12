@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 /**
  * Class Sessionmember
  */
@@ -28,6 +30,16 @@ class Sessionmember extends \Eloquent
     public function rating()
     {
         return $this->hasOne('Rating');
+    }
+
+    public static function todaysSales()
+    {
+        return count(DB::table('sessionmembers')->where('created_at', '>=', Carbon::now()->setTime(0, 0, 0))->get());
+    }
+
+    public function session()
+    {
+        return $this->belongsTo('Evercisesession', 'evercisesession_id');
     }
 
 }

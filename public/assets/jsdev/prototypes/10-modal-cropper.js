@@ -30,10 +30,17 @@ function imageCropper(elem){
 imageCropper.prototype = {
     constructor: imageCropper,
     init: function(){
+        if(typeof(window.FileReader)!="undefined"){
+            $('#get_file_content').closest('form').remove();
+        }
+        else{
+            $('#image-select').remove();
+        }
         this.addListener();
         if($('input[name="cloned"]').val() != ''){
             this.galleryImage = '<img src="/'+$('input[name="cloned"]').val()+'"  alt="cover photo" class="img-responsive">';
         }
+
     },
     addListener: function () {
         $(document).on("click", '.image-select' ,$.proxy(this.upload, this));
@@ -44,22 +51,54 @@ imageCropper.prototype = {
         this.modal.on("hidden.bs.modal", $.proxy(this.destroyCrop, this));
         this.croppedForm.on("submit", $.proxy(this.submitForm, this));
         $(document).on("click", '.gallery-option' ,$.proxy(this.clickGalleryOption, this));
+        $(document).on("change", '#get_file_content' ,$.proxy(this.getFileContent, this));
     },
-    upload: function(){
+    upload: function(e){
         this.uploadButton.trigger('click');
     },
     getImage: function(e){
-        self = this;
-        if (e.target.files && e.target.files[0]) {
 
+
+        self = this;
+
+        if (e.target.files && e.target.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
                 self.modalImage.attr('src', e.target.result);
             }
 
             reader.readAsDataURL(e.target.files[0]);
-
         }
+
+    },
+    getFileContent : function(e){
+        var form = $(e.target).closest('form'),
+            file = $(e.target),
+            data = new FormData(form[0]),
+            self = this;
+        console.log(file.val());
+        $.ajax(form.attr('action'), {
+            type: "post",
+            data: data,
+            processData: false,
+            contentType: false,
+
+            beforeSend: function () {
+            },
+
+            success: function (data) {
+                file.addClass('opacity');
+                self.modalImage.attr('src','/'+data.file);
+                self.modal.find("input[name='file']").replaceWith(file);
+                self.modal.find("input[name='deletion']").val(data.file);
+            },
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+            }
+        });
+
+
     },
     openModal: function(){
         this.modal.modal('show');
@@ -70,6 +109,7 @@ imageCropper.prototype = {
     crop: function(){
         self = this;
         this.image = this.modal.find(".bootstrap-modal-cropper img");
+
         this.image.cropper({
             data: this.originalData,
             aspectRatio: this.ratio,
@@ -85,6 +125,9 @@ imageCropper.prototype = {
         this.image.cropper("destroy");
         self.modalImage.attr('src',null);
         this.uploadButton.val('');
+        if(self.modal.find('#get_file_content').length){
+            $('#no-file-reader-form').append(self.modal.find('#get_file_content').removeClass('opacity'));
+        }
     },
     submitForm: function(e){
         e.preventDefault();
@@ -131,6 +174,7 @@ imageCropper.prototype = {
                     $('input[name="gallery_image"]').val(false);
                 }
                 $('input[name="image"]').val(self.galleryValue).trigger('change');
+
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {

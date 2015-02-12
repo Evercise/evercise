@@ -15,24 +15,66 @@
 /* Show home page */
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
 Route::get(
-    'what_is_evercise',
-    function () {
-        return Redirect::to('about_evercise');
-    }
-);
-
-Route::get('/popular', [
+    'popular',
+    [
         'as' => 'popular',
         function () {
-            return Redirect::to('/uk/london');
+            return Redirect::to('uk/london');
+        }
+    ]
+);
+foreach (Config::get('redirect') as $old => $new) {
+    Route::get(
+        $old,
+        [
+            function () use ($new) {
+                return Redirect::to($new);
+            }
+        ]
+    );
+}
+
+Route::get('email',
+    [
+        function(){
+            return View::make('hello');
         }
     ]
 );
 
 
+Route::get('ttt',
+    [ 'before' => 'admin',
+        function(){
+
+            $user = Sentry::findUserById(323);
+
+
+            $mindbody = new Mindbody($user);
+
+            echo "<h4>getClasses</h4>";
+            d($mindbody->getClasses());
+            echo "<h4>getSchedules</h4>";
+            d($mindbody->getSchedules(), false);
+            echo "<h4>getEnrollments</h4>";
+            d($mindbody->getEnrollments(), false);
+            echo "<h4>getClassSchedules</h4>";
+            d($mindbody->getClassSchedules(), false);
+
+        }
+    ]
+);
+
+
+
+
 /** SEO URLS */
 Route::get('/fitness-instructors/{id?}', ['as' => 'trainer.show', 'uses' => 'TrainersController@show']);
 Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'EvercisegroupsController@show']);
+/** Duplicate Name Added just because of the route URL */
+Route::get('/classes/{id?}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
+
+Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show.redirect', 'uses' => 'EvercisegroupsController@show']);
 
 
 // ajax prefix
@@ -52,6 +94,21 @@ Route::group(['prefix' => 'ajax'], function () {
     // login
     // login
     Route::post('/auth/login', ['as' => 'auth.login.post', 'uses' => 'ajax\AuthController@postLogin']);
+
+    // Search
+    Route::post('/uk/{allsegments}', ['as' => 'ajax.search.parse', 'uses' => 'ajax\SearchController@parseUrl'])->where(
+        'allsegments',
+        '(.*)?'
+    );
+    Route::post('/uk/', ['as' => 'ajax.evercisegroups.search', 'uses' => 'ajax\SearchController@parseUrl']);
+    Route::post('/map/uk/{allsegments}', ['as' => 'ajax.map.search.parse', 'uses' => 'ajax\SearchController@parseMapUrl'])->where(
+        'allsegments',
+        '(.*)?'
+    );
+    Route::post('/map/uk/', ['as' => 'ajax.map.evercisegroups.search', 'uses' => 'ajax\SearchController@parseMapUrl']);
+
+
+
 
     // cart
 
@@ -106,6 +163,10 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('upload/profile',
         ['as' => 'ajax.upload.profile', 'uses' => 'ajax\UploadController@uploadProfilePicture']);
 
+    // Upload file only (no crop stuff) for the stupid Safari workaround
+    Route::post('upload/basic',
+        ['as' => 'ajax.upload.basic', 'uses' => 'ajax\UploadController@uploadWithoutCrop']);
+
     //Gallery
     Route::post('gallery/getDefaults',
         ['as' => 'ajax.gallery.getdefaults', 'uses' => 'ajax\GalleryController@getDefaults']);
@@ -123,7 +184,15 @@ Route::group(['prefix' => 'ajax'], function () {
     Route::post('withdrawal/process',
         ['as' => 'ajax.process.withdrawal', 'before' => 'trainer', 'uses' => 'ajax\UsersController@makeWithdrawal']);
 
+
+    Route::post('categories',
+        ['as' => 'ajax.categories', 'uses' => 'ajax\CategoryController@getCategories']);
+
+    Route::post('categories/browse',
+        ['as' => 'categories.browse', 'uses' => 'ajax\CategoryController@browse']);
+
 });
+
 
 // auth / login
 
@@ -179,7 +248,7 @@ Route::get('/finished-user', [
     ]
 );
 
-Route::get('/profile/{id}/{tab?}', ['as' => 'users.edit', 'uses' => 'UsersController@edit']);
+Route::get('/profile/{id}/{tab?}', ['as' => 'users.edit', 'uses' => 'UsersController@edit', 'before' => 'user']);
 
 
 Route::get(
@@ -198,13 +267,9 @@ Route::post(
     '/users/resetpassword',
     ['as' => 'users.resetpassword.post', 'uses' => 'UsersController@postResetPassword']
 );
-Route::get(
-    '/users/{display_name}/changepassword',
-    ['as' => 'users.changepassword', 'uses' => 'UsersController@getChangePassword']
-);
 Route::post(
     '/users/changepassword',
-    ['as' => 'users.changepassword.post', 'uses' => 'UsersController@postChangePassword']
+    ['as' => 'users.changepassword.post', 'before' => 'user', 'uses' => 'UsersController@postChangePassword']
 );
 Route::get('/users/{display_name}/logout', ['as' => 'users.logout', 'uses' => 'UsersController@logout']);
 
@@ -228,9 +293,6 @@ Route::get(
     ['as' => 'evercisegroups.create', 'before' => 'trainer', 'uses' => 'EvercisegroupsController@create']
 );
 
-Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
-
-
 Route::get(
     '/clone_class/{id}',
     ['as' => 'clone_class', 'uses' => 'EvercisegroupsController@cloneEG']
@@ -248,6 +310,10 @@ foreach (Config::get('landing_pages') as $url => $params) {
     );
 }
 
+Route::get('/trainers',
+    ['as' => 'landing.trainer.ppc' , 'uses' => 'LandingsController@trainerPpc']
+);
+
 
 //Redirect All UK segments to the same function and we will go from there
 Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchController@parseUrl'])->where(
@@ -256,13 +322,18 @@ Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchContro
 );
 Route::any('/uk/', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
 
-
 // VenuesController
 Route::get('venues', 'VenuesController@index');
 Route::get('venues/create', 'VenuesController@create');
 Route::get('venues/edit/{id}', 'VenuesController@edit');
 Route::post('venues/update/{id}', 'VenuesController@update');
 
+Route::get('confo', [
+    'as' => 'con',
+    function () {
+        return View::make('v3.cart.confirmation');
+    }
+]);
 
 // Cart
 Route::group(['prefix' => 'cart'], function () {
@@ -381,9 +452,9 @@ Route::post(
 
 
 // mail
-Route::get('/sessions/{id}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
+Route::get('/sessions/{sessionId}/mail_all', ['as' => 'sessions.mail_all', 'uses' => 'SessionsController@getMailAll']);
 Route::post(
-    '/sessions/{id}/mail_all',
+    '/sessions/{sessionId}/mail_all',
     ['as' => 'sessions.mail_all.post', 'uses' => 'SessionsController@postMailAll']
 );
 Route::get('/sessions/{sessionId}/mail_one/{userId}',
@@ -399,7 +470,14 @@ Route::post('/sessions/{sessionId}/mail_trainer/{trainerId}',
     ['as' => 'sessions.mail_trainer.post', 'uses' => 'SessionsController@postMailTrainer']
 );
 
-Route::get('/packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
+Route::get('/conversation/{displayName}',
+    ['as' => 'conversation', 'uses' => 'MessageController@getConversation', 'before' => 'user']
+);
+Route::post('/conversation/{displayName}',
+    ['as' => 'conversation.post', 'uses' => 'MessageController@postMessage']
+);
+
+Route::get('/fitness-packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
 
 
 // widgets
@@ -422,23 +500,23 @@ Route::group(['prefix' => 'widgets'], function () {
 Route::get('blog', ['as' => 'blog', 'uses' => 'PagesController@showBlog']);
 
 
-Route::get('about_evercise', [
+Route::get('about-evercise', [
     'as' => 'general.about',
     function () {
         return View::make('v3.pages.about');
     }
 ]);
-Route::get('terms', [
+Route::get('terms-of-use', [
     'as' => 'general.terms',
     function () {
         return View::make('v3.pages.terms');
     }
 ]);
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
-Route::get('the_team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
-Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
+Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
+Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@dickface']);
 Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
-Route::get('class_guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
+Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);
 Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
 Route::post('/postPdf', ['as' => 'postPdf', 'uses' => 'PdfController@postPdf']);
@@ -450,6 +528,7 @@ Route::get('refer_a_friend/{code}', ['as' => 'referral', 'uses' => 'ReferralsCon
 Route::get('ppc/{category}/{code}', ['as' => 'landing.category.code', 'uses' => 'LandingsController@submitPpc']);
 Route::get('ppc_fb/{category}', ['as' => 'ppc_fb.category', 'uses' => 'LandingsController@facebookPpc']);
 Route::post('landing/send', ['as' => 'landings.send', 'uses' => 'LandingsController@landingSend']);
+Route::post('landing/enquiry', ['as' => 'landings.enquiry', 'uses' => 'LandingsController@trainerEnquiry']);
 
 Route::post('new_referral', ['as' => 'new_referral', 'uses' => 'ReferralsController@store']);
 
@@ -513,19 +592,27 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         ['as' => 'admin.fakeratings.addrating', 'uses' => 'AdminAjaxController@addRating']);
 
 
+    Route::post('/update_categories',
+        ['as' => 'admin.update_categories', 'uses' => 'AdminAjaxController@updateCategories']);
+    Route::post('/update_category',
+        ['as' => 'admin.update_category', 'uses' => 'AdminAjaxController@updateCategory']);
+
     Route::post('/edit_subcategories',
         ['as' => 'admin.edit_subcategories', 'uses' => 'AdminAjaxController@editSubcategories']);
     Route::post('/add_subcategory',
         ['as' => 'admin.add_subcategory', 'uses' => 'AdminAjaxController@addSubcategory']);
     Route::post('/edit_group_subcats',
         ['as' => 'admin.edit_group_subcats', 'uses' => 'AdminAjaxController@editGroupSubcats']);
+    Route::post('/subcategory/delete',
+        ['as' => 'ajax.admin.subcategory.delete', 'uses' => 'AdminAjaxController@deleteSubcategory']);
 
     Route::post('/unapprove_trainer',
         ['as' => 'admin.unapprove_trainer', 'uses' => 'AdminAjaxController@unapproveTrainer']);
 
     Route::get('/search/stats',
         ['as' => 'admin.ajax.searchstats', 'uses' => 'AdminAjaxController@searchStats']);
-
+    Route::post('/search/stats/download',
+        ['as' => 'admin.ajax.searchstats.download', 'uses' => 'AdminAjaxController@downloadStats']);
 
     Route::post('galleryImageUpload',
         ['as' => 'admin.ajax.gallery_upload', 'uses' => 'AdminAjaxController@galleryUploadFile']);
@@ -555,10 +642,16 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
     Route::get('modal/categories/{id?}',
         ['as' => 'ajax.admin.modal.categories', 'uses' => 'AdminAjaxController@modalClassCategories']);
 
+    Route::get('/importStatsToDB',
+        ['as' => 'ajax.admin.import.stats', 'uses' => 'AdminAjaxController@importStatsToDB']);
+
 
     Route::put('modal/categories',
         ['as' => 'ajax.admin.modal.categories.save', 'uses' => 'AdminAjaxController@saveClassCategories']);
 
+
+    Route::post('runindexer',
+        ['as' => 'ajax.admin.indexall', 'uses' => 'AdminAjaxController@runIndexer']);
 
 
 });
@@ -594,7 +687,10 @@ Route::group(
 
 
         Route::get('/categories',
-            ['as' => 'admin.categories', 'uses' => 'MainController@categories']);
+            ['as' => 'admin.categories', 'uses' => 'MainController@editCategories']);
+        Route::get('categories/{id?}',
+            ['as' => 'admin.categories.manage', 'uses' => 'MainController@categoriesManage']);
+
         Route::get('/subcategories',
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 
@@ -619,6 +715,15 @@ Route::group(
 
         Route::get('/search/stats',
             ['as' => 'admin.searchstats', 'uses' => 'MainController@searchStats']);
+
+        Route::get('/sales',
+            ['as' => 'admin.sales', 'uses' => 'MainController@salesStats']);
+
+        Route::get('/transactions',
+            ['as' => 'admin.transactions', 'uses' => 'MainController@transactions']);
+
+        Route::get('/packages',
+            ['as' => 'admin.packages', 'uses' => 'MainController@userPackages']);
 
         Route::get('/gallery',
             ['as' => 'admin.gallery', 'uses' => 'AdminGalleryController@index']);
@@ -667,9 +772,73 @@ Route::get('generatestaticlandingemail', function(){
     return 'generated. code: '.$code;
 });
 */
-Route::get('ping', function () {
-    return 'All is good.';
-});
+Route::get('ping', ['as' => 'ping.me', 'uses' => 'PingController@check']);
 
+Route::get('/evercisegroups/{id?}/{preview?}', ['as' => 'class.show.eg', 'uses' => 'EvercisegroupsController@show']);
 
 Route::any('emailgrab', ['as' => 'email.grab', 'uses' => 'EmailGrabber@grab']);
+
+Route::get('cleansubcategoriesup', function () {
+
+    $subcategories = Subcategory::get();
+
+    foreach ($subcategories as $sc) {
+        $n = $sc['name'];
+        //return var_dump($n);
+        //if ($n != 'dance' && $n != 'belly dancing')
+        //return ucfirst($n);
+        $sc->name = ucfirst($n);
+        $sc->save();
+    }
+
+});
+
+Route::get('test1', function(){
+
+    $trainer = User::find('169');
+
+    event('trainer.registered_ppc', [$trainer]);
+
+    return 'event fired : '.$trainer->display_name;
+
+});
+Route::get('test2', function(){
+
+    $transaction = \Transactions::find(5318091);
+    $hashes = $transaction->makeBookingHashBySession('1479');
+
+    $output = '';
+    foreach($hashes as $hash)
+    {
+        $output .= $hash . ',';
+    }
+    return $output;
+});
+Route::get('test3', function(){
+    $cart = EverciseCart::getCart();
+
+    $upperPrice = round($cart['packages'][0]['max_class_price'], 2) + 0.01;
+    //Log::live()
+    /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+         $query->where('price', '<', $packagePrice);
+     })->take(3)->get();*/
+
+    $searchController = App::make('SearchController');
+    $everciseGroups = $searchController->getClasses([
+        'sort'  => 'price_desc',
+        'price' => ['under' => round($upperPrice, 2), 'over' => round(($upperPrice - 10))],
+        'size'  => '3'
+    ]);
+
+    return var_dump($everciseGroups);
+});
+
+Route::get('test4/{term}', function($term) {
+
+    return Subcategory::getRelatedFromSearch($term);
+});
+Route::get('test5', function() {
+
+    return d(Category::browse());
+});
+

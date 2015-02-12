@@ -79,4 +79,24 @@ class UserPackages extends \Eloquent
 
     }
 
+    public static function hasActivePackage($user)
+    {
+
+        $res = DB::table('packages')
+            ->select(DB::raw('*, count(user_packages.id) as classes_count, user_packages.id as up_id'))
+            ->join('user_packages', 'packages.id', '=', 'user_packages.package_id')
+            ->leftJoin('user_package_classes', 'user_packages.id', '=', 'user_package_classes.package_id')
+            ->where('user_packages.user_id', '=', $user->id)
+            ->get();
+
+        foreach($res as $row) {
+            if($row->classes > $row->classes_count) {
+                $package = static::find($row->up_id);
+                return $package;
+            }
+        }
+
+        return 0;
+    }
+
 }

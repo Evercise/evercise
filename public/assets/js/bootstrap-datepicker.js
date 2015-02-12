@@ -764,6 +764,7 @@
 			nextMonth = nextMonth.valueOf();
 			var html = [];
 			var clsName;
+
 			while (prevMonth.valueOf() < nextMonth){
 				if (prevMonth.getUTCDay() === this.o.weekStart){
 					html.push('<tr>');
@@ -787,6 +788,7 @@
 				clsName.push('day');
 
 				if (this.o.beforeShowDay !== $.noop){
+                    var session;
 					var before = this.o.beforeShowDay(this._utc_to_local(prevMonth));
 					if (before === undefined)
 						before = {};
@@ -800,10 +802,12 @@
 						clsName = clsName.concat(before.classes.split(/\s+/));
 					if (before.tooltip)
 						tooltip = before.tooltip;
+                    if (before.session)
+                        session = before.session;
 				}
 
 				clsName = $.unique(clsName);
-				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
+				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + (session ? ' data-session="'+session+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
 				if (prevMonth.getUTCDay() === this.o.weekEnd){
 					html.push('</tr>');
 				}

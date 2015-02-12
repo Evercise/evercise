@@ -36,7 +36,7 @@ class Search
         $this->cart = EverciseCart::getCart();
 
         $this->cart_items = [];
-        foreach($this->cart['sessions_grouped'] as $key_id => $val) {
+        foreach ($this->cart['sessions_grouped'] as $key_id => $val) {
             $this->cart_items[$key_id] = $val['qty'];
         }
 
@@ -51,14 +51,16 @@ class Search
      * @param bool $all
      * @return mixed
      */
-    public function getResults(Place $area, $params = [], $all = FALSE)
+    public function getMapResults(Place $area, $params = [], $all = FALSE)
     {
         /**  Set Defaults */
         $defaults = [
-            'radius' => '10mi',
-            'size'   => 24,
-            'from'   => 0
+            'radius' => $params['radius'],
+            'size'   => $params['size'],
+            'from'   => $params['from'],
+            'fields' => ['id', 'venue.id', 'venue.name', 'venue.lat', 'venue.lon']
         ];
+
 
         foreach ($defaults as $key => $val) {
             if (!isset($params[$key])) {
@@ -67,8 +69,40 @@ class Search
         }
         $results = $this->elastic->searchEvercisegroups($area, $params);
 
+        return $this->formatMapResults($results, $area);
 
-        return $this->formatResults($results, $area);
+    }
+
+
+    /**
+     * Get results for a specific Place
+     * @param Place $area
+     * @param array $params
+     * @param bool $all
+     * @return mixed
+     */
+    public function getResults(Place $area, $params = [], $dates = FALSE)
+    {
+        /**  Set Defaults */
+        $defaults = [
+            'radius' => $params['radius'],
+            'size'   => $params['size'],
+            'from'   => $params['from']
+        ];
+
+        foreach ($defaults as $key => $val) {
+            if (!isset($params[$key])) {
+                $params[$key] = $val;
+            }
+        }
+        $results = $this->elastic->searchEvercisegroups($area, $params, $dates);
+
+
+        if ($dates) {
+            return $this->formatDates($results, $area);
+        }
+
+        return $this->formatResults($results, $area, $params);
 
     }
 
@@ -92,12 +126,13 @@ class Search
      * @param $results
      * @return mixed
      */
-    public function formatResults($results, $area = FALSE)
+    public function formatResults($results, $area = FALSE, $params)
     {
         $all_results = [];
 
         foreach ($results->hits as $r) {
-            $all_results[] = $this->formatSingle($r, $area);
+
+            $all_results[] = $this->formatSingle($r, $area, $params);
         }
 
         $results->hits = $all_results;
@@ -105,22 +140,145 @@ class Search
         return $results;
     }
 
+
+    public function formatDates($results)
+    {
+
+
+        $all_dates = [];
+
+        $now = date('Y-m-d H:i:s');
+
+
+        foreach ($results->hits as $r) {
+            $fields = (array)$r->fields;
+
+            foreach ($fields['futuresessions.date_time'] as $date) {
+                $short_date = date('Y-m-d', strtotime($date));
+
+                if ($short_date > date('Y-m-d', strtotime('+2 months')) || $short_date < date('Y-m-d')) {
+                    continue;
+                }
+                if (!isset($all_dates[$short_date])) {
+                    $all_dates[$short_date] = [];
+                }
+                if (!in_array($fields['id'][0], $all_dates[$short_date])) {
+
+                    if ($date > $now) {
+                        array_push($all_dates[$short_date], $fields['id'][0]);
+                    }
+                }
+            }
+        }
+        ksort($all_dates);
+        foreach ($all_dates as $date => $ids) {
+            $all_dates[$date] = count($ids);
+        }
+
+
+        return $all_dates;
+
+
+    }
+
+
+    /**
+     * Format Results
+     * @param $results
+     * @return mixed
+     */
+    public function formatMapResults($results)
+    {
+        $mapResults = [];
+
+        foreach ($results->hits as $r) {
+            $fields = (array)$r->_source;
+
+            $id = $fields['id'];
+            $venue_id = $fields['venue_id'];
+            $mapResults[$venue_id][$id]['location'] = [$fields['venue']->lon => $fields['venue']->lat];
+            $mapResults[$venue_id][$id]['classes'][] = $id;
+            $mapResults[$venue_id][$id]['total'] = count($mapResults[$venue_id][$id]['classes']);
+        }
+
+        return $mapResults;
+    }
+
+
     /**
      * Format a single Result
      * @param $row
      * @return mixed
      */
-    public function formatSingle($row, $area)
+    public function formatSingle($row, $area, $params = [])
     {
 
+        $not_needed = [
+            'global'  => [
+                'default_duration',
+                'published',
+                'created_at',
+                'updated_at',
+                'venue_id',
+                'title',
+                'gender'
+            ],
+            'user'    => ['id', 'display_name', 'first_name', 'last_name', 'email', 'image', 'phone'],
+            'venue'   => [ 'image'],
+            'ratings' => ['user_id', 'comment']
+        ];
 
-        $i = 0;
 
-        foreach ($row->_source->futuresessions as $s) {
-            $row->_source->futuresessions[$i]->date_time = (new Carbon($s->date_time))->format('M jS, g:ia');
+        $row->_source->score = $row->_score;
 
-            $i++;
+
+
+
+        /** UNSET everything else that we don't need! */
+
+        foreach ($not_needed['global'] as $n) {
+            if (isset($row->_source->{$n})) {
+                unset($row->_source->{$n});
+            }
         }
+
+        foreach ($not_needed['user'] as $n) {
+            if (isset($row->_source->user->{$n})) {
+                unset($row->_source->user->{$n});
+            }
+        }
+
+        foreach ($not_needed['venue'] as $n) {
+            if (isset($row->_source->venue->{$n})) {
+                unset($row->_source->venue->{$n});
+            }
+        }
+
+
+        foreach ($not_needed['ratings'] as $n) {
+            if (isset($row->_source->ratings->{$n})) {
+                unset($row->_source->ratings->{$n});
+            }
+        }
+
+
+
+        $times = [];
+
+        foreach ($row->_source->futuresessions as $key => $s) {
+
+            $date = new Carbon($s->date_time);
+
+            $row->_source->futuresessions[$key]->date_time = $date->format('M jS, g:ia');
+
+            if (!empty($params['date'])) {
+                if ($params['date'] == $date->format('Y-m-d') && !isset($times[$date->format('g:ia')])) {
+                    $times[$date->format('g:ia')] = $s->id;
+                }
+            }
+        }
+
+        $row->_source->times = $times;
 
         /** Add Lat and Lon to the venue */
         if (!empty($row->_source->venue->location->geohash) && $area) {
@@ -157,6 +315,11 @@ class Search
                 $row->_source->futuresessions[$i]->default_tickets = $this->cart_items[$s->id];
             }
             $i++;
+        }
+
+
+        if (!empty($params['clean'])) {
+            // unset($row->_source->futuresessions);
         }
 
         return $row->_source;
@@ -245,16 +408,16 @@ class Search
 
             $futuresessions = [];
 
-            if(count($row->futuresessions) > 4) {
+            if (count($row->futuresessions) > 4) {
                 $total = 0;
-                foreach($row->futuresessions as $s) {
+                foreach ($row->futuresessions as $s) {
 
-                    if($total > 3) {
+                    if ($total > 3) {
                         $row->futuresessions = $futuresessions;
                         break;
                     }
 
-                    if($s->remaining > 0) {
+                    if ($s->remaining > 0) {
                         $futuresessions[] = $s;
                         $total++;
                     }

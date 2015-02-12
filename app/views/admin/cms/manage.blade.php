@@ -92,7 +92,7 @@
 
     <div class="form-group">
           <label>Date published:</label>
-           {{ Form::text('published_on', (!empty($article->published_on) && $article->published_on != '0000-00-00 00:00:00') ? $article->published_on->format('d/m/Y') :  date('d/m/Y')), ['placeholder'=> 'Date published', 'class' => 'form-control datetime', 'id'=>'dp_basic']) }}
+           {{ Form::text('published_on', (!empty($article->published_on) && $article->published_on != '0000-00-00 00:00:00' ? $article->published_on->format('d/m/Y') :  date('d/m/Y')), ['placeholder'=> 'Date published', 'class' => 'form-control datetime', 'id'=>'dp_basic']) }}
 
 
     </div>
@@ -103,6 +103,12 @@
           <label>Intro (Excerpt):</label>
 
           {{ Form::textarea('intro', (!empty($article->intro) ? $article->intro : null), ['rows'=> '2', 'placeholder'=> 'Intro', 'class' => 'form-control', 'id'=>'reg_textarea']) }}
+
+    </div>
+
+    <div class="form-group">
+          <label>Meta title:</label>
+          {{ Form::textarea('meta_title', (!empty($article->meta_title) ? $article->meta_title : null), ['rows'=> '3', 'placeholder'=> 'Meta Title', 'class' => 'form-control', 'id'=>'meta_description']) }}
 
     </div>
 

@@ -9,7 +9,7 @@
                         {{ image( $data['user']->directory.'/medium_'.$data['user']->image , 'profile picture', [ 'class' => 'img-responsive img-circle center-block']) }}
                     </div>
                     <div class="col-md-8 mt20 md-text-center">
-                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
+                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br></h3><p><strong>{{ $data['user']->display_name }}</strong></p>
                         <a href="/auth/logout">Log out</a>
                     </div>
 
@@ -21,6 +21,7 @@
                  @if($data['user']->hasAccess('admin'))
                     {{ HTML::linkRoute('admin.dashboard', 'Admin', null, ['class' => 'btn btn-success']) }}
                 @endif
+
             </div>
         </div>
     </div>
@@ -55,6 +56,9 @@
         </div>
         <div id="edit" class="{{ $tab === 'edit' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.trainers.profile.edit')
+        </div>
+        <div id="password" class="{{ $tab === 'password' ? 'profile-panels' : 'hidden profile-panels' }}">
+            @include('v3.users.profile.change_password')
         </div>
 
     </div>

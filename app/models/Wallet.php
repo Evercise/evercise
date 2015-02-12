@@ -227,11 +227,11 @@ class Wallet extends \Eloquent
                 $walletHistoryDescription = 'You received £'.$amount.' for referral sign up';
                 break;
             case 'ppc_signup':
-                event('user.ppc.signup', [$this->user, $transaction, 'unique']);
+                event('user.ppc.signup', [$this->user, $transaction, 'ppcunique']);
                 $walletHistoryDescription = 'You received £'.$amount.' for ppc sign up';
                 break;
             case 'static_ppc_signup':
-                event('user.ppc.signup', [$this->user, $transaction, 'static', $description ]);
+                event('user.ppc.signup', [$this->user, $transaction, 'ppcstatic', $description ]);
                 $walletHistoryDescription = 'You received £'.$amount.' for ppc sign up';
                 break;
             case 'referral':

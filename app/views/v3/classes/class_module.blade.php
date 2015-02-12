@@ -22,12 +22,12 @@
     </div>
     <div class="class-info-wrapper panel-body bg-light-grey row">
         <div class="col-xs-6" ><strong class="text-primary">&pound;{{ $class->futuresessions[0]->price }}</strong></div>
-        <div class="col-xs-6"> {{ HTML::linkRoute('evercisegroups.show', 'Join Class', $class->id, ['class'=>'btn btn-default pull-right']) }}</div>
+        <div class="col-xs-6"> {{ HTML::linkRoute('class.show', 'Join Class', $class->id, ['class'=>'btn btn-default pull-right']) }}</div>
     </div>
 </div>
 -->
 
-<ul class="list-group class-module">
+<ul class="list-group class-module" onclick="ga('send', 'event', 'View Class', 'click', 'Home Page View Class ',20)">
     <div class="class-image-wrapper">
          {{ HTML::decode( HTML::linkRoute('class.show', image($class->user->directory. '/module_'. $class->image,  $class->name . ' cover image', ['class' => 'img-responsive img-full-width']) , $class->slug)  )}}
     </div>
@@ -45,7 +45,7 @@
     <li class="list-group-item bg-light-grey">
         <div class="class-info-wrapper  row">
             <div class="col-xs-6">
-                <span class="icon icon-clock"></span><small>{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}</small>
+                <span class="icon icon-clock"></span><small> <time datetime="{{ date('Y-m-d H:i' ,strtotime($class->futuresessions[0]->date_time ) )}}">{{ date('M jS, g:ia' ,strtotime($class->futuresessions[0]->date_time ) )}}</time></small>
             </div>
             <div class="col-xs-6">
                 <div class="row no-gutter">
@@ -60,7 +60,7 @@
     <li class="list-group-item bg-light-grey">
         <div class="class-info-wrapper  row">
             <div class="col-xs-6 mt5" ><strong class="text-large text-primary">&pound;{{ number_format($class->futuresessions[0]->price, 2, '.', '') }}</strong></div>
-            <div class="col-xs-6"> {{ HTML::linkRoute('class.show', 'Join Class', $class->slug, ['class'=>'btn btn-default pull-right']) }}</div>
+            <div class="col-xs-6"> {{ HTML::linkRoute('class.show', 'View Class', $class->slug, ['class'=>'btn btn-default pull-right']) }}</div>
         </div>
     </li>
 </ul>

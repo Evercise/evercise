@@ -7,9 +7,22 @@
   url('/fonts/universltstd-ultracn.svg#UniversLTStd59UltraCondensed') format('svg');
 }
 
+html{
+  font-weight: 300;
+}
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
   text-transform: @headings-case;
+  margin: 15px 0 22px;
+}
+
+.page-header {
+  margin-top: 55px;
+  margin-bottom: 0;
+  @media (max-width: @grid-float-breakpoint){
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
 }
 
 // Links
@@ -29,25 +42,39 @@ a {
   }
 }
 
+strong{
+  //color: @gray-darker;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+}
 
-strong{ color: @gray-darker}
-
+.text-sm{ font-size: 12px}
 .text-large{ font-size: 16px}
 .text-larger{ font-size: 18px}
+.text-largest{ font-size: 24px}
 
 .custom-list {
   .branded-list();
 }
 
-
+.link{
+  text-decoration: underline;
+  color: #7390e2;
+}
 .text-white {
    .text-emphasis-variant(@white);
+ }
+.text-blue {
+   .text-emphasis-variant(@blue);
  }
 .text-dark {
    .text-emphasis-variant(@gray-darker);
  }
 .text-grey {
    .text-emphasis-variant(@gray);
+ }
+.text-light-grey {
+   .text-emphasis-variant(@gray-light);
  }
 
 .bg-grey {
@@ -64,6 +91,10 @@ strong{ color: @gray-darker}
 .bg-light-grey{
   .bg-variant(@state-light-grey-bg);
 }
+
+.drop-shadow{
+  text-shadow: 0 1px 1px fade(#000, 50%);
+}
 .underline{
   position: relative;
   margin-bottom: 42px;
@@ -79,6 +110,31 @@ strong{ color: @gray-darker}
   }
 }
 
+.text-divider{
+  text-align: center;
+  width: 100%;
+  position: relative;
+  &:before{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    content: '';
+    border-top: 1px solid #ededed;
+  }
+  &:after{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 20px;
+    margin-top: -14px;
+    margin-left: -30px;
+    content: 'or';
+    background: #fff;
+  }
+}
+
 .condensed{ line-height: @line-height-condensed};
 
 .custom-inline-error{
@@ -86,9 +142,21 @@ strong{ color: @gray-darker}
   margin-bottom: -30px;
 }
 
+.jumbotron{
+  h2{
+    font-size: 46px;
+  }
+  @media (max-width: @grid-float-breakpoint){
+    h1{ font-size: 47px}
+    h2{ font-size: 27px }
+  }
+}
+
 @media (max-width: @screen-xs-max) {
   .sm-text-center{ text-align: center}
+  .sm-text-right{ text-align: right}
 }
 @media (max-width: @screen-sm-max) {
   .md-text-center{ text-align: center}
+  .md-text-right{ text-align: right}
 }

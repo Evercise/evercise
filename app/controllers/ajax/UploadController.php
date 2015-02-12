@@ -288,7 +288,63 @@ class UploadController extends AjaxBaseController
 
         }
 
-        return $this->response->json(['file' => $folder . '/' . $real_name, 'filename' => $real_name, 'folder' => $folder]);
+        // If file has been temporarily uploaded with uploadWithoutCrop(),
+        // then the name of the temporary upload will be sent through to be deleted here.
+        $deleted = 'none';
+        if($this->request->has('deletion'))
+        {
+            $deletion = $this->request->get('deletion');
+            if( file_exists( $deletion ) )
+            {
+                unlink( $deletion );
+                $deleted = $deletion;
+            }
+        }
+
+        return $this->response->json(['file' => $folder . '/' . $real_name, 'filename' => $real_name, 'folder' => $folder, 'deleted' => $deleted]);
+
+
+    }
+    public function uploadWithoutCrop()
+    {
+
+        $validator = $this->validator->make(
+            $this->request->except('_token'),
+            [
+                'file' => 'required|mimes:jpeg,gif,png'
+            ]
+        );
+
+
+        /** Did it faiL? */
+        if ($validator->fails()) {
+            $this->data = [
+                'error' => true,
+                'messages' => $validator->messages()
+            ];
+            return $this->response->json($this->data);
+        }
+
+        $upload_file = $this->request->file('file');
+
+        $user_id = $this->request->get('user_id', $this->user->id);
+
+        $user = Sentry::findUserById($user_id);
+
+        $file = $this->image->make($upload_file->getRealPath());
+
+        $folder = $user->directory;
+
+        /** New Slug for the Image */
+        $slug = slugIt($user->display_name);
+
+        $file_name = uniqueFile(public_path() . '/' . $folder . '/', 'temp_'.$slug,
+            $upload_file->getClientOriginalExtension());
+
+        //$image = $file->crop(100, 100, 0, 0);
+        $file->save(public_path() . '/' . $folder . '/'.$file_name);
+
+        return $this->response->json(['file' => $folder . '/' . $file_name, 'filename' => $file_name, 'folder' => $folder]);
 
 
     }

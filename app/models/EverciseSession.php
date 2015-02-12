@@ -3,6 +3,7 @@
 /**
  * Class Evercisesession
  */
+
 class Evercisesession extends \Eloquent
 {
 
@@ -29,15 +30,6 @@ class Evercisesession extends \Eloquent
     public function sessionmembers()
     {
         return $this->hasMany('Sessionmember');
-    }
-
-    public function getSessionmembers()
-    {
-        //return $this->sessionmembers->lists('id');
-        if (count($this->sessionmembers))
-            return User::whereIn('id', $this->sessionmembers->lists('user_id'))->get();
-        else
-            return [];
     }
 
     /**
@@ -253,38 +245,32 @@ class Evercisesession extends \Eloquent
     }
 
     /**
-     * @param $sessionId
+     * @param $session
      * @param $userList
+     * @param $subject
+     * @param $body
      * @return \Illuminate\Http\JsonResponse
      */
-    public static function mailMembers($sessionId, $userList)
+    public static function mailMembers($session, $userList, $subject, $body)
     {
-        if ( $response = static::validateMail() )
-            return $response;
 
-        $subject = Input::get('mail_subject');
-        $body = Input::get('mail_body');
-
-        $groupId = Evercisesession::where('id', $sessionId)->pluck('evercisegroup_id');
-        //$group = Evercisegroup::where('id', $groupId)->first();
-        $group = Evercisegroup::where('id', $groupId)->with(['User' => function($query)
+        $group = Evercisegroup::where('id', $session->evercisegroup_id)->with(['User' => function($query)
         {
             $query->select('first_name', 'last_name');
         }
         ])->first();
-        $groupName = $group->name;
-        $trainerName = $group->user->first_name . ' ' . $group->user->last_name;
 
-        event('session.mail_all', array(
-            'trainer' => $trainerName,
-            'email' => $userList,
-            'name' => $groupName,
-            'subject' => $subject,
-            'body' => $body
-        ));
 
-        Log::info('Members of Session '. $sessionId .' mailed by trainer');
-        return Response::json(['message' => 'group: ' . $groupId . ': ' . $groupName . ', session: ' . $sessionId]);
+        event('session.mail_all', [
+            $userList,
+            $group,
+            $session,
+            $subject,
+            $body
+        ]);
+
+        Log::info('Members of Session '. $session->id .' mailed by trainer');
+        return Response::json(['message' => 'group: ' . $group->id . ': ' . $group->name . ', session: ' . $session->id]);
     }
 
     /**
@@ -297,7 +283,6 @@ class Evercisesession extends \Eloquent
         $validator = Validator::make(
             Input::all(),
             array(
-                'mail_subject' => 'required',
                 'mail_body' => 'required',
             )
         );
@@ -333,18 +318,18 @@ class Evercisesession extends \Eloquent
      * @param $trainerId
      * @return array
      */
-    public static function mailTrainer($sessionId, $trainerId)
+    public static function mailTrainer($sessionId, $trainerId, $subject, $body)
     {
-        $subject = Input::get('mail_subject');
-        $body = Input::get('mail_body');
+        //$subject = Input::get('mail_subject');
+        //$body = Input::get('mail_body');
 
         $session = Evercisesession::find($sessionId);
         $evercisegroup = $session->evercisegroup()->first();
         $trainer = User::find($trainerId);
         $user = Sentry::getUser();
 
-        event('session.mail_trainer', [$trainer, $user, $evercisegroup, $session, $subject, $body]);
 
+        event('session.mail_trainer', [$trainer, $user, $evercisegroup, $session, $subject, $body]);
 
         return [$evercisegroup->id, $evercisegroup->name];
     }
@@ -684,6 +669,8 @@ class Evercisesession extends \Eloquent
         else
             return false;
     }
+
+
 
 
 

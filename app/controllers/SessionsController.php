@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 class SessionsController extends \BaseController
 {
 
@@ -36,21 +38,26 @@ class SessionsController extends \BaseController
      *
      * @return Response
      */
-    public function create($class_id)
+    public function create($evercisegroupId)
     {
-        $class = Evercisegroup::find($class_id);
+        $class = Evercisegroup::find($evercisegroupId);
 
         if(!isset($class->user_id) || !isset($this->user->id)) {
-            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
+            return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page. '.$evercisegroupId);
         }
 
         if($class->user_id != $this->user->id) {
             return Redirect::route('home')->with('success', 'You don\'t have permissions to view that page');
         }
 
-        $sessions = $class->futuresessions;
+        //$sessions = $class->futuresessions;
+        $sessions = Evercisesession::where('evercisegroup_id', $evercisegroupId)
+            ->where('date_time', '>=', Carbon::now())
+            ->orderBy('date_time', 'asc')
+            ->paginate(50);
+
         $data = [
-            'evercisegroup_id' => $class_id
+            'evercisegroup_id' => $evercisegroupId
         ];
 
         return View::make('v3.classes.add_sessions')->with('data', $data)->with('sessions', $sessions);
@@ -63,9 +70,16 @@ class SessionsController extends \BaseController
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function getMailAll($id)
+    public function getMailAll($sessionId)
     {
-        return View::make('sessions.mail_all')->with('sessionId', $id);
+        //$session = Evercisesession::with('evercisegroup')->find($sessionId);
+
+        return Response::json(
+            [
+                'view'  => View::make('v3.classes.mail_all_members')->with('sessionId', $sessionId)->render()
+            ]
+        );
+        //return View::make('v3.classes.mail_all_members')->with('sessionId', $sessionId);
     }
 
     /**
@@ -76,12 +90,28 @@ class SessionsController extends \BaseController
      */
     public function postMailAll($sessionId)
     {
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
         $userList = [];
-        foreach (Evercisesession::getMembers($sessionId) as $user) {
-            $userList[$user->first_name . ' ' . $user->last_name] = $user->email;
+        $session = Evercisesession::find($sessionId);
+        $participants = Evercisesession::getMembers($sessionId);
+        //Log::info('participants: '.$participants);
+        foreach ($participants as $user) {
+            $userList[$user->pivot->user_id] = $user;
+            //Log::info('USERLIST: '.$user->pivot->user_id);
         }
 
-        return Evercisesession::mailMembers($sessionId, $userList);
+        if ( $response = Evercisesession::validateMail() )
+            return $response;
+
+        /** Add message to TBmsg */
+        foreach ($userList as $id => $user) {
+
+            Messages::sendMessage($this->user->id, $id, $body);
+        }
+
+        return Evercisesession::mailMembers($session, $userList, $subject, $body);
     }
 
     /**
@@ -111,14 +141,17 @@ class SessionsController extends \BaseController
      */
     public function postMailOne($sessionId, $userId)
     {
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
         $userDetails = User::getNameAndEmail($userId);
         $userList = [$userDetails['name'] => $userDetails['email']];
 
-        return Evercisesession::mailMembers($sessionId, $userList);
+        return Evercisesession::mailMembers($sessionId, $userList, $subject, $body);
     }
 
     /**
-     * Get for to send an email to the trainer of a group
+     * Get form to send an email to the trainer of a group
      *
      * @param $sessionId
      * @param $trainerId
@@ -153,7 +186,13 @@ class SessionsController extends \BaseController
      */
     public function postMailTrainer($sessionId, $trainerId)
     {
-        list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId);
+        $subject = Input::get('mail_subject');
+        $body = Input::get('mail_body');
+
+        list($groupId, $groupName) = Evercisesession::mailTrainer($sessionId, $trainerId, $subject, $body);
+
+        /** Add message to TBmsg */
+        Messages::sendMessage($this->user->id, $trainerId, $body);
 
         return Response::json(
             [
@@ -200,7 +239,7 @@ class SessionsController extends \BaseController
         }
 
         if (empty($sessionIds)) {
-            return Redirect::route('evercisegroups.show', [$evercisegroupId]);
+            return Redirect::route('class.show', [$evercisegroupId]);
         }
 
         if ($joinParams = Evercisesession::confirmJoinSessions($evercisegroupId, $sessionIds)) {

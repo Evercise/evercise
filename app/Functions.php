@@ -1,6 +1,35 @@
 <?php
 
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\Cloner\VarCloner;
 
+
+
+    if (!function_exists('ga')) {
+
+        /*
+         * Google Event
+         *
+         */
+
+
+
+
+        function ga($url)
+        {
+            $track = "
+            <script>
+             if (typeof ga == 'function') {
+                ga('send', 'pageview', '".$url."');
+            }
+            </script>
+
+            ";
+
+            return $track;
+        }
+    }
 
     if (!function_exists('uniqueFile')) {
 
@@ -65,9 +94,13 @@
 
         function d($var, $die = true)
         {
-            echo "<pre>";
-            print_r($var);
-            echo "</pre>";
+
+
+
+            $dumper = 'cli' === PHP_SAPI ? new CliDumper : new HtmlDumper;
+            $dumper->dump((new VarCloner)->cloneVar($var));
+
+
             if ($die) {
                 die();
             }

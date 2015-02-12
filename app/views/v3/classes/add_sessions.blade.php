@@ -1,6 +1,7 @@
 @extends('v3.layouts.master')
 @section('body')
     <div class="container first-container">
+
         <div class="row text-center mt30">
             <div class="underline">
                 <h1>Your class Sessions</h1>
@@ -91,6 +92,13 @@
                             {{ Form::hidden('evercisegroup_id', $data['evercisegroup_id']) }}
                             {{ Form::hidden('session_array', null ) }}
                             {{ Form::hidden('update', true) }}
+                            <?php
+                                $sessionDate = [];
+                                foreach($sessions as $session){
+                                    array_push($sessionDate, $session['date_time']);
+                                }
+                            ?>
+                            {{ Form::hidden('checkDates', json_encode($sessionDate) ) }}
                             {{ Form::submit('Save', ['class' => 'btn btn-default btn-block']) }}
                         </div>
 
@@ -116,10 +124,16 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt10 mb30">
+                <div class="col-sm-8 col-sm-offset-2 text-right">
+                    {{$sessions->links()}}
+                </div>
+
+            </div>
             <div class="row mt25 mb50">
                 <div class="col-sm-6 col-sm-offset-3">
                     {{ Form::open(['route' => 'sessions.update', 'method' => 'put', 'id' => 'update-sessions']) }}
-                        {{ Form::hidden('$evercisegoupId', $data['evercisegroup_id']) }}
+                        {{ Form::hidden('evercisegroup_id', $data['evercisegroup_id']) }}
                         {{ Form::hidden('preview', 'yes') }}
                         <div class="row">
                             <div class="col-sm-4">
@@ -137,6 +151,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 

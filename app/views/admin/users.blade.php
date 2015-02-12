@@ -52,12 +52,14 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Registered</th>
+                        <th>Wallet</th>
                         <th>Type</th>
+                        <th>Social</th>
                         <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(User::orderBy('id', 'desc')->get() as $user)
+                    @foreach(User::orderBy('id', 'desc')->with('wallet')->get() as $user)
                     <tr>
                             <td>{{ $user->id }}</td>
                             <td>
@@ -72,13 +74,17 @@
                             </td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->created_at->format('d/m/Y') }}</td>
+                            <td>{{ ($user->wallet ? $user->wallet->balance : 'No Wallet') }}</td>
                             <td>
                                 <span class="label status-
                                 {{ ($user->isTrainer() ? 'trainer label-success ':'user label-warning') }} status-all" title="Active">
                                 {{ ($user->isTrainer() ? 'Trainer':'User') }}</span></td>
 
                             </td>
-
+                            <td>
+                                {{$user->getFacebookId() ? '<a href="http://facebook.com/'.$user->getFacebookId().'" target="_blank">Facebook</a>' : '' }}
+                                {{$user->getTwitterId() ? '<a href="http://twitter.com/'.$user->getTwitterId().'" target="_blank">Twitter</a>' : '' }}
+                            </td>
                             <td>
 
                                 {{ Form::open(array('id' => 'log_in_'.$user->id, 'url' => 'admin/log_in_as', 'method' => 'post', 'class' => '', 'style' => 'float:left;margin-right:5px')) }}

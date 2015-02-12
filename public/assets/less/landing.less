@@ -27,6 +27,7 @@
     float: left;
     padding-top: 51px;
     margin-right: 20px;
+    height: 115px;
   }
   h4{
     padding-top: 48px;
@@ -35,9 +36,16 @@
   p{
     line-height: 20px;
   }
+  ul{
+    margin-left: 52px;
+  }
 }
 
 .landing-popup{
+  &.in{
+    display: block;
+  }
+
   height: 520px;
   width: 860px;
   position: fixed;
@@ -64,6 +72,11 @@
   }
   strong{
     font-size: 17px;
+  }
+  .close{
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
 }
 

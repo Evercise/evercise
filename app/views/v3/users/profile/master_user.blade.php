@@ -12,7 +12,7 @@
                         @endif
                     </div>
                     <div class="col-sm-8 mt20">
-                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br><small>{{ $data['user']->display_name }}</small></h3>
+                        <h3>{{ $data['user']->first_name .' '. $data['user']->last_name }}<br></h3><p>{{ $data['user']->display_name }}</p>
                     </div>
                     <a href="{{ URL::route('auth.logout') }}">Log out</a>
                 </div>
@@ -44,6 +44,9 @@
         </div>
         <div id="edit" class="{{ $tab === 'edit' ? 'profile-panels' : 'hidden profile-panels' }}">
             @include('v3.users.profile.edit')
+        </div>
+        <div id="password" class="{{ $tab === 'password' ? 'profile-panels' : 'hidden profile-panels' }}">
+            @include('v3.users.profile.change_password')
         </div>
 
 

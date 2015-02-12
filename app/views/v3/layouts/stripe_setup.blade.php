@@ -1,8 +1,8 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
   var handler = StripeCheckout.configure({
-    key: "{{  getenv('STRIPE_API_KEY') }}",
-    image: '{{url()}}/img/evercoin.png',
+    key: "{{  getenv('STRIPE_PUB_KEY') }}",
+    /*image: '{{url()}}/img/evercoin.png',*/
     currency: "GBP",
     allowRememberMe: false,
     token: function(token) {

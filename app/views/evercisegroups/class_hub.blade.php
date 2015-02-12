@@ -28,7 +28,7 @@
 				<div class="hub-block">
 					<div class="hub-title">
 						<h3>{{ $evercisegroup['name'] }}</h3>
-						{{ HTML::linkRoute('evercisegroups.show', Lang::choice('general.class', 1).' '.trans('general.details'),$evercisegroup['id'] ,array('class' => 'btn btn-blue')) }}
+						{{ HTML::linkRoute('class.show', Lang::choice('general.class', 1).' '.trans('general.details'),$evercisegroup['id'] ,array('class' => 'btn btn-blue')) }}
 					</div>
 					
 					

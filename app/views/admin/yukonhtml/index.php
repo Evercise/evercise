@@ -38,6 +38,7 @@
         <!-- moment.js (date library) -->
         <script src="assets/js/moment-with-langs.min.js"></script>
 
+
     </head>
     <body class="side_menu_active side_menu_expanded fx_width">
         <div id="page_wrapper">
@@ -70,6 +71,10 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
         <script src="assets/bootstrap/js/bootstrap.min.js"></script>
         <!-- retina images -->
         <script src="assets/js/retina.min.js"></script>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
         <!-- Yukon Admin functions -->
         <script src="assets/js/yukon_all.js"></script>
@@ -223,6 +228,7 @@ echo '<div class="alert alert-danger text-center">Page not found</div>';
                 initPut('{"selector": "#edit_subcategories"}');
                 initPut('{"selector": "#add_subcategory"}');
                 initPut('{"selector": "#edit_classes"}');
+
 
             });
 

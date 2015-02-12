@@ -27,9 +27,15 @@ class BaseController extends Controller
             $this->cart_items[$key_id] = $val['qty'];
         }
 
+        foreach($this->cart['packages'] as $key_id => $val) {
+            $this->cart_items[$key_id] = 1;
+        }
+
+
 
         View::share('cart_items', $this->cart_items);
         View::share('cart', View::make('v3.cart.dropdown')->with($this->cart)->render());
+
 
 
         if (Sentry::check()) {
@@ -38,9 +44,15 @@ class BaseController extends Controller
             $userImage = $this->user->image ? (Config::get('evercise.upload_dir') . 'profiles' . '/' . $this->user->directory . '/' . $this->user->image) : 'img' . '/' . 'no-user-img.jpg';
             View::share('userImage', isset($userImage) ? $userImage : '');
             View::share('user', $this->user);
+            View::share('newMessages', ['count' => Messages::unread($this->user->id), 'user' => Messages::getLastMessageDisplayName($this->user->id)] );
+
             $header = $this->setupHeader('user');
         } else {
             $header = $this->setupHeader('none');
+        }
+        if (Request::is('cart/*'))
+        {
+            $header = $this->setupHeader('cart');
         }
 
 
@@ -50,19 +62,29 @@ class BaseController extends Controller
 
         View::share('version', $version);
 
+
     }
 
 
     protected function setupHeader($user_type = 'none')
     {
+        $browse = false;
+        if (Request::is('uk/*'))
+        {
+            $browse = true;
+        }
 
         switch ($user_type) {
             case 'none':
-                return View::make('v3.layouts.navigation')->render();
+                return View::make('v3.layouts.navigation')->with('browse',$browse)->render();
                 break;
 
             case 'user':
-                return View::make('v3.layouts.navigation-user')->render();
+                return View::make('v3.layouts.navigation-user')->with('browse',$browse)->render();
+                break;
+
+            case 'cart':
+                return View::make('v3.layouts.navigation-cart')->render();
                 break;
         }
 

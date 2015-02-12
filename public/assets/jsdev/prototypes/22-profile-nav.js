@@ -1,8 +1,7 @@
 function profileNav(nav){
     this.nav = nav;
     this.scroll = 0;
-    this.top = $('#nav').height();
-    this.stickyTop = (this.nav.offset().top - this.nav.height());
+    this.stickyTop = this.nav.offset().top;
     this.url = document.URL;
     this.lastOfUrl = '';
     this.init();
@@ -15,7 +14,7 @@ profileNav.prototype = {
         new Masonry( $('.masonry') );
     },
     addListeners : function(){
-        $(window).scroll($.proxy(this.checkScrollPosition, this) );
+        //$(window).scroll($.proxy(this.checkScrollPosition, this) );
         $(window).on('popstate',$.proxy(this.checkHistoryState, this) );
         this.nav.find('a').on('click', $.proxy( this.changeTabs, this));
     },
@@ -40,12 +39,10 @@ profileNav.prototype = {
     },
     addStickyClass: function(){
         this.nav.addClass('navbar-fixed-top');
-        this.nav.css({'top': this.top })
         $('.profile-panels').css({'margin-top': this.nav.outerHeight(true) })
     },
     removeStickyClass: function(){
         this.nav.removeClass('navbar-fixed-top');
-        this.nav.css({'top':0 })
         $('.profile-panels').css({'margin-top':0 })
     },
     changeTabs: function(e){

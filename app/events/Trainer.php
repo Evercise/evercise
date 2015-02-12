@@ -88,6 +88,22 @@ class Trainer
     /**
      * @param $trainer
      */
+    public function registeredPpc($trainer)
+    {
+        $this->log->info('Trainer ' . $trainer->id . ' has registered');
+
+
+        $this->activity->userRegistered($trainer);
+
+        $this->activity->trainerRegistered($trainer);
+
+        $this->mail->trainerRegisteredPpc($trainer);
+    }
+
+
+    /**
+     * @param $trainer
+     */
     public function edit($trainer)
     {
         $this->log->info('Trainer ' . $trainer->id . ' has edited his account');
@@ -110,6 +126,35 @@ class Trainer
     {
         $this->log->info('Trainer ' . $trainer->id . ' has been reminded to create their first class');
         $this->mail->trainerWhyNotCreateFirstClass($trainer);
+    }
+    /**
+     * @param $trainer
+     */
+    public function notReturnedTrainer($trainer)
+    {
+        $this->log->info('Trainer ' . $trainer->id . ' has been reminded to return after 10 days or so');
+        $this->mail->notReturnedTrainer($trainer);
+    }
+
+    public function relaunch($user)
+    {
+        $this->log->info('relaunch message sent ' . $user->id);
+
+        $this->mail->relaunch($user);
+    }
+
+    /**
+     * @param $user
+     * @param $trainer
+     * @param $session
+     * @param $everciseGroup
+     * @param $transactionId
+     */
+    public function sessionsJoined($trainerId, $sessionDetails)
+    {
+        $this->log->info('Trainer ' . $trainerId . ' has been notified of someone joining their class. ' . count($sessionDetails));
+
+        $this->mail->userJoinedTrainersSession($trainerId, $sessionDetails);
     }
 
 }

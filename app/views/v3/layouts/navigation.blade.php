@@ -1,44 +1,26 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="nav">
+<nav class="navbar navbar-default {{(isset($browse) && $browse) ? 'bg-dark' : null}}" role="navigation" id="nav">
   <div class="container-fluid">
     <div class="navbar-header">
-
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navy">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-
-      {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand' ])}}
-      <ul id="mobile-cart" class="nav navbar-nav navbar-right">
-            <li class="dropdown cart-dropdown">
-                <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
-                {{ isset($cart) ? $cart : '' }}
-            </li>
-      </ul>
+      {{HTML::linkRoute('home', '' , null , ['class' =>'navbar-brand', 'title' => 'Evercise Excercise' ])}}
     </div>
-
-    <div class="collapse navbar-collapse sm-text-center" id="navy">
-      <ul class="nav navbar-nav">
-        <li>{{HTML::linkRoute('evercisegroups.search', 'Discover Classes' , null , ['class' => Route::currentRouteName() == 'evercisegroups.search' ? 'nav-list active' : 'nav-list'])}}</li>
-        <li>{{HTML::linkRoute('packages', 'Packages' , null , ['class' => Route::currentRouteName() == 'packages' ? 'nav-list active' : 'nav-list'])}}</li>
-        <li>{{HTML::linkRoute('blog', 'Blog' , null , ['class' => Route::currentRouteName() == 'blog' ? 'nav-list active' : 'nav-list'])}}</li>
-      </ul>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown cart-dropdown no-mob">
-            <a href="#" class="dropdown-toggle nav-cart" data-toggle="dropdown"><span class="icon icon-cart hover"></span></a>
-            {{ isset($cart) ? $cart : '' }}
-        </li>
-
-        <li class="dropdown  login-drop">
-            <a href="#" class="dropdown-toggle nav-list" data-toggle="dropdown">Login</a>
+    @if(isset($browse) && $browse)
+        @include('v3.classes.browse')
+    @endif
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-btn nav-list">{{HTML::linkRoute('register', 'Join' , null , ['title'=>'Register Here', 'class' => Route::currentRouteName() == 'register' ? 'nav-link active' : 'nav-link'])}}</li>
+        <li class="dropdown  login-drop nav-list">
+            <a href="#" title="Login Here" class="dropdown-toggle nav-link" data-toggle="dropdown">Login</a>
             <ul class="dropdown-menu" role="menu">
                 @include('v3.auth.login')
             </ul>
         </li>
-        <li class="nav-list">{{HTML::linkRoute('register', 'Register' , null , ['class' => Route::currentRouteName() == 'register' ? 'nav-list active' : 'nav-list'])}}</li>
-      </ul>
-    </div>
+        <li class="dropdown cart-dropdown nav-list visible-md-block visible-lg-block">
+            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
+            {{ isset($cart) ? $cart : '' }}
+        </li>
+        <li class="nav-list visible-xs-block visible-sm-block">
+            <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
+        </li>
+    </ul>
   </div>
 </nav>

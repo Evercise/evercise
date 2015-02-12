@@ -135,8 +135,6 @@ class User
      */
     public function facebookRegistered($user)
     {
-
-
         $this->log->info('User ' . $user->id . ' has registered with Facebook');
         $this->track->userFacebookRegistered($user);
     }
@@ -150,14 +148,9 @@ class User
      */
     public function cartCompleted($user, $cart, $transaction)
     {
-
-
         $this->log->info('User ' . $user->id . ' cart completed');
-
         $this->mail->userCartCompleted($user, $cart, $transaction);
-
         $this->activity->userCartCompleted($user, $cart, $transaction);
-
     }
 
     /**
@@ -177,22 +170,22 @@ class User
      * @param $user
      * @param $transaction
      */
-    public function referralCompleted($user, $transaction, $balance)
+    public function referralCompleted($user, $amount, $type)
     {
         $this->log->info('User ' . $user->id . ' referral completed');
 
-        $this->activity->userReferralCompleted($user, $transaction, 'referralcompleted');
+        $this->activity->userReferralCompleted($user, $amount, $type);
     }
 
     /**
      * @param $user
      * @param $transaction
      */
-    public function referralSignup($user, $transaction, $balance)
+    public function referralSignup($user, $amount, $type)
     {
         $this->log->info('User ' . $user->id . ' signup through referral');
 
-        $this->activity->userReferralSignup($user, $transaction, 'referralsignup');
+        $this->activity->userReferralSignup($user, $amount, $type);
     }
 
     /**
@@ -201,11 +194,11 @@ class User
      * @param $type
      * @param $description
      */
-    public function ppcSignup($user, $transaction, $type, $description = 0)
+    public function ppcSignup($user, $amount, $type, $description = 0)
     {
         $this->log->info('User ' . $user->id . ' signup through '.$type.' ppc code');
 
-        $this->activity->ppcSignup($user, $transaction, $type, $description);
+        $this->activity->ppcSignup($user, $amount, $type, $description);
     }
 
     /**
@@ -299,11 +292,10 @@ class User
         $this->log->info('Sending forgoten password ' . $user->id);
 
         /** @var Forgotten Password Code Generate $resetCode */
-        $resetCode = $user->getResetPasswordCode();
-        $link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . urlencode($resetCode));
+        $resetCode = urlencode($user->getResetPasswordCode());
+        //$link = $this->url->to('users/' . $user->display_name . '/resetpassword/' . $resetCode);
 
-
-        $this->mail->userForgotPassword($user, $link);
+        $this->mail->userForgotPassword($user, $resetCode);
     }
 
 
@@ -368,5 +360,45 @@ class User
         $this->log->info('static landing email generated ' . $ppcCode);
 
         $this->mail->generateStaticLandingEmail($ppcCode, $categoryId);
+    }
+
+    public function newYear($user)
+    {
+        $this->log->info('new year message sent ' . $user->id);
+
+        $this->mail->newYear($user);
+    }
+
+    public function notReturned($user, $everciseGroups)
+    {
+        $this->log->info('why not returned message sent ' . $user->id);
+
+        $this->mail->notReturned($user, $everciseGroups);
+    }
+
+    public function whyNotRefer($user)
+    {
+        $this->log->info('why not refer a friend sent ' . $user->id);
+
+        $this->mail->whyNotRefer($user);
+    }
+    public function rateClass($user)
+    {
+        $this->log->info('hey rate this class email sent ' . $user->id);
+
+        $this->mail->rateClass($user);
+    }
+    public function rateClassHasPackage($user)
+    {
+        $this->log->info('hey rate this class email NOT SENT AS USER HAS PACKAGES ' . $user->id);
+
+        $this->mail->rateClassHasPackage($user);
+    }
+
+    public function messageReply($sender, $recipient, $body)
+    {
+        $this->log->info('Message sent by ' . $sender->id . ' to ' . $recipient->id);
+
+        $this->mail->messageReply($sender, $recipient, $body); /** NOT SENDING!!?? */
     }
 }

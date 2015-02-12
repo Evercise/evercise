@@ -7,11 +7,14 @@ class StaticController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
+    // FAQ is loaded from database, editable in Admin. Articles > How it works
+
 	public function show()
 	{
-		return 'twat';
 		$page = Route::getCurrentRoute()->getPath();
 		return View::make('static.'.$page);
 	}
+
 
 }

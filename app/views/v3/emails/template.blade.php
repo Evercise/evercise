@@ -40,7 +40,7 @@
                                     @if($title)
                                     <tr>
                                         <td align="{{ $align or 'left' }}">
-                                            <h1 class="pink-text">{{ $title or "" }}</h1>
+                                            <h1 class="{{$style}}-text">{{ $title or "" }}</h1>
                                         </td>
                                     </tr>
                                     @endif
@@ -76,7 +76,7 @@
 
                                         <td class="sm-hidden"  height="50">
 
-                                            <p class="footer">&copy; Copyright 2014 Evercise</p>
+                                            <p class="footer">&copy; Copyright 2015 Evercise</p>
 
                                         </td>
                                         <td width="100"  height="40" align="center">

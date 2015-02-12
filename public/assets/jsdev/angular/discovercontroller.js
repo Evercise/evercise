@@ -8,7 +8,7 @@ if(typeof angular != 'undefined') {
 
 
         // set initial sort
-        $scope.sort = 'id';
+        $scope.sort = '-score';
 
 
 
@@ -29,6 +29,8 @@ if(typeof angular != 'undefined') {
         // watch the scope for map loaded
         $scope.myMarkers = [];
         $scope.markers = [];
+
+
 
 
         // create the markers
@@ -56,6 +58,7 @@ if(typeof angular != 'undefined') {
                 capacity: data.capacity,
                 sessions: data.futuresessions,
                 distance : data.distance,
+                score : data.score,
                 nextClassDate: data.futuresessions[0].date_time,
                 nextClassDuration: data.futuresessions[0].duration,
                 link: '/classes/' + data.slug,
@@ -75,8 +78,9 @@ if(typeof angular != 'undefined') {
 
         // toggle sorting dropdowns
         $scope.toggle = function(e,toggle){
-            var offset = $(e.target).offset();
-            var height = ( $(e.target).height() * 1.5 );
+            var container = $(e.target);
+            var offset = container.offset();
+            var height = ( container.height() * 1.5 );
             $scope.dropwdownStyle = {
                 top : offset.top + height,
                 left : offset.left
@@ -87,12 +91,33 @@ if(typeof angular != 'undefined') {
                     $('#'+toggle).removeClass('active');
                     $(e.target).parent().removeClass('active');
                 },1);
+
             }
+
+
         };
+
+        $(document).mouseup(function (e)
+        {
+            var container = $(".custom-dropdown");
+
+            if(container.parent().hasClass('active')){
+                if (!container.is(e.target) // if the target of the click isn't the container...
+                    && container.has(e.target).length === 0) // ... nor a descendant of the container
+                {
+                    $('.sort-btn').removeClass('active');
+                    $('.filter-btn').removeClass('active');
+                    $('.tab-pane-sort').removeClass('active');
+                }
+            }
+
+
+        });
+
 
         // when dropdown is closed
         $scope.closeDropdown = function(toggle){
-            $("img.lazy").trigger("sort");
+
             window.setTimeout(function(){
                 $('.tab-pane-sort').removeClass('active');
                 $('.'+toggle+'-btn').removeClass('active');
@@ -147,8 +172,6 @@ if(typeof angular != 'undefined') {
             zoom: 12
         };
 
-
-
         // used for marker clusters
         $scope.clusterStyles = [
             {
@@ -188,6 +211,7 @@ if(typeof angular != 'undefined') {
 
 
         $scope.lastActiveMarker = '';
+
 
 
         $scope.clicked = function (marker) {
@@ -260,15 +284,7 @@ if(typeof angular != 'undefined') {
             return result;
         }
 
-        $scope.preview = {
-            id: 1,
-            image: '',
-            description: '',
-            nextClassDate: '',
-            nextClassDuration: '',
-            capacity: '',
-            link: ''
-        }
+
 
         // test to see if has sessions
         $scope.hasTickets = function(session){
@@ -280,7 +296,7 @@ if(typeof angular != 'undefined') {
             }
         }
 
-        if(window.innerWidth >= 1200) {
+        if(window.innerWidth >= 992) {
             $scope.view = 'mapview';
         }else if(window.innerWidth >= 767) {
             $scope.view = 'listview';
@@ -292,7 +308,7 @@ if(typeof angular != 'undefined') {
         // only display grid view on smaller screens
         $(window).resize(function(){
 
-            if(window.innerWidth < 1200 && window.innerWidth >= 767)
+            if(window.innerWidth < 992 && window.innerWidth >= 767)
             {
                 $scope.$apply(function(){
                     $scope.view = 'listview';
@@ -313,10 +329,7 @@ if(typeof angular != 'undefined') {
                 $scope.myMarkers.push(createMarker($scope.everciseGroups[i]));
             }
             $scope.markers = $scope.myMarkers;
-            $("img.lazy").lazyload({
-                container: $(".snippet-body"),
-                event : "sort"
-            });
+
 
             $scope.scrollHeight();
 
@@ -342,35 +355,25 @@ if(typeof angular != 'undefined') {
             })
         })
 
-
-        /*
-        $(window).resize(function(){
-            $scope.$apply(function(){
-                google.maps.event.trigger($scope.map, 'resize');
-                $scope.map.center = $scope.currentCenter;
-            });
-        });
-        */
-        /*
-        $scope.$watch('isPreviewOpen',function(open){
-            if(open){
-                $(".map-wrapper").animate({
-                    left: '820px'
-                }, 100, function () {
-                    google.maps.event.trigger($scope.map, 'resize');
-                    $scope.map.center = $scope.currentCenter;
-                });
-            }else{
-                $(".map-wrapper").animate({
-                    left: '410px'
-                }, 100, function () {
-                    google.maps.event.trigger($scope.map, 'resize');
-                    $scope.map.center = $scope.currentCenter;
-                });
-            }
-        });
-        */
+        $scope.preview = {
+            id: 1,
+            description: '',
+            nextClassDate: '',
+            nextClassDuration: '',
+            capacity: '',
+            link: ''
+        }
 
 
     }]);
+    app.directive('backImg', function(){
+        return function(scope, element, attrs){
+            attrs.$observe('backImg', function(value) {
+                element.css({
+                    'background': 'url(' + value +')'
+                });
+            });
+        };
+    });
 };
+

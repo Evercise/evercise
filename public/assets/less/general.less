@@ -1,7 +1,4 @@
 // add padding to body so content does not fall behind nav bar
-.first-container{
-  padding-top: ceil(@navbar-height + 20);
-}
 
 .no-border-right{ border-right: 0; }
 .no-border-left{ border-left: 0;}
@@ -13,5 +10,32 @@
 .transparent-border-top{ border-top-color: transparent!important;}
 .transparent-border-bottom{ border-bottom-color: transparent!important;}
 
-
-
+.fixed{
+  position: fixed;
+  top: 0;
+}
+.opacity{
+  opacity: 0;
+}
+.caret-right {
+  border-bottom: 4px solid transparent;
+  border-top: 4px solid transparent;
+  border-left: 4px solid;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+}
+.loading{
+  .sprite(50%, 50%, 40, "../img/spinning-circles.svg");
+  background-size: 60px 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  width: 80px;
+  margin-top: -40px;
+  margin-left: -40px;
+  background-color: transparent;
+}

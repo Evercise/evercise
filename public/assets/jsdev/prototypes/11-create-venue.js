@@ -138,7 +138,6 @@ createVenue.prototype = {
 
         $.each(arr, function(index, value)
         {
-            console.log(index);
             self.form.find('input[name="' + index+ '"]').parent().addClass('has-error');
             self.form.find('input[name="' + index+ '"]').parent().find('.glyphicon').remove();
             self.form.find('input[name="' + index + '"]').parent().find('.help-block:visible').remove();

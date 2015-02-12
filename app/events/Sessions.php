@@ -86,25 +86,25 @@ class Sessions
      * @param $trainerEmail
      * @param $classId
      */
-    public function upcommingSessions($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId){
+    public function upcomingSessions($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId){
 
         $this->log->info('Sending Upcomming Sessions email');
         $this->mail->trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId);
 
-        $this->mail->usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId);
+        $this->mail->usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId);
     }
 
     /**
-     * @param $trainer
      * @param $userList
      * @param $group
+     * @param $session
      * @param $messageSubject
      * @param $messageBody
      */
-    public function mailAll($trainer, $userList, $group, $messageSubject, $messageBody){
+    public function mailAll($userList, $group, $session, $messageSubject, $messageBody){
 
         $this->log->info('Trainer Emailing All');
-        $this->mail->trainerMailAll($trainer, $userList, $group, $messageSubject, $messageBody);
+        $this->mail->trainerMailAll($userList, $group, $session, $messageSubject, $messageBody);
     }
 
 
@@ -151,9 +151,7 @@ class Sessions
 
         $this->track->registerUserSessionTracking($user, $session);
 
-        //$this->mail->userJoinedTrainersSession($user, $trainer, $evercisegroup, $transaction); // This seems to be the same as trainerJoinSession
         $this->mail->trainerJoinSession($user, $trainer, $session, $evercisegroup, $transaction);
-
 
         $this->indexer->indexSingle($evercisegroup->id);
     }

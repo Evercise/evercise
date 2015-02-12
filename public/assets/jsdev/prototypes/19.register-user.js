@@ -16,7 +16,7 @@ function registerUser(form){
             },
             regexp: {
                 regexp: /^[a-zA-Z0-9_]+$/,
-                message: 'Your display name can only consist of alphabetical, number and underscore'
+                message: 'Your display name must consist of alphanumeric characters and underscores'
             }
         }
     };
@@ -32,6 +32,10 @@ function registerUser(form){
     };
     this.first_name = {
         validators: {
+            regexp: {
+                regexp: /^[a-zA-Z]+$/,
+                message: 'Your first name can only contain letters'
+            },
             notEmpty: {
                 message: 'Your first name is required and cannot be empty'
             },
@@ -44,6 +48,10 @@ function registerUser(form){
     };
     this.last_name = {
         validators: {
+            regexp: {
+                regexp: /^[a-zA-Z]+$/,
+                message: 'Your surname name can only contain letters'
+            },
             notEmpty: {
                 message: 'Your surname is required and cannot be empty'
             },
@@ -65,7 +73,7 @@ function registerUser(form){
                 message: 'Your Password must be more than 6 and less than 32 characters long'
             },
             identical: {
-                field: 'confirmed_password',
+                field: 'password_confirmation',
                 message: 'Your passwords do not match'
             }
         }
@@ -86,6 +94,14 @@ function registerUser(form){
             }
         }
     };
+    this.phone = {
+        validators: {
+            phone: {
+                country: 'areacode',
+                message: 'The value is not valid %s phone number'
+            }
+        }
+    }
 
     this.init();
 }
@@ -121,7 +137,8 @@ registerUser.prototype = {
                 first_name: this.first_name,
                 last_name: this.last_name,
                 password: this.password,
-                confirmed_password: this.confirmed_password
+                password_confirmation: this.confirmed_password,
+                phone : this.phone
             }
         })
         .on('success.form.bv', function(e) {

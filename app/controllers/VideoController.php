@@ -10,6 +10,10 @@ class VideoController extends \BaseController {
 
 	public function create()
 	{
+
+        return Redirect::to('/');
+
+
         return View::make('layouts.videoModal');
 	}
 }

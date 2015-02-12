@@ -1,5 +1,5 @@
 @if( !empty($sessions_grouped) || !empty($packages))
-    <ul class="dropdown-menu dropdown-cart" role="menu">
+    <ul class="dropdown-menu dropdown-cart" role="menu" id="cart-dropdown">
         <div class="col-xs-10 sm-mt10">
             <h4>Your classes cart</h4>
         </div>
@@ -47,17 +47,18 @@
                     {{ Form::hidden('force', true) }}
 
                         <div class="btn-group btn-block">
-                            {{ Form::submit( $row['qty'], ['class'=> 'btn btn-primary add-btn']) }}
-                            <div class="btn btn-primary btn-dropdown">
-                                <select name="quantity" id="quantity" class="btn-primary btn-select">
-                                    <option value=""></option>
-                                    @for($i = 1; $i <= ($row['tickets_left'] /*<= 10 ? $row['tickets_left'] : 10*/); $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
-                                </select>
-                                <!--
-                                <span class="caret"></span>
-                                -->
+                            <label for="quantity" class="btn btn-primary add-btn">{{$row['qty']}}</label>
+                            <div class="btn btn-primary btn-aside">
+                                <div class="custom-select btn-drop">
+                                    <select name="quantity" id="quantity" class="btn-primary btn-select ">
+                                        <option value=""></option>
+                                        @for($i = 1; $i <= ($row['tickets_left'] /*<= 10 ? $row['tickets_left'] : 10*/); $i++)
+                                            <option value="{{$i}}">{{$i}}</option>
+                                        @endfor
+                                    </select>
+
+                                    <span class="caret"></span>
+                                </div>
                             </div>
 
                         </div>

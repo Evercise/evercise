@@ -26,6 +26,8 @@ Login.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
+                self.form.find(".has-error").removeClass('has-error');
+               $("#login-error-msg").remove();
                 self.removeError();
             },
 
@@ -50,7 +52,7 @@ Login.prototype = {
     failedValidation: function(data) {
         self = this;
         var arr = data.errors;
-
-        self.form.find("input[name = 'password']").after('<div class="mt10 alert alert-danger alert-dismissible" role="alert">' + arr + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
+        //self.form.find("input[name = 'password']").after('<div class="mt10 alert alert-danger alert-dismissible" role="alert">' + arr + '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');
+        self.form.find("input[name = 'password']").parent().after('<div id="login-error-msg" class="form-control mb10 input-lg input-group has-error">' + arr + '</div>');
     }
 }
