@@ -95,6 +95,60 @@ class Mindbody
 
     }
 
+    public function getUserMindbodyId($user) {
+
+
+
+        $client = [
+                'Email' => $user->display_name.'@u.evercise.com',
+                'City'  => 'London',
+                'FirstName' => $user->first_name,
+                'LastName' => $user->last_name,
+                'BirthDate' => '1950-10-10T10:10:10',
+                'AddressLine1' => '4 Wessley Terrace',
+                'State' => 'London',
+                'PostalCode' => 'N1 7NA',
+                'MobilePhone' => '07654566543',
+                'ReferredBy' => '100015649'
+            ];
+
+        $service = $this->getService('ClientService');
+        $request = $service::request('AddOrUpdateClients', $this->credentials, null, ['Clients' => (object)['Client' => (object)$client]]);
+
+
+        try {
+            $apiClasses = $service->AddOrUpdateClients($request);
+        } catch( SoapFault $e) {
+            d($e);
+        }
+        d($apiClasses, false);
+
+
+        return $apiClasses->Clients->Client->ID;
+
+    }
+
+
+    public function addUserToClass($classId= 0, User $user){
+
+
+
+      $client_ID = $this->getUserMindbodyId($user);
+       // $client_ID = 100015649;
+
+        $unset = [
+            'RequirePayment', 'Waitlist', 'SendEmail'
+        ];
+
+        $service = $this->getService('ClassService');
+        $request = $service::request('AddClientsToClasses', $this->credentials, $this->user_credentials, ['Test' => true, 'ClientIDs' => [$client_ID], 'ClassIDs' => [$classId]], $unset);
+        $apiClasses = $service->AddClientsToClasses($request);
+
+
+        return $apiClasses;
+
+    }
+
 
     /************ CLASSES  ***************/
 
