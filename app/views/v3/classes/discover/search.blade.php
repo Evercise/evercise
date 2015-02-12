@@ -29,9 +29,17 @@
                 clusterOptions = "map.clusterOptions"
                 clusterEvents = "clusterEvents"
                 events = "markerEvents"
-                fit = "true"
                 >
             </ui-gmap-markers>
+
+            <ui-gmap-circle
+                center="circleOptions.center"
+                radius="circleOptions.radius"
+                stroke="circleOptions.stroke"
+                fill="circleOptions.fill"
+            >
+
+            </ui-gmap-circle>
 
         </ui-gmap-google-map>
     </div>
