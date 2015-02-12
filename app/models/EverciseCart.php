@@ -345,6 +345,14 @@ class EverciseCart extends Cart
 
         $cart['total']['from_wallet'] = 0;
 
+        // If remainder is less than 50p, add discount for the remaining amount, cos we're nice
+        if($cart['total']['final_cost'] > 0 && $cart['total']['final_cost'] < 0.50) {
+
+            $cart['rewards'][]['Keep the change'] = $cart['total']['final_cost'];
+            $cart['total']['rewards_deduct'] += $cart['total']['final_cost'];
+            $cart['total']['final_cost'] -= $cart['total']['rewards_deduct'];
+        }
+
         return $cart;
 
 
