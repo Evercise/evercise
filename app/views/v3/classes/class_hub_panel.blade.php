@@ -5,14 +5,21 @@
         </div>
         <div class="class-title-wrapper pull-left">
             <a href="{{ URL::route('class.show', [$evercisegroup->slug]) }}"><h2 class="h3">{{ $evercisegroup->name }}</h2></a>
+            @if(isset($addressInsteadOfStars))
+            <ul class="list-unstyled">
+                <li>{{ $evercisegroup->venue->address }}</li>
+                <li>{{ $evercisegroup->venue->town . ' ' . $evercisegroup->venue->postcode }}</li>
+            </ul>
+            @else
             <div class="class-rating-wrapper">
                 @for($i=0; $i<5; $i++)
                     <span class="icon icon-{{ $i < $evercisegroup->getStars() ? 'full' : 'empty'  }}-star"></span>
                 @endfor
             </div>
+            @endif
 
             @if( isset($mode) && $mode == 'user')
-                <div class="mt40">
+                <div>
                     <strong class="mr20">Share this class:</strong>
                     <span>
                         <a href="{{  Share::load(URL::to('class/'.$evercisegroup->slug)  , $evercisegroup->name)->facebook()   }}" target="_blank"><span class="icon icon-fb mr20 hover"></span> </a>

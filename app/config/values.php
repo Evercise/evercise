@@ -43,6 +43,6 @@ return array(
     'full_refund_cut_off' => 5,
 
     // price
-    'max_price' => 120
+    'max_price' => 200
 
 );

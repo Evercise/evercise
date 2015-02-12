@@ -12,7 +12,7 @@ facebookRedirect.prototype = {
     changeFbUrl : function(e){
         var trainer = $(e.target).val();
         if(trainer == 'yes'){
-            this.redirect = 'trainers.create';
+            this.redirect = '/trainers.create';
             if($('input[name="phone"]').length > 0){
                 $("label[for='phone']").find('small').text('(For Evercise to contact you)');
             }
@@ -25,4 +25,5 @@ facebookRedirect.prototype = {
         }
         this.btn.attr('href', this.url + this.redirect);
     }
+
 }

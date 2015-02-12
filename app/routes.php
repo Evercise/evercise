@@ -222,7 +222,7 @@ Route::get(
 );
 
 
-/*Route::get('login/fb/{redirect?}', ['as' => 'users.fb', function($redirect)
+/*Route::get('login/fb/{redirect?}', ['as' => 'users.fb', function($redirect = 'no redirect')
 {
    return $redirect;
 }]);*/
