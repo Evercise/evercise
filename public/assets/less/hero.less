@@ -3,7 +3,7 @@
   background-size: cover ;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 332px;
+  height: 320px;
   padding-top: 30px;
   position: relative;
   @media (max-width: @grid-float-breakpoint){
@@ -11,13 +11,32 @@
   }
   h1{
     margin-bottom: 0px;
+    margin-top: 47px;
     @media (max-width: @grid-float-breakpoint){
       margin-top: 45px;
       margin-bottom: 10px;
     }
   }
+  h2{
+    margin-top: 11px;
+  }
   &.small-padding{
     padding-top: 10px;
+  }
+  .dot{
+    width: 30px;
+    display: inline-block;
+    position: relative;
+    &:after{
+      content: '';
+      background: @brand-primary;
+      width: 8px;
+      height: 8px;
+      position: absolute;
+      top: -14px;
+      left: 12px;
+      border-radius: 50%;
+    }
   }
   .hero-full-link{
     position: absolute;
@@ -32,6 +51,8 @@
 }
 
 .jumbotron{
+  position: absolute;
+  width: 100%;
   margin-bottom: 0;
 }
 .class-hero{

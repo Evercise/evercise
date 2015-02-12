@@ -55,7 +55,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <p>{{$user->display_name}} has booked {{ count($sessionDetails) }} ticket{{ count($sessionDetails) > 1 ? 's' : '' }}.  Booking codes are below.</p>
+                        <p>{{$user->display_name}} has booked {{ count($sessionDetails['codes']) }} ticket{{ count($sessionDetails['codes']) > 1 ? 's' : '' }}.  Booking codes are below.</p>
                         <table border="0" cellspacing="0" cellpadding="20" class="text-center">
                             <tr>
                       <?php $count=0 ?>
