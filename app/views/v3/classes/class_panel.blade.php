@@ -99,7 +99,7 @@
                             <strong class="text-primary">&pound;{{$nextSession->price}}</strong>
                         </div>
                         <div class="col-sm-9 sm-text-center">
-                            @if($nextSession->remainingTickets()  > 10)
+                            @if($nextSession->remainingTickets()  > 0)
                                 {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $nextSession->id, 'class' => 'add-to-class']) }}
                                     <div class="btn-group btn-block">
                                         {{ Form::submit('Join class', ['class'=> 'btn btn-primary add-btn']) }}
