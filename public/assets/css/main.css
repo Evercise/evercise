@@ -7149,6 +7149,16 @@ a:focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
+.link {
+  text-decoration: underline;
+  color: #7390e2;
+}
+.grey-link {
+  color: #aaa;
+}
+.grey-link:hover {
+  color: #4a90e2;
+}
 strong {
   font-weight: 600;
   -webkit-font-smoothing: antialiased;
@@ -7184,10 +7194,6 @@ strong {
   top: 0;
   color: #ff1b7e;
   margin-right: 5px;
-}
-.link {
-  text-decoration: underline;
-  color: #7390e2;
 }
 .text-white {
   color: #ffffff;
@@ -7291,15 +7297,9 @@ a.bg-light-grey:hover {
   float: left;
   margin-bottom: -30px;
 }
-.jumbotron h2 {
-  font-size: 46px;
-}
 @media (max-width: 992px) {
   .jumbotron h1 {
     font-size: 47px;
-  }
-  .jumbotron h2 {
-    font-size: 27px;
   }
 }
 @media (max-width: 767px) {
@@ -9543,6 +9543,9 @@ fieldset[disabled] .stripe-button-el.active {
   line-height: 14px;
   margin-bottom: 6px;
 }
+.class-block .list-group-item h4 a {
+  color: #383d48;
+}
 .class-block .list-group-item p {
   line-height: 12px;
   margin: 10px 0 0;
@@ -10600,7 +10603,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   background-size: cover ;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 332px;
+  height: 320px;
   padding-top: 30px;
   position: relative;
 }
@@ -10611,6 +10614,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 .hero h1 {
   margin-bottom: 0px;
+  margin-top: 47px;
 }
 @media (max-width: 992px) {
   .hero h1 {
@@ -10618,8 +10622,26 @@ body:not(:-moz-handler-blocked) .custom-select:after {
     margin-bottom: 10px;
   }
 }
+.hero h2 {
+  margin-top: 11px;
+}
 .hero.small-padding {
   padding-top: 10px;
+}
+.hero .dot {
+  width: 30px;
+  display: inline-block;
+  position: relative;
+}
+.hero .dot:after {
+  content: '';
+  background: #ff1b7e;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: -14px;
+  left: 12px;
+  border-radius: 50%;
 }
 .hero .hero-full-link {
   position: absolute;
@@ -10632,6 +10654,8 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   bottom: 0;
 }
 .jumbotron {
+  position: absolute;
+  width: 100%;
   margin-bottom: 0;
 }
 .class-hero {

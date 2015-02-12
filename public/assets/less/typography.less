@@ -42,6 +42,18 @@ a {
   }
 }
 
+.link{
+  text-decoration: underline;
+  color: #7390e2;
+}
+
+.grey-link{
+  color: #aaa;
+  &:hover{
+    color: #4a90e2;
+  }
+}
+
 strong{
   //color: @gray-darker;
   font-weight: 600;
@@ -57,10 +69,7 @@ strong{
   .branded-list();
 }
 
-.link{
-  text-decoration: underline;
-  color: #7390e2;
-}
+
 .text-white {
    .text-emphasis-variant(@white);
  }
@@ -143,12 +152,8 @@ strong{
 }
 
 .jumbotron{
-  h2{
-    font-size: 46px;
-  }
   @media (max-width: @grid-float-breakpoint){
     h1{ font-size: 47px}
-    h2{ font-size: 27px }
   }
 }
 

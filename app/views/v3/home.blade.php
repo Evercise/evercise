@@ -5,26 +5,13 @@
     @if($tester)
         {{ $tester }}
     @endif
-    <div id="hero-carousel" class="carousel slide">
-          <div class="carousel-inner">
-            @foreach($slider as $index => $sl)
-                 <div class="item {{ $index == 0 ? 'active': NULL }}">
-                    <div class="hero hero-nav-change" style="background-image: url('{{url().'/files/slider/cover_'. $sl['image']}}');">
-                        <div class="jumbotron">
-                          <div class="container text-center">
-                            <h1 class="text-white mb0"> {{ $sl['name'] }}</h1>
-                            <h2 class="text-primary mt0">only &pound; {{ round($sl['price'], 0) }}</h2>
-                            <div class="row mt20 text-center">
-                                {{ Html::linkRoute('class.show', 'View Class', Evercisegroup::getSlug($sl['evercisegroup_id']) ,['class' => 'btn btn-primary']) }}
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                 </div>
-            @endforeach
-          </div>
+    <div class="hero hero-nav-change black-gradient-mask" style="background-image: url('{{url().'/assets/img/home/banner-'.rand(1,6).'.jpg'}}');">
+        <div class="mask"></div>
+        <div class="jumbotron text-center">
+            <h1 class="drop-shadow text-white"><span class="text-primary">PAY</span> AS YOU <span class="text-primary">GO</span> FITNESS</h1>
+            <h2 class="text-white drop-shadow">NO MEMBERSHIPS <span class="text-primary dot"></span> 17,000+ CLASSES <span class="text-primary dot"></span> OVER 600 LOCATIONS</h2>
+        </div>
     </div>
-
     <div class="container-fluid bg-dark-grey sm-mb0">
         <div class="container">
             <div class="row mt10 mb10 sm-inline-gutter visible-md-block visible-lg-block">
@@ -53,7 +40,6 @@
                                 </ul>
                             </div>
                         </div>
-
                         <div class="col-sm-2">
                             {{ Form::hidden('city', NULL) }}
                             {{ Form::submit('Find a class' , ['class' => 'btn btn-primary btn-block']) }}
@@ -75,9 +61,7 @@
                             {{ Form::hidden('city', NULL) }}
                             {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator', 'id' => 'mobile-sub']) }}
                         </div>
-
                     </div>
-
                 {{ Form::close() }}
             </div>
         </div>
@@ -93,7 +77,7 @@
                                     <span class="text-primary text-larger">{{ $block['title'] }}</span>
                                 </div>
                                 <div class="col-sm-3 text-right hidden-sm hidden-xs">
-                                    <a class="view-all-btn text-blue" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
+                                    <a class="view-all-btn grey-link" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
                                 </div>
                            </div>
                        </div>
@@ -152,11 +136,10 @@
             </div>
         @endif
     @endforeach
-
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <div class="page-header">
+                <div class="page-header text-center">
                     <span class="text-primary text-larger">What are you looking for?</span>
                 </div>
             </div>
