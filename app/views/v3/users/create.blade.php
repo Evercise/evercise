@@ -105,13 +105,6 @@
                             <div class="form-group col-sm-8">
                                 <label class="mb15" for="phone">Mobile Number <small>(Get alerts about your classes)</small></label>
                                 <div class="input-group">
-                                    {{--
-                                    <div class="input-group-addon custom-select">
-                                       {{ Form::select('areacode', Config::get('countrycodes.pretty')
-
-                                        , '+44', ['class' => 'select-addon'] ) }}
-                                    </div>
-                                    --}}
                                      <div class="input-group-addon custom-select">
                                      <select  name="areacode">
                                         <option value="GB">United Kingdom</option>

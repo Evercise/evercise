@@ -15,6 +15,13 @@ function updateProfile(form){
     };
     this.first_name = {
         validators: {
+            regexp: {
+                regexp: /^[a-zA-Z]+$/,
+                message: 'Your first name can only contain letters'
+            },
+            notEmpty: {
+                message: 'Your first name is required and cannot be empty'
+            },
             stringLength: {
                 min: 2,
                 max: 15,
@@ -24,36 +31,17 @@ function updateProfile(form){
     };
     this.last_name = {
         validators: {
+            regexp: {
+                regexp: /^[a-zA-Z]+$/,
+                message: 'Your surname name can only contain letters'
+            },
+            notEmpty: {
+                message: 'Your surname is required and cannot be empty'
+            },
             stringLength: {
                 min: 2,
                 max: 15,
                 message: 'Your surname must be more than 2 and less than 15 characters long'
-            }
-        }
-    };
-    this.password = {
-        validators: {
-            stringLength: {
-                min: 6,
-                max: 32,
-                message: 'Your Password must be more than 6 and less than 32 characters long'
-            },
-            identical: {
-                field: 'confirmed_password',
-                message: 'Your passwords do not match'
-            }
-        }
-    };
-    this.confirmed_password = {
-        validators: {
-            stringLength: {
-                min: 6,
-                max: 32,
-                message: 'Your Password must be more than 6 and less than 32 characters long'
-            },
-            identical: {
-                field: 'password',
-                message: 'Your passwords do not match'
             }
         }
     };
@@ -83,6 +71,14 @@ function updateProfile(form){
             }
         }
     };
+    this.phone = {
+        validators: {
+            phone: {
+                country: 'areacode',
+                message: 'The value is not valid %s phone number'
+            }
+        }
+    }
     this.init();
 }
 updateProfile.prototype = {
@@ -105,10 +101,9 @@ updateProfile.prototype = {
                 email: this.email,
                 first_name: this.first_name,
                 last_name: this.last_name,
-                password: this.password,
-                confirmed_password: this.confirmed_password,
                 profession: this.profession,
-                bio: this.bio
+                bio: this.bio,
+                phone : this.phone
             }
         })
         .on('success.form.bv', function(e) {
