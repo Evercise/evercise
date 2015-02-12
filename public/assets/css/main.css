@@ -9011,13 +9011,14 @@ fieldset[disabled] .btn-grey.active {
 }
 .btn-pill {
   background: #ffffff;
-  color: #d6d6d6;
-  border-color: #d6d6d6;
+  color: #ccc;
+  border-color: #aaa;
 }
 .btn-pill:hover,
 .btn-pill:active,
 .btn-pill:focus {
   background: #ff1b7e;
+  border-color: #ff1b7e;
   color: #ffffff;
 }
 .btn-icon {
