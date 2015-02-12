@@ -45,8 +45,9 @@ class MindbodyClient extends \SoapClient {
 		}
 
 		foreach ($unset as $key) {
-			$request->Request->{$key} = 'null';
+			unset($request->Request->$key);
 		}
+
 
 		return $request;
 	}

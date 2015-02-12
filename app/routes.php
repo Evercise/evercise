@@ -47,13 +47,24 @@ Route::get('ttt',
     [ 'before' => 'admin',
         function(){
 
+
+
             $user = Sentry::findUserById(323);
 
 
             $mindbody = new Mindbody($user);
+            echo "<h4>addUserToClass</h4>";
+            d($mindbody->addUserToClass(24376, $user), false);
+
+
+
 
             echo "<h4>getClasses</h4>";
             d($mindbody->getClasses());
+
+
+
+
             echo "<h4>getSchedules</h4>";
             d($mindbody->getSchedules(), false);
             echo "<h4>getEnrollments</h4>";
