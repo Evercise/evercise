@@ -44,7 +44,7 @@ Route::get('email',
 
 
 Route::get('ttt',
-    [
+    [ 'before' => 'admin',
         function(){
 
             $user = Sentry::findUserById(323);
@@ -52,8 +52,8 @@ Route::get('ttt',
 
             $mindbody = new Mindbody($user);
 
-            echo "<h4>getClassVisits</h4>";
-            d($mindbody->getClassVisits(), false);
+            echo "<h4>getClasses</h4>";
+            d($mindbody->getClasses());
             echo "<h4>getSchedules</h4>";
             d($mindbody->getSchedules(), false);
             echo "<h4>getEnrollments</h4>";

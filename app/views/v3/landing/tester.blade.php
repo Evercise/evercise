@@ -6,7 +6,7 @@
 				<h4 class="modal-title">Welcome Tester</h4>
 			</div>
 			<div class="modal-body">
-				<p>For your Information. We are recording this session. All sensitive data like passwords and credit card info are NOT recorder.</p>
+				<p>FYI. We are recording this session. All sensitive data like passwords and credit card info are NOT recorder.</p>
 				<p style="font-size:30px">
 					<input type="text" placeholder="Enter Full Name" style="text-align: center;width:100%"/></p>
 			</div>

@@ -366,7 +366,7 @@ class Mindbody
     {
 
         $service = $this->getService('ClassService');
-        $request = $service::request('GetClasses', $this->credentials);
+        $request = $service::request('GetClasses', $this->credentials,  $this->user_credentials);
         $apiClasses = $service->GetClasses($request);
 
         return $apiClasses;
