@@ -103,17 +103,8 @@ class SearchController extends \BaseController
 
         if ($link && !$this->input->get('area', FALSE)) {
 
-            switch ($link->type) {
-                case 'AREA':
-                case 'STATION':
-                case 'POSTCODE':
-                case 'ZIP':
-                    return $this->search($link->getArea);
-                    break;
-                case 'CLASS':
-                    return $this->show($link->getClass);
-                    break;
-            }
+            return $this->search($link->getArea);
+
         } elseif ($link && $this->input->get('area', FALSE)) {
             $input = array_filter($this->input->except(['area', '_token', 'location']));
             $input['allsegments'] = $link->permalink;
@@ -179,7 +170,10 @@ class SearchController extends \BaseController
         $results['available_dates'] = $dates;
 
 
+
         if (!empty($results['redirect'])) {
+
+
 
             return $results['redirect'];
         }
