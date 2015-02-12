@@ -54,10 +54,10 @@ Route::filter('admin', function () {
             // Check if the user is in the administrator group
             if (!$user->inGroup($admin)) {
                 return Redirect::route('home')->with('notification',
-                    'you do not have the correct privilages to view this page');
+                    'You do not have the correct privileges to view this page');
             }
         } else {
-            return Redirect::route('home')->with('notification', 'You have been logged out');
+            return Redirect::route('home')->with('notification', 'You do not have the correct privileges to view this page');
         }
     }
 
@@ -66,7 +66,7 @@ Route::filter('admin', function () {
 Route::filter('user', function () {
     // Kick out if not logged in
     if (!Sentry::check()) {
-        return Redirect::route('home')->with('notification', 'You have been logged out');
+        return Redirect::route('home')->with('notification', 'You do not have the correct privileges to view this page. Please Log In');
     }
 });
 

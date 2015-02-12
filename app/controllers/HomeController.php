@@ -47,6 +47,13 @@ class HomeController extends BaseController
         $homepage = Config::get('homepage');
 
 
+        $tester = Input::get('t', false);
+
+        if($tester) {
+            $tester = View::make('v3.landing.tester', ['email' => $tester])->render();
+        }
+
+
         foreach ($homepage['blocks'] as $key => $block) {
             $blocks[$key] = array_except($block, ['params']);
             $blocks[$key]['results'] = $searchController->getClasses($block['params'], TRUE);
@@ -73,7 +80,7 @@ class HomeController extends BaseController
          */
 
 
-        return View::make('v3.home', compact('blocks', 'slider', 'articles', 'homepage'));
+        return View::make('v3.home', compact('blocks', 'slider', 'articles', 'homepage', 'tester'));
     }
 
 }

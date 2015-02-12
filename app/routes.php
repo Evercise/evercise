@@ -44,15 +44,22 @@ Route::get('email',
 
 
 Route::get('ttt',
-    [
+    [ 'before' => 'admin',
         function(){
 
+            $user = Sentry::findUserById(323);
 
 
-            $mindbody = new Mindbody(-99);
+            $mindbody = new Mindbody($user);
 
-
-            d($mindbody->getClassSchedules());
+            echo "<h4>getClasses</h4>";
+            d($mindbody->getClasses());
+            echo "<h4>getSchedules</h4>";
+            d($mindbody->getSchedules(), false);
+            echo "<h4>getEnrollments</h4>";
+            d($mindbody->getEnrollments(), false);
+            echo "<h4>getClassSchedules</h4>";
+            d($mindbody->getClassSchedules(), false);
 
         }
     ]
@@ -215,7 +222,7 @@ Route::get(
 );
 
 
-/*Route::get('login/fb/{redirect?}', ['as' => 'users.fb', function($redirect)
+/*Route::get('login/fb/{redirect?}', ['as' => 'users.fb', function($redirect = 'no redirect')
 {
    return $redirect;
 }]);*/
@@ -262,7 +269,7 @@ Route::post(
 );
 Route::post(
     '/users/changepassword',
-    ['as' => 'users.changepassword.post', 'uses' => 'UsersController@postChangePassword']
+    ['as' => 'users.changepassword.post', 'before' => 'user', 'uses' => 'UsersController@postChangePassword']
 );
 Route::get('/users/{display_name}/logout', ['as' => 'users.logout', 'uses' => 'UsersController@logout']);
 
@@ -507,7 +514,7 @@ Route::get('terms-of-use', [
 ]);
 Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
 Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
-Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@show']);
+Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@dickface']);
 Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
 Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
 Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);

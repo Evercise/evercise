@@ -50,8 +50,9 @@
                            <div class="custom-select">
                                {{ Form::select('gender',
                                    [
+                                       '' => '',
                                        'male' => 'male',
-                                       'female' => 'female'
+                                       'female' => 'female',
                                    ]
                                 , $user->getGender(), ['class' => 'form-control'] ) }}
                            </div>
