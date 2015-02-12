@@ -7548,11 +7548,42 @@ a.bg-light-grey:hover {
 .nav-browse {
   z-index: 10;
   position: absolute;
-  left: 130px;
-  right: 310px;
+  left: 180px;
+  width: 970px;
   background: #383d48;
   height: 100%;
   padding: 11px 0px;
+}
+@media (max-width: 1405px) {
+  .nav-browse {
+    width: 870px;
+  }
+}
+@media (max-width: 1320px) {
+  .nav-browse {
+    width: 820px;
+  }
+}
+@media (max-width: 1260px) {
+  .nav-browse {
+    width: 780px;
+    left: 130px;
+  }
+}
+@media (max-width: 1190px) {
+  .nav-browse {
+    width: 720px;
+  }
+}
+@media (max-width: 1120px) {
+  .nav-browse {
+    width: 680px;
+  }
+}
+@media (max-width: 1080px) {
+  .nav-browse {
+    width: 620px;
+  }
 }
 .nav-categories {
   position: absolute;
@@ -7638,6 +7669,7 @@ a.bg-light-grey:hover {
   }
 }
 .footer {
+  margin-top: 70px;
   background: #ffffff;
   padding: 40px 0;
   border-top: 1px solid #d6d6d6;
@@ -8979,13 +9011,14 @@ fieldset[disabled] .btn-grey.active {
 }
 .btn-pill {
   background: #ffffff;
-  color: #d6d6d6;
-  border-color: #d6d6d6;
+  color: #ccc;
+  border-color: #aaa;
 }
 .btn-pill:hover,
 .btn-pill:active,
 .btn-pill:focus {
   background: #ff1b7e;
+  border-color: #ff1b7e;
   color: #ffffff;
 }
 .btn-icon {
@@ -9512,7 +9545,7 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-block .list-group-item p {
   line-height: 12px;
-  margin: 0;
+  margin: 10px 0 0;
 }
 .class-block .class-img-wrapper {
   padding: 0;
@@ -10612,11 +10645,11 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   bottom: 0;
   left: 0;
   right: 0;
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
-  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.9) 100%);
+  background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.9) 100%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.9) 100%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#38000000', endColorstr='#cc000000', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#38000000', endColorstr='#e6000000', GradientType=0);
 }
 .class-content {
   margin-top: -567px;
@@ -12915,8 +12948,8 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
 .results .inner {
   width: 100%;
   background: #ffffff;
-  -webkit-box-shadow: 5px 5px 13px -5px #000000;
-  box-shadow: 5px 5px 13px -5px #000000;
+  -webkit-box-shadow: 5px 5px 13px -5px rgba(0, 0, 0, 0.6);
+  box-shadow: 5px 5px 13px -5px rgba(0, 0, 0, 0.6);
 }
 .results .mask {
   position: absolute;

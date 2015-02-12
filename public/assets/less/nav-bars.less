@@ -133,11 +133,31 @@
 .nav-browse{
   z-index: 10;
   position: absolute;
-  left: 130px;
-  right: 310px;
+  left: 180px;
+  width: 970px;
   background: @gray-darker;
   height: 100%;
   padding: 11px 0px;
+  @media (max-width:1405px) {
+      width: 870px;
+  }
+  @media (max-width:1320px) {
+    width: 820px;
+  }
+  @media (max-width:1260px) {
+    width: 780px;
+    left: 130px;
+  }
+  @media (max-width:1190px) {
+    width: 720px;
+  }
+  @media (max-width:1120px) {
+    width: 680px;
+  }
+  @media (max-width:1080px) {
+    width: 620px;
+  }
+
 }
 
 .nav-categories{
@@ -238,6 +258,7 @@
 // footer
 
 .footer{
+  margin-top: 70px;
   background: @white;
   padding: 40px 0;
   border-top: 1px solid @gray-dark;

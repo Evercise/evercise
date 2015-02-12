@@ -41,8 +41,8 @@
 
         <div class="inner">
             <div ng-if="resultsLoading" class="mask"><div class="loading"></div></div>
-            <div class="heading"><div class="col-xs-9"><span class="text-primary">{[{ results.results.total }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div>  </div>
-            <div role="tabpanel">
+            <div class="heading"><div class="row no-gutter ml0"><div class="col-xs-9"><span class="text-primary">{[{ results.results.total }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div></div>  </div>
+            <div role="tabpanel" ng-if="!selectedVenueIds">
                 <ul class="nav nav-tabs nav-justified">
                   <li role="presentation"><a href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
                   <li role="presentation"><a href="#sort" class="sort-btn" data-toggle="tab">Sort by</a></li>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="results.results.total > 0" class="date-picker-inline">
+            <div ng-if="results.results.total > 0 && !selectedVenueIds"  class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
                          <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
@@ -125,7 +125,7 @@
                              </div>
                          </ul>
                      </div>
-                    <div ng-if="view == 'list'" class="row class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
+                    <div ng-if="view == 'list'" class="row no-gutter ml0 mr0 class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                         <div class="col-xs-9">
                             <h2 class="h4"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>

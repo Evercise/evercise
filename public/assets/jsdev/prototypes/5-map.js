@@ -23,6 +23,7 @@ Map.prototype = {
                 document.getElementById('map_canvas'), {
                 center: new google.maps.LatLng(self.lat, self.lng),
                 zoom: self.zoom,
+                scrollwheel: false,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             google.maps.event.trigger(map, "resize");
