@@ -88,17 +88,8 @@ class SearchController extends AjaxBaseController
 
         if ($link) {
 
-            switch ($link->type) {
-                case 'AREA':
-                case 'STATION':
-                case 'POSTCODE':
-                case 'ZIP':
-                    return $this->search($link->getArea);
-                    break;
-                case 'CLASS':
-                    return $this->show($link->getClass);
-                    break;
-            }
+            return $this->search($link->getArea);
+            
         } elseif (!$link && !$this->input->get('location', FALSE) && $all_segments != '') {
 
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
