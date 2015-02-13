@@ -52,8 +52,8 @@
             <div class="heading"><div class="row no-gutter ml0"><div class="col-xs-9"><span class="text-primary">{[{ results.results.total }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div></div>  </div>
             <div role="tabpanel" ng-if="!selectedVenueIds">
                 <ul class="nav nav-tabs nav-justified">
-                  <li role="presentation"><a href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
-                  <li role="presentation"><a href="#sort" class="sort-btn" data-toggle="tab">Sort by</a></li>
+                  <li role="presentation"><a ng-click="$event.preventDefault();" href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
+                  <li role="presentation"><a ng-click="$event.preventDefault();" href="#sort" class="sort-btn" data-toggle="tab">Sort by</a></li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane" id="filter">
