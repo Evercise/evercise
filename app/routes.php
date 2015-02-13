@@ -1,6 +1,4 @@
 <?php
-
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -36,7 +34,7 @@ foreach (Config::get('redirect') as $old => $new) {
 
 Route::get('email',
     [
-        function(){
+        function () {
             return View::make('hello');
         }
     ]
@@ -44,39 +42,32 @@ Route::get('email',
 
 
 Route::get('ttt',
-    [ 'before' => 'admin',
-        function(){
-
-
+    [
+        'before' => 'admin',
+        function () {
 
             $user = Sentry::findUserById(323);
 
 
             $mindbody = new Mindbody($user);
             echo "<h4>addUserToClass</h4>";
-            d($mindbody->addUserToClass(24376, $user), false);
-
-
+            d($mindbody->addUserToClass(24376, $user), FALSE);
 
 
             echo "<h4>getClasses</h4>";
             d($mindbody->getClasses());
 
 
-
-
             echo "<h4>getSchedules</h4>";
-            d($mindbody->getSchedules(), false);
+            d($mindbody->getSchedules(), FALSE);
             echo "<h4>getEnrollments</h4>";
-            d($mindbody->getEnrollments(), false);
+            d($mindbody->getEnrollments(), FALSE);
             echo "<h4>getClassSchedules</h4>";
-            d($mindbody->getClassSchedules(), false);
+            d($mindbody->getClassSchedules(), FALSE);
 
         }
     ]
 );
-
-
 
 
 /** SEO URLS */
@@ -85,7 +76,8 @@ Route::get('/classes/{id?}/{preview?}', ['as' => 'class.show', 'uses' => 'Everci
 /** Duplicate Name Added just because of the route URL */
 Route::get('/classes/{id?}/{preview?}', ['as' => 'evercisegroups.show', 'uses' => 'EvercisegroupsController@show']);
 
-Route::get('/class/{id}/{preview?}', ['as' => 'evercisegroups.show.redirect', 'uses' => 'EvercisegroupsController@show']);
+Route::get('/class/{id}/{preview?}',
+    ['as' => 'evercisegroups.show.redirect', 'uses' => 'EvercisegroupsController@show']);
 
 
 // ajax prefix
@@ -112,13 +104,12 @@ Route::group(['prefix' => 'ajax'], function () {
         '(.*)?'
     );
     Route::post('/uk/', ['as' => 'ajax.evercisegroups.search', 'uses' => 'ajax\SearchController@parseUrl']);
-    Route::post('/map/uk/{allsegments}', ['as' => 'ajax.map.search.parse', 'uses' => 'ajax\SearchController@parseMapUrl'])->where(
+    Route::post('/map/uk/{allsegments}',
+        ['as' => 'ajax.map.search.parse', 'uses' => 'ajax\SearchController@parseMapUrl'])->where(
         'allsegments',
         '(.*)?'
     );
     Route::post('/map/uk/', ['as' => 'ajax.map.evercisegroups.search', 'uses' => 'ajax\SearchController@parseMapUrl']);
-
-
 
 
     // cart
@@ -322,7 +313,7 @@ foreach (Config::get('landing_pages') as $url => $params) {
 }
 
 Route::get('/trainers',
-    ['as' => 'landing.trainer.ppc' , 'uses' => 'LandingsController@trainerPpc']
+    ['as' => 'landing.trainer.ppc', 'uses' => 'LandingsController@trainerPpc']
 );
 
 
@@ -804,28 +795,28 @@ Route::get('cleansubcategoriesup', function () {
 
 });
 
-Route::get('test1', function(){
+Route::get('test1', function () {
 
     $trainer = User::find('169');
 
     event('trainer.registered_ppc', [$trainer]);
 
-    return 'event fired : '.$trainer->display_name;
+    return 'event fired : ' . $trainer->display_name;
 
 });
-Route::get('test2', function(){
+Route::get('test2', function () {
 
     $transaction = \Transactions::find(5318091);
     $hashes = $transaction->makeBookingHashBySession('1479');
 
     $output = '';
-    foreach($hashes as $hash)
-    {
+    foreach ($hashes as $hash) {
         $output .= $hash . ',';
     }
+
     return $output;
 });
-Route::get('test3', function(){
+Route::get('test3', function () {
     $cart = EverciseCart::getCart();
 
     $upperPrice = round($cart['packages'][0]['max_class_price'], 2) + 0.01;
@@ -844,11 +835,11 @@ Route::get('test3', function(){
     return var_dump($everciseGroups);
 });
 
-Route::get('test4/{term}', function($term) {
+Route::get('test4/{term}', function ($term) {
 
     return Subcategory::getRelatedFromSearch($term);
 });
-Route::get('test5', function() {
+Route::get('test5', function () {
 
     return d(Category::browse());
 });
