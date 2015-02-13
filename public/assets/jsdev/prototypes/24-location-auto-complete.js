@@ -14,7 +14,6 @@ LocationAutoComplete.prototype = {
     init: function(){
         // find form
         this.form = this.input.closest("form");
-
         var self = this;
         //check if we are using angular as angualr is loading google maps api
         if (typeof angular != 'undefined')
@@ -27,7 +26,6 @@ LocationAutoComplete.prototype = {
                     self.init();
                 }, 1000);
             }
-
         }
         else {
             if(!self.addScript){
@@ -58,7 +56,15 @@ LocationAutoComplete.prototype = {
     },
     addListeners : function(){
         var self = this;
-        this.input.keyup( function() {
+        $('#location-auto-complete').on('focus', function (e) {
+            $(this).parent().addClass('open');
+        })
+        $('body').on('click', function (e) {
+            if (!$('#location-auto-complete').parent().is(e.target) && $('#location-auto-complete').parent().has(e.target).length === 0 && $('.open').has(e.target).length === 0) {
+                $('#location-auto-complete').parent().removeClass('open');
+            }
+        });
+        this.input.keyup( function(e) {
             if( this.value.length < 1 ) return;
             var service =  new google.maps.places.AutocompleteService();
             var res = service.getPlacePredictions({ input: self.input.val(), componentRestrictions: {country: 'uk'} }, function(predictions, status){
@@ -69,7 +75,6 @@ LocationAutoComplete.prototype = {
                 for (var i = 0, prediction; prediction = predictions[i]; i++) {
                     $('#locaction-autocomplete .autocomplete-content').append('<li><a href="'+prediction.description+'">'+ prediction.description +'</a></li>');
                 }
-
             });
         });
         $(document).on('click', '#locaction-autocomplete .autocomplete-content a', $.proxy(this.changeLocation, this));
@@ -87,7 +92,6 @@ LocationAutoComplete.prototype = {
         this.form = this.input.closest('form');
         geocoder.geocode({'address': value}, function(results, status) {
             if (results[0] && status == 'OK') {
-
                 var address = results[0].formatted_address;
                 self.form.find('input[name="location"]').val(address);
                 self.getTown(results[0].address_components);
@@ -101,9 +105,7 @@ LocationAutoComplete.prototype = {
     },
     getTown : function(address_components){
         var self = this;
-
         var result = address_components;
-
         for (var i = 0; i < result.length; ++i) {
 
             if (result[i].types[0] == "locality") {

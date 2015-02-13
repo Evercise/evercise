@@ -32,7 +32,7 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
-                                {{ Form::text('location', NULL, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
+                                {{ Form::text('location', NULL, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete',  'autocomplete' => 'off']) }}
                                 {{ Form::hidden('fullLocation', NULL) }}
                                 <ul id="locaction-autocomplete" class="dropdown-menu category-select" >
                                     <li id="near-me" class="heading locator"><span class="icon icon-locator-pink-small"></span>Use my Current Location</li>
