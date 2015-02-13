@@ -13,6 +13,14 @@
           cursor: pointer;
         }
         td{
+          color: @gray;
+          &.disabled{
+            color: @gray-lighter;
+            pointer-events: none;
+          }
+          &.new{
+            color: @gray-light;
+          }
           &.active{
             background-color: transparent!important;
             border-color: @white!important;
@@ -44,7 +52,24 @@
       width: 100%;
       //border-collapse: separate;
       thead{
-
+        .next,.prev{
+          position: relative;
+          color: @white;
+          &:after{
+            content: '';
+            position: absolute;
+            .sprite(-1170px, -610px);
+            height: 22px;
+            width:  22px;
+            top: 9px;
+            left: 22px;
+          }
+        }
+        .prev{
+          &:after{
+            .sprite(-1130px, -610px);
+          }
+        }
       }
       th{
         font-size: 16px;
@@ -76,6 +101,11 @@
         &.old, &.new{
           background: #f1f1f1;
           color: #f1f1f1;
+        }
+        &.active:not(.session){
+          background: @white!important;
+          color: @gray-lighter!important;
+          border-color: #eaeaea!important;
         }
       }
     }

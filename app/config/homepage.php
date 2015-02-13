@@ -9,8 +9,7 @@ return [
         'Dance',
         'Workout',
         'Bootcamp',
-        'Boxing',
-        'Martial Arts'
+        'Boxing'
     ],
     'category_blocks'  => [
         [

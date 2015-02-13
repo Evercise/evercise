@@ -11093,6 +11093,16 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .calendar .datepicker-inline table tr .dow {
   cursor: pointer;
 }
+.calendar .datepicker-inline table tr td {
+  color: #797979;
+}
+.calendar .datepicker-inline table tr td.disabled {
+  color: #f0f0f0;
+  pointer-events: none;
+}
+.calendar .datepicker-inline table tr td.new {
+  color: #96a2ab;
+}
 .calendar .datepicker-inline table tr td.active {
   background-color: transparent!important;
   border-color: #ffffff !important;
@@ -11116,6 +11126,49 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 .class-calendar .datepicker-inline table {
   width: 100%;
+}
+.class-calendar .datepicker-inline table thead .next,
+.class-calendar .datepicker-inline table thead .prev {
+  position: relative;
+  color: #ffffff;
+}
+.class-calendar .datepicker-inline table thead .next:after,
+.class-calendar .datepicker-inline table thead .prev:after {
+  content: '';
+  position: absolute;
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -1170px -610px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  height: 22px;
+  width: 22px;
+  top: 9px;
+  left: 22px;
+}
+.class-calendar .datepicker-inline table thead .next:after.active,
+.class-calendar .datepicker-inline table thead .prev:after.active {
+  background-position: -1170px -650px;
+}
+.class-calendar .datepicker-inline table thead .next:after.hover:hover,
+.class-calendar .datepicker-inline table thead .prev:after.hover:hover,
+.class-calendar .datepicker-inline table thead .next:after.active:hover,
+.class-calendar .datepicker-inline table thead .prev:after.active:hover {
+  cursor: pointer;
+  background-position: -1170px -650px;
+}
+.class-calendar .datepicker-inline table thead .prev:after {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -1130px -610px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.class-calendar .datepicker-inline table thead .prev:after.active {
+  background-position: -1130px -650px;
+}
+.class-calendar .datepicker-inline table thead .prev:after.hover:hover,
+.class-calendar .datepicker-inline table thead .prev:after.active:hover {
+  cursor: pointer;
+  background-position: -1130px -650px;
 }
 .class-calendar .datepicker-inline table th {
   font-size: 16px;
@@ -11157,6 +11210,11 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .class-calendar .datepicker-inline table td.new {
   background: #f1f1f1;
   color: #f1f1f1;
+}
+.class-calendar .datepicker-inline table td.active:not(.session) {
+  background: #ffffff !important;
+  color: #f0f0f0 !important;
+  border-color: #eaeaea!important;
 }
 .calendar-selected li {
   padding-top: 13px;
@@ -12170,7 +12228,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   border-color: #ff1b7e;
 }
 .holder {
-  background-color: #96a2ab;
+  background-color: #f0f0f0;
   width: 100%;
   text-align: center;
   position: relative;

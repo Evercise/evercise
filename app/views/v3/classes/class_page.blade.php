@@ -172,7 +172,7 @@
                     <strong class="text-large">Related Categories</strong>
                     <div class="text-center mt20">
                         @foreach($related as $cat)
-                            <a href="/uk/london?search={{$cat->name}}" class="btn btn-rounded btn-white-primary mb10 mr10 ml10">{{$cat->name}}</a>
+                            <a href="/uk/london?search={{$cat->name}}" class="btn btn-rounded btn-pill mb10 mr10 ml10">{{$cat->name}}</a>
                         @endforeach
                     </div>
 

@@ -33,10 +33,9 @@ MailPopup.prototype = {
     ajaxGet: function(){
         var self = this;
         $.get( this.target, function(data) {
-            console.log(data);
             self.link.after(data.view);
             $('#mail-trainer-'+self.id).modal('show');
-            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail ml10 mt25" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>')
+            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail ml10 mt15" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>')
             self.form = $('#mail-trainer-'+self.id).find('form');
             self.validation();
         })
@@ -74,11 +73,12 @@ MailPopup.prototype = {
             dataType: 'json',
 
             beforeSend: function () {
+
                 self.form.find("input[type='submit']").prop('disabled', true).after('<span id="sending-loading" class="icon icon-loading ml10 mt15"></span>');
             },
 
             success: function (data) {
-                self.form.find("input[type='submit']").before('<strong class="text-primary">Message sent successfully!</strong><br>');
+                self.form.find("input[type='submit']").before('<strong id="successfull-mail" class="text-primary">Message sent successfully!</strong><br>');
                 setTimeout(function(){
                     $('.modal').modal('hide');
                 },1500);
@@ -91,8 +91,11 @@ MailPopup.prototype = {
             },
 
             complete: function () {
-                self.form.find("input[type=submit]").prop('disabled', false);
-                $('#sending-loading').remove();
+                setTimeout(function(){
+                    self.form.find("input[type=submit]").prop('disabled', false);
+                    $('#sending-loading').remove();
+                    $('#successfull-mail').remove();
+                },1500);
             }
         });
     }
