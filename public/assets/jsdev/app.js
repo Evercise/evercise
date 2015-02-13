@@ -1,19 +1,25 @@
 if(typeof angular != 'undefined') {
     var app = angular.module('everApp', [
         "ng.deviceDetector",
+        'angularytics',
         'google-maps'.ns()
     ] , ['$interpolateProvider',function ($interpolateProvider) {
             $interpolateProvider.startSymbol('{[{');
             $interpolateProvider.endSymbol('}]}');
         }]);
 
-    app.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+    app.config(['GoogleMapApiProvider'.ns(), 'AngularyticsProvider', function (GoogleMapApi, AngularyticsProvider) {
         GoogleMapApi.configure({
             v: '3.17',
             libraries: 'places',
             uk: true
         });
+        AngularyticsProvider.setEventHandlers(['Console', 'GoogleUniversal']);
+    }]).run([ 'Angularytics',function(Angularytics) {
+        Angularytics.init();
     }]);
+
+
 
 
 

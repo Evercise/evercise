@@ -1,6 +1,6 @@
 if(typeof angular != 'undefined') {
 
-    app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", function ($scope, $http, uiGmapGoogleMapApi) {
+    app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", "Angularytics", function ($scope, $http, uiGmapGoogleMapApi, Angularytics) {
 
         $scope.groupHeight = function(){
             var windowWidth = $(window).width();
@@ -384,6 +384,12 @@ if(typeof angular != 'undefined') {
                 $scope.view = 'list';
             }
         });
+
+        // google anayltics
+
+        $scope.gaEventTrigger = function(cat,action, label ) {
+            Angularytics.trackEvent(cat, action, label);
+        }
 
 
     }])
