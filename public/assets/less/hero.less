@@ -15,10 +15,15 @@
     @media (max-width: @grid-float-breakpoint){
       margin-top: 45px;
       margin-bottom: 10px;
+      font-size: 35px;
     }
   }
   h2{
     margin-top: 11px;
+    @media (max-width: @grid-float-breakpoint){
+      font-size: 24px;
+      line-height: 35px;
+    }
   }
   &.small-padding{
     padding-top: 10px;
@@ -36,6 +41,10 @@
       top: -14px;
       left: 12px;
       border-radius: 50%;
+    }
+    @media (max-width: @grid-float-breakpoint){
+      display: block;
+      opacity: 0;
     }
   }
   .hero-full-link{

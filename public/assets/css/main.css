@@ -10620,10 +10620,17 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   .hero h1 {
     margin-top: 45px;
     margin-bottom: 10px;
+    font-size: 35px;
   }
 }
 .hero h2 {
   margin-top: 11px;
+}
+@media (max-width: 992px) {
+  .hero h2 {
+    font-size: 24px;
+    line-height: 35px;
+  }
 }
 .hero.small-padding {
   padding-top: 10px;
@@ -10642,6 +10649,12 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   top: -14px;
   left: 12px;
   border-radius: 50%;
+}
+@media (max-width: 992px) {
+  .hero .dot {
+    display: block;
+    opacity: 0;
+  }
 }
 .hero .hero-full-link {
   position: absolute;

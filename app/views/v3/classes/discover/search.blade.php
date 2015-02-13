@@ -119,33 +119,33 @@
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>
                         <ul class="list-group class-block">
                              <li class="list-group-item class-img-wrapper">
-                                 <a href="/classes/{[{ group.slug }]}"><img ng-src="{[{group.image}]}" alt="{[{group.name}]}" class="img-responsive"></a>
+                                 <a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}"><img ng-src="{[{group.image}]}" alt="{[{group.name}]}" class="img-responsive"></a>
                              </li>
                              <div class="class-body">
                                  <li class="list-group-item text-center class-title">
-                                     <h4><a href="/classes/{[{ group.slug }]}">{[{group.name | truncate:22  }]}</a></h4>
+                                     <h4><a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}">{[{group.name | truncate:22  }]}</a></h4>
                                      <p><span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span>{[{ group.venue.postcode }]}</p>
                                  </li>
                                  <li class="list-group-item class-footer">
                                      <aside class="text-center"><strong class="text-primary">{[{ group.price | currency :  '£' : 2  }]}</strong></aside>
-                                     <aside class="btn-wrapper"><a href="/classes/{[{ group.slug }]}" class="btn btn-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a></aside>
+                                     <aside class="btn-wrapper"><a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}" class="btn btn-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a></aside>
                                  </li>
                              </div>
                          </ul>
                      </div>
                     <div ng-if="view == 'list'" class="row no-gutter ml0 mr0 class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
                         <div class="col-xs-9">
-                            <h2 class="h4"><a href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
+                            <h2 class="h4"><a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
                             <div class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
-                                <a ng-repeat="(time, link) in group.times | objLimitTo:3" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
+                                <a ng-repeat="(time, link) in group.times | objLimitTo:3" ng-click="gaEventTrigger('Class schedule', 'click', group.name)" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>
                         </div>
                         <div class="col-xs-3">
                             <div class="btn-group-vertical btn-block">
-                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.price | currency :  '£' : 2  }]}</a>
-                                 <a href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a>
+                                 <a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ group.price | currency :  '£' : 2  }]}</a>
+                                 <a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}" class="btn btn-white-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a>
                             </div>
                         </div>
                     </div>
