@@ -11,24 +11,21 @@ if(typeof angular != 'undefined') {
 
         $('#class-calendar').datepicker({
             format: "yyyy-mm-dd",
-            startDate: "+0d",
+            startDate: "-1d",
             weekStart : 1,
+            todayHighlight : false,
             multidate: false,
-            beforeShowDay: function(d) {
-
+            setDate: null,
+                beforeShowDay: function(d) {
                 var date = d.getFullYear() + '-' + ('0' + (d.getMonth() +1)).slice(-2) + '-' +  ('0' + d.getDate()).slice(-2);
                 var result = $.grep($scope.sessions, function(e){
-
                     if(e.remaining  > 0){
                         var dt = e.date_time;
                         dt = dt.split(/\s+/);
 
                         return dt[0] == date;
                     }
-
                 });
-
-
                 if(result.length > 0){
                     for(var key in result){
                         if (!checkDuplicate(result[key].id)){
@@ -43,7 +40,6 @@ if(typeof angular != 'undefined') {
                                 dt;
                             dt = new Date(year, month, day, hours, minutes, seconds);
                             var time = $filter('date')(dt, 'hh:mm a');
-
                             if(result[key].remaining > 0){
                                 $scope.rows.push({
                                     'id' : result[key].id,
@@ -56,11 +52,8 @@ if(typeof angular != 'undefined') {
                                     'show' : false
                                 })
                             }
-
                         }
                     }
-
-
                     return {
                         enabled : true,
                         classes : 'session'
@@ -89,11 +82,8 @@ if(typeof angular != 'undefined') {
 
         $scope.activeFilter = function (rows) {
             if (typeof $scope.activeDate !== 'undefined') {
-                console.log('let do this');
                 var start = rows.date;
-                console.log(start);
                 start.setHours(0,0,0,0);
-                console.log(start);
                 return start.toString() == $scope.activeDate.toString();
             }
         };

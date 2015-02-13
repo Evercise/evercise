@@ -59,9 +59,9 @@ LocationAutoComplete.prototype = {
     addListeners : function(){
         var self = this;
         this.input.keyup( function() {
-            if( this.value.length < 2 ) return;
+            if( this.value.length < 1 ) return;
             var service =  new google.maps.places.AutocompleteService();
-            var res = service.getPlacePredictions({ input: self.input.val() }, function(predictions, status){
+            var res = service.getPlacePredictions({ input: self.input.val(), componentRestrictions: {country: 'uk'} }, function(predictions, status){
                 if (status != google.maps.places.PlacesServiceStatus.OK) {
                     return;
                 }
@@ -69,9 +69,15 @@ LocationAutoComplete.prototype = {
                 for (var i = 0, prediction; prediction = predictions[i]; i++) {
                     $('#locaction-autocomplete .autocomplete-content').append('<li><a href="'+prediction.description+'">'+ prediction.description +'</a></li>');
                 }
+
             });
         });
         $(document).on('click', '#locaction-autocomplete .autocomplete-content a', $.proxy(this.changeLocation, this));
+        $(document).on('change', 'input[name="location"]', function(e){
+            if($(e.target).val() != ''){
+                $('.autocomplete-content li:first a').trigger('click');
+            }
+        });
     },
     changeLocation : function(e){
         e.preventDefault();

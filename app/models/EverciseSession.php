@@ -654,7 +654,7 @@ class Evercisesession extends \Eloquent
 
     public function formattedTime()
     {
-        return  date('H:i', strtotime($this->date_time));
+        return  date('h:i A', strtotime($this->date_time));
     }
 
     public function remainingTickets()

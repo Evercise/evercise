@@ -1,6 +1,5 @@
 <div id="panel-{{$session->id}}" class="class-panel center-block">
     <div class="row sm-mb20">
-
         <div class="class-image-wrapper col-sm-4 sm-text-center">
             {{ image($session->evercisegroup->user->directory.'/search_'.$session->evercisegroup->image, $session->evercisegroup->name) }}
         </div>
@@ -10,16 +9,11 @@
                     <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3>{{ $session->evercisegroup->name }}</h3></a>
                 </div>
                 <div class="col-sm-2">
-                    {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail mt25 mail-popup', 'id' => 'mail-popup', 'data-id' =>$session->id ]) }}
+                    {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail mt15 mail-popup', 'id' => 'mail-popup', 'data-id' =>$session->id ]) }}
                 </div>
             </div>
-
-
-
              <div class="mt20">
                 <span><span class="icon icon-clock"></span> {{ $session->formattedDate().', '.$session->formattedTime() }}</span><br>
-
-
              </div>
 
          </div>
@@ -91,7 +85,7 @@
         @elseif($nextSession = $session->evercisegroup->getNextFutureSession()) {{-- If there is a future session of this group, not signed up to--}}
             <div id="next-session" class="row panel-body bg-light-grey class-info-wrapper">
                 <div class=" col-sm-5 sm-text-center mt10">
-                    <span><span class="icon icon-clock"></span> {{ $nextSession->formattedDate().', '.$nextSession->formattedTime() }}</span>
+                    <span>{{ $nextSession->formattedDate().', '.$nextSession->formattedTime() }}</span>
                 </div>
                 <div class=" col-sm-7">
                     <div class="row">

@@ -21,6 +21,8 @@ if(typeof angular != 'undefined') {
             }
         }
 
+        $scope.width = window.innerWidth;
+
         $scope.results = laracasts.results;
 
         $scope.resultsLoading = false;
@@ -179,10 +181,31 @@ if(typeof angular != 'undefined') {
 
 
         // map object
+        $scope.setMapCenter = function(){
+            var radius = $scope.results.radius.substring(0, $scope.results.radius.length  - 2);
+            var lng = $scope.results.area.lng;
+            if($scope.width >= 992 ){
+                if(radius == 10){
+                    return lng + 0.13;
+                }
+                if(radius == 5){
+                    return lng + 0.09;
+                }
+                if(radius == 3){
+                    return lng + 0.04;
+                }
+                if(radius == 1){
+                    return lng + 0.02;
+                }
+            }
+            else{
+                return lng;
+            }
+        }
         $scope.map = {
             zoom: $scope.initialZoom(),
             maxZoom: 16,
-            center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
+            center:  { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter()},
             control: {},
             clusterOptions: $scope.clusterOptions
         };
@@ -360,10 +383,14 @@ if(typeof angular != 'undefined') {
                     },
                     radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
                 }
+                $scope.map = {
+                    zoom: $scope.initialZoom(),
+                    maxZoom: 16,
+                    center:  { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter()},
+                    control: {},
+                    clusterOptions: $scope.clusterOptions
+                };
 
-                // reset zoom
-                var map = $scope.map.control.getGMap();
-                map.setZoom($scope.initialZoom());
             });
 
             responsePromise.error(function(data) {
@@ -372,7 +399,7 @@ if(typeof angular != 'undefined') {
         }
 
 
-        $scope.width = window.innerWidth;
+
 
 
         $(window).resize(function(){
