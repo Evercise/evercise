@@ -24,6 +24,7 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
+        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -270,16 +271,37 @@ if(typeof angular != 'undefined') {
             }
         }
 
+        $scope.scrollBtnWidth = function(){
+            if($scope.width < 992) {
+                var containerWidth = $scope.width - ($('.date-picker-inline .scroll').outerWidth() * 2 );
+                if($scope.width > 767) {
+                    var dateWidth = containerWidth / 14;
+                }
+                else{
+                    var dateWidth = containerWidth / 5;
+                }
+                return {
+                    width: dateWidth + 'px'
+                }
+            }
+        }
+
         $scope.scroll_clicked = false;
 
         $scope.scrollDates = function(direction, e){
             e.preventDefault();
             $scope.scroll_clicked = true;
             var par = $(e.target).parent();
-            var width = par.width();
+            if($scope.width < 992){
+                var width = par.outerWidth() - ($('.date-picker-inline .scroll').outerWidth() * 2 );
+            }
+            else{
+                var width = par.width();
+            }
             var content = par.find('.content');
             var mg = parseInt(content.css('margin-left'));
             var contentWidth = -content.width();
+            console.log(mg - width);
             if(direction == 'right'){
                 var newMg = mg - width;
             }

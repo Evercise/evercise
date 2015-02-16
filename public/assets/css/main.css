@@ -11249,7 +11249,7 @@ div.hub-row.last {
 }
 @media (max-width: 991px) {
   .date-picker-inline .wrapper {
-    padding: 0 20px;
+    padding: 0 30px;
     border-top: 1px solid #e6e6e6;
   }
 }
@@ -11371,6 +11371,7 @@ div.hub-row.last {
     top: 0;
     height: 100%;
     border: 1px solid #e6e6e6;
+    width: 30px;
   }
   .date-picker-inline .scroll.left {
     left: 0;
@@ -13028,7 +13029,7 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
   position: relative;
   width: 100%;
   padding: 0;
-  top: 25px;
+  top: 61px;
 }
 .results:after {
   content: '';

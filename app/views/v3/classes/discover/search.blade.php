@@ -46,7 +46,23 @@
 
 
     <div class="results">
-
+        <div ng-if="width < 992" class="row mt10 mb10 ml0 mr0 sm-inline-gutter visible-xs-block visible-sm-block">
+             {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
+                 <div class="col-xs-9">
+                     <div class="input-group">
+                         <div class="input-group-addon"><span class="icon icon-search"></span></div>
+                         <input type="text" name="search" value="{[{ results.search}]}" class="form-control input-lg" placeholder="I am looking for....Running">
+                     </div>
+                 </div>
+                 <div class="col-xs-3">
+                     <div class="btn-find-me">
+                         {{ Form::hidden('location', NULL ) }}
+                         {{ Form::hidden('city', NULL) }}
+                         {{ Form::submit('' , ['class' => 'btn btn-primary btn-block btn-lg locator', 'id' => 'mobile-sub']) }}
+                     </div>
+                 </div>
+             {{ Form::close() }}
+        </div>
         <div class="inner">
             <div ng-if="resultsLoading" class="mask"><div class="loading"></div></div>
             <div class="heading"><div class="row no-gutter ml0"><div class="col-xs-9"><span class="text-primary">{[{ results.results.total }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div></div>  </div>
@@ -96,7 +112,7 @@
             <div ng-if="results.results.total > 0 && !selectedVenueIds"  class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
-                         <li class="date-btn" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
+                         <li class="date-btn" ng-style="scrollBtnWidth()" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
                             <div ng-class="value == 0 ? 'disabled' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
                                 <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeSelectedDate($event, date)">

@@ -49,13 +49,13 @@
             </div>
             <div class="row mt10 mb10 sm-inline-gutter visible-xs-block visible-sm-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
-                    <div class="col-xs-10">
+                    <div class="col-xs-9">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="icon icon-search"></span></div>
                             {{ Form::text('search', NULL, ['class' => 'form-control input-lg', 'placeholder' => 'I am looking for....Running']) }}
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
                         <div class="btn-find-me">
                             {{ Form::hidden('location', NULL ) }}
                             {{ Form::hidden('city', NULL) }}
