@@ -12,7 +12,7 @@
             <div class="row sm-mb10">
                 <div class="col-xs-6">
                     <div class="custom-select bg-white">
-                        {{ Form::select('time', Config::get('evercise.time'), $session->formattedTime(), ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
+                        {{ Form::select('time', Config::get('evercise.time'), $session->date_time->format('H:i'), ['class' => 'form-control input-sm update-session-select', 'form' => 'update-sessions-'.$session->id] ) }}
                     </div>
                 </div>
                 <div class="col-xs-6">
