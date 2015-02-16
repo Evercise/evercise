@@ -73,7 +73,7 @@ class UsersController extends \BaseController
     public function fb_login($redirect_url = null, $params = '')
     {
 
-        $getUser = User::getFacebookUser($redirect_url);
+        $getUser = User::getFacebookUser($redirect_url, $params);
 
         $me = $getUser['user_profile'];
 

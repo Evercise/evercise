@@ -442,14 +442,22 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     }
 
-    public static function getFacebookUser($redirect_url)
+    public static function getFacebookUser($redirect_url, $params = '')
     {
+        $param = '';
+        if(!empty($params)) {
+            $data = explode(':', $params);
+            if(!empty($data[1])) {
+                $param = $data[1];
+            }
+        }
+        
         try {
             // Use a single object of a class throughout the lifetime of an application.
             $application = Config::get('facebook');
             $permissions = 'publish_stream,email,user_birthday,read_stream';
             if ($redirect_url != NULL) {
-                $url_app = Request::root() . '/login/fb/' . $redirect_url;
+                $url_app = Request::root() . '/login/fb/' . $redirect_url.'/'.$param;
             } else {
                 $url_app = Request::root() . '/login/fb';
             }
