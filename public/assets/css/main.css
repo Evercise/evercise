@@ -9218,17 +9218,17 @@ fieldset[disabled] .btn-blank.active {
   width: 22px;
   content: '';
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -370px -250px;
+  background-position: -1250px -290px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .btn-toggle-up:after.active {
-  background-position: -370px -290px;
+  background-position: -1250px -330px;
 }
 .btn-toggle-up:after.hover:hover,
 .btn-toggle-up:after.active:hover {
   cursor: pointer;
-  background-position: -370px -290px;
+  background-position: -1250px -330px;
 }
 .btn-toggle-up.loading:after {
   background: url("../img/spinner_grey.gif");
@@ -9249,17 +9249,17 @@ fieldset[disabled] .btn-blank.active {
   width: 22px;
   content: '';
   background-image: url("../img/ev_site_icons_v2.png");
-  background-position: -410px -250px;
+  background-position: -50px -330px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
 .btn-toggle-down:after.active {
-  background-position: -410px -290px;
+  background-position: -50px -370px;
 }
 .btn-toggle-down:after.hover:hover,
 .btn-toggle-down:after.active:hover {
   cursor: pointer;
-  background-position: -410px -290px;
+  background-position: -50px -370px;
 }
 .btn-toggle-down.loading:after {
   background: url("../img/spinner_grey.gif");
@@ -9684,7 +9684,7 @@ fieldset[disabled] .stripe-button-el.active {
   margin-bottom: 0;
 }
 .class-list .class-title-wrapper .btn {
-  margin-top: 20px;
+  margin-top: 14px;
 }
 .class-list strong.text-primary {
   font-size: 20px;
@@ -9733,7 +9733,7 @@ fieldset[disabled] .stripe-button-el.active {
   margin-bottom: 0;
 }
 .class-panel .class-title-wrapper .btn {
-  margin-top: 20px;
+  margin-top: 14px;
 }
 .class-panel strong.text-primary {
   font-size: 20px;
@@ -9748,6 +9748,12 @@ fieldset[disabled] .stripe-button-el.active {
 }
 .class-panel .class-info-wrapper form {
   padding: 0 15px;
+}
+@media (max-width: 992px) {
+  .class-panel .class-image-wrapper img {
+    height: auto;
+    width: 100%;
+  }
 }
 .class-hub-panel {
   width: 100%;
@@ -9776,7 +9782,7 @@ fieldset[disabled] .stripe-button-el.active {
   margin-bottom: 0;
 }
 .class-hub-panel .class-title-wrapper .btn {
-  margin-top: 20px;
+  margin-top: 14px;
 }
 .class-hub-panel strong.text-primary {
   font-size: 20px;
@@ -9885,7 +9891,7 @@ fieldset[disabled] .stripe-button-el.active {
   margin-bottom: 0;
 }
 .class-snippet .class-title-wrapper .btn {
-  margin-top: 20px;
+  margin-top: 14px;
 }
 .class-snippet strong.text-primary {
   font-size: 20px;
@@ -10555,7 +10561,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .checkout li:not(.list-group-item).voucher {
   line-height: 31px;
   font-weight: 600;
-  padding: 24px 0;
+  padding: 10px 0;
 }
 .checkout li:not(.list-group-item).total {
   font-size: 14px;
@@ -10619,7 +10625,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 }
 @media (max-width: 992px) {
   .hero h1 {
-    margin-top: 45px;
+    margin-top: 35px;
     margin-bottom: 10px;
     font-size: 35px;
   }
@@ -11221,9 +11227,6 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   padding-top: 13px;
   padding-bottom: 13px;
   line-height: 38px;
-}
-.calendar-selected li:nth-of-type(2) {
-  border-color: #9c9c9c;
 }
 .calendar-selected .selectable-btn {
   padding: 5px 10px 5px 30px;

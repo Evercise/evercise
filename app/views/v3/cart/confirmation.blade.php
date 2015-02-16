@@ -14,7 +14,7 @@
                 </ul>
                 <strong>Order ID: {{ $transaction }}</strong>
 
-                <p>Thanks for your order! You can view your classes at any time through you account.</p>
+                <p>Thanks for your order! You can view your classes at any time through your account page.</p>
                 @foreach($cart['sessions_grouped'] as $row)
                     <?php
 

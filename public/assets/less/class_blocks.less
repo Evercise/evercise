@@ -139,6 +139,12 @@
 
 .class-panel {
   .class-box(auto, 130px);
+  @media (max-width: @grid-float-breakpoint) {
+    .class-image-wrapper img{
+      height: auto;
+      width: 100%;
+    }
+  }
 }
 
 .class-hub-panel {

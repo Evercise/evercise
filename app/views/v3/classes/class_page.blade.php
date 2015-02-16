@@ -7,7 +7,7 @@
     </script>
     @if(isset($preview))
 
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="preview">
+        <nav class="navbar navbar-inverse bg-dark-grey" id="preview">
           <div class="container mt10">
 
             <div class="row">

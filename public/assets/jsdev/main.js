@@ -7,7 +7,7 @@ $.ajaxSetup({
 $(function(){
 
     // initialise nav bar is nav bar exists
-    $('.navbar').exists(function() {
+    $('#nav').exists(function() {
         new Navigation( this , $('.hero-nav-change') );
     });
 
@@ -59,9 +59,6 @@ $(function(){
         new registerTrainer(this);
     })
 
-    $('.class-preview').exists(function(){
-         new PreviewClassBox(this);
-    })
 
     $('.hide-by-class').exists(function(){
         var i = 0;
