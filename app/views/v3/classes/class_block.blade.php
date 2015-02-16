@@ -5,7 +5,7 @@
     <div class="class-body">
         {{ Html::decode( Html::linkRoute('class.show', image($result->user->directory.'/search_'.$result->image, $result->image, ['class' => 'img-responsive']) , $result->slug ) ) }}
         <li class="list-group-item text-center class-title">
-            <h4>{{ Html::decode( Html::linkRoute('class.show',str_limit($result->name, 25, '...'), $result->slug ) ) }}</h4>
+            <h4>{{ Html::decode( Html::linkRoute('class.show',str_limit($result->name, 23, '...'), $result->slug ) ) }}</h4>
             <p><span class="icon icon-sm icon-sm-marker mr5"></span>{{ str_limit($result->venue->address, 24, '...') }}</p>
         </li>
         <li class="list-group-item class-footer">

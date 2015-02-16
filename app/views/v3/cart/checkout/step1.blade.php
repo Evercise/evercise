@@ -7,7 +7,6 @@
 </li>
 <hr class="dark">
 @foreach($sessions_grouped as $row)
-
 <li class="item">
     <div class="col-xs-6 info">
         <strong>{{ $row['name']}}</strong><br>
@@ -66,26 +65,27 @@
         {{Form::close()}}
     </div>
 </li>
-<hr>
 @endforeach
-<hr class="dark up">
-<li id="voucher" class="voucher switch-cart">
-<div class="col-sm-10 col-sm-offset-1">
-    {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
-        <div class="row">
-            <div class="col-md-4">
-                I have a voucher code:
-            </div>
-            <div class="col-md-6">
-                {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
-            </div>
-            <div class="col-md-2 sm-mt10">
-                {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
-            </div>
+@if(empty($discount['amount']) || $discount['amount'] == 0)
+    <hr class="dark up">
+    <li id="voucher" class="voucher switch-cart">
+        <div class="col-sm-10 col-sm-offset-1">
+            {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
+                <div class="row">
+                    <div class="col-md-4">
+                        I have a voucher code:
+                    </div>
+                    <div class="col-md-6">
+                        {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
+                    </div>
+                    <div class="col-md-2 sm-mt10">
+                        {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
+                    </div>
+                </div>
+            {{ Form::close() }}
         </div>
-    {{ Form::close() }}
-</div>
-</li>
+    </li>
+@endif
 <hr class="dark switc-cart">
 <li class="total">
     <div class="col-xs-8"><strong>Sub-Total</strong></div>
@@ -119,10 +119,8 @@
             </div>
             </li>
         @endforeach
-
     @endforeach
 @endif
-
 <hr class="dark">
 <li class="total">
     <div class="col-xs-8"><strong>Total</strong></div>
