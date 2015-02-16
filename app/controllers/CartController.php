@@ -32,13 +32,14 @@ class CartController extends \BaseController
     }
 
 
-    public function checkout()
+    public function checkout($step = 0)
     {
         $coupon = Session::get('coupon', FALSE);
         $data = EverciseCart::getCart($coupon);
 
-        if (empty($data['sessions_grouped']) && empty($data['packages']) && empty($data['sessions']))
+        if (empty($data['sessions_grouped']) && empty($data['packages']) && empty($data['sessions'])) {
             return Redirect::route('home');
+        }
 
         $packages = [];
 
@@ -47,6 +48,7 @@ class CartController extends \BaseController
         }
 
         $data['coupon'] = $coupon;
+        $data['step'] = $step;
         $data['user'] = Sentry::getUser();
         $data['packages_available'] = $packages;
         $data['cart'] = View::make('v3.cart.dropdown')->with(EverciseCart::getCart())->render();

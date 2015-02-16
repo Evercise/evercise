@@ -345,7 +345,7 @@ Route::get('confo', [
 
 // Cart
 Route::group(['prefix' => 'cart'], function () {
-    Route::get('checkout',
+    Route::get('checkout/{step?}',
         ['as' => 'cart.checkout', 'uses' => 'CartController@checkout']);
     Route::get('confirm',
         ['as' => 'cart.confirm', 'uses' => 'CartController@confirm']);
