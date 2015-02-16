@@ -9013,6 +9013,7 @@ fieldset[disabled] .btn-grey.active {
   background: #ffffff;
   color: #ccc;
   border-color: #aaa;
+  font-weight: 400;
 }
 .btn-pill:hover,
 .btn-pill:active,

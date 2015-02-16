@@ -48,13 +48,13 @@
     <div class="results">
         <div ng-if="width < 992" class="row mt10 mb10 ml0 mr0 sm-inline-gutter visible-xs-block visible-sm-block">
              {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
-                 <div class="col-xs-9">
+                 <div class="col-xs-9 col-sm-10">
                      <div class="input-group">
                          <div class="input-group-addon"><span class="icon icon-search"></span></div>
                          <input type="text" name="search" value="{[{ results.search}]}" class="form-control input-lg" placeholder="I am looking for....Running">
                      </div>
                  </div>
-                 <div class="col-xs-3">
+                 <div class="col-xs-3  col-sm-2">
                      <div class="btn-find-me">
                          {{ Form::hidden('location', NULL ) }}
                          {{ Form::hidden('city', NULL) }}
