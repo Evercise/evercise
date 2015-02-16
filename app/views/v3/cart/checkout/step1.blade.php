@@ -68,24 +68,27 @@
 </li>
 <hr>
 @endforeach
-<hr class="dark up">
-<li id="voucher" class="voucher switch-cart">
-<div class="col-sm-10 col-sm-offset-1">
-    {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
-        <div class="row">
-            <div class="col-md-4">
-                I have a voucher code:
-            </div>
-            <div class="col-md-6">
-                {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
-            </div>
-            <div class="col-md-2 sm-mt10">
-                {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
-            </div>
+
+@if(empty($discount['amount']) || $discount['amount'] == 0)
+    <hr class="dark up">
+    <li id="voucher" class="voucher switch-cart">
+        <div class="col-sm-10 col-sm-offset-1">
+            {{ Form::open(['route'=> 'cart.coupon', 'method' => 'post', 'id' => 'add-voucher']) }}
+                <div class="row">
+                    <div class="col-md-4">
+                        I have a voucher code:
+                    </div>
+                    <div class="col-md-6">
+                        {{ Form::text('coupon', null, ['class' => 'form-control input-sm', 'placeholder' => 'Enter your voucher']) }}
+                    </div>
+                    <div class="col-md-2 sm-mt10">
+                        {{ Form::submit('Add Code', ['class' => 'btn btn-primary btn-sm btn-block']) }}
+                    </div>
+                </div>
+            {{ Form::close() }}
         </div>
-    {{ Form::close() }}
-</div>
-</li>
+    </li>
+@endif
 <hr class="dark switc-cart">
 <li class="total">
     <div class="col-xs-8"><strong>Sub-Total</strong></div>

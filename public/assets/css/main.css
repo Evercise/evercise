@@ -10561,7 +10561,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .checkout li:not(.list-group-item).voucher {
   line-height: 31px;
   font-weight: 600;
-  padding: 24px 0;
+  padding: 10px 0;
 }
 .checkout li:not(.list-group-item).total {
   font-size: 14px;

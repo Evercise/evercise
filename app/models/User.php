@@ -186,6 +186,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function pendingWithdrawals()
+    {
+        return $this->hasMany('Withdrawalrequest')->where('withdrawalrequests.processed', 0);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function emailOut()
     {
         return $this->hasMany('EmailOut');

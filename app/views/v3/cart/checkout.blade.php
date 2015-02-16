@@ -6,12 +6,13 @@
 </script>
 <div class="container">
     <div class="row">
-        <div class="page-header col-sm-12">
+        <div class="page-header col-sm-9">
             <h1 class="h2">Checkout</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3 pull-right visible-md-block visible-lg-block">
+
            <ul class="cart-progress sticky">
                 <div id="progress-1" class="progress-box">
                 <li class="title active"><span class="icon icon-pink-circle mr10"></span>Review Order</li>

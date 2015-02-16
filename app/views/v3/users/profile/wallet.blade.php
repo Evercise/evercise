@@ -23,6 +23,24 @@
                             @endif
                         </div>
                     </li>
+                    @if(count($data['user']->pendingWithdrawals))
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @foreach($data['user']->pendingWithdrawals as $pw)
+                                    <div><strong>Pending withdrawal: </strong><span  class="text-primary">£{{round($pw->transaction_amount, 2)}}</span> on <span  class="text-primary">{{ date('M jS Y' , strtotime($pw->created_at)) }}</span></div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                    <div>Withdrawal requests are processed every Monday.</div>
+                            </div>
+                        </div>
+                    </li>
+                    @endif
                 </ul>
                 @endif
 
