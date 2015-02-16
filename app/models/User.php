@@ -444,20 +444,12 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public static function getFacebookUser($redirect_url, $params = '')
     {
-        $param = '';
-        if(!empty($params)) {
-            $data = explode(':', $params);
-            if(!empty($data[1])) {
-                $param = $data[1];
-            }
-        }
-        
         try {
             // Use a single object of a class throughout the lifetime of an application.
             $application = Config::get('facebook');
             $permissions = 'publish_stream,email,user_birthday,read_stream';
             if ($redirect_url != NULL) {
-                $url_app = Request::root() . '/login/fb/' . $redirect_url.'/'.$param;
+                $url_app = Request::root() . '/login/fb/' . $redirect_url.'/'.$params;
             } else {
                 $url_app = Request::root() . '/login/fb';
             }
@@ -467,9 +459,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             FacebookConnect::getFacebook($application);
             $getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
+
             return $getUser;
         } catch (Exception $e) {
             Log::error('There was an error communicating with Facebook' . $e);
+
         }
 
     }
@@ -498,17 +492,18 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public static function facebookRedirectHandler($redirect = NULL, $user, $message = NULL)
+    public static function facebookRedirectHandler($redirect = NULL, $user, $message = NULL, $params = '')
     {
+        if (!empty($params)) {
+            $data = explode(':', $params);
 
-        $params = [];
-        if (Session::has('FB_REDIRECT_PARAMS')) {
-            $data = explode(':', Session::get('FB_REDIRECT_PARAMS'));
+            $params = [];
 
             if (!empty($data[1])) {
                 $params[$data[0]] = $data[1];
             }
-            Session::forget('FB_REDIRECT_PARAMS');
+        } else {
+            $params = [];
         }
 
 
