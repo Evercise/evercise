@@ -77,14 +77,8 @@ class UsersController extends \BaseController
 
         $me = $getUser['user_profile'];
 
-
         if(!empty($params)) {
             Session::put('FB_REDIRECT_PARAMS', $params);
-        }
-
-
-        if(!empty($params)) {
-
         }
 
 
@@ -144,7 +138,7 @@ class UsersController extends \BaseController
 
                 Sentry::login($user, false);
 
-                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'));
+                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'), $params);
 
                 event('user.registeredFacebook', [$user]);
 
