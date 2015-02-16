@@ -140,13 +140,18 @@ class Evercisesession extends \Eloquent
 
             $date_time = $sessionData['date'] . ' ' . $sessionData['time'].':00';
 
-            $evercisegroupName = Evercisesession::create([
+
+            $session = Evercisesession::create([
                 'evercisegroup_id' => $sessionData['evercisegroup_id'],
                 'date_time' => new \Carbon\Carbon($date_time),
                 'price' => $sessionData['price'],
                 'duration' => $sessionData['duration'],
                 'tickets' => $sessionData['tickets'],
-            ])->evercisegroup->name;
+            ]);
+
+            $evercisegroupName = $session->evercisegroup->name;
+
+
 
 
             $timestamp = strtotime($date_time);

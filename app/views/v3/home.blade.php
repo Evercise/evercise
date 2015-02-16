@@ -32,7 +32,7 @@
                         <div class="col-sm-4">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon icon-pointer"></span></div>
-                                {{ Form::text('location', NULL, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete', 'data-toggle' => 'dropdown',  'autocomplete' => 'off']) }}
+                                {{ Form::text('location', NULL, ['class' => 'form-control', 'placeholder' => 'Location', 'id' => 'location-auto-complete',  'autocomplete' => 'off']) }}
                                 {{ Form::hidden('fullLocation', NULL) }}
                                 <ul id="locaction-autocomplete" class="dropdown-menu category-select" >
                                     <li id="near-me" class="heading locator"><span class="icon icon-locator-pink-small"></span>Use my Current Location</li>
@@ -49,13 +49,13 @@
             </div>
             <div class="row mt10 mb10 sm-inline-gutter visible-xs-block visible-sm-block">
                 {{ Form::open(['route' => 'evercisegroups.search', 'method' => 'get',  'role' => 'form', 'id' => 'search-form'] ) }}
-                    <div class="col-xs-10">
+                    <div class="col-xs-9  col-sm-10">
                         <div class="input-group">
                             <div class="input-group-addon"><span class="icon icon-search"></span></div>
                             {{ Form::text('search', NULL, ['class' => 'form-control input-lg', 'placeholder' => 'I am looking for....Running']) }}
                         </div>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-3  col-sm-2">
                         <div class="btn-find-me">
                             {{ Form::hidden('location', NULL ) }}
                             {{ Form::hidden('city', NULL) }}
@@ -138,7 +138,7 @@
     @endforeach
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mb30">
                 <div class="page-header text-center">
                     <span class="text-primary text-larger">What are you looking for?</span>
                 </div>

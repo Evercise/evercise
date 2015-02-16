@@ -7,12 +7,49 @@
         <div id="" class="row">
             <div class="col-md-6">
 
+                @if($data['user']->isTrainer())
+                <ul class="list-group mb20">
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-sm-7 sm-mb10">
+                                <h3>Current Balance: <span class="text-primary">£{{round($data['user']->getWallet()->getBalance(), 2)}}</span> </h3>
+                            </div>
+                            @if($data['user']->getWallet()->balance > 5 && $data['user']->isTrainer())
+                                <div class="col-sm-5 text-right">
+                                    {{ Form::open(['route' => 'ajax.request.withdrawal', 'method' => 'post', 'id' => 'withdraw-funds']) }}
+                                    {{ Form::submit('Withdraw Funds', ['class' => 'btn btn-default sm-btn-block']) }}
+                                    {{Form::close()}}
+                                </div>
+                            @endif
+                        </div>
+                    </li>
+                    @if(count($data['user']->pendingWithdrawals))
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                @foreach($data['user']->pendingWithdrawals as $pw)
+                                    <div><strong>Pending withdrawal: </strong><span  class="text-primary">£{{round($pw->transaction_amount, 2)}}</span> on <span  class="text-primary">{{ date('M jS Y' , strtotime($pw->created_at)) }}</span></div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item ">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                    <div>Withdrawal requests are processed every Monday.</div>
+                            </div>
+                        </div>
+                    </li>
+                    @endif
+                </ul>
+                @endif
+
                 <ul class="list-group">
 
                   <li class="list-group-item ">
                     <div class="row">
                         <div class="col-sm-12">
-                            <h3>Add to your balance</h3>
+                            <h3>Rewards</h3>
                         </div>
                     </div>
                   </li>
