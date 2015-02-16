@@ -58,6 +58,9 @@
                         {{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10 login-form', 'role' => 'form'] ) }}
                             {{ Form::hidden('redirect_after_login', 'true') }}
                             {{ Form::hidden('redirect_after_login_url', 'cart.checkout') }}
+
+                            {{ Html::linkRoute('users.fb', 'Connect via Facebook', 'cart.checkout', ['class' => 'custom-fb mb15']) }}
+                            <div class="text-divider mb15 pull-left">or</div>
                             <div class="form-group">
                                 <label for="email">What  is your Email Address?</label>
                                 <div class="input-list">
@@ -67,8 +70,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-divider mb15">or</div>
-                            {{ Html::linkRoute('users.fb', 'Connect via Facebook', 'cart.checkout', ['class' => 'custom-fb mb15']) }}
                             <label for="account">Do you have a Evercise account?</label>
                             <div class="input-list">
                                  <div class="custom-checkbox form-control input-lg mt10 input-group">
