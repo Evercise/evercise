@@ -23,7 +23,7 @@ return [
             'link'  => '/uk/london?search=martial+arts'
         ],
         [
-            'title' => 'Pilate Classes',
+            'title' => 'Pilates Classes',
             'image' => '/img/home/Pilates.jpg',
             'link'  => '/uk/london?search=pilates'
         ]

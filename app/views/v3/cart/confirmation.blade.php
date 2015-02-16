@@ -55,7 +55,7 @@
                     <li class="item">
                         <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
-                                {{ Html::linkRoute('users.edit', 'View my Account', $user->display_name , ['class' => 'btn btn-primary btn-block']) }}
+                                {{ Html::linkRoute('users.edit', 'View my Account', [$user->display_name, 'upcoming'] , ['class' => 'btn btn-primary btn-block']) }}
                             </div>
                         </div>
                     </li>
