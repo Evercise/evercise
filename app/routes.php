@@ -234,7 +234,7 @@ Route::get(
 {
    return $redirect;
 }]);*/
-Route::get('login/fb/{redirect?}', ['as' => 'users.fb', 'uses' => 'UsersController@fb_login']);
+Route::get('login/fb/{redirect?}/{param?}', ['as' => 'users.fb', 'uses' => 'UsersController@fb_login']);
 
 Route::post('auth/checkout', ['as' => 'auth.checkout', 'uses' => 'SessionsController@checkout']);
 
@@ -345,7 +345,7 @@ Route::get('confo', [
 
 // Cart
 Route::group(['prefix' => 'cart'], function () {
-    Route::get('checkout',
+    Route::get('checkout/{step?}',
         ['as' => 'cart.checkout', 'uses' => 'CartController@checkout']);
     Route::get('confirm',
         ['as' => 'cart.confirm', 'uses' => 'CartController@confirm']);

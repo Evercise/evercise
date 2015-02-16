@@ -70,12 +70,16 @@ class UsersController extends \BaseController
     }
 
 
-    public function fb_login($redirect_url = null)
+    public function fb_login($redirect_url = null, $params = '')
     {
 
-        $getUser = User::getFacebookUser($redirect_url);
+        $getUser = User::getFacebookUser($redirect_url, $params);
 
         $me = $getUser['user_profile'];
+
+        if(!empty($params)) {
+            Session::put('FB_REDIRECT_PARAMS', $params);
+        }
 
 
         if (empty($me)) {
@@ -134,7 +138,7 @@ class UsersController extends \BaseController
 
                 Sentry::login($user, false);
 
-                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'));
+                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'), $params);
 
                 event('user.registeredFacebook', [$user]);
 
@@ -156,8 +160,20 @@ class UsersController extends \BaseController
 
                 $result = Redirect::route('users.edit', ['id'=>$user->display_name]);
 
+                $params = [];
+                if (Session::has('FB_REDIRECT_PARAMS')) {
+                    $data = explode(':', Session::get('FB_REDIRECT_PARAMS'));
+
+                    if (!empty($data[1])) {
+                        $params[$data[0]] = $data[1];
+                    }
+                    Session::forget('FB_REDIRECT_PARAMS');
+                }
+
+
+
                 if(!is_null($redirect_url)) {
-                    $result = Redirect::route($redirect_url);
+                    $result = Redirect::route($redirect_url, $params);
                 }
 
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {

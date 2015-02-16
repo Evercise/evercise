@@ -69,7 +69,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-    public function mindbody() {
+    public function mindbody()
+    {
         return $this->hasOne('ExternalService')->where('service', 'mindbody');
     }
 
@@ -441,14 +442,14 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     }
 
-    public static function getFacebookUser($redirect_url)
+    public static function getFacebookUser($redirect_url, $params = '')
     {
         try {
             // Use a single object of a class throughout the lifetime of an application.
             $application = Config::get('facebook');
             $permissions = 'publish_stream,email,user_birthday,read_stream';
             if ($redirect_url != NULL) {
-                $url_app = Request::root() . '/login/fb/' . $redirect_url;
+                $url_app = Request::root() . '/login/fb/' . $redirect_url.'/'.$params;
             } else {
                 $url_app = Request::root() . '/login/fb';
             }
@@ -458,9 +459,11 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
             FacebookConnect::getFacebook($application);
             $getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
+
             return $getUser;
         } catch (Exception $e) {
             Log::error('There was an error communicating with Facebook' . $e);
+
         }
 
     }
@@ -489,18 +492,31 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      * @param $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public static function facebookRedirectHandler($redirect = NULL, $user, $message = NULL)
+    public static function facebookRedirectHandler($redirect = NULL, $user, $message = NULL, $params = '')
     {
+        if (!empty($params)) {
+            $data = explode(':', $params);
+
+            $params = [];
+
+            if (!empty($data[1])) {
+                $params[$data[0]] = $data[1];
+            }
+        } else {
+            $params = [];
+        }
+
+
         if ($redirect != NULL) {
             if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
             {
-                $result = Redirect::route($redirect)->with(
+                $result = Redirect::route($redirect, $params)->with(
                     'notification', $message
                 );
 
             } else // Used when logging in before hitting the checkout
             {
-                $result = Redirect::route($redirect);
+                $result = Redirect::route($redirect, $params);
 
             }
         } else {
@@ -600,7 +616,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
         $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : ($inputs['gender'] == 'female' ? 2 : 0) ) : 0;
+        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : ($inputs['gender'] == 'female' ? 2 : 0)) : 0;
 
 
         $user = Sentry::register(
@@ -780,7 +796,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function getGender()
     {
-        return ($this->gender == 1 ? 'male' : ($this->gender == 2 ? 'female' : '') );
+        return ($this->gender == 1 ? 'male' : ($this->gender == 2 ? 'female' : ''));
     }
 
     public function hasTwitter()
