@@ -234,7 +234,7 @@ Route::get(
 {
    return $redirect;
 }]);*/
-Route::get('login/fb/{redirect?}', ['as' => 'users.fb', 'uses' => 'UsersController@fb_login']);
+Route::get('login/fb/{redirect?}/{param?}', ['as' => 'users.fb', 'uses' => 'UsersController@fb_login']);
 
 Route::post('auth/checkout', ['as' => 'auth.checkout', 'uses' => 'SessionsController@checkout']);
 

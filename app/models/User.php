@@ -69,7 +69,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     }
 
 
-    public function mindbody() {
+    public function mindbody()
+    {
         return $this->hasOne('ExternalService')->where('service', 'mindbody');
     }
 
@@ -491,16 +492,28 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
      */
     public static function facebookRedirectHandler($redirect = NULL, $user, $message = NULL)
     {
+
+        $params = [];
+        if (Session::has('FB_REDIRECT_PARAMS')) {
+            $data = explode(':', Session::get('FB_REDIRECT_PARAMS'));
+
+            if (!empty($data[1])) {
+                $params[$data[0]] = $data[1];
+            }
+            Session::forget('FB_REDIRECT_PARAMS');
+        }
+
+
         if ($redirect != NULL) {
             if ($redirect == 'trainers.create') // Used when the 'i want to list classes' button is clicked in the register page
             {
-                $result = Redirect::route($redirect)->with(
+                $result = Redirect::route($redirect, $params)->with(
                     'notification', $message
                 );
 
             } else // Used when logging in before hitting the checkout
             {
-                $result = Redirect::route($redirect);
+                $result = Redirect::route($redirect, $params);
 
             }
         } else {
@@ -600,7 +613,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
         $password = $inputs['password'];
         $area_code = isset($inputs['areacode']) ? $inputs['areacode'] : '+44';
         $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
-        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : ($inputs['gender'] == 'female' ? 2 : 0) ) : 0;
+        $gender = isset($inputs['gender']) ? ($inputs['gender'] == 'male' ? 1 : ($inputs['gender'] == 'female' ? 2 : 0)) : 0;
 
 
         $user = Sentry::register(
@@ -780,7 +793,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
     public function getGender()
     {
-        return ($this->gender == 1 ? 'male' : ($this->gender == 2 ? 'female' : '') );
+        return ($this->gender == 1 ? 'male' : ($this->gender == 2 ? 'female' : ''));
     }
 
     public function hasTwitter()
