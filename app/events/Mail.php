@@ -286,12 +286,12 @@ class Mail
 
 
         $params = [
-            'subject'  => 'Reset Password',
-            'title'    => 'Evercise password reset',
-            'view'     => 'v3.emails.user.forgot_password',
-            'user'     => $user,
-            'banner'   => FALSE,
-            'image'    => image('/assets/img/email/user_default.jpg', 'reset your password'),
+            'subject'   => 'Reset Password',
+            'title'     => 'Evercise password reset',
+            'view'      => 'v3.emails.user.forgot_password',
+            'user'      => $user,
+            'banner'    => FALSE,
+            'image'     => image('/assets/img/email/user_default.jpg', 'reset your password'),
             'resetCode' => $resetCode
         ];
 
@@ -341,8 +341,16 @@ class Mail
      * Event session.upcoming_session
      * Single event fires emails to all users and the trainer involved in the session.
      */
-    public function usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId)
-    {
+    public function usersSessionRemind(
+        $userList,
+        $group,
+        $location,
+        $dateTime,
+        $trainerName,
+        $trainerEmail,
+        $classId,
+        $sessionId
+    ) {
         foreach ($userList as $name => $details) {
             $email = $details['email'];
 
@@ -520,7 +528,8 @@ class Mail
             'user'           => $user,
             'everciseGroups' => $everciseGroups,
             'banner'         => FALSE,
-            'image'          => image('/assets/img/email/user_default.jpg', 'You have not used your £5 Evercise Balance'),
+            'image'          => image('/assets/img/email/user_default.jpg',
+                'You have not used your £5 Evercise Balance'),
             'link_url'       => $this->url->to('/uk/london')
         ];
 
@@ -583,11 +592,11 @@ class Mail
     public function messageReply($sender, $recipient, $body)
     {
         $params = [
-            'subject'        => 'You have a new message',
-            'view'           => 'v3.emails.user.mail_reply',
-            'sender'         => $sender,
-            'recipient'      => $recipient,
-            'messageBody'    => $body
+            'subject'     => 'You have a new message',
+            'view'        => 'v3.emails.user.mail_reply',
+            'sender'      => $sender,
+            'recipient'   => $recipient,
+            'messageBody' => $body
         ];
 
         $this->send($recipient->email, $params);
@@ -688,6 +697,55 @@ class Mail
         ];
 
         $this->send($trainer->email, $params);
+
+    }
+
+
+    /**
+     * @param $class
+     * @param $trainer
+     */
+    public function sendEmailAgain()
+    {
+
+
+        die('LETS NOT TRIGGER THIS AGAIN');
+        $users = [
+            'ZL249@cam.ac.uk',
+            'xinsheng.zhang@kcl.ac.uk',
+            'md@alanday.co.uk',
+            'leadavies@btinternet.com',
+            'chelsea@chelseahayes.co.uk',
+            'natalija.bogdanovic666@gmail.com',
+            'jokelly86@googlemail.com',
+            'jelena.miholjac@yahoo.co.uk',
+            'cinilak@yahoo.com',
+            'Anishauk79@hotmail.com',
+            'Aislingnutley@hotmail.com',
+            'yardley4@hotmail.com',
+            'stephen@dubishere.com',
+            'szilvia.uri@gmail.com',
+            'horvat.arpad@gmail.com',
+            'tchitava@gmail.com',
+            'ruska_dd@yahoo.com',
+            'ed@dubishere.com',
+            'accounts@dubishere.com',
+            'sboudoux@gmail.com',
+            'mlatko@gmail.com'
+        ];
+
+        foreach($users as $email) {
+
+            $params = [
+                'subject' => 'Evercise Invitation',
+                'title'   => 'Invitation',
+                'view'    => 'v3.emails.user.testers'
+            ];
+
+
+            $this->send($email, $params);
+        }
+
 
     }
 
@@ -797,31 +855,29 @@ class Mail
         // This is fired once for each batch of classes belonging to a single trainer, so the Trainer only gets a single email per booking.
 
         $classes = [];
-        foreach($sessionDetails as $sd)
-        {
-            $this->log->info('SESSION BOOKED: '.$sd['session']->id);
+        foreach ($sessionDetails as $sd) {
+            $this->log->info('SESSION BOOKED: ' . $sd['session']->id);
 
             $trainer = $sd['trainer'];
             $user = $sd['user'];
 
-            if (! isset($classes[$sd['group']->id]))
-            {
+            if (!isset($classes[$sd['group']->id])) {
                 $classes[$sd['group']->id] = [
                     'transaction' => $sd['transaction'],
-                    'session' => $sd['session'],
-                    'codes' => $sd['transaction']->makeBookingHashBySession($sd['session']->id)
+                    'session'     => $sd['session'],
+                    'codes'       => $sd['transaction']->makeBookingHashBySession($sd['session']->id)
                 ];
             }
         }
 
         $params = [
-            'subject'       => 'A User just Joined your Class',
-            'view'          => 'v3.emails.trainer.user_joined_classes',
-            'trainer'       => $trainer,
-            'user'          => $user,
-            'classes'       => $classes,
-            'link_url'      => $this->url->to('/'),
-            'image'         => image('assets/img/email/user_booking_confirmation.jpg',
+            'subject'  => 'A User just Joined your Class',
+            'view'     => 'v3.emails.trainer.user_joined_classes',
+            'trainer'  => $trainer,
+            'user'     => $user,
+            'classes'  => $classes,
+            'link_url' => $this->url->to('/'),
+            'image'    => image('assets/img/email/user_booking_confirmation.jpg',
                 'someone has joined your classs'),
         ];
 
@@ -951,13 +1007,13 @@ class Mail
     public function notReturnedTrainer($trainer)
     {
         $params = [
-            'subject'        => 'Don’t be a stranger!',
-            'title'          => 'Don’t be a stranger!',
-            'view'           => 'v3.emails.trainer.why_not_coming_back',
-            'user'           => $trainer,
-            'banner'         => FALSE,
-            'image'          => image('/assets/img/email/user_default.jpg', 'Don’t be a stranger!'),
-            'link_url'       => $this->url->to('/uk/london')
+            'subject'  => 'Don’t be a stranger!',
+            'title'    => 'Don’t be a stranger!',
+            'view'     => 'v3.emails.trainer.why_not_coming_back',
+            'user'     => $trainer,
+            'banner'   => FALSE,
+            'image'    => image('/assets/img/email/user_default.jpg', 'Don’t be a stranger!'),
+            'link_url' => $this->url->to('/uk/london')
         ];
 
         $this->send($trainer->email, $params);
@@ -1026,6 +1082,8 @@ class Mail
             $this->data['banner'] = $this->data['banner_types'][$this->data['banner']];
         }
 
+        $this->data['email'] = $email;
+
         $subject = $this->data['subject'];
         $attachments = $this->data['attachments'];
 
@@ -1036,7 +1094,7 @@ class Mail
         $parse = new CssToInlineStyles($view, $this->data['css']);
 
         $content = $parse->convert();
-        
+
         $plain_text = $this->plainText($content);
 
 
@@ -1058,16 +1116,12 @@ class Mail
             $user_id = \User::where('email', $email)->pluck('id');
         }
 
-        if ($user_id) {
-            EmailOut::addRecord($user_id, $name);
-        } else {
-            $this->log->info('CANNOT FIND USER BY EMAIL: ' . $email . '. This is probably a referral to a not-yet-registered address. ');
-        }
 
 
         if ($this->config->get('pardot.active')) {
             $campayn_id = $this->config->get('pardot.campayns.' . $name);
         }
+
 
         $sent = FALSE;
         if (!empty($campayn_id)) {
@@ -1089,16 +1143,24 @@ class Mail
             }
         }
 
+        $message_id = '';
+
         if (!$sent) {
             try {
 
+
+
                 /** Remove Unsubscribe for now! */
                 $content = str_replace('%%unsubscribe%%', '', $content);
+                $content = str_replace('dev.evercise.com', 'evercise.com', $content);
                 $plain_text = str_replace('%%unsubscribe%%', '', $plain_text);
+                $plain_text = str_replace('dev.evercise.com', 'evercise.com', $plain_text);
+
 
                 $this->email->send(['v3.emails.blank', 'v3.emails.plain_blank'],
                     ['content' => $content, 'plain_text' => $plain_text],
-                    function ($message) use ($email, $subject, $attachments) {
+                    function ($message) use ($email, $subject, $attachments, &$message_id) {
+                        $message_id = $message->getId();
                         $message->to($email)->subject($subject);
                         if (count($attachments) > 0) {
                             foreach ($attachments as $attachment) {
@@ -1107,11 +1169,20 @@ class Mail
                         }
                     });
                 $this->log->info('Email sent with basic sending');
+
             } catch (Exception $e) {
                 $this->log->error('Email could not be sent ' . $e->getMessage());
 
                 /** ADD HERE SOME SORT OF NOTIFICATION TO ADMINS !!!*/
 
+            }
+
+
+
+            if ($user_id) {
+                EmailOut::addRecord($user_id, $name, $message_id);
+            } else {
+                EmailOut::addRecord($email, $name, $message_id);
             }
         }
 
