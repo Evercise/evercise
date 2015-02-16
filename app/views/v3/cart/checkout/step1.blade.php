@@ -7,7 +7,6 @@
 </li>
 <hr class="dark">
 @foreach($sessions_grouped as $row)
-
 <li class="item">
     <div class="col-xs-6 info">
         <strong>{{ $row['name']}}</strong><br>
@@ -66,9 +65,7 @@
         {{Form::close()}}
     </div>
 </li>
-<hr>
 @endforeach
-
 @if(empty($discount['amount']) || $discount['amount'] == 0)
     <hr class="dark up">
     <li id="voucher" class="voucher switch-cart">
@@ -122,10 +119,8 @@
             </div>
             </li>
         @endforeach
-
     @endforeach
 @endif
-
 <hr class="dark">
 <li class="total">
     <div class="col-xs-8"><strong>Total</strong></div>

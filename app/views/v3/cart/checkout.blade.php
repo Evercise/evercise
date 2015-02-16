@@ -29,7 +29,6 @@
         </div>
         <div class="col-md-9">
             <ul class="checkout">
-
                  <div id="step-1" class="cart-step">
                     <li class="title active"><div class="col-sm-12">Review Order</div></li>
                     @include('v3.cart.checkout.step1')
@@ -37,7 +36,19 @@
                  </div>
                  <hr class="dark">
                  <li class="text-right">
-                    <a data-step="1" class="collapsed btn btn-white-primary continue sm-btn-block" data-toggle="collapse"  href="#step-2">Continue</a>
+
+                     @if(isset($user))
+                         @if($total['final_cost'] > 0)
+                             <a data-step="1" class="collapsed btn btn-white-primary continue sm-btn-block" data-toggle="collapse"  href="#step-2">Continue</a>
+                         @elseif($total['subtotal'] == $total['package_deduct'])
+                             {{ Html::linkRoute('wallet.sessions', 'Pay with Package',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary']) }}
+                         @else
+                             {{ Html::linkRoute('wallet.sessions', 'Complete Payment',[], ['id'=>'wallet-button', 'class'=>'btn btn-primary']) }}
+                         @endif
+                     @else
+                        <a data-step="1" class="collapsed btn btn-white-primary continue sm-btn-block" data-toggle="collapse"  href="#step-2">Continue</a>
+                     @endif
+
                  </li>
 
                  <li class="title"><div class="col-sm-12">Details & Payment</div></li>

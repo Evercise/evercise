@@ -211,10 +211,29 @@ if(typeof angular != 'undefined') {
             clusterOptions: $scope.clusterOptions
         };
 
+        $scope.bounds = {
+
+        }
 
 
         // map events
-        $scope.mapEvents = {}
+        $scope.mapEvents = {
+            // any map events go here
+            dragend : function () {
+                // map instance
+                var m = $scope.map.control.getGMap();
+                // bounds of viewport of map
+                var bounds = m.getBounds();
+                var ne = bounds.getNorthEast();
+                var sw = bounds.getSouthWest();
+                // map bounds object
+                var mapBounds = {};
+                mapBounds.ne = ne.lat() + ',' + ne.lng();
+                mapBounds.sw = sw.lat() + ','+sw.lng();
+                $scope.bounds = mapBounds;
+                $scope.getData();
+            }
+        }
 
 
         // class results
@@ -377,10 +396,11 @@ if(typeof angular != 'undefined') {
                     date : $scope.selectedDate,
                     radius : $scope.results.radius,
                     sort : $scope.results.sort,
-                    search : $scope.results.search
+                    search : $scope.results.search,
+                    ne : $scope.bounds.ne,
+                    sw : $scope.bounds.sw
                 }
             }
-
             var responsePromise = $http(req);
             // close tab
             $scope.openFilter = null;
@@ -390,6 +410,7 @@ if(typeof angular != 'undefined') {
             $scope.resultsLoading = true;
 
             responsePromise.success(function(data) {
+                console.log(data);
                 $scope.results = data;
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.everciseGroups = shapeEverciseGroups();
@@ -405,13 +426,11 @@ if(typeof angular != 'undefined') {
                     },
                     radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
                 }
-                $scope.map = {
-                    zoom: $scope.initialZoom(),
-                    maxZoom: 16,
-                    center:  { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter()},
-                    control: {},
-                    clusterOptions: $scope.clusterOptions
+                $scope.map.center =  {
+                    latitude: $scope.results.area.lat,
+                    longitude: $scope.setMapCenter()
                 };
+                $scope.map.zoom = $scope.initialZoom();
 
             });
 
@@ -427,6 +446,20 @@ if(typeof angular != 'undefined') {
         $(window).resize(function(){
             $scope.width = window.innerWidth;
         });
+
+        $scope.$watch(function () {
+            return $scope.map;
+        }, function () {
+            uiGmapGoogleMapApi.then(function(maps) {
+                var latlng = new maps.LatLng($scope.results.area.lat, $scope.results.area.lng);
+                $scope.originalBounds =  new google.maps.Circle({center:latlng , radius:$scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344 }).getBounds();
+                $scope.bounds = {
+                    ne : $scope.originalBounds.getNorthEast().toString(),
+                    sw : $scope.originalBounds.getSouthWest().toString()
+                }
+            });
+
+        })
 
         $scope.$watch('width', function(value) {
             if(value < 768){
