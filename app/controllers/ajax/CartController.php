@@ -36,6 +36,13 @@ class CartController extends AjaxBaseController
 
             $rowIds = EverciseCart::search(['id' => $productCode]);
 
+            if ($session->date_time < date('Y-m-d H:i:s')) {
+                return Response::json([
+                    'validation_failed' => 1,
+                    'errors'            => ['custom' => 'This class occurred in the past']
+                ]);
+            }
+
             if ($rowIds[0]) // If product ID already exists in cart, then add to quantity.
             {
                 $rowId = $rowIds[0];

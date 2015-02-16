@@ -128,7 +128,7 @@ class Elastic
                 ]
             ];
         } else {
-            if(!isset($params['all'])) {
+            if (!isset($params['all'])) {
                 $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = ['futuresessions.date_time' => ['gte' => date('Y-m-d H:i:s')]];
             }
         }
@@ -137,7 +137,7 @@ class Elastic
         if ($dates) {
 
             $searchParams['size'] = '200';
-            $searchParams['body']['fields'] = ['id','futuresessions.date_time'];
+            $searchParams['body']['fields'] = ['id', 'futuresessions.date_time'];
 
         }
 
@@ -164,7 +164,9 @@ class Elastic
 
 
         /** What Are we Searching For */
-        if ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
+        if (!empty($params['bounds'])) {
+            $searchParams['body']['query']['filtered']['filter']['bool']['must'][]['geo_bounding_box']['venue.location'] = $params['bounds'];
+        } elseif ($area->coordinate_type == 'polygon' && !empty($area->poly_coordinates) && $this->elastic_polygon) {
 
             $location_points = [];
 
@@ -195,7 +197,6 @@ class Elastic
                 ];
             }
         }
-
 
         $result = $this->elasticsearch->search($searchParams)['hits'];
 
