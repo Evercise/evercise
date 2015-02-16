@@ -6,7 +6,7 @@
          <div class="class-title-wrapper col-sm-8 sm-text-center">
             <div class="row">
                 <div class="col-sm-10">
-                    <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}"><h3>{{ str_limit($session->evercisegroup->name, 27) }}</h3></a>
+                    <a href="{{ URL::route('class.show', [$session->evercisegroup->slug]) }}" title="{{$session->evercisegroup->name}}"><h3>{{ str_limit($session->evercisegroup->name, 23) }}</h3></a>
                 </div>
                 <div class="col-sm-2">
                     {{ HTML::linkRoute('sessions.mail_trainer', '', ['sessionId'=>$session->id, 'trainerId' => $session->evercisegroup->user_id], ['class'=>'icon icon-mail mt15 mail-popup', 'id' => 'mail-popup', 'data-id' =>$session->id ]) }}
