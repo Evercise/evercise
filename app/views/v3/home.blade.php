@@ -74,7 +74,7 @@
                        <div class="page-header">
                            <div class="row">
                                 <div class="col-sm-9">
-                                    <span class="text-primary text-larger">{{ $block['title'] }}</span>
+                                    <a class="text-primary text-larger" href="{{ $block['link'] }}"> {{ $block['title'] }}</a>
                                 </div>
                                 <div class="col-sm-3 text-right hidden-sm hidden-xs">
                                     <a class="view-all-btn grey-link" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
@@ -116,7 +116,7 @@
                            <div class="page-header">
                                <div class="row">
                                     <div class="col-sm-9">
-                                        <span class="text-white text-larger">{{ $block['title'] }}</span>
+                                        <a href="{{ $block['link'] }}" class="text-white text-larger">{{ $block['title'] }}</a>
                                     </div>
                                     <div class="col-sm-3 text-right hidden-sm hidden-xs">
                                         <a class="view-all-btn text-white" href="{{ $block['link'] }}">{{ $block['link_title'] }}</a>
