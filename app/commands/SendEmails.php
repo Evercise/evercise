@@ -29,6 +29,8 @@ class SendEmails extends Command {
 	 */
 	public function __construct()
 	{
+        ini_set('max_execution_time', 200);
+        
 
 		parent::__construct();
 
@@ -182,7 +184,7 @@ class SendEmails extends Command {
 
 			}
 
-			//Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
+			Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
 		}
 		else
 		{
