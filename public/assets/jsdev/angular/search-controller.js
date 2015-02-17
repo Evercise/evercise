@@ -24,7 +24,6 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
-        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -40,6 +39,8 @@ if(typeof angular != 'undefined') {
 
         // map options
         $scope.mapOptions = {
+            minZoom: 11,
+            maxZoom: 17,
             disableDefaultUI: true,
             zoomControl : true,
             backgroundColor: '#383d48',
@@ -205,7 +206,6 @@ if(typeof angular != 'undefined') {
         }
         $scope.map = {
             zoom: $scope.initialZoom(),
-            maxZoom: 16,
             center:  { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter()},
             control: {},
             clusterOptions: $scope.clusterOptions
@@ -220,19 +220,26 @@ if(typeof angular != 'undefined') {
         $scope.mapEvents = {
             // any map events go here
             dragend : function () {
-                // map instance
-                var m = $scope.map.control.getGMap();
-                // bounds of viewport of map
-                var bounds = m.getBounds();
-                var ne = bounds.getNorthEast();
-                var sw = bounds.getSouthWest();
-                // map bounds object
-                var mapBounds = {};
-                mapBounds.ne = ne.lat() + ',' + ne.lng();
-                mapBounds.sw = sw.lat() + ','+sw.lng();
-                $scope.bounds = mapBounds;
-                $scope.getData();
+                ChangedBounds();
+            },
+            zoom_changed : function(){
+                ChangedBounds();
             }
+        }
+
+        var ChangedBounds = function(){
+            // map instance
+            var m = $scope.map.control.getGMap();
+            // bounds of viewport of map
+            var bounds = m.getBounds();
+            var ne = bounds.getNorthEast();
+            var sw = bounds.getSouthWest();
+            // map bounds object
+            var mapBounds = {};
+            mapBounds.ne = ne.lat() + ',' + ne.lng();
+            mapBounds.sw = sw.lat() + ','+sw.lng();
+            $scope.bounds = mapBounds;
+            $scope.getData(true);
         }
 
 
@@ -320,7 +327,6 @@ if(typeof angular != 'undefined') {
             var content = par.find('.content');
             var mg = parseInt(content.css('margin-left'));
             var contentWidth = -content.width();
-            console.log(mg - width);
             if(direction == 'right'){
                 var newMg = mg - width;
             }
@@ -384,7 +390,14 @@ if(typeof angular != 'undefined') {
 
         // function used for getting data from the server
 
-        $scope.getData = function(){
+        $scope.getData = function(drag){
+            var ne = $scope.bounds.ne;
+            var sw = $scope.bounds.sw;
+            if (typeof drag === "undefined" || drag === null) {
+                var drag = false;
+                ne = false;
+                sw = false;
+            }
             var path = '/ajax/uk/';
             var req = {
                 method: 'POST',
@@ -397,8 +410,8 @@ if(typeof angular != 'undefined') {
                     radius : $scope.results.radius,
                     sort : $scope.results.sort,
                     search : $scope.results.search,
-                    ne : $scope.bounds.ne,
-                    sw : $scope.bounds.sw
+                    ne : ne,
+                    sw : sw
                 }
             }
             var responsePromise = $http(req);
@@ -410,10 +423,11 @@ if(typeof angular != 'undefined') {
             $scope.resultsLoading = true;
 
             responsePromise.success(function(data) {
-                console.log(data);
                 $scope.results = data;
                 $scope.selectedDate = $scope.results.selected_date;
-                $scope.everciseGroups = shapeEverciseGroups();
+                var newGroups = shapeEverciseGroups();
+                $scope.everciseGroups = newGroups;
+                console.log($scope.results.results.hits);
                 $scope.resultsLoading = false;
                 $scope.circleOptions = {
                     center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
@@ -426,11 +440,14 @@ if(typeof angular != 'undefined') {
                     },
                     radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
                 }
-                $scope.map.center =  {
-                    latitude: $scope.results.area.lat,
-                    longitude: $scope.setMapCenter()
-                };
-                $scope.map.zoom = $scope.initialZoom();
+                if(!drag){
+                    $scope.map.center =  {
+                     latitude: $scope.results.area.lat,
+                     longitude: $scope.setMapCenter()
+                     };
+                    $scope.map.zoom = $scope.initialZoom();
+                }
+
 
             });
 
@@ -446,20 +463,6 @@ if(typeof angular != 'undefined') {
         $(window).resize(function(){
             $scope.width = window.innerWidth;
         });
-
-        $scope.$watch(function () {
-            return $scope.map;
-        }, function () {
-            uiGmapGoogleMapApi.then(function(maps) {
-                var latlng = new maps.LatLng($scope.results.area.lat, $scope.results.area.lng);
-                $scope.originalBounds =  new google.maps.Circle({center:latlng , radius:$scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344 }).getBounds();
-                $scope.bounds = {
-                    ne : $scope.originalBounds.getNorthEast().toString(),
-                    sw : $scope.originalBounds.getSouthWest().toString()
-                }
-            });
-
-        })
 
         $scope.$watch('width', function(value) {
             if(value < 768){

@@ -7,12 +7,11 @@
 <div class="container">
     <div class="row">
         <div class="page-header col-sm-9">
-            <h1 class="h2">Checkout</h1>
+            <h1 class="h2">Checkout {{$step}}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-md-3 pull-right visible-md-block visible-lg-block">
-
            <ul class="cart-progress sticky">
                 <div id="progress-1" class="progress-box">
                 <li class="title active"><span class="icon icon-pink-circle mr10"></span>Review Order</li>
@@ -36,7 +35,6 @@
                  </div>
                  <hr class="dark">
                  <li class="text-right">
-
                      @if(isset($user))
                          @if($total['final_cost'] > 0)
                              <a data-step="1" class="collapsed btn btn-white-primary continue sm-btn-block" data-toggle="collapse"  href="#step-2">Continue</a>
@@ -48,9 +46,7 @@
                      @else
                         <a data-step="1" class="collapsed btn btn-white-primary continue sm-btn-block" data-toggle="collapse"  href="#step-2">Continue</a>
                      @endif
-
                  </li>
-
                  <li class="title"><div class="col-sm-12">Details & Payment</div></li>
                  @if(!isset($user))
                  <div id="step-2" class="cart-step collapse">
@@ -59,7 +55,7 @@
                             {{ Form::hidden('redirect_after_login', 'true') }}
                             {{ Form::hidden('redirect_after_login_url', 'cart.checkout') }}
 
-                            {{ Html::linkRoute('users.fb', 'Connect via Facebook', 'cart.checkout', ['class' => 'custom-fb mb15']) }}
+                            {{ Html::linkRoute('users.fb', 'Connect via Facebook', ['cart.checkout', 'param:3'], ['class' => 'custom-fb mb15']) }}
                             <div class="text-divider mb15 pull-left">or</div>
                             <div class="form-group">
                                 <label for="email">What  is your Email Address?</label>
@@ -96,10 +92,6 @@
                         <li class="text-right">
                             {{ Form::button('Continue', ['class' => 'btn btn-white-primary ', 'id' => 'cart-account']) }}
                         </li>
-
-
-
-
                      </div>
                  </div>
                  @else
@@ -131,14 +123,12 @@
                                 @endif
                             </div>
                         </div>
-
                      </div>
                  </div>
                  @endif
                  <li class="title mb50"><div class="col-sm-12">Confirmation</div></li>
             </ul>
         </div>
-
     </div>
 </div>
 @stop
