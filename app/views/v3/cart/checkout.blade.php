@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="page-header col-sm-9">
-            <h1 class="h2">Checkout {{$step}}</h1>
+            <h1 class="h2">Checkout</h1>
         </div>
     </div>
     <div class="row">
@@ -54,7 +54,7 @@
                      <div class="col-sm-10 col-sm-offset-1 mt25">
                         {{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10 login-form', 'role' => 'form'] ) }}
                             {{ Form::hidden('redirect_after_login', true) }}
-                            {{ Form::hidden('redirect_after_login_url', 'cart/checkout/2') }}
+                            {{ Form::hidden('redirect_after_login_url', '/cart/checkout/2') }}
 
                             {{ Html::linkRoute('users.fb', 'Connect via Facebook', ['cart.checkout', 'param:3'], ['class' => 'custom-fb mb15']) }}
                             <div class="text-divider mb15 pull-left">or</div>

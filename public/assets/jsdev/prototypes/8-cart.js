@@ -209,7 +209,7 @@ Cart.prototype = {
             beforeSend: function () {
                 $('.has-error').removeClass('has-error');
                 $('.error-append').remove()
-                self.newUserForm.find("input[type='submit']").prop('disabled', true);
+                $("#cart-account").prop('disabled', true);
             },
 
             success: function (data) {
@@ -217,7 +217,9 @@ Cart.prototype = {
                     self.failedValidation(data);
                 }
                 else{
-                    location.reload();
+                    var url = window.location.href;
+                    url = url +'/2';
+                    window.location.href = url;
                 }
 
             },
@@ -227,7 +229,7 @@ Cart.prototype = {
             },
 
             complete: function () {
-                self.newUserForm.find("input[type=submit]").prop('disabled', false);
+                $("#cart-account").prop('disabled', false);
             }
         });
 

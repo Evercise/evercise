@@ -26,6 +26,9 @@ Login.prototype = {
 
             beforeSend: function () {
                 self.form.find("input[type='submit']").prop('disabled', true);
+                if( $('#cart-account').length){
+                    $('#cart-account').prop('disabled', true).addClass('disabled');
+                }
                 self.form.find(".has-error").removeClass('has-error');
                $("#login-error-msg").remove();
                 self.removeError();
@@ -36,12 +39,7 @@ Login.prototype = {
                     self.failedValidation(data);
                 }
                 else{
-                    if(REDIRECT){
-                        window.location.href = data.url+'/2'+STEP;
-                    }
-                    else{
-                        window.location.href = data.url;
-                    }
+                    window.location.href = data.url;
 
                 }
             },
@@ -52,6 +50,9 @@ Login.prototype = {
 
             complete: function () {
                 self.form.find("input[type='submit']").prop('disabled', false)
+                if( $('#cart-account').length){
+                    $('#cart-account').prop('disabled', false).removeClass('disabled');
+                }
             }
         });
     },
