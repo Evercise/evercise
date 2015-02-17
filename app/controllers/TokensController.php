@@ -39,11 +39,11 @@ class TokensController extends \BaseController
             }
             else
             {
-                return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your Facebook account has already been connected to another Evercise account.');
+                return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('error', 'Your Facebook account has already been connected to another Evercise account.');
             }
 
 		}
-		return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'We cannot access your Facebook account.');
+		return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('error', 'We cannot access your Facebook account.');
 	}
 	public function tw()
 	{
