@@ -29,6 +29,8 @@ class SendEmails extends Command {
 	 */
 	public function __construct()
 	{
+        ini_set('max_execution_time', 200);
+        
 
 		parent::__construct();
 
