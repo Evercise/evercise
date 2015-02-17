@@ -74,6 +74,7 @@
             <div class="col-sm-6 sm-mt30">
                 <div class="panel panel-default">
                     <div class="panel-body">
+                        @if($data['next_session'])
                        {{ Form::open(['route'=> 'cart.add','method' => 'post', 'id' => 'add-to-class'. $data['next_session']->id, 'class' => 'add-to-class']) }}
                            @if(Input::has('t'))
                                 <strong class="text-large">Selected Session</strong>
@@ -113,6 +114,9 @@
                                 </div>
                            </div>
                        {{ Form::close() }}
+                        @else
+                            <div class="col-sm-12">This class has no upcoming sessions</div>
+                        @endif
                     </div>
                 </div>
 
