@@ -35,7 +35,7 @@ class AuthController extends AjaxBaseController
                     return Response::json(
                         [
                             'callback' => 'gotoUrl',
-                            'url'      => route($redirect_after_login_url)
+                            'url'      => $redirect_after_login_url
                         ]
                     );
                 }
