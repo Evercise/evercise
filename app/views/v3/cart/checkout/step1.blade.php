@@ -85,6 +85,14 @@
             {{ Form::close() }}
         </div>
     </li>
+@else
+    <hr class="dark up">
+    <li id="voucher" class="voucher switch-cart bg-success">
+    <div class="col-xs-1"><span class="icon icon-tick"></span></div>
+    <div class="col-xs-11">
+         Voucher Added
+    </div>
+    </li>
 @endif
 <hr class="dark switch-cart">
 <li class="total">

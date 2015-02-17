@@ -45,7 +45,6 @@ $(function(){
             autoHideScrollbar: false,
             scrollInertia: 0
         });
-
     })
 
     $('.holder').exists(function(){

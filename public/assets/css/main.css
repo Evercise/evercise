@@ -7687,7 +7687,7 @@ a.bg-light-grey:hover {
   top: 0;
 }
 .icon {
-  height: 20px;
+  height: 22px;
   width: 22px;
   display: inline-block;
   vertical-align: middle;
@@ -8600,6 +8600,20 @@ a.bg-light-grey:hover {
 .icon-loading.active:hover {
   cursor: pointer;
   background-position: 50% 10%;
+}
+.icon-white-package {
+  background-image: url("../img/ev_site_icons_v2.png");
+  background-position: -1210px -250px;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+.icon-white-package.active {
+  background-position: -1210px -290px;
+}
+.icon-white-package.hover:hover,
+.icon-white-package.active:hover {
+  cursor: pointer;
+  background-position: -1210px -290px;
 }
 .icon-md-camera {
   background-image: url("../img/ev_site_icons_v2.png");
@@ -10596,7 +10610,7 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   color: #ff1b7e;
 }
 .cart-progress li.content {
-  height: 80px;
+  height: 83px;
   border-left: 1px dashed #96a2ab;
   padding: 27px 25px;
 }

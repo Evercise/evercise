@@ -143,13 +143,16 @@ if(typeof angular != 'undefined') {
             var results = $scope.results.results.total;
             if(results == 1){
                 var distance = $scope.results.results.hits[0].distance;
-                if(distance > 7){
+                if(distance == 10){
                     return 10
                 }
-                else if(distance > 5){
+                else if(distance == 5){
                     return 12
                 }
-                else if(distance > 2){
+                else if(distance == 3){
+                    return 13
+                }
+                else{
                     return 14
                 }
             }
@@ -247,31 +250,48 @@ if(typeof angular != 'undefined') {
 
         $scope.lastActiveMarker = {};
 
+        // groups
+        $scope.everciseGroups = [];
+
         shapeEverciseGroups = function(){
             var groups = [];
             angular.forEach($scope.results.results.hits, function(v,k){
-                groups.push({
-                    id : v.id,
-                    name : v.name,
-                    icon : '/assets/img/icon_default_small_pin.png',
-                    venue : {
+                var arr = $.grep($scope.everciseGroups, function(item, index) {
+                    return item.id != v.id;
+                });
+                if(arr){
+                    groups.push({
                         id : v.id,
-                        name : v.venue.name,
-                        postcode : v.venue.postcode,
-                        latitude : v.venue.lat,
-                        longitude : v.venue.lng
-                    },
-                    slug: v.slug,
-                    remaining: v.futuresessions[0].remaining,
-                    times : v.times ,
-                    price : v.default_price,
-                    image : '/'+v.user.directory+'/preview_'+v.image
-                })
+                        name : v.name,
+                        icon : '/assets/img/icon_default_small_pin.png',
+                        venue : {
+                            id : v.id,
+                            name : v.venue.name,
+                            postcode : v.venue.postcode,
+                            latitude : v.venue.lat,
+                            longitude : v.venue.lng
+                        },
+                        slug: v.slug,
+                        remaining: v.futuresessions[0].remaining,
+                        times : v.times ,
+                        price : v.default_price,
+                        image : '/'+v.user.directory+'/preview_'+v.image
+                    })
+                }
             })
+
             return groups;
         }
 
-        $scope.everciseGroups = shapeEverciseGroups();
+
+        $scope.$watch(function () {
+            return $scope.map;
+        }, function () {
+            $scope.everciseGroups = shapeEverciseGroups();
+        })
+
+
+
 
 
         // pan to
@@ -288,10 +308,12 @@ if(typeof angular != 'undefined') {
 
         // scroll dates
 
+        $scope.available_dates = $scope.results.available_dates;
+
 
         $scope.scrollWidth = function(){
             var singleWidth = $('.date-picker-inline li .day').outerWidth();
-            var noOfDates = Object.keys($scope.results.available_dates).length;
+            var noOfDates = Object.keys($scope.available_dates).length;
             return {
                 width: (singleWidth * noOfDates) + 'px'
             }
@@ -424,6 +446,7 @@ if(typeof angular != 'undefined') {
 
             responsePromise.success(function(data) {
                 $scope.results = data;
+                $scope.available_dates = $scope.results.available_dates;
                 $scope.selectedDate = $scope.results.selected_date;
                 if (drag) {
                     var newGroups = shapeEverciseGroups();
@@ -432,37 +455,23 @@ if(typeof angular != 'undefined') {
                 else{
                     $scope.everciseGroups = shapeEverciseGroups();
                 }
-                //console.log($scope.results.results.hits);
-                $scope.resultsLoading = false;
-                $scope.circleOptions = {
-                    center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },
-                    stroke: {
-                        color: '#50c3e2',
-                        weight: 2
-                    },
-                    fill: {
-                        opacity: 0
-                    },
-                    radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
-                }
                 if(!drag){
                     $scope.map.center =  {
                      latitude: $scope.results.area.lat,
                      longitude: $scope.setMapCenter()
                      };
                     $scope.map.zoom = $scope.initialZoom();
+                    console.log($scope.map.zoom);
+                    $scope.circleOptions.center = { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng };
+                    $scope.circleOptions.radius = $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344;
                 }
 
-
+                $scope.resultsLoading = false;
             });
-
             responsePromise.error(function(data) {
                 $scope.resultsLoading = false;
             });
         }
-
-
-
 
 
         $(window).resize(function(){
