@@ -182,7 +182,7 @@ class SendEmails extends Command {
 
 			}
 
-			//Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
+			Evercisesession::whereIn('id', $sessionIds)->update(['members_emailed' => 1]);
 		}
 		else
 		{
