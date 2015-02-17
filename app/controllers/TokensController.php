@@ -30,12 +30,20 @@ class TokensController extends \BaseController
 			*/
 			
 			$token = Token::where('user_id', $this->user->id)->first();
-			$token->addToken('facebook', Token::makeFacebookToken($getUser));
 
+            if ($facebookToken = Token::makeFacebookToken($getUser))
+            {
+                $token->addToken('facebook', $facebookToken);
+                event('user.facebook.connected', [$this->user]);
+                return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your Facebook account has been linked successfully.');
+            }
+            else
+            {
+                return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your Facebook account has already been connected to another Evercise account.');
+            }
 
-            event('user.facebook.connected', [$this->user]);
 		}
-		return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your facebook account has been linked successfully.');
+		return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'We cannot access your Facebook account.');
 	}
 	public function tw()
 	{

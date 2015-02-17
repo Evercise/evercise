@@ -44,9 +44,18 @@ class Token extends \Eloquent
      */
     public static function makeFacebookToken($getUser)
     {
+        $profileId = $getUser['user_profile']['id'];
+        $accessToken = $getUser['access_token'];
+
+        if (Token::where('facebook', 'LIKE', '%"id":"'.$profileId.'""%'))
+        {
+            // Facebook user has already been registered with Evercise
+            return false;
+        }
+
         $facebookTokenArray = [
-            'id'           => $getUser['user_profile']['id'],
-            'access_token' => $getUser['access_token']
+            'id'           => $profileId,
+            'access_token' => $accessToken
         ];
         return $facebookTokenArray;
     }
