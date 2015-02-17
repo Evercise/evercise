@@ -15,11 +15,9 @@
 			<p><strong class="highlight">&pound;{{ $default_price }}</strong><small>per person</small></p>
 		@endif
 	</div>
-		
-	
-	
+
 	<div class="class-block-body block-inner">
-		@if(isset($sessions))
+		@if(isset($sessions) && !empty($sessions))
 			{{ HTML::image('img/clock_icon.png', 'date image', array('class' => 'block-icon')); }}
 			<div class="inner-float">
 				<li class="bold">{{ date('d M Y - h:ia', strtotime($sessions[0]->date_time))}}</li>	

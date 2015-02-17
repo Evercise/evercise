@@ -2,7 +2,10 @@
 .env.*.php
 .env.php
 .idea
+.idea/workspace.xml
+.idea/*
 .env.local.php
+node_modules
 /vendor
 composer.phar
 composer.lock
@@ -11,7 +14,10 @@ composer.lock
 .DS_Store
 Thumbs.db
 public/profiles/
-app/config/facebook.php
+public/img/pages/*
+public/img/gallery/*
+public/files/*
+/app/storage/*
 /app/storage/logs/*
 /app/storage/cache/*
 /app/storage/sessions/*
@@ -19,3 +25,6 @@ app/config/facebook.php
 /app/storage/views/*
 /app/storage/emails/*
 /public/files/*
+_ide_helper.php
+.vagrant
+npm-debug.log

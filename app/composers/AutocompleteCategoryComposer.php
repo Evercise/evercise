@@ -1,5 +1,9 @@
-<?php
- 
+<?php namespace composers;
+
+use Subcategory;
+use JavaScript;
+
+
 class AutocompleteCategoryComposer {
  
   public function compose($view)

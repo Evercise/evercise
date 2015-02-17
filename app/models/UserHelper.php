@@ -14,9 +14,9 @@ class UserHelper
             return false;
         }
 
-        Evercoin::create(['user_id' => $user_id, 'balance' => 0]);
-        Milestone::create(['user_id' => $user_id]);
-        Token::create(['user_id' => $user_id]);
+        Wallet::createIfDoesntExist($user_id);
+        Milestone::createIfDoesntExist($user_id);
+        Token::createIfDoesntExist($user_id);
     }
 
     /**
@@ -25,12 +25,13 @@ class UserHelper
      * @param bool $referal_code
      * @param int $user_id
      */
-    public static function checkReferalCode($referral_code = false, $user_id = 0)
+    public static function checkAndUseReferralCode($referral_code = false, $user_id = 0)
     {
 
         if ($referral = Referral::useReferralCode($referral_code, $user_id)) {
+            Log::info('using referral code: ' . $referral_code. ' user id: '.$user_id);
             Milestone::where('user_id', $referral->user_id)->first()->add('referral');
-            Milestone::where('user_id', $user_id)->first()->freeCoin('referral_signup');
+            Milestone::where('user_id', $user_id)->first()->milestoneComplete('referral_signup');
 
             Session::forget('referralCode');
         }
@@ -43,11 +44,22 @@ class UserHelper
      * @param bool $ppc_code
      * @param int $user_id
      */
-    public static function checkLandingCode($ppc_code = false, $user_id = 0)
+    public static function checkAndUseLandingCode($ppc_code = false, $user_id = 0)
     {
 
         if ($landing = Landing::useLandingCode($ppc_code, $user_id)) {
-            Milestone::where('user_id', $user_id)->first()->freeCoin('ppc_signup');
+            $wallet = Wallet::where('user_id', $user_id)->first();
+
+            $type = 'ppc_signup';
+            $freeCoins = Config::get('values')['freeCoins'];
+            if (isset($freeCoins[$type])) {
+                $wallet->giveAmount($freeCoins[$type], $type);
+            }
+        }
+        else if ($staticLanding = StaticLanding::useLandingCode($ppc_code, $user_id)) {
+            $wallet = Wallet::where('user_id', $user_id)->first();
+
+            $wallet->giveAmount($staticLanding->amount, 'static_ppc_signup', $staticLanding->description);
         }
 
         Session::forget('ppcCode');

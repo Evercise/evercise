@@ -1,5 +1,5 @@
 
-{{ Form::open(array('id' => 'trainer_create', 'url' => 'trainers/'.$trainer->id, 'method' => 'PUT', 'class' => 'create-form mt20')) }}
+{{ Form::open(array('id' => 'trainer_edit', 'route' => ['trainers.update', $trainer->id],  'method' => 'PUT', 'class' => 'create-form mt20')) }}
 
 
     @include('form.textfield', array('fieldname'=>'profession', 'placeholder'=>'Your profession', 'maxlength'=>50, 'label'=>'Add your profession', 'class' => '', 'fieldtext'=>'Add your profession', 'default'=>$profession ))

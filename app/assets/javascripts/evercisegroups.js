@@ -17,7 +17,6 @@ function initEvercisegroups()
 
     $('.hub-block #delete_group').click(function(){
         var url = $(this).attr('href');
-        console.log('delete '+url);
 
         $.ajax({
             url: url,
@@ -75,7 +74,7 @@ function initEvercisegroups()
                 {
                    trace('Did your mother never tell you not to touch over peoples stuff');
                 }
-                initChart('total-members-bookings-'+EGindex);
+                //initChart('total-members-bookings-'+EGindex); // This was causing an error
              }
         );
 
@@ -232,7 +231,7 @@ function initJoinEvercisegroup(params)
         var price = 0;
     }
 
-    $(document).on('click','.btn-join-session,.undo-btn-reverse',function(){
+/*    $(document).on('click','.btn-join-session,.undo-btn-reverse',function(){
 
         var sessionId = $(this).data('session');
 
@@ -241,8 +240,6 @@ function initJoinEvercisegroup(params)
         sessions.push(sessionId);
         var session = JSON.stringify(sessions);
 
-        check = checkUrlForDev();
-
         // add session id's to hidden  field in form
         $('#session-ids').val(session);
         // change button to undo button depending on existing button
@@ -250,7 +247,7 @@ function initJoinEvercisegroup(params)
         if($(this).attr('class') == 'undo-btn-reverse'){
            $(this).replaceWith('<button data-price="'+sessionPrice+'" data-session="'+sessionId+'" class="btn-cancel-session btn btn-red">Cancel</button>');
         }else{
-          $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="'+check+'/img/undo.png" alt="undo"><span>Undo</span></button>');  
+          $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
         }
         
         ++total;
@@ -263,6 +260,36 @@ function initJoinEvercisegroup(params)
         if (total > 0) {
             $('#session-checkout').removeClass('disabled');
         };
+    });*/
+
+    $(document).on('click','.btn-join-session,.undo-btn-reverse',function(){
+
+        var sessionId = $(this).data('session');
+
+        var sessionPrice = $(this).data('price');
+
+        // add session id's to hidden  field in form
+        $('#session-id').val(sessionId);
+        // change button to undo button depending on existing button
+
+        if($(this).attr('class') == 'undo-btn-reverse'){
+           $(this).replaceWith('<button data-price="'+sessionPrice+'" data-session="'+sessionId+'" class="btn-cancel-session btn btn-red">Cancel</button>');
+        }else{
+          $(this).replaceWith('<button class="undo-btn" data-price="'+sessionPrice+'" data-session="'+sessionId+'" ><img src="/img/undo.png" alt="undo"><span>Undo</span></button>');
+        }
+
+        ++total;
+
+        price = price + parseFloat(sessionPrice);
+
+        $('#total-sessions').html(total);
+        $('#total-price').html(price);
+
+        if (total > 0) {
+            $('#session-checkout').removeClass('disabled');
+        };
+
+        $('#add-to-cart').submit();
     });
 
     $(document).on('click','.undo-btn' , function(){
@@ -353,10 +380,10 @@ function initJoinEvercisegroup(params)
             function(data) {
                 try
                 {
-                   var parsedData = JSON.parse(data);
-                   trace(parsedData.status);
-                   if (parsedData.status == 'logged_in')
-                   {
+                    var parsedData = JSON.parse(data);
+                    trace(parsedData.status);
+                    if (parsedData.status == 'logged_in')
+                    {
                         $(event.currentTarget).unbind('submit');
                         event.currentTarget.submit();
                     }
@@ -370,21 +397,6 @@ function initJoinEvercisegroup(params)
              }
         );
         return false;
-
-/*        var url = '/auth/login';
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'html'
-        })
-        .done(
-            function(data) { 
-                $('.mask').show();
-                $('.lower_footer').append(data);
-                login();
-             }
-        );
-        return false;*/
     });
 }
 

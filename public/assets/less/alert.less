@@ -1,0 +1,22 @@
+.alert{
+  &.fixed{
+    position: fixed;
+    top: 50px;
+    left: 0px;
+    z-index: 9999;
+    min-width: 200px;
+    @media (max-width: @grid-float-breakpoint) {
+      right: 0;
+      text-align: center;
+      width:  100%;
+    }
+  }
+  &.absolute{
+    position: absolute;
+    left: 30px;
+    right: 30px;
+  }
+  &.alert-sm{
+    padding: 5px 35px 5px 5px;
+  }
+}

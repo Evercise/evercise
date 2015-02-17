@@ -5,20 +5,25 @@
 	<meta name="description" content="{{ isset($metaDescription)? $metaDescription : 'Lower your barrier to enjoy fitness classes, Flexible schedule and multiple options across London.'}}">
 	<meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta charset="UTF-8">
-    <meta name="language" content="en-UK" /> 
-    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta name="language" content="en-UK" />
     @if(isset($og))
     	{{ $og->renderTags() }}
     @endif
-  <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
-	<link href='http://fonts.googleapis.com/css?family=Exo:300,400,500,600,300italic,400italic,500italic,600italic' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <meta name="msvalidate.01" content="029DC64552B69F2A7C8222158C81BB59" />
+	@include('layouts.googlefonts')
 
-	<link href="/assets/application.css?version=2.7" rel="stylesheet" type="text/css">
-	<script src="/assets/application.js?version=2.7"></script>
+	@yield('header')
+
+    <script>
+        var DEBUG_APP = <?=getenv('DEBUG_APP') ? 'true' : 'false'?>;
+        var BASE_URL = '<?=getenv('APP_URL')?>';
+    </script>
+	<link href="/assets/application.css?version=2.9" rel="stylesheet" type="text/css">
+	<script src="/assets/application.js?version=2.9"></script>
 
 </head>
 <body>
+    @include('layouts.tracking')
 	@yield('banner')
 	@if(isset($class))
 		<div class="container no-bk">
@@ -36,6 +41,7 @@
 	<div class="mask">
 
 	</div>
+
 
 	<script type="text/javascript">
 	   var _mfq = _mfq || [];
@@ -65,6 +71,8 @@
 	/* custom configuration goes here (www.olark.com/documentation) */
 	olark.identify('4020-649-10-3648');/*]]>*/</script><noscript><a href="https://www.olark.com/site/4020-649-10-3648/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
 	<!-- end olark code -->
+
+
 		
 </body>
 </html>

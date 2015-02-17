@@ -14,7 +14,7 @@
 			<h3>{{ $evercisegroup->name }}</h3>
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>
-			<p>Gender: 
+			<p>Gender:
 				@if ($evercisegroup->gender == 0) Unisex
 				@elseif ($evercisegroup->gender == 1) Male
 				@elseif ($evercisegroup->gender == 2) Female
@@ -37,7 +37,7 @@
 			<div class="donut-chart">
 				@include('widgets.donutChart', array('label' => 'Average Class Revenue', 'width' => 120 , 'id' => 'total-class-bookings4','total' => $averageTotalRevenue, 'fill' => $averageRevenue ))
 			</div>
-		
+
 		</div>
 
 		<hr class="col12">
@@ -52,7 +52,7 @@
 			<li class="hd">Price Per Person</li>
 			<li class="hd">Places Filled</li>
 			<li class="hd">Options</li>
-			
+
 			@foreach ($evercisegroup['Evercisesession'] as $s_key => $session)
 				@if((new DateTime($session['date_time'])) > (new DateTime('now')))
 					@include('sessions.show')
@@ -82,7 +82,7 @@
 				<li class="hd">Commission</li>
 				<li class="hd">Total revenue</li>
 				<li class="hd">Options</li>
-				
+
 				@foreach ($evercisegroup['evercisesession'] as $s_key => $session)
 					@if((new DateTime($session['date_time'])) < (new DateTime('now')))
 						@include('sessions.show')
@@ -90,8 +90,8 @@
 				@endforeach
 			</div>
 		@endif
-		
-		
+
+
 
 	</div>
 

@@ -1,349 +1,191 @@
 <?php
 
+
 class UsersController extends \BaseController
 {
 
-  /**
-   * Display a listing of the resource.
-   *
-   * @return View
-   */
-  public function index()
-  {
-		return Redirect::route('home');
-  }
-
-  /**
-   * Show the form for creating a new resource.
-   *
-   * @return View
-   */
-  public function create()
-  {
-      $referralCode = Referral::checkReferralCode(Session::get('referralCode'));
-      $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
-      $email = Session::get('email');
-
-      JavaScript::put(['initUsers' => 1, 'initPut' => 1, 'initToolTip' => 1]); //Initialise tooltip JS.
-
-      return View::make('users.register')
-          ->with('referralCode', $referralCode)
-          ->with('ppcCode', $ppcCode)
-          ->with('email', $email);
-
-	}
 
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @return Response
+     * @return View
      */
-    public function store()
+    public function index()
     {
+        return Redirect::route('home');
+    }
 
-        $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P16Y'));
-        $dateBefore = $before->format('Y-m-d');
-        $after = $dt->sub(new DateInterval('P120Y'));
-        $dateAfter = $after->format('Y-m-d');
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View
+     */
+    public function create($redirect = null)
+    {
+        // If a user is already logged in, kick em out so a new account can be created.
+        Sentry::logout();
 
-        Validator::extend(
-            'has',
-            function ($attr, $value, $params) {
-                return ValidationHelper::hasRegex($attr, $value, $params);
-            }
-        );
+        $referral = Referral::checkReferralCode(Session::get('referralCode'));
+        $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
+        if(!$ppcCode)
+            $ppcCode = StaticLanding::checkLandingCode(Session::get('ppcCode'));
 
-        // validation rules for input field on register form
-        $validator = Validator::make(
-            Input::all(),
-            [
-                'display_name' => 'required|max:20|min:5|unique:users',
-                'first_name'   => 'required|max:15|min:3',
-                'last_name'    => 'required|max:15|min:3',
-                'dob'          => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                'email'        => 'required|email|unique:users',
-                'password'     => 'required|confirmed|min:6|max:32|has:letter,num',
-                'phone'        => 'numeric',
-            ],
-            ['password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+        $ppcDb = Landing::where('code', Session::get('ppcCode'))->first();
 
+        $email = '';
 
-        );
-        if ($validator->fails()) {
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('users.edit')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        } else {
-            $display_name = Input::get('display_name');
-            $first_name = Input::get('first_name');
-            $last_name = Input::get('last_name');
-            $dob = Input::get('dob');
-            $email = Input::get('email');
-            $password = Input::get('password');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-            $gender = Input::get('gender');
-            //$newsletter = Input::get('userNewsletter'); // newsletter not currently captured
-
-            if ($phone != '' && $area_code == '') {
-                return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['areacode' => 'Please select a country']]
-                );
-            }
-
-
-            $user = Sentry::register(
-                array(
-                    'display_name' => str_replace(' ', '_', $display_name),
-                    'first_name'   => $first_name,
-                    'last_name'    => $last_name,
-                    'dob'          => $dob,
-                    'email'        => $email,
-                    'area_code'    => $area_code,
-                    'phone'        => $phone,
-                    'password'     => $password,
-                    'gender'       => $gender,
-                    'activated'    => true,
-                )
-            );
-
-            $userGroup = Sentry::findGroupById(1);
-            $user->addGroup($userGroup);
-
-            /*
-                $marketingpreferences = Marketingpreference::where('name', '=', 'newsletter')->get();
-                $chosenPreference = 1;
-                foreach ($marketingpreferences as $pref)
-                {
-                    if ($pref->option == $newsletter) $chosenPreference = $pref->id;
-                }
-
-
-                $user_marketingpreferences = User_marketingpreference::create(array('user_id'=>$user->id, 'marketingpreference_id'=>$chosenPreference));
-            */
-
-            UserHelper::generateUserDefaults($user->id);
-
-            UserHelper::checkReferalCode(Session::get('referralCode'), $user->id);
-
-            UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
-
-            Session::forget('email');
-
-
-            if ($user && Request::ajax()) {
-
-                User::find($user->id)->makeUserDir();
-
-                $user->save();
-
-                Sentry::login($user, true);
-
-                if (Input::has('redirect')) {
-                    return Response::json(['callback' => 'gotoUrl', 'url' => Input::get('redirect')]);
-                } else {
-                    $activation_code = $user->getActivationCode();
-
-                    Event::fire(
-                        'user.signup',
-                        array(
-                            'email'          => $user->email,
-                            'display_name'   => $user->display_name,
-                            'activationCode' => $activation_code
-                        )
-                    );
-                    return Response::json(
-                        ['callback' => 'gotoUrl', 'url' => route('users.edit.tab', [$user->id, 'profile'])]
-                    );
-
-                }
-            }
+        if(!empty($ppcDb->email)) {
+            $email = $ppcDb->email;
         }
+        if(!empty($referral->email)) {
+            $email = $referral->email;
+        }
+
+        return View::make('v3.users.create')
+            ->with('referralCode', $referral ? $referral->code : null)
+            ->with('redirect', $redirect)
+            ->with('ppcCode', $ppcCode)
+            ->with('email', $email);
 
     }
 
-    public function fb_login($redirect = null)
+
+
+
+    public function guestCheckout() {
+
+
+
+        $referral = Referral::checkReferralCode(Session::get('referralCode'));
+        $ppcCode = Landing::checkLandingCode(Session::get('ppcCode'));
+
+
+        return View::make('v3.users.guest')
+            ->with('referralCode', $referral ? $referral->code : null)
+            ->with('redirect', 'cart/checkout')
+            ->with('ppcCode', $ppcCode)
+            ->with('email', $referral ? $referral->email : '');
+
+
+    }
+
+
+    public function fb_login($redirect_url = null, $params = '')
     {
-        // Use a single object of a class throughout the lifetime of an application.
-        $application = Config::get('facebook');
-        $permissions = 'publish_stream,email,user_birthday,read_stream';
-        $url_app = Request::root() . '/login/fb';
-        //echo $url_app;exit;
 
-        // getInstance
-        FacebookConnect::getFacebook($application);
-        $getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
-
-        //return View::make('users.tokens')->with('fb', $getUser);
-
-
-        if (!$getUser) {
-            return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
-        }
+        $getUser = User::getFacebookUser($redirect_url, $params);
 
         $me = $getUser['user_profile'];
 
+        if(!empty($params)) {
+            Session::put('FB_REDIRECT_PARAMS', $params);
+        }
 
-        $password = Functions::randomPassword(8);
 
-        $dob = isset($me['birthday']) ? new DateTime($me['birthday']) : '';
+        if (empty($me)) {
+            return Redirect::to('/')->with('message', 'There was an error communicating with Facebook');
+        }
+
+
+        $inputs = [];
+        $inputs['display_name'] = slugIt($me['name']);
+        $inputs['first_name'] = $me['first_name'];
+        $inputs['last_name'] = $me['last_name'];
+        $inputs['dob'] = isset($me['birthday']) ? new DateTime($me['birthday']) : null;
+        $inputs['email'] = $me['email'];
+        $inputs['password'] = Functions::randomPassword(8);
+
+        $inputs['activated'] = true;
+
+        $inputs['gender'] = (isset($me['gender'])) ? (($me['gender'] == 'male') ? 1 : 2) : null;
+
 
         try {
-            $user = Sentry::createUser(
-                array(
-                    'display_name' => str_replace(' ', '_', $me['name']),
-                    'first_name'   => $me['first_name'],
-                    'last_name'    => $me['last_name'],
-                    'dob'          => $dob,
-                    'email'        => $me['email'],
-                    'password'     => $password,
-                    'gender'       => isset($me['gender']) ? $me['gender'] : '',
-                    'activated'    => true,
-                )
-            );
+
+            // register user and add to user group
+            $user = User::registerUser($inputs);
+
 
             if ($user) {
 
+                User::addToUserGroup($user);
 
-                $userGroup = Sentry::findGroupById(1);
-                $user->addGroup($userGroup);
-
-                $userGroup = Sentry::findGroupById(2);
-                $user->addGroup($userGroup);
-
+                User::addToFbGroup($user);
 
                 UserHelper::generateUserDefaults($user->id);
 
-                UserHelper::checkReferalCode(Session::get('referralCode'), $user->id);
+                UserHelper::checkAndUseReferralCode(Session::get('referralCode'), $user->id);
 
-                UserHelper::checkLandingCode(Session::get('ppcCode'), $user->id);
+                UserHelper::checkAndUseLandingCode(Session::get('ppcCode'), $user->id);
 
                 Session::forget('email');
 
                 $token = Token::where('user_id', $user->id)->first();
                 $token->addToken('facebook', Token::makeFacebookToken($getUser));
 
-                User::find($user->id)->marketingpreferences()->attach(1);
-
-                Event::fire(
-                    'user.fb_signup',
-                    array(
-                        'email'        => $user->email,
-                        'display_name' => $user->display_name,
-                        'password'     => $password
-                    )
+                User::subscribeMailchimpNewsletter(
+                    Config::get('mailchimp')['newsletter'],
+                    $user->email,
+                    $user->first_name,
+                    $user->last_name
                 );
 
-                User::find($user->id)->makeUserDir();
+                User::sendFacebookWelcomEmail($user, $inputs);
 
-                $path = public_path() . '/profiles/' . date('Y-m');
-                $img_filename = 'facebook-image-' . $user->display_name . '-' . date('d-m') . '.jpg';
-                $url = 'http://graph.facebook.com/' . $me['id'] . '/picture?width=200&height=200';
+                User::makeUserDir($user);
 
-                try {
-                    $img = file_get_contents($url);
-                    file_put_contents($path . '/' . $user->id . '_' . $user->display_name . '/' . $img_filename, $img);
-                } catch (Exception $e) {
-                    // This exception will happen from localhost, as pulling the file from facebook will not work
-                    $img_filename = '';
-                }
-
-                $user->image = $img_filename;
-
-                $user->save();
+                User::grabFacebookImage($user, $me);
 
                 Sentry::login($user, false);
 
-                if (isset($redirect) && $redirect != null) {
-                    if ($redirect == 'trainer') // Used when the 'i want to list classes' button is clicked in the register page
-                    {
-                        return Redirect::route('trainers.create')->with(
-                            'notification',
-                            'you have successfully signed up with facebook, Your password has been emailed to you'
-                        );
-                    } else // Used when logging in before hitting the checkout
-                    {
-                        return Redirect::route($redirect);
-                    }
-                } else {
-                    return Redirect::route('users.edit.tab', [$user->id, 'profile'])->with(
-                        'notification',
-                        'you have successfully signed up with facebook, Your password has been emailed to you'
-                    );
-                }
+                $result = User::facebookRedirectHandler($redirect_url, $user, trans('redirect-messages.facebook_signup'), $params);
 
-                //return Redirect::route('users.edit.tab', [$user->id ,'profile'])->with('notification','you have successfully signed up with facebook, Your password has been emailed to you' );
-                //return Redirect::route('users.activatecodeless', array('display_name'=>$user->display_name))->with('activation',3);
-                //return View::make('users.show');
+                event('user.registeredFacebook', [$user]);
+
             }
         } catch (Cartalyst\Sentry\Users\UserExistsException $e) {
+
             try {
                 $user = Sentry::findUserByLogin($me['email']);
+
                 Sentry::login($user, false);
-                $trainerGroup = Sentry::findGroupByName('trainer');
 
-                if ($redirect && $redirect != null) {
-                    return Redirect::route($redirect);
-                } elseif ($user->inGroup($trainerGroup)) {
-                    return Redirect::route('trainers.edit', $user->display_name);
-                } else {
-                    return Redirect::route('users.edit', $user->display_name);
+
+
+                if (Sentry::check()) {
+                    event('user.loginFacebook', [$user]);
                 }
+
+                //$result = User::facebookRedirectHandler($redirect_url, $user);
+
+                $result = Redirect::route('users.edit', ['id'=>$user->display_name]);
+
+                $params = [];
+                if (Session::has('FB_REDIRECT_PARAMS')) {
+                    $data = explode(':', Session::get('FB_REDIRECT_PARAMS'));
+
+                    if (!empty($data[1])) {
+                        $params[$data[0]] = $data[1];
+                    }
+                    Session::forget('FB_REDIRECT_PARAMS');
+                }
+
+
+
+                if(!is_null($redirect_url)) {
+                    $result = Redirect::route($redirect_url, $params);
+                }
+
             } catch (Cartalyst\Sentry\Users\UserNotActivatedException $e) {
-                $user = Sentry::findUserByLogin($me['email']);
-
-
-                if (isset($redirect) && $redirect != null) {
-
-                    return Response::json(route('trainers.create'));
-                } else {
-                    return View::make('users.edit')->with(
-                        'notification',
-                        'you have successfully signed up with facebook. Your password has been emailed to you'
-                    )->with('display_name', $user->display_name);
-                }
+                Log::error($e->getMessage());
             }
         }
 
-
-        //return View::make('users.activate')->with('activation', 3)->with('display_name', $user->display_name);
-
-    }
-
-    public function makeUserDir($user)
-    {
-        $path = public_path() . '/profiles/' . date('Y-m');
-        $userFolder = $path . '/' . $user->id . '_' . $user->display_name;
-        try {
-
-
-            if (!file_exists($path)) {
-                File::makeDirectory($path);
-            }
-            if (!file_exists($userFolder)) {
-                File::makeDirectory($userFolder);
-            }
-
-            $user->directory = date('Y-m') . '/' . $user->id . '_' . $user->display_name;
-        } catch (Exception $e) {
-            return Redirect::route('home')->with(
-                'errorNotification',
-                'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com'
-            );
-        }
+        return $result;
 
 
     }
+
 
     /**
      * Display the specified resource.
@@ -354,7 +196,10 @@ class UsersController extends \BaseController
     public function show($id)
     {
 
-        $this->checkLogin();
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
 
         return View::make('users.show');
     }
@@ -367,182 +212,43 @@ class UsersController extends \BaseController
      */
     public function edit($id, $tab = 0)
     {
-        $this->checkLogin();
+        $activity = Activities::getAll($this->user->id, Config::get('evercise.user.activities', 100));
 
-        return View::make('users.edit')->with('tab', $tab);
-    }
+        $activity_group = [];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        $dt = new DateTime();
-        $before = $dt->sub(new DateInterval('P16Y'));
-        $dateBefore = $before->format('Y-m-d');
-        $after = $dt->sub(new DateInterval('P104Y'));
-        $dateAfter = $after->format('Y-m-d');
-
-
-        $validator = Validator::make(
-            Input::all(),
-            array(
-                'first_name' => 'required|max:15|min:3',
-                'last_name'  => 'required|max:15|min:3',
-                'dob'        => 'required|date_format:Y-m-d|after:' . $dateAfter . '|before:' . $dateBefore,
-                //'email' => 'required|email',
-                'phone'      => 'numeric',
-                // 'old_password' => 'required',
-                // 'new_password' => 'confirmed',
-                //'thumbFilename' => 'required',
-            )
-        );
-        if ($validator->fails()) {
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('users.edit')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-        } else {
-            // Actually update the user record
-
-            //$old_password = Input::get('old_password');
-            //$new_password = Input::get('new_password');
-            $first_name = Input::get('first_name');
-            $last_name = Input::get('last_name');
-            $dob = Input::get('dob');
-            //$email = Input::get('email');
-            $gender = Input::get('gender');
-            $newsletter = Input::get('userNewsletter');
-            $image = Input::get('thumbFilename');
-            $area_code = Input::get('areacode');
-            $phone = Input::get('phone');
-
-            if ($phone == '' && $area_code != '') {
-                return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['areacode' => 'Please enter you phone number']]
-                );
-            }
-            if ($phone != '' && $area_code == '') {
-                return Response::json(
-                    ['validation_failed' => 1, 'errors' => ['areacode' => 'Please select a country']]
-                );
-            }
-
-            $this->user->update(
-                array(
-                    'first_name' => $first_name,
-                    'last_name'  => $last_name,
-                    'dob'        => $dob,
-                    //'email' => $email,
-                    'gender'     => $gender,
-                    'image'      => $image,
-                    'area_code'  => $area_code,
-                    'phone'      => $phone,
-                )
-            );
-            /*
-            $savedNewsletter = User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
-            if ($newsletter != $savedNewsletter)
-            {
-                User::find($this->user->id)->marketingpreferences()->where('name', 'newsletter')->detach();
-                User::find($this->user->id)->marketingpreferences()->attach($newsletter == 'yes' ? true : false);
-            }
-            */
-
-            if (
-                $this->user->gender
-                && $this->user->dob
-                && $this->user->phone
-                && $this->user->image
-            ) {
-                Milestone::where('user_id', $this->user->id)->first()->add('profile');
-            }
-
-
-            /* find out if user is a trainer or not */
-
-            $trainerGroup = Sentry::findGroupByName('trainer');
-
-            if ($this->user->inGroup($trainerGroup)) {
-                $typeOfUser = 'trainers';
-            } else {
-                $typeOfUser = 'users';
-            }
-
-            return Response::json(
-                [
-                    'callback' => 'gotoUrl',
-                    'url'      => Request::root() . '/' . $typeOfUser . '/' . $this->user->id . '/edit/profile'
-                ]
-            );
-            //return Response::json(['callback' => 'gotoUrl', 'url' => Request::route('users.edit.tab', [$user->id ,'profile'])]);
+        foreach($activity as $a) {
+            $activity_group[$a->format_date][] = $a;
         }
-        //return Response::json($result);
-        //return View::make('users.edit');
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        $user = $this->user;
+        $data = [
+            'user' => $user,
+            'activity' => $activity_group
+        ];
 
-    /**
-     * Activate the user using the emailed hash
-     *
-     * @param  int $id
-     * @return Response
-     */
-    /*
-    removed from current site but may return
-    public function activate($display_name, $code)
-    {
-        $user = 0;
-        if ($code)
+        if(Trainer::isTrainerLoggedIn())
         {
-            try
-            {
-                $user = Sentry::findUserByActivationCode($code);
-            }
-            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-            {
-                // User activation failed
-            }
+            $hub = Evercisegroup::getTrainerHub($user);
+            $data = array_merge($hub, $data);
+
+            $view = 'v3.users.profile.master_trainer';
         }
-        if ($user)
+        else
         {
-            if ($user->attemptActivation($code))
-            {
-                // User activation passed
-                $display_name = $user->display_name;
-                //return View::make('users.activate')->with('activation', 2)->with('display_name', $display_name);
-                return View::make('home')->with('notification', 'Your account has been successfuly activated');
-            }
-        }
-        if (!$user)
-        {
-            // User activation failed
-            return View::make('users.activate')->with('activation', 0)->with('display_name', $display_name);
+            $hub = Evercisegroup::getUserHub($user);
+            $data = array_merge($hub, $data);
+
+            $view = 'v3.users.profile.master_user';
         }
 
+
+
+
+        return View::make( $view )
+            ->with('data', $data)
+            ->with('tab', $tab);
     }
-    */
+
 
     /**
      * Activate the user using the emailed hash
@@ -552,22 +258,8 @@ class UsersController extends \BaseController
      */
     public function pleaseActivate($display_name)
     {
-
         return View::make('users.activate')->with('display_name', $display_name);
 
-
-    }
-
-    /**
-     * Reset the user's password using the emailed hash
-     *
-     * @param  int $id
-     * @return View
-     */
-    public function getChangePassword($display_name)
-    {
-        // Init JS from composer as used for trainers as well as users
-        return View::make('users.changepassword');
     }
 
     /**
@@ -590,9 +282,8 @@ class UsersController extends \BaseController
             Input::all(),
             [
                 'old_password' => 'required',
-                'new_password' => 'required|confirmed|min:6|max:32|has:letter,num',
-            ],
-            ['new_password.has' => 'For increased security, please choose a password with a combination of lowercase and numbers',]
+                'new_password' => 'required|confirmed|min:6|max:32',
+            ]
         );
 
         $oldPassword = Input::get('old_password');
@@ -600,13 +291,7 @@ class UsersController extends \BaseController
 
         if ($validator->fails()) {
 
-            if (Request::ajax()) {
-                return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
-            } else {
-                return Redirect::route('users.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            return Response::json(['validation_failed' => 1, 'errors' => $validator->errors()->toArray()]);
         } else {
             if ($oldPassword == $newPassword) {
                 return Response::json(
@@ -619,6 +304,8 @@ class UsersController extends \BaseController
             if ($this->user->checkPassword($oldPassword)) {
                 $this->user->password = $newPassword;
                 $this->user->save();
+
+                event('user.changedPassword', [ $this->user ]);
 
                 return Response::json(['result' => 'changed', 'callback' => 'successAndRefresh']);
             }
@@ -639,16 +326,16 @@ class UsersController extends \BaseController
         try {
             $user = Sentry::findUserByResetPasswordCode($code);
         } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-            return View::make('users.resetpassword')->with('message', 'Cannot find user');
+            return View::make('v3.auth.resetpassword')->with('message', 'Cannot find user');
         }
 
-        return View::make('users.resetpassword')->with('code', $code);
+        return View::make('v3.auth.resetpassword')->with('code', $code);
     }
 
     /**
      * Reset the user's password using the emailed hash
      *
-     * @param  int $id
+     * @internal param int $id
      * @return Response
      */
     public function postResetPassword()
@@ -663,8 +350,8 @@ class UsersController extends \BaseController
         $validator = Validator::make(
             Input::all(),
             array(
-                'email'    => 'required|email',
-                'password' => 'required|confirmed|min:6|max:32|has:letter,num',
+                'email' => 'required|email',
+                'password' => 'required|confirmed|min:6|max:32',
             ),
             ['password.has' => 'The password must contain at least one number and can be a combination of lowercase letters and uppercase letters.',]
         );
@@ -674,19 +361,10 @@ class UsersController extends \BaseController
         $code = Input::get('code');
 
         if ($validator->fails()) {
-
-            if (Request::ajax()) {
-                $result = array(
-                    'validation_failed' => 1,
-                    'errors'            => $validator->errors()->toArray()
-                );
-
-                return Response::json($result);
-            } else {
-                return Redirect::route('users.resetpassword')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
+            return Response::json([
+                'validation_failed' => 1,
+                'errors'            => $validator->errors()->toArray()
+            ]);
         } else {
             $success = false;
             try {
@@ -697,7 +375,7 @@ class UsersController extends \BaseController
 
                 }
             } catch (Cartalyst\Sentry\Users\UserNotFoundException $e) {
-                //return View::make('users.resetpassword')->with('message', 'Could not find user. Please check your email address');
+                //return View::make('v3.auth.resetpassword')->with('message', 'Could not find user. Please check your email address');
                 Session::flash(
                     'errorNotification',
                     'Sorry we are experiencing technical difficulties, please try again or contact our technical support at support@evercise.com'
@@ -705,19 +383,16 @@ class UsersController extends \BaseController
                 return Response::json(route('home'));
             }
             if ($success) {
-                Event::fire(
-                    'user.newpassword',
-                    array(
-                        'email' => $email
-                    )
+                event('user.changedPassword', [$user]);
+
+                Session::flash('notification', 'Password reset successful');
+                return Response::json(
+                    [
+                        'callback' => 'gotoUrl',
+                        'url'      => route('home')
+                    ]
                 );
 
-                if (Request::ajax()) {
-                    Session::flash('notification', 'Password reset successful');
-                    return Response::json(route('home'));
-                } else {
-                    return View::make('home')->with('notification', 'Password Reset Successful');
-                }
             } else {
                 $result = array(
                     'validation_failed' => 1,
@@ -743,12 +418,31 @@ class UsersController extends \BaseController
      */
     public function logout()
     {
-        //return View::make('users.resetpassword');
+
+        if(!$this->checkLogin()) {
+            return Redirect::route('home');
+        }
+
+
+        $user = Sentry::getUser();
+
+        if (!empty($user->id)) {
+            event('user.logout', [$user]);
+        }
         Sentry::logout();
 
         $cookie = Cookie::forget('PHPSESSID');
 
         return Redirect::route('home')->withCookie($cookie);
+    }
+
+    public function replyToMessage($user_slug)
+    {
+
+    }
+    public function fuck()
+    {
+        return 'COCK';
     }
 
 

@@ -23,7 +23,7 @@
 				<div class="grey-box">
 					<p id="session-class-name">Class name: <span>{{ $name }}</span></p>
 					<p id="session-class-price">Class price: &pound;<span>{{ $price }}</span></p>
-					<p id="session-class-duration">Class duration: <span>{{ $duration }}</span></p>
+					<p id="session-class-duration">Class duration: <span>{{ $duration }} minutes</span></p>
 					<p id="session-start-time">Start time: <span></span></p>
 					<p id="session-end-time">End time: <span></span></p>
 				</div>

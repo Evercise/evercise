@@ -69,15 +69,6 @@ jQuery( document ).ready( function( $ )
 */  
 });
 
-function checkUrlForDev(){
-  if(window.location.href.indexOf("dev") > -1) {
-      // alert("your url contains the name dev");
-      var check = '/dev';
-  }else{
-      var check = '';
-  }
-  return check;
-}
 
 
 function getView(url, callback)
@@ -99,15 +90,12 @@ function getView(url, callback)
 
 function trace(message, debug)
 {
-  if (debug == true)
-  {
-    console.log(arguments.callee.caller.name + ' => ');
-    console.debug(message);
-  }
-  else
-  {
-    console.log(arguments.callee.caller.name + ' => ' + message);
-  }
+    if (DEBUG_APP)
+    {
+        console.log(arguments.callee.caller.name + ' => ' + message);
+        //window.console && console.log(message);
+    }
+
 }
 
 function initLoginBox()
@@ -303,16 +291,17 @@ function initPut (params) {
 
   $( document ).on( 'submit', selector , function() {
 
+      var form = $(this);
+      form.find('.btn').addClass('disabled');
+
       loading();
       var method = ($(this).find('input').val() == 'PUT') ? 'PUT' : $(this).attr('method');
       var url = $(this).attr('action');
-      trace('submitting via initPut. Method: '+ method+', url: '+url);
 
       $('.error-msg').remove();
       $('input').removeClass('error');
       // post to controller
-      var form = $(this);
-      form.find('.btn').addClass('disabled');
+
       $.ajax({
           url: url,
           type: method,
@@ -321,7 +310,6 @@ function initPut (params) {
       })
       .done(
           function(data) {
-              trace("initPut >> Sending data.....");
               loaded();
               
               if (data.validation_failed == 1)
@@ -330,16 +318,21 @@ function initPut (params) {
                     $('.mask').hide();
                   };
 
-                  console.debug("failed: "+data);
-                      console.debug(data, true);
+                  form.find('.btn').removeClass('disabled');
                       // show validation errors
                       var arr = data.errors;
-                      trace(arr, true);
                       var scroll = false;
                       $.each(arr, function(index, value)
                       {
                           if (scroll == false) {
-                              $('html, body').animate({ scrollTop: form.find("#" + index).offset().top -85 }, 400);
+                              if (form.find("#" + index).length) {
+                                  $('html, body').animate({ scrollTop: form.find("#" + index).offset().top -85 }, 400);
+                                  form.find("#" + index).focus();
+                              }else{
+                                  $('html, body').animate({ scrollTop: form.find('input[name="'+index+'"]').offset().top -85 }, 400);
+                                  form.find('input[name="'+index+'"]').focus();
+                              }
+
                               scroll = true;
                           };
                           if (value.length != 0)
@@ -353,7 +346,13 @@ function initPut (params) {
                               
                             }else{
                               if (!form.find("#" + index+'-error').length) {
-                                form.find("#" + index).after('<span id="'+index+'-error" class="error-msg">' + value + '</span>'); 
+                                  if (form.find("#" + index).length) {
+                                      form.find("#" + index).after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+
+                                  }else{
+                                      form.find('input[name="'+index+'"]').after('<span id="'+index+'-error" class="error-msg">' + value + '</span>');
+                                  }
+
                               }
                             };
                             
@@ -362,9 +361,7 @@ function initPut (params) {
                  form.find('.btn').removeClass('disabled');                   
               }else{
                   // call back
-                  form.find('.btn').removeClass('disabled');
                   var callback = data.callback;
-
                   window[callback](data, form);
 
               }
@@ -521,8 +518,7 @@ function openPopup(data)
 
 function loading(){
   $('.mask').show();
-  check = checkUrlForDev();
-  $('html').append('<img src="'+check+'/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
+  $('html').append('<img src="/img/e-circle-loading-yellow-on-black.gif" class="loading_circle">');
 }
 
 
@@ -541,3 +537,23 @@ function overrideGaPageview(params){
 }
 
 registerInitFunction('overrideGaPageview');
+
+function initSearchByName()
+{
+    $('input[name="findByName"]').keyup( function(e){
+        if(this.value.length >= 3 || e.keyCode == 13) {
+            $('.selectors').addClass('hidden');
+            $("[id*="+this.value.toLowerCase()+"]").removeClass('hidden');
+        }else{
+            $('.selectors').removeClass('hidden');
+        }
+    })
+}
+
+registerInitFunction('initSearchByName');
+
+function adminPopupMessage(data)
+{
+    trace(data.message);
+    //alert(data.message);
+}

@@ -3,118 +3,44 @@
 class ReferralsController extends \BaseController {
 
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		//
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @return Response
 	 */
 	public function store()
 	{
-		
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'referee_email' => 'required|email|unique:users,email',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
+		$validator = Referral::validateEmail(Input::all());
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('evercisegroups.create')
-					->withErrors($validator)
-					->withInput();
-	        }
+		if($validator->fails()) {
+			return Response::json([
+				'validation_failed' => 1,
+				'errors' =>  $validator->errors()->toArray()
+			]);
 		}
 		else {
-
 			$refereeEmail = Input::get('referee_email');
 			$referralCode = Functions::randomPassword(20);
 
-			$referral = Referral::create(['user_id'=>$this->user->id, 'email'=>$refereeEmail, 'code'=>$referralCode]);
+			$referralAndMessage = Referral::checkAndStore($this->user->id, $refereeEmail, $referralCode);
 
-			$referrerName = $this->user->first_name.' '.$this->user->last_name;
 
-			if ($referral)
+			if ($referralAndMessage['referral'])
 			{
-				Event::fire('referral.invite', array(
+				event('referral.invite', [
 		        	'email' => $refereeEmail,
 		            'referralCode' => $referralCode,
-		            'referrerName' => $referrerName
-		        ));
+		            'referrerName' => $this->user->first_name.' '.$this->user->last_name,
+		            'referrerEmail' => $this->user->email,
+					'balanceWithBonus' => ($this->user->balance + Config::get('values')['milestones']['referral']['reward'])
+                ]);
 			}
-
-			return Response::json(['callback'=>'gotoUrl', 'url'=>route('users.edit.tab', [$this->user->id, 'evercoins'])]);
+			return Response::json(
+				[
+					'view'  => View::make('v3.layouts.positive-alert')->with('message', $referralAndMessage['message'])->with('fixed', TRUE)->render(),
+					'referral' => $this->user->countPendingReferrals()
+				]
+			);
 		}
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
 	}
 
 	// Accept a code from a friend referral
@@ -122,7 +48,7 @@ class ReferralsController extends \BaseController {
 	{
 		Session::put('referralCode', $code);
 
-		return Redirect::to('users/create');
+		return Redirect::to('register');
 	}
 
 }

@@ -1,0 +1,118 @@
+.landing-header{
+  height: 650px;
+  padding-top: 10px;
+  .jumbotron{
+    padding-top: 185px;
+  }
+  h1{
+    font-size: 72px;
+    margin-bottom: 0;
+    letter-spacing: 1px;
+  }
+  h2{
+    font-size: 60px;
+    margin-top: 11px;
+    letter-spacing: 1px;
+  }
+  h3{
+    margin-top: 0;
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+  }
+}
+.landing-banner{
+  min-height: 160px;
+
+  img{
+    float: left;
+    padding-top: 51px;
+    margin-right: 20px;
+    height: 115px;
+  }
+  h4{
+    padding-top: 48px;
+    margin: 0 0 8px;
+  }
+  p{
+    line-height: 20px;
+  }
+  ul{
+    margin-left: 52px;
+  }
+}
+
+.landing-popup{
+  &.in{
+    display: block;
+  }
+
+  height: 520px;
+  width: 860px;
+  position: fixed;
+  left: 50%;
+  margin-left: -460px;
+  top: 50%;
+  margin-top: -285px;
+  z-index: 9999;
+  background-position: right;
+  background-repeat: no-repeat;
+  background-color: @white;
+  background-size: contain;
+  padding: 75px 85px;
+  h1{
+    font-size: 85px;
+    margin: 0;
+    line-height: 85px;
+  }
+  h2{
+    font-size: 42px;
+    margin: 0 0 28px;
+    line-height: 42px;
+    color: #758690;
+  }
+  strong{
+    font-size: 17px;
+  }
+  .close{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+}
+
+.landing-mask{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: fade(#000, 30%);
+  z-index: 9998;
+}
+
+@media screen and (max-width: @screen-sm-min){
+  .landing-header{
+    .jumbotron{
+      padding-top: 30px;
+    }
+    .input-wrapper{
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .btn{
+      width: 100%;
+    }
+    h1{
+      font-size: 62px;
+    }
+    h2{
+      font-size: 50px;
+    }
+    h3{
+      font-size: 20px;
+    }
+  }
+  .landing-banner{
+    padding-bottom: 40px;
+  }
+}

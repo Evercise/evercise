@@ -1,6 +1,9 @@
-<?php
- 
- // http://packalyst.com/packages/package/gloudemans/calendar
+<?php namespace composers;
+
+
+use JavaScript;
+use Calendar;
+use Functions;
 
 class CalendarComposer {
  
@@ -15,11 +18,12 @@ class CalendarComposer {
 		$year = date('Y');
 	}
 	
-	$calendarData = array();
+	$calendarData = [];
+
 	$startDay = $month == date('m') ? date('d')+1 : 1;
 
-	if ($month >= date('m') && $year >= date('Y'))
-		for ($i=$startDay; $i<=date("t"); $i++)
+	if ($month >= date('m') || $year >= date('Y'))
+		for ($i=$startDay; $i<=cal_days_in_month(CAL_GREGORIAN,$month,$year); $i++)
 			$calendarData[$i] = 'day_'.$i;
 	
 

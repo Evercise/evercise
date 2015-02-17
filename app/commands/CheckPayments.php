@@ -51,23 +51,16 @@ class CheckPayments extends Command {
 
 		foreach ($payments as $p_key => $payment) {
 
-			$currentBalance = $payment->user->wallet->balance;
+			//$payment->user points to the user who bought the class NOT the trainer to be paid!
+
+			$trainer = $payment->evercisesession->evercisegroup->user;
+
+			$currentBalance = $trainer->wallet->balance;
 			$newBalance = $currentBalance + $payment->total_after_fees;
 
 			$this->info('processing payment. id: '.$payment->id.', total after fees: '.$payment->total_after_fees.', new balance: '.$newBalance);
 
-			$payment->user->wallet->find($payment->user->wallet->id)->deposit($payment->total_after_fees, $payment->id);
-
-			/*$payment->user->wallet->where('id', $payment->user->wallet->id)->update([
-				'balance'=>$newBalance,
-				'previous_balance'=>$currentBalance
-			]);
-			$payment->user->wallet->recordedSave([
-				'user_id' => $payment->user_id,
-				'sessionpayment_id' => $payment->id,
-				'transaction_amount' => $payment->total_after_fees,
-				'new_balance' => $newBalance
-			]);*/
+			$trainer->wallet->find($trainer->wallet->id)->deposit($payment->total_after_fees, $payment->id, 'trainer_payment');
 
 			$payment->update(['processed'=>1]);
 		}

@@ -1,31 +1,31 @@
-<?php
- 
-class CategoryBoxComposer {
+<?php namespace composers;
 
-	public function compose($view)
-  	{
-  		$viewdata = $view->getData();
+class CategoryBoxComposer
+{
 
-  		$subcategories = $viewdata['subcategories'];
+    public function compose($view)
+    {
+        $viewdata = $view->getData();
 
-  		/*loop through the sub cats to get category pivot */
-  		foreach ($subcategories as $key => $subcategory) {
-  			$subcats[] = $subcategory->categories;
-  		}
+        $subcategories = $viewdata['subcategories'];
 
-  		/*loop though pivot to get catehory */
-      $categories = [];
-      $categoryIds = [];
-  		foreach ($subcats as $key => $subcat) {
-  			foreach ($subcat as $key => $cat) {
-          if (!in_array($cat->id, $categoryIds))
-          {
-            $categoryIds[] = $cat->id;
-    				$categories[] = $cat;
-          }
-  			}
-  		}
+        /*loop through the sub cats to get category pivot */
+        foreach ($subcategories as $key => $subcategory) {
+            $subcats[] = $subcategory->categories;
+        }
 
-  		$view->with('categories', $categories);
-  	}
+        /*loop though pivot to get catehory */
+        $categories = [];
+        $categoryIds = [];
+        foreach ($subcats as $key => $subcat) {
+            foreach ($subcat as $key => $cat) {
+                if (!in_array($cat->id, $categoryIds)) {
+                    $categoryIds[] = $cat->id;
+                    $categories[] = $cat;
+                }
+            }
+        }
+
+        $view->with('categories', $categories);
+    }
 }

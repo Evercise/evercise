@@ -1,0 +1,20 @@
+v1.1 (10.09.2014)
+  [HTML][new] HTML/PHP version
+  [App][new] Directive for changing title ('updateTitle')
+  [App|HTML][new] Fixed width layout
+  [App|HTML][new] Style Switcher
+  [App|HTML][new] WYSIWYG Editor example
+  [App|HTML][new] non-minified CSS (with comments)
+  [App|HTML][new] Favicon
+  [App][bug] Page Loader position
+  [App][bug] Position for alert close button
+  [App][bug] isTouchDevice, isHighDensity() moved to 'run' block
+  [App][bug] Site Logo ui-sref
+  [App|HTML][updated] Qrcode plugin
+  [App][updated] Side menu redesign
+  [App][updated] Error 404 moved to pages, updated styles
+  [App][updated] Removed not needed files
+  [App][updated] JS/CSS minor fixes
+  
+v1.0 (28.08.2014)
+  initial release

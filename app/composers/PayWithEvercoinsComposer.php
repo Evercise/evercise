@@ -1,5 +1,9 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+use Evercoin;
+use Sentry;
+
 class PayWithEvercoinsComposer {
 
 	 public function compose($view)
@@ -14,7 +18,7 @@ class PayWithEvercoinsComposer {
 
       $evercoins = Evercoin::where('user_id', $user->id)->pluck('balance');
 
-      JavaScript::put(array('initPut' => 1 )); // Initialise init put js.
+      JavaScript::put(array('initPut' => json_encode(['selector' => '#paywithevercoinsform']) )); // Initialise init put js.
 
       JavaScript::put(array('initRedeemEvercoin' => json_encode(['balance'=> $evercoins , 'priceInEvercoins' => $priceInEvercoins]) ));
 

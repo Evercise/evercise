@@ -1,0 +1,193 @@
+/**
+** default class css
+@param element height
+@param image wrapper height
+@param title margin
+@param border for info box
+
+*/
+
+// manage background sprite
+// logos at
+.logo-sprite( @x : -40px , @y: -72px, @img : "../img/ev_site_icons_v2.png" ){
+  background-image: url(@img);
+  background-position: @x @y;
+  overflow: hidden;
+}
+// default sprite starts at -50px -250px and is in increments of 40
+.sprite( @x, @y, @int : 40,  @img : "../img/ev_site_icons_v2.png" ){
+  background-image: url(@img);
+  background-position: @x @y;
+  background-repeat: no-repeat ;
+  overflow: hidden;
+  &.active{
+    background-position: @x ceil(@y - @int);
+  }
+  &.hover, &.active{
+    &:hover{
+      cursor: pointer;
+      background-position: @x ceil(@y - @int);
+    }
+  }
+}
+
+.class-box(@height: auto, @image-height: 100%, @heading-margin: 0, @info-border : 1px solid @gray-light){
+  width: 100%;
+  background-color: @white;
+  height: @height;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 25px;
+  overflow: hidden;
+  color: @gray;
+  .class-image-wrapper{
+    height: @image-height;
+    overflow: hidden;
+    img{
+      height: 100%;
+    }
+  }
+  .class-title-wrapper{
+    padding:0 20px;
+    .class-rating-wrapper{
+    margin:5px 0 15px;
+  }
+  h3{
+    margin-bottom: @heading-margin;
+  }
+  .btn{
+    margin-top: 14px;
+  }
+}
+  strong.text-primary{
+    font-size: 20px;
+  }
+  .class-info-wrapper{
+    border-top: @info-border;
+    font-size: 12px;
+    font-weight: 700;
+    span{
+      margin-top: -4px;
+
+    }
+    form{
+      padding: 0 15px;
+    }
+  }
+}
+
+// icon mixin
+
+.icon(@height: 20px, @width : 22px){
+  height: @height;
+  width: @width;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// branded list styleing
+
+.branded-list() {
+  list-style-type: none;
+  position: relative;
+  margin-left: 2px;
+  padding-left: 0;
+  li{
+    line-height: 30px;
+    position: relative;
+    padding-left: 10px;
+    &:before {
+      content: "\2022";
+      font-size: 18px;
+      position: absolute;
+      left: -2px;
+      top:0;
+      color: @brand-primary;
+      margin-right: 5px;
+    }
+  }
+}
+
+.collapsing {
+  .transition(height 2s ease);
+  &.hub-table-row{
+    .transition(all 0s ease);
+  }
+}
+
+.btn-toggle(@x, @y){
+  position: relative;
+  padding-right: 40px;
+  &:after{
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 10px;
+    height: 20px;
+    width: 22px;
+    content: '';
+    .sprite(@x, @y);
+  }
+  &.loading{
+    &:after{
+      background: url("../img/spinner_grey.gif");
+      background-repeat: no-repeat;
+      background-position: center center;
+      opacity: 0.65;
+    }
+  }
+}
+
+.package-block-module(@color){
+  .package-title{
+    background-color: @color;
+    .sprite(-434px, -643px, 0);
+    padding: 0px 20px 0;
+    height: 135px;
+    h2{
+      color: @white;
+      margin-bottom: 9px;
+      position: absolute;
+      bottom: -5px;
+      width: 70%;
+      right: 0  ;
+      @media (max-width: @grid-float-breakpoint) {
+        right: 20px;
+        text-align: right;
+      }
+    }
+  }
+  .package-description{
+    height: 210px;
+  }
+  .package-list{
+    height: 200px;
+    ul{
+      padding: 0;
+      list-style: none;
+      li{
+        padding-left: 15px;
+        text-indent: -14px;
+        &:before {
+          content: "•";
+          color: @color;
+          padding-right: 7px;
+        }
+      }
+    }
+
+  }
+  span.colour{
+    color: @color;
+  }
+  .package-pay{
+    strong{
+      font-size: 16px;
+      display: block;
+      line-height: 19px;
+      color: @color;
+    }
+    .btn{
+      .button-variant(@white; @color; @color);
+    }
+  }
+}

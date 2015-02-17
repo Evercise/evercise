@@ -1,5 +1,9 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+use User;
+
+
 class UserEditComposer {
 
 	 public function compose($view)
@@ -18,9 +22,14 @@ class UserEditComposer {
 
 
     	$markPref = User::find($user->id)->marketingpreferences()->where('name', 'newsletter')->first()['option'];
-		
-		//JavaScript::put(array('initLeaveSession' => 1 )); 
-		JavaScript::put(array('initImage' => json_encode(['ratio' => 'user_ratio']) )); // Initialise Users JS with Ratio string (defined in image.js)
+
+
+        JavaScript::put(
+            [
+                'initImage'   => 	json_encode(['ratio' => 'user_ratio'])
+            ]
+        );
+
 		$view->with('firstName', $firstName)
 			->with('lastName', $lastName)
 			->with('dob', $dob)

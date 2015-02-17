@@ -1,12 +1,18 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+
 class UsersResetPasswordComposer {
  
   public function compose($view)
   {
 
 
-  	JavaScript::put(['initUsers' => 1]); // Initialise Users JS.
+  	JavaScript::put(
+        [
+            'initPut' => json_encode(['selector' => '#passwords_reset'])
+        ]
+    ); // Initialise init put for submission.
 
   }
 }

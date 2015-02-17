@@ -1,295 +1,205 @@
 <?php
 
-class TrainersController extends \BaseController {
+class TrainersController extends \BaseController
+{
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		return View::make('trainers.index');
-	}
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        return View::make('trainers.index');
+    }
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		if ( ! Sentry::check())
-		{
-		   return View::make('trainers.about')->with('status','logged-out')->with('redirect_after_login', true); 
-		}
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        if (!Sentry::check()) {
+            return Redirect::route('register');
+        }
 
-		//$user = Sentry::getUser();
-		$trainerGroup = Sentry::findGroupByName('trainer');
-		if ($this->user->inGroup($trainerGroup))
-		{
-			return Redirect::route('trainers.edit', $this->user->id);
-		}
+        //$user = Sentry::getUser();
+        $trainerGroup = Sentry::findGroupByName('trainer');
+        if ($this->user->inGroup($trainerGroup)) {
+            return Redirect::route('trainers.edit', $this->user->id);
+        }
 
-		$specialities = Speciality::all();
-		$disciplines = array();
-		$titles = array();
-		foreach ($specialities as $sp)
-		{
-		    if (!isset($titles[$sp->name]))
-		    {
-		    	$disciplines[$sp->name] = $sp->name;
-		    	$titles[$sp->name] = array($sp->titles);
-		    }
-		   	else array_push($titles[$sp->name], $sp->titles);
-		}
+        $specialities = Speciality::all();
+        $disciplines = [];
+        $titles = [];
+        foreach ($specialities as $sp) {
+            if (!isset($titles[$sp->name])) {
+                $disciplines[$sp->name] = $sp->name;
+                $titles[$sp->name] = [$sp->titles];
+            } else {
+                array_push($titles[$sp->name], $sp->titles);
+            }
+        }
 
-		// http://image.intervention.io/methods/crop
-		// http://odyniec.net/projects/imgareaselect
+        // http://image.intervention.io/methods/crop
+        // http://odyniec.net/projects/imgareaselect
 
-		return View::make('trainers.create')
-			->with('disciplines', $disciplines);
+        return View::make('v3.trainers.create')
+            ->with('disciplines', $disciplines);
 
 
-	}
+    }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				//'title' => 'required',
-				'bio' => 'required|max:500|min:50',
-				'image' => 'required',
-				'phone' => 'required|numeric',
-				'website' => 'sometimes',
-				'profession' => 'required|max:50|min:2',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function edit($id, $tab = 0)
+    {
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('trainers.create')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else {
-			$user = Sentry::getUser();
+    }
 
-			$bio = Input::get('bio');
-			$image = Input::get('image');
-			$website = Input::get('website');
-			$area_code = Input::get('areacode');
-			$phone = Input::get('phone');
-			//$discipline = Input::get('discipline');
-			//$title = Input::get('title');
-			//$speciality = DB::table('specialities')->where('name', $discipline)->where('titles', $title)->pluck('id');
-			$profession = Input::get('profession');
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function show($id = 'me')
+    {
+        if ($id == 'me') {
+            $user = Sentry::getUser();
+            if (!$user) {
+                return Redirect::route('home')->with('notification', 'Please log in');
+            }
+            $id = $user->id;
+        }
 
-			if ($phone == '' && $area_code != '')
-				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please enter you phone number']]);
-			if ($phone != '' && $area_code == '')
-				return Response::json(['validation_failed' => 1, 'errors' => ['areacode'=>'Please select a country']]);
+        $user = User::where((is_numeric($id) ? 'id' : 'display_name'), $id)->first();
 
 
-			$trainer = Trainer::createOrFail(['user_id'=>$user->id, 'bio'=>$bio, 'website'=>$website, 'profession'=>$profession]);
 
-			// Duck out if record already exists
-			if (!$trainer) return Response::json(route('trainers.edit', array('id'=> $user->id)));
+        if ($user) {
+            if(is_numeric($id)) {
+                return Redirect::route('trainer.show', ['id' => $user->display_name]);
+            }
+            try {
+                $trainer = $user->trainer()->first();
+            } catch (Exception $e) {
+                return Redirect::route('home')->with('notification', 'this trainer does not exist');
+            }
+        } else {
+            return Redirect::route('home')->with('notification', 'this trainer does not exist');
+        }
 
-			// Use firstOrCreate just incase to make sure no duplicates are made
-			$wallet = Wallet::firstOrCreate(['user_id'=>$user->id, 'balance'=>0, 'previous_balance'=>0]);
-
-			// update user image
-
-			$user->image = $image;
-			$user->area_code = $area_code;
-			$user->phone = $phone;
-			$user->save();
-
-			// add to trainer group
-
-			$userGroup = Sentry::findGroupById(3);
-			$user->addGroup($userGroup);
-
-			// welcome email
-
-			Event::fire('user.confirm', array(
-            	'email' => $user->email, 
-            	'display_name' => $user->display_name
-            ));
-
-			//respond
-			//return Response::json(route('trainers.edit', array('id'=> $user->id)));
-			//return Response::json(route('evercisegroups.index'));
-			return Response::json(['callback' => 'gotoUrl', 'url' => route('evercisegroups.index')]);
-		}
-
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id, $tab=0)
-	{
-		if (!Sentry::check()) return Redirect::route('home')->with('notification', 'You have been logged out');
-		$trainer = Trainer::where('user_id' , $this->user->id)
-				//->with('speciality')
-				->first();
-		
+        // check if trainer has classes else redirect them home
+        try {
+            $evercisegroups = Evercisegroup::has('futuresessions')
+                ->with('futuresessions')
+                ->with('venue')
+                ->where('user_id', $trainer->user->id)->get();
+        } catch (Exception $e) {
+            return Redirect::route('home')->with('notification', 'this trainer does not exist');
+        }
 
 
-		return View::make('trainers.edit')
-			->with('trainer', $trainer)
-			->with('profession', $trainer->profession)
-			->with('tab', $tab);
-			//->with('speciality', $speciality);
-	}
+        $stars = [];
+        $totalStars = 0;
+        $evercisegroup_ids = [];
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//$userTrainer = User::has('Trainer')->find($id);
-		//$trainer = Trainer::where('user_id' ,$userTrainer->id)->first();
+        foreach ($evercisegroups as $key => $evercisegroup) {
+            $evercisegroup_ids[] = $evercisegroup->id;
+        }
 
-		//$speciality = Speciality::where('id', $trainer['Trainer'][0]['specialities_id'])->pluck(DB::raw("CONCAT(name, ' ', titles)")); // specialities_id is a extra layer down from trainer
+        if (!empty($evercisegroup_ids)) {
+            $ratings = Rating::with('rator')->whereIn('evercisegroup_id',
+                $evercisegroup_ids)->orderBy('created_at')->get();
 
-		$trainer=Trainer::with('user')
-					//->with('speciality')
-					->where('user_id', $id)
-					->first();
+            foreach ($ratings as $key => $rating) {
+                $stars[$rating->evercisegroup_id][] = $rating->stars;
+                $totalStars = $totalStars + $rating->stars;
+            }
+        } else {
+            $ratings = [];
+        }
 
-		// check if trainer has classes else redirect them home
-		try{
-			$evercisegroups = Evercisegroup::has('evercisesession')
-			->with('evercisesession')
-			->with('venue')
-			->where('user_id', $trainer->user->id)->get();
-		}catch(Exception $e){
-			return Redirect::route('home')->with('notification', 'this trainer does not exist');
-		}
-		
+        $params = [
+            'title' => (!empty($user->first_name) ? $user->first_name.' '.$user->last_name : $user->display_name).' '.$trainer->profession.' | Evercise',
+            'metaDescription' => str_limit($trainer->bio, 160, $end = '...'),
+            'tab' => 0,
+            'data' => [
+                'trainer'        => $trainer,
+                'evercisegroups' => $evercisegroups,
+                'stars'          => $stars,
+                'totalStars'     => $totalStars,
+                'ratings'        => $ratings,
+            ]
+        ];
 
-		$stars = [];
-		$totalStars = 0;
-		$evercisegroup_ids = [];
+        return View::make('v3.trainers.show', $params);
+    }
 
-		foreach ($evercisegroups as $key => $evercisegroup) {
-			$evercisegroup_ids[] = $evercisegroup->id;
-		}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int $id
+     * @return Response
+     */
+    public function update($id)
+    {
 
-		if (!empty($evercisegroup_ids)) {
-	    	$ratings = Rating::with('rator')->whereIn('evercisegroup_id', $evercisegroup_ids)->orderBy('created_at')->get();
+        $validator = Validator::make(
+            Input::all(),
+            [
+                'bio'        => 'required|max:500|min:50',
+                'profession' => 'required|max:50|min:5',
+            ]
+        );
+        if ($validator->fails()) {
+            if (Request::ajax()) {
+                $result = [
+                    'validation_failed' => 1,
+                    'errors'            => $validator->errors()->toArray()
+                ];
 
-		    foreach ($ratings as $key => $rating) {
-		    	$stars[$rating->evercisegroup_id][] = $rating->stars;
-		    	$totalStars = $totalStars + $rating->stars;
-		    }
-	    }
-	    else
-	    {
-	    	$ratings = [];
-	    }
-	    
-		return View::make('trainers.show')
-				->with('trainer', $trainer)
-				->with('evercisegroups', $evercisegroups)
-				->with('stars', $stars)
-				->with('totalStars', $totalStars)
-				->with('ratings', $ratings);
-	}
+                return Response::json($result);
+            } else {
+                return Redirect::route('trainers.edit')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        } else {
+            // Actually update the trainer record
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
+            $bio = Input::get('bio');
+            $website = Input::get('website');
+            $profession = Input::get('profession');
 
-		$validator = Validator::make(
-			Input::all(),
-			array(
-				'bio' => 'required|max:500|min:50',
-				'profession' => 'required|max:50|min:5',
-			)
-		);
-		if($validator->fails()) {
-			if(Request::ajax())
-	        { 
-	        	$result = array(
-		            'validation_failed' => 1,
-		            'errors' =>  $validator->errors()->toArray()
-		         );	
+            $trainer = Trainer::find($id);
 
-				return Response::json($result);
-	        }else{
-	        	return Redirect::route('trainers.edit')
-					->withErrors($validator)
-					->withInput();
-	        }
-		}
-		else{
-			// Actually update the trainer record 
+            if ($this->user->id != $trainer->user_id) {
+                return Response::json(['callback' => 'fail']);
+            }
 
-			//$discipline = Input::get('discipline');
-			//$title = Input::get('title');
-			$bio = Input::get('bio');
-			$website = Input::get('website');
-			$profession = Input::get('profession');
+            $trainer->update([
+                'bio'        => $bio,
+                'website'    => $website,
+                'profession' => $profession,
+                //'specialities_id' => $speciality->id,
+            ]);
 
-			$trainer = Trainer::find($id);
+            $result = [
+                'callback' => 'gotoUrl',
+                'url'      => '/trainers/2/edit/trainer'
+            ];
 
-			if ($this->user->id != $trainer->user_id) return Response::json(['callback' => 'fail']);
+            Event::fire('trainer.editTrainerDetails', [$this->user]);
 
-			//$speciality = Speciality::where('name', $discipline)->where('titles', $title)->first();
+            return Response::json($result);
 
-			$trainer->update(array(
-				'bio' => $bio,
-				'website' => $website,
-				'profession' => $profession,
-				//'specialities_id' => $speciality->id, 
-			));
-
-			$result = array(
-		            //'sp' =>  $speciality,
-		            'callback' => 'gotoUrl',
-		            'url' => '/trainers/2/edit/trainer'
-		         );	
-
-			return Response::json($result);
-
-		}
-		//return Response::json($result);
-		//return View::make('users.edit');
-	}
-
-	public function trainerSignup()
-	{
-		Session::put('redirectAfter', 'trainer/create');
-
-		return Redirect::to('users/create');
-	}
+        }
+    }
 }

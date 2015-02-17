@@ -1,0 +1,1 @@
+<strong>Your search returned <span class="text-primary">{{ results }}</span> results</strong>

@@ -11,7 +11,7 @@ function updateNewSessionFields()
 
 function session_overview() {
 
-    // update start and end time on changing of tim dropdown
+    // update start and end time on changajaxing of tim dropdown
     
     $('select.time-box').on('change', function(){
         updateTimeFields();

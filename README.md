@@ -1,6 +1,5 @@
-#Laravel LiveLogger
+# Evercise Setup
 ==================================================
-## Evercise Setup
 
 To set up Evercise on your local machine you need to do the following:
 
@@ -38,3 +37,120 @@ If you don't want to set 777 then just allow apache (or what ever user is runnin
 ```bash
    chmod apache:apache -R app/storage/*
 ```
+
+
+
+
+
+
+
+# Evercise Vagrant
+==================================================
+## Dependencies
+
+https://www.virtualbox.org/wiki/Downloads
+
+http://www.vagrantup.com/downloads.html
+
+
+## Setup
+
+In you local setup first update the .env.php to look like this:
+
+```php
+return [
+
+    'DEBUG_APP'             => true,
+    'APP_URL'               => 'http://dev.evercise.com/',
+    'ENCRYPTION_KEY'        => 'ozt38MwirMfb5STSJWowmnHBGUz0ziAR',
+    'ASSETS_CACHE'          => true,
+    //DB LIVE
+    'DB_HOST'               => 'localhost',
+    'DB_NAME'               => 'evercise',
+    'DB_USER'               => 'root',
+    'DB_PASS'               => '',
+    //DB MIGRATION
+    'DB_V1_HOST'            => 'localhost',
+    'DB_V1_NAME'            => 'evercise_v1',
+    'DB_V1_USER'            => 'root',
+    'DB_V1_PASS'            => '',
+    //EMAIL SETUP
+    'EMAIL_DRIVER'          => 'smtp',
+    'EMAIL_SMTP_HOST'       => '127.0.0.1',
+    'EMAIL_SMTP_PORT'       => 1025,
+    'EMAIL_FROM_ADDRESS'    => 'noreply@evercise.com',
+    'EMAIL_FROM_NAME'       => 'Evercise',
+    'EMAIL_SMTP_ENCRYPTION' => '',
+    'EMAIL_SMTP_USERNAME'   => 'vagrant@evercise.com',
+    'EMAIL_SMTP_PASSWORD'   => '',
+    'EMAIL_SENDMAIL'        => '/usr/sbin/sendmail -bs',
+    'EMAIL_PRETEND'         => false, //For Production Set to False
+    //Facebook Data
+    'FACEBOOK_ID'           => '306418789525126',
+    'FACEBOOK_SECRET'       => 'd599aae625444706f9335ca10ae5f71d'
+
+];
+```
+
+Then Run:
+```bash
+   vagrant up
+```
+
+
+
+When the machine boots. And you notice the page is loading slowly.
+
+You should enable: I/O APIC
+
+Located in the Settings/System of the Virtual Machine that you are using
+
+![Setup](https://www.dropbox.com/s/c9v36501zoqbc35/Screen%20Shot%202014-08-27%20at%209.46.26%201.png?dl=1)
+
+After that open your command line and go to the project root
+
+
+
+
+
+
+# How to ADD a new domain or site
+==================================================
+## Auto
+
+In the Server files you have a .sh file: scripts/server.sh
+
+For example we want to add a new site called dev.mysite.com and its located in the folder mysite
+
+First in your hosts file add the new domain and point to the machine IP
+In my case it would look like this:
+```bash
+192.168.10.10 dev.mysite.com
+```
+
+Log into the Vagrant server.
+Lets assume that your project files are located like this:
+```bash
+/home/vagrant/html
+```
+
+and your new site is located:
+```bash
+/home/vagrant/html/mysite
+```
+
+Now to set it up just run the command:
+```bash
+sudo sh scripts/serve.sh dev.mysite.com /home/vagrant/html/mysite/public
+```
+
+Notice it has public at the end.
+
+
+Now the site will be created automatically in Nginx/Sites Available and linked to the enabled sites.
+Nginx and PHP will be restarted so it should work instantly
+
+
+
+
+

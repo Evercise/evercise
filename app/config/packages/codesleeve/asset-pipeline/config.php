@@ -84,9 +84,7 @@ return array(
 		'.min.css' => array(
 			new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
 		),
-		'.js' => array(
-			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment()),
-		),
+		'.js' => (getenv('DISSABLE_JS_MINIFY') ? [] : [new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment())]),
 		'.js.coffee' => array(
 			new Codesleeve\AssetPipeline\Filters\CoffeeScript,
 			new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\JSMinPlusFilter, App::environment()),

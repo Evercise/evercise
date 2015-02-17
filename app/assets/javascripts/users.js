@@ -47,13 +47,7 @@ function initUsers()
 
         $.post(
             $( this ).prop( 'action' ),
-           /* {
-                "email": $( '#email' ).val(),
-                "password": $( '#password' ).val(),
-                "password_confirmation": $( '#password_confirmation' ).val(),
-                "code": $( '#code' ).val()
-            },
-            */
+
             $( this ).serialize(),
             function( data ) {
                 trace("about to win.......");
@@ -89,8 +83,9 @@ function initUsers()
     });
 
 
-    $('.checkbox').on('change', function () {
-      this.value = this.checked ? 'yes' : 'no';
+    $(document).on('change', '.checkbox', function (e) {
+        e.preventDefault();
+        this.value = this.checked ? 'yes' : 'no';
     }).change();
 }
 registerInitFunction('initUsers');

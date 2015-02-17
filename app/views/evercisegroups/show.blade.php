@@ -24,12 +24,12 @@
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->twitter()  }}" target="_blank" class="btn">{{ HTML::image('img/tweeter-share.png','tweet', array('class' => 'share-btn')) }}</a>
 				<a href="{{ Share::load(Request::url() , $evercisegroup->name)->gplus()  }}" target="_blank" class="btn">{{ HTML::image('img/google-share.png','share on google plus', array('class' => 'share-btn')) }}</a>
 			</div>
-			
+
 			<br>
 			<p>{{ $evercisegroup->description }}</p>
 			<br/>
 
-			<p>{{Lang::choice('general.gender', 2)}}: 
+			<p>{{Lang::choice('general.gender', 2)}}:
 				@if ($evercisegroup->gender == 0) All
 				@elseif ($evercisegroup->gender == 1) Male
 				@elseif ($evercisegroup->gender == 2) Female
@@ -39,7 +39,7 @@
 
 			@if(count($evercisegroup->subcategories) > 0)
 				@include('evercisegroups.category_box', ['subcategories' => $evercisegroup->subcategories])
-			@endif	
+			@endif
 		</div>
 		<div class="class-wrap" id="sessions">
 			<h4>{{Lang::choice('general.session', 2)}}</h4>
@@ -54,50 +54,56 @@
 				<ul>
 					@foreach ($evercisegroup->futuresessions as $key => $futuresession)
 
-							
-							@if ($key < 3) 
-								<div class="session-list-row">
-							@else
-								<div class="session-list-row extra hidden">
-							@endif
-									<li>{{ date('M-dS' , strtotime($futuresession->date_time)) }}</li>
-									<li>{{ date('h:ia' , strtotime($futuresession->date_time)) }}</li>
-									<li>{{ date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->duration * 60))}}
-									<li>{{trans('general.currency_sign')}}{{ $futuresession->price }}</li>
-									<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
-									@if (isset($membersIds[$futuresession->id]))
 
-										@if ($user ? (in_array($user->id, $membersIds[$futuresession->id]) ? true : false ) : false ) 
+						@if ($key < 3)
+							<div class="session-list-row">
+						@else
+							<div class="session-list-row extra hidden">
+						@endif
+								<li>{{ date('M-dS' , strtotime($futuresession->date_time)) }}</li>
+								<li>{{ date('h:ia' , strtotime($futuresession->date_time)) }}</li>
+								<li>{{ date('h:ia' , strtotime($futuresession->date_time) + ( $futuresession->formattedDuration * 60))}}
+								<li>{{trans('general.currency_sign')}}{{ $futuresession->price }}</li>
+								<li> <strong>{{ $evercisegroup->capacity -  $members[$futuresession->id] }}</strong></li>
+								@if (isset($membersIds[$futuresession->id]))
 
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
-										@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">{{trans('evercisegroups-show.class_full')}}</button></li>
+									@if ($user ? (in_array($user->id, $membersIds[$futuresession->id]) ? true : false ) : false )
 
-										@else
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
-										@endif
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-joined-session btn btn-blue disabled">Joined</button></li>
+									@elseif ($members[$futuresession->id] >= $evercisegroup->capacity )
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn-blue disabled">{{trans('evercisegroups-show.class_full')}}</button></li>
+
 									@else
-											<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
-										
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
 									@endif
+								@else
+										<li><button  data-price="{{ $futuresession->price }}" data-session="{{$futuresession->id}}" class="btn-join-session btn btn-yellow">{{trans('evercisegroups-show.join_session')}}</button></li>
 
-							@if ($key > 3) 
-								</div>
-							@else
-								</div>
-							@endif
+								@endif
 
-							@if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1) 
-								<div id="expand-sessions" class="session-list-row tc expand">
-									<h5 class="extra">{{trans('evercisegroups-show.show_more')}}</h5>
-									<h5 class="extra hidden">{{trans('evercisegroups-show.hide_more')}}</h5>
-								</div>
-							@endif
-							
-								
-								
+						@if ($key > 3)
+							</div>
+						@else
+							</div>
+						@endif
+
+						@if ($key >= 3 && $key == count($evercisegroup->futuresessions) - 1)
+							<div id="expand-sessions" class="session-list-row tc expand">
+								<h5 class="extra">{{trans('evercisegroups-show.show_more')}}</h5>
+								<h5 class="extra hidden">{{trans('evercisegroups-show.hide_more')}}</h5>
+							</div>
+						@endif
+
+
+
 					@endforeach
 				</ul>
+
+				{{ Form::open(array('id' => 'add-to-cart', 'url' => 'cart/add', 'method' => 'post', 'class' => '')) }}
+					{{ Form::hidden( 'evercisegroup-id' , $evercisegroup->id, array('id' => 'evercisegroup-id')) }}
+					{{ Form::hidden( 'session-id' , null, array('id' => 'session-id')) }}
+				{{ Form::close() }}
+
 				<div class="session-total">
 					{{ Form::open(array('id' => 'join-sessions', 'url' => 'sessions/join', 'method' => 'post', 'class' => '')) }}
 						<span>{{trans('evercisegroups-show.total_sessions')}}: <span id="total-sessions">0</span></span>
@@ -127,33 +133,33 @@
 				@include('widgets.map', array('lat' =>$venue->lat, 'lng' =>  $venue->lng))
 			</div>
 			<hr>
-			
-			
+
+
 			@if(count($venue->facilities) > 0)
 				<ul class="facilities-wrap">
 					<strong>{{trans('evercisegroups-show.venue_facilities')}}</strong>
 					@foreach($venue->facilities as $key => $facility)
-						@if ($facility->category == 'facility') 
-							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>				
-						@endif										
+						@if ($facility->category == 'facility')
+							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>
+						@endif
 					@endforeach
 				</ul>
 			@endif
 
-			
+
 			@if(count($venue->facilities) > 0)
 				<ul class="facilities-wrap">
 					<strong>{{trans('evercisegroups-show.venue_amenities')}}</strong>
 					@foreach($venue->facilities as $key => $facility)
-						@if ($facility->category == 'Amenity') 
-							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>				
-						@endif										
+						@if ($facility->category == 'Amenity')
+							<li>{{ HTML::image('img/facility/'.$facility->image,'facilities icon', array('class' => 'facilities-icon')) }}{{ $facility->name}}</li>
+						@endif
 					@endforeach
-				</ul>	
+				</ul>
 			@endif
-			
+
 		</div>
-		<div class="class-wrap" id="reviews"> 
+		<div class="class-wrap" id="reviews">
 			<h4>{{trans('evercisegroups-show.reviews_participants')}}</h4>
 			<div class="tab-wrapper">
 				<div class="tab-header">
@@ -176,18 +182,18 @@
 	            @include('form.textfield', array('fieldname'=>'stars', 'placeholder'=>'stars', 'maxlength'=>10, 'label'=>'stars', 'default' => 5 ))
 	            @include('form.textarea', array('fieldname'=>'comment', 'placeholder'=>'comment', 'maxlength'=>255, 'label'=>'comment', 'default' => '' ))
 	            @include('form.hidden', array('fieldname'=>'evercisegroup_id', 'placeholder'=>'evercisegroup_id', 'maxlength'=>10, 'label'=>'evercisegroup_id', 'value' => $evercisegroup->id ))
-	            
+
 	            {{ Form::submit('Leave review' , array('class'=>'btn btn-yellow', 'id' => 'create_review')) }}
 
 	            {{ Form::close() }}
             @endif
 
 
-						
-						@foreach ($allRatings as $rating) 
+
+						@foreach ($allRatings as $rating)
 							<div class="rating-row">
 
-								
+
 								<div class="rating-block">
 									{{ HTML::image('profiles/'.$rating['rator']['directory'].'/'.$rating['rator']['image'],  $rating['rator']['display_name']  , array('title' => $rating['rator']['display_name'] ,'class' => 'user-icon')) }}
 									{{ HTML::image('img/rating-arrow.png', 'ratng arrow place holder' , array('class' => 'rating-arrow-icon')) }}
@@ -199,11 +205,11 @@
 											{{ HTML::image('img/yellow_' . ($i < $rating['stars'] ? '' : 'empty') . 'star.png', 'stars' , array('class' => 'star-icons')) }}
 										@endfor
 									</div>
-									
+
 
 
 									<strong>  {{ $rating['rator']['display_name'] }}</strong> on {{ date('d/m/Y' , strtotime($rating['created_at']))}} </span>
-									<p>{{ $rating['comment']}}</p> 
+									<p>{{ $rating['comment']}}</p>
 								</div>
 							</div>
 
@@ -211,7 +217,7 @@
 					</div>
 				</div>
 				<div id="participant" class="tab-view">
-					
+
 
 					@foreach ($memberUsers as $memberUser)
 						<div class="float-left participant-block">
@@ -227,7 +233,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 </div>
 

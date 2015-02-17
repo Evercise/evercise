@@ -1,5 +1,7 @@
-<?php
- 
+<?php namespace composers;
+
+use JavaScript;
+
 class UsersCreateComposer {
  
   public function compose($view)

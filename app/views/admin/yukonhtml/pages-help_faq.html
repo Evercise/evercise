@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+		<title>Yukon Admin HTML 1.1(pages-help_faq)</title>
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+        <!-- favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+        <!-- bootstrap framework -->
+		<link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		
+        <!-- icon sets -->
+            <!-- elegant icons -->
+                <link href="assets/icons/elegant/style.css" rel="stylesheet" media="screen">
+            <!-- elusive icons -->
+                <link href="assets/icons/elusive/css/elusive-webfont.css" rel="stylesheet" media="screen">
+            <!-- flags -->
+                <link rel="stylesheet" href="assets/icons/flags/flags.css">
+
+
+        <!-- google webfonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+        <!-- main stylesheet -->
+		<link href="assets/css/main.min.css" rel="stylesheet" media="screen" id="mainCss">
+
+        <!-- moment.js (date library) -->
+        <script src="assets/js/moment-with-langs.min.js"></script>
+
+    </head>
+    <body class="side_menu_active side_menu_expanded">
+        <div id="page_wrapper">
+
+            <!-- header -->
+            <header id="main_header">
+                <div class="container-fluid">
+                    <div class="brand_section">
+                        <a href="dashboard.html"><img src="assets/img/logo.png" alt="site_logo" width="63" height="26"></a>
+                    </div>
+                    <ul class="header_notifications clearfix">
+                        <li class="dropdown">
+                            <span class="label label-danger">8</span>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="el-icon-envelope"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar02_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor sit amet&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar03_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor sit&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar04_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <img src="assets/img/avatars/avatar05_tn.png" alt="" width="38" height="38">
+                                        <p><a href="#">Lorem ipsum dolor sit amet&hellip;</a></p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-xs btn-primary btn-block">All messages</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown" id="tasks_dropdown">
+                            <span class="label label-danger">14</span>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="el-icon-tasks"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li>
+                                        <div class="clearfix">
+                                            <div class="label label-warning pull-right">Medium</div>
+                                            <small class="text-muted">YUK-21 (24.07.2014)</small>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                    </li>
+                                    <li>
+                                        <div class="clearfix">
+                                            <div class="label label-danger pull-right">High</div>
+                                            <small class="text-muted">YUK-8 (26.07.2014)</small>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                    </li>
+                                    <li>
+                                        <div class="clearfix">
+                                            <div class="label label-success pull-right">Medium</div>
+                                            <small class="text-muted">DES-14 (25.07.2014)</small>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-xs btn-primary btn-block">All tasks</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="dropdown">
+                            <span class="label label-primary">2</span>
+                            <a data-toggle="dropdown" href="#" class="dropdown-toggle"><i class="el-icon-bell"></i></a>
+                            <div class="dropdown-menu">
+                                <ul>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                        <small class="text-muted">20 minutes ago</small>
+                                    </li>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit&hellip;</p>
+                                        <small class="text-muted">44 minutes ago</small>
+                                    </li>
+                                    <li>
+                                        <p>Lorem ipsum dolor&hellip;</p>
+                                        <small class="text-muted">10:55</small>
+                                    </li>
+                                    <li>
+                                        <p>Lorem ipsum dolor sit amet&hellip;</p>
+                                        <small class="text-muted">14.07.2014</small>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn btn-xs btn-primary btn-block">All Alerts</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="header_user_actions dropdown">
+                        <div data-toggle="dropdown" class="dropdown-toggle user_dropdown">
+                            <div class="user_avatar">
+                                <img src="assets/img/avatars/avatar08_tn.png" alt="" title="Carrol Clark (carrol@example.com)" width="38" height="38">
+                            </div>
+                            <span class="caret"></span>
+                        </div>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="pages-user_profile.html">User Profile</a></li>
+                            <li><a href="login_page.html">Log Out</a></li>
+                        </ul>
+                    </div>
+                    <div class="search_section hidden-sm hidden-xs">
+                        <input type="text" class="form-control input-sm">
+                        <button class="btn btn-link btn-sm" type="button"><span class="icon_search"></span></button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- breadcrumbs -->
+            <nav id="breadcrumbs">
+                <ul>
+                    <li><a href="dashboard.html">Home</a></li>
+                    <li><span>Pages</span></li>
+                    <li><span>Help/Faq</span></li>
+		        </ul>
+            </nav>
+
+            <!-- main content -->
+            <div id="main_wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <h1 class="page_heading">
+                                Help/Faq
+                                <span>Get Help. Find Answers</span>
+                            </h1>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="What would you like to know?">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button"><span class="icon_search"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="heading_b"><span class="heading_text">Categories</span></div>
+                            <div class="list-group">
+                                <a href="javascript:void(0)" class="active list-group-item">All</a>
+                                <a href="javascript:void(0)" class="list-group-item">Customer Service</a>
+                                <a href="javascript:void(0)" class="list-group-item">Configuration & Data Management</a>
+                                <a href="javascript:void(0)" class="list-group-item">Mobile</a>
+                                <a href="javascript:void(0)" class="list-group-item">Reports & Dashboards</a>
+                                <a href="javascript:void(0)" class="list-group-item">Sales & Marketing</a>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-sep-md">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_1">
+                                                1. Tempora deleniti ipsa excepturi nam accusantium.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_1" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Qui et architecto quia est at vel aperiam sint atque quos non impedit minima deleniti vero reprehenderit voluptatem accusantium iste nesciunt delectus modi voluptatibus repellendus quia dolor perferendis occaecati unde vitae ut quia quo doloremque sint consequuntur vel aut in nihil perferendis vel aliquam aut temporibus incidunt vitae illo ea saepe.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_2">
+                                                2. Sunt tenetur eligendi.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_2" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Necessitatibus quas cupiditate distinctio maiores officiis ut quia rerum vitae eaque culpa dolor sed incidunt non odio labore vero ut esse mollitia aut repellat ducimus hic voluptas atque quos voluptate quibusdam cupiditate sapiente rerum dolor unde dignissimos ipsa minus voluptatem repudiandae voluptatum voluptatem ullam temporibus fugit.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_3">
+                                                3. Inventore hic unde sit maiores voluptas.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_3" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Dolores numquam non earum libero nihil necessitatibus eos saepe dignissimos occaecati aut tempore accusamus voluptas aperiam possimus nostrum maiores ea possimus numquam qui nihil laborum quas dolore aliquid nihil est occaecati quis rerum est voluptate animi voluptas dolor non et nostrum harum dolore quas omnis dolorem vel voluptate ab alias.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_4">
+                                                4. Sunt ea nesciunt.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_4" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Neque velit cum dolor quam veritatis optio suscipit voluptatem aut sunt aspernatur corrupti qui corrupti omnis eum qui eum et a vero unde labore sit maiores eum dicta delectus sapiente ducimus voluptatem porro repellendus hic optio dolore quos ea voluptatem aut qui voluptates consequatur aut ut sit qui provident nesciunt eaque earum quasi.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_5">
+                                                5. Repudiandae et eum voluptas.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_5" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Dolor ipsam ad excepturi non cupiditate non fuga esse est adipisci unde consequatur et vel necessitatibus in voluptate consequatur quia pariatur ad non debitis beatae vitae aut nesciunt eligendi possimus porro et minus vero quae minus nobis assumenda soluta dolorum ipsam.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_6">
+                                                6. Autem officia beatae voluptate.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_6" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Alias quis et qui qui mollitia quos iure ut aut qui voluptates dolore reprehenderit temporibus magni incidunt cumque nisi inventore labore odit amet quibusdam debitis omnis.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_7">
+                                                7. Consequuntur et dignissimos qui et.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_7" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Expedita dolorum quisquam expedita dolorem quo consequatur eum dolorem enim dicta totam ratione quaerat sint qui et veniam illo aspernatur consequatur harum in repellat consequatur voluptatem recusandae expedita ut quibusdam facilis dolorum consectetur fugiat et et tempore nisi voluptatem corrupti est sequi.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_8">
+                                                8. Et est molestiae fuga ut.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_8" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Sit dolorem omnis qui consequatur mollitia sequi enim ad mollitia consequatur tenetur dolorem aperiam repudiandae accusamus sint soluta magnam ut sit quae saepe ut sit voluptas est itaque expedita error quas velit laudantium ratione vel nobis accusamus porro omnis minima similique vel.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_9">
+                                                9. Iste optio aliquam dolorum modi.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_9" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Dolorem hic qui est iusto inventore rerum similique vel veniam voluptas unde hic deserunt deserunt repudiandae ipsum voluptatem voluptas fugiat culpa sed numquam adipisci vero rerum tempora maxime tenetur et a quia maiores quaerat omnis alias repellendus sunt non sit voluptatem molestias velit quia fugit ut dolorum omnis aut fugiat est provident pariatur.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_10">
+                                                10. Quod qui vero ex.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_10" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Sit suscipit labore perspiciatis minus ipsa ipsum aperiam deleniti laborum voluptatum ullam consequuntur aut et aut repellat omnis est repellat corporis enim dolor ipsam fugit et eaque tenetur autem voluptas praesentium ex nemo provident rerum autem dolor esse nisi omnis quis officia eaque quidem et labore sequi nesciunt placeat nam ad sint.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_11">
+                                                11. Non beatae illum.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_11" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Tenetur nesciunt harum qui quas officiis facere facilis architecto sint fugit laboriosam repudiandae eaque illo aut laboriosam est sapiente et debitis repudiandae maxime eveniet quo ut error consequatur placeat explicabo molestias voluptates qui tenetur quibusdam sed animi qui animi ut eos hic laudantium temporibus facere non itaque architecto labore a vel enim voluptatem vel.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_12">
+                                                12. Dolor ut voluptas.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_12" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Quaerat amet magnam magni facilis harum numquam natus nam repellendus eos molestias est rerum debitis qui voluptates enim reprehenderit quisquam et vel minima illum blanditiis eum esse corrupti sed vitae esse doloremque consequuntur alias corporis consequatur.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_13">
+                                                13. Similique architecto sed cumque ut.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_13" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Sunt inventore aliquam in quaerat consequuntur enim earum adipisci et dolorem non aliquid velit aut eos omnis sint soluta aliquid qui provident sequi sit neque qui et labore maxime quis unde molestiae facilis reiciendis nam laudantium omnis et repellat in aut laboriosam doloribus.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_14">
+                                                14. Numquam earum nisi omnis.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_14" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Dolores libero eos nobis totam incidunt tenetur et eligendi id sunt sit dignissimos optio odit voluptas earum autem nam vero rerum laborum veniam expedita debitis mollitia corporis delectus assumenda est saepe dolores quis tempora voluptas voluptate occaecati.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_15">
+                                                15. Quia provident et totam libero ea.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_15" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Similique rerum et accusantium a suscipit repudiandae ratione sint hic ad aliquam mollitia omnis dolores nisi voluptas autem ab maxime maxime molestias sequi ipsum eum nisi sit impedit consequatur sed qui et itaque eius nam enim laboriosam qui eos voluptas saepe nisi quia mollitia consequatur accusamus esse optio ut saepe laboriosam consequatur.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_16">
+                                                16. Porro totam aut ex.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_16" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Ab saepe ad hic excepturi ut blanditiis sit magni error voluptas ab nam nesciunt eos dolore molestiae mollitia dolor dolores ipsa minus dolores dolores velit.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_17">
+                                                17. Velit ut numquam saepe suscipit ullam.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_17" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            A iusto consequuntur modi molestiae molestiae enim occaecati ut et eaque ut cumque repudiandae sint ut ut et accusamus nam saepe id officia ex ad alias culpa saepe voluptates vero debitis quo incidunt impedit quia nam ipsum qui nostrum at quia dolorum nihil voluptate nihil similique.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_18">
+                                                18. Nostrum illo incidunt perferendis esse nesciunt.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_18" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Sit vel et veritatis inventore ut iusto ipsa aut est quis aut itaque ducimus deserunt aut aut ea sapiente dolor nam eos in suscipit soluta reprehenderit.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_19">
+                                                19. Amet at odio animi distinctio iste.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_19" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Itaque odit id officia autem consectetur maiores cumque aliquam consectetur eius maxime consequatur commodi quia non qui sed aut eum eum sequi sit dolore est eligendi ea.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="#helpFaq_sect_20">
+                                                20. Provident iure veniam.
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="helpFaq_sect_20" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            Ut nostrum iste et quo autem sit et recusandae nam aut ut velit doloremque aut ipsum nesciunt odit sit occaecati quibusdam impedit tenetur consequatur qui nisi repellendus modi voluptatem placeat deleniti dolor accusamus quasi assumenda et quisquam totam et error incidunt quo sapiente dolorem delectus.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- main menu -->
+            <nav id="main_menu">
+                <ul>
+                    <li class="first_level">
+                        <a href="dashboard.html">
+                            <span class="icon_house_alt first_level_icon"></span>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_document_alt first_level_icon"></span>
+                            <span class="menu-title">Forms</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Forms</li>
+                            <li><a href="forms-regular_elements.html">Regular Elements</a></li>
+                            <li><a href="forms-extended_elements.html">Extended Elements</a></li>
+                            <li><a href="forms-gridforms.html">Gridforms</a></li>
+                            <li><a href="forms-validation.html">Validation</a></li>
+                            <li><a href="forms-wizard.html">Wizard</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_folder-alt first_level_icon"></span>
+                            <span class="menu-title">Pages</span>
+                            <span class="label label-danger">7</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Pages</li>
+                            <li><a href="pages-chat.html">Chat</a></li>
+                            <li><a href="error_404.html">Error 404</a></li>
+                            <li><a class="act_nav" href="pages-help_faq.html">Help/Faq</a></li>
+                            <li><a href="pages-invoices.html">Invoices</a></li>
+                            <li><a href="pages-mailbox.html">Mailbox</a></li>
+                            <li><a href="pages-search_page.html">Search Page</a></li>
+                            <li><a href="pages-user_list.html">User List</a></li>
+                            <li><a href="pages-user_profile.html">User Profile</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_puzzle first_level_icon"></span>
+                            <span class="menu-title">Components</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Components</li>
+                            <li><a href="components-bootstrap.html">Bootstrap</a></li>
+                            <li><a href="components-gallery.html">Gallery</a></li>
+                            <li><a href="components-grid.html">Grid</a></li>
+                            <li><a href="components-icons.html">Icons</a></li>
+                            <li><a href="components-notifications_popups.html">Notifications/Popups</a></li>
+                            <li><a href="components-typography.html">Typography</a></li>
+                        </ul>
+                    </li>
+                    <li class="first_level">
+                        <a href="javascript:void(0)">
+                            <span class="icon_lightbulb_alt first_level_icon"></span>
+                            <span class="menu-title">Plugins</span>
+                            <span class="label label-danger">6</span>
+                        </a>
+                        <ul>
+                            <li class="submenu-title">Plugins</li>
+                            <li><a href="plugins-calendar.html">Calendar</a></li>
+                            <li><a href="plugins-charts.html">Charts</a></li>
+                            <li><a href="plugins-google_maps.html">Google Maps</a></li>
+                            <li><a href="plugins-tables_footable.html">Tables</a></li>
+                            <li><a href="plugins-vector_maps.html">Vector Maps</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="menu_toggle">
+                    <span class="icon_menu_toggle">
+                        <i class="arrow_carrot-2left toggle_left"></i>
+                        <i class="arrow_carrot-2right toggle_right" style="display:none"></i>
+                    </span>
+                </div>
+            </nav>
+
+        </div>
+
+        <!-- jQuery -->
+        <script src="assets/js/jquery.min.js"></script>
+        <!-- jQuery Cookie -->
+        <script src="assets/js/jqueryCookie.min.js"></script>
+        <!-- Bootstrap Framework -->
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <!-- retina images -->
+        <script src="assets/js/retina.min.js"></script>
+
+        <!-- Yukon Admin functions -->
+        <script src="assets/js/yukon_all.js"></script>
+
+
+        <!-- style switcher -->
+        <div id="style_switcher">
+            <a class="switcher_toggle"><i class="icon_cog"></i></a>
+            <div class="style_items">
+                <div class="heading_b"><span class="heading_text">Top Bar Color</span></div>
+                <ul class="clearfix" id="topBar_style_switch">
+                    <li class="sw_tb_style_0 style_active" title=""><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_1" title="topBar_style_1"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_2" title="topBar_style_2"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_3" title="topBar_style_3"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_4" title="topBar_style_4"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_5" title="topBar_style_5"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_6" title="topBar_style_6"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_7" title="topBar_style_7"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_8" title="topBar_style_8"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_9" title="topBar_style_9"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_10" title="topBar_style_10"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_11" title="topBar_style_11"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_12" title="topBar_style_12"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_13" title="topBar_style_13"><span class="icon_check_alt2"></span></li> <li class="sw_tb_style_14" title="topBar_style_14"><span class="icon_check_alt2"></span></li>
+                </ul>
+            </div>
+            <div class="style_items hidden-sm hidden-md" id="layout_switch">
+                <div class="heading_b"><span class="heading_text">Layout</span></div>
+                <select class="form-control input-sm" id="layout_style_switch">
+                    <option value="full_width">Full Width</option>
+                    <option value="fixed">Fixed</option>
+                </select>
+            </div>
+        </div>
+
+    </body>
+</html>

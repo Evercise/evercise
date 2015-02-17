@@ -1,31 +1,76 @@
 <?php
 
-class Referral extends \Eloquent {
+/**
+ * Class Referral
+ */
+class Referral extends \Eloquent
+{
 
-	protected $fillable = array('id', 'user_id', 'email', 'code', 'referee_id');
+    /**
+     * @var array
+     */
+    protected $fillable = ['id', 'user_id', 'email', 'code', 'referee_id'];
 
-	protected $table = 'referrals';
+    /**
+     * @var string
+     */
+    protected $table = 'referrals';
 
-	public static function checkReferralCode($rc)
-	{
-		$referralCode = 0;
-		if( ! is_null($rc))
-		{
-			if ( ! is_null(Referral::where('code', $rc)->first()))
-			{
-				$referralCode = $rc;
-			}
-		}
-		return $referralCode;
-	}
-	public static function useReferralCode($rc, $user_id)
-	{
-		$referral = 0;
-		if(Referral::checkReferralCode($rc))
-		{
-			$referral = Referral::where('code', $rc)->first();
-			$referral->update(['code' => '', 'referee_id' => $user_id]);
-		}
-		return $referral;
-	}
+    /**
+     * Check the Referral Code
+     *
+     * @param $rc
+     * @return int
+     */
+    public static function checkReferralCode($rc)
+    {
+        $referral = 0;
+        if (!is_null($rc)) {
+            $referral = static::where('code', $rc)->where('referee_id', 0)->first();
+        }
+        return $referral;
+    }
+
+    /**
+     * User Referral Code
+     * @param $rc
+     * @param $user_id
+     * @return \Illuminate\Database\Eloquent\Model|int|null|static
+     */
+    public static function useReferralCode($rc, $user_id)
+    {
+        $referral = 0;
+        if (static::checkReferralCode($rc)) {
+            $referral = static::where('code', $rc)->first();
+            $referral->update(['referee_id' => $user_id]);
+
+        }
+        return $referral;
+    }
+
+    public static function validateEmail($inputs)
+    {
+
+        $validator = Validator::make(
+            $inputs,
+            [
+                'referee_email' => 'required|email|unique:users,email',
+            ]
+        );
+        return $validator;
+    }
+
+    public static function checkAndStore($user_id, $email, $code)
+    {
+        $message = 'Referral re-sent';
+        $referral = Referral::where('user_id', $user_id)->where('email', $email)->first();
+
+        if(!$referral)
+        {
+            $referral = static::create(['user_id' => $user_id, 'email' => $email, 'code' => $code, 'referee_id' => 0]);
+            $message = 'Referral sent successfully';
+        }
+
+        return ['referral' => $referral, 'message' => $message];
+    }
 }

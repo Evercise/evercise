@@ -45,7 +45,7 @@
                         {{$instructor['body']}}
                     </li>
                   @endforeach
-                    
+
                 </ul>
                 <div class="faq_gap"></div>
                 <ul name="participant"><h3>For Participant</h3>
@@ -56,7 +56,7 @@
                         {{$participant['body']}}
                     </li>
                   @endforeach
-                    
+
                 </ul>
    			</div>
 	    </div>

@@ -15,7 +15,10 @@ ClassLoader::addDirectories(array(
 
 	app_path().'/commands',
 	app_path().'/controllers',
-	app_path().'/models',
+    app_path().'/models',
+    app_path().'/events',
+    app_path().'/widgets',
+    app_path().'/composers',
 	app_path().'/database/seeds',
 
 ));
@@ -68,9 +71,21 @@ App::error(function(Exception $exception, $code)
 
 App::down(function()
 {
-	return Response::make("Be right back!", 503);
+    $ip = Request::getClientIp();
+
+    $allowed = array('81.133.93.26', '127.0.0.1', '192.168.10.1');
+
+    if(!in_array($ip, $allowed))
+    {
+        return Response::view('v3.errors.maintenance', array(), 503);
+    }
+
 });
 
+
+
+
+require app_path().'/Functions.php';
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
@@ -108,3 +123,29 @@ require app_path().'/composers.php';
 
 require app_path().'/observables.php';
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Require The cronjobs config File
+|--------------------------------------------------------------------------
+|
+| Load a file containing the observables
+|
+*/
+
+require app_path().'/start/cronjobs.php';
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Require The ShortCode Classes
+|--------------------------------------------------------------------------
+|
+| Load a file containing the observables
+|
+*/
+
+require app_path().'/shortcodes.php';

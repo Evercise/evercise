@@ -6,7 +6,7 @@ return array(
 	// reward - Amount rewarded in pounds
 	// Recur - Number of times the award can be claimed 
 	'milestones' => [
-		'referral' => 		['count'=>3,	'reward'=>5, 	'recur'=>2,  	'column'=>'referrals'	],
+		'referral' => 		['count'=>1,	'reward'=>5, 	'recur'=>3,  	'column'=>'referrals'	],
 		'profile' => 			['count'=>1,	'reward'=>.5,	'recur'=>1,  	'column'=>'profile'		],
 		'facebook' => 		['count'=>1,	'reward'=>.5,	'recur'=>1,  	'column'=>'facebook'	],
 		'twitter' => 			['count'=>1,	'reward'=>.5,	'recur'=>1,  	'column'=>'twitter'		],
@@ -15,8 +15,9 @@ return array(
 
 	// Amount rewarded for signing up from a referral link in pounds
 	'freeCoins' => [
-		'referral_signup' => 1,
-		'ppc_signup' => 3,
+		'referral_signup' => 5,
+		'ppc_signup' => 5,
+		'static_ppc_signup' => 5,
 	],
 	
 	// Value of an evercoin in pounds
@@ -32,5 +33,16 @@ return array(
 		7=>		'So you&apos;ve expressed an interest in exercising outdoors? Check out our boot camp classes all steered for those who love workouts in the fresh air!',
 		13=>	'So you&apos;re into a fitness regimes or routine workouts? There are one-to-one and group classes catered for all levels of expertise.',
 	],
+
+    // dates
+    'min_age' => 16,
+    'max_age' => 120,
+
+    // Refunds cut off dates (in number of days into the future)
+    'half_refund_cut_off' => 2,
+    'full_refund_cut_off' => 5,
+
+    // price
+    'max_price' => 200
 
 );

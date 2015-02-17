@@ -9,7 +9,7 @@
 						{{ HTML::image('img/person_icon.png', 'date image', array('class' => 'block-icon mr10')); }}
 						<span>Class Size: {{ $evercisegroup->capacity}}</span>
 					</div>
-					@if(isset($evercisegroup->futuresessions))
+					@if(!empty($evercisegroup->futuresessions))
 						<div class="future-session-header mt10">
 							{{ HTML::image('img/date_icon.png', 'date image', array('class' => 'block-icon mr10')); }}
 							<span>{{ date('d M Y - h:ia', strtotime($evercisegroup->futuresessions[0]->date_time))}}</span>
@@ -21,7 +21,7 @@
 						
 					@endif
 
-					@if(isset($evercisegroup->venue))
+					@if(!empty($evercisegroup->venue))
 						<div class="block-inner mt10" id="block-venue">
 							<div class="inner-float">
 								{{ HTML::image('img/location_icon.png', 'date image', array('class' => 'block-icon mr10')); }}
@@ -37,19 +37,24 @@
 					<div class="list-row">
 						<div class="half">
 							<strong>
-								@if(isset($members[$key]))
-									{{ $evercisegroup->capacity -  count($members[$key])}}
-								@else
-								 	{{ $evercisegroup->capacity }}
-								@endif
+							<?php
+							$numUsers=0;
+
+							if(!empty($evercisegroup->futuresessions)) {
+                                foreach($evercisegroup->futuresessions as $fs){
+                                    $numUsers += $fs->members;
+                                 }
+							 }?>
+                            {{ $evercisegroup->capacity - (!empty($evercisegroup->futuresessions[0]->members) ? $evercisegroup->futuresessions[0]->members : 0) }}
+
 							</strong>
 							<br>
-							<span>Tickets Left</span>
+							<span class="detail-description">Tickets<br>Left</span>
 						</div>
 						<div class="half">
 							<strong>&pound;{{ $evercisegroup->default_price }}</strong>
 							<br>
-							<span>Per person</span>
+							<span>Per<br>person</span>
 						</div>
 					</div>
 

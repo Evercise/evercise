@@ -1,14 +1,17 @@
-<?php
- 
-class PpcLandingComposer {
- 
-  public function compose($view)
-  {
+<?php namespace composers;
 
-  	JavaScript::put(
-        [
-            'initPut'       	  => 	json_encode(['selector' => '#send_ppc'])      
-        ]
-    );
-  }
+use JavaScript;
+
+class PpcLandingComposer
+{
+
+    public function compose($view)
+    {
+
+        JavaScript::put(
+            [
+                'initPut' => json_encode(['selector' => '#send_ppc'])
+            ]
+        );
+    }
 }

@@ -1,0 +1,27 @@
+.table {
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th,
+      > td {
+        line-height: 40px;
+        padding: 14px 8px;
+        border-bottom: 1px solid @gray-light;
+        strong{
+          vertical-align: middle;
+        }
+        .input-sm{
+          padding: 0 10px;
+          background: rgba(255,255,255,0.85);
+        }
+        .custom-select{
+          select{
+            background-color: fade(@white, 80);
+          }
+        }
+
+      }
+    }
+  }
+}
