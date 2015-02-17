@@ -47,7 +47,7 @@ class Token extends \Eloquent
         $profileId = $getUser['user_profile']['id'];
         $accessToken = $getUser['access_token'];
 
-        if (Token::where('facebook', 'LIKE', '%"id":"'.$profileId.'""%'))
+        if (! Token::where('facebook', 'LIKE', '%"id":"'.$profileId.'""%')->get()->isEmpty())
         {
             // Facebook user has already been registered with Evercise
             return false;
