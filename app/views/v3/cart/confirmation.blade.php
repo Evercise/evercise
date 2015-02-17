@@ -63,14 +63,14 @@
             </div>
             <div class="col-sm-3">
                <ul class="cart-progress">
-                    <li class="title active"><span class="icon icon-cross mr10"></span>Review Order</li>
+                    <li class="title active"><span class="icon icon-pink-circle mr10"></span>Review Order</li>
                     <div class="complete">
                         <li class="content">Total <strong class="pull-right text-primary">£{{ number_format($cart['total']['final_cost'], 2, '.', '')}}</strong></li>
-                        <li class="title"><span class="icon icon-cross mr10"></span>Payment Method</li>
+                        <li class="title"><span class="icon icon-pink-circle mr10"></span>Payment Method</li>
                     </div>
                     <div class="complete">
                         <li class="content"></li>
-                        <li class="title"><span class="icon icon-cross mr10"></span>Confirmation</li>
+                        <li class="title"><span class="icon icon-pink-circle mr10"></span>Confirmation</li>
                     </div>
                     <strong>Thanks for your purchase!</strong><br>
                     <strong>Order ID: {{ $transaction }}</strong>

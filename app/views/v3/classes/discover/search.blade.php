@@ -112,6 +112,8 @@
             <div ng-if="results.results.total > 0 && !selectedVenueIds"  class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
+                        <div>Week 1</div>
+                        <div>Week 2</div>
                          <li class="date-btn" ng-style="scrollBtnWidth()" ng-repeat="(date, value) in results.available_dates" ng-class="(date == selectedDate) ? 'active' : ''">
                             <div ng-class="value == 0 ? 'disabled' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>

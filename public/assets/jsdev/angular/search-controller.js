@@ -425,12 +425,12 @@ if(typeof angular != 'undefined') {
             responsePromise.success(function(data) {
                 $scope.results = data;
                 $scope.selectedDate = $scope.results.selected_date;
-                if (typeof drag === "undefined" || drag === null) {
-                    $scope.everciseGroups = shapeEverciseGroups();
-                }
-                else{
+                if (drag) {
                     var newGroups = shapeEverciseGroups();
                     $scope.everciseGroups = $scope.everciseGroups.concat(newGroups);
+                }
+                else{
+                    $scope.everciseGroups = shapeEverciseGroups();
                 }
                 //console.log($scope.results.results.hits);
                 $scope.resultsLoading = false;
