@@ -58,7 +58,7 @@
                                 <option value="VE">Venezuela</option>
                             </select>
                             </div>
-                            {{ Form::text('phone', null, ['class' => 'form-control']) }}
+                            {{ Form::text('phone', $user->phone, ['class' => 'form-control']) }}
                         </div>
                     </div>
                     <div class="col-sm-6">
