@@ -223,7 +223,7 @@ if(typeof angular != 'undefined') {
                 ChangedBounds();
             },
             zoom_changed : function(){
-                ChangedBounds();
+                //ChangedBounds();
             }
         }
 
@@ -425,9 +425,14 @@ if(typeof angular != 'undefined') {
             responsePromise.success(function(data) {
                 $scope.results = data;
                 $scope.selectedDate = $scope.results.selected_date;
-                var newGroups = shapeEverciseGroups();
-                $scope.everciseGroups = newGroups;
-                console.log($scope.results.results.hits);
+                if (typeof drag === "undefined" || drag === null) {
+                    $scope.everciseGroups = shapeEverciseGroups();
+                }
+                else{
+                    var newGroups = shapeEverciseGroups();
+                    $scope.everciseGroups = $scope.everciseGroups.concat(newGroups);
+                }
+                //console.log($scope.results.results.hits);
                 $scope.resultsLoading = false;
                 $scope.circleOptions = {
                     center:  { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng },

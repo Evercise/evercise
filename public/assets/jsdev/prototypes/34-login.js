@@ -36,7 +36,13 @@ Login.prototype = {
                     self.failedValidation(data);
                 }
                 else{
-                    window.location.href = data.url;
+                    if(REDIRECT){
+                        window.location.href = data.url+'/2'+STEP;
+                    }
+                    else{
+                        window.location.href = data.url;
+                    }
+
                 }
             },
 

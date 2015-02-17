@@ -65,7 +65,7 @@
         </div>
         <div class="inner">
             <div ng-if="resultsLoading" class="mask"><div class="loading"></div></div>
-            <div class="heading"><div class="row no-gutter ml0"><div class="col-xs-9"><span class="text-primary">{[{ results.results.total }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div></div>  </div>
+            <div class="heading"><div class="row no-gutter ml0"><div class="col-xs-9"><span class="text-primary">{[{ everciseGroups.length }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div></div>  </div>
             <div role="tabpanel" ng-if="!selectedVenueIds">
                 <ul class="nav nav-tabs nav-justified">
                   <li role="presentation"><a ng-click="$event.preventDefault();" href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
@@ -130,7 +130,7 @@
             <div class="groups" ng-class="width > 992 ?  'mb-scroll' : ''" ng-style="groupHeight()">
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
-                <div class="list-results" ng-repeat="group in everciseGroups track by group.id" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
+                <div class="list-results" ng-repeat="group in everciseGroups track by $index" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
 
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>
                         <ul class="list-group class-block">

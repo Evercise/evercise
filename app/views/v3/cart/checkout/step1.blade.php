@@ -37,7 +37,7 @@
     </div>
     <div class="col-xs-3 hidden text-center switch-back">{{$cart_items[$row['id']]}}</div>
     <div class="col-xs-2 text-right"><b class="text-primary">{{ ($row['grouped_price_discount'] != $row['grouped_price'] ? '<strike>&pound'.number_format($row['grouped_price'],2,'.','').'</strike> &pound'.number_format($row['grouped_price_discount'],2,'.','') : '&pound'.number_format($row['grouped_price'],2,'.','') ) }}</b></div>
-    <div class="col-xs-1 text-right">
+    <div class="col-xs-1 text-right switch-cart">
         {{ Form::open(['route' =>'cart.delete', 'method' => 'post', 'class' => 'remove-row']) }}
             {{ Form::hidden('product-id', EverciseCart::toProductCode('session', $row['id'])) }}
             {{ Form::hidden('refresh-page', true) }}
@@ -86,7 +86,7 @@
         </div>
     </li>
 @endif
-<hr class="dark switc-cart">
+<hr class="dark switch-cart">
 <li class="total">
     <div class="col-xs-8"><strong>Sub-Total</strong></div>
     <div class="col-xs-4 text-right"><strong class="text-larger text-primary">£{{ number_format($total['subtotal'], 2,'.','') }}</strong></div>

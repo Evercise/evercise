@@ -3,6 +3,7 @@
 @include('v3.layouts.stripe_setup', ['route' => 'stripe.sessions'])
 <script>
     var VIEWPRICE = '{{ isset($total['final_cost']) ? SessionPayment::poundsToPennies($total['final_cost'])  : null }}';
+    var STEP = '{{$step}}'
 </script>
 <div class="container">
     <div class="row">
@@ -12,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col-md-3 pull-right visible-md-block visible-lg-block">
-           <ul class="cart-progress sticky">
+           <ul class="cart-progress">
                 <div id="progress-1" class="progress-box">
                 <li class="title active"><span class="icon icon-pink-circle mr10"></span>Review Order</li>
                 </div>
@@ -49,7 +50,7 @@
                  </li>
                  <li class="title"><div class="col-sm-12">Details & Payment</div></li>
                  @if(!isset($user))
-                 <div id="step-2" class="cart-step collapse">
+                 <div id="step-2" class="cart-step collapse ">
                      <div class="col-sm-10 col-sm-offset-1 mt25">
                         {{ Form::open(['id' => 'login-form', 'route' => 'auth.login.post', 'method' => 'post', 'class'=>'mb10 login-form', 'role' => 'form'] ) }}
                             {{ Form::hidden('redirect_after_login', 'true') }}
