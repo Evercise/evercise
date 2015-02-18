@@ -5,7 +5,7 @@ use Illuminate\Log\Writer;
 use Illuminate\Console\Application as Artisan;
 
 
-class SendReminderEmails
+class SendExtraEmails
 {
 
     private $log;
