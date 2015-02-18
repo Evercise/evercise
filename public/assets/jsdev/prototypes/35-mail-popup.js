@@ -1,4 +1,5 @@
 function MailPopup(link){
+    console.log('mail pouip');
     this.link = link;
     this.target = '';
     this.form = '';
@@ -22,7 +23,6 @@ MailPopup.prototype = {
         $(document).on('click', '.mail-popup',  $.proxy(this.grabPopup, this));
     },
     grabPopup: function(e){
-        console.log(e);
         e.preventDefault();
         this.link = $(e.target);
         this.id = this.link.data('id');
