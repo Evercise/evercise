@@ -28,14 +28,17 @@ MailPopup.prototype = {
         this.target = $(e.target).attr('href');
         this.link.addClass('icon-loading');
         this.ajaxGet();
-
     },
     ajaxGet: function(){
         var self = this;
         $.get( this.target, function(data) {
             self.link.after(data.view);
             $('#mail-trainer-'+self.id).modal('show');
-            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail ml10 mt15" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>')
+            var mt = self.link.css('margin-top').replace("px", "");
+            var mb = self.link.css('margin-bottom').replace("px", "");
+            var ml = self.link.css('margin-left').replace("px", "");
+            var mr = self.link.css('margin-right').replace("px", "");
+            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail mt'+mt+' mb'+mb+' mr'+mr+' ml'+ml+'" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>');
             self.form = $('#mail-trainer-'+self.id).find('form');
             self.validation();
         })

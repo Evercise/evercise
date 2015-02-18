@@ -11265,6 +11265,7 @@ div.hub-row.last {
 }
 .date-picker-inline .wrapper {
   overflow: hidden;
+  height: 90px;
 }
 @media (max-width: 991px) {
   .date-picker-inline .wrapper {

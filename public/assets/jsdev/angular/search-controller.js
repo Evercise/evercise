@@ -1,6 +1,6 @@
 if(typeof angular != 'undefined') {
 
-    app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", "Angularytics", function ($scope, $http, uiGmapGoogleMapApi, Angularytics) {
+    app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", "Angularytics", '$window', function ($scope, $http, uiGmapGoogleMapApi, Angularytics, $window) {
 
         $scope.groupHeight = function(){
             var windowWidth = $(window).width();
@@ -142,14 +142,13 @@ if(typeof angular != 'undefined') {
             var radius = $scope.results.radius.substring(0, $scope.results.radius.length  - 2);
             var results = $scope.results.results.total;
             if(results == 1){
-                var distance = $scope.results.results.hits[0].distance;
-                if(distance == 10){
+                if(radius == 10){
                     return 10
                 }
-                else if(distance == 5){
+                else if(radius == 5){
                     return 12
                 }
-                else if(distance == 3){
+                else if(radius == 3){
                     return 13
                 }
                 else{
@@ -373,6 +372,11 @@ if(typeof angular != 'undefined') {
         $scope.changeSelectedDate = function(e, date){
             e.preventDefault();
             $scope.selectedDate = date;
+            /*if ("pushState" in history) {
+                $location.url('gooo');
+                $location.replace();
+                $window.history.pushState(null, 'any', $location.absUrl());
+            }*/
 
             $scope.getData();
         }
@@ -461,7 +465,6 @@ if(typeof angular != 'undefined') {
                      longitude: $scope.setMapCenter()
                      };
                     $scope.map.zoom = $scope.initialZoom();
-                    console.log($scope.map.zoom);
                     $scope.circleOptions.center = { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng };
                     $scope.circleOptions.radius = $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344;
                 }
