@@ -1,5 +1,4 @@
 function MailPopup(link){
-    console.log('MAILPOPUP');
     this.link = link;
     this.target = '';
     this.form = '';
@@ -39,8 +38,7 @@ MailPopup.prototype = {
             var mb = self.link.css('margin-bottom').replace("px", "");
             var ml = self.link.css('margin-left').replace("px", "");
             var mr = self.link.css('margin-right').replace("px", "");
-            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail mt'+mt+' mb'+mb+' mr'+mr+' ml'+ml+'" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>');
-            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail ml10 mt15" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>')
+            self.link.replaceWith('<a  href="#mail-trainer-'+ self.id+'" class="icon icon-mail mt'+mt+' mb'+mb+' mr'+mr+' ml'+ml+' hover" data-toggle="modal" data-target="#mail-trainer-'+ self.id+'"></a>');
             self.form = $('#mail-trainer-'+self.id).find('form');
             self.validation();
         })

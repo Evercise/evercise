@@ -12,7 +12,11 @@ GetMembers.prototype = {
         e.preventDefault();
         this.form = $(e.target)
         var id = this.form.find('input[name="session_id"]').val()
-        this.form.find('input[type="submit"]').replaceWith('<a  href="#session-members-'+id+'" class="icon icon-people mr15 hover" data-toggle="modal" data-target="#session-members-'+id+'"></a>')
+        var mt = this.form.find('input[type="submit"]').css('margin-top').replace("px", "");
+        var mb = this.form.find('input[type="submit"]').css('margin-bottom').replace("px", "");
+        var ml = this.form.find('input[type="submit"]').css('margin-left').replace("px", "");
+        var mr = this.form.find('input[type="submit"]').css('margin-right').replace("px", "");
+        this.form.find('input[type="submit"]').replaceWith('<a  href="#session-members-'+id+'" class="icon icon-people mt'+mt+' mb'+mb+' mr'+mr+' ml'+ml+' hover" data-toggle="modal" data-target="#session-members-'+id+'"></a>')
         this.ajax();
     },
     ajax: function(){
