@@ -45,8 +45,10 @@ class SendEmails extends Command {
 	 */
 	public function fire()
 	{
-		$this->remindSessions();
+		$output = $this->remindSessions();
 		$this->whyNotReview();
+
+        return $output;
 	}
 
 
@@ -108,7 +110,7 @@ class SendEmails extends Command {
 	public function remindSessions()
 	{
 		$this->info('remindSessions - Searching for Sessions in the next 1 day, which have not yet fired out emails');
-		
+
 		$today = new DateTime();
 		$onedaystime = (new DateTime())->add(new DateInterval('P1D'));
 
@@ -170,7 +172,7 @@ class SendEmails extends Command {
 
 				// Pang out an email with a list of users
 				Event::fire('session.upcoming_session', [
-	            	'userList' => $email['userList'], 
+	            	'userList' => $email['userList'],
 	            	'group' => $email['group'],
 	                'location' => $email['location'],
 	                'dateTime' => $email['dateTime'],
@@ -188,6 +190,9 @@ class SendEmails extends Command {
 		{
 			$this->info('No sessions found which have not already sent out emails');
 		}
+
+        return 'sessions mailed: '.$numSessions;
+
 	}
 
 	/**
