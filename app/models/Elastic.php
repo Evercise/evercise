@@ -118,7 +118,7 @@ class Elastic
                 $from = $params['date'] . ' 00:00:00';
             }
 
-            $to = date('Y-m-d', strtotime($params['date'] . ' +1 day')) . ' 00:00:00';
+            $to = date('Y-m-d', strtotime($params['date'] . ' +6 day')) . ' 23:59:59';
 
 
             $searchParams['body']['query']['filtered']['filter']['bool']['must'][]["range"] = [

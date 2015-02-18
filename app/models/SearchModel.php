@@ -234,11 +234,11 @@ class SearchModel
 
         if ($dates) {
 
-            $cache_params = array_except($params, 'date');
-            $cache_id = md5((!empty($area->id) ? $area->id : '') . '_' . serialize($cache_params));
+            $params['date'] = $input['date'];
+            $cache_id = md5((!empty($area->id) ? $area->id : '') . '_' . serialize($params));
 
             if (Cache::has($cache_id)) {
-                //return Cache::get($cache_id);
+                return Cache::get($cache_id);
             }
 
             $searchResults = $this->search->getResults($area, $params, $dates);
@@ -248,9 +248,10 @@ class SearchModel
             return $searchResults;
         }
 
-
         if (!empty($input['date']) && $input['date']) {
             $params['date'] = $input['date'];
+        } else {
+            $params['date'] = $input['date'] = date('Y-m-d');
         }
 
 
@@ -258,7 +259,6 @@ class SearchModel
 
         $this->elastic->saveStats((!empty($user->id) ? $user->id : 0), $this->input->ip(), $area, $params,
             $searchResults->total);
-
 
         $data = [
             'area'           => $area,
@@ -528,48 +528,26 @@ class SearchModel
 
     }
 
-    public function getSearchDate($dates, $input = [])
+    public function getSearchDate($input = [])
     {
 
-        if (!$dates) {
-            return FALSE;
-        }
-
-
-        $search_date_keys = array_keys($dates);
-        $search_date = FALSE;
-
-
-        /** Check if we have enough of classes to Show for the next 7 days */
-        $days = 7;
-        $minimum = 10;
-        $total = 0;
-        $i = 0;
-        foreach ($dates as $date => $amount) {
-            $i++;
-            if ($i > $days) {
-                break;
-            }
-
-            $total += $amount;
-        }
-
-
-        if ($minimum > $total) {
-           // return FALSE;
-        }
-
-
-        if (!empty($search_date_keys[0])) {
-            $search_date = $search_date_keys[0];
-        }
-
-        if (!empty($input['date']) && !empty($dates[$input['date']])) {
+        /** Just Return Date for now!!! */
+        if (!empty($input['date'])) {
             return $input['date'];
         }
 
-        return $search_date;
+        return date('Y-m-d');
 
+
+    }
+
+    public function getSearchEndDate($input = [])
+    {
+        $date = $this->getSearchDate($input);
+
+        $dateObject = new Carbon($date);
+
+        return $dateObject->addDays(6)->format('Y-m-d');
     }
 
 

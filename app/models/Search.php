@@ -83,6 +83,8 @@ class Search
      */
     public function getResults(Place $area, $params = [], $dates = FALSE)
     {
+
+
         /**  Set Defaults */
         $defaults = [
             'radius' => $params['radius'],
@@ -99,7 +101,7 @@ class Search
 
 
         if ($dates) {
-            return $this->formatDates($results, $area);
+            return $this->formatDates($results, $params);
         }
 
         return $this->formatResults($results, $area, $params);
@@ -130,6 +132,13 @@ class Search
     {
         $all_results = [];
 
+
+        $this->searchmodel = App::make('SearchModel');
+
+
+        $this->date_from = $this->searchmodel->getSearchDate($params);
+        $this->date_to = $this->searchmodel->getSearchEndDate($params);
+
         foreach ($results->hits as $r) {
 
             $all_results[] = $this->formatSingle($r, $area, $params);
@@ -141,7 +150,7 @@ class Search
     }
 
 
-    public function formatDates($results)
+    public function formatDates($results, $params)
     {
 
 
@@ -149,14 +158,21 @@ class Search
 
         $now = date('Y-m-d H:i:s');
 
+        $searchmodel = App::make('SearchModel');
+
+
+        $from = $searchmodel->getSearchDate($params);
+        $to = $searchmodel->getSearchEndDate($params);
+
 
         foreach ($results->hits as $r) {
             $fields = (array)$r->fields;
 
             foreach ($fields['futuresessions.date_time'] as $date) {
+
                 $short_date = date('Y-m-d', strtotime($date));
 
-                if ($short_date > date('Y-m-d', strtotime('+2 months')) || $short_date < date('Y-m-d')) {
+                if ($short_date > $to || $short_date < $from) {
                     continue;
                 }
                 if (!isset($all_dates[$short_date])) {
@@ -224,14 +240,12 @@ class Search
                 'gender'
             ],
             'user'    => ['id', 'display_name', 'first_name', 'last_name', 'email', 'image', 'phone'],
-            'venue'   => [ 'image'],
+            'venue'   => ['image'],
             'ratings' => ['user_id', 'comment']
         ];
 
 
         $row->_source->score = $row->_score;
-
-
 
 
         /** UNSET everything else that we don't need! */
@@ -262,8 +276,10 @@ class Search
         }
 
 
-
         $times = [];
+
+
+        $dates_available = [];
 
         foreach ($row->_source->futuresessions as $key => $s) {
 
@@ -275,10 +291,21 @@ class Search
                 if ($params['date'] == $date->format('Y-m-d') && !isset($times[$date->format('g:ia')])) {
                     $times[$date->format('g:ia')] = $s->id;
                 }
+
+
+                $this->date_from = $this->searchmodel->getSearchDate($params);
+                $this->date_to = $this->searchmodel->getSearchEndDate($params);
+                if ($date->format('Y-m-d') > $this->date_from && $date->format('Y-m-d') < $this->date_to) {
+                    $dates_available[$date->format('Y-m-d')] = 1;
+                }
+
             }
+
+
         }
 
         $row->_source->times = $times;
+        $row->_source->dates = array_keys($dates_available);
 
         /** Add Lat and Lon to the venue */
         if (!empty($row->_source->venue->location->geohash) && $area) {

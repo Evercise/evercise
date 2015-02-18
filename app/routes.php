@@ -10,6 +10,8 @@
 |
 */
 
+
+
 /* Show home page */
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
 Route::get(

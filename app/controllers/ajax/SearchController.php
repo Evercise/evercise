@@ -89,7 +89,7 @@ class SearchController extends AjaxBaseController
         if ($link) {
 
             return $this->search($link->getArea);
-            
+
         } elseif (!$link && !$this->input->get('location', FALSE) && $all_segments != '') {
 
             $this->log->info('Somebody tried to access a missing URL ' . $this->input->url());
@@ -140,14 +140,9 @@ class SearchController extends AjaxBaseController
     public function search($area = FALSE)
     {
         $input = array_filter($this->input->all());
-
+        $input['date'] = $this->searchmodel->getSearchDate($input);
 
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
-
-
-        $input['date'] = $this->searchmodel->getSearchDate($dates, $input);
-
-
         $results = $this->searchmodel->search($area, $input, $this->user);
 
 

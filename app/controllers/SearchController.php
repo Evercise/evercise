@@ -156,12 +156,9 @@ class SearchController extends \BaseController
         $input = array_filter($this->input->all());
 
 
+        $input['date'] = $this->searchmodel->getSearchDate($input);
 
         $dates = $this->searchmodel->search($area, $input, $this->user, TRUE);
-
-        $input['date'] = $this->searchmodel->getSearchDate($dates, $input);
-
-
         $results = $this->searchmodel->search($area, $input, $this->user);
 
 
@@ -172,8 +169,6 @@ class SearchController extends \BaseController
 
 
         if (!empty($results['redirect'])) {
-
-
 
             return $results['redirect'];
         }
