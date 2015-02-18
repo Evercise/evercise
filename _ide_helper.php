@@ -1,7 +1,7 @@
 <?php
 /**
  * An helper file for Laravel 4, to provide autocomplete information to your IDE
- * Generated for Laravel 4.1.30 on 2014-08-27.
+ * Generated for Laravel 4.2.17 on 2015-02-18.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -103,8 +103,8 @@ namespace {
          * @return \Illuminate\Support\ServiceProvider 
          * @static 
          */
-        public static function forgeRegister($provider, $options = array()){
-            return \Illuminate\Foundation\Application::forgeRegister($provider, $options);
+        public static function forceRegister($provider, $options = array()){
+            return \Illuminate\Foundation\Application::forceRegister($provider, $options);
         }
         
         /**
@@ -176,6 +176,34 @@ namespace {
          */
         public static function make($abstract, $parameters = array()){
             return \Illuminate\Foundation\Application::make($abstract, $parameters);
+        }
+        
+        /**
+         * Determine if the given abstract type has been bound.
+         * 
+         * (Overriding Container::bound)
+         *
+         * @param string $abstract
+         * @return bool 
+         * @static 
+         */
+        public static function bound($abstract){
+            return \Illuminate\Foundation\Application::bound($abstract);
+        }
+        
+        /**
+         * "Extend" an abstract type in the container.
+         * 
+         * (Overriding Container::extend)
+         *
+         * @param string $abstract
+         * @param \Closure $closure
+         * @return void 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function extend($abstract, $closure){
+            \Illuminate\Foundation\Application::extend($abstract, $closure);
         }
         
         /**
@@ -291,7 +319,7 @@ namespace {
          *
          * @param string $class
          * @param array $parameters
-         * @return \Illuminate\Foundation\Application 
+         * @return $this 
          * @static 
          */
         public static function middleware($class, $parameters = array()){
@@ -319,6 +347,7 @@ namespace {
          * @param int $type
          * @param bool $catch
          * @return \Symfony\Component\HttpFoundation\Response 
+         * @throws \Exception
          * @static 
          */
         public static function handle($request, $type = 1, $catch = true){
@@ -337,7 +366,7 @@ namespace {
         }
         
         /**
-         * Terminate the request and send the response to the browser.
+         * Call the "finish" and "shutdown" callbacks assigned to the application.
          *
          * @param \Symfony\Component\HttpFoundation\Request $request
          * @param \Symfony\Component\HttpFoundation\Response $response
@@ -599,15 +628,15 @@ namespace {
         }
         
         /**
-         * Determine if the given abstract type has been bound.
+         * Determine if the given abstract type has been resolved.
          *
          * @param string $abstract
          * @return bool 
          * @static 
          */
-        public static function bound($abstract){
+        public static function resolved($abstract){
             //Method inherited from \Illuminate\Container\Container            
-            return \Illuminate\Foundation\Application::bound($abstract);
+            return \Illuminate\Foundation\Application::resolved($abstract);
         }
         
         /**
@@ -625,7 +654,7 @@ namespace {
         /**
          * Register a binding with the container.
          *
-         * @param string $abstract
+         * @param string|array $abstract
          * @param \Closure|string|null $concrete
          * @param bool $shared
          * @return void 
@@ -667,7 +696,7 @@ namespace {
          * Wrap a Closure such that it is shared.
          *
          * @param \Closure $closure
-         * @return \Illuminate\Container\Closure 
+         * @return \Closure 
          * @static 
          */
         public static function share($closure){
@@ -686,20 +715,6 @@ namespace {
         public static function bindShared($abstract, $closure){
             //Method inherited from \Illuminate\Container\Container            
             \Illuminate\Foundation\Application::bindShared($abstract, $closure);
-        }
-        
-        /**
-         * "Extend" an abstract type in the container.
-         *
-         * @param string $abstract
-         * @param \Closure $closure
-         * @return void 
-         * @throws \InvalidArgumentException
-         * @static 
-         */
-        public static function extend($abstract, $closure){
-            //Method inherited from \Illuminate\Container\Container            
-            \Illuminate\Foundation\Application::extend($abstract, $closure);
         }
         
         /**
@@ -919,7 +934,7 @@ namespace {
         /**
          * Boot the Console application.
          *
-         * @return \Illuminate\Console\Application 
+         * @return $this 
          * @static 
          */
         public static function boot(){
@@ -988,7 +1003,7 @@ namespace {
          * Set the exception handler instance.
          *
          * @param \Illuminate\Exception\Handler $handler
-         * @return \Illuminate\Console\Application 
+         * @return $this 
          * @static 
          */
         public static function setExceptionHandler($handler){
@@ -999,7 +1014,7 @@ namespace {
          * Set the Laravel application instance.
          *
          * @param \Illuminate\Foundation\Application $laravel
-         * @return \Illuminate\Console\Application 
+         * @return $this 
          * @static 
          */
         public static function setLaravel($laravel){
@@ -1010,7 +1025,7 @@ namespace {
          * Set whether the Console app should auto-exit when done.
          *
          * @param bool $boolean
-         * @return \Illuminate\Console\Application 
+         * @return $this 
          * @static 
          */
         public static function setAutoExit($boolean){
@@ -1080,7 +1095,7 @@ namespace {
         }
         
         /**
-         * Set an input definition set to be used with this application
+         * Set an input definition set to be used with this application.
          *
          * @param \Symfony\Component\Console\InputDefinition $definition The input definition
          * @api 
@@ -1336,7 +1351,7 @@ namespace {
         }
         
         /**
-         * Tries to figure out the terminal dimensions based on the current environment
+         * Tries to figure out the terminal dimensions based on the current environment.
          *
          * @return array Array containing width and height
          * @static 
@@ -1374,6 +1389,17 @@ namespace {
         public static function extractNamespace($name, $limit = null){
             //Method inherited from \Symfony\Component\Console\Application            
             return \Illuminate\Console\Application::extractNamespace($name, $limit);
+        }
+        
+        /**
+         * Sets the default Command name.
+         *
+         * @param string $commandName The Command name
+         * @static 
+         */
+        public static function setDefaultCommand($commandName){
+            //Method inherited from \Symfony\Component\Console\Application            
+            return \Illuminate\Console\Application::setDefaultCommand($commandName);
         }
         
     }
@@ -1439,7 +1465,7 @@ namespace {
          *
          * @param string $driver
          * @param \Closure $callback
-         * @return \Illuminate\Support\Manager|static 
+         * @return $this 
          * @static 
          */
         public static function extend($driver, $callback){
@@ -1649,10 +1675,11 @@ namespace {
          * Set the event dispatcher instance.
          *
          * @param \Illuminate\Events\Dispatcher
+         * @return void 
          * @static 
          */
         public static function setDispatcher($events){
-            return \Illuminate\Auth\Guard::setDispatcher($events);
+            \Illuminate\Auth\Guard::setDispatcher($events);
         }
         
         /**
@@ -1721,7 +1748,7 @@ namespace {
          * Set the current request instance.
          *
          * @param \Symfony\Component\HttpFoundation\Request
-         * @return \Illuminate\Auth\Guard 
+         * @return $this 
          * @static 
          */
         public static function setRequest($request){
@@ -1817,17 +1844,6 @@ namespace {
         }
         
         /**
-         * Register a custom Blade compiler.
-         *
-         * @param \Closure $compiler
-         * @return void 
-         * @static 
-         */
-        public static function extend($compiler){
-            \Illuminate\View\Compilers\BladeCompiler::extend($compiler);
-        }
-        
-        /**
          * Compile the default values for the echo statement.
          *
          * @param string $value
@@ -1836,6 +1852,17 @@ namespace {
          */
         public static function compileEchoDefaults($value){
             return \Illuminate\View\Compilers\BladeCompiler::compileEchoDefaults($value);
+        }
+        
+        /**
+         * Register a custom Blade compiler.
+         *
+         * @param \Closure $compiler
+         * @return void 
+         * @static 
+         */
+        public static function extend($compiler){
+            \Illuminate\View\Compilers\BladeCompiler::extend($compiler);
         }
         
         /**
@@ -2004,7 +2031,7 @@ namespace {
          *
          * @param string $driver
          * @param \Closure $callback
-         * @return \Illuminate\Support\Manager|static 
+         * @return $this 
          * @static 
          */
         public static function extend($driver, $callback){
@@ -2044,6 +2071,18 @@ namespace {
          */
         public static function get($key, $default = null){
             return \Illuminate\Cache\Repository::get($key, $default);
+        }
+        
+        /**
+         * Retrieve an item from the cache and delete it.
+         *
+         * @param string $key
+         * @param mixed $default
+         * @return mixed 
+         * @static 
+         */
+        public static function pull($key, $default = null){
+            return \Illuminate\Cache\Repository::pull($key, $default);
         }
         
         /**
@@ -2186,15 +2225,39 @@ namespace {
         }
         
         /**
-         * Register a macro with the Cache class.
+         * Register a custom macro.
          *
          * @param string $name
-         * @param callable $callback
+         * @param callable $macro
          * @return void 
          * @static 
          */
-        public static function macro($name, $callback){
-            \Illuminate\Cache\Repository::macro($name, $callback);
+        public static function macro($name, $macro){
+            \Illuminate\Cache\Repository::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Cache\Repository::hasMacro($name);
+        }
+        
+        /**
+         * Dynamically handle calls to the class.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return mixed 
+         * @throws \BadMethodCallException
+         * @static 
+         */
+        public static function macroCall($method, $parameters){
+            return \Illuminate\Cache\Repository::macroCall($method, $parameters);
         }
         
         /**
@@ -2202,12 +2265,11 @@ namespace {
          *
          * @param string $key
          * @param mixed $value
-         * @return void 
-         * @throws \LogicException
+         * @return int 
          * @static 
          */
         public static function increment($key, $value = 1){
-            \Illuminate\Cache\FileStore::increment($key, $value);
+            return \Illuminate\Cache\FileStore::increment($key, $value);
         }
         
         /**
@@ -2215,12 +2277,11 @@ namespace {
          *
          * @param string $key
          * @param mixed $value
-         * @return void 
-         * @throws \LogicException
+         * @return int 
          * @static 
          */
         public static function decrement($key, $value = 1){
-            \Illuminate\Cache\FileStore::decrement($key, $value);
+            return \Illuminate\Cache\FileStore::decrement($key, $value);
         }
         
         /**
@@ -2594,7 +2655,7 @@ namespace {
         /**
          * Remove a cookie from the queue.
          *
-         * @param $cookieName
+         * @param string $name
          * @static 
          */
         public static function unqueue($name){
@@ -2606,7 +2667,7 @@ namespace {
          *
          * @param string $path
          * @param string $domain
-         * @return self 
+         * @return $this 
          * @static 
          */
         public static function setDefaultPathAndDomain($path, $domain){
@@ -2700,14 +2761,14 @@ namespace {
         }
         
         /**
-         * Reconnect to the given database.
+         * Disconnect from the given database and remove from local cache.
          *
          * @param string $name
-         * @return \Illuminate\Database\Connection 
+         * @return void 
          * @static 
          */
-        public static function reconnect($name = null){
-            return \Illuminate\Database\DatabaseManager::reconnect($name);
+        public static function purge($name = null){
+            \Illuminate\Database\DatabaseManager::purge($name);
         }
         
         /**
@@ -2719,6 +2780,17 @@ namespace {
          */
         public static function disconnect($name = null){
             \Illuminate\Database\DatabaseManager::disconnect($name);
+        }
+        
+        /**
+         * Reconnect to the given database.
+         *
+         * @param string $name
+         * @return \Illuminate\Database\Connection 
+         * @static 
+         */
+        public static function reconnect($name = null){
+            return \Illuminate\Database\DatabaseManager::reconnect($name);
         }
         
         /**
@@ -2852,9 +2924,23 @@ namespace {
          * @return array 
          * @static 
          */
-        public static function select($query, $bindings = array()){
+        public static function selectFromWriteConnection($query, $bindings = array()){
             //Method inherited from \Illuminate\Database\Connection            
-            return \Illuminate\Database\MySqlConnection::select($query, $bindings);
+            return \Illuminate\Database\MySqlConnection::selectFromWriteConnection($query, $bindings);
+        }
+        
+        /**
+         * Run a select statement against the database.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @param bool $useReadPdo
+         * @return array 
+         * @static 
+         */
+        public static function select($query, $bindings = array(), $useReadPdo = true){
+            //Method inherited from \Illuminate\Database\Connection            
+            return \Illuminate\Database\MySqlConnection::select($query, $bindings, $useReadPdo);
         }
         
         /**
@@ -3020,7 +3106,7 @@ namespace {
          *
          * @param string $query
          * @param array $bindings
-         * @param $time
+         * @param float|null $time
          * @return void 
          * @static 
          */
@@ -3079,7 +3165,7 @@ namespace {
         /**
          * Get the current PDO connection.
          *
-         * @return \Illuminate\Database\PDO 
+         * @return \PDO 
          * @static 
          */
         public static function getPdo(){
@@ -3090,7 +3176,7 @@ namespace {
         /**
          * Get the current PDO connection used for reading.
          *
-         * @return \Illuminate\Database\PDO 
+         * @return \PDO 
          * @static 
          */
         public static function getReadPdo(){
@@ -3101,8 +3187,8 @@ namespace {
         /**
          * Set the PDO connection.
          *
-         * @param \Illuminate\Database\PDO $pdo
-         * @return \Illuminate\Database\Connection 
+         * @param \PDO|null $pdo
+         * @return $this 
          * @static 
          */
         public static function setPdo($pdo){
@@ -3113,13 +3199,25 @@ namespace {
         /**
          * Set the PDO connection used for reading.
          *
-         * @param \Illuminate\Database\PDO $pdo
-         * @return \Illuminate\Database\Connection 
+         * @param \PDO|null $pdo
+         * @return $this 
          * @static 
          */
         public static function setReadPdo($pdo){
             //Method inherited from \Illuminate\Database\Connection            
             return \Illuminate\Database\MySqlConnection::setReadPdo($pdo);
+        }
+        
+        /**
+         * Set the reconnect instance on the connection.
+         *
+         * @param callable $reconnector
+         * @return $this 
+         * @static 
+         */
+        public static function setReconnector($reconnector){
+            //Method inherited from \Illuminate\Database\Connection            
+            return \Illuminate\Database\MySqlConnection::setReconnector($reconnector);
         }
         
         /**
@@ -3251,7 +3349,7 @@ namespace {
         /**
          * Get the paginator environment instance.
          *
-         * @return \Illuminate\Pagination\Environment 
+         * @return \Illuminate\Pagination\Factory 
          * @static 
          */
         public static function getPaginator(){
@@ -3262,7 +3360,7 @@ namespace {
         /**
          * Set the pagination environment instance.
          *
-         * @param \Illuminate\Pagination\Environment|\Closure $paginator
+         * @param \Illuminate\Pagination\Factory|\Closure $paginator
          * @return void 
          * @static 
          */
@@ -3474,7 +3572,7 @@ namespace {
          *
          * @param array $columns
          * @return \Illuminate\Database\Eloquent\Model|static 
-         * @throws ModelNotFoundException
+         * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
          * @static 
          */
         public static function firstOrFail($columns = array()){
@@ -3540,10 +3638,35 @@ namespace {
         }
         
         /**
+         * Get a paginator only supporting simple next and previous links.
+         * 
+         * This is more efficient on larger data-sets, etc.
+         *
+         * @param int $perPage
+         * @param array $columns
+         * @return \Illuminate\Pagination\Paginator 
+         * @static 
+         */
+        public static function simplePaginate($perPage = null, $columns = array()){
+            return \Illuminate\Database\Eloquent\Builder::simplePaginate($perPage, $columns);
+        }
+        
+        /**
+         * Register a replacement for the default delete function.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */
+        public static function onDelete($callback){
+            \Illuminate\Database\Eloquent\Builder::onDelete($callback);
+        }
+        
+        /**
          * Get the hydrated models without eager loading.
          *
          * @param array $columns
-         * @return array|static[] 
+         * @return \Illuminate\Database\Eloquent\Model[] 
          * @static 
          */
         public static function getModels($columns = array()){
@@ -3568,7 +3691,7 @@ namespace {
          * @param string $operator
          * @param mixed $value
          * @param string $boolean
-         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function where($column, $operator = null, $value = null, $boolean = 'and'){
@@ -3595,12 +3718,25 @@ namespace {
          * @param string $operator
          * @param int $count
          * @param string $boolean
-         * @param \Closure $callback
+         * @param \Closure|null $callback
          * @return \Illuminate\Database\Eloquent\Builder|static 
          * @static 
          */
         public static function has($relation, $operator = '>=', $count = 1, $boolean = 'and', $callback = null){
             return \Illuminate\Database\Eloquent\Builder::has($relation, $operator, $count, $boolean, $callback);
+        }
+        
+        /**
+         * Add a relationship count condition to the query.
+         *
+         * @param string $relation
+         * @param string $boolean
+         * @param \Closure|null $callback
+         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @static 
+         */
+        public static function doesntHave($relation, $boolean = 'and', $callback = null){
+            return \Illuminate\Database\Eloquent\Builder::doesntHave($relation, $boolean, $callback);
         }
         
         /**
@@ -3615,6 +3751,18 @@ namespace {
          */
         public static function whereHas($relation, $callback, $operator = '>=', $count = 1){
             return \Illuminate\Database\Eloquent\Builder::whereHas($relation, $callback, $operator, $count);
+        }
+        
+        /**
+         * Add a relationship count condition to the query with where clauses.
+         *
+         * @param string $relation
+         * @param \Closure|null $callback
+         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @static 
+         */
+        public static function whereDoesntHave($relation, $callback = null){
+            return \Illuminate\Database\Eloquent\Builder::whereDoesntHave($relation, $callback);
         }
         
         /**
@@ -3700,7 +3848,7 @@ namespace {
          * Set a model instance for the model being queried.
          *
          * @param \Illuminate\Database\Eloquent\Model $model
-         * @return \Illuminate\Database\Eloquent\Builder 
+         * @return $this 
          * @static 
          */
         public static function setModel($model){
@@ -3708,10 +3856,33 @@ namespace {
         }
         
         /**
+         * Extend the builder with a given callback.
+         *
+         * @param string $name
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $callback){
+            \Illuminate\Database\Eloquent\Builder::macro($name, $callback);
+        }
+        
+        /**
+         * Get the given macro by name.
+         *
+         * @param string $name
+         * @return \Closure 
+         * @static 
+         */
+        public static function getMacro($name){
+            return \Illuminate\Database\Eloquent\Builder::getMacro($name);
+        }
+        
+        /**
          * Set the columns to be selected.
          *
          * @param array $columns
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function select($columns = array()){
@@ -3733,7 +3904,7 @@ namespace {
          * Add a new select column to the query.
          *
          * @param mixed $column
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function addSelect($column){
@@ -3743,7 +3914,7 @@ namespace {
         /**
          * Force the query to only return distinct results.
          *
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function distinct(){
@@ -3754,7 +3925,7 @@ namespace {
          * Set the table which the query is targeting.
          *
          * @param string $table
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function from($table){
@@ -3765,12 +3936,12 @@ namespace {
          * Add a join clause to the query.
          *
          * @param string $table
-         * @param string $first
+         * @param string $one
          * @param string $operator
          * @param string $two
          * @param string $type
          * @param bool $where
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function join($table, $one, $operator = null, $two = null, $type = 'inner', $where = false){
@@ -3781,7 +3952,7 @@ namespace {
          * Add a "join where" clause to the query.
          *
          * @param string $table
-         * @param string $first
+         * @param string $one
          * @param string $operator
          * @param string $two
          * @param string $type
@@ -3810,7 +3981,7 @@ namespace {
          * Add a "join where" clause to the query.
          *
          * @param string $table
-         * @param string $first
+         * @param string $one
          * @param string $operator
          * @param string $two
          * @return \Illuminate\Database\Query\Builder|static 
@@ -3821,12 +3992,40 @@ namespace {
         }
         
         /**
+         * Add a right join to the query.
+         *
+         * @param string $table
+         * @param string $first
+         * @param string $operator
+         * @param string $second
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function rightJoin($table, $first, $operator = null, $second = null){
+            return \Illuminate\Database\Query\Builder::rightJoin($table, $first, $operator, $second);
+        }
+        
+        /**
+         * Add a "right join where" clause to the query.
+         *
+         * @param string $table
+         * @param string $one
+         * @param string $operator
+         * @param string $two
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function rightJoinWhere($table, $one, $operator, $two){
+            return \Illuminate\Database\Query\Builder::rightJoinWhere($table, $one, $operator, $two);
+        }
+        
+        /**
          * Add a raw where clause to the query.
          *
          * @param string $sql
          * @param array $bindings
          * @param string $boolean
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function whereRaw($sql, $bindings = array(), $boolean = 'and'){
@@ -3852,7 +4051,7 @@ namespace {
          * @param array $values
          * @param string $boolean
          * @param bool $not
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function whereBetween($column, $values, $boolean = 'and', $not = false){
@@ -3913,7 +4112,7 @@ namespace {
          *
          * @param \Illuminate\Database\Query\Builder|static $query
          * @param string $boolean
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function addNestedWhereQuery($query, $boolean = 'and'){
@@ -3926,7 +4125,7 @@ namespace {
          * @param \Closure $callback
          * @param string $boolean
          * @param bool $not
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function whereExists($callback, $boolean = 'and', $not = false){
@@ -3975,7 +4174,7 @@ namespace {
          * @param mixed $values
          * @param string $boolean
          * @param bool $not
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function whereIn($column, $values, $boolean = 'and', $not = false){
@@ -4025,7 +4224,7 @@ namespace {
          * @param string $column
          * @param string $boolean
          * @param bool $not
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function whereNull($column, $boolean = 'and', $not = false){
@@ -4064,6 +4263,20 @@ namespace {
          */
         public static function orWhereNotNull($column){
             return \Illuminate\Database\Query\Builder::orWhereNotNull($column);
+        }
+        
+        /**
+         * Add a "where date" statement to the query.
+         *
+         * @param string $column
+         * @param string $operator
+         * @param int $value
+         * @param string $boolean
+         * @return \Illuminate\Database\Query\Builder|static 
+         * @static 
+         */
+        public static function whereDate($column, $operator, $value, $boolean = 'and'){
+            return \Illuminate\Database\Query\Builder::whereDate($column, $operator, $value, $boolean);
         }
         
         /**
@@ -4113,7 +4326,7 @@ namespace {
          *
          * @param string $method
          * @param string $parameters
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function dynamicWhere($method, $parameters){
@@ -4123,8 +4336,8 @@ namespace {
         /**
          * Add a "group by" clause to the query.
          *
-         * @param mixed $columns
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @param array|string $column,...
+         * @return $this 
          * @static 
          */
         public static function groupBy(){
@@ -4137,11 +4350,25 @@ namespace {
          * @param string $column
          * @param string $operator
          * @param string $value
+         * @param string $boolean
+         * @return $this 
+         * @static 
+         */
+        public static function having($column, $operator = null, $value = null, $boolean = 'and'){
+            return \Illuminate\Database\Query\Builder::having($column, $operator, $value, $boolean);
+        }
+        
+        /**
+         * Add a "or having" clause to the query.
+         *
+         * @param string $column
+         * @param string $operator
+         * @param string $value
          * @return \Illuminate\Database\Query\Builder|static 
          * @static 
          */
-        public static function having($column, $operator = null, $value = null){
-            return \Illuminate\Database\Query\Builder::having($column, $operator, $value);
+        public static function orHaving($column, $operator = null, $value = null){
+            return \Illuminate\Database\Query\Builder::orHaving($column, $operator, $value);
         }
         
         /**
@@ -4150,7 +4377,7 @@ namespace {
          * @param string $sql
          * @param array $bindings
          * @param string $boolean
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function havingRaw($sql, $bindings = array(), $boolean = 'and'){
@@ -4174,7 +4401,7 @@ namespace {
          *
          * @param string $column
          * @param string $direction
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function orderBy($column, $direction = 'asc'){
@@ -4208,7 +4435,7 @@ namespace {
          *
          * @param string $sql
          * @param array $bindings
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function orderByRaw($sql, $bindings = array()){
@@ -4219,7 +4446,7 @@ namespace {
          * Set the "offset" value of the query.
          *
          * @param int $value
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function offset($value){
@@ -4241,7 +4468,7 @@ namespace {
          * Set the "limit" value of the query.
          *
          * @param int $value
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function limit($value){
@@ -4297,8 +4524,8 @@ namespace {
         /**
          * Lock the selected rows in the table.
          *
-         * @param bool $update
-         * @return \Illuminate\Database\Query\Builder 
+         * @param bool $value
+         * @return $this 
          * @static 
          */
         public static function lock($value = true){
@@ -4340,7 +4567,7 @@ namespace {
          *
          * @param \DateTime|int $minutes
          * @param string $key
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function remember($minutes, $key = null){
@@ -4362,7 +4589,7 @@ namespace {
          * Indicate that the results, if cached, should use the given cache tags.
          *
          * @param array|mixed $cacheTags
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function cacheTags($cacheTags){
@@ -4373,7 +4600,7 @@ namespace {
          * Indicate that the results, if cached, should use the given cache driver.
          *
          * @param string $cacheDriver
-         * @return \Illuminate\Database\Query\Builder|static 
+         * @return $this 
          * @static 
          */
         public static function cacheDriver($cacheDriver){
@@ -4437,7 +4664,7 @@ namespace {
         /**
          * Build a paginator instance from a raw result array.
          *
-         * @param \Illuminate\Pagination\Environment $paginator
+         * @param \Illuminate\Pagination\Factory $paginator
          * @param array $results
          * @param int $perPage
          * @return \Illuminate\Pagination\Paginator 
@@ -4591,7 +4818,7 @@ namespace {
         }
         
         /**
-         * Get the current query value bindings.
+         * Get the current query value bindings in a flattened array.
          *
          * @return array 
          * @static 
@@ -4601,32 +4828,46 @@ namespace {
         }
         
         /**
+         * Get the raw array of bindings.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getRawBindings(){
+            return \Illuminate\Database\Query\Builder::getRawBindings();
+        }
+        
+        /**
          * Set the bindings on the query builder.
          *
          * @param array $bindings
-         * @return \Illuminate\Database\Query\Builder 
+         * @param string $type
+         * @return $this 
+         * @throws \InvalidArgumentException
          * @static 
          */
-        public static function setBindings($bindings){
-            return \Illuminate\Database\Query\Builder::setBindings($bindings);
+        public static function setBindings($bindings, $type = 'where'){
+            return \Illuminate\Database\Query\Builder::setBindings($bindings, $type);
         }
         
         /**
          * Add a binding to the query.
          *
          * @param mixed $value
-         * @return \Illuminate\Database\Query\Builder 
+         * @param string $type
+         * @return $this 
+         * @throws \InvalidArgumentException
          * @static 
          */
-        public static function addBinding($value){
-            return \Illuminate\Database\Query\Builder::addBinding($value);
+        public static function addBinding($value, $type = 'where'){
+            return \Illuminate\Database\Query\Builder::addBinding($value, $type);
         }
         
         /**
          * Merge an array of bindings into our bindings.
          *
          * @param \Illuminate\Database\Query\Builder $query
-         * @return \Illuminate\Database\Query\Builder 
+         * @return $this 
          * @static 
          */
         public static function mergeBindings($query){
@@ -4653,6 +4894,16 @@ namespace {
             return \Illuminate\Database\Query\Builder::getGrammar();
         }
         
+        /**
+         * Use the write pdo for query.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function useWritePdo(){
+            return \Illuminate\Database\Query\Builder::useWritePdo();
+        }
+        
     }
 
 
@@ -4661,7 +4912,7 @@ namespace {
         /**
          * Register an event listener with the dispatcher.
          *
-         * @param string|array $event
+         * @param string|array $events
          * @param mixed $listener
          * @param int $priority
          * @return void 
@@ -4795,6 +5046,16 @@ namespace {
             \Illuminate\Events\Dispatcher::forget($event);
         }
         
+        /**
+         * Forget all of the queued listeners.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function forgetQueued(){
+            \Illuminate\Events\Dispatcher::forgetQueued();
+        }
+        
     }
 
 
@@ -4851,11 +5112,12 @@ namespace {
          *
          * @param string $path
          * @param string $contents
+         * @param bool $lock
          * @return int 
          * @static 
          */
-        public static function put($path, $contents){
-            return \Illuminate\Filesystem\Filesystem::put($path, $contents);
+        public static function put($path, $contents, $lock = false){
+            return \Illuminate\Filesystem\Filesystem::put($path, $contents, $lock);
         }
         
         /**
@@ -4915,6 +5177,17 @@ namespace {
          */
         public static function copy($path, $target){
             return \Illuminate\Filesystem\Filesystem::copy($path, $target);
+        }
+        
+        /**
+         * Extract the file name from a file path.
+         *
+         * @param string $path
+         * @return string 
+         * @static 
+         */
+        public static function name($path){
+            return \Illuminate\Filesystem\Filesystem::name($path);
         }
         
         /**
@@ -5049,7 +5322,7 @@ namespace {
          * @return bool 
          * @static 
          */
-        public static function makeDirectory($path, $mode = 511, $recursive = false, $force = false){
+        public static function makeDirectory($path, $mode = 493, $recursive = false, $force = false){
             return \Illuminate\Filesystem\Filesystem::makeDirectory($path, $mode, $recursive, $force);
         }
         
@@ -5267,6 +5540,19 @@ namespace {
         }
         
         /**
+         * Create a number input field.
+         *
+         * @param string $name
+         * @param string|null $value
+         * @param array $options
+         * @return string 
+         * @static 
+         */
+        public static function number($name, $value = null, $options = array()){
+            return \Illuminate\Html\FormBuilder::number($name, $value, $options);
+        }
+        
+        /**
          * Create a select box field.
          *
          * @param string $name
@@ -5415,18 +5701,6 @@ namespace {
         }
         
         /**
-         * Register a custom form macro.
-         *
-         * @param string $name
-         * @param callable $macro
-         * @return void 
-         * @static 
-         */
-        public static function macro($name, $macro){
-            \Illuminate\Html\FormBuilder::macro($name, $macro);
-        }
-        
-        /**
          * Get the ID attribute for a field name.
          *
          * @param string $name
@@ -5485,11 +5759,34 @@ namespace {
          * Set the session store implementation.
          *
          * @param \Illuminate\Session\Store $session
-         * @return \Illuminate\Html\FormBuilder 
+         * @return $this 
          * @static 
          */
         public static function setSessionStore($session){
             return \Illuminate\Html\FormBuilder::setSessionStore($session);
+        }
+        
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Illuminate\Html\FormBuilder::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Html\FormBuilder::hasMacro($name);
         }
         
     }
@@ -5535,22 +5832,21 @@ namespace {
             return \Illuminate\Hashing\BcryptHasher::needsRehash($hashedValue, $options);
         }
         
+        /**
+         * Set the default crypt cost factor.
+         *
+         * @param int $rounds
+         * @return void 
+         * @static 
+         */
+        public static function setRounds($rounds){
+            \Illuminate\Hashing\BcryptHasher::setRounds($rounds);
+        }
+        
     }
 
 
     class HTML extends \Illuminate\Support\Facades\HTML{
-        
-        /**
-         * Register a custom HTML macro.
-         *
-         * @param string $name
-         * @param callable $macro
-         * @return void 
-         * @static 
-         */
-        public static function macro($name, $macro){
-            \Illuminate\Html\HtmlBuilder::macro($name, $macro);
-        }
         
         /**
          * Convert an HTML string to entities.
@@ -5766,6 +6062,29 @@ namespace {
             return \Illuminate\Html\HtmlBuilder::obfuscate($value);
         }
         
+        /**
+         * Register a custom macro.
+         *
+         * @param string $name
+         * @param callable $macro
+         * @return void 
+         * @static 
+         */
+        public static function macro($name, $macro){
+            \Illuminate\Html\HtmlBuilder::macro($name, $macro);
+        }
+        
+        /**
+         * Checks if macro is registered
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function hasMacro($name){
+            return \Illuminate\Html\HtmlBuilder::hasMacro($name);
+        }
+        
     }
 
 
@@ -5774,7 +6093,7 @@ namespace {
         /**
          * Return the Request instance.
          *
-         * @return \Illuminate\Http\Request 
+         * @return $this 
          * @static 
          */
         public static function instance(){
@@ -5895,6 +6214,26 @@ namespace {
         }
         
         /**
+         * Returns the client IP address.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function ip(){
+            return \Illuminate\Http\Request::ip();
+        }
+        
+        /**
+         * Returns the client IP addresses.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function ips(){
+            return \Illuminate\Http\Request::ips();
+        }
+        
+        /**
          * Determine if the request contains a given input item key.
          *
          * @param string|array $key
@@ -5906,7 +6245,7 @@ namespace {
         }
         
         /**
-         * Determine if the request contains a non-emtpy value for an input item.
+         * Determine if the request contains a non-empty value for an input item.
          *
          * @param string|array $key
          * @return bool 
@@ -6155,6 +6494,7 @@ namespace {
         /**
          * Get the data format expected in the response.
          *
+         * @param string $default
          * @return string 
          * @static 
          */
@@ -6275,7 +6615,7 @@ namespace {
          * Overrides the PHP global variables according to this request instance.
          * 
          * It overrides $_GET, $_POST, $_REQUEST, $_SERVER, $_COOKIE.
-         * $_FILES is never override, see rfc1867
+         * $_FILES is never overridden, see rfc1867
          *
          * @api 
          * @static 
@@ -6389,6 +6729,9 @@ namespace {
          * 
          * Be warned that enabling this feature might lead to CSRF issues in your code.
          * Check that you are using CSRF tokens when required.
+         * If the HTTP method parameter override is enabled, an html-form with method "POST" can be altered
+         * and used to send a "PUT" or "DELETE" request via the _method request parameter.
+         * If these methods are not protected against CSRF, this presents a possible vulnerability.
          * 
          * The HTTP method can only be overridden when the real HTTP method is POST.
          *
@@ -6680,9 +7023,9 @@ namespace {
         }
         
         /**
-         * Returns the requested URI.
+         * Returns the requested URI (path and query string).
          *
-         * @return string The raw URI (i.e. not urldecoded)
+         * @return string The raw URI (i.e. not URI decoded)
          * @api 
          * @static 
          */
@@ -6706,9 +7049,9 @@ namespace {
         }
         
         /**
-         * Generates a normalized URI for the Request.
+         * Generates a normalized URI (URL) for the Request.
          *
-         * @return string A normalized URI for the Request
+         * @return string A normalized URI (URL) for the Request
          * @see getQueryString()
          * @api 
          * @static 
@@ -6813,7 +7156,7 @@ namespace {
          *
          * @return string The request method
          * @api 
-         * @see getRealMethod
+         * @see getRealMethod()
          * @static 
          */
         public static function getMethod(){
@@ -6825,7 +7168,7 @@ namespace {
          * Gets the "real" request method.
          *
          * @return string The request method
-         * @see getMethod
+         * @see getMethod()
          * @static 
          */
         public static function getRealMethod(){
@@ -6925,6 +7268,17 @@ namespace {
         public static function setDefaultLocale($locale){
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::setDefaultLocale($locale);
+        }
+        
+        /**
+         * Get the default locale.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultLocale(){
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+            return \Illuminate\Http\Request::getDefaultLocale();
         }
         
         /**
@@ -7058,7 +7412,7 @@ namespace {
         }
         
         /**
-         * Gets a list of content types acceptable by the client browser
+         * Gets a list of content types acceptable by the client browser.
          *
          * @return array List of content types in preferable order
          * @api 
@@ -7072,7 +7426,7 @@ namespace {
         /**
          * Returns true if the request is a XMLHttpRequest.
          * 
-         * It works if your JavaScript library set an X-Requested-With HTTP header.
+         * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
          *
          * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
@@ -7293,187 +7647,6 @@ namespace {
     }
 
 
-    class Log extends \Illuminate\Support\Facades\Log{
-        
-        /**
-         * Adds a log record at the DEBUG level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function debug($message, $context = array()){
-            return \Monolog\Logger::debug($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the INFO level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function info($message, $context = array()){
-            return \Monolog\Logger::info($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the NOTICE level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function notice($message, $context = array()){
-            return \Monolog\Logger::notice($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the WARNING level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function warning($message, $context = array()){
-            return \Monolog\Logger::warning($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the ERROR level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function error($message, $context = array()){
-            return \Monolog\Logger::error($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the CRITICAL level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function critical($message, $context = array()){
-            return \Monolog\Logger::critical($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the ALERT level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function alert($message, $context = array()){
-            return \Monolog\Logger::alert($message, $context);
-        }
-        
-        /**
-         * Adds a log record at the EMERGENCY level.
-         *
-         * @param string $message The log message
-         * @param array $context The log context
-         * @return Boolean Whether the record has been processed
-         * @static 
-         */
-        public static function emergency($message, $context = array()){
-            return \Monolog\Logger::emergency($message, $context);
-        }
-        
-        /**
-         * Register a file log handler.
-         *
-         * @param string $path
-         * @param string $level
-         * @return void 
-         * @static 
-         */
-        public static function useFiles($path, $level = 'debug'){
-            \Illuminate\Log\Writer::useFiles($path, $level);
-        }
-        
-        /**
-         * Register a daily file log handler.
-         *
-         * @param string $path
-         * @param int $days
-         * @param string $level
-         * @return void 
-         * @static 
-         */
-        public static function useDailyFiles($path, $days = 0, $level = 'debug'){
-            \Illuminate\Log\Writer::useDailyFiles($path, $days, $level);
-        }
-        
-        /**
-         * Register a new callback handler for when
-         * a log event is triggered.
-         *
-         * @param \Closure $callback
-         * @return void 
-         * @throws \RuntimeException
-         * @static 
-         */
-        public static function listen($callback){
-            \Illuminate\Log\Writer::listen($callback);
-        }
-        
-        /**
-         * Get the underlying Monolog instance.
-         *
-         * @return \Monolog\Logger 
-         * @static 
-         */
-        public static function getMonolog(){
-            return \Illuminate\Log\Writer::getMonolog();
-        }
-        
-        /**
-         * Get the event dispatcher instance.
-         *
-         * @return \Illuminate\Events\Dispatcher 
-         * @static 
-         */
-        public static function getEventDispatcher(){
-            return \Illuminate\Log\Writer::getEventDispatcher();
-        }
-        
-        /**
-         * Set the event dispatcher instance.
-         *
-         * @param \Illuminate\Events\Dispatcher
-         * @return void 
-         * @static 
-         */
-        public static function setEventDispatcher($dispatcher){
-            \Illuminate\Log\Writer::setEventDispatcher($dispatcher);
-        }
-        
-        /**
-         * Dynamically pass log calls into the writer.
-         *
-         * @param mixed  (level, param, param)
-         * @return mixed 
-         * @static 
-         */
-        public static function write(){
-            return \Illuminate\Log\Writer::write();
-        }
-        
-    }
-
-
     class Mail extends \Illuminate\Support\Facades\Mail{
         
         /**
@@ -7507,11 +7680,11 @@ namespace {
          * @param string|array $view
          * @param array $data
          * @param \Closure|string $callback
-         * @return int 
+         * @return void 
          * @static 
          */
         public static function send($view, $data, $callback){
-            return \Illuminate\Mail\Mailer::send($view, $data, $callback);
+            \Illuminate\Mail\Mailer::send($view, $data, $callback);
         }
         
         /**
@@ -7521,11 +7694,11 @@ namespace {
          * @param array $data
          * @param \Closure|string $callback
          * @param string $queue
-         * @return void 
+         * @return mixed 
          * @static 
          */
         public static function queue($view, $data, $callback, $queue = null){
-            \Illuminate\Mail\Mailer::queue($view, $data, $callback, $queue);
+            return \Illuminate\Mail\Mailer::queue($view, $data, $callback, $queue);
         }
         
         /**
@@ -7535,11 +7708,11 @@ namespace {
          * @param string|array $view
          * @param array $data
          * @param \Closure|string $callback
-         * @return void 
+         * @return mixed 
          * @static 
          */
         public static function queueOn($queue, $view, $data, $callback){
-            \Illuminate\Mail\Mailer::queueOn($queue, $view, $data, $callback);
+            return \Illuminate\Mail\Mailer::queueOn($queue, $view, $data, $callback);
         }
         
         /**
@@ -7550,11 +7723,11 @@ namespace {
          * @param array $data
          * @param \Closure|string $callback
          * @param string $queue
-         * @return void 
+         * @return mixed 
          * @static 
          */
         public static function later($delay, $view, $data, $callback, $queue = null){
-            \Illuminate\Mail\Mailer::later($delay, $view, $data, $callback, $queue);
+            return \Illuminate\Mail\Mailer::later($delay, $view, $data, $callback, $queue);
         }
         
         /**
@@ -7565,11 +7738,11 @@ namespace {
          * @param string|array $view
          * @param array $data
          * @param \Closure|string $callback
-         * @return void 
+         * @return mixed 
          * @static 
          */
         public static function laterOn($queue, $delay, $view, $data, $callback){
-            \Illuminate\Mail\Mailer::laterOn($queue, $delay, $view, $data, $callback);
+            return \Illuminate\Mail\Mailer::laterOn($queue, $delay, $view, $data, $callback);
         }
         
         /**
@@ -7596,13 +7769,23 @@ namespace {
         }
         
         /**
-         * Get the view environment instance.
+         * Check if the mailer is pretending to send messages.
          *
-         * @return \Illuminate\View\Environment 
+         * @return bool 
          * @static 
          */
-        public static function getViewEnvironment(){
-            return \Illuminate\Mail\Mailer::getViewEnvironment();
+        public static function isPretending(){
+            return \Illuminate\Mail\Mailer::isPretending();
+        }
+        
+        /**
+         * Get the view factory instance.
+         *
+         * @return \Illuminate\View\Factory 
+         * @static 
+         */
+        public static function getViewFactory(){
+            return \Illuminate\Mail\Mailer::getViewFactory();
         }
         
         /**
@@ -7640,7 +7823,7 @@ namespace {
          * Set the log writer instance.
          *
          * @param \Illuminate\Log\Writer $logger
-         * @return \Illuminate\Mail\Mailer 
+         * @return $this 
          * @static 
          */
         public static function setLogger($logger){
@@ -7651,7 +7834,7 @@ namespace {
          * Set the queue manager instance.
          *
          * @param \Illuminate\Queue\QueueManager $queue
-         * @return \Illuminate\Mail\Mailer 
+         * @return $this 
          * @static 
          */
         public static function setQueue($queue){
@@ -7679,12 +7862,12 @@ namespace {
          *
          * @param array $items
          * @param int $total
-         * @param int $perPage
+         * @param int|null $perPage
          * @return \Illuminate\Pagination\Paginator 
          * @static 
          */
-        public static function make($items, $total, $perPage){
-            return \Illuminate\Pagination\Environment::make($items, $total, $perPage);
+        public static function make($items, $total, $perPage = null){
+            return \Illuminate\Pagination\Factory::make($items, $total, $perPage);
         }
         
         /**
@@ -7696,7 +7879,7 @@ namespace {
          * @static 
          */
         public static function getPaginationView($paginator, $view = null){
-            return \Illuminate\Pagination\Environment::getPaginationView($paginator, $view);
+            return \Illuminate\Pagination\Factory::getPaginationView($paginator, $view);
         }
         
         /**
@@ -7706,7 +7889,7 @@ namespace {
          * @static 
          */
         public static function getCurrentPage(){
-            return \Illuminate\Pagination\Environment::getCurrentPage();
+            return \Illuminate\Pagination\Factory::getCurrentPage();
         }
         
         /**
@@ -7717,7 +7900,7 @@ namespace {
          * @static 
          */
         public static function setCurrentPage($number){
-            \Illuminate\Pagination\Environment::setCurrentPage($number);
+            \Illuminate\Pagination\Factory::setCurrentPage($number);
         }
         
         /**
@@ -7727,7 +7910,7 @@ namespace {
          * @static 
          */
         public static function getCurrentUrl(){
-            return \Illuminate\Pagination\Environment::getCurrentUrl();
+            return \Illuminate\Pagination\Factory::getCurrentUrl();
         }
         
         /**
@@ -7738,7 +7921,7 @@ namespace {
          * @static 
          */
         public static function setBaseUrl($baseUrl){
-            \Illuminate\Pagination\Environment::setBaseUrl($baseUrl);
+            \Illuminate\Pagination\Factory::setBaseUrl($baseUrl);
         }
         
         /**
@@ -7749,7 +7932,7 @@ namespace {
          * @static 
          */
         public static function setPageName($pageName){
-            \Illuminate\Pagination\Environment::setPageName($pageName);
+            \Illuminate\Pagination\Factory::setPageName($pageName);
         }
         
         /**
@@ -7759,7 +7942,7 @@ namespace {
          * @static 
          */
         public static function getPageName(){
-            return \Illuminate\Pagination\Environment::getPageName();
+            return \Illuminate\Pagination\Factory::getPageName();
         }
         
         /**
@@ -7770,7 +7953,7 @@ namespace {
          * @static 
          */
         public static function getViewName($view = null){
-            return \Illuminate\Pagination\Environment::getViewName($view);
+            return \Illuminate\Pagination\Factory::getViewName($view);
         }
         
         /**
@@ -7781,7 +7964,7 @@ namespace {
          * @static 
          */
         public static function setViewName($viewName){
-            \Illuminate\Pagination\Environment::setViewName($viewName);
+            \Illuminate\Pagination\Factory::setViewName($viewName);
         }
         
         /**
@@ -7791,7 +7974,7 @@ namespace {
          * @static 
          */
         public static function getLocale(){
-            return \Illuminate\Pagination\Environment::getLocale();
+            return \Illuminate\Pagination\Factory::getLocale();
         }
         
         /**
@@ -7802,7 +7985,7 @@ namespace {
          * @static 
          */
         public static function setLocale($locale){
-            \Illuminate\Pagination\Environment::setLocale($locale);
+            \Illuminate\Pagination\Factory::setLocale($locale);
         }
         
         /**
@@ -7812,7 +7995,7 @@ namespace {
          * @static 
          */
         public static function getRequest(){
-            return \Illuminate\Pagination\Environment::getRequest();
+            return \Illuminate\Pagination\Factory::getRequest();
         }
         
         /**
@@ -7823,28 +8006,28 @@ namespace {
          * @static 
          */
         public static function setRequest($request){
-            \Illuminate\Pagination\Environment::setRequest($request);
+            \Illuminate\Pagination\Factory::setRequest($request);
         }
         
         /**
-         * Get the current view driver.
+         * Get the current view factory.
          *
-         * @return \Illuminate\View\Environment 
+         * @return \Illuminate\View\Factory 
          * @static 
          */
-        public static function getViewDriver(){
-            return \Illuminate\Pagination\Environment::getViewDriver();
+        public static function getViewFactory(){
+            return \Illuminate\Pagination\Factory::getViewFactory();
         }
         
         /**
-         * Set the current view driver.
+         * Set the current view factory.
          *
-         * @param \Illuminate\View\Environment $view
+         * @param \Illuminate\View\Factory $view
          * @return void 
          * @static 
          */
-        public static function setViewDriver($view){
-            \Illuminate\Pagination\Environment::setViewDriver($view);
+        public static function setViewFactory($view){
+            \Illuminate\Pagination\Factory::setViewFactory($view);
         }
         
         /**
@@ -7854,7 +8037,7 @@ namespace {
          * @static 
          */
         public static function getTranslator(){
-            return \Illuminate\Pagination\Environment::getTranslator();
+            return \Illuminate\Pagination\Factory::getTranslator();
         }
         
     }
@@ -7928,6 +8111,17 @@ namespace {
     class Queue extends \Illuminate\Support\Facades\Queue{
         
         /**
+         * Register an event listener for the daemon queue loop.
+         *
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function looping($callback){
+            \Illuminate\Queue\QueueManager::looping($callback);
+        }
+        
+        /**
          * Register an event listener for the failed job event.
          *
          * @param mixed $callback
@@ -7936,6 +8130,17 @@ namespace {
          */
         public static function failing($callback){
             \Illuminate\Queue\QueueManager::failing($callback);
+        }
+        
+        /**
+         * Register an event listener for the daemon queue stopping.
+         *
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function stopping($callback){
+            \Illuminate\Queue\QueueManager::stopping($callback);
         }
         
         /**
@@ -8017,6 +8222,16 @@ namespace {
         }
         
         /**
+         * Determine if the application is in maintenance mode.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isDownForMaintenance(){
+            return \Illuminate\Queue\QueueManager::isDownForMaintenance();
+        }
+        
+        /**
          * Push a new job onto the queue.
          *
          * @param string $job
@@ -8079,7 +8294,7 @@ namespace {
         }
         
         /**
-         * Push a new an array of jobs onto the queue.
+         * Push an array of jobs onto the queue.
          *
          * @param array $jobs
          * @param mixed $data
@@ -8113,6 +8328,18 @@ namespace {
         public static function setContainer($container){
             //Method inherited from \Illuminate\Queue\Queue            
             \Illuminate\Queue\SyncQueue::setContainer($container);
+        }
+        
+        /**
+         * Set the encrypter instance.
+         *
+         * @param \Illuminate\Encryption\Encrypter $crypt
+         * @return void 
+         * @static 
+         */
+        public static function setEncrypter($crypt){
+            //Method inherited from \Illuminate\Queue\Queue            
+            \Illuminate\Queue\SyncQueue::setEncrypter($crypt);
         }
         
     }
@@ -8281,7 +8508,7 @@ namespace {
          * Get a specific Redis connection instance.
          *
          * @param string $name
-         * @return \Predis\Connection\SingleConnectionInterface 
+         * @return \Predis\ClientInterface 
          * @static 
          */
         public static function connection($name = 'default'){
@@ -8308,7 +8535,7 @@ namespace {
         /**
          * Return the Request instance.
          *
-         * @return \Illuminate\Http\Request 
+         * @return $this 
          * @static 
          */
         public static function instance(){
@@ -8429,6 +8656,26 @@ namespace {
         }
         
         /**
+         * Returns the client IP address.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function ip(){
+            return \Illuminate\Http\Request::ip();
+        }
+        
+        /**
+         * Returns the client IP addresses.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function ips(){
+            return \Illuminate\Http\Request::ips();
+        }
+        
+        /**
          * Determine if the request contains a given input item key.
          *
          * @param string|array $key
@@ -8440,7 +8687,7 @@ namespace {
         }
         
         /**
-         * Determine if the request contains a non-emtpy value for an input item.
+         * Determine if the request contains a non-empty value for an input item.
          *
          * @param string|array $key
          * @return bool 
@@ -8689,6 +8936,7 @@ namespace {
         /**
          * Get the data format expected in the response.
          *
+         * @param string $default
          * @return string 
          * @static 
          */
@@ -8809,7 +9057,7 @@ namespace {
          * Overrides the PHP global variables according to this request instance.
          * 
          * It overrides $_GET, $_POST, $_REQUEST, $_SERVER, $_COOKIE.
-         * $_FILES is never override, see rfc1867
+         * $_FILES is never overridden, see rfc1867
          *
          * @api 
          * @static 
@@ -8923,6 +9171,9 @@ namespace {
          * 
          * Be warned that enabling this feature might lead to CSRF issues in your code.
          * Check that you are using CSRF tokens when required.
+         * If the HTTP method parameter override is enabled, an html-form with method "POST" can be altered
+         * and used to send a "PUT" or "DELETE" request via the _method request parameter.
+         * If these methods are not protected against CSRF, this presents a possible vulnerability.
          * 
          * The HTTP method can only be overridden when the real HTTP method is POST.
          *
@@ -9214,9 +9465,9 @@ namespace {
         }
         
         /**
-         * Returns the requested URI.
+         * Returns the requested URI (path and query string).
          *
-         * @return string The raw URI (i.e. not urldecoded)
+         * @return string The raw URI (i.e. not URI decoded)
          * @api 
          * @static 
          */
@@ -9240,9 +9491,9 @@ namespace {
         }
         
         /**
-         * Generates a normalized URI for the Request.
+         * Generates a normalized URI (URL) for the Request.
          *
-         * @return string A normalized URI for the Request
+         * @return string A normalized URI (URL) for the Request
          * @see getQueryString()
          * @api 
          * @static 
@@ -9347,7 +9598,7 @@ namespace {
          *
          * @return string The request method
          * @api 
-         * @see getRealMethod
+         * @see getRealMethod()
          * @static 
          */
         public static function getMethod(){
@@ -9359,7 +9610,7 @@ namespace {
          * Gets the "real" request method.
          *
          * @return string The request method
-         * @see getMethod
+         * @see getMethod()
          * @static 
          */
         public static function getRealMethod(){
@@ -9459,6 +9710,17 @@ namespace {
         public static function setDefaultLocale($locale){
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
             return \Illuminate\Http\Request::setDefaultLocale($locale);
+        }
+        
+        /**
+         * Get the default locale.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultLocale(){
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+            return \Illuminate\Http\Request::getDefaultLocale();
         }
         
         /**
@@ -9592,7 +9854,7 @@ namespace {
         }
         
         /**
-         * Gets a list of content types acceptable by the client browser
+         * Gets a list of content types acceptable by the client browser.
          *
          * @return array List of content types in preferable order
          * @api 
@@ -9606,7 +9868,7 @@ namespace {
         /**
          * Returns true if the request is a XMLHttpRequest.
          * 
-         * It works if your JavaScript library set an X-Requested-With HTTP header.
+         * It works if your JavaScript library sets an X-Requested-With HTTP header.
          * It is known to work with common JavaScript frameworks:
          *
          * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
@@ -9845,7 +10107,7 @@ namespace {
         /**
          * Register a route matched event listener.
          *
-         * @param callable $callback
+         * @param string|callable $callback
          * @return void 
          * @static 
          */
@@ -9856,7 +10118,7 @@ namespace {
         /**
          * Register a new "before" filter with the router.
          *
-         * @param mixed $callback
+         * @param string|callable $callback
          * @return void 
          * @static 
          */
@@ -9867,7 +10129,7 @@ namespace {
         /**
          * Register a new "after" filter with the router.
          *
-         * @param mixed $callback
+         * @param string|callable $callback
          * @return void 
          * @static 
          */
@@ -9879,7 +10141,7 @@ namespace {
          * Register a new filter with the router.
          *
          * @param string $name
-         * @param mixed $callback
+         * @param string|callable $callback
          * @return void 
          * @static 
          */
@@ -9893,10 +10155,11 @@ namespace {
          * @param string $pattern
          * @param string $name
          * @param array|null $methods
+         * @return void 
          * @static 
          */
         public static function when($pattern, $name, $methods = null){
-            return \Illuminate\Routing\Router::when($pattern, $name, $methods);
+            \Illuminate\Routing\Router::when($pattern, $name, $methods);
         }
         
         /**
@@ -9930,12 +10193,23 @@ namespace {
          * Add a new route parameter binder.
          *
          * @param string $key
-         * @param callable $binder
+         * @param string|callable $binder
          * @return void 
          * @static 
          */
         public static function bind($key, $binder){
             \Illuminate\Routing\Router::bind($key, $binder);
+        }
+        
+        /**
+         * Create a class based binding using the IoC container.
+         *
+         * @param string $binding
+         * @return \Closure 
+         * @static 
+         */
+        public static function createClassBinding($binding){
+            return \Illuminate\Routing\Router::createClassBinding($binding);
         }
         
         /**
@@ -9948,6 +10222,17 @@ namespace {
          */
         public static function pattern($key, $pattern){
             \Illuminate\Routing\Router::pattern($key, $pattern);
+        }
+        
+        /**
+         * Set a group of global where patterns on all routes
+         *
+         * @param array $patterns
+         * @return void 
+         * @static 
+         */
+        public static function patterns($patterns){
+            \Illuminate\Routing\Router::patterns($patterns);
         }
         
         /**
@@ -10065,6 +10350,17 @@ namespace {
         }
         
         /**
+         * Check if a route with the given name exists.
+         *
+         * @param string $name
+         * @return bool 
+         * @static 
+         */
+        public static function has($name){
+            return \Illuminate\Routing\Router::has($name);
+        }
+        
+        /**
          * Get the current route name.
          *
          * @return string|null 
@@ -10113,8 +10409,8 @@ namespace {
          * @return bool 
          * @static 
          */
-        public static function isAction(){
-            return \Illuminate\Routing\Router::isAction();
+        public static function uses(){
+            return \Illuminate\Routing\Router::uses();
         }
         
         /**
@@ -10180,10 +10476,22 @@ namespace {
         }
         
         /**
+         * Get the global "where" patterns.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getPatterns(){
+            return \Illuminate\Routing\Router::getPatterns();
+        }
+        
+        /**
          * Get the response for a given request.
          *
          * @param \Symfony\Component\HttpFoundation\Request $request
-         * @return \Symfony\Component\HttpFoundation\Response 
+         * @param int $type
+         * @param bool $catch
+         * @return \Illuminate\Http\Response 
          * @static 
          */
         public static function handle($request, $type = 1, $catch = true){
@@ -10308,7 +10616,7 @@ namespace {
          * Set the database connection instance.
          *
          * @param \Illuminate\Database\Connection
-         * @return \Illuminate\Database\Schema\Builder 
+         * @return $this 
          * @static 
          */
         public static function setConnection($connection){
@@ -10386,7 +10694,7 @@ namespace {
          *
          * @param string $driver
          * @param \Closure $callback
-         * @return \Illuminate\Support\Manager|static 
+         * @return $this 
          * @static 
          */
         public static function extend($driver, $callback){
@@ -10429,7 +10737,7 @@ namespace {
         }
         
         /**
-         * Sets the session ID
+         * Sets the session ID.
          *
          * @param string $id
          * @api 
@@ -10437,6 +10745,17 @@ namespace {
          */
         public static function setId($id){
             return \Illuminate\Session\Store::setId($id);
+        }
+        
+        /**
+         * Determine if this is a valid session ID.
+         *
+         * @param string $id
+         * @return bool 
+         * @static 
+         */
+        public static function isValidId($id){
+            return \Illuminate\Session\Store::isValidId($id);
         }
         
         /**
@@ -10468,9 +10787,9 @@ namespace {
          * session and deletes the old session from persistence.
          *
          * @param int $lifetime Sets the cookie lifetime for the session cookie. A null value
-         *                          will leave the system settings unchanged, 0 sets the cookie
-         *                          to expire with browser session. Time is in seconds, and is
-         *                          not a Unix timestamp.
+         *                      will leave the system settings unchanged, 0 sets the cookie
+         *                      to expire with browser session. Time is in seconds, and is
+         *                      not a Unix timestamp.
          * @return bool True if session invalidated, false if error.
          * @api 
          * @static 
@@ -10485,9 +10804,9 @@ namespace {
          *
          * @param bool $destroy Whether to delete the old session or leave it to garbage collection.
          * @param int $lifetime Sets the cookie lifetime for the session cookie. A null value
-         *                          will leave the system settings unchanged, 0 sets the cookie
-         *                          to expire with browser session. Time is in seconds, and is
-         *                          not a Unix timestamp.
+         *                       will leave the system settings unchanged, 0 sets the cookie
+         *                       to expire with browser session. Time is in seconds, and is
+         *                       not a Unix timestamp.
          * @return bool True if session migrated, false if error.
          * @api 
          * @static 
@@ -10556,6 +10875,18 @@ namespace {
         }
         
         /**
+         * Get the value of a given key and then forget it.
+         *
+         * @param string $key
+         * @param string $default
+         * @return mixed 
+         * @static 
+         */
+        public static function pull($key, $default = null){
+            return \Illuminate\Session\Store::pull($key, $default);
+        }
+        
+        /**
          * Determine if the session contains old input.
          *
          * @param string $key
@@ -10598,7 +10929,7 @@ namespace {
          * @return void 
          * @static 
          */
-        public static function put($key, $value){
+        public static function put($key, $value = null){
             \Illuminate\Session\Store::put($key, $value);
         }
         
@@ -10802,6 +11133,17 @@ namespace {
          */
         public static function regenerateToken(){
             \Illuminate\Session\Store::regenerateToken();
+        }
+        
+        /**
+         * Set the existence of the session on the handler if applicable.
+         *
+         * @param bool $value
+         * @return void 
+         * @static 
+         */
+        public static function setExists($value){
+            \Illuminate\Session\Store::setExists($value);
         }
         
         /**
@@ -11097,7 +11439,7 @@ namespace {
          *
          * @param string $path
          * @param mixed $extra
-         * @param bool $secure
+         * @param bool|null $secure
          * @return string 
          * @static 
          */
@@ -11121,7 +11463,7 @@ namespace {
          * Generate a URL to an application asset.
          *
          * @param string $path
-         * @param bool $secure
+         * @param bool|null $secure
          * @return string 
          * @static 
          */
@@ -11138,6 +11480,17 @@ namespace {
          */
         public static function secureAsset($path){
             return \Illuminate\Routing\UrlGenerator::secureAsset($path);
+        }
+        
+        /**
+         * Force the schema for URLs.
+         *
+         * @param string $schema
+         * @return void 
+         * @static 
+         */
+        public static function forceSchema($schema){
+            \Illuminate\Routing\UrlGenerator::forceSchema($schema);
         }
         
         /**
@@ -11169,6 +11522,17 @@ namespace {
         }
         
         /**
+         * Set the forced root URL.
+         *
+         * @param string $root
+         * @return void 
+         * @static 
+         */
+        public static function forceRootUrl($root){
+            \Illuminate\Routing\UrlGenerator::forceRootUrl($root);
+        }
+        
+        /**
          * Determine if the given path is a valid URL.
          *
          * @param string $path
@@ -11192,7 +11556,7 @@ namespace {
         /**
          * Set the current request instance.
          *
-         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Illuminate\Http\Request $request
          * @return void 
          * @static 
          */
@@ -11314,7 +11678,7 @@ namespace {
          * @static 
          */
         public static function make($view, $data = array(), $mergeData = array()){
-            return \Illuminate\View\Environment::make($view, $data, $mergeData);
+            return \Illuminate\View\Factory::make($view, $data, $mergeData);
         }
         
         /**
@@ -11326,7 +11690,7 @@ namespace {
          * @static 
          */
         public static function of($view, $data = array()){
-            return \Illuminate\View\Environment::of($view, $data);
+            return \Illuminate\View\Factory::of($view, $data);
         }
         
         /**
@@ -11338,7 +11702,19 @@ namespace {
          * @static 
          */
         public static function name($view, $name){
-            \Illuminate\View\Environment::name($view, $name);
+            \Illuminate\View\Factory::name($view, $name);
+        }
+        
+        /**
+         * Add an alias for a view.
+         *
+         * @param string $view
+         * @param string $alias
+         * @return void 
+         * @static 
+         */
+        public static function alias($view, $alias){
+            \Illuminate\View\Factory::alias($view, $alias);
         }
         
         /**
@@ -11349,7 +11725,7 @@ namespace {
          * @static 
          */
         public static function exists($view){
-            return \Illuminate\View\Environment::exists($view);
+            return \Illuminate\View\Factory::exists($view);
         }
         
         /**
@@ -11363,7 +11739,19 @@ namespace {
          * @static 
          */
         public static function renderEach($view, $data, $iterator, $empty = 'raw|'){
-            return \Illuminate\View\Environment::renderEach($view, $data, $iterator, $empty);
+            return \Illuminate\View\Factory::renderEach($view, $data, $iterator, $empty);
+        }
+        
+        /**
+         * Get the appropriate view engine for the given path.
+         *
+         * @param string $path
+         * @return \Illuminate\View\Engines\EngineInterface 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function getEngineFromPath($path){
+            return \Illuminate\View\Factory::getEngineFromPath($path);
         }
         
         /**
@@ -11375,7 +11763,7 @@ namespace {
          * @static 
          */
         public static function share($key, $value = null){
-            \Illuminate\View\Environment::share($key, $value);
+            \Illuminate\View\Factory::share($key, $value);
         }
         
         /**
@@ -11387,7 +11775,7 @@ namespace {
          * @static 
          */
         public static function creator($views, $callback){
-            return \Illuminate\View\Environment::creator($views, $callback);
+            return \Illuminate\View\Factory::creator($views, $callback);
         }
         
         /**
@@ -11398,7 +11786,7 @@ namespace {
          * @static 
          */
         public static function composers($composers){
-            return \Illuminate\View\Environment::composers($composers);
+            return \Illuminate\View\Factory::composers($composers);
         }
         
         /**
@@ -11406,11 +11794,12 @@ namespace {
          *
          * @param array|string $views
          * @param \Closure|string $callback
+         * @param int|null $priority
          * @return array 
          * @static 
          */
         public static function composer($views, $callback, $priority = null){
-            return \Illuminate\View\Environment::composer($views, $callback, $priority);
+            return \Illuminate\View\Factory::composer($views, $callback, $priority);
         }
         
         /**
@@ -11421,7 +11810,7 @@ namespace {
          * @static 
          */
         public static function callComposer($view){
-            \Illuminate\View\Environment::callComposer($view);
+            \Illuminate\View\Factory::callComposer($view);
         }
         
         /**
@@ -11432,7 +11821,7 @@ namespace {
          * @static 
          */
         public static function callCreator($view){
-            \Illuminate\View\Environment::callCreator($view);
+            \Illuminate\View\Factory::callCreator($view);
         }
         
         /**
@@ -11444,7 +11833,7 @@ namespace {
          * @static 
          */
         public static function startSection($section, $content = ''){
-            \Illuminate\View\Environment::startSection($section, $content);
+            \Illuminate\View\Factory::startSection($section, $content);
         }
         
         /**
@@ -11456,7 +11845,7 @@ namespace {
          * @static 
          */
         public static function inject($section, $content){
-            \Illuminate\View\Environment::inject($section, $content);
+            \Illuminate\View\Factory::inject($section, $content);
         }
         
         /**
@@ -11466,7 +11855,7 @@ namespace {
          * @static 
          */
         public static function yieldSection(){
-            return \Illuminate\View\Environment::yieldSection();
+            return \Illuminate\View\Factory::yieldSection();
         }
         
         /**
@@ -11477,7 +11866,7 @@ namespace {
          * @static 
          */
         public static function stopSection($overwrite = false){
-            return \Illuminate\View\Environment::stopSection($overwrite);
+            return \Illuminate\View\Factory::stopSection($overwrite);
         }
         
         /**
@@ -11487,7 +11876,7 @@ namespace {
          * @static 
          */
         public static function appendSection(){
-            return \Illuminate\View\Environment::appendSection();
+            return \Illuminate\View\Factory::appendSection();
         }
         
         /**
@@ -11499,7 +11888,7 @@ namespace {
          * @static 
          */
         public static function yieldContent($section, $default = ''){
-            return \Illuminate\View\Environment::yieldContent($section, $default);
+            return \Illuminate\View\Factory::yieldContent($section, $default);
         }
         
         /**
@@ -11509,7 +11898,7 @@ namespace {
          * @static 
          */
         public static function flushSections(){
-            \Illuminate\View\Environment::flushSections();
+            \Illuminate\View\Factory::flushSections();
         }
         
         /**
@@ -11519,7 +11908,7 @@ namespace {
          * @static 
          */
         public static function flushSectionsIfDoneRendering(){
-            \Illuminate\View\Environment::flushSectionsIfDoneRendering();
+            \Illuminate\View\Factory::flushSectionsIfDoneRendering();
         }
         
         /**
@@ -11529,7 +11918,7 @@ namespace {
          * @static 
          */
         public static function incrementRender(){
-            \Illuminate\View\Environment::incrementRender();
+            \Illuminate\View\Factory::incrementRender();
         }
         
         /**
@@ -11539,7 +11928,7 @@ namespace {
          * @static 
          */
         public static function decrementRender(){
-            \Illuminate\View\Environment::decrementRender();
+            \Illuminate\View\Factory::decrementRender();
         }
         
         /**
@@ -11549,7 +11938,7 @@ namespace {
          * @static 
          */
         public static function doneRendering(){
-            return \Illuminate\View\Environment::doneRendering();
+            return \Illuminate\View\Factory::doneRendering();
         }
         
         /**
@@ -11560,7 +11949,7 @@ namespace {
          * @static 
          */
         public static function addLocation($location){
-            \Illuminate\View\Environment::addLocation($location);
+            \Illuminate\View\Factory::addLocation($location);
         }
         
         /**
@@ -11572,7 +11961,7 @@ namespace {
          * @static 
          */
         public static function addNamespace($namespace, $hints){
-            \Illuminate\View\Environment::addNamespace($namespace, $hints);
+            \Illuminate\View\Factory::addNamespace($namespace, $hints);
         }
         
         /**
@@ -11584,7 +11973,7 @@ namespace {
          * @static 
          */
         public static function prependNamespace($namespace, $hints){
-            \Illuminate\View\Environment::prependNamespace($namespace, $hints);
+            \Illuminate\View\Factory::prependNamespace($namespace, $hints);
         }
         
         /**
@@ -11597,7 +11986,7 @@ namespace {
          * @static 
          */
         public static function addExtension($extension, $engine, $resolver = null){
-            \Illuminate\View\Environment::addExtension($extension, $engine, $resolver);
+            \Illuminate\View\Factory::addExtension($extension, $engine, $resolver);
         }
         
         /**
@@ -11607,7 +11996,7 @@ namespace {
          * @static 
          */
         public static function getExtensions(){
-            return \Illuminate\View\Environment::getExtensions();
+            return \Illuminate\View\Factory::getExtensions();
         }
         
         /**
@@ -11617,7 +12006,7 @@ namespace {
          * @static 
          */
         public static function getEngineResolver(){
-            return \Illuminate\View\Environment::getEngineResolver();
+            return \Illuminate\View\Factory::getEngineResolver();
         }
         
         /**
@@ -11627,17 +12016,18 @@ namespace {
          * @static 
          */
         public static function getFinder(){
-            return \Illuminate\View\Environment::getFinder();
+            return \Illuminate\View\Factory::getFinder();
         }
         
         /**
          * Set the view finder instance.
          *
+         * @param \Illuminate\View\ViewFinderInterface $finder
          * @return void 
          * @static 
          */
         public static function setFinder($finder){
-            \Illuminate\View\Environment::setFinder($finder);
+            \Illuminate\View\Factory::setFinder($finder);
         }
         
         /**
@@ -11647,7 +12037,7 @@ namespace {
          * @static 
          */
         public static function getDispatcher(){
-            return \Illuminate\View\Environment::getDispatcher();
+            return \Illuminate\View\Factory::getDispatcher();
         }
         
         /**
@@ -11658,7 +12048,7 @@ namespace {
          * @static 
          */
         public static function setDispatcher($events){
-            \Illuminate\View\Environment::setDispatcher($events);
+            \Illuminate\View\Factory::setDispatcher($events);
         }
         
         /**
@@ -11668,7 +12058,7 @@ namespace {
          * @static 
          */
         public static function getContainer(){
-            return \Illuminate\View\Environment::getContainer();
+            return \Illuminate\View\Factory::getContainer();
         }
         
         /**
@@ -11679,7 +12069,7 @@ namespace {
          * @static 
          */
         public static function setContainer($container){
-            \Illuminate\View\Environment::setContainer($container);
+            \Illuminate\View\Factory::setContainer($container);
         }
         
         /**
@@ -11691,7 +12081,7 @@ namespace {
          * @static 
          */
         public static function shared($key, $default = null){
-            return \Illuminate\View\Environment::shared($key, $default);
+            return \Illuminate\View\Factory::shared($key, $default);
         }
         
         /**
@@ -11701,7 +12091,7 @@ namespace {
          * @static 
          */
         public static function getShared(){
-            return \Illuminate\View\Environment::getShared();
+            return \Illuminate\View\Factory::getShared();
         }
         
         /**
@@ -11711,7 +12101,7 @@ namespace {
          * @static 
          */
         public static function getSections(){
-            return \Illuminate\View\Environment::getSections();
+            return \Illuminate\View\Factory::getSections();
         }
         
         /**
@@ -11721,7 +12111,7 @@ namespace {
          * @static 
          */
         public static function getNames(){
-            return \Illuminate\View\Environment::getNames();
+            return \Illuminate\View\Factory::getNames();
         }
         
     }
@@ -12166,10 +12556,20 @@ namespace {
     class Image extends \Intervention\Image\Facades\Image{
         
         /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @static 
+         */
+        public static function configure($config = array()){
+            return \Intervention\Image\ImageManager::configure($config);
+        }
+        
+        /**
          * Initiates an Image instance from different input types
          *
          * @param mixed $data
-         * @return \Intervention\Image\Intervention\Image\Image 
+         * @return \Intervention\Image\Image 
          * @static 
          */
         public static function make($data){
@@ -12182,7 +12582,7 @@ namespace {
          * @param integer $width
          * @param integer $height
          * @param mixed $background
-         * @return \Intervention\Image\Intervention\Image\Image 
+         * @return \Intervention\Image\Image 
          * @static 
          */
         public static function canvas($width, $height, $background = null){
@@ -14235,6 +14635,688 @@ namespace {
     }
 
 
+    class UniversalAnalytics extends \TagPlanet\UniversalAnalytics\UniversalAnalyticsFacade{
+        
+        /**
+         * Returns the Laravel application
+         *
+         * @return \TagPlanet\UniversalAnalytics\Illuminate\Foundation\Application 
+         * @static 
+         */
+        public static function app(){
+            return \TagPlanet\UniversalAnalytics\UniversalAnalytics::app();
+        }
+        
+        /**
+         * Find a single tracker instance
+         *
+         * @return \TagPlanet\UniversalAnalytics\TagPlanet\UniversalAnalytics\UniversalAnalyticsInstance 
+         * @static 
+         */
+        public static function get($name){
+            return \TagPlanet\UniversalAnalytics\UniversalAnalytics::get($name);
+        }
+        
+        /**
+         * Render the Universal Analytics code
+         *
+         * @return string 
+         * @static 
+         */
+        public static function render($renderedCodeBlock = true, $renderScriptTag = true){
+            return \TagPlanet\UniversalAnalytics\UniversalAnalytics::render($renderedCodeBlock, $renderScriptTag);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function ga(){
+            return \TagPlanet\UniversalAnalytics\UniversalAnalytics::ga();
+        }
+        
+    }
+
+
+    class ES extends \Elasticsearch\Client{
+        
+    }
+
+
+    class Shortcode extends \Pingpong\Shortcode\Facades\Shortcode{
+        
+        /**
+         * Get the container instance.
+         *
+         * @return \Illuminate\Container\Container 
+         * @static 
+         */
+        public static function getContainer(){
+            return \Pingpong\Shortcode\Shortcode::getContainer();
+        }
+        
+        /**
+         * Set the laravel container instance.
+         *
+         * @param \Illuminate\Container\Container $container
+         * @return self 
+         * @static 
+         */
+        public static function setContainer($container){
+            return \Pingpong\Shortcode\Shortcode::setContainer($container);
+        }
+        
+        /**
+         * Get all shortcodes.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function all(){
+            return \Pingpong\Shortcode\Shortcode::all();
+        }
+        
+        /**
+         * Register new shortcode.
+         *
+         * @param string $name
+         * @param mixed $callback
+         * @return void 
+         * @static 
+         */
+        public static function register($name, $callback){
+            \Pingpong\Shortcode\Shortcode::register($name, $callback);
+        }
+        
+        /**
+         * Unregister the specified shortcode by given name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function unregister($name){
+            \Pingpong\Shortcode\Shortcode::unregister($name);
+        }
+        
+        /**
+         * Unregister all shortcodes.
+         *
+         * @return self 
+         * @static 
+         */
+        public static function destroy(){
+            return \Pingpong\Shortcode\Shortcode::destroy();
+        }
+        
+        /**
+         * Strip any shortcodes.
+         *
+         * @param string $content
+         * @return string 
+         * @static 
+         */
+        public static function strip($content){
+            return \Pingpong\Shortcode\Shortcode::strip($content);
+        }
+        
+        /**
+         * Get count from all shortcodes.
+         *
+         * @return integer 
+         * @static 
+         */
+        public static function count(){
+            return \Pingpong\Shortcode\Shortcode::count();
+        }
+        
+        /**
+         * Return true is the given name exist in shortcodes array.
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function exists($name){
+            return \Pingpong\Shortcode\Shortcode::exists($name);
+        }
+        
+        /**
+         * Return true is the given content contain the given name shortcode.
+         *
+         * @param string $content
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function contains($content, $name){
+            return \Pingpong\Shortcode\Shortcode::contains($content, $name);
+        }
+        
+        /**
+         * Compile the gived content.
+         *
+         * @param string $content
+         * @return void 
+         * @static 
+         */
+        public static function compile($content){
+            \Pingpong\Shortcode\Shortcode::compile($content);
+        }
+        
+        /**
+         * Render the current calld shortcode.
+         *
+         * @param array $matches
+         * @return void 
+         * @static 
+         */
+        public static function render($matches){
+            \Pingpong\Shortcode\Shortcode::render($matches);
+        }
+        
+    }
+
+
+    class Cart extends \Gloudemans\Shoppingcart\Facades\Cart{
+        
+        /**
+         * Set the current cart instance
+         *
+         * @param string $instance Cart instance name
+         * @return \Gloudemans\Shoppingcart\Gloudemans\Shoppingcart\Cart 
+         * @static 
+         */
+        public static function instance($instance = null){
+            return \Gloudemans\Shoppingcart\Cart::instance($instance);
+        }
+        
+        /**
+         * Set the associated model
+         *
+         * @param string $modelName The name of the model
+         * @param string $modelNamespace The namespace of the model
+         * @return void 
+         * @static 
+         */
+        public static function associate($modelName, $modelNamespace = null){
+            \Gloudemans\Shoppingcart\Cart::associate($modelName, $modelNamespace);
+        }
+        
+        /**
+         * Add a row to the cart
+         *
+         * @param string|array $id Unique ID of the item|Item formated as array|Array of items
+         * @param string $name Name of the item
+         * @param int $qty Item qty to add to the cart
+         * @param float $price Price of one item
+         * @param array $options Array of additional options, such as 'size' or 'color'
+         * @static 
+         */
+        public static function add($id, $name = null, $qty = null, $price = null, $options = array()){
+            return \Gloudemans\Shoppingcart\Cart::add($id, $name, $qty, $price, $options);
+        }
+        
+        /**
+         * Update the quantity of one row of the cart
+         *
+         * @param string $rowId The rowid of the item you want to update
+         * @param integer|array $attribute New quantity of the item|Array of attributes to update
+         * @return boolean 
+         * @static 
+         */
+        public static function update($rowId, $attribute){
+            return \Gloudemans\Shoppingcart\Cart::update($rowId, $attribute);
+        }
+        
+        /**
+         * Remove a row from the cart
+         *
+         * @param string $rowId The rowid of the item
+         * @return boolean 
+         * @static 
+         */
+        public static function remove($rowId){
+            return \Gloudemans\Shoppingcart\Cart::remove($rowId);
+        }
+        
+        /**
+         * Get a row of the cart by its ID
+         *
+         * @param string $rowId The ID of the row to fetch
+         * @return \Gloudemans\Shoppingcart\Gloudemans\Shoppingcart\CartCollection 
+         * @static 
+         */
+        public static function get($rowId){
+            return \Gloudemans\Shoppingcart\Cart::get($rowId);
+        }
+        
+        /**
+         * Get the cart content
+         *
+         * @return \Gloudemans\Shoppingcart\Gloudemans\Shoppingcart\CartRowCollection 
+         * @static 
+         */
+        public static function content(){
+            return \Gloudemans\Shoppingcart\Cart::content();
+        }
+        
+        /**
+         * Empty the cart
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function destroy(){
+            return \Gloudemans\Shoppingcart\Cart::destroy();
+        }
+        
+        /**
+         * Get the price total
+         *
+         * @return float 
+         * @static 
+         */
+        public static function total(){
+            return \Gloudemans\Shoppingcart\Cart::total();
+        }
+        
+        /**
+         * Get the number of items in the cart
+         *
+         * @param boolean $totalItems Get all the items (when false, will return the number of rows)
+         * @return int 
+         * @static 
+         */
+        public static function count($totalItems = true){
+            return \Gloudemans\Shoppingcart\Cart::count($totalItems);
+        }
+        
+        /**
+         * Search if the cart has a item
+         *
+         * @param array $search An array with the item ID and optional options
+         * @return array|boolean 
+         * @static 
+         */
+        public static function search($search){
+            return \Gloudemans\Shoppingcart\Cart::search($search);
+        }
+        
+    }
+
+
+    class Log extends \Igormatkovic\Livelogger\Facades\Livelogger{
+        
+        /**
+         * Adds a log record at the DEBUG level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function debug($message, $context = array()){
+            return \Monolog\Logger::debug($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the INFO level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function info($message, $context = array()){
+            return \Monolog\Logger::info($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the NOTICE level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function notice($message, $context = array()){
+            return \Monolog\Logger::notice($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the WARNING level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function warning($message, $context = array()){
+            return \Monolog\Logger::warning($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ERROR level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function error($message, $context = array()){
+            return \Monolog\Logger::error($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the CRITICAL level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function critical($message, $context = array()){
+            return \Monolog\Logger::critical($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the ALERT level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function alert($message, $context = array()){
+            return \Monolog\Logger::alert($message, $context);
+        }
+        
+        /**
+         * Adds a log record at the EMERGENCY level.
+         *
+         * @param string $message The log message
+         * @param array $context The log context
+         * @return Boolean Whether the record has been processed
+         * @static 
+         */
+        public static function emergency($message, $context = array()){
+            return \Monolog\Logger::emergency($message, $context);
+        }
+        
+        /**
+         * Register a file log handler.
+         *
+         * @param string $path
+         * @param string $level
+         * @return void 
+         * @static 
+         */
+        public static function useFiles($path, $level = 'debug'){
+            //Method inherited from \Illuminate\Log\Writer            
+            \Igormatkovic\Livelogger\Livelogger::useFiles($path, $level);
+        }
+        
+        /**
+         * Register a daily file log handler.
+         *
+         * @param string $path
+         * @param int $days
+         * @param string $level
+         * @return void 
+         * @static 
+         */
+        public static function useDailyFiles($path, $days = 0, $level = 'debug'){
+            //Method inherited from \Illuminate\Log\Writer            
+            \Igormatkovic\Livelogger\Livelogger::useDailyFiles($path, $days, $level);
+        }
+        
+        /**
+         * Register an error_log handler.
+         *
+         * @param string $level
+         * @param int $messageType
+         * @return void 
+         * @static 
+         */
+        public static function useErrorLog($level = 'debug', $messageType = 0){
+            //Method inherited from \Illuminate\Log\Writer            
+            \Igormatkovic\Livelogger\Livelogger::useErrorLog($level, $messageType);
+        }
+        
+        /**
+         * Register a new callback handler for when
+         * a log event is triggered.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @throws \RuntimeException
+         * @static 
+         */
+        public static function listen($callback){
+            //Method inherited from \Illuminate\Log\Writer            
+            \Igormatkovic\Livelogger\Livelogger::listen($callback);
+        }
+        
+        /**
+         * Get the underlying Monolog instance.
+         *
+         * @return \Monolog\Logger 
+         * @static 
+         */
+        public static function getMonolog(){
+            //Method inherited from \Illuminate\Log\Writer            
+            return \Igormatkovic\Livelogger\Livelogger::getMonolog();
+        }
+        
+        /**
+         * Get the event dispatcher instance.
+         *
+         * @return \Illuminate\Events\Dispatcher 
+         * @static 
+         */
+        public static function getEventDispatcher(){
+            //Method inherited from \Illuminate\Log\Writer            
+            return \Igormatkovic\Livelogger\Livelogger::getEventDispatcher();
+        }
+        
+        /**
+         * Set the event dispatcher instance.
+         *
+         * @param \Illuminate\Events\Dispatcher
+         * @return void 
+         * @static 
+         */
+        public static function setEventDispatcher($dispatcher){
+            //Method inherited from \Illuminate\Log\Writer            
+            \Igormatkovic\Livelogger\Livelogger::setEventDispatcher($dispatcher);
+        }
+        
+        /**
+         * Dynamically pass log calls into the writer.
+         *
+         * @param mixed  (level, param, param)
+         * @return mixed 
+         * @static 
+         */
+        public static function write(){
+            //Method inherited from \Illuminate\Log\Writer            
+            return \Igormatkovic\Livelogger\Livelogger::write();
+        }
+        
+    }
+
+
+    class TBMsg extends \Tzookb\TBMsg\Facade\TBMsg{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markMessageAs($msgId, $userId, $status){
+            return \Tzookb\TBMsg\TBMsg::markMessageAs($msgId, $userId, $status);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markMessageAsRead($msgId, $userId){
+            return \Tzookb\TBMsg\TBMsg::markMessageAsRead($msgId, $userId);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markMessageAsUnread($msgId, $userId){
+            return \Tzookb\TBMsg\TBMsg::markMessageAsUnread($msgId, $userId);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markMessageAsDeleted($msgId, $userId){
+            return \Tzookb\TBMsg\TBMsg::markMessageAsDeleted($msgId, $userId);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markMessageAsArchived($msgId, $userId){
+            return \Tzookb\TBMsg\TBMsg::markMessageAsArchived($msgId, $userId);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getUserConversations($user_id){
+            return \Tzookb\TBMsg\TBMsg::getUserConversations($user_id);
+        }
+        
+        /**
+         * 
+         *
+         * @param $conv_id
+         * @param $user_id
+         * @param bool $newToOld
+         * @return \Tzookb\TBMsg\Conversation 
+         * @static 
+         */
+        public static function getConversationMessages($conv_id, $user_id, $newToOld = true){
+            return \Tzookb\TBMsg\TBMsg::getConversationMessages($conv_id, $user_id, $newToOld);
+        }
+        
+        /**
+         * 
+         *
+         * @param $userA_id
+         * @param $userB_id
+         * @throws ConversationNotFoundException
+         * @return mixed -> id of conversation or false on not found
+         * @static 
+         */
+        public static function getConversationByTwoUsers($userA_id, $userB_id){
+            return \Tzookb\TBMsg\TBMsg::getConversationByTwoUsers($userA_id, $userB_id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function addMessageToConversation($conv_id, $user_id, $content){
+            return \Tzookb\TBMsg\TBMsg::addMessageToConversation($conv_id, $user_id, $content);
+        }
+        
+        /**
+         * 
+         *
+         * @param array $users_ids
+         * @throws Exceptions\NotEnoughUsersInConvException
+         * @return \Tzookb\TBMsg\ConversationEloquent 
+         * @static 
+         */
+        public static function createConversation($users_ids){
+            return \Tzookb\TBMsg\TBMsg::createConversation($users_ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function sendMessageBetweenTwoUsers($senderId, $receiverId, $content){
+            return \Tzookb\TBMsg\TBMsg::sendMessageBetweenTwoUsers($senderId, $receiverId, $content);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markReadAllMessagesInConversation($conv_id, $user_id){
+            return \Tzookb\TBMsg\TBMsg::markReadAllMessagesInConversation($conv_id, $user_id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function markUnreadAllMessagesInConversation($conv_id, $user_id){
+            return \Tzookb\TBMsg\TBMsg::markUnreadAllMessagesInConversation($conv_id, $user_id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function deleteConversation($conv_id, $user_id){
+            return \Tzookb\TBMsg\TBMsg::deleteConversation($conv_id, $user_id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function isUserInConversation($conv_id, $user_id){
+            return \Tzookb\TBMsg\TBMsg::isUserInConversation($conv_id, $user_id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getUsersInConversation($conv_id){
+            return \Tzookb\TBMsg\TBMsg::getUsersInConversation($conv_id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getNumOfUnreadMsgs($user_id){
+            return \Tzookb\TBMsg\TBMsg::getNumOfUnreadMsgs($user_id);
+        }
+        
+    }
+
+
     class JavaScript extends \Laracasts\Utilities\JavaScript\Facades\JavaScript{
         
         /**
@@ -14314,6 +15396,2057 @@ namespace {
          */
         public static function postToFacebook($message, $type = null){
             return \Pitchanon\FacebookConnect\Provider\FacebookConnect::postToFacebook($message, $type);
+        }
+        
+    }
+
+
+    class Es extends \Shift31\LaravelElasticsearch\Facades\Es{
+        
+        /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */
+        public static function info(){
+            return \Elasticsearch\Client::info();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function ping(){
+            return \Elasticsearch\Client::ping();
+        }
+        
+        /**
+         * $params['id']              = (string) The document ID (Required)
+         *        ['index']           = (string) The name of the index (Required)
+         *        ['type']            = (string) The type of the document (use `_all` to fetch the first document matching the ID across all types) (Required)
+         *        ['ignore_missing']  = ??
+         *        ['fields']          = (list) A comma-separated list of fields to return in the response
+         *        ['parent']          = (string) The ID of the parent document
+         *        ['preference']      = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['realtime']        = (boolean) Specify whether to perform the operation in realtime or search mode
+         *        ['refresh']         = (boolean) Refresh the shard containing the document before performing the operation
+         *        ['routing']         = (string) Specific routing value
+         *        ['_source']         = (list) True or false to return the _source field or not, or a list of fields to return
+         *        ['_source_exclude'] = (list) A list of fields to exclude from the returned _source field
+         *        ['_source_include'] = (list) A list of fields to extract and return from the _source field
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function get($params){
+            return \Elasticsearch\Client::get($params);
+        }
+        
+        /**
+         * $params['id']             = (string) The document ID (Required)
+         *        ['index']          = (string) The name of the index (Required)
+         *        ['type']           = (string) The type of the document (use `_all` to fetch the first document matching the ID across all types) (Required)
+         *        ['ignore_missing'] = ??
+         *        ['parent']         = (string) The ID of the parent document
+         *        ['preference']     = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['realtime']       = (boolean) Specify whether to perform the operation in realtime or search mode
+         *        ['refresh']        = (boolean) Refresh the shard containing the document before performing the operation
+         *        ['routing']        = (string) Specific routing value
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function getSource($params){
+            return \Elasticsearch\Client::getSource($params);
+        }
+        
+        /**
+         * $params['id']           = (string) The document ID (Required)
+         *        ['index']        = (string) The name of the index (Required)
+         *        ['type']         = (string) The type of the document (Required)
+         *        ['consistency']  = (enum) Specific write consistency setting for the operation
+         *        ['parent']       = (string) ID of parent document
+         *        ['refresh']      = (boolean) Refresh the index after performing the operation
+         *        ['replication']  = (enum) Specific replication type
+         *        ['routing']      = (string) Specific routing value
+         *        ['timeout']      = (time) Explicit operation timeout
+         *        ['version_type'] = (enum) Specific version type
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function delete($params){
+            return \Elasticsearch\Client::delete($params);
+        }
+        
+        /**
+         * $params[''] @todo finish the rest of these params
+         *        ['ignore_unavailable'] = (bool) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+         *        ['allow_no_indices']   = (bool) Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+         *        ['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both.
+         *
+         * @param array $params
+         * @return array 
+         * @static 
+         */
+        public static function deleteByQuery($params = array()){
+            return \Elasticsearch\Client::deleteByQuery($params);
+        }
+        
+        /**
+         * $params['index']              = (list) A comma-separated list of indices to restrict the results
+         *        ['type']               = (list) A comma-separated list of types to restrict the results
+         *        ['min_score']          = (number) Include only documents with a specific `_score` value in the result
+         *        ['preference']         = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['routing']            = (string) Specific routing value
+         *        ['source']             = (string) The URL-encoded query definition (instead of using the request body)
+         *        ['body']               = (array) A query to restrict the results (optional)
+         *        ['ignore_unavailable'] = (bool) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+         *        ['allow_no_indices']   = (bool) Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+         *        ['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both.
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function count($params = array()){
+            return \Elasticsearch\Client::count($params);
+        }
+        
+        /**
+         * $params['index']              = (list) A comma-separated list of indices to restrict the results
+         *        ['type']               = (list) A comma-separated list of types to restrict the results
+         *        ['id']                 = (string) ID of document
+         *        ['ignore_unavailable'] = (boolean) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+         *        ['preference']         = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['routing']            = (string) Specific routing value
+         *        ['allow_no_indices']   = (boolean) Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+         *        ['body']               = (array) A query to restrict the results (optional)
+         *        ['ignore_unavailable'] = (bool) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+         *        ['percolate_index']    = (string) The index to count percolate the document into. Defaults to index.
+         * 
+         * ['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both.
+         *        ['version']            = (number) Explicit version number for concurrency control
+         *        ['version_type']       = (enum) Specific version type
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function countPercolate($params = array()){
+            return \Elasticsearch\Client::countPercolate($params);
+        }
+        
+        /**
+         * $params['index']        = (string) The name of the index with a registered percolator query (Required)
+         *        ['type']         = (string) The document type (Required)
+         *        ['prefer_local'] = (boolean) With `true`, specify that a local shard should be used if available, with `false`, use a random shard (default: true)
+         *        ['body']         = (array) The document (`doc`) to percolate against registered queries; optionally also a `query` to limit the percolation to specific registered queries
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function percolate($params){
+            return \Elasticsearch\Client::percolate($params);
+        }
+        
+        /**
+         * $params['index']              = (string) Default index for items which don't provide one
+         *        ['type']               = (string) Default document type for items which don't provide one
+         *        ['ignore_unavailable'] = (boolean) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+         *        ['allow_no_indices']   = (boolean) Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+         *        ['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both.
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function mpercolate($params = array()){
+            return \Elasticsearch\Client::mpercolate($params);
+        }
+        
+        /**
+         * $params['index']            = (string) Default index for items which don't provide one
+         *        ['type']             = (string) Default document type for items which don't provide one
+         *        ['term_statistics']  = (boolean) Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['field_statistics'] = (boolean) Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['fields']           = (list) A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['offsets']          = (boolean) Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['positions']        = (boolean) Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['payloads']         = (boolean) Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         * 
+         * ['preference']       = (string) Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         *        ['routing']          = (string) Specific routing value. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         *        ['parent']           = (string) Parent id of documents. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         *        ['realtime']         = (boolean) Specifies if request is real-time as opposed to near-real-time (default: true).
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function termvector($params = array()){
+            return \Elasticsearch\Client::termvector($params);
+        }
+        
+        /**
+         * $params['index']            = (string) Default index for items which don't provide one
+         *        ['type']             = (string) Default document type for items which don't provide one
+         *        ['ids']              = (list) A comma-separated list of documents ids. You must define ids as parameter or set \"ids\" or \"docs\" in the request body
+         *        ['term_statistics']  = (boolean) Specifies if total term frequency and document frequency should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['field_statistics'] = (boolean) Specifies if document count, sum of document frequencies and sum of total term frequencies should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['fields']           = (list) A comma-separated list of fields to return. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['offsets']          = (boolean) Specifies if term offsets should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['positions']        = (boolean) Specifies if term positions should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\"."
+         *        ['payloads']         = (boolean) Specifies if term payloads should be returned. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         * 
+         * ['preference']       = (string) Specify the node or shard the operation should be performed on (default: random) .Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         *        ['routing']          = (string) Specific routing value. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         *        ['parent']           = (string) Parent id of documents. Applies to all returned documents unless otherwise specified in body \"params\" or \"docs\".
+         *        ['realtime']         = (boolean) Specifies if request is real-time as opposed to near-real-time (default: true).
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function mtermvectors($params = array()){
+            return \Elasticsearch\Client::mtermvectors($params);
+        }
+        
+        /**
+         * $params['id']         = (string) The document ID (Required)
+         *        ['index']      = (string) The name of the index (Required)
+         *        ['type']       = (string) The type of the document (use `_all` to fetch the first document matching the ID across all types) (Required)
+         *        ['parent']     = (string) The ID of the parent document
+         *        ['preference'] = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['realtime']   = (boolean) Specify whether to perform the operation in realtime or search mode
+         *        ['refresh']    = (boolean) Refresh the shard containing the document before performing the operation
+         *        ['routing']    = (string) Specific routing value
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function exists($params){
+            return \Elasticsearch\Client::exists($params);
+        }
+        
+        /**
+         * $params['id']                     = (string) The document ID (Required)
+         *        ['index']                  = (string) The name of the index (Required)
+         *        ['type']                   = (string) The type of the document (use `_all` to fetch the first document matching the ID across all types) (Required)
+         *        ['boost_terms']            = (number) The boost factor
+         *        ['max_doc_freq']           = (number) The word occurrence frequency as count: words with higher occurrence in the corpus will be ignored
+         *        ['max_query_terms']        = (number) The maximum query terms to be included in the generated query
+         *        ['max_word_len']           = (number) The minimum length of the word: longer words will be ignored
+         *        ['min_doc_freq']           = (number) The word occurrence frequency as count: words with lower occurrence in the corpus will be ignored
+         *        ['min_term_freq']          = (number) The term frequency as percent: terms with lower occurrence in the source document will be ignored
+         *        ['min_word_len']           = (number) The minimum length of the word: shorter words will be ignored
+         *        ['mlt_fields']             = (list) Specific fields to perform the query against
+         *        ['percent_terms_to_match'] = (number) How many terms have to match in order to consider the document a match (default: 0.3)
+         *        ['routing']                = (string) Specific routing value
+         *        ['search_from']            = (number) The offset from which to return results
+         *        ['search_indices']         = (list) A comma-separated list of indices to perform the query against (default: the index containing the document)
+         *        ['search_query_hint']      = (string) The search query hint
+         *        ['search_scroll']          = (string) A scroll search request definition
+         *        ['search_size']            = (number) The number of documents to return (default: 10)
+         *        ['search_source']          = (string) A specific search request definition (instead of using the request body)
+         *        ['search_type']            = (string) Specific search type (eg. `dfs_then_fetch`, `count`, etc)
+         *        ['search_types']           = (list) A comma-separated list of types to perform the query against (default: the same type as the document)
+         *        ['stop_words']             = (list) A list of stop words to be ignored
+         *        ['body']                   = (array) A specific search request definition
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function mlt($params){
+            return \Elasticsearch\Client::mlt($params);
+        }
+        
+        /**
+         * $params['index']           = (string) The name of the index
+         *        ['type']            = (string) The type of the document
+         *        ['fields']          = (list) A comma-separated list of fields to return in the response
+         *        ['parent']          = (string) The ID of the parent document
+         *        ['preference']      = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['realtime']        = (boolean) Specify whether to perform the operation in realtime or search mode
+         *        ['refresh']         = (boolean) Refresh the shard containing the document before performing the operation
+         *        ['routing']         = (string) Specific routing value
+         *        ['body']            = (array) Document identifiers; can be either `docs` (containing full document information) or `ids` (when index and type is provided in the URL.
+         * 
+         * ['_source']         = (list) True or false to return the _source field or not, or a list of fields to return
+         *        ['_source_exclude'] = (list) A list of fields to exclude from the returned _source field
+         *        ['_source_include'] = (list) A list of fields to extract and return from the _source field
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function mget($params = array()){
+            return \Elasticsearch\Client::mget($params);
+        }
+        
+        /**
+         * $params['index']       = (list) A comma-separated list of index names to use as default
+         *        ['type']        = (list) A comma-separated list of document types to use as default
+         *        ['search_type'] = (enum) Search operation type
+         *        ['body']        = (array|string) The request definitions (metadata-search request definition pairs), separated by newlines
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function msearch($params = array()){
+            return \Elasticsearch\Client::msearch($params);
+        }
+        
+        /**
+         * $params['index']        = (string) The name of the index (Required)
+         *        ['type']         = (string) The type of the document (Required)
+         *        ['id']           = (string) Specific document ID (when the POST method is used)
+         *        ['consistency']  = (enum) Explicit write consistency setting for the operation
+         *        ['parent']       = (string) ID of the parent document
+         *        ['percolate']    = (string) Percolator queries to execute while indexing the document
+         *        ['refresh']      = (boolean) Refresh the index after performing the operation
+         *        ['replication']  = (enum) Specific replication type
+         *        ['routing']      = (string) Specific routing value
+         *        ['timeout']      = (time) Explicit operation timeout
+         *        ['timestamp']    = (time) Explicit timestamp for the document
+         *        ['ttl']          = (duration) Expiration time for the document
+         *        ['version']      = (number) Explicit version number for concurrency control
+         *        ['version_type'] = (enum) Specific version type
+         *        ['body']         = (array) The document
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function create($params){
+            return \Elasticsearch\Client::create($params);
+        }
+        
+        /**
+         * $params['index']       = (string) Default index for items which don't provide one
+         *        ['type']        = (string) Default document type for items which don't provide one
+         *        ['consistency'] = (enum) Explicit write consistency setting for the operation
+         *        ['refresh']     = (boolean) Refresh the index after performing the operation
+         *        ['replication'] = (enum) Explicitly set the replication type
+         *        ['body']        = (string) Default document type for items which don't provide one
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function bulk($params = array()){
+            return \Elasticsearch\Client::bulk($params);
+        }
+        
+        /**
+         * $params['index']        = (string) The name of the index (Required)
+         *        ['type']         = (string) The type of the document (Required)
+         *        ['id']           = (string) Specific document ID (when the POST method is used)
+         *        ['consistency']  = (enum) Explicit write consistency setting for the operation
+         *        ['op_type']      = (enum) Explicit operation type
+         *        ['parent']       = (string) ID of the parent document
+         *        ['percolate']    = (string) Percolator queries to execute while indexing the document
+         *        ['refresh']      = (boolean) Refresh the index after performing the operation
+         *        ['replication']  = (enum) Specific replication type
+         *        ['routing']      = (string) Specific routing value
+         *        ['timeout']      = (time) Explicit operation timeout
+         *        ['timestamp']    = (time) Explicit timestamp for the document
+         *        ['ttl']          = (duration) Expiration time for the document
+         *        ['version']      = (number) Explicit version number for concurrency control
+         *        ['version_type'] = (enum) Specific version type
+         *        ['body']         = (array) The document
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function index($params){
+            return \Elasticsearch\Client::index($params);
+        }
+        
+        /**
+         * $params['index']          = (list) A comma-separated list of index names to restrict the operation; use `_all` or empty string to perform the operation on all indices
+         *        ['ignore_indices'] = (enum) When performed on multiple indices, allows to ignore `missing` ones
+         *        ['preference']     = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['routing']        = (string) Specific routing value
+         *        ['source']         = (string) The URL-encoded request definition (instead of using request body)
+         *        ['body']           = (array) The request definition
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function suggest($params = array()){
+            return \Elasticsearch\Client::suggest($params);
+        }
+        
+        /**
+         * $params['id']                       = (string) The document ID (Required)
+         *        ['index']                    = (string) The name of the index (Required)
+         *        ['type']                     = (string) The type of the document (Required)
+         *        ['analyze_wildcard']         = (boolean) Specify whether wildcards and prefix queries in the query string query should be analyzed (default: false)
+         *        ['analyzer']                 = (string) The analyzer for the query string query
+         *        ['default_operator']         = (enum) The default operator for query string query (AND or OR)
+         *        ['df']                       = (string) The default field for query string query (default: _all)
+         *        ['fields']                   = (list) A comma-separated list of fields to return in the response
+         *        ['lenient']                  = (boolean) Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+         *        ['lowercase_expanded_terms'] = (boolean) Specify whether query terms should be lowercased
+         *        ['parent']                   = (string) The ID of the parent document
+         *        ['preference']               = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['q']                        = (string) Query in the Lucene query string syntax
+         *        ['routing']                  = (string) Specific routing value
+         *        ['source']                   = (string) The URL-encoded query definition (instead of using the request body)
+         *        ['_source']                  = (list) True or false to return the _source field or not, or a list of fields to return
+         *        ['_source_exclude']          = (list) A list of fields to exclude from the returned _source field
+         *        ['_source_include']          = (list) A list of fields to extract and return from the _source field
+         *        ['body']                     = (string) The URL-encoded query definition (instead of using the request body)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function explain($params){
+            return \Elasticsearch\Client::explain($params);
+        }
+        
+        /**
+         * $params['index']                    = (list) A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+         *        ['type']                     = (list) A comma-separated list of document types to search; leave empty to perform the operation on all types
+         *        ['analyzer']                 = (string) The analyzer to use for the query string
+         *        ['analyze_wildcard']         = (boolean) Specify whether wildcard and prefix queries should be analyzed (default: false)
+         *        ['default_operator']         = (enum) The default operator for query string query (AND or OR)
+         *        ['df']                       = (string) The field to use as default where no field prefix is given in the query string
+         *        ['explain']                  = (boolean) Specify whether to return detailed information about score computation as part of a hit
+         *        ['fields']                   = (list) A comma-separated list of fields to return as part of a hit
+         *        ['from']                     = (number) Starting offset (default: 0)
+         *        ['ignore_indices']           = (enum) When performed on multiple indices, allows to ignore `missing` ones
+         *        ['indices_boost']            = (list) Comma-separated list of index boosts
+         *        ['lenient']                  = (boolean) Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+         *        ['lowercase_expanded_terms'] = (boolean) Specify whether query terms should be lowercased
+         *        ['preference']               = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['q']                        = (string) Query in the Lucene query string syntax
+         *        ['routing']                  = (list) A comma-separated list of specific routing values
+         *        ['scroll']                   = (duration) Specify how long a consistent view of the index should be maintained for scrolled search
+         *        ['search_type']              = (enum) Search operation type
+         *        ['size']                     = (number) Number of hits to return (default: 10)
+         *        ['sort']                     = (list) A comma-separated list of <field>:<direction> pairs
+         *        ['source']                   = (string) The URL-encoded request definition using the Query DSL (instead of using request body)
+         *        ['_source']                  = (list) True or false to return the _source field or not, or a list of fields to return
+         *        ['_source_exclude']          = (list) A list of fields to exclude from the returned _source field
+         *        ['_source_include']          = (list) A list of fields to extract and return from the _source field
+         *        ['stats']                    = (list) Specific 'tag' of the request for logging and statistical purposes
+         *        ['suggest_field']            = (string) Specify which field to use for suggestions
+         *        ['suggest_mode']             = (enum) Specify suggest mode
+         *        ['suggest_size']             = (number) How many suggestions to return in response
+         *        ['suggest_text']             = (text) The source text for which the suggestions should be returned
+         *        ['timeout']                  = (time) Explicit operation timeout
+         *        ['version']                  = (boolean) Specify whether to return document version as part of a hit
+         *        ['body']                     = (array|string) The search definition using the Query DSL
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function search($params = array()){
+            return \Elasticsearch\Client::search($params);
+        }
+        
+        /**
+         * $params['index']              = (list) A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+         *        ['type']               = (list) A comma-separated list of document types to search; leave empty to perform the operation on all types
+         *        ['preference']         = (string) Specify the node or shard the operation should be performed on (default: random)
+         *        ['routing']            = (string) Specific routing value
+         *        ['local']              = (bool) Return local information, do not retrieve the state from master node (default: false)
+         *        ['ignore_unavailable'] = (bool) Whether specified concrete indices should be ignored when unavailable (missing or closed)
+         *        ['allow_no_indices']   = (bool) Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes `_all` string or when no indices have been specified)
+         *        ['expand_wildcards']   = (enum) Whether to expand wildcard expression to concrete indices that are open, closed or both.
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function searchShards($params = array()){
+            return \Elasticsearch\Client::searchShards($params);
+        }
+        
+        /**
+         * $params['index']                    = (list) A comma-separated list of index names to search; use `_all` or empty string to perform the operation on all indices
+         *        ['type']                     = (list) A comma-separated list of document types to search; leave empty to perform the operation on all types
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function searchTemplate($params = array()){
+            return \Elasticsearch\Client::searchTemplate($params);
+        }
+        
+        /**
+         * $params['scroll_id'] = (string) The scroll ID for scrolled search
+         *        ['scroll']    = (duration) Specify how long a consistent view of the index should be maintained for scrolled search
+         *        ['body']      = (string) The scroll ID for scrolled search
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function scroll($params = array()){
+            return \Elasticsearch\Client::scroll($params);
+        }
+        
+        /**
+         * $params['scroll_id'] = (string) The scroll ID for scrolled search
+         *        ['scroll']    = (duration) Specify how long a consistent view of the index should be maintained for scrolled search
+         *        ['body']      = (string) The scroll ID for scrolled search
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function clearScroll($params = array()){
+            return \Elasticsearch\Client::clearScroll($params);
+        }
+        
+        /**
+         * $params['id']                = (string) Document ID (Required)
+         *        ['index']             = (string) The name of the index (Required)
+         *        ['type']              = (string) The type of the document (Required)
+         *        ['consistency']       = (enum) Explicit write consistency setting for the operation
+         *        ['fields']            = (list) A comma-separated list of fields to return in the response
+         *        ['lang']              = (string) The script language (default: mvel)
+         *        ['parent']            = (string) ID of the parent document
+         *        ['percolate']         = (string) Perform percolation during the operation; use specific registered query name, attribute, or wildcard
+         *        ['refresh']           = (boolean) Refresh the index after performing the operation
+         *        ['replication']       = (enum) Specific replication type
+         *        ['retry_on_conflict'] = (number) Specify how many times should the operation be retried when a conflict occurs (default: 0)
+         *        ['routing']           = (string) Specific routing value
+         *        ['script']            = () The URL-encoded script definition (instead of using request body)
+         *        ['timeout']           = (time) Explicit operation timeout
+         *        ['timestamp']         = (time) Explicit timestamp for the document
+         *        ['ttl']               = (duration) Expiration time for the document
+         *        ['version_type']      = (number) Explicit version number for concurrency control
+         *        ['body']              = (array) The request definition using either `script` or partial `doc`
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function update($params){
+            return \Elasticsearch\Client::update($params);
+        }
+        
+        /**
+         * $params['id']   = (string) The script ID (Required)
+         *        ['lang'] = (string) The script language (Required)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function getScript($params){
+            return \Elasticsearch\Client::getScript($params);
+        }
+        
+        /**
+         * $params['id']   = (string) The script ID (Required)
+         *        ['lang'] = (string) The script language (Required)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function deleteScript($params){
+            return \Elasticsearch\Client::deleteScript($params);
+        }
+        
+        /**
+         * $params['id']   = (string) The script ID (Required)
+         *        ['lang'] = (string) The script language (Required)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function putScript($params){
+            return \Elasticsearch\Client::putScript($params);
+        }
+        
+        /**
+         * $params['id']   = (string) The search template ID (Required)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function getTemplate($params){
+            return \Elasticsearch\Client::getTemplate($params);
+        }
+        
+        /**
+         * $params['id']   = (string) The search template ID (Required)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function deleteTemplate($params){
+            return \Elasticsearch\Client::deleteTemplate($params);
+        }
+        
+        /**
+         * $params['id']   = (string) The search template ID (Required)
+         *
+         * @param $params array Associative array of parameters
+         * @return array 
+         * @static 
+         */
+        public static function putTemplate($params){
+            return \Elasticsearch\Client::putTemplate($params);
+        }
+        
+        /**
+         * Operate on the Indices Namespace of commands
+         *
+         * @return \Elasticsearch\IndicesNamespace 
+         * @static 
+         */
+        public static function indices(){
+            return \Elasticsearch\Client::indices();
+        }
+        
+        /**
+         * Operate on the Cluster namespace of commands
+         *
+         * @return \Elasticsearch\ClusterNamespace 
+         * @static 
+         */
+        public static function cluster(){
+            return \Elasticsearch\Client::cluster();
+        }
+        
+        /**
+         * Operate on the Nodes namespace of commands
+         *
+         * @return \Elasticsearch\NodesNamespace 
+         * @static 
+         */
+        public static function nodes(){
+            return \Elasticsearch\Client::nodes();
+        }
+        
+        /**
+         * Operate on the Snapshot namespace of commands
+         *
+         * @return \Elasticsearch\SnapshotNamespace 
+         * @static 
+         */
+        public static function snapshot(){
+            return \Elasticsearch\Client::snapshot();
+        }
+        
+        /**
+         * Operate on the Cat namespace of commands
+         *
+         * @return \Elasticsearch\CatNamespace 
+         * @static 
+         */
+        public static function cat(){
+            return \Elasticsearch\Client::cat();
+        }
+        
+        /**
+         * 
+         *
+         * @param array $params
+         * @param string $arg
+         * @return null|mixed 
+         * @static 
+         */
+        public static function extractArgument($params, $arg){
+            return \Elasticsearch\Client::extractArgument($params, $arg);
+        }
+        
+    }
+
+
+    class Salesforce extends \Davispeixoto\LaravelSalesforce\Facades\Salesforce{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function create($sObjects, $type){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::create($sObjects, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function update($sObjects, $type, $assignment_header = null, $mru_header = null){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::update($sObjects, $type, $assignment_header, $mru_header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function upsert($ext_Id, $sObjects, $type = 'Contact'){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::upsert($ext_Id, $sObjects, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function merge($mergeRequest, $type){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::merge($mergeRequest, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getNamespace(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getNamespace();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function printDebugInfo(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::printDebugInfo();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function createConnection($wsdl, $proxy = null, $soap_options = array()){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::createConnection($wsdl, $proxy, $soap_options);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setCallOptions($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setCallOptions($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function login($username, $password){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::login($username, $password);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function logout(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::logout();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function invalidateSessions(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::invalidateSessions();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setEndpoint($location){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setEndpoint($location);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setAssignmentRuleHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setAssignmentRuleHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setEmailHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setEmailHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setLoginScopeHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setLoginScopeHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setMruHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setMruHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setSessionHeader($id){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setSessionHeader($id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setUserTerritoryDeleteHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setUserTerritoryDeleteHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setQueryOptions($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setQueryOptions($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setAllowFieldTruncationHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setAllowFieldTruncationHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setLocaleOptions($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setLocaleOptions($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setPackageVersionHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setPackageVersionHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getSessionId(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getSessionId();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLocation(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLocation();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getConnection(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getConnection();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getFunctions(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getFunctions();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getTypes(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getTypes();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastRequest(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastRequest();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastRequestHeaders(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastRequestHeaders();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastResponse(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastResponse();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastResponseHeaders(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastResponseHeaders();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function sendSingleEmail($request){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::sendSingleEmail($request);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function sendMassEmail($request){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::sendMassEmail($request);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function convertLead($leadConverts){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::convertLead($leadConverts);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function delete($ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::delete($ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function undelete($ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::undelete($ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function emptyRecycleBin($ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::emptyRecycleBin($ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function processSubmitRequest($processRequestArray){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::processSubmitRequest($processRequestArray);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function processWorkitemRequest($processRequestArray){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::processWorkitemRequest($processRequestArray);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeGlobal(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeGlobal();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeLayout($type, $recordTypeIds = null){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeLayout($type, $recordTypeIds);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeSObject($type){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeSObject($type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeSObjects($arrayOfTypes){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeSObjects($arrayOfTypes);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeTabs(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeTabs();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeDataCategoryGroups($sObjectType){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeDataCategoryGroups($sObjectType);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeDataCategoryGroupStructures($pairs, $topCategoriesOnly){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeDataCategoryGroupStructures($pairs, $topCategoriesOnly);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getDeleted($type, $startDate, $endDate){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getDeleted($type, $startDate, $endDate);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getUpdated($type, $startDate, $endDate){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getUpdated($type, $startDate, $endDate);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function query($query){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::query($query);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function queryMore($queryLocator){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::queryMore($queryLocator);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function queryAll($query, $queryOptions = null){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::queryAll($query, $queryOptions);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function retrieve($fieldList, $sObjectType, $ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::retrieve($fieldList, $sObjectType, $ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function search($searchString){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::search($searchString);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getServerTimestamp(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getServerTimestamp();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getUserInfo(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getUserInfo();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setPassword($userId, $password){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setPassword($userId, $password);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function resetPassword($userId){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::resetPassword($userId);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function dump(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::dump();
+        }
+        
+    }
+
+
+    class SF extends \Davispeixoto\LaravelSalesforce\Facades\Salesforce{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function create($sObjects, $type){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::create($sObjects, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function update($sObjects, $type, $assignment_header = null, $mru_header = null){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::update($sObjects, $type, $assignment_header, $mru_header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function upsert($ext_Id, $sObjects, $type = 'Contact'){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::upsert($ext_Id, $sObjects, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function merge($mergeRequest, $type){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::merge($mergeRequest, $type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getNamespace(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getNamespace();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function printDebugInfo(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::printDebugInfo();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function createConnection($wsdl, $proxy = null, $soap_options = array()){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::createConnection($wsdl, $proxy, $soap_options);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setCallOptions($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setCallOptions($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function login($username, $password){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::login($username, $password);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function logout(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::logout();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function invalidateSessions(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::invalidateSessions();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setEndpoint($location){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setEndpoint($location);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setAssignmentRuleHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setAssignmentRuleHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setEmailHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setEmailHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setLoginScopeHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setLoginScopeHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setMruHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setMruHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setSessionHeader($id){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setSessionHeader($id);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setUserTerritoryDeleteHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setUserTerritoryDeleteHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setQueryOptions($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setQueryOptions($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setAllowFieldTruncationHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setAllowFieldTruncationHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setLocaleOptions($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setLocaleOptions($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setPackageVersionHeader($header){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setPackageVersionHeader($header);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getSessionId(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getSessionId();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLocation(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLocation();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getConnection(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getConnection();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getFunctions(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getFunctions();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getTypes(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getTypes();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastRequest(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastRequest();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastRequestHeaders(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastRequestHeaders();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastResponse(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastResponse();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getLastResponseHeaders(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getLastResponseHeaders();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function sendSingleEmail($request){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::sendSingleEmail($request);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function sendMassEmail($request){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::sendMassEmail($request);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function convertLead($leadConverts){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::convertLead($leadConverts);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function delete($ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::delete($ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function undelete($ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::undelete($ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function emptyRecycleBin($ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::emptyRecycleBin($ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function processSubmitRequest($processRequestArray){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::processSubmitRequest($processRequestArray);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function processWorkitemRequest($processRequestArray){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::processWorkitemRequest($processRequestArray);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeGlobal(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeGlobal();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeLayout($type, $recordTypeIds = null){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeLayout($type, $recordTypeIds);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeSObject($type){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeSObject($type);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeSObjects($arrayOfTypes){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeSObjects($arrayOfTypes);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeTabs(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeTabs();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeDataCategoryGroups($sObjectType){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeDataCategoryGroups($sObjectType);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function describeDataCategoryGroupStructures($pairs, $topCategoriesOnly){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::describeDataCategoryGroupStructures($pairs, $topCategoriesOnly);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getDeleted($type, $startDate, $endDate){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getDeleted($type, $startDate, $endDate);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getUpdated($type, $startDate, $endDate){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getUpdated($type, $startDate, $endDate);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function query($query){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::query($query);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function queryMore($queryLocator){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::queryMore($queryLocator);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function queryAll($query, $queryOptions = null){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::queryAll($query, $queryOptions);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function retrieve($fieldList, $sObjectType, $ids){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::retrieve($fieldList, $sObjectType, $ids);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function search($searchString){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::search($searchString);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getServerTimestamp(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getServerTimestamp();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function getUserInfo(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::getUserInfo();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function setPassword($userId, $password){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::setPassword($userId, $password);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function resetPassword($userId){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::resetPassword($userId);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function dump(){
+            return \Davispeixoto\LaravelSalesforce\Salesforce::dump();
+        }
+        
+    }
+
+
+    class Cron extends \Liebig\Cron\Facades\Cron{
+        
+        /**
+         * Add a cron job
+         * 
+         * Expression definition:
+         * 
+         *       *    *    *    *    *    *
+         *       -    -    -    -    -    -
+         *       |    |    |    |    |    |
+         *       |    |    |    |    |    + year [optional]
+         *       |    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)
+         *       |    |    |    +---------- month (1 - 12)
+         *       |    |    +--------------- day of month (1 - 31)
+         *       |    +-------------------- hour (0 - 23)
+         *       +------------------------- min (0 - 59)
+         *
+         * @static 
+         * @param string $name The name for the cron job - has to be unique
+         * @param string $expression The cron job expression (e.g. for every minute: '* * * * *')
+         * @param callable $function The anonymous function which will be executed
+         * @param bool $isEnabled optional If the cron job should be enabled or disabled - the standard configuration is enabled
+         * @throws \InvalidArgumentException if one of the parameters has the wrong data type, is incorrect or is not set
+         * @static 
+         */
+        public static function add($name, $expression, $function, $isEnabled = true){
+            return \Liebig\Cron\Cron::add($name, $expression, $function, $isEnabled);
+        }
+        
+        /**
+         * Remove a cron job by name
+         *
+         * @static 
+         * @param string $name The name of the cron job which should be removed from execution
+         * @return bool Return true if a cron job with the given name was found and was successfully removed or return false if no job with the given name was found
+         * @static 
+         */
+        public static function remove($name){
+            return \Liebig\Cron\Cron::remove($name);
+        }
+        
+        /**
+         * Run the cron jobs
+         * This method checks and runs all the defined cron jobs at the right time
+         * This method (route) should be called automatically by a server or service
+         *
+         * @static 
+         * @param bool $checkRundateOnce optional When we check if a cronjob is due do we take into account the time when the run function was called ($checkRundateOnce = true) or do we take into account the time when each individual cronjob is executed ($checkRundateOnce = false) - default value is true
+         * @return array Return an array with the rundate, runtime, errors and a result cron job array (with name, function return value, runtime in seconds)
+         * @static 
+         */
+        public static function run($checkRundateOnce = true){
+            return \Liebig\Cron\Cron::run($checkRundateOnce);
+        }
+        
+        /**
+         * Add a custom Monolog logger object
+         *
+         * @static 
+         * @param \Monolog\Logger $logger optional The Monolog logger object which will be used for cron logging, if this parameter is null the logger will be removed - default value is null
+         * @static 
+         */
+        public static function setLogger($logger = null){
+            return \Liebig\Cron\Cron::setLogger($logger);
+        }
+        
+        /**
+         * Get the Monolog logger object
+         *
+         * @static 
+         * @return \Monolog\Logger|null Return the set logger object or null if no logger is set
+         * @static 
+         */
+        public static function getLogger(){
+            return \Liebig\Cron\Cron::getLogger();
+        }
+        
+        /**
+         * Enable or disable Laravels build in logging
+         *
+         * @static 
+         * @param bool $bool Set to enable or disable Laravels logging
+         * @throws \InvalidArgumentException if the $bool function paramter is not a boolean
+         * @static 
+         */
+        public static function setLaravelLogging($bool){
+            return \Liebig\Cron\Cron::setLaravelLogging($bool);
+        }
+        
+        /**
+         * Is Laravels build in logging enabled or disabled
+         *
+         * @static 
+         * @return bool Return boolean which indicates if Laravels logging is enabled or disabled
+         * @throws \UnexpectedValueException if the cron::laravelLogging config value is not a boolean or NULL
+         * @static 
+         */
+        public static function isLaravelLogging(){
+            return \Liebig\Cron\Cron::isLaravelLogging();
+        }
+        
+        /**
+         * Enable or disable database logging
+         *
+         * @static 
+         * @param bool $bool Set to enable or disable database logging
+         * @throws \InvalidArgumentException if the $bool function paramter is not a boolean
+         * @static 
+         */
+        public static function setDatabaseLogging($bool){
+            return \Liebig\Cron\Cron::setDatabaseLogging($bool);
+        }
+        
+        /**
+         * Is logging to database enabled or disabled
+         *
+         * @static 
+         * @return boolean Return boolean which indicates if database logging is enabled or disabled
+         * @throws \UnexpectedValueException if the cron::databaseLogging config value is not a boolean
+         * @static 
+         */
+        public static function isDatabaseLogging(){
+            return \Liebig\Cron\Cron::isDatabaseLogging();
+        }
+        
+        /**
+         * Enable or disable logging error jobs only to database
+         * NOTE: This works only if database logging is enabled
+         *
+         * @static 
+         * @param bool $bool Set to enable or disable logging error jobs only
+         * @throws \InvalidArgumentException if the $bool function paramter is not a boolean
+         * @static 
+         */
+        public static function setLogOnlyErrorJobsToDatabase($bool){
+            return \Liebig\Cron\Cron::setLogOnlyErrorJobsToDatabase($bool);
+        }
+        
+        /**
+         * Check if log error jobs to database only is enabled or disabled
+         *
+         * @return bool Return boolean which indicates if logging only error jobs to database is enabled or disabled
+         * @throws \UnexpectedValueException if the cron::logOnlyErrorJobsToDatabase config value is not a boolean
+         * @static 
+         */
+        public static function isLogOnlyErrorJobsToDatabase(){
+            return \Liebig\Cron\Cron::isLogOnlyErrorJobsToDatabase();
+        }
+        
+        /**
+         * Reset the Cron class
+         * Remove the cron jobs array and the logger object
+         *
+         * @static 
+         * @static 
+         */
+        public static function reset(){
+            return \Liebig\Cron\Cron::reset();
+        }
+        
+        /**
+         * Set the run interval - the run interval is the time between two cron job route calls
+         *
+         * @static 
+         * @param int $minutes Set the interval in minutes
+         * @throws \InvalidArgumentException if the $minutes function paramter is not an integer
+         * @static 
+         */
+        public static function setRunInterval($minutes){
+            return \Liebig\Cron\Cron::setRunInterval($minutes);
+        }
+        
+        /**
+         * Get the current run interval value
+         *
+         * @return int|null Return the current interval value in minutes or NULL if there is no value set
+         * @throws \UnexpectedValueException if the cron::runInterval config value is not an integer or NULL
+         * @static 
+         */
+        public static function getRunInterval(){
+            return \Liebig\Cron\Cron::getRunInterval();
+        }
+        
+        /**
+         * Set the delete time of old database entries in hours
+         *
+         * @static 
+         * @param int $hours optional Set the delete time in hours, if this value is 0 the delete old database entries function will be disabled - default value is 0
+         * @throws \InvalidArgumentException if the $hours function paramter is not an integer
+         * @static 
+         */
+        public static function setDeleteDatabaseEntriesAfter($hours = 0){
+            return \Liebig\Cron\Cron::setDeleteDatabaseEntriesAfter($hours);
+        }
+        
+        /**
+         * Get the current delete time value in hours for old database entries
+         *
+         * @return int|null Return the current delete time value in hours or NULL if no value was set
+         * @throws \UnexpectedValueException if the cron::deleteDatabaseEntriesAfter config value is not an integer or NULL
+         * @static 
+         */
+        public static function getDeleteDatabaseEntriesAfter(){
+            return \Liebig\Cron\Cron::getDeleteDatabaseEntriesAfter();
+        }
+        
+        /**
+         * Enable a job by job name
+         *
+         * @static 
+         * @param string $jobname The name of the job which should be enabled
+         * @param bool $enable The trigger for enable (true) or disable (false) the job with the given name
+         * @return bool Return true if job was enabled successfully or false if no job with the $jobname parameter was found
+         * @throws \InvalidArgumentException if the $enable function paramter is not a boolean
+         * @static 
+         */
+        public static function setEnableJob($jobname, $enable = true){
+            return \Liebig\Cron\Cron::setEnableJob($jobname, $enable);
+        }
+        
+        /**
+         * Disable a job by job name
+         *
+         * @static 
+         * @param String $jobname The name of the job which should be disabled
+         * @return bool Return true if job was disabled successfully or false if no job with the $jobname parameter was found
+         * @static 
+         */
+        public static function setDisableJob($jobname){
+            return \Liebig\Cron\Cron::setDisableJob($jobname);
+        }
+        
+        /**
+         * Is the given job by name enabled or disabled
+         *
+         * @static 
+         * @param String $jobname The name of the job which should be checked
+         * @return bool|null Return boolean if job is enabled (true) or disabled (false) or null if no job with the given name is found
+         * @static 
+         */
+        public static function isJobEnabled($jobname){
+            return \Liebig\Cron\Cron::isJobEnabled($jobname);
+        }
+        
+        /**
+         * Enable prevent job overlapping
+         *
+         * @static 
+         * @static 
+         */
+        public static function setEnablePreventOverlapping(){
+            return \Liebig\Cron\Cron::setEnablePreventOverlapping();
+        }
+        
+        /**
+         * Disable prevent job overlapping
+         *
+         * @static 
+         * @static 
+         */
+        public static function setDisablePreventOverlapping(){
+            return \Liebig\Cron\Cron::setDisablePreventOverlapping();
+        }
+        
+        /**
+         * Is prevent job overlapping enabled or disabled
+         *
+         * @static 
+         * @return bool Return boolean if prevent job overlapping is enabled (true) or disabled (false)
+         * @static 
+         */
+        public static function isPreventOverlapping(){
+            return \Liebig\Cron\Cron::isPreventOverlapping();
+        }
+        
+        /**
+         * Enable the Cron run in time check
+         *
+         * @static 
+         * @static 
+         */
+        public static function setEnableInTimeCheck(){
+            return \Liebig\Cron\Cron::setEnableInTimeCheck();
+        }
+        
+        /**
+         * Disable the Cron run in time check
+         *
+         * @static 
+         * @static 
+         */
+        public static function setDisableInTimeCheck(){
+            return \Liebig\Cron\Cron::setDisableInTimeCheck();
+        }
+        
+        /**
+         * Is the Cron run in time check enabled or disabled
+         *
+         * @static 
+         * @return bool Return boolean if the Cron run in time check is enabled (true) or disabled (false)
+         * @static 
+         */
+        public static function isInTimeCheck(){
+            return \Liebig\Cron\Cron::isInTimeCheck();
+        }
+        
+        /**
+         * Get added Cron jobs as array
+         *
+         * @static 
+         * @return array Return array of the added Cron jobs
+         * @static 
+         */
+        public static function getCronJobs(){
+            return \Liebig\Cron\Cron::getCronJobs();
         }
         
     }
