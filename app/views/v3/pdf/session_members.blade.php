@@ -7,7 +7,7 @@
 		<h3>{{ date('d-M-Y H:ia', strtotime($evercisesession->date_time)) }}</h3>
 		<div class="pdf-table">
 		<?php $bookingCodes = [] ?>
-			@foreach ($sessionmembers as $key => $user)
+        @foreach ($sessionmembers as $key => $user)
 			@if (! isset($bookingCodes[$user['pivot']['transaction_id'].'_'.$user['pivot']['evercisesession_id']]) )
 				<div class="pdf-row">
 					@if($user['image'] != null)
@@ -29,7 +29,7 @@
 					</div>
 				</div>
 			@endif
-			@endforeach
+		@endforeach
 		</div>
 
 			

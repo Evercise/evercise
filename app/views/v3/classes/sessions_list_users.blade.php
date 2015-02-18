@@ -8,12 +8,26 @@
       </div>
       <div class="modal-body text-left">
             <ul class="list-group">
-               @foreach($sessionmembers as $s)
-                   <li class="list-group-item">
-                        <h4 class="list-group-item-heading">{{ $s->first_name }}  {{ $s->last_name }}</h4>
-                        <p class="list-group-item-text">{{ $s->email }}</p>
-                    </li>
 
+
+               <?php $bookingCodes = [] ?>
+               @foreach ($sessionmembers as $key => $user)
+                   @if (! isset($bookingCodes[$user['pivot']['transaction_id'].'_'.$user['pivot']['evercisesession_id']]) )
+                       <li class="list-group-item">
+                           <h4>{{ $user->first_name }}  {{ $user->last_name }}</h4>
+                           <?php
+                           $transaction = \Transactions::where('id', $user['pivot']['transaction_id'])->first();
+                           $bookingCodes[$user['pivot']['transaction_id'].'_'.$user['pivot']['evercisesession_id']] = $transaction->makeBookingHashBySession($user['pivot']['evercisesession_id']);
+                           $countCodes = 0;
+                           ?>
+                           <p>Tickets bought: {{ count($bookingCodes[$user['pivot']['transaction_id'].'_'.$user['pivot']['evercisesession_id']]) }}</p>
+                           <p>Booking Codes:
+                               @foreach($bookingCodes[$user['pivot']['transaction_id'].'_'.$user['pivot']['evercisesession_id']] as $code)
+                                   {{ $code . ( $countCodes++ >= count($bookingCodes[$user['pivot']['transaction_id'].'_'.$user['pivot']['evercisesession_id']]) ? '' : ',' ) }}
+                               @endforeach
+                           </p>
+                       </li>
+                   @endif
                @endforeach
             </ul>
       </div>
