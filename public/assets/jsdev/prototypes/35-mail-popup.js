@@ -1,5 +1,5 @@
 function MailPopup(link){
-    console.log(MAILPOPUP);
+    console.log('MAILPOPUP');
     this.link = link;
     this.target = '';
     this.form = '';
