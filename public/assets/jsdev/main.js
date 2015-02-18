@@ -225,6 +225,7 @@ $(function(){
         new categoryAutoComplete(this);
     })
 
+
     if (navigator.geolocation) {
         new myLocation();
     }

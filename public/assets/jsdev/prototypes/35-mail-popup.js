@@ -81,7 +81,7 @@ MailPopup.prototype = {
             },
 
             success: function (data) {
-                self.form.find("input[type='submit']").before('<strong id="successfull-mail" class="text-primary">Message sent successfully!</strong><br>');
+                self.form.find("input[type='submit']").after('<strong id="successfull-mail" class="text-primary">Message sent successfully!</strong><br>');
                 setTimeout(function(){
                     $('.modal').modal('hide');
                 },1500);
