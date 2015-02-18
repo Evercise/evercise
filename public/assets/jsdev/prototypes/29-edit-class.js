@@ -47,5 +47,8 @@ EditClass.prototype = {
         new UpdateSession($('.update-session'));
         new RemoveSession($('.remove-session'));
         new GetMembers($('.get-members'));
+        $('.mail-popup').exists(function(){
+            new MailPopup(this);
+        })
     }
 }
