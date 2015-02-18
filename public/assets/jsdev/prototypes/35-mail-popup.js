@@ -19,9 +19,9 @@ function MailPopup(link){
 MailPopup.prototype = {
     constructor: MailPopup,
     addListener : function(){
-        $(document).on('click', '.mail-popup',  $.proxy(this.getPopup, this));
+        $(document).on('click', '.mail-popup',  $.proxy(this.grabPopup, this));
     },
-    getPopup: function(e){
+    grabPopup: function(e){
         console.log(e);
         e.preventDefault();
         this.link = $(e.target);
@@ -29,7 +29,6 @@ MailPopup.prototype = {
         this.target = $(e.target).attr('href');
         this.link.addClass('icon-loading');
         this.ajaxGet();
-
     },
     ajaxGet: function(){
         var self = this;
