@@ -46,8 +46,8 @@
                                 <a class="btn btn-block btn-default" href="{{ URL::route('class.show', [$evercisegroup->slug]) }}">Preview</a>
                             </div>
                             <div class="col-sm-4">
-                                <button type="submit" id="submit-{{$evercisegroup->id}}" class="btn btn-default btn-block btn-toggle-down">Edit</button>
-                                {{ HTML::link('#myClassInfo-'.$evercisegroup->id , 'Done', [ 'class' => 'btn btn-default btn-block btn-toggle-up hide toggle-switch' , 'data-toggle' =>'collapse', 'id' => 'infoToggle-'.$evercisegroup->id , 'data-removeclass'=>'btn-toggle-up' ,  'data-switchclass' => 'btn-toggle-down' , 'data-switchtext' => 'Edit']) }}
+                                <button type="submit" id="submit-{{$evercisegroup->id}}" class="btn btn-default btn-block btn-toggle-down">Manage</button>
+                                {{ HTML::link('#myClassInfo-'.$evercisegroup->id , 'Done', [ 'class' => 'btn btn-default btn-block btn-toggle-up hide toggle-switch' , 'data-toggle' =>'collapse', 'id' => 'infoToggle-'.$evercisegroup->id , 'data-removeclass'=>'btn-toggle-up' ,  'data-switchclass' => 'btn-toggle-down' , 'data-switchtext' => 'Manage']) }}
                             </div>
 
                         @endif

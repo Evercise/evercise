@@ -25,12 +25,11 @@ class SendEmails extends Command {
 	/**
 	 * Create a new command instance.
 	 *
-	 * @return void
 	 */
 	public function __construct()
 	{
         ini_set('max_execution_time', 200);
-        
+
 
 		parent::__construct();
 
@@ -47,8 +46,10 @@ class SendEmails extends Command {
 	 */
 	public function fire()
 	{
-		$this->remindSessions();
+		$output = $this->remindSessions();
 		$this->whyNotReview();
+
+        return $output;
 	}
 
 
@@ -190,6 +191,8 @@ class SendEmails extends Command {
 		{
 			$this->info('No sessions found which have not already sent out emails');
 		}
+
+        return 'sessions mailed: '.$numSessions;
 	}
 
 	/**
