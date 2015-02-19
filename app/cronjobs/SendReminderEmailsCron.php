@@ -5,7 +5,7 @@ use Illuminate\Log\Writer;
 use Illuminate\Console\Application as Artisan;
 
 
-class SendExtraEmails
+class SendReminderEmailsCron
 {
 
     private $log;
@@ -23,9 +23,12 @@ class SendExtraEmails
 
     function run()
     {
-        $this->log->info('Extra Email Command has Run!');
+        $this->log->info('Reminder Email Command has Run!');
 
-        $this->artisan->call('email:extra');
+        //$output = new BufferedOutput;
 
+        $this->artisan->call('email:remind');
+
+        //return $output->fetch();
     }
 }
