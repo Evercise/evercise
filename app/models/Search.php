@@ -287,6 +287,21 @@ class Search
 
             $row->_source->futuresessions[$key]->date_time = $date->format('M jS, g:ia');
 
+            $this->date_from = $this->searchmodel->getSearchDate($params);
+            $this->date_to = $this->searchmodel->getSearchEndDate($params);
+
+
+            if ($date->format('Y-m-d') >= $this->date_from && $date->format('Y-m-d') <= $this->date_to) {
+
+                if(!isset($dates_available[$date->format('Y-m-d')])) {
+                    $dates_available[$date->format('Y-m-d')] = [];
+                }
+                $dates_available[$date->format('Y-m-d')][$date->format('g:ia')] = $s->id;
+            }
+
+
+
+            /**
             if (!empty($params['date'])) {
                 if ($params['date'] == $date->format('Y-m-d') && !isset($times[$date->format('g:ia')])) {
                     $times[$date->format('g:ia')] = $s->id;
@@ -300,12 +315,13 @@ class Search
                 }
 
             }
+            */
 
 
         }
 
-        $row->_source->times = $times;
-        $row->_source->dates = array_keys($dates_available);
+
+        $row->_source->dates = $dates_available;
 
         /** Add Lat and Lon to the venue */
         if (!empty($row->_source->venue->location->geohash) && $area) {
