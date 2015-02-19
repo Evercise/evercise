@@ -24,7 +24,6 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
-        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -59,6 +58,7 @@ if(typeof angular != 'undefined') {
                 anchorText: [-14,9]
             }
         ];
+
         $scope.clusterOptions = {
             title: 'click to expand',
             gridSize: 5,
@@ -66,6 +66,7 @@ if(typeof angular != 'undefined') {
             styles: $scope.clusterStyles,
             zoomOnClick: false
         };
+
 
         $scope.markerEvents = {
             click: function (marker,e,model) {
@@ -108,7 +109,6 @@ if(typeof angular != 'undefined') {
                 var newlatlng = new google.maps.LatLng(center.lat(), center.lng());
 
                 map.panTo(newlatlng);
-
 
                 var svi = [];
 
@@ -223,7 +223,7 @@ if(typeof angular != 'undefined') {
         $scope.mapEvents = {
             // any map events go here
             dragend : function () {
-                ChangedBounds();
+                //ChangedBounds();
             },
             zoom_changed : function(){
                 //ChangedBounds();
@@ -255,20 +255,54 @@ if(typeof angular != 'undefined') {
 
         shapeEverciseGroups = function(){
             var groups = [];
-            angular.forEach($scope.results.results.hits, function(v,k){
+            var venue = [];
+            for(var i = 0; i < $scope.results.results.hits.length; i++){
+                var v = $scope.results.results.hits[i];
                 var arr = $.grep($scope.everciseGroups, function(item, index) {
                     return item.id != v.id;
                 });
                 var icon = '/assets/img/icon_default_small_pin_grey.png';
-                if(v.dates.indexOf($scope.selectedDate) != -1)
-                {
-                    icon = '/assets/img/icon_default_small_pin.png';
-                    console.log('index of');
-                }
+                var notFound = true;
+                var active = false;
+                var isAVenue = false;
+                angular.forEach(v.dates, function(value,date){
+                    if(notFound){
+                        if(date == $scope.activeDate){
+                            icon = '/assets/img/icon_default_small_pin.png';
+                            active = true;
+                            notFound == false;
+                        }
+                    }
+                })
+                var times = $.map(v.dates, function(value, index) {
+                    if(index == $scope.activeDate){
+                        return [value];
+                    }
+                });
                 /*
-                if($.inArray($scope.selectedDate, v.dates)!==-1){
-                    console.log('in array');
+
+                if ($.inArray(v.venue.id, venue) !== -1)
+                {
+                    var dontCluster = false;
+                    var keepGoing = true;
+                    angular.forEach(v.dates, function(value,date){
+                        if(keepGoing) {
+                            if (date == $scope.activeDate) {
+                                dontCluster = true;
+                                keepGoing = false;
+                            }
+                        }
+                    })
+                    if(!dontCluster){
+                        continue;
+                    }
                 }
+
+                angular.forEach(v.dates, function(value,date) {
+                    if(date == $scope.activeDate) {
+                        venue.push(v.venue.id);
+                    }
+                })
                 */
                 if(arr){
                     groups.push({
@@ -282,17 +316,18 @@ if(typeof angular != 'undefined') {
                             latitude : v.venue.lat,
                             longitude : v.venue.lng
                         },
+                        active : active,
                         slug: v.slug,
                         remaining: v.futuresessions[0].remaining,
-                        times : v.times ,
+                        times : times[0] ,
                         price : v.default_price,
                         image : '/'+v.user.directory+'/preview_'+v.image
                     })
                 }
-            })
-
+            }
             return groups;
         }
+
 
 
         $scope.$watch(function () {
@@ -302,7 +337,13 @@ if(typeof angular != 'undefined') {
         })
 
 
-
+        $scope.isClassVisible = function(item){
+            if ($.inArray(item.id, $scope.selectedVenueIds) !== -1)
+            {
+                return true;
+            }
+            return item.active == true;
+        }
 
 
         // pan to
@@ -310,7 +351,6 @@ if(typeof angular != 'undefined') {
         var panToMarker = function(marker){
             var map = $scope.map.control.getGMap();
             var newlatlng = new google.maps.LatLng(marker.venue.latitude, marker.venue.longitude);
-
             map.panTo(newlatlng);
         }
 
@@ -350,6 +390,23 @@ if(typeof angular != 'undefined') {
         $scope.scrollDates = function(direction, e){
             e.preventDefault();
             $scope.scroll_clicked = true;
+            var date = new Date($scope.selectedDate);
+            var date = $scope.selectedDate,
+                values = date.split(/[^0-9]/),
+                year = parseInt(values[0], 10),
+                month = parseInt(values[1], 10) - 1, // Month is zero based, so subtract 1
+                day = parseInt(values[2], 10),
+                dt;
+            dt = new Date(year, month, day);
+            if(direction == 'right'){
+                dt.setDate(dt.getDate() + 7);
+            }
+            else{
+                dt.setDate(dt.getDate() - 7);
+            }
+            $scope.selectedDate = dt.getFullYear() + '-' + ('0' + (dt.getMonth() +1)).slice(-2) + '-' +  ('0' + dt.getDate()).slice(-2);
+            $scope.getData();
+            /*
             var par = $(e.target).parent();
             if($scope.width < 992){
                 var width = par.outerWidth() - ($('.date-picker-inline .scroll').outerWidth() * 2 );
@@ -371,6 +428,7 @@ if(typeof angular != 'undefined') {
                     'margin-left' : newMg+'px'
                 })
             }
+            */
             setTimeout(function() {
                 $scope.scroll_clicked = false;
             }, 500)
@@ -378,12 +436,14 @@ if(typeof angular != 'undefined') {
 
         // the selected date
         $scope.selectedDate = $scope.results.selected_date;
+        $scope.activeDate = $scope.results.selected_date;
 
         // date clicked
 
-        $scope.changeSelectedDate = function(e, date){
+        $scope.changeActiveDate = function(e, date){
             e.preventDefault();
-            $scope.selectedDate = date;
+            $scope.activeDate = date;
+            $scope.everciseGroups = shapeEverciseGroups();
             /*if ("pushState" in history) {
                 $location.url('gooo');
                 $location.replace();
@@ -464,6 +524,7 @@ if(typeof angular != 'undefined') {
                 $scope.results = data;
                 $scope.available_dates = $scope.results.available_dates;
                 $scope.selectedDate = $scope.results.selected_date;
+                $scope.activeDate = $scope.results.selected_date;
                 if (drag) {
                     var newGroups = shapeEverciseGroups();
                     $scope.everciseGroups = $scope.everciseGroups.concat(newGroups);

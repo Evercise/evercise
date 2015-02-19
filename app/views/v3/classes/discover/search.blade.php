@@ -26,9 +26,10 @@
                 id="'venue.id'"
                 icon = "'icon'"
                 doCluster = "true"
-                clusterOptions = "map.clusterOptions"
+                clusterOptions = "clusterOptions"
                 clusterEvents = "clusterEvents"
                 events = "markerEvents"
+                doRebuildAll = "true"
                 >
             </ui-gmap-markers>
 
@@ -112,10 +113,10 @@
             <div ng-if="results.results.total > 0 && !selectedVenueIds"  class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content" ng-style="scrollWidth()">
-                         <li class="date-btn" ng-style="scrollBtnWidth()" ng-repeat="(date, value) in available_dates" ng-class="((date == selectedDate) ? 'active' : (value > 0 ? 'available' : ''))">
+                         <li class="date-btn" ng-style="scrollBtnWidth()" ng-repeat="(date, value) in available_dates" ng-class="((date == activeDate) ? 'active' : (value > 0 ? 'available' : ''))">
                             <div ng-class="value == 0 ? 'disabled' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
-                                <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeSelectedDate($event, date)">
+                                <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeActiveDate($event, date)">
                                     {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
                                 </a>
                             </div>
@@ -130,7 +131,7 @@
             <div class="groups" ng-class="width > 992 ?  'mb-scroll' : ''" ng-style="groupHeight()">
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
-                <div class="list-results" ng-repeat="group in everciseGroups" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
+                <div class="list-results" ng-repeat="group in everciseGroups | filter:isClassVisible" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>
                         <ul class="list-group class-block">
                              <li class="list-group-item class-img-wrapper">
@@ -152,7 +153,7 @@
                         <div class="col-xs-9">
                             <h2 class="h4"><a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
-                            <div class="smallest-btn-wrapper">
+                            <div ng-if="!selectedVenueIds" class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
                                 <a ng-repeat="(time, link) in group.times | objLimitTo:3" ng-click="gaEventTrigger('Class schedule', 'click', group.name)" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>
