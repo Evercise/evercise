@@ -3,7 +3,6 @@
 
 use Illuminate\Log\Writer;
 use Illuminate\Console\Application as Artisan;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 
 class SendReminderEmails
@@ -26,10 +25,10 @@ class SendReminderEmails
     {
         $this->log->info('Reminder Email Command has Run!');
 
-        $output = new BufferedOutput;
+        //$output = new BufferedOutput;
 
-        $this->artisan->call('email:remind', [], $output);
+        $this->artisan->call('email:remind');
 
-        return $output->fetch();
+        //return $output->fetch();
     }
 }
