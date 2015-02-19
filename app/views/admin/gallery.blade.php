@@ -99,7 +99,7 @@
             $('.image_tags').select2({
                 placeholder: "Keywords...",
                 tags:{{ json_encode(array_values($categories)) }},
-                tokenSeparators: [",", " "]
+                tokenSeparators: [","]
             });
 
             $(".image_tags").on("change", function(e) {
