@@ -259,12 +259,22 @@ if(typeof angular != 'undefined') {
                 var arr = $.grep($scope.everciseGroups, function(item, index) {
                     return item.id != v.id;
                 });
-                console.log(v);
+                var icon = '/assets/img/icon_default_small_pin_grey.png';
+                if(v.dates.indexOf($scope.selectedDate) != -1)
+                {
+                    icon = '/assets/img/icon_default_small_pin.png';
+                    console.log('index of');
+                }
+                /*
+                if($.inArray($scope.selectedDate, v.dates)!==-1){
+                    console.log('in array');
+                }
+                */
                 if(arr){
                     groups.push({
                         id : v.id,
                         name : v.name,
-                        icon : '/assets/img/icon_default_small_pin.png',
+                        icon : icon,
                         venue : {
                             id : v.id,
                             name : v.venue.name,
