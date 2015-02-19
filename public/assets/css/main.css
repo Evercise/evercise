@@ -11317,6 +11317,17 @@ div.hub-row.last {
   font-weight: 600;
   line-height: 6px;
 }
+.date-picker-inline li.available {
+  background: #6a7d94;
+}
+.date-picker-inline li.available .day {
+  border-bottom: 1px solid #fff;
+  background: #6a7d94;
+  color: #ffffff;
+}
+.date-picker-inline li.available a {
+  color: #ffffff;
+}
 .date-picker-inline li.active {
   background: #ff1b7e;
 }

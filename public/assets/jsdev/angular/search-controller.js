@@ -24,6 +24,7 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
+        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -258,6 +259,7 @@ if(typeof angular != 'undefined') {
                 var arr = $.grep($scope.everciseGroups, function(item, index) {
                     return item.id != v.id;
                 });
+                console.log(v);
                 if(arr){
                     groups.push({
                         id : v.id,
@@ -378,7 +380,7 @@ if(typeof angular != 'undefined') {
                 $window.history.pushState(null, 'any', $location.absUrl());
             }*/
 
-            $scope.getData();
+            //$scope.getData();
         }
 
 
