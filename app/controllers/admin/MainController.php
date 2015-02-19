@@ -302,7 +302,8 @@ class MainController extends \BaseController
             $category[$c->id] = $c->name;
         }
 
-        return View::make('admin.subcategories', compact('categories', 'subcategories', 'category', 'subcatCats'))->render();
+        return View::make('admin.subcategories',
+            compact('categories', 'subcategories', 'category', 'subcatCats'))->render();
 
     }
 
@@ -385,18 +386,19 @@ class MainController extends \BaseController
         foreach ($payments as $p) {
             $transaction = Transactions::create(
                 [
-                    'user_id' => $p->user_id,
-                    'total' => $p->transaction_amount,
+                    'user_id'          => $p->user_id,
+                    'total'            => $p->transaction_amount,
                     'total_after_fees' => $p->transaction_amount,
-                    'coupon_id' => 0,
-                    'commission' => 0,
-                    'token' => 0,
-                    'transaction' => 0,
-                    'payment_method' => 'paypal',
-                    'payer_id' => $p->user_id
+                    'coupon_id'        => 0,
+                    'commission'       => 0,
+                    'token'            => 0,
+                    'transaction'      => 0,
+                    'payment_method'   => 'paypal',
+                    'payer_id'         => $p->user_id
                 ]);
 
-            event('user.withdraw.completed', [User::find($p->user_id), $transaction, Wallet::where('user_id', $p->user_id)->pluck('balance')]);
+            event('user.withdraw.completed',
+                [User::find($p->user_id), $transaction, Wallet::where('user_id', $p->user_id)->pluck('balance')]);
         }
 
         foreach ($payments as $p) {
@@ -531,26 +533,25 @@ class MainController extends \BaseController
         $to = Carbon::now();
         /** Top Searches The past Week */
         $top_searches = StatsModel::select(DB::raw('count(*) as total, search, AVG(results) as avg'))
-            ->whereBetween('created_at', array($from, $to))
+            ->whereBetween('created_at', [$from, $to])
             ->groupBy('search')
             ->orderBy(DB::raw('count(*)'), 'desc')
             ->limit(20)
             ->get();
 
         $top_cities = StatsModel::select(DB::raw('count(*) as total, name, AVG(results) as avg'))
-            ->whereBetween('created_at', array($from, $to))
+            ->whereBetween('created_at', [$from, $to])
             ->where('name', '!=', 'London')
             ->groupBy('name')
             ->orderBy(DB::raw('count(*)'), 'desc')
             ->limit(15)
             ->get();
 
-        $total_london = StatsModel::whereBetween('created_at', array($from, $to))
+        $total_london = StatsModel::whereBetween('created_at', [$from, $to])
             ->where('name', 'London')
             ->count();
 
         $percentage_london = ($total_london / ($top_cities->count() + $total_london)) * 100;
-
 
 
         return View::make('admin.searchstats', compact('top_searches', 'top_cities', 'percentage_london'));
@@ -558,7 +559,7 @@ class MainController extends \BaseController
 
     public function salesStats()
     {
-        $sessionmembers = DB::table('sessionmembers')->orderBy('id', 'desc')->get();
+        $sessionmembers = Sessionmember::orderBy('id', 'desc')->get();
 
         $sales = [];
         foreach ($sessionmembers as $sm) {
@@ -567,10 +568,11 @@ class MainController extends \BaseController
             $sales[] = [
                 'id'             => $sm->id,
                 'user_id'        => $sm->user_id,
-                'user_name'      => User::where('id', $sm->user_id)->pluck('display_name'),
+                'user'           => User::where('id', $sm->user_id)->first(),
                 'class_id'       => $session->evercisegroup_id,
-                'class_name'     => Evercisegroup::where('id', $session->evercisegroup_id)->pluck('name'),
-                'date'           => $sm->created_at,
+                'session'        => $session,
+                'class'          => $session->evercisegroup,
+                'date'           => $sm->created_at->format('M jS, Y g:ia'),
                 'amount'         => $session->price,
                 'transaction_id' => $sm->transaction_id,
                 'payment_method' => $sm->payment_method,
@@ -691,13 +693,13 @@ class MainController extends \BaseController
         $groups = Evercisegroup::where('published', 1)->has('futuresessions')
             ->whereHas('subcategories', function ($query) use ($id) {
                 $query->whereHas('categories', function ($query) use ($id) {
-                        $query->where('categories.id', $id);
-                    });
+                    $query->where('categories.id', $id);
+                });
             })
             ->lists('name', 'id');
 
         foreach ($groups as $id => $group) {
-            $groups[$id] = $id.' - '.$group;
+            $groups[$id] = $id . ' - ' . $group;
         }
 
 

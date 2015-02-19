@@ -375,7 +375,16 @@ var activeImageClass;
                     <?php
                     $slider = $a->slider()->first();
                     $slider_image = (!empty($slider->image) ? '/files/slider/medium_'.$slider->image : false);
-                    ?>
+
+					$price = '';
+
+					$min_price = $a->evercisesession->min('price');
+					$max_price = $a->evercisesession->max('price');
+					$price = $min_price;
+					if($min_price != $max_price) {
+						$price .= '-'.$max_price;
+					}
+					?>
 
 
                     <tr class="class_{{$a->id}}">
@@ -383,7 +392,9 @@ var activeImageClass;
                         <td><a href="/classes/{{$a->slug}}" target="_blank">{{ $a->name }}</a></td>
                         <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
                         <td class="warning">{{ round($a->evercisesession()->avg('tickets'),0) }}</td>
-                        <td>{{ $a->default_price }}</td>
+
+
+                        <td>{{ $price }}</td>
                         <td>{{ $a->futuresessions()->count() }}</td>
 
                         <td>

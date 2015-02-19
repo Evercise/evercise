@@ -40,7 +40,8 @@
                         <th data-toggle="true">ID</th>
                         <th>User</th>
                         <th>Class</th>
-                        <th>Date</th>
+                        <th>Sale Date</th>
+                        <th>Session Date</th>
                         <th>Amount</th>
                         <th>Transaction ID</th>
                         <th>Payment method</th>
@@ -50,9 +51,11 @@
                     @foreach($sales as $sale)
                         <tr>
                             <td>{{ $sale['id'] }}</td>
-                            <td>{{ $sale['user_id'] . ' - ' . $sale['user_name'] }}</td>
-                            <td>{{ $sale['class_id'] . ' - ' . $sale['class_name'] }}</td>
-                            <td>{{ $sale['date'] }}</td>
+                            <td><a href="{{ URL::route('users.edit', ['id' => $sale['user']->display_name]) }}">{{ $sale['user_id'] . ' - ' . $sale['user']->display_name }}</a></td>
+                            <td><a href="{{ URL::route('class.show', ['id' => $sale['class']->slug]) }}">{{ $sale['class_id'] . ' - ' . $sale['class']->name }}</a></td>
+							<td>{{ $sale['date'] }}</td>
+							<td><a href="{{ URL::route('class.show', ['id' => $sale['class']->slug]) }}?t={{ $sale['session']->id}}">{{ $sale['session']->date_time->format('M jS, Y g:ia') }}</a></td>
+
                             <td>{{ $sale['amount'] }}</td>
                             <td>{{ $sale['transaction_id'] }}</td>
                             <td>{{ $sale['payment_method'] }}</td>
