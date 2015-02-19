@@ -8,7 +8,14 @@
 <div class="container">
     <div class="row">
         <div class="page-header col-sm-9">
-            <h1 class="h2">Checkout</h1>
+            <div class="row">
+                <div class="col-sm-9">
+                    <h1 class="h2">Checkout</h1>
+                </div>
+                <div class="col-sm-3 mt15">
+                    {{ Html::linkRoute('evercisegroups.search', 'Continue Shopping', null ,['class' => 'btn btn-white-primary']) }}
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
