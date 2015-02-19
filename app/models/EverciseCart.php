@@ -257,19 +257,6 @@ class EverciseCart extends Cart
         $cart['total']['rewards_deduct'] = 0;
         $cart['total']['final_cost'] = ($subTotal - $package_deduct);
 
-        /**
-         DISABLE FROM WALLET
-
-        if ($cart['wallet'] > 0) {
-            if ($cart['wallet'] > $cart['total']['final_cost']) {
-                $cart['total']['from_wallet'] = $cart['total']['final_cost'];
-                $cart['total']['final_cost'] = 0;
-            } else {
-                $cart['total']['from_wallet'] = $cart['wallet'];
-                $cart['total']['final_cost'] = ($cart['total']['final_cost'] - $cart['wallet']);
-            }
-        }
-        */
 
         $cart['discount'] = [];
         $cart['discount']['amount'] = 0;
@@ -345,6 +332,35 @@ class EverciseCart extends Cart
 
         $cart['total']['from_wallet'] = 0;
 
+
+
+        $cart['wallet'] = 0;
+        if(!empty($user->id) && $user->hasPermission('admin')) {
+            $cart['wallet'] = $user->getWallet()->getBalance();
+            if ($cart['wallet'] > 0) {
+                if ($cart['wallet'] > $cart['total']['final_cost']) {
+
+                    $cart['rewards'][]['From Wallet'] = $cart['total']['final_cost'];
+                    $cart['total']['rewards_deduct'] += $cart['total']['final_cost'];
+
+                    $cart['total']['from_wallet'] = $cart['total']['final_cost'];
+                    $cart['total']['final_cost'] = 0;
+
+
+                } else {
+
+                    $cart['rewards'][]['From Wallet'] = $cart['wallet'];
+                    $cart['total']['rewards_deduct'] += $cart['wallet'];
+
+                    $cart['total']['from_wallet'] = $cart['wallet'];
+                    $cart['total']['final_cost'] = ($cart['total']['final_cost'] - $cart['wallet']);
+
+                }
+            }
+        }
+
+
+
         // If remainder is less than 50p, add discount for the remaining amount, cos we're nice
         if($cart['total']['final_cost'] > 0 && $cart['total']['final_cost'] < 0.50) {
 
@@ -352,7 +368,7 @@ class EverciseCart extends Cart
             $cart['total']['rewards_deduct'] += $cart['total']['final_cost'];
             $cart['total']['final_cost'] -= $cart['total']['rewards_deduct'];
         }
-
+        
         return $cart;
 
 
