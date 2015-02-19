@@ -544,6 +544,8 @@ class PaymentController extends BaseController
             );
 
 
+            //  Not to be done from here.  Happens in Command: CheckSessions the day after the class happens.
+/*
             $session_payment = Sessionpayment::create(
                 [
                     'user_id'            => $this->user->id,
@@ -553,8 +555,9 @@ class PaymentController extends BaseController
                     'commission'         => round($commission, 3),
                     'processed'          => 0
                 ]
-            );
+            );*/
 
+            
 
             $item = new TransactionItems([
                 'user_id'            => $this->user->id,
