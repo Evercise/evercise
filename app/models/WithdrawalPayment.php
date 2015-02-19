@@ -31,7 +31,7 @@ class WithdrawalPayment
 
 
         $this->paypal_config = [
-            'Sandbox'      => getenv('PAYPAL_TESTMODE') ?: TRUE,
+            'Sandbox'      => getenv('PAYPAL_TESTMODE') ?: FALSE,
             'APIUsername'  => getenv('PAYPAL_USER') ?: FALSE,
             'APIPassword'  => getenv('PAYPAL_PASS') ?: FALSE,
             'APISignature' => getenv('PAYPAL_SIGNATURE') ?: FALSE,
