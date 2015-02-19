@@ -704,6 +704,11 @@ Route::group(
         Route::get('/subcategories',
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 
+        Route::get('/seourls',
+            ['as' => 'admin.seourls', 'uses' => 'MainController@seourls']);
+        Route::post('/seourls',
+            ['as' => 'admin.seourls.update', 'uses' => 'MainController@updateSeourls']);
+
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);
 

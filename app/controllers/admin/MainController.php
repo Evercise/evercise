@@ -710,5 +710,17 @@ class MainController extends \BaseController
         return View::make('admin.edit_category', compact('category', 'groups', 'subcategories'));
     }
 
+    public function seourls()
+    {
+        $seourls = SeoUrls::get();
+
+        return View::make('admin.seo_urls', compact('seourls'));
+    }
+
+    public function updateSeourls()
+    {
+
+    }
+
 
 }
