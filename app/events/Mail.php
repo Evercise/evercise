@@ -94,6 +94,13 @@ class Mail
             ]
         ];
 
+        if (file_exists('./public/assets/css/mail.css')) {
+            $cssFile = file_get_contents('./public/assets/css/mail.css');
+        }
+        else
+        {
+            $cssFile = file_get_contents('./assets/css/mail.css');
+        }
 
         $this->data = [
             'config'       => $this->config->get('evercise'),
@@ -107,7 +114,7 @@ class Mail
             'banner'       => FALSE,
             'banner_types' => $this->banner_types,
             'style'        => 'pink',
-            'css'          => file_get_contents((php_sapi_name() === 'cli' ? './public/' : './') . 'assets/css/mail.css')
+            'css'          => $cssFile
         ];
 
     }
