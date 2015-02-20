@@ -99,7 +99,7 @@ class Mail
         }
         else
         {
-            $cssFile = file_get_contents('./assets/css/mail.css');
+            $cssFile = file_get_contents('http://evercise.com/assets/css/mail.css');
         }
 
         $this->data = [
