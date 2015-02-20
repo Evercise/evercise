@@ -740,4 +740,19 @@ class AdminAjaxController extends AdminController
 
     }
 
+    public function deleteSeoUrl()
+    {
+        $id = Input::get('id', FALSE);
+
+        if ($id) {
+            $data = DB::table('seo_urls')->where('id', $id)->delete();
+
+            return Response::json(['deleted' => TRUE, 'id' => $id]);
+        }
+
+        return Response::json(['deleted' => FALSE, 'id' => $id]);
+    }
+
+
+
 }
