@@ -406,6 +406,41 @@ class MainController extends \BaseController
 
         return Redirect::route('admin.pending_withdrawal')->with('notification', 'Yaay.. you payed Somebody!!!');
     }
+    public function processWithdrawalMultiManual()
+    {
+
+        $process = Input::get('process');
+
+        $payments = Withdrawalrequest::whereIn('id', array_keys($process))->get();
+
+        if ($payments->count() == 0) {
+            return Redirect::route('admin.pending_withdrawal')->with('notification', 'You need to select somebody !!!');
+        }
+
+        foreach ($payments as $p) {
+            $transaction = Transactions::create(
+                [
+                    'user_id' => $p->user_id,
+                    'total' => $p->transaction_amount,
+                    'total_after_fees' => $p->transaction_amount,
+                    'coupon_id' => 0,
+                    'commission' => 0,
+                    'token' => 0,
+                    'transaction' => 0,
+                    'payment_method' => 'paypal',
+                    'payer_id' => $p->user_id
+                ]);
+
+            event('user.withdraw.completed', [User::find($p->user_id), $transaction, Wallet::where('user_id', $p->user_id)->pluck('balance')]);
+        }
+
+        foreach ($payments as $p) {
+            $p->processed = 1;
+            $p->save();
+        }
+
+        return Redirect::route('admin.pending_withdrawal')->with('notification', 'Make sure payments are made MANUALLY through PayPal !!!');
+    }
 
     /**
      * @return \Illuminate\Http\RedirectResponse

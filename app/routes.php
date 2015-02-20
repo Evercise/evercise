@@ -690,6 +690,8 @@ Route::group(
             ['as' => 'admin.pending_withdrawal', 'uses' => 'MainController@pendingWithdrawal']);
         Route::post('/pending_withdrawal_multi',
             ['as' => 'admin.pending.process', 'uses' => 'MainController@processWithdrawalMulti']);
+        Route::post('/pending_withdrawal_multi_manual',
+            ['as' => 'admin.pending.process.manual', 'uses' => 'MainController@processWithdrawalMultiManual']);
         Route::post('/process_withdrawal',
             ['as' => 'admin.process_withdrawal', 'uses' => 'MainController@processWithdrawal']);
 

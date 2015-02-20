@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 
             <h1>Pending Withdrawals</h1>
-            {{ Form::open(['route' => 'admin.pending.process', 'method' => 'post']) }}
+            {{ Form::open(['route' => 'admin.pending.process.manual', 'method' => 'post']) }}
             <table class="table-condensed">
                 <tr>
                     <th><input type="checkbox" id="all"/> ALL/None</th>
@@ -49,7 +49,7 @@ $(document).ready(function() {
                 @endforeach
             </table>
             <br>
-            {{ Form::submit('Process now!', array('class'=>'btn-yellow btn btn-info')) }}
+            {{ Form::submit('Process manually!', array('class'=>'btn-yellow btn btn-info')) }}
             {{ Form::close() }}
             <br>
             <br>
