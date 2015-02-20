@@ -86,12 +86,12 @@ class Sessions
      * @param $trainerEmail
      * @param $classId
      */
-    public function upcomingSessions($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId){
+    public function upcomingSessions($userList, $group, $location, $trainerName, $trainerEmail, $session){
 
         $this->log->info('Sending Upcomming Sessions email');
-        $this->mail->trainerSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId);
+        $this->mail->trainerSessionRemind($userList, $group, $location, $trainerName, $trainerEmail, $session);
 
-        $this->mail->usersSessionRemind($userList, $group, $location, $dateTime, $trainerName, $trainerEmail, $classId, $sessionId);
+        $this->mail->usersSessionRemind($userList, $group, $location, $trainerName, $trainerEmail, $session);
     }
 
     /**
