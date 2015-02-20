@@ -24,7 +24,6 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
-        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -99,7 +98,6 @@ if(typeof angular != 'undefined') {
                 $scope.selectedVenueIds = false;
 
                 var center = cluster.getCenter();
-
                 // zoom into cluster
 
                 var map = $scope.map.control.getGMap();
@@ -301,7 +299,6 @@ if(typeof angular != 'undefined') {
             var content = par.find('.content');
             var mg = parseInt(content.css('margin-left'));
             var contentWidth = -content.width();
-            console.log(mg - width);
             if(direction == 'right'){
                 var newMg = mg - width;
             }
@@ -405,13 +402,8 @@ if(typeof angular != 'undefined') {
                     },
                     radius: $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344
                 }
-                $scope.map = {
-                    zoom: $scope.initialZoom(),
-                    maxZoom: 16,
-                    center:  { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter()},
-                    control: {},
-                    clusterOptions: $scope.clusterOptions
-                };
+                $scope.map.center = { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter() };
+                $scope.map.zoom = $scope.initialZoom();
 
             });
 
