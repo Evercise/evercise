@@ -81,10 +81,9 @@ class Sessions
      * @param $userList
      * @param $group
      * @param $location
-     * @param $dateTime
      * @param $trainerName
      * @param $trainerEmail
-     * @param $classId
+     * @param $session
      */
     public function upcomingSessions($userList, $group, $location, $trainerName, $trainerEmail, $session){
 
@@ -111,10 +110,10 @@ class Sessions
     /**
      * @param $trainer
      * @param $user
-     * @param $group
-     * @param $dateTime
-     * @param $messageSubject
-     * @param $messageBody
+     * @param $evercisegroup
+     * @param $session
+     * @param $subject
+     * @param $body
      */
     public function mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body)
     {
@@ -144,8 +143,8 @@ class Sessions
      * @param $user
      * @param $trainer
      * @param $session
-     * @param $everciseGroup
-     * @param $transactionId
+     * @param $evercisegroup
+     * @param $transaction
      */
     public function joinedClass($user, $trainer, $session, $evercisegroup, $transaction) {
 

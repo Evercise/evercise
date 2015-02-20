@@ -20,7 +20,17 @@ class SeoUrls extends Eloquent
 
     public static function match($search, $location)
     {
-        return ['title' => 'yep', 'desc' => 'nope'];
+        $seoUrl = SeoUrls::where('search', $search)->where('location', $location)->first();
+
+        $defaultTitle = 'Fitness Classes, Events & Gyms in London | Evercise';
+        $defaultDescription = 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and fitness classes all over London.';
+
+        if ($seoUrl)
+        {
+            return ['title' => $seoUrl->title, 'desc' => $seoUrl->description];
+        }
+
+        return ['title' => $defaultTitle, 'desc' => $defaultDescription];
     }
 
 
