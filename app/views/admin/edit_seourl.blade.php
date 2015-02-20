@@ -7,56 +7,39 @@
     <script>
         function MultiAjaxAutoComplete(element, url) {
             $(element).select2({
-                placeholder: "Search for a movie",
+                placeholder: "Start typing place name",
                 minimumInputLength: 1,
                 multiple: true,
                 id: function(e) { return e.id+":"+e.title; },
                 ajax: {
                     url: url,
                     dataType: 'json',
-                    data: function(term, page) {
-
+                    data: function(term) {
                         return {
-                            q: term,
-                            page_limit: 10,
-                            apikey: "z4vbb4bjmgsb7dy33kvux3ea" //my own apikey
+                            q: term
                         };
                     },
                     results: function(data, page) {
-                        alert(data);
+                        console.log(data);
                         return {
-                            results: data.movies
+                            results: data.places
                         };
                     }
-                },
-                formatResult: formatResult,
-                formatSelection: formatSelection,
-                initSelection: function(element, callback) {
-                    var data = [];
-                    $(element.val().split(",")).each(function(i) {
-                        var item = this.split(':');
-                        data.push({
-                            id: item[0],
-                            title: item[1]
-                        });
-                    });
-//$(element).val('');
-                    callback(data);
                 }
             });
         };
 
-        function formatResult(movie) {
-            return '<div>' + movie.title + '</div>';
+        function formatResult(data) {
+            return '<div>' + data + '</div>';
         };
 
         function formatSelection(data) {
-            return data.title;
+            return data;
         };
 
 
 
-        MultiAjaxAutoComplete('#e6', {{route('admin.load')}}}});
+        MultiAjaxAutoComplete('#e6', '{{ route('admin.ajax.search_places') }}' );
 
     </script>
 
@@ -74,7 +57,7 @@
     <div class="col-lg-9">
         <div class="form-group">
             <label>Location:</label>
-            <input type='text' id="e6" style="width: 500px;" value="34:Donnie Darko,54:Heat,27:No Country for Old Men"  />
+            <input type='text' id="e6" style="width: 500px;" value=""  />
         </div>
         <div class="form-group">
             <label>Location:</label>

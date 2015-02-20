@@ -9,7 +9,7 @@ class SeoUrls extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['id', 'location', 'search', 'title', 'description'];
+    protected $fillable = ['id', 'area_id', 'search', 'title', 'description'];
 
     /**
      * The database table used by the model.

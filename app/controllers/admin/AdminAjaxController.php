@@ -753,6 +753,13 @@ class AdminAjaxController extends AdminController
         return Response::json(['deleted' => FALSE, 'id' => $id]);
     }
 
+    public function searchPlaces()
+    {
+        $searchTerm = Input::get('q');
 
+        $places = Place::where('name', 'LIKE', '%'.$searchTerm.'%')->lists('name', 'id');
+
+        return Response::json(['places'=>$places]);
+    }
 
 }
