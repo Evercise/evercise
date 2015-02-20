@@ -406,6 +406,13 @@ class MainController extends \BaseController
 
         return Redirect::route('admin.pending_withdrawal')->with('notification', 'Yaay.. you payed Somebody!!!');
     }
+
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * Same as function above, but no paypal payemt is attempted (bacause it doesn't work)
+     */
     public function processWithdrawalMultiManual()
     {
 
