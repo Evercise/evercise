@@ -14,11 +14,6 @@ class Link extends \Eloquent
     protected $primaryKey = 'link_id';
 
 
-    public function getClass()
-    {
-        return $this->belongsTo('Evercisegroup', 'parent_id', 'id');
-    }
-
     public function getArea()
     {
         return $this->belongsTo('Place', 'parent_id', 'id');

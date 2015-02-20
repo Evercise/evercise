@@ -18,9 +18,9 @@ class SeoUrls extends Eloquent
      */
     protected $table = 'seo_urls';
 
-    public static function match($search, $location)
+    public static function match($search, $area)
     {
-        $seoUrl = SeoUrls::where('search', $search)->where('location', $location)->first();
+        $seoUrl = SeoUrls::where('search', $search)->where('area_id', $area->id)->first();
 
         $defaultTitle = 'Fitness Classes, Events & Gyms in London | Evercise';
         $defaultDescription = 'Evercise is an online platform that connects everyone wanting to exercise in a class with a wide array of Fitness Trainers and fitness classes all over London.';
