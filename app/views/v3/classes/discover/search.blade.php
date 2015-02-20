@@ -25,9 +25,8 @@
                 idKey="'id'"
                 id="'venue.id'"
                 icon = "'icon'"
-                doCluster = "true"
-                clusterOptions = "clusterOptions"
-                clusterEvents = "clusterEvents"
+                doCluster = "false"
+                options = "'options'"
                 events = "markerEvents"
                 doRebuildAll = "true"
                 >
@@ -149,11 +148,11 @@
                              </div>
                          </ul>
                      </div>
-                    <div ng-if="view == 'list'" class="row no-gutter ml0 mr0 class-stacked" ng-class="(lastActiveMarker == group) ? 'active' : ''">
+                    <div ng-if="view == 'list'" class="row no-gutter ml0 mr0 class-stacked" ng-class="(activeGroupId == group.id) ? 'active' : ''">
                         <div class="col-xs-9">
                             <h2 class="h4"><a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}">{[{ group.name | truncate:40 }]}</a></h2>
                             <span id="venue-{[{group.venue.id}]}" class="icon icon-sm icon-sm-marker mr5"></span><small>{[{ group.venue.name }]},{[{ group.venue.postcode }]}</small><br>
-                            <div ng-if="!selectedVenueIds" class="smallest-btn-wrapper">
+                            <div class="smallest-btn-wrapper">
                                 <strong class="h5 text-large">AVAILABLE CLASSES:</strong>
                                 <a ng-repeat="(time, link) in group.times | objLimitTo:3" ng-click="gaEventTrigger('Class schedule', 'click', group.name)" href="/classes/{[{ group.slug }]}?t={[{link}]}" class="ml5 mr5 btn btn-smallest btn-primary btn-rounded">{[{ time }]}</a>
                             </div>

@@ -47,43 +47,37 @@ if(typeof angular != 'undefined') {
             panControl: false
         }
 
-        // cluster options
-
-        $scope.clusterStyles = [
-            {
-                textColor: 'white',
-                url: '/assets/img/icon_default_small_pin_number.png',
-                height: 43,
-                width: 33,
-                anchorText: [-14,9]
-            }
-        ];
-
-        $scope.clusterOptions = {
-            title: 'click to expand',
-            gridSize: 5,
-            maxZoom: 20,
-            styles: $scope.clusterStyles,
-            zoomOnClick: false
-        };
-
+        $scope.selectedVenueIds = false;
+        $scope.selectedVenueName = false;
 
         $scope.markerEvents = {
             click: function (marker,e,model) {
-                // remove select venue
-                $scope.selectedVenueIds = false;
-                // toggle markers
-                $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
-                $scope.lastActiveMarker = model;
-                model.icon = '/assets/img/icon_default_large_pink.png';
+                if(!model.active){
+                    $scope.activeDate = model.otherDates[0];
+                    $scope.passInGroupId = model.id;
+                    $scope.everciseGroups = shapeEverciseGroups();
+                    $scope.lastActiveMarker = model;
+                    setTimeout(function(){
+                        markerClicked(marker,e,model);
+                    },500);
+                }
+                else{
+                    $scope.passInGroupId = false;
+                    for(var i = 0; i < $scope.everciseGroups.length; i++){
+                        if($scope.everciseGroups[i].tempIcon){
+                            $scope.everciseGroups[i].icon = '/assets/img/icon_default_small_pin.png';
+                            $scope.everciseGroups[i].tempIcon = false;
+                        }
+                    }
+                    markerClicked(marker,e,model);
 
-                panToMarker(model);
-                setTimeout(function() {
-                    $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+model.id), {
-                        scrollInertia: 500,
-                        timeout: 20
-                    });
-                }, 500)
+                    // toggle markers
+                    $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
+                    $scope.lastActiveMarker = model;
+                    model.icon = '/assets/img/icon_default_large_pink.png';
+                }
+
+
             },
             mouseover: function (marker,e,model) {
                 $('#venue-'+model.id).addClass('active');
@@ -93,46 +87,40 @@ if(typeof angular != 'undefined') {
             }
         }
 
-        $scope.selectedVenueIds = false;
-        $scope.selectedVenueName = false;
-
-        $scope.clusterEvents = {
-            click: function (cluster, clusterModels) {
-
+        var markerClicked = function(marker,e,model){
+            // check if there are other classes at this venue
+            var vId = model.venue.id;
+            var svi = [];
+            for(var i = 0; i < $scope.venues.length; i++){
+                if(vId == $scope.venues[i].venueId ){
+                    svi.push($scope.venues[i].groupId);
+                }
+            }
+            if(svi.length > 1){
+                // start select venue
+                $scope.selectedVenueIds = true;
+                $scope.selectedVenueIds = svi;
+                $scope.selectedVenueName = model.venue.name;
+            }
+            else{
+                // active group id
+                $scope.activeGroupId = model.id;
+                // remove select venue
                 $scope.selectedVenueIds = false;
 
-                var center = cluster.getCenter();
-
-                // zoom into cluster
-
-                var map = $scope.map.control.getGMap();
-                var newlatlng = new google.maps.LatLng(center.lat(), center.lng());
-
-                map.panTo(newlatlng);
-
-                var svi = [];
-
-                angular.forEach(clusterModels,function(value,key){
-                    svi.push(value.id);
-                } )
-                $scope.selectedVenueIds = svi;
-                $scope.selectedVenueName = clusterModels[0].venue.name;
-                // toggle markers
-                $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
-                $scope.lastActiveMarker = cluster;
-
-            },
-            mouseover: function (cluster, clusterModels) {
-                angular.forEach(clusterModels,function(value,key){
-                    $('#venue-'+value.id).addClass('active');
-                } )
-            },
-            mouseout: function (cluster, clusterModels) {
-                angular.forEach(clusterModels,function(value,key){
-                    $('#venue-'+value.id).removeClass('active');
-                } )
+                setTimeout(function() {
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+model.id), {
+                        scrollInertia: 500,
+                        timeout: 20
+                    });
+                }, 100)
             }
-        };
+
+            panToMarker(model);
+
+
+        }
+
 
 
         // current search radius
@@ -210,8 +198,7 @@ if(typeof angular != 'undefined') {
         $scope.map = {
             zoom: $scope.initialZoom(),
             center:  { latitude: $scope.results.area.lat, longitude: $scope.setMapCenter()},
-            control: {},
-            clusterOptions: $scope.clusterOptions
+            control: {}
         };
 
         $scope.bounds = {
@@ -264,67 +251,55 @@ if(typeof angular != 'undefined') {
                 var icon = '/assets/img/icon_default_small_pin_grey.png';
                 var notFound = true;
                 var active = false;
-                var isAVenue = false;
-                angular.forEach(v.dates, function(value,date){
-                    if(notFound){
-                        if(date == $scope.activeDate){
-                            icon = '/assets/img/icon_default_small_pin.png';
-                            active = true;
-                            notFound == false;
-                        }
-                    }
-                })
+                var zindex = -1;
+                var nextDates = [];
+                var tempIcon = false;
                 var times = $.map(v.dates, function(value, index) {
                     if(index == $scope.activeDate){
+
+                        icon = '/assets/img/icon_default_small_pin.png';
+                        active = true;
+                        zindex = 10;
+                        notFound == false;
+                        venue.push({
+                            venueId : v.venue.id ,
+                            groupId : v.id
+                        });
                         return [value];
                     }
+                    else{
+                        nextDates.push(index);
+                    }
                 });
-                /*
-
-                if ($.inArray(v.venue.id, venue) !== -1)
-                {
-                    var dontCluster = false;
-                    var keepGoing = true;
-                    angular.forEach(v.dates, function(value,date){
-                        if(keepGoing) {
-                            if (date == $scope.activeDate) {
-                                dontCluster = true;
-                                keepGoing = false;
-                            }
-                        }
-                    })
-                    if(!dontCluster){
-                        continue;
-                    }
+                if($scope.passInGroupId == v.id ){
+                    icon = '/assets/img/icon_default_large_pink.png';
+                    tempIcon = true;
                 }
-
-                angular.forEach(v.dates, function(value,date) {
-                    if(date == $scope.activeDate) {
-                        venue.push(v.venue.id);
-                    }
-                })
-                */
                 if(arr){
                     groups.push({
                         id : v.id,
                         name : v.name,
                         icon : icon,
+                        options : {zIndex : zindex},
                         venue : {
-                            id : v.id,
+                            id : v.venue.id,
                             name : v.venue.name,
                             postcode : v.venue.postcode,
                             latitude : v.venue.lat,
                             longitude : v.venue.lng
                         },
                         active : active,
+                        tempIcon : tempIcon,
                         slug: v.slug,
                         remaining: v.futuresessions[0].remaining,
                         times : times[0] ,
+                        otherDates : nextDates,
                         price : v.default_price,
                         image : '/'+v.user.directory+'/preview_'+v.image
                     })
                 }
             }
+            $scope.venues = venue;
             return groups;
         }
 
@@ -449,8 +424,6 @@ if(typeof angular != 'undefined') {
                 $location.replace();
                 $window.history.pushState(null, 'any', $location.absUrl());
             }*/
-
-            //$scope.getData();
         }
 
 
@@ -525,6 +498,7 @@ if(typeof angular != 'undefined') {
                 $scope.available_dates = $scope.results.available_dates;
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.activeDate = $scope.results.selected_date;
+                $scope.activeGroupId = false;
                 if (drag) {
                     var newGroups = shapeEverciseGroups();
                     $scope.everciseGroups = $scope.everciseGroups.concat(newGroups);

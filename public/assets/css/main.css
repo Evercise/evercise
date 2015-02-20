@@ -13150,3 +13150,21 @@ fieldset[disabled] .package-pink .package-pay .btn.active {
     right: 10px;
   }
 }
+/*
+img[src^="/assets/img/icon_default_small_pin_number.png"]{
+  opacity: 0.2;
+  position: relative;
+  &:hover{
+    opacity: 1;
+  }
+  &:after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    background: #000;
+    content: '';
+  }
+}
+*/
