@@ -34,11 +34,22 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
+
+Route::get('sitemap.xml', ['as' => 'sitemap', 'uses' => 'SiteMapController@index']);
+
 Route::get('email',
     [
         'before' => 'admin',
         function () {
 
+
+            echo "<select>";
+            for($i = 1; $i < 3000; $i++) {
+
+                echo '<option value=".rand(1,3000000).">'.str_random(10).'</option>';
+            }
+
+            die('</select>');
 
 
             $mail = App::make('events\Mail');
