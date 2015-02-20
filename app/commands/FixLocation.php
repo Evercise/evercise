@@ -24,39 +24,72 @@ class FixLocation extends Command
     public function fire()
     {
         $id = $this->option('id');
-        $places = Place::where('id', '>', $id)->limit(500)->get();
+        $doPlaces = $this->option('places');
 
-        foreach($places as $place) {
 
-            $name = $place->name;
-            if($place->link->type == 'STATION') {
-                $name .= ' station';
+        if ($doPlaces) {
+            $places = Place::where('id', '>', $id)->limit(500)->get();
+
+            foreach ($places as $place) {
+
+                $name = $place->name;
+                if ($place->link->type == 'STATION') {
+                    $name .= ' station';
+                }
+                $geo = Place::getLocation($name, 'London', FALSE);
+
+                $this->line($name);
+                $this->line($geo['latitude'] . ', ' . $geo['longitude']);
+
+                if (!empty($geo['latitude'])) {
+                    $place->lat = $geo['latitude'];
+                    $place->lng = $geo['longitude'];
+
+                    $place->save();
+                } else {
+                    $this->line('MISSING ' . $name . ' ' . $place->id);
+                }
+                $this->line($place->id);
+                if ($place->id % 100 == 0) {
+                    $this->line('SLEEP');
+                    sleep(3);
+                }
             }
-            $geo = Place::getLocation($name, 'London', false);
+        } else {
+            //We are doing venues... yea...
+            //('id', 'user_id', 'name', 'address', 'town', 'postcode', 'lat', 'lng', 'image');
+            $venues = Venue::where('id', '>', $id)->limit(500)->get();
 
-            $this->line($name);
-            $this->line($geo['latitude'].', '.$geo['longitude']);
+            foreach ($venues as $venue) {
 
-            if(!empty($geo['latitude'])) {
-                $place->lat = $geo['latitude'];
-                $place->lng = $geo['longitude'];
+                $this->line('Checking ' . $venue->name . ' ' . $venue->id);
+                if ($data = get_location($venue->postcode, $venue->address, $venue->town)) {
 
-                $place->save();
-            } else{
-                $this->line('MISSING '.$name.' '.$place->id);
+                    list($latitude, $longitude) = $data;
+
+                    $this->info('Found it ' . implode(', ', $data));
+                    $venue->lat = $latitude;
+                    $venue->lng = $longitude;
+                    $venue->save();
+
+                }
+
+                if ($venue->id % 100 == 0) {
+                    $this->error('SLEEP it off a little bit so google wont bitch about it');
+                    sleep(3);
+                }
+
             }
-            $this->line($place->id);
-            if($place->id%100 == 0) {
-                $this->line('SLEEP');
-                sleep(3);
-            }
+
+            $this->info('All done');
         }
     }
 
     protected function getOptions()
     {
         return [
-           ['id', null, InputOption::VALUE_OPTIONAL, 'Start from ID', 1],
+            ['id', NULL, InputOption::VALUE_OPTIONAL, 'Start from ID', 1],
+            ['places', NULL, InputOption::VALUE_OPTIONAL, 'Should we do place?', FALSE],
         ];
     }
 }

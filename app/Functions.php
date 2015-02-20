@@ -5,866 +5,913 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 
 
+if (!function_exists('get_location')) {
 
-    if (!function_exists('ga')) {
-
-        /*
-         * Google Event
-         *
-         */
-
+    function get_location()
+    {
+        $params = trim(implode(', ', func_get_args()));
+        $location = get_location_full($params);
 
 
+        if (!empty($location['lat'])) {
+            return [$location['lat'], $location['lng']];
+        }
 
-        function ga($url)
-        {
-            $track = "
+        return FALSE;
+    }
+}
+
+if (!function_exists('get_location_full')) {
+
+    function get_location_full($location)
+    {
+
+        $location = urlencode($location);
+
+
+        $url = "http://maps.google.com/maps/api/geocode/json?address=$location&sensor=false&region=United+Kingdom";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $response_a = json_decode($response);
+
+        if (!empty($response_a->results[0])) {
+
+            $searchModel = App::make('SearchModel');
+
+            return $searchModel->parseGoogleLocation($response_a->results[0]);
+
+
+        }
+
+        return FALSE;
+
+    }
+}
+
+if (!function_exists('ga')) {
+
+    /*
+     * Google Event
+     *
+     */
+
+
+    function ga($url)
+    {
+        $track = "
             <script>
              if (typeof ga == 'function') {
-                ga('send', 'pageview', '".$url."');
+                ga('send', 'pageview', '" . $url . "');
             }
             </script>
 
             ";
 
-            return $track;
-        }
+        return $track;
     }
+}
 
-    if (!function_exists('uniqueFile')) {
+if (!function_exists('uniqueFile')) {
 
-        /*
-         * Wrap event class
-         *
-         */
-
-
+    /*
+     * Wrap event class
+     *
+     */
 
 
-        function uniqueFile($path, $name, $extension)
-        {
-            do {
-                $next_file = $name.'-'.rand(1,50).'.'.$extension;
-            } while (is_file($path.$next_file));
+    function uniqueFile($path, $name, $extension)
+    {
+        do {
+            $next_file = $name . '-' . rand(1, 50) . '.' . $extension;
+        } while (is_file($path . $next_file));
 
-            return $next_file;
-        }
+        return $next_file;
     }
-    if (!function_exists('formatDuration')) {
+}
+if (!function_exists('formatDuration')) {
 
-        /*
-         * Wrap event class
-         *
-         */
+    /*
+     * Wrap event class
+     *
+     */
 
 
-
-
-        function formatDuration($duration = 0)
-        {
-
-            $hours = floor($duration / 60);
-            $minutes = $duration % 60;
-
-            return ($hours ? $hours . ' hours ' : '') . ( $minutes . ' minutes');
-        }
-    }
-
-
-    if (!function_exists('event')) {
-
-        /*
-         * Wrap event class
-         *
-         */
-
-        function event($name, $params = [])
-        {
-            Event::fire($name, $params);
-        }
-    }
-
-
-    if (!function_exists('d')) {
-
-        /*
-         * nice print of vardump without the xdebug
-         *
-         */
-
-        function d($var, $die = true)
-        {
-
-
-
-            $dumper = 'cli' === PHP_SAPI ? new CliDumper : new HtmlDumper;
-            $dumper->dump((new VarCloner)->cloneVar($var));
-
-
-            if ($die) {
-                die();
-            }
-        }
-    }
-
-    if (!function_exists('returnPlural')) {
-
-        /*
-         * nice print of vardump without the xdebug
-         *
-         */
-
-        function returnPlural($string, $count = 1)
-        {
-            if (is_array($count)) {
-                $count = count($count);
-            }
-            if ($count == 1) {
-                return str_singular($string);
-            }
-
-            return str_plural($string);
-        }
-    }
-
-
-    if (!function_exists('image')) {
-
-        /*
-         * nice print of vardump without the xdebug
-         *
-         */
-
-        function image($image, $alt = 'image', $params = [])
-        {
-            /*
-             * return html image tag
-             */
-            return HTML::image($image, $alt, $params);
-        }
-    }
-
-
-    if (!function_exists('generateImage')) {
-        function generateImage($size = 200)
-        {
-            
-            $hash = str_random();
-
-            /* parse hash string */
-
-            $csh = hexdec(substr($hash, 0, 1)); // corner sprite shape
-            $ssh = hexdec(substr($hash, 1, 1)); // side sprite shape
-            $xsh = hexdec(substr($hash, 2, 1)) & 7; // center sprite shape
-
-            $cro = hexdec(substr($hash, 3, 1)) & 3; // corner sprite rotation
-            $sro = hexdec(substr($hash, 4, 1)) & 3; // side sprite rotation
-            $xbg = hexdec(substr($hash, 5, 1)) % 2; // center sprite background
-
-            /* corner sprite foreground color */
-            $cfr = hexdec(substr($hash, 6, 2));
-            $cfg = hexdec(substr($hash, 8, 2));
-            $cfb = hexdec(substr($hash, 10, 2));
-
-            /* side sprite foreground color */
-            $sfr = hexdec(substr($hash, 12, 2));
-            $sfg = hexdec(substr($hash, 14, 2));
-            $sfb = hexdec(substr($hash, 16, 2));
-
-            /* final angle of rotation */
-            $angle = hexdec(substr($hash, 18, 2));
-
-            /* size of each sprite */
-            $spriteZ = 128;
-
-            /* start with blank 3x3 identicon */
-            $identicon = imagecreatetruecolor($spriteZ * 3, $spriteZ * 3);
-            imageantialias($identicon, TRUE);
-
-            /* assign white as background */
-            $bg = imagecolorallocate($identicon, 255, 255, 255);
-            imagefilledrectangle($identicon, 0, 0, $spriteZ, $spriteZ, $bg);
-
-            /* generate corner sprites */
-            $corner = getsprite($csh, $cfr, $cfg, $cfb, $cro);
-            imagecopy($identicon, $corner, 0, 0, 0, 0, $spriteZ, $spriteZ);
-            $corner = imagerotate($corner, 90, $bg);
-            imagecopy($identicon, $corner, 0, $spriteZ * 2, 0, 0, $spriteZ, $spriteZ);
-            $corner = imagerotate($corner, 90, $bg);
-            imagecopy($identicon, $corner, $spriteZ * 2, $spriteZ * 2, 0, 0, $spriteZ, $spriteZ);
-            $corner = imagerotate($corner, 90, $bg);
-            imagecopy($identicon, $corner, $spriteZ * 2, 0, 0, 0, $spriteZ, $spriteZ);
-
-            /* generate side sprites */
-            $side = getsprite($ssh, $sfr, $sfg, $sfb, $sro);
-            imagecopy($identicon, $side, $spriteZ, 0, 0, 0, $spriteZ, $spriteZ);
-            $side = imagerotate($side, 90, $bg);
-            imagecopy($identicon, $side, 0, $spriteZ, 0, 0, $spriteZ, $spriteZ);
-            $side = imagerotate($side, 90, $bg);
-            imagecopy($identicon, $side, $spriteZ, $spriteZ * 2, 0, 0, $spriteZ, $spriteZ);
-            $side = imagerotate($side, 90, $bg);
-            imagecopy($identicon, $side, $spriteZ * 2, $spriteZ, 0, 0, $spriteZ, $spriteZ);
-
-            /* generate center sprite */
-            $center = getcenter($xsh, $cfr, $cfg, $cfb, $sfr, $sfg, $sfb, $xbg);
-            imagecopy($identicon, $center, $spriteZ, $spriteZ, 0, 0, $spriteZ, $spriteZ);
-
-            // $identicon=imagerotate($identicon,$angle,$bg);
-
-            /* make white transparent */
-            imagecolortransparent($identicon, $bg);
-
-            /* create blank image according to specified dimensions */
-            $resized = imagecreatetruecolor($size, $size);
-            imageantialias($resized, TRUE);
-
-            /* assign white as background */
-            $bg = imagecolorallocate($resized, 255, 255, 255);
-            imagefilledrectangle($resized, 0, 0, $size, $size, $bg);
-
-            /* resize identicon according to specification */
-            imagecopyresampled($resized, $identicon, 0, 0, (imagesx($identicon) - $spriteZ * 3) / 2,
-                (imagesx($identicon) - $spriteZ * 3) / 2, $size, $size, $spriteZ * 3, $spriteZ * 3);
-
-            /* make white transparent */
-            imagecolortransparent($resized, $bg);
-
-            return $resized;
-        }
-
-
-        /* generate sprite for corners and sides */
-        function getsprite($shape, $R, $G, $B, $rotation)
-        {
-            global $spriteZ;
-            $sprite = imagecreatetruecolor($spriteZ, $spriteZ);
-            imageantialias($sprite, TRUE);
-            $fg = imagecolorallocate($sprite, $R, $G, $B);
-            $bg = imagecolorallocate($sprite, 255, 255, 255);
-            imagefilledrectangle($sprite, 0, 0, $spriteZ, $spriteZ, $bg);
-            switch ($shape) {
-                case 0: // triangle
-                    $shape = [
-                        0.5,
-                        1,
-                        1,
-                        0,
-                        1,
-                        1
-                    ];
-                    break;
-                case 1: // parallelogram
-                    $shape = [
-                        0.5,
-                        0,
-                        1,
-                        0,
-                        0.5,
-                        1,
-                        0,
-                        1
-                    ];
-                    break;
-                case 2: // mouse ears
-                    $shape = [
-                        0.5,
-                        0,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0.5,
-                        1,
-                        1,
-                        0.5
-                    ];
-                    break;
-                case 3: // ribbon
-                    $shape = [
-                        0,
-                        0.5,
-                        0.5,
-                        0,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5
-                    ];
-                    break;
-                case 4: // sails
-                    $shape = [
-                        0,
-                        0.5,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0.5
-                    ];
-                    break;
-                case 5: // fins
-                    $shape = [
-                        1,
-                        0,
-                        1,
-                        1,
-                        0.5,
-                        1,
-                        1,
-                        0.5,
-                        0.5,
-                        0.5
-                    ];
-                    break;
-                case 6: // beak
-                    $shape = [
-                        0,
-                        0,
-                        1,
-                        0,
-                        1,
-                        0.5,
-                        0,
-                        0,
-                        0.5,
-                        1,
-                        0,
-                        1
-                    ];
-                    break;
-                case 7: // chevron
-                    $shape = [
-                        0,
-                        0,
-                        0.5,
-                        0,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0,
-                        1,
-                        0.5,
-                        0.5
-                    ];
-                    break;
-                case 8: // fish
-                    $shape = [
-                        0.5,
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        1,
-                        1,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        0.5
-                    ];
-                    break;
-                case 9: // kite
-                    $shape = [
-                        0,
-                        0,
-                        1,
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        1
-                    ];
-                    break;
-                case 10: // trough
-                    $shape = [
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0,
-                        1
-                    ];
-                    break;
-                case 11: // rays
-                    $shape = [
-                        0.5,
-                        0,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0.5,
-                        1,
-                        1,
-                        0.75,
-                        0.5,
-                        0.5,
-                        1,
-                        0.25
-                    ];
-                    break;
-                case 12: // double rhombus
-                    $shape = [
-                        0,
-                        0.5,
-                        0.5,
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        0,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        1
-                    ];
-                    break;
-                case 13: // crown
-                    $shape = [
-                        0,
-                        0,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0.5,
-                        0.5,
-                        0.25,
-                        0.5,
-                        0.75,
-                        0,
-                        0.5,
-                        0.5,
-                        0.25
-                    ];
-                    break;
-                case 14: // radioactive
-                    $shape = [
-                        0,
-                        0.5,
-                        0.5,
-                        0.5,
-                        0.5,
-                        0,
-                        1,
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        1
-                    ];
-                    break;
-                default: // tiles
-                    $shape = [
-                        0,
-                        0,
-                        1,
-                        0,
-                        0.5,
-                        0.5,
-                        0.5,
-                        0,
-                        0,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        1
-                    ];
-                    break;
-            }
-            /* apply ratios */
-            for ($i = 0; $i < count($shape); $i++)
-                $shape[$i] = $shape[$i] * $spriteZ;
-            imagefilledpolygon($sprite, $shape, count($shape) / 2, $fg);
-            /* rotate the sprite */
-            for ($i = 0; $i < $rotation; $i++)
-                $sprite = imagerotate($sprite, 90, $bg);
-
-            return $sprite;
-        }
-
-        /* generate sprite for center block */
-        function getcenter($shape, $fR, $fG, $fB, $bR, $bG, $bB, $usebg)
-        {
-            global $spriteZ;
-            $sprite = imagecreatetruecolor($spriteZ, $spriteZ);
-            imageantialias($sprite, TRUE);
-            $fg = imagecolorallocate($sprite, $fR, $fG, $fB);
-            /* make sure there's enough contrast before we use background color of side sprite */
-            if ($usebg > 0 && (abs($fR - $bR) > 127 || abs($fG - $bG) > 127 || abs($fB - $bB) > 127))
-                $bg = imagecolorallocate($sprite, $bR, $bG, $bB);
-            else
-                $bg = imagecolorallocate($sprite, 255, 255, 255);
-            imagefilledrectangle($sprite, 0, 0, $spriteZ, $spriteZ, $bg);
-            switch ($shape) {
-                case 0: // empty
-                    $shape = [];
-                    break;
-                case 1: // fill
-                    $shape = [
-                        0,
-                        0,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0,
-                        1
-                    ];
-                    break;
-                case 2: // diamond
-                    $shape = [
-                        0.5,
-                        0,
-                        1,
-                        0.5,
-                        0.5,
-                        1,
-                        0,
-                        0.5
-                    ];
-                    break;
-                case 3: // reverse diamond
-                    $shape = [
-                        0,
-                        0,
-                        1,
-                        0,
-                        1,
-                        1,
-                        0,
-                        1,
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        0,
-                        0.5
-                    ];
-                    break;
-                case 4: // cross
-                    $shape = [
-                        0.25,
-                        0,
-                        0.75,
-                        0,
-                        0.5,
-                        0.5,
-                        1,
-                        0.25,
-                        1,
-                        0.75,
-                        0.5,
-                        0.5,
-                        0.75,
-                        1,
-                        0.25,
-                        1,
-                        0.5,
-                        0.5,
-                        0,
-                        0.75,
-                        0,
-                        0.25,
-                        0.5,
-                        0.5
-                    ];
-                    break;
-                case 5: // morning star
-                    $shape = [
-                        0,
-                        0,
-                        0.5,
-                        0.25,
-                        1,
-                        0,
-                        0.75,
-                        0.5,
-                        1,
-                        1,
-                        0.5,
-                        0.75,
-                        0,
-                        1,
-                        0.25,
-                        0.5
-                    ];
-                    break;
-                case 6: // small square
-                    $shape = [
-                        0.33,
-                        0.33,
-                        0.67,
-                        0.33,
-                        0.67,
-                        0.67,
-                        0.33,
-                        0.67
-                    ];
-                    break;
-                case 7: // checkerboard
-                    $shape = [
-                        0,
-                        0,
-                        0.33,
-                        0,
-                        0.33,
-                        0.33,
-                        0.66,
-                        0.33,
-                        0.67,
-                        0,
-                        1,
-                        0,
-                        1,
-                        0.33,
-                        0.67,
-                        0.33,
-                        0.67,
-                        0.67,
-                        1,
-                        0.67,
-                        1,
-                        1,
-                        0.67,
-                        1,
-                        0.67,
-                        0.67,
-                        0.33,
-                        0.67,
-                        0.33,
-                        1,
-                        0,
-                        1,
-                        0,
-                        0.67,
-                        0.33,
-                        0.67,
-                        0.33,
-                        0.33,
-                        0,
-                        0.33
-                    ];
-                    break;
-            }
-            /* apply ratios */
-            for ($i = 0; $i < count($shape); $i++)
-                $shape[$i] = $shape[$i] * $spriteZ;
-            if (count($shape) > 0)
-                imagefilledpolygon($sprite, $shape, count($shape) / 2, $fg);
-
-            return $sprite;
-        }
-
-
-    }
-
-    if (!function_exists('slugIt')) {
-
-        /*
-         * Slug the string and convert all non latin characters into similar letters
-         *
-         * Example:
-         *  ć  =>  c
-         *  Ể  =>  E
-         *
-         */
-
-        function slugIt($str, $slug = true, $separator = '-')
-        {
-            $foreign_chars = Config::get('foreign_chars');
-
-            $array_from = array_keys($foreign_chars);
-            $array_to   = array_values($foreign_chars);
-
-            if (is_array($str) || is_object($str)) {
-                $str = implode(' ', (array)$str);
-            }
-
-            $str = preg_replace($array_from, $array_to, $str);
-
-            if ($slug) {
-                return Str::slug($str, $separator);
-            }
-
-            return $str;
-        }
-    }
-
-    if (!function_exists('hashDir')) {
-
-        function hashDir($id, $folder = 'gallery')
-        {
-
-            $id = abs($id + 20000);
-
-            $public = '';
-
-            if (App::runningInConsole()) {
-                $public = 'public/';
-            }
-
-            $path = 'files/' . $folder;
-
-            if (!is_dir($public . $path)) {
-                mkdir($public . $path);
-            }
-
-
-            $h       = $id % 4096;
-            $maindir = floor($h / 64);
-            $subdir  = $h % 64;
-
-
-            if (!is_dir($public . $path)) {
-                mkdir($public . $path);
-            }
-
-
-            if (!is_dir($public . $path . '/' . $maindir)) {
-                mkdir($public . $path . '/' . $maindir);
-            }
-            if (!is_dir($public . $path . '/' . $maindir . '/' . $subdir)) {
-                mkdir($public . $path . '/' . $maindir . '/' . $subdir);
-            }
-
-            return $path . '/' . $maindir . '/' . $subdir;
-
-
-        }
-    }
-
-
-    if (!function_exists('isTesting')) {
-
-        function isTesting()
-        {
-
-            if (isset($_GET['test'])) {
-                if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-                    $ip = $_SERVER['HTTP_CLIENT_IP'];
-                } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                } else {
-                    $ip = $_SERVER['REMOTE_ADDR'];
-                }
-
-                $allowed_ips = Config::get('evercise.testing_ips');
-
-
-                foreach ($allowed_ips as $i) {
-                    if (strpos($ip, $i) !== false) {
-                        return true;
-                    }
-
-                }
-
-            }
-
-            return false;
-        }
-    }
-
-
-    class Functions
+    function formatDuration($duration = 0)
     {
 
-        public static function getPosition($address = null)
-        {
-            if (is_null($address)) {
-                $query = Request::getClientIp();
+        $hours = floor($duration / 60);
+        $minutes = $duration % 60;
 
-                if ($query == '127.0.0.1' || $query == null) {
-                    $query = '151.237.238.126'; /* london office? */
-                }
+        return ($hours ? $hours . ' hours ' : '') . ($minutes . ' minutes');
+    }
+}
+
+
+if (!function_exists('event')) {
+
+    /*
+     * Wrap event class
+     *
+     */
+
+    function event($name, $params = [])
+    {
+        Event::fire($name, $params);
+    }
+}
+
+
+if (!function_exists('d')) {
+
+    /*
+     * nice print of vardump without the xdebug
+     *
+     */
+
+    function d($var, $die = TRUE)
+    {
+
+
+        $dumper = 'cli' === PHP_SAPI ? new CliDumper : new HtmlDumper;
+        $dumper->dump((new VarCloner)->cloneVar($var));
+
+
+        if ($die) {
+            die();
+        }
+    }
+}
+
+if (!function_exists('returnPlural')) {
+
+    /*
+     * nice print of vardump without the xdebug
+     *
+     */
+
+    function returnPlural($string, $count = 1)
+    {
+        if (is_array($count)) {
+            $count = count($count);
+        }
+        if ($count == 1) {
+            return str_singular($string);
+        }
+
+        return str_plural($string);
+    }
+}
+
+
+if (!function_exists('image')) {
+
+    /*
+     * nice print of vardump without the xdebug
+     *
+     */
+
+    function image($image, $alt = 'image', $params = [])
+    {
+        /*
+         * return html image tag
+         */
+        return HTML::image($image, $alt, $params);
+    }
+}
+
+
+if (!function_exists('generateImage')) {
+    function generateImage($size = 200)
+    {
+
+        $hash = str_random();
+
+        /* parse hash string */
+
+        $csh = hexdec(substr($hash, 0, 1)); // corner sprite shape
+        $ssh = hexdec(substr($hash, 1, 1)); // side sprite shape
+        $xsh = hexdec(substr($hash, 2, 1)) & 7; // center sprite shape
+
+        $cro = hexdec(substr($hash, 3, 1)) & 3; // corner sprite rotation
+        $sro = hexdec(substr($hash, 4, 1)) & 3; // side sprite rotation
+        $xbg = hexdec(substr($hash, 5, 1)) % 2; // center sprite background
+
+        /* corner sprite foreground color */
+        $cfr = hexdec(substr($hash, 6, 2));
+        $cfg = hexdec(substr($hash, 8, 2));
+        $cfb = hexdec(substr($hash, 10, 2));
+
+        /* side sprite foreground color */
+        $sfr = hexdec(substr($hash, 12, 2));
+        $sfg = hexdec(substr($hash, 14, 2));
+        $sfb = hexdec(substr($hash, 16, 2));
+
+        /* final angle of rotation */
+        $angle = hexdec(substr($hash, 18, 2));
+
+        /* size of each sprite */
+        $spriteZ = 128;
+
+        /* start with blank 3x3 identicon */
+        $identicon = imagecreatetruecolor($spriteZ * 3, $spriteZ * 3);
+        imageantialias($identicon, TRUE);
+
+        /* assign white as background */
+        $bg = imagecolorallocate($identicon, 255, 255, 255);
+        imagefilledrectangle($identicon, 0, 0, $spriteZ, $spriteZ, $bg);
+
+        /* generate corner sprites */
+        $corner = getsprite($csh, $cfr, $cfg, $cfb, $cro);
+        imagecopy($identicon, $corner, 0, 0, 0, 0, $spriteZ, $spriteZ);
+        $corner = imagerotate($corner, 90, $bg);
+        imagecopy($identicon, $corner, 0, $spriteZ * 2, 0, 0, $spriteZ, $spriteZ);
+        $corner = imagerotate($corner, 90, $bg);
+        imagecopy($identicon, $corner, $spriteZ * 2, $spriteZ * 2, 0, 0, $spriteZ, $spriteZ);
+        $corner = imagerotate($corner, 90, $bg);
+        imagecopy($identicon, $corner, $spriteZ * 2, 0, 0, 0, $spriteZ, $spriteZ);
+
+        /* generate side sprites */
+        $side = getsprite($ssh, $sfr, $sfg, $sfb, $sro);
+        imagecopy($identicon, $side, $spriteZ, 0, 0, 0, $spriteZ, $spriteZ);
+        $side = imagerotate($side, 90, $bg);
+        imagecopy($identicon, $side, 0, $spriteZ, 0, 0, $spriteZ, $spriteZ);
+        $side = imagerotate($side, 90, $bg);
+        imagecopy($identicon, $side, $spriteZ, $spriteZ * 2, 0, 0, $spriteZ, $spriteZ);
+        $side = imagerotate($side, 90, $bg);
+        imagecopy($identicon, $side, $spriteZ * 2, $spriteZ, 0, 0, $spriteZ, $spriteZ);
+
+        /* generate center sprite */
+        $center = getcenter($xsh, $cfr, $cfg, $cfb, $sfr, $sfg, $sfb, $xbg);
+        imagecopy($identicon, $center, $spriteZ, $spriteZ, 0, 0, $spriteZ, $spriteZ);
+
+        // $identicon=imagerotate($identicon,$angle,$bg);
+
+        /* make white transparent */
+        imagecolortransparent($identicon, $bg);
+
+        /* create blank image according to specified dimensions */
+        $resized = imagecreatetruecolor($size, $size);
+        imageantialias($resized, TRUE);
+
+        /* assign white as background */
+        $bg = imagecolorallocate($resized, 255, 255, 255);
+        imagefilledrectangle($resized, 0, 0, $size, $size, $bg);
+
+        /* resize identicon according to specification */
+        imagecopyresampled($resized, $identicon, 0, 0, (imagesx($identicon) - $spriteZ * 3) / 2,
+            (imagesx($identicon) - $spriteZ * 3) / 2, $size, $size, $spriteZ * 3, $spriteZ * 3);
+
+        /* make white transparent */
+        imagecolortransparent($resized, $bg);
+
+        return $resized;
+    }
+
+
+    /* generate sprite for corners and sides */
+    function getsprite($shape, $R, $G, $B, $rotation)
+    {
+        global $spriteZ;
+        $sprite = imagecreatetruecolor($spriteZ, $spriteZ);
+        imageantialias($sprite, TRUE);
+        $fg = imagecolorallocate($sprite, $R, $G, $B);
+        $bg = imagecolorallocate($sprite, 255, 255, 255);
+        imagefilledrectangle($sprite, 0, 0, $spriteZ, $spriteZ, $bg);
+        switch ($shape) {
+            case 0: // triangle
+                $shape = [
+                    0.5,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1
+                ];
+                break;
+            case 1: // parallelogram
+                $shape = [
+                    0.5,
+                    0,
+                    1,
+                    0,
+                    0.5,
+                    1,
+                    0,
+                    1
+                ];
+                break;
+            case 2: // mouse ears
+                $shape = [
+                    0.5,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0.5,
+                    1,
+                    1,
+                    0.5
+                ];
+                break;
+            case 3: // ribbon
+                $shape = [
+                    0,
+                    0.5,
+                    0.5,
+                    0,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5
+                ];
+                break;
+            case 4: // sails
+                $shape = [
+                    0,
+                    0.5,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0.5
+                ];
+                break;
+            case 5: // fins
+                $shape = [
+                    1,
+                    0,
+                    1,
+                    1,
+                    0.5,
+                    1,
+                    1,
+                    0.5,
+                    0.5,
+                    0.5
+                ];
+                break;
+            case 6: // beak
+                $shape = [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0.5,
+                    0,
+                    0,
+                    0.5,
+                    1,
+                    0,
+                    1
+                ];
+                break;
+            case 7: // chevron
+                $shape = [
+                    0,
+                    0,
+                    0.5,
+                    0,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0,
+                    1,
+                    0.5,
+                    0.5
+                ];
+                break;
+            case 8: // fish
+                $shape = [
+                    0.5,
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    1,
+                    1,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    0.5
+                ];
+                break;
+            case 9: // kite
+                $shape = [
+                    0,
+                    0,
+                    1,
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    1
+                ];
+                break;
+            case 10: // trough
+                $shape = [
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ];
+                break;
+            case 11: // rays
+                $shape = [
+                    0.5,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0.5,
+                    1,
+                    1,
+                    0.75,
+                    0.5,
+                    0.5,
+                    1,
+                    0.25
+                ];
+                break;
+            case 12: // double rhombus
+                $shape = [
+                    0,
+                    0.5,
+                    0.5,
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    0,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    1
+                ];
+                break;
+            case 13: // crown
+                $shape = [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0.5,
+                    0.5,
+                    0.25,
+                    0.5,
+                    0.75,
+                    0,
+                    0.5,
+                    0.5,
+                    0.25
+                ];
+                break;
+            case 14: // radioactive
+                $shape = [
+                    0,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0,
+                    1,
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    1
+                ];
+                break;
+            default: // tiles
+                $shape = [
+                    0,
+                    0,
+                    1,
+                    0,
+                    0.5,
+                    0.5,
+                    0.5,
+                    0,
+                    0,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    1
+                ];
+                break;
+        }
+        /* apply ratios */
+        for ($i = 0; $i < count($shape); $i++) {
+            $shape[$i] = $shape[$i] * $spriteZ;
+        }
+        imagefilledpolygon($sprite, $shape, count($shape) / 2, $fg);
+        /* rotate the sprite */
+        for ($i = 0; $i < $rotation; $i++) {
+            $sprite = imagerotate($sprite, 90, $bg);
+        }
+
+        return $sprite;
+    }
+
+    /* generate sprite for center block */
+    function getcenter($shape, $fR, $fG, $fB, $bR, $bG, $bB, $usebg)
+    {
+        global $spriteZ;
+        $sprite = imagecreatetruecolor($spriteZ, $spriteZ);
+        imageantialias($sprite, TRUE);
+        $fg = imagecolorallocate($sprite, $fR, $fG, $fB);
+        /* make sure there's enough contrast before we use background color of side sprite */
+        if ($usebg > 0 && (abs($fR - $bR) > 127 || abs($fG - $bG) > 127 || abs($fB - $bB) > 127)) {
+            $bg = imagecolorallocate($sprite, $bR, $bG, $bB);
+        } else {
+            $bg = imagecolorallocate($sprite, 255, 255, 255);
+        }
+        imagefilledrectangle($sprite, 0, 0, $spriteZ, $spriteZ, $bg);
+        switch ($shape) {
+            case 0: // empty
+                $shape = [];
+                break;
+            case 1: // fill
+                $shape = [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ];
+                break;
+            case 2: // diamond
+                $shape = [
+                    0.5,
+                    0,
+                    1,
+                    0.5,
+                    0.5,
+                    1,
+                    0,
+                    0.5
+                ];
+                break;
+            case 3: // reverse diamond
+                $shape = [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1,
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    0,
+                    0.5
+                ];
+                break;
+            case 4: // cross
+                $shape = [
+                    0.25,
+                    0,
+                    0.75,
+                    0,
+                    0.5,
+                    0.5,
+                    1,
+                    0.25,
+                    1,
+                    0.75,
+                    0.5,
+                    0.5,
+                    0.75,
+                    1,
+                    0.25,
+                    1,
+                    0.5,
+                    0.5,
+                    0,
+                    0.75,
+                    0,
+                    0.25,
+                    0.5,
+                    0.5
+                ];
+                break;
+            case 5: // morning star
+                $shape = [
+                    0,
+                    0,
+                    0.5,
+                    0.25,
+                    1,
+                    0,
+                    0.75,
+                    0.5,
+                    1,
+                    1,
+                    0.5,
+                    0.75,
+                    0,
+                    1,
+                    0.25,
+                    0.5
+                ];
+                break;
+            case 6: // small square
+                $shape = [
+                    0.33,
+                    0.33,
+                    0.67,
+                    0.33,
+                    0.67,
+                    0.67,
+                    0.33,
+                    0.67
+                ];
+                break;
+            case 7: // checkerboard
+                $shape = [
+                    0,
+                    0,
+                    0.33,
+                    0,
+                    0.33,
+                    0.33,
+                    0.66,
+                    0.33,
+                    0.67,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0.33,
+                    0.67,
+                    0.33,
+                    0.67,
+                    0.67,
+                    1,
+                    0.67,
+                    1,
+                    1,
+                    0.67,
+                    1,
+                    0.67,
+                    0.67,
+                    0.33,
+                    0.67,
+                    0.33,
+                    1,
+                    0,
+                    1,
+                    0,
+                    0.67,
+                    0.33,
+                    0.67,
+                    0.33,
+                    0.33,
+                    0,
+                    0.33
+                ];
+                break;
+        }
+        /* apply ratios */
+        for ($i = 0; $i < count($shape); $i++) {
+            $shape[$i] = $shape[$i] * $spriteZ;
+        }
+        if (count($shape) > 0) {
+            imagefilledpolygon($sprite, $shape, count($shape) / 2, $fg);
+        }
+
+        return $sprite;
+    }
+
+
+}
+
+if (!function_exists('slugIt')) {
+
+    /*
+     * Slug the string and convert all non latin characters into similar letters
+     *
+     * Example:
+     *  ć  =>  c
+     *  Ể  =>  E
+     *
+     */
+
+    function slugIt($str, $slug = TRUE, $separator = '-')
+    {
+        $foreign_chars = Config::get('foreign_chars');
+
+        $array_from = array_keys($foreign_chars);
+        $array_to = array_values($foreign_chars);
+
+        if (is_array($str) || is_object($str)) {
+            $str = implode(' ', (array)$str);
+        }
+
+        $str = preg_replace($array_from, $array_to, $str);
+
+        if ($slug) {
+            return Str::slug($str, $separator);
+        }
+
+        return $str;
+    }
+}
+
+if (!function_exists('hashDir')) {
+
+    function hashDir($id, $folder = 'gallery')
+    {
+
+        $id = abs($id + 20000);
+
+        $public = '';
+
+        if (App::runningInConsole()) {
+            $public = 'public/';
+        }
+
+        $path = 'files/' . $folder;
+
+        if (!is_dir($public . $path)) {
+            mkdir($public . $path);
+        }
+
+
+        $h = $id % 4096;
+        $maindir = floor($h / 64);
+        $subdir = $h % 64;
+
+
+        if (!is_dir($public . $path)) {
+            mkdir($public . $path);
+        }
+
+
+        if (!is_dir($public . $path . '/' . $maindir)) {
+            mkdir($public . $path . '/' . $maindir);
+        }
+        if (!is_dir($public . $path . '/' . $maindir . '/' . $subdir)) {
+            mkdir($public . $path . '/' . $maindir . '/' . $subdir);
+        }
+
+        return $path . '/' . $maindir . '/' . $subdir;
+
+
+    }
+}
+
+
+if (!function_exists('isTesting')) {
+
+    function isTesting()
+    {
+
+        if (isset($_GET['test'])) {
+            if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+                $ip = $_SERVER['HTTP_CLIENT_IP'];
+            } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
             } else {
-                $query = $address;
+                $ip = $_SERVER['REMOTE_ADDR'];
             }
 
+            $allowed_ips = Config::get('evercise.testing_ips');
 
-            $geocoder = new \Geocoder\Geocoder();
-            $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 
-            $chain = new \Geocoder\Provider\ChainProvider([
-                new \Geocoder\Provider\FreeGeoIpProvider($adapter),
-                new \Geocoder\Provider\HostIpProvider($adapter),
-                new \Geocoder\Provider\IpGeoBaseProvider($adapter),
-                new \Geocoder\Provider\GoogleMapsProvider($adapter),
-            ]);
+            foreach ($allowed_ips as $i) {
+                if (strpos($ip, $i) !== FALSE) {
+                    return TRUE;
+                }
 
-            $geocoder->registerProvider($chain);
-
-            try {
-                $geocode = $geocoder->geocode($query);
-            } catch (Exception $e) {
-                $geocode = $geocoder->geocode('london');
             }
 
-            /* catch should pick this up
-            if ($geocode->getLatitude() == 0 && $geocode->getLongitude() == 0) {
-               $geocode = $geocoder->geocode('london');
-            }*/
-
-            return $geocode;
         }
 
-        public static function getDistance($clientLat, $clientLng, $lat, $lng)
-        {
-            $geotools = new \League\Geotools\Geotools();
-            $coordA   = new \League\Geotools\Coordinate\Coordinate([$clientLat, $clientLng]);
-            $coordB   = new \League\Geotools\Coordinate\Coordinate([$lat, $lng]);
-            $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
+        return FALSE;
+    }
+}
 
-            return $distance;
+
+class Functions
+{
+
+    public static function getPosition($address = NULL)
+    {
+        if (is_null($address)) {
+            $query = Request::getClientIp();
+
+            if ($query == '127.0.0.1' || $query == NULL) {
+                $query = '151.237.238.126'; /* london office? */
+            }
+        } else {
+            $query = $address;
         }
 
-        public static function getCalendarTemplate()
-        {
-            $template = '
+
+        $geocoder = new \Geocoder\Geocoder();
+        $adapter = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+
+        $chain = new \Geocoder\Provider\ChainProvider([
+            new \Geocoder\Provider\FreeGeoIpProvider($adapter),
+            new \Geocoder\Provider\HostIpProvider($adapter),
+            new \Geocoder\Provider\IpGeoBaseProvider($adapter),
+            new \Geocoder\Provider\GoogleMapsProvider($adapter),
+        ]);
+
+        $geocoder->registerProvider($chain);
+
+        try {
+            $geocode = $geocoder->geocode($query);
+        } catch (Exception $e) {
+            $geocode = $geocoder->geocode('london');
+        }
+
+        /* catch should pick this up
+        if ($geocode->getLatitude() == 0 && $geocode->getLongitude() == 0) {
+           $geocode = $geocoder->geocode('london');
+        }*/
+
+        return $geocode;
+    }
+
+    public static function getDistance($clientLat, $clientLng, $lat, $lng)
+    {
+        $geotools = new \League\Geotools\Geotools();
+        $coordA = new \League\Geotools\Coordinate\Coordinate([$clientLat, $clientLng]);
+        $coordB = new \League\Geotools\Coordinate\Coordinate([$lat, $lng]);
+        $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
+
+        return $distance;
+    }
+
+    public static function getCalendarTemplate()
+    {
+        $template = '
             {table_open}<table border="0" cellpadding="0" cellspacing="0" id="calendar" class="calendar">{/table_open}
 
             {heading_row_start}<tr class="calendar-head">{/heading_row_start}
@@ -896,32 +943,32 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
             {table_close}</table>{/table_close}
         ';
 
-            return $template;
-        }
-
-        public static function randomPassword($charachters)
-        {
-            $alphabet    = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-            $pass        = []; //remember to declare $pass as an array
-            $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-            for ($i = 0; $i < $charachters; $i++) {
-                $n      = rand(0, $alphaLength);
-                $pass[] = $alphabet[$n];
-            }
-
-            return implode($pass); //turn the array into a string
-        }
-
-
-        public static function arrayDate($array, $format = 'h:ia M-dS')
-        {
-            $dateTime = [];
-
-            foreach ($array as $key => $value) {
-                $dateTime[$key] = date($format, strtotime($value));
-            }
-
-            return $dateTime;
-        }
-
+        return $template;
     }
+
+    public static function randomPassword($charachters)
+    {
+        $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+        $pass = []; //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < $charachters; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+
+        return implode($pass); //turn the array into a string
+    }
+
+
+    public static function arrayDate($array, $format = 'h:ia M-dS')
+    {
+        $dateTime = [];
+
+        foreach ($array as $key => $value) {
+            $dateTime[$key] = date($format, strtotime($value));
+        }
+
+        return $dateTime;
+    }
+
+}
