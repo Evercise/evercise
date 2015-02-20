@@ -260,6 +260,8 @@ class SearchModel
         $this->elastic->saveStats((!empty($user->id) ? $user->id : 0), $this->input->ip(), $area, $params,
             $searchResults->total);
 
+        $seoUrl = SeoUrls::match($search, $area->name);
+
         $data = [
             'area'           => $area,
             'results'        => $searchResults,
@@ -271,7 +273,9 @@ class SearchModel
             'radius'         => $radius,
             'allowed_radius' => array_flip($this->config->get('evercise.radius')),
             'page'           => $page,
-            'search'         => $search
+            'search'         => $search,
+            'title'          => $seoUrl['title'],
+            'desc'           => $seoUrl['desc'],
         ];
 
 

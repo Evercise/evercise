@@ -663,6 +663,10 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
     Route::post('runindexer',
         ['as' => 'ajax.admin.indexall', 'uses' => 'AdminAjaxController@runIndexer']);
 
+    Route::delete(
+        '/seourls/delete',
+        ['as' => 'admin.ajax.delete.seourls', 'before' => 'admin', 'uses' => 'AdminAjaxController@deleteSeoUrl']
+    );
 
 });
 
@@ -705,9 +709,11 @@ Route::group(
             ['as' => 'admin.subcategories', 'uses' => 'MainController@subcategories']);
 
         Route::get('/seourls',
-            ['as' => 'admin.seourls', 'uses' => 'MainController@seourls']);
-        Route::post('/seourls',
-            ['as' => 'admin.seourls.update', 'uses' => 'MainController@updateSeourls']);
+            ['as' => 'admin.seourls', 'uses' => 'MainController@seoUrls']);
+        Route::get('seourls/{id?}',
+            ['as' => 'admin.seourls.manage', 'uses' => 'MainController@seoUrlsManage']);
+        Route::post('/update_seourl',
+            ['as' => 'admin.update_seourl', 'uses' => 'MainController@updateSeoUrl']);
 
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);

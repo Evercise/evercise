@@ -18,5 +18,10 @@ class SeoUrls extends Eloquent
      */
     protected $table = 'seo_urls';
 
+    public static function match($search, $location)
+    {
+        return ['title' => 'yep', 'desc' => 'nope'];
+    }
+
 
 }

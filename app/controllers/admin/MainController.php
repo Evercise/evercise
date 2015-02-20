@@ -712,16 +712,49 @@ class MainController extends \BaseController
         return View::make('admin.edit_category', compact('category', 'groups', 'subcategories'));
     }
 
-    public function seourls()
+    public function seoUrls()
     {
         $seourls = SeoUrls::get();
 
         return View::make('admin.seo_urls', compact('seourls'));
     }
 
-    public function updateSeourls()
+    public function seoUrlsManage($id)
     {
+        if($id > 0)
+            $seoUrl = SeoUrls::find($id);
 
+        else
+            $seoUrl = 0;
+
+        return View::make('admin.edit_seourl', compact('seoUrl'));
+    }
+
+    public function updateSeoUrl()
+    {
+        $id = Input::get('id');
+
+        if($id > 0)
+        {
+            $seoUrl = SeoUrls::find($id);
+            $seoUrl->location = Input::get('location');
+            $seoUrl->search = Input::get('search');
+            $seoUrl->title = Input::get('title');
+            $seoUrl->description = Input::get('description');
+
+            $seoUrl->save();
+        }
+        else
+        {
+            SeoUrls::create([
+                'location' => Input::get('location'),
+                'search' => Input::get('search'),
+                'title' => Input::get('title'),
+                'description' => Input::get('description'),
+            ]);
+        }
+
+        return Redirect::route('admin.seourls');
     }
 
 
