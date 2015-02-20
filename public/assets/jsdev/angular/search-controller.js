@@ -24,6 +24,7 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
+        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -57,24 +58,21 @@ if(typeof angular != 'undefined') {
                     $scope.passInGroupId = model.id;
                     $scope.everciseGroups = shapeEverciseGroups();
                     $scope.lastActiveMarker = model;
-                    setTimeout(function(){
-                        markerClicked(marker,e,model);
-                    },500);
+                    markerClicked(marker,e,model);
                 }
                 else{
-                    $scope.passInGroupId = false;
                     for(var i = 0; i < $scope.everciseGroups.length; i++){
                         if($scope.everciseGroups[i].tempIcon){
-                            $scope.everciseGroups[i].icon = '/assets/img/icon_default_small_pin.png';
+                            $scope.everciseGroups[i].icon = '/assets/img/icon_default_pin_active.svg';
                             $scope.everciseGroups[i].tempIcon = false;
                         }
                     }
                     markerClicked(marker,e,model);
 
                     // toggle markers
-                    $scope.lastActiveMarker.icon = '/assets/img/icon_default_small_pin.png';
+                    $scope.lastActiveMarker.icon = '/assets/img/icon_default_pin_active.svg';
                     $scope.lastActiveMarker = model;
-                    model.icon = '/assets/img/icon_default_large_pink.png';
+                    model.icon = '/assets/img/icon_default_pin_selected.svg';
                 }
 
 
@@ -210,7 +208,7 @@ if(typeof angular != 'undefined') {
         $scope.mapEvents = {
             // any map events go here
             dragend : function () {
-                //ChangedBounds();
+                ChangedBounds();
             },
             zoom_changed : function(){
                 //ChangedBounds();
@@ -248,7 +246,7 @@ if(typeof angular != 'undefined') {
                 var arr = $.grep($scope.everciseGroups, function(item, index) {
                     return item.id != v.id;
                 });
-                var icon = '/assets/img/icon_default_small_pin_grey.png';
+                var icon = '/assets/img/icon_default_pin_inactive.svg';
                 var notFound = true;
                 var active = false;
                 var zindex = -1;
@@ -257,7 +255,7 @@ if(typeof angular != 'undefined') {
                 var times = $.map(v.dates, function(value, index) {
                     if(index == $scope.activeDate){
 
-                        icon = '/assets/img/icon_default_small_pin.png';
+                        icon = '/assets/img/icon_default_pin_active.svg';
                         active = true;
                         zindex = 10;
                         notFound == false;
@@ -272,15 +270,21 @@ if(typeof angular != 'undefined') {
                     }
                 });
                 if($scope.passInGroupId == v.id ){
-                    icon = '/assets/img/icon_default_large_pink.png';
+                    icon = '/assets/img/icon_default_pin_selected.svg';
                     tempIcon = true;
                 }
+                var score = v.score;
+                if(!$scope.results.search){
+                    score = i;
+                };
                 if(arr){
                     groups.push({
                         id : v.id,
                         name : v.name,
                         icon : icon,
-                        options : {zIndex : zindex},
+                        options : {
+                            zIndex : zindex
+                        },
                         venue : {
                             id : v.venue.id,
                             name : v.venue.name,
@@ -291,6 +295,7 @@ if(typeof angular != 'undefined') {
                         active : active,
                         tempIcon : tempIcon,
                         slug: v.slug,
+                        score: score,
                         remaining: v.futuresessions[0].remaining,
                         times : times[0] ,
                         otherDates : nextDates,
@@ -335,30 +340,6 @@ if(typeof angular != 'undefined') {
         // scroll dates
 
         $scope.available_dates = $scope.results.available_dates;
-
-
-        $scope.scrollWidth = function(){
-            var singleWidth = $('.date-picker-inline li .day').outerWidth();
-            var noOfDates = Object.keys($scope.available_dates).length;
-            return {
-                width: (singleWidth * noOfDates) + 'px'
-            }
-        }
-
-        $scope.scrollBtnWidth = function(){
-            if($scope.width < 992) {
-                var containerWidth = $scope.width - ($('.date-picker-inline .scroll').outerWidth() * 2 );
-                if($scope.width > 767) {
-                    var dateWidth = containerWidth / 14;
-                }
-                else{
-                    var dateWidth = containerWidth / 5;
-                }
-                return {
-                    width: dateWidth + 'px'
-                }
-            }
-        }
 
         $scope.scroll_clicked = false;
 
@@ -434,7 +415,6 @@ if(typeof angular != 'undefined') {
         $(document).on('click','.filter-btn, .sort-btn', function(e){
             e.preventDefault();
             closeTab($(this));
-
         } )
 
         var closeTab = function(tab){
@@ -453,8 +433,31 @@ if(typeof angular != 'undefined') {
         $scope.sortChanged = function(e, sort){
             e.preventDefault();
             $scope.results.sort = sort;
-            $scope.getData();
         }
+
+        $scope.sortGroups = 'score';
+
+        $scope.$watch('results.sort', function(newVal, oldVal) {
+            if(newVal != oldVal){
+                if(newVal== 'distance'){
+                    $scope.sortGroups = 'distance';
+                }
+                else if(newVal == 'price_desc'){
+                    $scope.sortGroups = '-price';
+                }
+                else if(newVal == 'price_asc'){
+                    $scope.sortGroups = 'price';
+                }
+                else{
+                    $scope.sortGroups = 'score';
+                }
+            }
+            $(".tab-pane").removeClass('active');
+            $('.sort-btn').parent('li').removeClass('active');
+            $scope.openFilter = null;
+        }, true);
+
+
 
         // url to use for ajax calls
         $scope.url = $scope.results.url;

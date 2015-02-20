@@ -95,7 +95,6 @@ Cart.prototype = {
                 else{
                     self.form.find("input[type='submit']").replaceWith('<span id="cart-loading" class="icon icon-loading"></span>');
                 }
-                console.log($('.checkout .mask').length);
                 if($('.checkout .mask').length){
                     $('.mask').removeClass('hidden');
                 }
@@ -105,7 +104,10 @@ Cart.prototype = {
 
             success: function (data) {
                 if(data.view){
-                    self.updateCart(data);
+                    $('html,body').animate({scrollTop:0}, 300);
+                    setTimeout(function(){
+                        self.updateCart(data);
+                    }, 300);
                     if($('.checkout .mask').length){
                         $('.checkout .mask').addClass('hidden');
                     }

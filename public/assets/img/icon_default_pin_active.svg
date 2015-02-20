@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_default_pin_active@3x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="map_icons" sketch:type="MSArtboardGroup" transform="translate(0.000000, -40.000000)">
+            <g id="icon_default_pin_inactive" sketch:type="MSLayerGroup" transform="translate(4.000000, 0.000000)" fill="#6B7D93">
+                <path d="M15.8383684,0.666015625 C7.56213465,0.666015625 0.854048295,7.49556374 0.854048295,15.9198287 C0.854048295,27.5517734 12.9816519,40.1489415 15.8867569,40.1489415 C18.7918619,40.1489415 30.8208963,27.5517734 30.8208963,15.9198287 C30.8208963,7.49556374 24.1128099,0.666015625 15.8383684,0.666015625 L15.8383684,0.666015625 Z" id="location" sketch:type="MSShapeGroup"></path>
+            </g>
+            <g id="icon_default_pin_active" sketch:type="MSLayerGroup" transform="translate(4.000000, 40.000000)" fill="#FF1B7E">
+                <path d="M15.8383684,0.666015625 C7.56213465,0.666015625 0.854048295,7.49556374 0.854048295,15.9198287 C0.854048295,27.5517734 12.9816519,40.1489415 15.8867569,40.1489415 C18.7918619,40.1489415 30.8208963,27.5517734 30.8208963,15.9198287 C30.8208963,7.49556374 24.1128099,0.666015625 15.8383684,0.666015625 L15.8383684,0.666015625 Z" id="location" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

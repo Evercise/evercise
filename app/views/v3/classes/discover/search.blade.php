@@ -101,7 +101,7 @@
                     </div>
                     <div role="tabpanel" class="tab-pane sort-box open" id="sort">
                         <ul class="dropdown-menu open" role="menu" aria-labelledby="dropdownMenu1">
-                            <li ng-class="(results.sort == 'best') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'best')">Best</a></li>
+                            <li ng-if="results.search" ng-class="(results.sort == 'best') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'best')">Best</a></li>
                             <li ng-class="(results.sort == 'distance') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'distance')">Distance</a></li>
                             <li ng-class="(results.sort == 'price_desc') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'price_desc')">Price (high to low)</a></li>
                             <li ng-class="(results.sort == 'price_asc') ? 'active' : ''"><a href="#" ng-click="sortChanged($event, 'price_asc')">Price (low to high)</a></li>
@@ -111,8 +111,8 @@
             </div>
             <div ng-if="results.results.total > 0 && !selectedVenueIds"  class="date-picker-inline">
                 <div class="wrapper">
-                    <div class="content" ng-style="scrollWidth()">
-                         <li class="date-btn" ng-style="scrollBtnWidth()" ng-repeat="(date, value) in available_dates" ng-class="((date == activeDate) ? 'active' : (value > 0 ? 'available' : ''))">
+                    <div class="content">
+                         <li class="date-btn" ng-repeat="(date, value) in available_dates" ng-class="((date == activeDate) ? 'active' : (value > 0 ? 'available' : ''))">
                             <div ng-class="value == 0 ? 'disabled' : ''">
                             <div class="day">{[{ date | date : 'EEE'}]}</div>
                                 <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeActiveDate($event, date)">
@@ -130,7 +130,7 @@
             <div class="groups" ng-class="width > 992 ?  'mb-scroll' : ''" ng-style="groupHeight()">
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
-                <div class="list-results" ng-repeat="group in everciseGroups | filter:isClassVisible" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
+                <div class="list-results" ng-repeat="group in everciseGroups | orderBy: sortGroups:reverse | filter:isClassVisible" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>
                         <ul class="list-group class-block">
                              <li class="list-group-item class-img-wrapper">
@@ -146,6 +146,7 @@
                                      <aside class="btn-wrapper"><a ng-click="gaEventTrigger('View Class', 'click', group.name)" href="/classes/{[{ group.slug }]}" class="btn btn-primary btn-block">{[{ width > 500 ?  'View Class' : 'View' }]} </a></aside>
                                  </li>
                              </div>
+                         </ul>
                          </ul>
                      </div>
                     <div ng-if="view == 'list'" class="row no-gutter ml0 mr0 class-stacked" ng-class="(activeGroupId == group.id) ? 'active' : ''">
