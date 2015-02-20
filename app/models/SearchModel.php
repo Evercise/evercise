@@ -260,7 +260,7 @@ class SearchModel
         $this->elastic->saveStats((!empty($user->id) ? $user->id : 0), $this->input->ip(), $area, $params,
             $searchResults->total);
 
-        $seoUrl = SeoUrls::match($search, $area->name);
+        $seoUrl = SeoUrls::match($search, $area);
 
         $data = [
             'area'           => $area,

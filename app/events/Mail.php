@@ -333,10 +333,9 @@ class Mail
      * @param $userList
      * @param $group
      * @param $location
-     * @param $dateTime
      * @param $trainerName
      * @param $trainerEmail
-     * @param $classId
+     * @param $session
      *
      * Event session.upcoming_session
      * Single event fires emails to all users and the trainer involved in the session.
@@ -345,30 +344,27 @@ class Mail
         $userList,
         $group,
         $location,
-        $dateTime,
         $trainerName,
         $trainerEmail,
-        $classId,
-        $sessionId
+        $session
     ) {
         foreach ($userList as $name => $details) {
             $email = $details['email'];
 
             $transaction = \Transactions::find($details['transactionId']);
-            $bookingCodes = $transaction->makeBookingHashBySession($sessionId);
+            $bookingCodes = $transaction->makeBookingHashBySession($session->id);
 
             $params = [
                 'subject'       => 'Evercise class reminder',
                 'view'          => 'v3.emails.user.session_remind',
                 'userList'      => $userList,
                 'group'         => $group,
+                'session'       => $session,
                 'location'      => $location,
                 'name'          => $name,
                 'email'         => $email,
-                'dateTime'      => $dateTime,
                 'trainerName'   => $trainerName,
                 'trainerEmail'  => $trainerEmail,
-                'classId'       => $classId,
                 'style'         => 'blue',
                 'transactionId' => $details['transactionId'],
                 'bookingCodes'  => $bookingCodes,
@@ -754,10 +750,9 @@ class Mail
      * @param $userList
      * @param $group
      * @param $location
-     * @param $dateTime
      * @param $trainerName
      * @param $trainerEmail
-     * @param $classId
+     * @param $session
      *
      * Event: session.upcoming_session
      * Single event fires emails to all users and the trainer involved in the session.
@@ -766,26 +761,22 @@ class Mail
         $userList,
         $group,
         $location,
-        $dateTime,
         $trainerName,
         $trainerEmail,
-        $classId,
-        $sessionId
+        $session
     ) {
         $params = [
             'subject'      => 'Class reminder & participant list',
             'view'         => 'v3.emails.trainer.session_remind',
             'userList'     => $userList,
             'group'        => $group,
+            'session'      => $session,
             'location'     => $location,
-            'dateTime'     => $dateTime,
             'trainerName'  => $trainerName,
             'trainerEmail' => $trainerEmail,
-            'classId'      => $classId,
-            'sessionId'    => $sessionId,
             'style'        => 'blue',
             'image'        => image('/assets/img/email/user_class_reminder.jpg', 'reminder of upcoming class'),
-            'link_url'     => $this->url->to('/download_user_list/' . $sessionId)
+            'link_url'     => $this->url->to('/download_user_list/' . $session->id)
         ];
 
         $this->send($trainerEmail, $params);
@@ -797,7 +788,6 @@ class Mail
      * @param $session
      * @param $messageSubject
      * @param $messageBody
-     * @internal param $group
      */
     public function trainerMailAll($userList, $evercisegroup, $session, $messageSubject, $messageBody)
     {
@@ -938,10 +928,10 @@ class Mail
     /**
      * @param $trainer
      * @param $user
-     * @param $group
-     * @param $dateTime
-     * @param $messageSubject
-     * @param $messageBody
+     * @param $evercisegroup
+     * @param $session
+     * @param $subject
+     * @param $body
      */
     public function mailTrainer($trainer, $user, $evercisegroup, $session, $subject, $body)
     {

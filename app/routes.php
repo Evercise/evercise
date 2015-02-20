@@ -34,19 +34,8 @@ foreach (Config::get('redirect') as $old => $new) {
     );
 }
 
-Route::get('email',
-    [
-        'before' => 'admin',
-        function () {
 
-
-
-            $mail = App::make('events\Mail');
-
-            return $mail->sendEmailAgain();
-        }
-    ]
-);
+Route::get('sitemap.xml', ['as' => 'sitemap', 'uses' => 'SiteMapController@index']);
 
 
 Route::get('ttt',

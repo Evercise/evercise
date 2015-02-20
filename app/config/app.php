@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -13,7 +13,7 @@ return array(
     |
     */
 
-    'debug'     => (getenv('DEBUG_APP') ?: false),
+    'debug'     => (getenv('DEBUG_APP') ?: FALSE),
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -72,9 +72,8 @@ return array(
     | this array to grant expanded functionality to your applications.
     |
     */
-    'cipher' => MCRYPT_RIJNDAEL_256,
-
-    'providers' => array(
+    'cipher'    => MCRYPT_RIJNDAEL_256,
+    'providers' => [
 
         'Illuminate\Foundation\Providers\ArtisanServiceProvider',
         'Illuminate\Auth\AuthServiceProvider',
@@ -127,11 +126,11 @@ return array(
         'Igormatkovic\Livelogger\LiveloggerServiceProvider',
         'Davispeixoto\LaravelSalesforce\LaravelSalesforceServiceProvider',
         'Liebig\Cron\CronServiceProvider',
-        'Tzookb\TBMsg\TBMsgServiceProvider'
+        'Tzookb\TBMsg\TBMsgServiceProvider',
+        'Watson\Sitemap\SitemapServiceProvider'
 
 
-
-    ),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Service Provider Manifest
@@ -155,7 +154,7 @@ return array(
     |
     */
 
-    'aliases'   => array(
+    'aliases'   => [
 
         'App'                => 'Illuminate\Support\Facades\App',
         'Artisan'            => 'Illuminate\Support\Facades\Artisan',
@@ -211,8 +210,10 @@ return array(
         'Shortcode'          => 'Pingpong\Shortcode\Facades\Shortcode',
         'Cart'               => 'Gloudemans\Shoppingcart\Facades\Cart',
         'Log'                => 'Igormatkovic\Livelogger\Facades\Livelogger',
-        'TBMsg'              => 'Tzookb\TBMsg\Facade\TBMsg'
+        'TBMsg'              => 'Tzookb\TBMsg\Facade\TBMsg',
+        'Sitemap'            => 'Watson\Sitemap\Facades\Sitemap'
 
-    ),
 
-);
+    ],
+
+];

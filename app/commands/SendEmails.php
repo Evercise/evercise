@@ -146,12 +146,10 @@ class SendEmails extends Command {
 					$emails[] = [
 						'groupName'=>$group->name,
 						'group'=>$group,
-						'dateTime'=>$session->date_time,
 						'userList' =>$userList,
 						'trainer'=>$group->user,
 						'location'=>$group->venue->address.', '.$group->venue->town.', '.$group->venue->postcode,
-						'classId' => $group->id,
-						'sessionId' => $session->id,
+						'session' => $session,
 					];
 					$sessionIds[] = $session->id;
 				}
@@ -163,7 +161,7 @@ class SendEmails extends Command {
 			foreach($emails as $email)
 			{
 				$this->info('');
-				$this->info('Session: '.$email['groupName'].' - '.$email['dateTime']);
+				$this->info('Session: '.$email['groupName'].' - '.$email['session']->date_time);
 				$this->info('Trainer: '.$email['trainer']->id.' - '.$email['trainer']->display_name);
 				$this->info('Venue: '.$email['location']);
 				foreach ($email['userList'] as $name => $details)
@@ -176,11 +174,9 @@ class SendEmails extends Command {
 	            	'userList' => $email['userList'], 
 	            	'group' => $email['group'],
 	                'location' => $email['location'],
-	                'dateTime' => $email['dateTime'],
 	                'trainerName' => $email['trainer']->first_name.' '.$email['trainer']->last_name,
 	                'trainerEmail' => $email['trainer']->email,
-	                'classId' => $email['classId'],
-	                'sessionId' => $email['sessionId'],
+	                'session' => $email['session'],
 	            ]);
 
 			}

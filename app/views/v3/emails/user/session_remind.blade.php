@@ -50,7 +50,7 @@
                                         <tr height="80px">
                                             <td width="100%">
                                                 <a href="{{route('class.show', $group->slug)}}"><strong>{{$group->name}}</strong></a>
-                                                <p>{{ date('M jS, g:ia', strtotime($dateTime)) }}<br>{{ ucwords($group->venue->address) }}<br>{{ ucwords($group->venue->town) . ' ' . strtoupper($group->venue->postcode) }}</p>
+                                                <p>{{ date('M jS, g:ia', strtotime($session->date_time)) }}<br>{{ ucwords($group->venue->address) }}<br>{{ ucwords($group->venue->town) . ' ' . strtoupper($group->venue->postcode) }}</p>
                                             </td>
                                         </tr>
                                     </table>
@@ -60,7 +60,7 @@
                                     <table width="100%" height="100%" align="right" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
                                         <tr height="80px">
                                             <td width="100%" align="right">
-                                                <strong class="pink-text"><b class="pink-text">&pound;{{$group->default_price}}</b></strong>
+                                                <strong class="pink-text"><b class="pink-text">&pound;{{$session->price}}</b></strong>
                                             </td>
                                         </tr>
                                         <tr height="30%">
