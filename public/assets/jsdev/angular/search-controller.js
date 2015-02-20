@@ -362,29 +362,7 @@ if(typeof angular != 'undefined') {
             }
             $scope.selectedDate = dt.getFullYear() + '-' + ('0' + (dt.getMonth() +1)).slice(-2) + '-' +  ('0' + dt.getDate()).slice(-2);
             $scope.getData();
-            /*
-            var par = $(e.target).parent();
-            if($scope.width < 992){
-                var width = par.outerWidth() - ($('.date-picker-inline .scroll').outerWidth() * 2 );
-            }
-            else{
-                var width = par.width();
-            }
-            var content = par.find('.content');
-            var mg = parseInt(content.css('margin-left'));
-            var contentWidth = -content.width();
-            if(direction == 'right'){
-                var newMg = mg - width;
-            }
-            else{
-                var newMg = mg + width;
-            }
-            if(newMg <= 0 && newMg >= contentWidth){
-                par.find('.content').css({
-                    'margin-left' : newMg+'px'
-                })
-            }
-            */
+
             setTimeout(function() {
                 $scope.scroll_clicked = false;
             }, 500)
@@ -400,11 +378,6 @@ if(typeof angular != 'undefined') {
             e.preventDefault();
             $scope.activeDate = date;
             $scope.everciseGroups = shapeEverciseGroups();
-            /*if ("pushState" in history) {
-                $location.url('gooo');
-                $location.replace();
-                $window.history.pushState(null, 'any', $location.absUrl());
-            }*/
         }
 
 
