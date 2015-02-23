@@ -58,7 +58,7 @@
         </thead>
         @foreach($seourls as $url)
             <tr data-subid="{{$url->id}}" class="seourl_{{ $url->id}}">
-                <td>{{$url->location}}</td>
+                <td>{{$url->locationName()}}</td>
                 <td>{{$url->search}}</td>
                 <td>{{$url->title}}</td>
                 <td>{{$url->description}}</td>

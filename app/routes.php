@@ -656,7 +656,7 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         '/seourls/delete',
         ['as' => 'admin.ajax.delete.seourls', 'before' => 'admin', 'uses' => 'AdminAjaxController@deleteSeoUrl']
     );
-    Route::get('/search_places',
+    Route::post('search_places',
         ['as' => 'admin.ajax.search_places', 'uses' => 'AdminAjaxController@searchPlaces']);
 
 });

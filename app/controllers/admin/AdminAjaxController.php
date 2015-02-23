@@ -5,7 +5,7 @@
  * Class AdminAjaxController
  * @property Elastic elastic
  */
-class AdminAjaxController extends AdminController
+class AdminAjaxController extends Controller
 {
     /**
      * @var Evercisegroup
@@ -43,7 +43,9 @@ class AdminAjaxController extends AdminController
         Geotools $geotools
     ) {
 
-        parent::__construct();
+        App::environment();
+
+        //parent::__construct();
 
         $this->evercisegroup = $evercisegroup;
         $this->input = $input;
@@ -759,7 +761,13 @@ class AdminAjaxController extends AdminController
 
         $places = Place::where('name', 'LIKE', '%'.$searchTerm.'%')->lists('name', 'id');
 
-        return Response::json(['places'=>$places]);
+        $returnPlaces = [];
+        foreach ($places as $id => $name) {
+            $returnPlaces[] = ['id'=>$id, 'name'=>$name];
+        }
+
+
+        return Response::json($returnPlaces);
     }
 
 }
