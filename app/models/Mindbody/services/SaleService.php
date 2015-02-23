@@ -146,6 +146,14 @@ class SaleService extends \MindbodyAPI\MindbodyClient
 	 */
 	public function CheckoutShoppingCart(structures\CheckoutShoppingCart $parameters)
 	{
+
+
+        unset($parameters->Request->PromotionCode);
+        unset($parameters->Request->SendEmail);
+        unset($parameters->Request->LocationID);
+        unset($parameters->Request->InStore);
+
+
 		return $this->__soapCall('CheckoutShoppingCart', [
 			$parameters
 		], [

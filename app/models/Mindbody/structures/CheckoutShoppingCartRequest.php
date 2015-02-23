@@ -11,7 +11,9 @@ class CheckoutShoppingCartRequest {
 	public $SendEmail; // boolean
 	public $LocationID; // int
 	public $Image; // base64Binary
-	public $ImageFileName; // string
-	
+	public $XMLDetail; // string
+	public $PageSize; // int
+	public $CurrentPageIndex; // int
+
 }
 ?>

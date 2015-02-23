@@ -121,9 +121,6 @@ class Mindbody
         } catch( SoapFault $e) {
             d($e);
         }
-        d($apiClasses, false);
-
-
         return $apiClasses->Clients->Client->ID;
 
     }
@@ -133,7 +130,7 @@ class Mindbody
 
 
 
-      $client_ID = $this->getUserMindbodyId($user);
+        $client_ID = $this->getUserMindbodyId($user);
        // $client_ID = 100015649;
 
         $unset = [
@@ -484,6 +481,43 @@ class Mindbody
 
 
         return $classes;
+    }
+
+
+    public function purchaseClass($classId, $user) {
+
+        $cartItem = new \MindbodyAPI\structures\CartItem();
+
+        $CustomPaymentInfo = new \MindbodyAPI\structures\CustomPaymentInfo();
+
+        $client_ID = 100015642; //$this->getUserMindbodyId($user);
+
+        $cartItem->ClassIDs = [$classId];
+        $cartItem->Quantity = 1;
+        $cartItem->DiscountAmount = 0;
+
+        $CustomPaymentInfo->ID = 17;
+        $CustomPaymentInfo->Amount = 6.99;
+
+
+
+
+
+        $service = $this->getService('SaleService');
+        $request = $service::request('CheckoutShoppingCart', $this->credentials, null,
+            ['CartItems' => ['CartItem' => $cartItem], 'Payments' => ['PaymentInfo' => $CustomPaymentInfo], 'ClientID' => $client_ID, 'InStore' => true,  'PromotionCode' => '']);
+        try {
+            $apiClasses = $service->CheckoutShoppingCart($request);
+        } catch (SoapFault $e) {
+
+            d($service, FALSE);
+            d($service->__getLastRequest(), FALSE);
+            echo $e->getMessage();
+            die('done');
+        }
+
+        d($service->__getLastRequest(), FALSE);
+        return $apiClasses;
     }
 
 

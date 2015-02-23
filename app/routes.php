@@ -38,7 +38,7 @@ foreach (Config::get('redirect') as $old => $new) {
 Route::get('sitemap.xml', ['as' => 'sitemap', 'uses' => 'SiteMapController@index']);
 
 
-Route::get('ttt',
+Route::get('mindbodytest',
     [
         'before' => 'admin',
         function () {
@@ -46,9 +46,18 @@ Route::get('ttt',
             $user = Sentry::findUserById(323);
 
 
+
+            $mindbody = new Mindbody($user);
+            echo "<h4>Purchase Class</h4>";
+            d($mindbody->purchaseClass(24376, $user));
+
+
             $mindbody = new Mindbody($user);
             echo "<h4>addUserToClass</h4>";
             d($mindbody->addUserToClass(24376, $user), FALSE);
+
+
+
 
 
             echo "<h4>getClasses</h4>";
