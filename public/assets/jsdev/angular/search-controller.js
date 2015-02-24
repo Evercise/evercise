@@ -154,8 +154,11 @@ if(typeof angular != 'undefined') {
                 //getBounds();
             },
             dragend : function () {
-                $scope.bounds = getBounds();
-                $scope.getData(true);
+                var bounds = getBounds();
+                if(bounds){
+                    $scope.bounds = bounds;
+                    $scope.getData(true);
+                }
             },
             zoom_changed : function(){
                 //getBounds();
@@ -173,6 +176,9 @@ if(typeof angular != 'undefined') {
             var sw = bounds.getSouthWest();
             // map bounds object
             var mapBounds = {};
+            if(sw.lat() > $scope.furthestBottom && ne.lat() < $scope.furthestTop && sw.lng() > $scope.furthestLeft && ne.lng() < $scope.furthestRight){
+                return false
+            }
             if(sw.lat() < $scope.furthestBottom){
                 $scope.furthestBottom = sw.lat();
             }
@@ -189,6 +195,7 @@ if(typeof angular != 'undefined') {
             mapBounds.ne = $scope.furthestTop + ',' + $scope.furthestRight;
             mapBounds.sw = $scope.furthestBottom + ','+$scope.furthestLeft;
             return mapBounds;
+
         }
 
 
@@ -257,7 +264,6 @@ if(typeof angular != 'undefined') {
                     if(!$scope.results.search){
                         score = i;
                     };
-                    console.log(v.id+'.'+Math.floor(Math.random() * 6000) + 1);
                     groups.push({
                         id : v.id,
                         keyId: v.id+'.'+Math.floor(Math.random() * 6000) + 1,
