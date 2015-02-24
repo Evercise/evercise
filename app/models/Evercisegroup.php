@@ -12,7 +12,6 @@ class Evercisegroup extends \Eloquent
      */
     protected $fillable = [
         'user_id',
-        'category_id',
         'venue_id',
         'name',
         'title',

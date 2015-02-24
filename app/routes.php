@@ -715,6 +715,11 @@ Route::group(
         Route::post('/update_seourl',
             ['as' => 'admin.update_seourl', 'uses' => 'MainController@updateSeoUrl']);
 
+        Route::get('/pendinggroups',
+            ['as' => 'admin.pendinggroups', 'uses' => 'MainController@pendingGroups']);
+        Route::get('pendinggroups/{id?}',
+            ['as' => 'admin.pendinggroups.manage', 'uses' => 'MainController@pendinggroupsManage']);
+
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);
 

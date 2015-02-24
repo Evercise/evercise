@@ -771,5 +771,25 @@ class MainController extends \BaseController
         return Redirect::route('admin.seourls')->with('notification', 'Record updated');
     }
 
+    public function pendingGroups()
+    {
+        $classes = PendingEvercisegroup::get();
+
+        return View::make('admin.pending_classes', compact('classes'));
+    }
+
+    public function pendinggroupsManage($id)
+    {
+        if($id > 0)
+            $pendinggroup = PendingEvercisegroup::find($id);
+
+        else
+            $pendinggroup = 0;
+
+        $subcategories = Subcategory::lists('name');
+
+        return View::make('admin.edit_pending_class', compact('pendinggroup', 'subcategories'));
+    }
+
 
 }
