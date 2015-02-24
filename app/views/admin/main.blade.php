@@ -224,7 +224,7 @@
                         input.select2({
                             placeholder: "Type here...",
                             tags:[],
-                            tokenSeparators: [",", " "]
+                            tokenSeparators: [","]
                         });
                         //input.focus();
                     }

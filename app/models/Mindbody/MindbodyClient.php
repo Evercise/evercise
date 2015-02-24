@@ -39,6 +39,11 @@ class MindbodyClient extends \SoapClient {
 			$request->Request->UserCredentials = $userCredentials;
 		}
 
+        $request->Request->XMLDetail = 'Full';
+        $request->Request->PageSize = 10;
+        $request->Request->CurrentPageIndex = 0;
+        $request->Request->Test = true;
+
 
 		foreach ($params as $key => $val) {
 			$request->Request->{$key} = $val;

@@ -734,10 +734,24 @@ class MainController extends \BaseController
     {
         $id = Input::get('id');
 
+        $location = Input::get('location');
+
+        if(! Place::find($location))
+        {
+            if(! $placeId = Place::where('name', $location)->pluck('id'))
+            {
+                return Redirect::route('admin.seourls')->with('error', 'Could not update record');
+            }
+        }
+        else
+        {
+            $placeId = $location;
+        }
+
         if($id > 0)
         {
             $seoUrl = SeoUrls::find($id);
-            $seoUrl->location = Input::get('location');
+            $seoUrl->area_id = $placeId;
             $seoUrl->search = Input::get('search');
             $seoUrl->title = Input::get('title');
             $seoUrl->description = Input::get('description');
@@ -747,14 +761,34 @@ class MainController extends \BaseController
         else
         {
             SeoUrls::create([
-                'location' => Input::get('location'),
+                'area_id' => $location,
                 'search' => Input::get('search'),
                 'title' => Input::get('title'),
                 'description' => Input::get('description'),
             ]);
         }
 
-        return Redirect::route('admin.seourls');
+        return Redirect::route('admin.seourls')->with('notification', 'Record updated');
+    }
+
+    public function pendingGroups()
+    {
+        $classes = PendingEvercisegroup::get();
+
+        return View::make('admin.pending_classes', compact('classes'));
+    }
+
+    public function pendinggroupsManage($id)
+    {
+        if($id > 0)
+            $pendinggroup = PendingEvercisegroup::find($id);
+
+        else
+            $pendinggroup = 0;
+
+        $subcategories = Subcategory::lists('name');
+
+        return View::make('admin.edit_pending_class', compact('pendinggroup', 'subcategories'));
     }
 
 

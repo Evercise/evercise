@@ -38,7 +38,7 @@ foreach (Config::get('redirect') as $old => $new) {
 Route::get('sitemap.xml', ['as' => 'sitemap', 'uses' => 'SiteMapController@index']);
 
 
-Route::get('ttt',
+Route::get('mindbodytest',
     [
         'before' => 'admin',
         function () {
@@ -46,9 +46,18 @@ Route::get('ttt',
             $user = Sentry::findUserById(323);
 
 
+
+            $mindbody = new Mindbody($user);
+            echo "<h4>Purchase Class</h4>";
+            d($mindbody->purchaseClass(24376, $user));
+
+
             $mindbody = new Mindbody($user);
             echo "<h4>addUserToClass</h4>";
             d($mindbody->addUserToClass(24376, $user), FALSE);
+
+
+
 
 
             echo "<h4>getClasses</h4>";
@@ -656,7 +665,7 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
         '/seourls/delete',
         ['as' => 'admin.ajax.delete.seourls', 'before' => 'admin', 'uses' => 'AdminAjaxController@deleteSeoUrl']
     );
-    Route::get('/search_places',
+    Route::post('search_places',
         ['as' => 'admin.ajax.search_places', 'uses' => 'AdminAjaxController@searchPlaces']);
 
 });
@@ -705,6 +714,11 @@ Route::group(
             ['as' => 'admin.seourls.manage', 'uses' => 'MainController@seoUrlsManage']);
         Route::post('/update_seourl',
             ['as' => 'admin.update_seourl', 'uses' => 'MainController@updateSeoUrl']);
+
+        Route::get('/pendinggroups',
+            ['as' => 'admin.pendinggroups', 'uses' => 'MainController@pendingGroups']);
+        Route::get('pendinggroups/{id?}',
+            ['as' => 'admin.pendinggroups.manage', 'uses' => 'MainController@pendinggroupsManage']);
 
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);

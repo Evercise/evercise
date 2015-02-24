@@ -9,11 +9,13 @@
             $(element).select2({
                 placeholder: "Start typing place name",
                 minimumInputLength: 1,
-                multiple: true,
-                id: function(e) { return e.id+":"+e.title; },
+                maximumSelectionSize: 1,
+                multiple: false,
                 ajax: {
                     url: url,
                     dataType: 'json',
+                    type: 'post',
+                    cache: true,
                     data: function(term) {
                         return {
                             q: term
@@ -22,24 +24,39 @@
                     results: function(data, page) {
                         console.log(data);
                         return {
-                            results: data.places
+                            results: data
                         };
                     }
+                },
+                formatResult: FormatResult,
+                formatSelection: FormatSelection,
+                escapeMarkup: function (m) { return m; },
+                initSelection : function (element, callback) {
+                    var data = {id: 1545, text: "whatever"};
+                    callback(data);
                 }
-            });
+            }).select2('val', [1545]);
         };
 
-        function formatResult(data) {
-            return '<div>' + data + '</div>';
-        };
+        function FormatResult(item) {
+            var markup = "";
+            console.log(item);
+            if (item.name !== undefined) {
+                markup += "<option value='" + item.id + "'>" + item.name + "</option>";
+            }
+            return markup;
+        }
 
-        function formatSelection(data) {
-            return data;
-        };
+        function FormatSelection(item) {
+            return item.name;
+        }
 
 
-
-        MultiAjaxAutoComplete('#e6', '{{ route('admin.ajax.search_places') }}' );
+        $('#location').bind('click',function() {
+            console.log('twat');
+            MultiAjaxAutoComplete('#location', '{{ route('admin.ajax.search_places') }}' );
+            $('#location').unbind('click');
+        });
 
     </script>
 
@@ -57,11 +74,7 @@
     <div class="col-lg-9">
         <div class="form-group">
             <label>Location:</label>
-            <input type='text' id="e6" style="width: 500px;" value=""  />
-        </div>
-        <div class="form-group">
-            <label>Location:</label>
-            {{ Form::text('location', (!empty($seoUrl->location) ? $seoUrl->location : null), ['placeholder'=> 'location', 'class' => 'form-control', 'id'=>'title']) }}
+            {{ Form::text('location', $seoUrl->locationName(), ['multiple'=>true, 'placeholder'=> 'Start typing location', 'class' => 'form-control', 'id'=>'location']) }}
         </div>
         <div class="form-group">
             <label>Search:</label>
