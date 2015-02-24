@@ -21,10 +21,12 @@ if(typeof angular != 'undefined') {
             $scope.area = '';
             $scope.$apply();
         })
+
         $('input[name="location"]').change(function(){
             $scope.area = '';
             $scope.$apply();
         })
+
 
         $scope.activeCatSwitch = function(cat){
             $scope.activeCat = cat;

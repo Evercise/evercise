@@ -64,6 +64,7 @@ LocationAutoComplete.prototype = {
                 $('#location-auto-complete').parent().removeClass('open');
             }
         });
+
         this.input.keyup( function(e) {
             if( this.value.length < 1 ) return;
             var service =  new google.maps.places.AutocompleteService();
