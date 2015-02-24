@@ -67,6 +67,7 @@ Route::filter('user', function () {
     // Kick out if not logged in
     if (!Sentry::check()) {
         Session::flash('redirect_after_login_url', Request::url());
+        Session::flash('redirect_after_login_route', Route::currentRouteName());
         return Redirect::route('auth.login');
         //return Redirect::route('home')->with('notification', 'You do not have the correct privileges to view this page. Please Log In');
     }
@@ -76,6 +77,7 @@ Route::filter('trainer', function () {
     // Kick out if not a trainer - send to trainer sign up page
     if (!Trainer::isTrainerLoggedIn()) {
         Session::flash('redirect_after_login_url', Request::url());
+        Session::flash('redirect_after_login_route', Route::currentRouteName());
         return Redirect::route('auth.login');
         //return Redirect::route('trainers.create');
     }

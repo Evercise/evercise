@@ -209,10 +209,10 @@ Route::get(
     [
         'as' => 'auth.login.redirect_after_login',
         function ($redirect_after_login_url) {
-            return View::make('v3.auth.login_page')->with('redirect_after_login', TRUE)->with(
-                'redirect_after_login_url',
-                $redirect_after_login_url
-            );
+            return View::make('v3.auth.login_page')
+                ->with('redirect_after_login', TRUE)
+                ->with('redirect_after_login_url',$redirect_after_login_url)
+                ->with('redirect_after_login_route',FALSE);
         }
     ]
 );
@@ -226,11 +226,13 @@ Route::get(
 
                 return View::make('v3.auth.login_page')
                     ->with('redirect_after_login', TRUE)
-                    ->with('redirect_after_login_url',Session::get('redirect_after_login_url'));
+                    ->with('redirect_after_login_url',Session::get('redirect_after_login_url'))
+                    ->with('redirect_after_login_route',Session::get('redirect_after_login_route'));
             }
             return View::make('v3.auth.login_page')
                 ->with('redirect_after_login', FALSE)
-                ->with('redirect_after_login_url', FALSE);
+                ->with('redirect_after_login_url', FALSE)
+                ->with('redirect_after_login_route', FALSE);
         }
     ]
 );
