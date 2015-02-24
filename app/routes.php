@@ -205,7 +205,7 @@ Route::group(['prefix' => 'ajax'], function () {
 // auth / login
 
 Route::get(
-    'auth/login/{redirect_after_login_url}',
+    'login/{redirect_after_login_url}',
     [
         'as' => 'auth.login.redirect_after_login',
         function ($redirect_after_login_url) {
@@ -217,7 +217,7 @@ Route::get(
     ]
 );
 Route::get(
-    'auth/login',
+    'login',
     [
         'as' => 'auth.login',
         function () {
