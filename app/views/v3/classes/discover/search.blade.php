@@ -68,7 +68,7 @@
             <div class="heading"><div class="row no-gutter ml0"><div class="col-xs-9"><span class="text-primary">{[{ everciseGroups.length }]} {[{ results.search}]}</span> Classes found near <span class="text-primary">{[{ results.area.name }]}</span></div><div class="col-xs-3"><span ng-if="width > 767" class="pull-right mt5"><span class="icon icon-sm-list hover mr5" ng-class="{'active' : (view == 'list') }" ng-click="switchView('list')"></span><span ng-class="{'active' : (view == 'grid') }" ng-click="switchView('grid')" class="icon hover icon-sm-grid"></span></span></div></div>  </div>
             <div role="tabpanel" ng-if="!selectedVenueIds">
                 <ul class="nav nav-tabs nav-justified">
-                  <li role="presentation"><a ng-click="$event.preventDefault();" href="#filter" class="filter-btn" data-toggle="tab">Filter</a></li>
+                  <li role="presentation"><a ng-click="$event.preventDefault();" href="#filter" class="filter-btn" data-toggle="tab">Distance</a></li>
                   <li role="presentation"><a ng-click="$event.preventDefault();" href="#sort" class="sort-btn" data-toggle="tab">Sort by</a></li>
                 </ul>
                 <div class="tab-content">
@@ -84,7 +84,7 @@
                                     <a href="#">Evening</a>
                                 </div>
                                 -->
-                                <strong class="h4">Distance</strong>
+                                <!--<strong class="h4">Distance</strong>-->
                                 <div class="filter-slider mt25 mb25">
                                     <a href="#" ng-class="(results.radius == '1mi') ? 'active' : ''" ng-click="results.radius = '1mi'; $event.preventDefault(); ">1 mi</a>
                                     <a href="#" ng-class="(results.radius == '3mi') ? 'active' : ''" ng-click="results.radius = '3mi'; $event.preventDefault();">3 mi</a>
@@ -112,9 +112,9 @@
             <div ng-if="results.results.total > 0 && !selectedVenueIds"  class="date-picker-inline">
                 <div class="wrapper">
                     <div class="content">
-                         <li class="date-btn" ng-repeat="(date, value) in available_dates" ng-class="((date == activeDate) ? 'active' : (value > 0 ? 'available' : ''))">
+                         <li class="date-btn" ng-repeat="(date, value) in available_dates" ng-class="((date == activeDate) ? 'active' :  ((otherDates.indexOf(date) > -1) ? 'other-date' : (value > 0 ? 'available' : '')))">
                             <div ng-class="value == 0 ? 'disabled' : ''">
-                            <div class="day">{[{ date | date : 'EEE'}]}</div>
+                                <div class="day">{[{ date | date : 'EEE'}]}</div>
                                 <a title="{[{value}]} {[{ value == 1 ? 'classes' : 'class'}]} available" href="#" ng-click="changeActiveDate($event, date)">
                                     {[{ date | date : 'd'}]}<span class="month">{[{ date| date : 'MMM'}]}</span>
                                 </a>
@@ -128,8 +128,9 @@
                  <a href="#" ng-click="scroll_clicked || scrollDates('right', $event)" class="scroll right" ng-disabled="scroll_clicked"></a>
              </div>
             <div class="groups" ng-class="width > 992 ?  'mb-scroll' : ''" ng-style="groupHeight()">
-                <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="selectedVenueIds = false; $event.preventDefault()">< All Results</a></div>
+                <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="closeVenue(); $event.preventDefault()">< All Results</a></div>
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
+
                 <div class="list-results" ng-repeat="group in everciseGroups | orderBy: sortGroups:reverse | filter:isClassVisible" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>
                         <ul class="list-group class-block">

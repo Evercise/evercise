@@ -11322,27 +11322,45 @@ div.hub-row.last {
   font-weight: 600;
   line-height: 6px;
 }
-.date-picker-inline li.available {
+.date-picker-inline li.available,
+.date-picker-inline li.hover {
   background: #6a7d94;
 }
-.date-picker-inline li.available .day {
+.date-picker-inline li.available .day,
+.date-picker-inline li.hover .day {
   border-bottom: 1px solid #fff;
   background: #6a7d94;
   color: #ffffff;
 }
-.date-picker-inline li.available a {
+.date-picker-inline li.available a,
+.date-picker-inline li.hover a {
   color: #ffffff;
 }
-.date-picker-inline li.active {
+.date-picker-inline li.active,
+.date-picker-inline li.other-date {
   background: #ff1b7e;
 }
-.date-picker-inline li.active .day {
+.date-picker-inline li.active .day,
+.date-picker-inline li.other-date .day {
   border-bottom: 1px solid #b31e57;
   background: #b31e57;
   color: #ffffff;
 }
-.date-picker-inline li.active a {
+.date-picker-inline li.active a,
+.date-picker-inline li.other-date a {
   color: #ffffff;
+}
+.date-picker-inline li.other-date {
+  opacity: 0.65;
+  -webkit-box-shadow: inset 0 40px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 40px 40px rgba(0, 0, 0, 0.15);
+}
+.date-picker-inline li.other-date .day {
+  border-color: #ffffff;
+}
+.date-picker-inline li.hover {
+  -webkit-box-shadow: inset 0 40px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 40px 40px rgba(0, 0, 0, 0.3);
 }
 .date-picker-inline .scroll {
   position: absolute;

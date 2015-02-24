@@ -1,6 +1,6 @@
 if(typeof angular != 'undefined') {
 
-    app.controller('searchController', ["$scope",  "$http" , "uiGmapGoogleMapApi", "Angularytics", '$window', function ($scope, $http, uiGmapGoogleMapApi, Angularytics, $window) {
+    app.controller('searchController', ["$scope",  "$http" , "uiGmapIsReady", "Angularytics", "uiGmapGoogleMapApi",'$window', function ($scope, $http, uiGmapIsReady, Angularytics, uiGmapGoogleMapApi,  $window) {
 
         $scope.groupHeight = function(){
             var windowWidth = $(window).width();
@@ -50,73 +50,18 @@ if(typeof angular != 'undefined') {
 
         $scope.selectedVenueIds = false;
         $scope.selectedVenueName = false;
-
-        $scope.markerEvents = {
-            click: function (marker,e,model) {
-                if(!model.active){
-                    $scope.activeDate = model.otherDates[0];
-                    $scope.passInGroupId = model.id;
-                    $scope.everciseGroups = shapeEverciseGroups();
-                    $scope.lastActiveMarker = model;
-                    markerClicked(marker,e,model);
-                }
-                else{
-                    for(var i = 0; i < $scope.everciseGroups.length; i++){
-                        if($scope.everciseGroups[i].tempIcon){
-                            $scope.everciseGroups[i].icon = '/assets/img/icon_default_pin_active.svg';
-                            $scope.everciseGroups[i].tempIcon = false;
-                        }
-                    }
-                    markerClicked(marker,e,model);
-
-                    // toggle markers
-                    $scope.lastActiveMarker.icon = '/assets/img/icon_default_pin_active.svg';
-                    $scope.lastActiveMarker = model;
-                    model.icon = '/assets/img/icon_default_pin_selected.svg';
-                }
+        $scope.otherDates = [];
 
 
-            },
-            mouseover: function (marker,e,model) {
-                $('#venue-'+model.id).addClass('active');
-            },
-            mouseout: function (marker,e,model) {
-                $('#venue-'+model.id).removeClass('active');
+
+        $scope.closeVenue = function(){
+            $scope.selectedVenueIds = false;
+            $scope.otherDates.length = 0;
+            $scope.lastActiveMarker.icon =  {
+                url : '/assets/img/icon_default_pin_active.svg',
+                size :  new google.maps.Size(40, 40),
+                scaledSize : new google.maps.Size(40, 40)
             }
-        }
-
-        var markerClicked = function(marker,e,model){
-            // check if there are other classes at this venue
-            var vId = model.venue.id;
-            var svi = [];
-            for(var i = 0; i < $scope.venues.length; i++){
-                if(vId == $scope.venues[i].venueId ){
-                    svi.push($scope.venues[i].groupId);
-                }
-            }
-            if(svi.length > 1){
-                // start select venue
-                $scope.selectedVenueIds = true;
-                $scope.selectedVenueIds = svi;
-                $scope.selectedVenueName = model.venue.name;
-            }
-            else{
-                // active group id
-                $scope.activeGroupId = model.id;
-                // remove select venue
-                $scope.selectedVenueIds = false;
-
-                setTimeout(function() {
-                    $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+model.id), {
-                        scrollInertia: 500,
-                        timeout: 20
-                    });
-                }, 100)
-            }
-
-            panToMarker(model);
-
-
         }
 
 
@@ -199,35 +144,51 @@ if(typeof angular != 'undefined') {
             control: {}
         };
 
-        $scope.bounds = {
-
-        }
+        $scope.bounds = {}
 
 
         // map events
         $scope.mapEvents = {
             // any map events go here
+            drag : function(){
+                //getBounds();
+            },
             dragend : function () {
-                ChangedBounds();
+                $scope.bounds = getBounds();
+                $scope.getData(true);
             },
             zoom_changed : function(){
-                //ChangedBounds();
+                //getBounds();
             }
         }
 
-        var ChangedBounds = function(){
+
+
+        var getBounds = function(){
             // map instance
             var m = $scope.map.control.getGMap();
-            // bounds of viewport of map
+            // bounds of view port of map
             var bounds = m.getBounds();
             var ne = bounds.getNorthEast();
             var sw = bounds.getSouthWest();
             // map bounds object
             var mapBounds = {};
-            mapBounds.ne = ne.lat() + ',' + ne.lng();
-            mapBounds.sw = sw.lat() + ','+sw.lng();
-            $scope.bounds = mapBounds;
-            $scope.getData(true);
+            if(sw.lat() < $scope.furthestBottom){
+                $scope.furthestBottom = sw.lat();
+            }
+            if(ne.lat() > $scope.furthestTop){
+                $scope.furthestTop = ne.lat();
+            }
+            if(sw.lng() < $scope.furthestLeft){
+                $scope.furthestLeft = sw.lng();
+            }
+            if(ne.lng() > $scope.furthestRight){
+                $scope.furthestRight = ne.lng();
+            }
+
+            mapBounds.ne = $scope.furthestTop + ',' + $scope.furthestRight;
+            mapBounds.sw = $scope.furthestBottom + ','+$scope.furthestLeft;
+            return mapBounds;
         }
 
 
@@ -243,41 +204,59 @@ if(typeof angular != 'undefined') {
             var venue = [];
             for(var i = 0; i < $scope.results.results.hits.length; i++){
                 var v = $scope.results.results.hits[i];
+                /*
                 var arr = $.grep($scope.everciseGroups, function(item, index) {
                     return item.id != v.id;
                 });
-                var icon = '/assets/img/icon_default_pin_inactive.svg';
-                var notFound = true;
-                var active = false;
-                var zindex = -1;
-                var nextDates = [];
-                var tempIcon = false;
-                var times = $.map(v.dates, function(value, index) {
-                    if(index == $scope.activeDate){
+                */
+                var arr = true;
 
-                        icon = '/assets/img/icon_default_pin_active.svg';
-                        active = true;
-                        zindex = 10;
-                        notFound == false;
-                        venue.push({
-                            venueId : v.venue.id ,
-                            groupId : v.id
-                        });
-                        return [value];
-                    }
-                    else{
-                        nextDates.push(index);
-                    }
-                });
-                if($scope.passInGroupId == v.id ){
-                    icon = '/assets/img/icon_default_pin_selected.svg';
-                    tempIcon = true;
-                }
-                var score = v.score;
-                if(!$scope.results.search){
-                    score = i;
-                };
                 if(arr){
+                    var icon = {
+                        url : '/assets/img/icon_default_pin_inactive.svg',
+                        size :  new google.maps.Size(28, 28),
+                        scaledSize : new google.maps.Size(28, 28)
+                    };
+                    var notFound = true;
+                    var active = false;
+                    var zindex = -1;
+                    var nextDates = [];
+                    var tempIcon = false;
+                    var times = $.map(v.dates, function(value, index) {
+                        if(index == $scope.activeDate){
+                            icon = {
+                                url : '/assets/img/icon_default_pin_active.svg',
+                                size :  new google.maps.Size(40, 40),
+                                scaledSize : new google.maps.Size(40, 40)
+                            };
+                            active = true;
+                            zindex = 10;
+                            notFound == false;
+                            venue.push({
+                                venueId : v.venue.id ,
+                                groupId : v.id
+                            });
+                            return [value];
+                        }
+                        else{
+                            nextDates.push(index);
+                        }
+
+                    });
+                    if($scope.passInGroupId == v.id ){
+                        icon = {
+                            url : '/assets/img/icon_default_pin_selected.svg',
+                            size :  new google.maps.Size(40, 40),
+                            scaledSize : new google.maps.Size(40, 40)
+                        };
+                        tempIcon = true;
+                        $scope.otherDates = nextDates;
+                        zindex = 20;
+                    }
+                    var score = v.score;
+                    if(!$scope.results.search){
+                        score = i;
+                    };
                     groups.push({
                         id : v.id,
                         name : v.name,
@@ -308,13 +287,103 @@ if(typeof angular != 'undefined') {
             return groups;
         }
 
+        $scope.markerEvents = {
+            click: function (marker,e,model) {
+                $scope.passInGroupId = model.id;
+                $scope.otherDates = model.otherDates;
+                if(!model.active){
+                    $scope.activeDate = model.otherDates[0];
+                    $scope.everciseGroups = shapeEverciseGroups();
+                    $scope.lastActiveMarker = model;
+                    markerClicked(marker,e,model);
+                }
+                else{
+                    for(var i = 0; i < $scope.everciseGroups.length; i++){
+                        if($scope.everciseGroups[i].tempIcon){
+                            $scope.everciseGroups[i].icon.url = '/assets/img/icon_default_pin_active.svg';
+                            $scope.everciseGroups[i].icon.scaledSize =  new google.maps.Size(40, 40);
+                            $scope.everciseGroups[i].icon.size =  new google.maps.Size(40, 40);
+                            $scope.everciseGroups[i].tempIcon = false;
+                        }
+                    }
+                    // toggle markers
+                    $scope.lastActiveMarker.icon =  {
+                        url : '/assets/img/icon_default_pin_active.svg',
+                        size :  new google.maps.Size(40, 40),
+                        scaledSize : new google.maps.Size(40, 40)
+                    }
+                    $scope.lastActiveMarker = model;
+                    model.icon.url = '/assets/img/icon_default_pin_selected.svg';
+                    model.icon.scaledSize =  new google.maps.Size(40, 40);
+                    model.icon.size =  new google.maps.Size(40, 40);
+                    model.options.zIndex = 20;
+                    markerClicked(marker,e,model);
+                }
+            },
+            mouseover: function (marker,e,model) {
+                //$('#venue-'+model.id).addClass('active');
+            },
+            mouseout: function (marker,e,model) {
+                // $('#venue-'+model.id).removeClass('active');
+            }
+        }
 
+        var markerClicked = function(marker,e,model){
+            // check if there are other classes at this venue
+            var vId = model.venue.id;
+            var svi = [];
+            for(var i = 0; i < $scope.venues.length; i++){
+                if(vId == $scope.venues[i].venueId ){
+                    svi.push($scope.venues[i].groupId);
+                }
+            }
+            if(svi.length > 1){
+                // start select venue
+                $scope.selectedVenueIds = true;
+                $scope.selectedVenueIds = svi;
+                $scope.selectedVenueName = model.venue.name;
+            }
+            else{
+                // active group id
+                $scope.activeGroupId = model.id;
+                // remove select venue
+                $scope.selectedVenueIds = false;
+
+                setTimeout(function() {
+                    $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+model.id), {
+                        scrollInertia: 500,
+                        timeout: 20
+                    });
+                }, 100)
+                setTimeout(function() {
+                    panToMarker(model);
+                },200)
+            }
+
+        }
+
+
+
+        uiGmapIsReady.promise(1).then(function(instances) {
+            $scope.everciseGroups = shapeEverciseGroups();
+        });
 
         $scope.$watch(function () {
             return $scope.map;
         }, function () {
-            $scope.everciseGroups = shapeEverciseGroups();
+            uiGmapGoogleMapApi.then(function(maps) {
+                var latlng = new maps.LatLng($scope.results.area.lat, $scope.results.area.lng);
+                $scope.originalBounds =  new google.maps.Circle({center:latlng , radius:$scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344 }).getBounds();
+                var ne = $scope.originalBounds.getNorthEast();
+                var sw = $scope.originalBounds.getSouthWest();
+                $scope.furthestTop = ne.lat();
+                $scope.furthestBottom = sw.lat();
+                $scope.furthestLeft = sw.lng();
+                $scope.furthestRight = ne.lng();
+            });
+
         })
+
 
 
         $scope.isClassVisible = function(item){
@@ -346,7 +415,6 @@ if(typeof angular != 'undefined') {
         $scope.scrollDates = function(direction, e){
             e.preventDefault();
             $scope.scroll_clicked = true;
-            var date = new Date($scope.selectedDate);
             var date = $scope.selectedDate,
                 values = date.split(/[^0-9]/),
                 year = parseInt(values[0], 10),
@@ -378,6 +446,12 @@ if(typeof angular != 'undefined') {
             e.preventDefault();
             $scope.activeDate = date;
             $scope.everciseGroups = shapeEverciseGroups();
+            setTimeout(function() {
+                $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+$scope.activeGroupId), {
+                    scrollInertia: 500,
+                    timeout: 20
+                });
+            }, 100)
         }
 
 
@@ -475,13 +549,7 @@ if(typeof angular != 'undefined') {
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.activeDate = $scope.results.selected_date;
                 $scope.activeGroupId = false;
-                if (drag) {
-                    var newGroups = shapeEverciseGroups();
-                    $scope.everciseGroups = $scope.everciseGroups.concat(newGroups);
-                }
-                else{
-                    $scope.everciseGroups = shapeEverciseGroups();
-                }
+                $scope.everciseGroups = shapeEverciseGroups();
                 if(!drag){
                     $scope.map.center =  {
                      latitude: $scope.results.area.lat,
