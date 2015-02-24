@@ -257,8 +257,10 @@ if(typeof angular != 'undefined') {
                     if(!$scope.results.search){
                         score = i;
                     };
+                    console.log(v.id+'.'+Math.floor(Math.random() * 6000) + 1);
                     groups.push({
                         id : v.id,
+                        keyId: v.id+'.'+Math.floor(Math.random() * 6000) + 1,
                         name : v.name,
                         icon : icon,
                         options : {

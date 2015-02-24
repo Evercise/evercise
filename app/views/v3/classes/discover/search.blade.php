@@ -22,13 +22,12 @@
             <ui-gmap-markers
                 models="everciseGroups"
                 coords="'venue'"
-                idKey="'id'"
+                idKey="'keyId'"
                 id="'venue.id'"
                 icon = "'icon'"
                 doCluster = "false"
                 options = "'options'"
                 events = "markerEvents"
-                doRebuildAll = "true"
                 >
             </ui-gmap-markers>
 
