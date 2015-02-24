@@ -66,7 +66,9 @@ Route::filter('admin', function () {
 Route::filter('user', function () {
     // Kick out if not logged in
     if (!Sentry::check()) {
-        return Redirect::route('home')->with('notification', 'You do not have the correct privileges to view this page. Please Log In');
+        Session::flash('redirect_after_login_url', 'profile');
+        return Redirect::route('auth.login');
+        //return Redirect::route('home')->with('notification', 'You do not have the correct privileges to view this page. Please Log In');
     }
 });
 

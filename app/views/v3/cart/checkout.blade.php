@@ -70,7 +70,7 @@
                                 <div class="input-list">
                                     <div class="input-group mt10">
                                         <div class="input-group-addon"><strong>EMAIL</strong></div>
-                                        {{ Form::email('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
+                                        {{ Form::email('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'name@address.com']) }}
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             </div>
                         {{Form::close()}}
                         {{ Form::open(['route' => 'users.guest.store', 'method' => 'post', 'class'=>'mb50', 'role' => 'form', 'id' => 'new-user-form'] ) }}
-                            {{ Form::hidden('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'aname@address.com']) }}
+                            {{ Form::hidden('email',null, ['class'=>'form-control input-lg', 'placeholder' => 'name@address.com']) }}
                         {{ Form::close() }}
                         <li class="text-right">
                             {{ Form::button('Continue', ['class' => 'btn btn-white-primary ', 'id' => 'cart-account']) }}

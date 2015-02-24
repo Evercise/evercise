@@ -205,9 +205,11 @@ class MainController extends \BaseController
 
         } else {
 
+            $password = Functions::randomPassword(8);
+
             $inputs['display_name'] = str_replace(' ', '_', $inputs['display_name']);
             $inputs['dob'] = NULL;
-            $inputs['password'] = Functions::randomPassword(8);
+            $inputs['password'] = $password;
             $inputs['activated'] = TRUE;
             $inputs['gender'] = $inputs['gender'] == 'male' ? 1 : 2;
 
@@ -262,10 +264,10 @@ class MainController extends \BaseController
             if ($res = Trainer::createOrFail($trainer)) {
 
 
-                event('trainer.registered', [$user,]);
+                //event('trainer.registered', [$user,]);
 
 
-                event('user.admin.trainerCreate', compact('user', 'trainer'));
+                event('user.admin.trainerCreate', compact('user', 'trainer', 'password'));
 
                 Session::flash('notification', 'Trainer Created');
 
