@@ -1037,6 +1037,24 @@ class Mail
         }
     }
 
+    public function adminCreateTrainer($user, $resetCode, $password)
+    {
+        $params = [
+            'subject'  => 'Welcome to Evercise',
+            'title'    => 'Welcome to Evercise',
+            'view'     => 'v3.emails.admin.trainer_registered',
+            'user'     => $user,
+            'resetCode'     => $resetCode,
+            'password'     => $password,
+            'banner'   => FALSE,
+            'image'    => image('/assets/img/email/user_default.jpg', 'Welcome to Evercise'),
+            'link_url' => $this->url->to('/evercisegroups/create')
+        ];
+
+        $this->send($user->email, $params);
+    }
+
+
 
 
 

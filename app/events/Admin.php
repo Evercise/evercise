@@ -2,21 +2,47 @@
 
 
 use Log;
+use Illuminate\Log\Writer;
 
 class Admin
 {
+    /**
+     * @var Writer
+     */
+    protected $log;
+    /**
+     * @var Activity
+     */
+    protected $activity;
+    /**
+     * @var Mail
+     */
+    protected $mail;
 
-    public function hasCreatedTrainer($user, $trainer)
+    /**
+     * @param Mail $mail
+     */
+    public function __construct(
+        Writer $log,
+        Activity $activity,
+        Mail $mail
+    ) {
+        $this->log = $log;
+        $this->activity = $activity;
+        $this->mail = $mail;
+    }
+
+    public function hasCreatedTrainer($user, $trainer, $password)
     {
-        Log::info('Admin Created a Trainer with id '.$user->id);
+        $this->log->info('Admin Created a Trainer with id '.$user->id);
+
+        $this->activity->userRegistered($user);
+        $this->activity->trainerRegistered($user);
 
         $resetCode = $user->getResetPasswordCode();
 
-        \Mail::send('emails.admin.createTrainer', compact('user', 'trainer', 'resetCode'), function($message) use($user)
-        {
-            $message->to($user->email)
-                ->subject('Welcome to Evercise');
-        });
+        $this->mail->adminCreateTrainer($user, $resetCode, $password);
+
 
 
     }

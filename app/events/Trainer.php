@@ -76,9 +76,7 @@ class Trainer
     {
         $this->log->info('Trainer ' . $trainer->id . ' has registered');
 
-
         $this->activity->userRegistered($trainer);
-
         $this->activity->trainerRegistered($trainer);
 
         $this->mail->trainerRegistered($trainer);

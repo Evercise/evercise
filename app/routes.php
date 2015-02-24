@@ -209,7 +209,7 @@ Route::get(
     [
         'as' => 'auth.login.redirect_after_login',
         function ($redirect_after_login_url) {
-            return View::make('auth.login')->with('redirect_after_login', TRUE)->with(
+            return View::make('v3.auth.login_page')->with('redirect_after_login', TRUE)->with(
                 'redirect_after_login_url',
                 $redirect_after_login_url
             );
@@ -221,10 +221,16 @@ Route::get(
     [
         'as' => 'auth.login',
         function () {
-            return View::make('auth.login')->with('redirect_after_login', FALSE)->with(
-                'redirect_after_login_url',
-                FALSE
-            );
+            if(Session::get('redirect_after_login_url'))
+            {
+
+                return View::make('v3.auth.login_page')
+                    ->with('redirect_after_login', TRUE)
+                    ->with('redirect_after_login_url',Session::get('redirect_after_login_url'));
+            }
+            return View::make('v3.auth.login_page')
+                ->with('redirect_after_login', FALSE)
+                ->with('redirect_after_login_url', FALSE);
         }
     ]
 );
@@ -257,6 +263,11 @@ Route::get('/finished-user', [
 );
 
 Route::get('/profile/{id}/{tab?}', ['as' => 'users.edit', 'uses' => 'UsersController@edit', 'before' => 'user']);
+Route::get('/profile', ['as' => 'profile', 'before' => 'user',
+    function () {
+        return Redirect::route('users.edit', Sentry::getUser()->display_name);
+    }
+]);
 
 
 Route::get(
