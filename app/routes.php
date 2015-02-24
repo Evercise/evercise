@@ -205,18 +205,6 @@ Route::group(['prefix' => 'ajax'], function () {
 // auth / login
 
 Route::get(
-    'login/{redirect_after_login_url}',
-    [
-        'as' => 'auth.login.redirect_after_login',
-        function ($redirect_after_login_url) {
-            return View::make('v3.auth.login_page')
-                ->with('redirect_after_login', TRUE)
-                ->with('redirect_after_login_url',$redirect_after_login_url)
-                ->with('redirect_after_login_route',FALSE);
-        }
-    ]
-);
-Route::get(
     'login',
     [
         'as' => 'auth.login',
