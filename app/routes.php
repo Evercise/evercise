@@ -202,8 +202,7 @@ Route::group(['prefix' => 'ajax'], function () {
 });
 
 
-// auth / login
-
+// Display login page, and redirect to specified page afterwards
 Route::get(
     'login',
     [
@@ -211,11 +210,10 @@ Route::get(
         function () {
             if(Session::get('redirect_after_login_url'))
             {
-
                 return View::make('v3.auth.login_page')
                     ->with('redirect_after_login', TRUE)
                     ->with('redirect_after_login_url',Session::get('redirect_after_login_url'))
-                    ->with('redirect_after_login_route',Session::get('redirect_after_login_route'));
+                    ->with('redirect_after_login_route',Session::get('redirect_after_login_route')); // Route is used for facebook login
             }
             return View::make('v3.auth.login_page')
                 ->with('redirect_after_login', FALSE)
