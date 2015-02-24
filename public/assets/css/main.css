@@ -10621,8 +10621,10 @@ body:not(:-moz-handler-blocked) .custom-select:after {
   color: #ff1b7e;
 }
 .cart-panel {
+  display: none;
   position: fixed;
-  top: 62px;
+  top: 14px;
+  right: 9px;
   width: 400px;
 }
 .hero {
