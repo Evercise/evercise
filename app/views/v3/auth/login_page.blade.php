@@ -7,7 +7,7 @@
                     {{ Form::hidden('redirect_after_login', true) }}
                     {{ Form::hidden('redirect_after_login_url', $redirect_after_login_url) }}
 
-                    {{ Html::linkRoute('users.fb', 'Connect via Facebook', [$redirect_after_login_url], ['class' => 'custom-fb mb15']) }}
+                    {{ Html::linkRoute('users.fb', 'Connect via Facebook', [$redirect_after_login_route], ['class' => 'custom-fb mb15']) }}
                     <div class="text-divider mb15 pull-left">or</div>
                     <label for="account">Do you have an Evercise account?</label>
                     <div class="input-list">
