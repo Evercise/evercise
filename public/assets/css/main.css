@@ -10620,6 +10620,11 @@ body:not(:-moz-handler-blocked) .custom-select:after {
 .cart-progress .complete li.title {
   color: #ff1b7e;
 }
+.cart-panel {
+  position: fixed;
+  top: 62px;
+  width: 400px;
+}
 .hero {
   background: #383d48;
   background-size: cover ;

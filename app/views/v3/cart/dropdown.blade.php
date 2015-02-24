@@ -1,3 +1,10 @@
+<div id="cart-dropdown" class="cart-panel">
+    <div class="panel panel-default">
+        ehhl
+    </div>
+</div>
+
+
 @if( !empty($sessions_grouped) || !empty($packages))
     <ul class="dropdown-menu dropdown-cart" role="menu" id="cart-dropdown">
         <div class="col-xs-10 sm-mt10">
