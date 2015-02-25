@@ -5,17 +5,6 @@ use Auth, BaseController, Form, Input, Redirect, Sentry, View, Cookie;
 class AuthController extends \BaseController {
 
 	/**
-	* Display the login page
-	* @return View
-	*/
-	public function getLogin()
-	{
-		return View::make('auth.login');
-	}
-
-
-
-	/**
 	* Logout action
 	* @return Redirect
 	*/

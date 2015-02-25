@@ -1,6 +1,6 @@
 <?php namespace ajax;
 
-use Input, Response, Venue, Sentry, \widgets\LocationController;
+use Input, Response, Venue, Sentry, LocationController;
 
 class VenuesController extends AjaxBaseController{
 

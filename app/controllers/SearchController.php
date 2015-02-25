@@ -78,7 +78,7 @@ class SearchController extends \BaseController
                 return $evercisegroup->showAsNonOwner($this->user);
             }
         } else {
-            return View::make('errors.missing');
+            return View::make('v3.errors.missing');
         }
 
     }
