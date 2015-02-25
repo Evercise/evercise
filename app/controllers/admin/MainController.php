@@ -793,5 +793,10 @@ class MainController extends \BaseController
         return View::make('admin.edit_pending_class', compact('pendinggroup', 'subcategories'));
     }
 
+    public function approveClass()
+    {
+        return 'fuck off you saturated piss wrinkle';
+    }
+
 
 }

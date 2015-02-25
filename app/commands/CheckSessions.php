@@ -61,7 +61,7 @@ class CheckSessions extends Command {
 		//$sessionPayments = Sessionpayment::whereNotIn($session_ids)->get();
 
 		foreach ($sessions as $s_key => $session) {
-			$this->info('session: group['.$session->evercisegroup_id.'] --> '. $session->id.' : ');
+			//$this->info('session: group['.$session->evercisegroup_id.'] --> '. $session->id.' : ');
 
             $commission = 10.00; // In %
 

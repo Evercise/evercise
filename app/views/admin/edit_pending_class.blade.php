@@ -21,98 +21,6 @@
 
     <script>
 
-        function categorySelect(form){
-            this.form = form;
-            this.select = this.form.find('.select2');
-            this.keywordSelect = this.form.find('input[name="keywords"]');
-            this.keywords = [];
-            this.keys = [];
-            this.gallery = '';
-            this.maximumSelectionSize = 3;
-            this.minimumResultsForSearch = 1;
-            this.placeholder = 'Choose upto 3 categories';
-            this.dropdownCssClass = 'select2-hidden';
-            this.init();
-        }
-        categorySelect.prototype = {
-            constructor: categorySelect,
-            init: function(){
-                this.select.select2({
-                    maximumSelectionSize: this.maximumSelectionSize,
-                    minimumResultsForSearch: this.minimumResultsForSearch,
-                    placeholder: this.placeholder,
-                    closeOnSelect: true,
-                    openOnEnter: false,
-                    formatNoMatches: function() {
-                        return '';
-                    },
-                    dropdownCssClass: this.dropdownCssClass
-                });
-                this.addListener();
-            },
-            addListener: function () {
-                this.form.on("submit", $.proxy(this.submitForm, this));
-                this.select.on("select2-selecting", $.proxy(this.addToKeywords, this))
-                this.select.on("select2-removing", $.proxy(this.removeFromKeywords, this))
-                $(document).on('swiperight', '#image-carousel', function(){
-                    $(this).carousel('next');
-                })
-                $(document).on('swipeleft', '#image-carousel', function(){
-                    $(this).carousel('prev');
-                })
-            },
-            submitForm: function(e){
-                e.preventDefault();
-                this.ajaxUpload();
-            },
-            ajaxUpload: function () {
-                var self = this;
-
-                $.ajax(self.form.attr("action"), {
-                    type: "post",
-                    data: self.form.serialize(),
-                    dataType: 'json',
-
-                    beforeSend: function () {
-                        $('#gallery-row').after('<div id="gallery-loading"  class="alert alert-success text-center"><span class="icon icon-loading ml10"></span> Loading gallery based on your selected categories...</div>');
-                    },
-
-                    success: function (data) {
-                        self.gallery = data.view;
-                        $('#gallery-row').html(self.gallery).trigger('change');
-                    },
-
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
-                    },
-
-                    complete: function () {
-                        self.select.prop('disabled', false);
-                        $('#gallery-loading').remove();
-                    }
-                });
-            },
-            addToKeywords: function(e){
-                this.keys.push(e.choice.id);
-                this.keywords.push(e.choice.text);
-                this.keywordSelect.val(this.keywords);
-                this.updateCategoriesInput();
-                this.form.submit();
-            },
-            removeFromKeywords: function(e){
-                this.keywords = $.grep(this.keywords, function(value) {
-                    return value != e.choice.text;
-                });
-                this.keys = $.grep(this.keys, function(value) {
-                    return value != e.choice.id;
-                });
-                this.updateCategoriesInput();
-            },
-            updateCategoriesInput: function(){
-                $('input[name="category_array[]"]').val(this.keywords).trigger('change');
-            }
-        }
-
         function imageCropper(elem){
             this.elem = elem;
             this.modal = this.elem.find(".modal-cropper");
@@ -320,9 +228,106 @@
         }
 
 
+
+        function categorySelect(form, select){
+            this.form = form;
+            this.select = select;
+            this.keywordSelect = this.form.find('input[name="keywords"]');
+            this.keywords = [];
+            this.keys = [];
+            this.gallery = '';
+            this.maximumSelectionSize = 3;
+            this.minimumResultsForSearch = 1;
+            this.placeholder = 'Choose upto 3 categories';
+            this.dropdownCssClass = 'select2-hidden';
+            this.init();
+        }
+        categorySelect.prototype = {
+            constructor: categorySelect,
+            init: function(){
+                console.log(this.select);
+                this.select.select2({
+                    maximumSelectionSize: this.maximumSelectionSize,
+                    minimumResultsForSearch: this.minimumResultsForSearch,
+                    placeholder: this.placeholder,
+                    closeOnSelect: true,
+                    openOnEnter: false,
+                    formatNoMatches: function() {
+                        return '';
+                    },
+                    dropdownCssClass: this.dropdownCssClass
+                });
+                this.addListener();
+            },
+            addListener: function () {
+                this.form.on("submit", $.proxy(this.submitForm, this));
+                this.select.on("select2-selecting", $.proxy(this.addToKeywords, this))
+                this.select.on("select2-removing", $.proxy(this.removeFromKeywords, this))
+                $(document).on('swiperight', '#image-carousel', function(){
+                    $(this).carousel('next');
+                })
+                $(document).on('swipeleft', '#image-carousel', function(){
+                    $(this).carousel('prev');
+                })
+            },
+            submitForm: function(e){
+                e.preventDefault();
+                this.ajaxUpload();
+            },
+            ajaxUpload: function () {
+                var self = this;
+
+                $.ajax(self.form.attr("action"), {
+                    type: "post",
+                    data: self.form.serialize(),
+                    dataType: 'json',
+
+                    beforeSend: function () {
+                        $('#gallery-row').after('<div id="gallery-loading"  class="alert alert-success text-center"><span class="icon icon-loading ml10"></span> Loading gallery based on your selected categories...</div>');
+                    },
+
+                    success: function (data) {
+                        self.gallery = data.view;
+                        $('#gallery-row').html(self.gallery).trigger('change');
+                    },
+
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        console.log(XMLHttpRequest + ' - ' + textStatus + ' - ' + errorThrown);
+                    },
+
+                    complete: function () {
+                        self.select.prop('disabled', false);
+                        $('#gallery-loading').remove();
+                    }
+                });
+            },
+            addToKeywords: function(e){
+                this.keys.push(e.choice.id);
+                this.keywords.push(e.choice.text);
+                this.keywordSelect.val(this.keywords);
+                this.updateCategoriesInput();
+                this.form.submit();
+            },
+            removeFromKeywords: function(e){
+                this.keywords = $.grep(this.keywords, function(value) {
+                    return value != e.choice.text;
+                });
+                this.keys = $.grep(this.keys, function(value) {
+                    return value != e.choice.id;
+                });
+                this.updateCategoriesInput();
+            },
+            updateCategoriesInput: function(){
+                console.log('fuck');
+                $('input[name="category_array[]"]').val(this.keywords).trigger('change');
+            }
+        }
+
+
+
         $(document).ready(function() {
+            new categorySelect( $('#find_gallery_image_by_category'), $('.select2') );
             new imageCropper( $('#image-cropper') );
-            new categorySelect( $('#find_gallery_image_by_category') );
         });
 
 
@@ -334,28 +339,30 @@
 @section('body')
 
 
-{{ Form::open(['id' => 'manage_seourl', 'route' => 'admin.update_seourl', 'method' => 'post', 'form-control', 'files'=> true]) }}
+    <div class="col-md-12">
+        <div class="col-lg-9">
+
+            <div class="form-group mb15">
+                {{ Form::open(['route' => 'ajax.gallery.getdefaults', 'method' => 'post', 'id' => 'find_gallery_image_by_category']) }}
+                {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
+                {{ Form::select('keywords-select', $subcategories, isset($cloneGroup) ? $cloneGroup->getSubcategoryIds() : '', ['class' => 'form-control mb40 select2', 'multiple' ] ) }}
+                {{ Form::hidden('keywords',null) }}
+                {{ Form::close() }}
+            </div>
+        </div>
+    </div>
+
+{{ Form::open(['id' => 'manage_seourl', 'route' => 'admin.approve_class', 'method' => 'post', 'form-control', 'files'=> true]) }}
 {{ Form::hidden('id', (!empty($pendinggroup->id) ? $pendinggroup->id : 0)) }}
 
 
 <div class="col-md-12">
     <div class="col-lg-9">
 
-        <div class="form-group mb15">
-            {{ Form::open(['route' => 'ajax.gallery.getdefaults', 'method' => 'post', 'id' => 'find_gallery_image_by_category']) }}
-            {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
-            {{ Form::select('keywords-select', $subcategories, isset($cloneGroup) ? $cloneGroup->getSubcategoryIds() : '', ['class' => 'form-control mb40 select2', 'multiple' ] ) }}
-            {{ Form::hidden('keywords',null) }}
-            {{ Form::close() }}
-        </div>
         <div class="form-group mb50">
             @include('v3.widgets.class_image_upload')
         </div>
 
-        <div class="form-group">
-            <label>Location:</label>
-            {{ Form::text('location', $pendinggroup->evercisegroup_id, ['multiple'=>true, 'placeholder'=> 'Start typing location', 'class' => 'form-control', 'id'=>'location']) }}
-        </div>
         <div class="form-group">
             <label>Name:</label>
             {{ Form::text('name', (!empty($pendinggroup->name) ? $pendinggroup->name : null), ['placeholder'=> 'search', 'class' => 'form-control', 'id'=>'title']) }}
@@ -365,8 +372,8 @@
             {{ Form::text('description', (!empty($pendinggroup->description) ? $pendinggroup->description : null), ['placeholder'=> 'description', 'class' => 'form-control', 'id'=>'title']) }}
         </div>
         <div class="form-group">
-            <label>Image:</label>
-            {{ Form::text('image', (!empty($pendinggroup->image) ? $pendinggroup->image : null), ['placeholder'=> 'title', 'class' => 'form-control', 'id'=>'title']) }}
+            <label>Venue:</label>
+            {{ Form::text('image', (!empty($pendinggroup->venue_id) ? $pendinggroup->venue_id : null), ['placeholder'=> 'title', 'class' => 'form-control', 'id'=>'title']) }}
         </div>
 
     </div>

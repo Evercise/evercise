@@ -677,6 +677,8 @@ Route::group(
             ['as' => 'admin.pendinggroups', 'uses' => 'MainController@pendingGroups']);
         Route::get('pendinggroups/{id?}',
             ['as' => 'admin.pendinggroups.manage', 'uses' => 'MainController@pendinggroupsManage']);
+        Route::post('/approve_class',
+            ['as' => 'admin.approve_class', 'uses' => 'MainController@approveClass']);
 
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);
