@@ -135,9 +135,13 @@ Cart.prototype = {
         });
     },
     updateCart: function(data){
-        $('.cart-dropdown:visible').addClass('open');
-        $('.cart-dropdown.open .dropdown-cart').replaceWith(data.view);
+        $('.basket').replaceWith(data.view);
         $('.cart-items').html(data.items);
+        if(!$('.basket').hasClass('checkout--active')){
+            setTimeout(function(){
+                $('.basket').find('.checkout__button ').trigger('click');
+            },300)
+        }
     },
     failedValidation: function(data){
         $('body').append('<div class="mt10 alert alert-danger alert-dismissible fixed" >'+data.errors.custom+'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></div>');

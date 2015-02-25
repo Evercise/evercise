@@ -26,7 +26,7 @@
   }
   .navbar-nav{
     &.navbar-right{
-      margin-top: 13px;
+      margin-top: 11px;
       @media (max-width: @grid-float-breakpoint) {
         float: right;
       }
@@ -41,22 +41,22 @@
         color: @brand-primary;
         font-family: @font-family-condensed;
         font-size: 20px;
-        padding: 7px 18px 5px;
         &.nav-profile{
           padding-right: 7px;
         }
-        @media (max-width: @grid-float-breakpoint) {
-          padding: 6px 12px 5px;
-        }
-        line-height: 22px;
+        line-height: 38px;
+        height: 38px;
+        padding-top: 0;
+        padding-bottom: 0;
         text-transform: uppercase;
       }
       a.nav-cart{
-        max-width: 75px;
+        max-width: 77px;
         background: @brand-primary;
         color: @white;
         font-size: 16px;
-        border-radius: @border-radius-base;
+        border-radius: 0;
+        border: 1px solid @white;
       }
       &.nav-btn{
         border: 1px solid @brand-primary;
@@ -76,11 +76,10 @@
       }
 
       .nav-profile{
-        height: 50px;
         img{
-          height: 35px;
+          height: 38px;
           float: right;
-          margin: -7px 10px;
+          margin: 0px 10px;
         }
       }
     }

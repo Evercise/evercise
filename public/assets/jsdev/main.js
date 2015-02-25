@@ -247,4 +247,12 @@ $(function(){
     $('#class-calendar').exists(function(){
         //new classCalendar(this);
     })
+
+    $(document).on('click', '.checkout__button, .js-checkout__cancel', function(e){
+        e.preventDefault();
+        if(!$(e.target).hasClass('disabled')){
+            $('.basket').toggleClass('checkout--active');
+        }
+
+    })
 });

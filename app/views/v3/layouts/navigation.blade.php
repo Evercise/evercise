@@ -6,6 +6,11 @@
     @if(isset($browse) && $browse)
         @include('v3.classes.browse')
     @endif
+    <ul class="nav navbar-nav cart-wrapper navbar-right ">
+          <li class="nav-list pull-right visible-md-block visible-lg-block">
+              {{ isset($cart) ? $cart : '' }}
+          </li>
+    </ul>
     <ul class="nav navbar-nav navbar-right">
         <li class="nav-btn nav-list">{{HTML::linkRoute('register', 'Join' , null , ['title'=>'Register Here', 'class' => Route::currentRouteName() == 'register' ? 'nav-link active' : 'nav-link'])}}</li>
         <li class="dropdown  login-drop nav-list">
@@ -13,10 +18,6 @@
             <ul class="dropdown-menu" role="menu">
                 @include('v3.auth.login')
             </ul>
-        </li>
-        <li class="dropdown cart-dropdown nav-list visible-md-block visible-lg-block">
-            <a href="#" title="Check your Shopping Cart" class="dropdown-toggle nav-cart nav-link" data-toggle="dropdown"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
-            {{ isset($cart) ? $cart : '' }}
         </li>
         <li class="nav-list visible-xs-block visible-sm-block">
             <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
