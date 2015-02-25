@@ -7,8 +7,11 @@
         @include('v3.classes.browse')
     @endif
       <ul class="nav navbar-nav cart-wrapper navbar-right ">
-          <li class="nav-list pull-right visible-md-block visible-lg-block">
+          <li class="nav-list pull-right visible-sm-block visible-md-block visible-lg-block">
               {{ isset($cart) ? $cart : '' }}
+          </li>
+          <li class="nav-list visible-xs-block">
+              <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
           </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -21,9 +24,7 @@
         <li class="nav-list visible-xs-block visible-sm-block">
             {{ HTML::decode(HTML::linkRoute('users.edit', image( $user->directory.'/small_'.$user->image, $user->display_name.'s image', ['class' => 'img-circle']) , $user->display_name , ['class' => Route::currentRouteName() == 'profile' ? 'nav-profile active nav-link' : 'nav-link nav-profile'] ) )}}
         </li>
-        <li class="nav-list visible-xs-block visible-sm-block">
-            <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
-        </li>
+
       </ul>
   </div>
 </nav>

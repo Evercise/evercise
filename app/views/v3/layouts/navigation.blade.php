@@ -7,7 +7,7 @@
         @include('v3.classes.browse')
     @endif
     <ul class="nav navbar-nav cart-wrapper navbar-right ">
-          <li class="nav-list pull-right visible-md-block visible-lg-block">
+          <li class="nav-list pull-right">
               {{ isset($cart) ? $cart : '' }}
           </li>
     </ul>
@@ -18,9 +18,6 @@
             <ul class="dropdown-menu" role="menu">
                 @include('v3.auth.login')
             </ul>
-        </li>
-        <li class="nav-list visible-xs-block visible-sm-block">
-            <a href="/cart/checkout" title="Check your Shopping Cart" class="nav-cart nav-link"><span class="icon icon-cart-white"></span>(<span class="cart-items">{{ isset($cart_items) ? count($cart_items) : '0' }}</span>)</a>
         </li>
     </ul>
   </div>
