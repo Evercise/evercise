@@ -13,7 +13,7 @@ function createVenue(container){
             },
             stringLength: {
                 min: 2,
-                max: 50,
+                max: 100,
                 message: 'Your Venue name must be more than 2 and less than 50 characters long'
             }
         }
@@ -26,7 +26,7 @@ function createVenue(container){
             },
             stringLength: {
                 min: 2,
-                max: 50,
+                max: 100,
                 message: 'Your street name must be more than 2 and less than 50 characters long'
             }
         }
@@ -39,7 +39,7 @@ function createVenue(container){
             },
             stringLength: {
                 min: 2,
-                max: 50,
+                max: 100,
                 message: 'Your town name must be more than 2 and less than 50 characters long'
             }
         }

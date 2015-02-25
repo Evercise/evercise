@@ -128,7 +128,7 @@
              </div>
             <div class="groups" ng-class="width > 992 ?  'mb-scroll' : ''" ng-style="groupHeight()">
                 <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm"><a class="text-primary" href="#" ng-click="closeVenue(); $event.preventDefault()">< All Results</a></div>
-                <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Venue at <strong class="text-primary">{[{ selectedVenueName }]}</strong></div>
+                <div ng-show="selectedVenueIds" class="heading hidden-xs hidden-sm">Classes at <strong class="text-primary">{[{ selectedVenueName }]}</strong> on <strong class="text-primary">{[{ activeDate | date: 'EEE, d MMMM yyyy h:mm a'}]}</strong></div>
 
                 <div class="list-results" ng-repeat="group in everciseGroups | orderBy: sortGroups:reverse | filter:isClassVisible" ng-if="group.remaining > 0" id="group-{[{group.id}]}" ng-show="!selectedVenueIds || selectedVenueIds.indexOf(group.id)>-1">
                     <div class="col-xs-6 mt10"  ng-if="view == 'grid'" ng-cloak>

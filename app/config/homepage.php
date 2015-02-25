@@ -82,18 +82,15 @@ return [
             ]
         ],
         [
-            'title'      => 'Move your body for under £10',
-            'link'       => '/uk/london?search=dance',
+            'title'      => 'Move your body from £5',
+            'link'       => '/uk/london?search=dance&order=price_asc',
             'link_title' => 'View all dance classes',
             'params'     => [
                 'size'     => 4,
                 'radius'   => '10mi',
                 'location' => 'London',
                 'search'   => 'dance',
-                'sort'     => 'best',
-                'price'    => [
-                    'under' => 10
-                ]
+                'sort'     => 'price_asc',
             ]
         ],
         [
