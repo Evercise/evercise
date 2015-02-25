@@ -74,7 +74,6 @@ class EvercisegroupsController extends \BaseController
             ->with('facilities', $facilities)
             ->with('subcategories', $subcategories)
             ->with('cloneGroup', isset($cloneGroup) ? $cloneGroup : NULL);
-        //return View::make('evercisegroups.create')->with('subcategories', $subcategories);
     }
 
     /**
@@ -213,7 +212,6 @@ class EvercisegroupsController extends \BaseController
                 return View::make('v3.classes.class_page', $params);
             }
         } else {
-            //return View::make('errors.missing');
             return Redirect::to('uk/london')->with('error', 'This class does not exist');
         }
 

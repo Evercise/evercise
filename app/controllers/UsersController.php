@@ -188,23 +188,6 @@ class UsersController extends \BaseController
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-
-
-        if(!$this->checkLogin()) {
-            return Redirect::route('home');
-        }
-
-        return View::make('users.show');
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -258,7 +241,7 @@ class UsersController extends \BaseController
      */
     public function pleaseActivate($display_name)
     {
-        return View::make('users.activate')->with('display_name', $display_name);
+        // Activation not used
 
     }
 
@@ -405,12 +388,6 @@ class UsersController extends \BaseController
         }
 
     }
-
-    public function getLoginStatus()
-    {
-        return View::make('users.loginStatus');
-    }
-
     /**
      * Logout Action
      *

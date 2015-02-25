@@ -202,35 +202,23 @@ Route::group(['prefix' => 'ajax'], function () {
 });
 
 
-// auth / login
-
+// Display login page, and redirect to specified page afterwards
 Route::get(
-    'auth/login/{redirect_after_login_url}',
-    [
-        'as' => 'auth.login.redirect_after_login',
-        function ($redirect_after_login_url) {
-            return View::make('v3.auth.login_page')->with('redirect_after_login', TRUE)->with(
-                'redirect_after_login_url',
-                $redirect_after_login_url
-            );
-        }
-    ]
-);
-Route::get(
-    'auth/login',
+    'login',
     [
         'as' => 'auth.login',
         function () {
             if(Session::get('redirect_after_login_url'))
             {
-
                 return View::make('v3.auth.login_page')
                     ->with('redirect_after_login', TRUE)
-                    ->with('redirect_after_login_url',Session::get('redirect_after_login_url'));
+                    ->with('redirect_after_login_url',Session::get('redirect_after_login_url'))
+                    ->with('redirect_after_login_route',Session::get('redirect_after_login_route')); // Route is used for facebook login
             }
             return View::make('v3.auth.login_page')
                 ->with('redirect_after_login', FALSE)
-                ->with('redirect_after_login_url', FALSE);
+                ->with('redirect_after_login_url', FALSE)
+                ->with('redirect_after_login_route', FALSE);
         }
     ]
 );
@@ -341,12 +329,6 @@ Route::any('/uk/{allsegments}', ['as' => 'search.parse', 'uses' => 'SearchContro
 );
 Route::any('/uk/', ['as' => 'evercisegroups.search', 'uses' => 'SearchController@parseUrl']);
 
-// VenuesController
-Route::get('venues', 'VenuesController@index');
-Route::get('venues/create', 'VenuesController@create');
-Route::get('venues/edit/{id}', 'VenuesController@edit');
-Route::post('venues/update/{id}', 'VenuesController@update');
-
 Route::get('confo', [
     'as' => 'con',
     function () {
@@ -391,17 +373,7 @@ Route::get(
 );
 Route::get('sessions/add/{id}', ['as' => 'sessions.add', 'uses' => 'SessionsController@create']);
 Route::get('sessions/date_list', ['as' => 'sessions.date_list']);
-Route::post('sessions/join', ['as' => 'sessions.join', 'uses' => 'SessionsController@joinSessions']);
-Route::get('sessions/join/class', ['as' => 'sessions.join.get', 'uses' => 'SessionsController@joinSessions']);
 Route::get('/sessions/{id}', ['as' => 'sessions.show', 'uses' => 'SessionsController@show']);
-Route::get(
-    '/sessions/{sessionId}/leave',
-    ['as' => 'sessions.leave', 'uses' => 'SessionsController@getLeaveSession']
-);
-Route::post(
-    '/sessions/{sessionId}/leave',
-    ['as' => 'sessions.leave.post', 'uses' => 'SessionsController@postLeaveSession']
-);
 
 /* New Stripe payment */
 Route::post('stripe/sessions',
@@ -449,24 +421,11 @@ Route::post(
     'wallets/{userId}/update_paypal',
     ['as' => 'wallets.updatepaypal', 'uses' => 'WalletsController@updatePaypal']
 );
-Route::post(
-    '/sessions/{evercisegroupId}/redeemEvercoins',
-    ['as' => 'sessions.redeemEvercoins.post', 'uses' => 'SessionsController@redeemEvercoins']
-);
 Route::get(
     '/sessions/{evercisegroupId}/paywithevercoins',
     function ($evercisegroupId) {
         return Redirect::to('evercisegroups/' . $evercisegroupId);
     }
-);
-Route::post(
-    '/sessions/{evercisegroupId}/paywithevercoins',
-    ['as' => 'sessions.paywithevercoins.post', 'uses' => 'SessionsController@postPayWithEvercoins']
-);
-Route::get('/sessions/{sessionId}/refund', ['as' => 'sessions.refund', 'uses' => 'SessionsController@getRefund']);
-Route::post(
-    '/sessions/{sessionId}/refund',
-    ['as' => 'sessions.refund.post', 'uses' => 'SessionsController@postRefund']
 );
 
 
@@ -499,22 +458,6 @@ Route::post('/conversation/{displayName}',
 Route::get('/fitness-packages', ['as' => 'packages', 'uses' => 'PackagesController@index']);
 
 
-// widgets
-
-
-Route::group(['prefix' => 'widgets'], function () {
-    Route::get('upload', ['as' => 'widgets.upload', 'uses' => 'widgets\ImageController@getUploadForm']);
-    Route::post('upload', ['as' => 'widgets.upload.post', 'uses' => 'widgets\ImageController@postUpload']);
-    Route::get('crop', ['as' => 'widgets.crop', 'uses' => 'widgets\ImageController@getCrop']);
-    Route::post('crop', ['as' => 'widgets.crop.post', 'uses' => 'widgets\ImageController@postCrop']);
-    Route::get('map', ['as' => 'widgets.map', 'uses' => 'widgets\LocationController@getMap']);
-    Route::get('mapForm', ['as' => 'widgets.map-form', 'uses' => 'widgets\LocationController@getGeo']);
-    Route::post('postGeo', ['as' => 'widgets.postGeo', 'uses' => 'widgets\LocationController@postGeo']);
-    Route::get('calendar', ['as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@getCalendar']);
-    Route::post('calendar', ['as' => 'widgets.calendar', 'uses' => 'widgets\CalendarController@postCalendar']);
-});
-
-
 // layouts and static pages
 Route::get('blog', ['as' => 'blog', 'uses' => 'PagesController@showBlog']);
 
@@ -531,13 +474,17 @@ Route::get('terms-of-use', [
         return View::make('v3.pages.terms');
     }
 ]);
-Route::get('privacy', ['as' => 'static.privacy', 'uses' => 'StaticController@show']);
-Route::get('leadership-team', ['as' => 'static.the_team', 'uses' => 'StaticController@show']);
-Route::get('faq', ['as' => 'static.faq', 'uses' => 'StaticController@dickface']);
-Route::get('careers', ['as' => 'static.careers', 'uses' => 'StaticController@show']);
-Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines', 'uses' => 'StaticController@show']);
-Route::get('contact_us', ['as' => 'static.contact_us', 'uses' => 'StaticController@show']);
-Route::get('how_it_works', ['as' => 'static.how_it_works', 'uses' => 'StaticController@show']);
+
+// ------------ STATIC PAGES ---------------
+Route::get('privacy', ['as' => 'static.privacy']);
+Route::get('leadership-team', ['as' => 'static.the_team']);
+Route::get('faq', ['as' => 'static.faq']);
+Route::get('careers', ['as' => 'static.careers']);
+Route::get('fitness-class-guidelines', ['as' => 'static.class_guidelines']);
+Route::get('contact_us', ['as' => 'static.contact_us']);
+Route::get('how_it_works', ['as' => 'static.how_it_works']);
+// ------------ ------------ ---------------
+
 Route::post('/postPdf', ['as' => 'postPdf', 'uses' => 'PdfController@postPdf']);
 Route::get('/download_user_list/{session_id}', ['as' => 'getPdf', 'uses' => 'PdfController@getPdf']);
 Route::get('video/create', ['as' => 'video', 'uses' => 'VideoController@create']);
@@ -830,6 +777,8 @@ Route::get('cleansubcategoriesup', function () {
 
 });
 
+
+/*
 Route::get('test1', function () {
 
     $trainer = User::find('169');
@@ -856,9 +805,9 @@ Route::get('test3', function () {
 
     $upperPrice = round($cart['packages'][0]['max_class_price'], 2) + 0.01;
     //Log::live()
-    /* $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
-         $query->where('price', '<', $packagePrice);
-     })->take(3)->get();*/
+    // $everciseGroups = Evercisegroup::whereHas('futuresessions', function($query) use($packagePrice) {
+     //    $query->where('price', '<', $packagePrice);
+     //})->take(3)->get();
 
     $searchController = App::make('SearchController');
     $everciseGroups = $searchController->getClasses([
@@ -878,4 +827,4 @@ Route::get('test5', function () {
 
     return d(Category::browse());
 });
-
+*/

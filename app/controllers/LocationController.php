@@ -1,15 +1,8 @@
-<?php namespace widgets;
-
-use Sentry, View, Geocoder, Exception, Request, Response, JavaScript, Input, Session;
-
+<?php
 
  
 class LocationController extends \BaseController {
 
-    public function getGeo() {
-
-       
-    }
 
     public function postGeo() {
         $ip = Request::getClientIp();
@@ -42,11 +35,6 @@ class LocationController extends \BaseController {
              return Response::json(array('error' => $e->getMessage()));
         }        
     }
-
-    public function getMap() {
-        return View::make('widgets/map');
-    }
-
 
     public static function addressToGeo($address) {
 

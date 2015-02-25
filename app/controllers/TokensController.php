@@ -12,7 +12,6 @@ class TokensController extends \BaseController
 	    FacebookConnect::getFacebook($application);
 		$getUser = FacebookConnect::getUser($permissions, $url_app); // Return facebook User data
 
-		//return View::make('users/tokens')->with('accessToken', $facebookTokenJSON);
 
 		if($getUser)
 		{
@@ -72,7 +71,6 @@ class TokensController extends \BaseController
 		else
 		{
 			// Only from localhost because twitter redirects to 127.0.0.1 which buggers it up
-			return View::make('users/tokens')->with('accessToken', $accessToken);
 		}
 
         return Redirect::route('users.edit', [$this->user->display_name, 'wallet'])->with('success', 'Your twitter account has been linked successfully.');
