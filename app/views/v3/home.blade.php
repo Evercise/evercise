@@ -9,7 +9,7 @@
         <div class="mask"></div>
         <div class="jumbotron text-center">
             <h1 class="drop-shadow text-white"><span class="text-primary">PAY</span> AS YOU <span class="text-primary">GO</span> FITNESS</h1>
-            <h2 class="text-white drop-shadow">NO MEMBERSHIPS <span class="text-primary dot"></span> 17,000+ CLASSES <span class="text-primary dot"></span> OVER 600 LOCATIONS</h2>
+            <h2 class="text-white drop-shadow">NO MEMBERSHIPS <span class="text-primary dot"></span> 20,000+ CLASSES <span class="text-primary dot"></span> OVER 600 LOCATIONS</h2>
         </div>
     </div>
     <div class="container-fluid bg-dark-grey sm-mb0">
