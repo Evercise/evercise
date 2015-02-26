@@ -24,6 +24,7 @@ if(typeof angular != 'undefined') {
         $scope.width = window.innerWidth;
 
         $scope.results = laracasts.results;
+        console.log($scope.results);
 
         $scope.resultsLoading = false;
 
@@ -56,7 +57,11 @@ if(typeof angular != 'undefined') {
         $scope.closeVenue = function(){
             $scope.selectedVenueIds = false;
             $scope.otherDates.length = 0;
-            $scope.lastActiveMarker.icon =  $scope.activeIcon
+            $scope.lastActiveMarker.icon =  {
+                url : '/assets/img/icon_default_pin_active.svg',
+                size :  new google.maps.Size(40, 40),
+                scaledSize : new google.maps.Size(40, 40)
+            }
         }
 
 
@@ -201,22 +206,24 @@ if(typeof angular != 'undefined') {
         // groups
         $scope.everciseGroups = [];
 
-
-
         shapeEverciseGroups = function(){
             var groups = [];
             var venue = [];
             for(var i = 0; i < $scope.results.results.hits.length; i++){
                 var v = $scope.results.results.hits[i];
                 /*
-                var arr = $.grep($scope.everciseGroups, function(item, index) {
-                    return item.id != v.id;
-                });
-                */
+                 var arr = $.grep($scope.everciseGroups, function(item, index) {
+                 return item.id != v.id;
+                 });
+                 */
                 var arr = true;
 
                 if(arr){
-                    var icon = $scope.inactiveIcon;
+                    var icon = {
+                        url : '/assets/img/icon_default_pin_inactive.svg',
+                        size :  new google.maps.Size(28, 28),
+                        scaledSize : new google.maps.Size(28, 28)
+                    };
                     var notFound = true;
                     var active = false;
                     var zindex = -1;
@@ -224,7 +231,11 @@ if(typeof angular != 'undefined') {
                     var tempIcon = false;
                     var times = $.map(v.dates, function(value, index) {
                         if(index == $scope.activeDate){
-                            icon = $scope.activeIcon;
+                            icon = {
+                                url : '/assets/img/icon_default_pin_active.svg',
+                                size :  new google.maps.Size(40, 40),
+                                scaledSize : new google.maps.Size(40, 40)
+                            };
                             active = true;
                             zindex = 10;
                             notFound == false;
@@ -240,7 +251,11 @@ if(typeof angular != 'undefined') {
 
                     });
                     if($scope.passInGroupId == v.id ){
-                        icon = $scope.selectedIcon;
+                        icon = {
+                            url : '/assets/img/icon_default_pin_selected.svg',
+                            size :  new google.maps.Size(40, 40),
+                            scaledSize : new google.maps.Size(40, 40)
+                        };
                         tempIcon = true;
                         $scope.otherDates = nextDates;
                         zindex = 20;
@@ -293,14 +308,22 @@ if(typeof angular != 'undefined') {
                 else{
                     for(var i = 0; i < $scope.everciseGroups.length; i++){
                         if($scope.everciseGroups[i].tempIcon){
-                            $scope.everciseGroups[i].icon = $scope.activeIcon;
+                            $scope.everciseGroups[i].icon.url = '/assets/img/icon_default_pin_active.svg';
+                            $scope.everciseGroups[i].icon.scaledSize =  new google.maps.Size(40, 40);
+                            $scope.everciseGroups[i].icon.size =  new google.maps.Size(40, 40);
                             $scope.everciseGroups[i].tempIcon = false;
                         }
                     }
                     // toggle markers
-                    $scope.lastActiveMarker.icon =  $scope.activeIcon;
+                    $scope.lastActiveMarker.icon =  {
+                        url : '/assets/img/icon_default_pin_active.svg',
+                        size :  new google.maps.Size(40, 40),
+                        scaledSize : new google.maps.Size(40, 40)
+                    }
                     $scope.lastActiveMarker = model;
-                    model.icon = $scope.selectedIcon;
+                    model.icon.url = '/assets/img/icon_default_pin_selected.svg';
+                    model.icon.scaledSize =  new google.maps.Size(40, 40);
+                    model.icon.size =  new google.maps.Size(40, 40);
                     model.options.zIndex = 20;
                     markerClicked(marker,e,model);
                 }
@@ -336,8 +359,8 @@ if(typeof angular != 'undefined') {
 
                 setTimeout(function() {
                     $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+model.id), {
-                        scrollInertia: 500,
-                        timeout: 20
+                        scrollInertia: 800,
+                        timeout: 200
                     });
                 }, 100)
                 setTimeout(function() {
@@ -350,25 +373,6 @@ if(typeof angular != 'undefined') {
 
 
         uiGmapIsReady.promise(1).then(function(instances) {
-            // icons
-            $scope.activeIcon =  {
-                url : '/assets/img/icon_default_pin_active.svg',
-                size :  new google.maps.Size(40, 40),
-                scaledSize : new google.maps.Size(40, 40)
-            }
-
-            $scope.inactiveIcon = {
-                url : '/assets/img/icon_default_pin_inactive.svg',
-                size :  new google.maps.Size(28, 28),
-                scaledSize : new google.maps.Size(28, 28)
-            };
-
-            $scope.selectedIcon = {
-                url : '/assets/img/icon_default_pin_selected.svg',
-                size :  new google.maps.Size(40, 40),
-                scaledSize : new google.maps.Size(40, 40)
-            };
-
             $scope.everciseGroups = shapeEverciseGroups();
         });
 
@@ -452,8 +456,8 @@ if(typeof angular != 'undefined') {
             $scope.everciseGroups = shapeEverciseGroups();
             setTimeout(function() {
                 $('.mb-scroll').mCustomScrollbar("scrollTo", $('#group-'+$scope.activeGroupId), {
-                    scrollInertia: 500,
-                    timeout: 20
+                    scrollInertia: 800,
+                    timeout: 200
                 });
             }, 100)
         }
@@ -556,9 +560,9 @@ if(typeof angular != 'undefined') {
                 $scope.everciseGroups = shapeEverciseGroups();
                 if(!drag){
                     $scope.map.center =  {
-                     latitude: $scope.results.area.lat,
-                     longitude: $scope.setMapCenter()
-                     };
+                        latitude: $scope.results.area.lat,
+                        longitude: $scope.setMapCenter()
+                    };
                     $scope.map.zoom = $scope.initialZoom();
                     $scope.circleOptions.center = { latitude: $scope.results.area.lat, longitude: $scope.results.area.lng };
                     $scope.circleOptions.radius = $scope.results.radius.substring(0, $scope.results.radius.length - 2) * 1609.344;
