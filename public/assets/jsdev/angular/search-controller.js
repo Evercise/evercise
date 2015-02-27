@@ -250,7 +250,7 @@ if(typeof angular != 'undefined') {
                         }
 
                     });
-                    if($scope.passInGroupId == v.id ){
+                    if($scope.passInGroupId == v.id && active == true){
                         icon = {
                             url : '/assets/img/icon_default_pin_selected.svg',
                             size :  new google.maps.Size(40, 40),
