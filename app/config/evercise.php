@@ -40,8 +40,8 @@ return [
     'upload_dir'                  => 'files/',
     'testing_ips'                 => ['188.39.12.12', '192.168', '127.0.0'],
     'per_page'                    => [3, 12, 24, 48, 96, 300],
-    'default_per_page'            => 300,
-    'max_display_map_results'     => 300,
+    'default_per_page'            => 96,
+    'max_display_map_results'     => 96,
     'radius'                      => [
         '1/2 mile' => '0.5mi',
         '1 mile'   => '1mi',

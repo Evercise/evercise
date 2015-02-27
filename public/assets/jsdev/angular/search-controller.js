@@ -375,6 +375,7 @@ if(typeof angular != 'undefined') {
 
         uiGmapIsReady.promise(1).then(function(instances) {
             $scope.everciseGroups = shapeEverciseGroups();
+            lazyLoadPages();
         });
 
         $scope.$watch(function () {
@@ -392,6 +393,16 @@ if(typeof angular != 'undefined') {
             });
 
         })
+
+        var lazyLoadPages = function(){
+
+            if($scope.results.results.total > $scope.everciseGroups.length) {
+                var page = $scope.results.page + 1;
+                setTimeout(function () {
+                    $scope.getData(false, page);
+                }, 2000)
+            }
+        }
 
 
 
@@ -520,13 +531,16 @@ if(typeof angular != 'undefined') {
 
         // function used for getting data from the server
 
-        $scope.getData = function(drag){
+        $scope.getData = function(drag, newPage){
             var ne = $scope.bounds.ne;
             var sw = $scope.bounds.sw;
             if (typeof drag === "undefined" || drag === null) {
                 var drag = false;
                 ne = false;
                 sw = false;
+            }
+            if (typeof newPage === "undefined" || newPage === null) {
+                var newPage = false;
             }
             var path = '/ajax/uk/';
             var req = {
@@ -541,7 +555,8 @@ if(typeof angular != 'undefined') {
                     sort : $scope.results.sort,
                     search : $scope.results.search,
                     ne : ne,
-                    sw : sw
+                    sw : sw,
+                    page : newPage
                 }
             }
             var responsePromise = $http(req);
@@ -550,7 +565,10 @@ if(typeof angular != 'undefined') {
             $(".tab-pane").removeClass('active');
             $('.filter-btn, .sort-btn').parent().removeClass('active');
             // bring up mask
-            $scope.resultsLoading = true;
+            if(!newPage){
+                $scope.resultsLoading = true;
+            }
+
 
             responsePromise.success(function(data) {
                 $scope.results = data;
@@ -558,8 +576,18 @@ if(typeof angular != 'undefined') {
                 $scope.selectedDate = $scope.results.selected_date;
                 $scope.activeDate = $scope.results.selected_date;
                 $scope.activeGroupId = false;
-                $scope.everciseGroups = shapeEverciseGroups();
+                if(newPage){
+                    var newGroups = shapeEverciseGroups();
+                    $scope.everciseGroups =  $scope.everciseGroups.concat(newGroups);
+                }
+                else{
+                    $scope.everciseGroups = shapeEverciseGroups();
+                }
+
                 if(!drag){
+                    if($scope.results.results.total > $scope.everciseGroups.length) {
+                        lazyLoadPages();
+                    }
                     $scope.map.center =  {
                         latitude: $scope.results.area.lat,
                         longitude: $scope.setMapCenter()
