@@ -337,6 +337,7 @@ if(typeof angular != 'undefined') {
         }
 
         var markerClicked = function(marker,e,model){
+
             // check if there are other classes at this venue
             var vId = model.venue.id;
             var svi = [];
