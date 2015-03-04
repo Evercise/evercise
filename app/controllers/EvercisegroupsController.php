@@ -54,9 +54,7 @@ class EvercisegroupsController extends \BaseController
     public function create($clone_id = NULL)
     {
         // Get names of subcategories and sort alphabetically
-        $subcategories = Subcategory::lists('name');
-
-        natsort($subcategories);
+        $subcategories = Subcategory::getIdList();
 
         $venues = Venue::usersVenues($this->user->id);
         $facilities = Facility::getLists();

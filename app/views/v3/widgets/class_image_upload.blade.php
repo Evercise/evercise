@@ -6,6 +6,20 @@
         <div class="col-sm-12 mb20" id="image-cropper">
             <div class="holder cover" id="cover_image">
                 {{ Form::open(['route' => 'home', 'method' => 'post', 'id' => 'image-upload-form' ]) }}
+                @if(isset($cloneGroup->image))
+                    @if(file_exists($cloneGroup->user->directory.'/cover_'.$cloneGroup->image))
+                        {{ image($cloneGroup->user->directory.'/cover_'.$cloneGroup->image, 'cover photo', ['class' => 'img-responsive']) }}
+                    @else
+                        <div class="row">
+                            <div class="text-center col-sm-12 mt50">
+                                <span id="image-select" class="image-select icon-block icon-lg-camera hover mb40"></span>
+                                <p><strong>The image ({{$cloneGroup->image}}) attached to this class does not exist</strong></p>
+                                <p>Maximum file size of 10MB</p>
+                                <p>Formats: JPG, JPEG, PNG or GIF</p>
+                            </div>
+                        </div>
+                    @endif
+                @else
                     <div class="row">
                         <div class="text-center col-sm-12 mt50">
                             <span id="image-select" class="image-select icon-block icon-lg-camera hover mb40"></span>
@@ -14,9 +28,7 @@
                             <p>Formats: JPG, JPEG, PNG or GIF</p>
                         </div>
                     </div>
-                    @if(isset($cloneGroup->image))
-                        {{ image($cloneGroup->user->directory.'/cover_'.$cloneGroup->image, 'cover photo', ['class' => 'img-responsive']) }}
-                    @endif
+                @endif
                 {{ Form::close() }}
                 </div>
                 <div class="modal modal-cropper" id="create-image" data-backdrop="static">

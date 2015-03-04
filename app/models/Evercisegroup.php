@@ -42,7 +42,7 @@ class Evercisegroup extends \Eloquent
      */
     protected $table = 'evercisegroups';
 
-    private static function validateInputs($inputs)
+    public static function validateInputs($inputs)
     {
 
         $validator = Validator::make(
@@ -105,6 +105,7 @@ class Evercisegroup extends \Eloquent
 
             if (empty($categoryIds)) {
                 return Response::json(
+
                     ['validation_failed' => 1, 'errors' => ['category-select' => 'You must choose at least one category']]
                 );
             }
@@ -117,6 +118,7 @@ class Evercisegroup extends \Eloquent
                     'description' => $description,
                     'image'       => $image,
                     'slug'        => str_random(12),
+                    'confirmed'   => 0,
                 ]
             );
 
@@ -219,7 +221,7 @@ class Evercisegroup extends \Eloquent
 
             // Push categories into an array, and fail if there are none.
             //$categories = static::categoriesToArray($inputs);
-            $categories = $inputs['category_array'];
+            $subcategories = Subcategory::namesToIds(explode(',', $inputs['category_array'][0]));
 
             $this->update([
                 'name'        => $classname,
@@ -229,8 +231,8 @@ class Evercisegroup extends \Eloquent
             ]);
 
 
-            if (!empty($categories)) {
-                $this->subcategories()->sync($categories);
+            if (!empty($subcategories)) {
+                $this->subcategories()->sync($subcategories);
             }
 
             Trainerhistory::create(
@@ -242,13 +244,17 @@ class Evercisegroup extends \Eloquent
                 ]
             );
 
-            event('class.updated', [$user, $this]);
+           // event('class.updated', [$user, $this]);
+
+            return Response::json(
+                [
+                    'success' => 'true',
+                    'id'      => $this->id
+                ]
+            );
 
 
         }
-
-        return TRUE;
-
     }
 
 

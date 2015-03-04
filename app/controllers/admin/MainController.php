@@ -775,12 +775,13 @@ class MainController extends \BaseController
 
     public function pendingGroups()
     {
-        $classes = PendingEvercisegroup::get();
+        $editedClassed = PendingEvercisegroup::get();
+        $newClasses =    Evercisegroup::where('confirmed', 0)->get();
 
-        return View::make('admin.pending_classes', compact('classes'));
+        return View::make('admin.pending_classes', compact('editedClassed', 'newClasses'));
     }
 
-    public function pendinggroupsManage($id)
+    public function pendinggroupsManage($id) // Edited class (PendingEvercisegroup)
     {
         if($id > 0)
             $pendinggroup = PendingEvercisegroup::find($id);
@@ -788,15 +789,35 @@ class MainController extends \BaseController
         else
             $pendinggroup = 0;
 
-        $subcategories = Subcategory::lists('name');
+        $subcategories = Subcategory::getIdList();
 
-        return View::make('admin.edit_pending_class', compact('pendinggroup', 'subcategories'));
+        $evercisegroup = Evercisegroup::find($pendinggroup->evercisegroup_id);
+
+
+        return View::make('admin.edit_pending_class', compact('pendinggroup', 'subcategories', 'evercisegroup'));
     }
 
-    public function approveClass()
+    public function createClassUpdate($evercisegroup_id)
     {
-        return 'fuck off you saturated piss wrinkle';
+        $evercisegroup = Evercisegroup::find($evercisegroup_id);
+
+        $pendingG = PendingEvercisegroup::storeUpdate($this->user, $evercisegroup);
+
+        return Redirect::route('admin.pendinggroups.manage', [$pendingG->id])->with('notification', 'Update created');
     }
 
+    public function pendingNewGroupManage($id) // new class (EverciseGroup)
+    {
+        if($id > 0)
+            $evercisegroup = Evercisegroup::find($id);
+
+        else
+            $evercisegroup = 0;
+
+        $subcategories = Subcategory::getIdList();
+
+
+        return View::make('admin.review_new_class', compact('subcategories', 'evercisegroup'));
+    }
 
 }

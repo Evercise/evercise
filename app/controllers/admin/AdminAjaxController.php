@@ -766,8 +766,87 @@ class AdminAjaxController extends Controller
             $returnPlaces[] = ['id'=>$id, 'name'=>$name];
         }
 
-
         return Response::json($returnPlaces);
+    }
+
+    public function deletePendingClass()
+    {
+        $pendingEvercisegroup_id = Input::get('id');
+        $pendingEvercisegroup = \PendingEvercisegroup::find($pendingEvercisegroup_id);
+
+        $pendingEvercisegroup->delete();
+
+        return Response::json(['deleted' => true]);
+    }
+
+    public function approveClass()
+    {
+        /*        $data = [
+                    'name' => Input::get('name'),
+                    'description' => Input::get('description'),
+                    'image' => Input::get('image'),
+                    'gallery_image' => Input::get('gallery_image'),
+                    'venue' => Input::get('venue'),
+                    'category_array' => Input::get('category_array'),
+                ];
+                return d($data);*/
+
+        $pendingG = PendingEvercisegroup::find(Input::get('id'));
+        //$categoryString = Input::get('category_array');
+
+        $subcategoryIds = Subcategory::namesToIds(explode(',', Input::get('category_array')[0]));
+        //return implode(',', $subcategoryIds);
+
+        $pendingG->name = Input::get('class_name');
+        $pendingG->description = Input::get('class_description');
+        $pendingG->image = Input::get('image');
+        $pendingG->venue_id = Input::get('venue_select');
+        $pendingG->subcategories = implode(',', $subcategoryIds);
+
+        $inputs = Input::all();
+
+        $user = Sentry::getUser();
+
+        if(! Input::get('evercisegroup_id')) // New class approval
+        {
+            $response = Evercisegroup::validateAndStore($inputs, $user);
+
+            if (isset($response->getData()->success))
+            {
+                $pendingG->status = 1;
+                $pendingG->evercisegroup_id = $response->getData()->id;
+                $pendingG->save();
+
+                return Response::json(
+                    [
+                        'url'     => route('admin.pendinggroups'),
+                        'callback' => 'gotoUrl',
+                    ]
+                );
+            }
+        }
+        else //Existing class edit approval
+        {
+            $evercisegroup = Evercisegroup::find(Input::get('evercisegroup_id'));
+
+            $response = $evercisegroup->validateAndUpdate($inputs, $user);
+
+            if (isset($response->getData()->success))
+            {
+                $pendingG->status = 1;
+                $pendingG->save();
+
+                return Response::json(
+                    [
+                        'url'     => route('admin.pendinggroups'),
+                        'callback' => 'gotoUrl',
+                    ]
+                );
+
+            }
+        }
+
+        return $response;
     }
 
 }

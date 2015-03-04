@@ -28,6 +28,8 @@ class EvercisegroupsController extends AjaxBaseController
 
         $response = Evercisegroup::validateAndStore($inputs, $this->user);
 
+        //$response = PendingEvercisegroup::validateAndStore($inputs, $this->user);
+
         return $response;
     }
 
@@ -102,4 +104,5 @@ class EvercisegroupsController extends AjaxBaseController
             ]
         );
     }
+
 }

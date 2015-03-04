@@ -437,6 +437,7 @@ var activeImageClass;
                             <span class="el-icon-star bs_ttip cp feature_it" data-id="{{ $a->id }}" style="{{ ($featured_count == 1 ? 'color:#d58512':'')}}"></span>
                             <span class="el-icon-braille bs_ttip cp categories_modal" data-toggle="modal" data-target="#ajaxModal" data-id="{{ $a->id }}" data-url="{{ URL::route('ajax.admin.modal.categories', [$a->id]) }}"></span>
                             <span class="get_image el-icon-picture cp" data-class_id="{{ $a->id }}"></span>
+                            <a  title="Edit" href="{{URL::route('admin.create_class_update', [$a->id]) }}"><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a>
                             <span data-confirm="Are you sure you want to delete this class?" onclick="deleteIt({{ $a->id }})" class="el-icon-remove bs_ttip cp delete_it" style="margin-left:5px" data-id="{{ $a->id }}"></span>
 
                         </td>

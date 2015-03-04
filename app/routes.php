@@ -626,6 +626,11 @@ Route::group(['prefix' => 'ajax/admin', 'before' => 'admin'], function () {
     Route::post('search_places',
         ['as' => 'admin.ajax.search_places', 'uses' => 'AdminAjaxController@searchPlaces']);
 
+    Route::post('/pending_evercisegroups/delete',
+        ['as' => 'pending_evercisegroups.delete', 'uses' => 'AdminAjaxController@deletePendingClass']);
+    Route::post('/approve_class',
+        ['as' => 'admin.ajax.approve_class', 'uses' => 'AdminAjaxController@approveClass']);
+
 });
 
 
@@ -677,8 +682,10 @@ Route::group(
             ['as' => 'admin.pendinggroups', 'uses' => 'MainController@pendingGroups']);
         Route::get('pendinggroups/{id?}',
             ['as' => 'admin.pendinggroups.manage', 'uses' => 'MainController@pendinggroupsManage']);
-        Route::post('/approve_class',
-            ['as' => 'admin.approve_class', 'uses' => 'MainController@approveClass']);
+        Route::get('pendingnewgroups/{id?}',
+            ['as' => 'admin.pendinggroups.new.manage', 'uses' => 'MainController@pendingNewGroupManage']);
+        Route::get('/create_class_update/{id?}',
+            ['as' => 'admin.create_class_update', 'uses' => 'MainController@createClassUpdate']);
 
         Route::get('/listclasses',
             ['as' => 'admin.listClasses', 'uses' => 'MainController@listClasses']);
@@ -825,8 +832,5 @@ Route::get('test4/{term}', function ($term) {
 
     return Subcategory::getRelatedFromSearch($term);
 });
-Route::get('test5', function () {
-
-    return d(Category::browse());
-});
 */
+

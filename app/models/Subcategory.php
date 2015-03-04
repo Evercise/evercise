@@ -189,4 +189,11 @@ class Subcategory extends Eloquent
 		return $output;
 	}
 
+    public static function getIdList()
+    {
+        $subcategories = static::lists('name', 'id');
+        natsort($subcategories);
+        return $subcategories;
+    }
+
 }

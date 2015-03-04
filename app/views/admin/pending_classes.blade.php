@@ -124,8 +124,8 @@ var activeImageClass;
     function deleteIt(id){
 
             currentRequest = $.ajax({
-                   type: "DELETE",
-                   url: AJAX_URL + "evercisegroups/delete",
+                   type: "POST",
+                   url: AJAX_URL + "pending_evercisegroups/delete",
                    cache: false,
                    dataType: 'json',
                    data: 'id='+id,
@@ -137,193 +137,17 @@ var activeImageClass;
                        if(res.deleted) {
 
                             $('.class_'+id).css('background', '#ff1b7e').fadeOut('slow');
-                            notify('Class Deleted.');
+                            notify('Class update Deleted.');
 
                        } else {
                             notify(res.message);
                        }
                    }
            });
-
-
-
-
-
-
-
         }
    $(document).ready(function(){
         yukon_footable.p_plugins_tables_footable();
         yukon_jBox.p_components_notifications_popups();
-
-
-        $('.feature_it').click(function(e){
-
-            var id = $(this).data('id');
-
-                var row = $(this);
-
-                currentRequest = $.ajax({
-                        type: "POST",
-                        url: AJAX_URL + "featureClass",
-                        cache: false,
-                        dataType: 'json',
-                        data: 'id='+id,
-                        beforeSend: function (json) {
-                            if (currentRequest != null) currentRequest.abort();
-                        },
-                        success:function(res){
-
-                            console.log(res);
-                            if(res.featured) {
-                                row.css('color', '#d58512');
-                            } else {
-
-                                row.css('color', '#222');
-                            }
-                        }
-                })
-
-        });
-
-        $(document).on('click', '.save_categories', function(e) {
-                var class_id = $('#ajaxModal').data('class_id');
-                var cats = $(".sub_cats_checkbox").map(function(){
-                    if($(this).prop( "checked" )) {
-                        return $(this).val();
-                    }
-                }).get();
-
-                currentRequest = $.ajax({
-                                        type: "PUT",
-                                        url: "{{ URL::route('ajax.admin.modal.categories.save') }}",
-                                        cache: false,
-                                        dataType: 'json',
-                                        data: 'class_id='+class_id+'&cat='+cats,
-                                        beforeSend: function (json) {
-                                            if (currentRequest != null) currentRequest.abort();
-                                        },
-                                        success:function(res){
-                                            console.log(res);
-                                        }
-                                })
-        });
-
-
-        $('.categories_modal').click(function(e){
-
-            var id = $(this).data('id');
-            var url = $(this).data('url');
-            $('#ajaxModal').data('class_id', id);
-            $('#ajaxModal').html('<div class="modal-dialog"><div class="modal-content" style="text-align: center"><div class="modal-header">'+
-                                    '<h4 class="modal-title">Edit Categories</h4></div><div class="modal-body">'+
-                                    '<img src="/assets/img/spinning-circles.svg" style="width:130px; text-align:center;margin:5px auto"/>'+
-                                    '</div></div></div>');
-
-                currentRequest = $.ajax({
-                        type: "GET",
-                        url: url,
-                        cache: false,
-                        dataType: 'json',
-                        data: 'id='+id,
-                        beforeSend: function (json) {
-                            if (currentRequest != null) currentRequest.abort();
-                        },
-                        success:function(res){
-                            $('#ajaxModal').html(res.view);
-                        }
-                })
-
-        });
-
-        $('body').append('<div class="modal" id="ajaxModal"><div class="modal-body"></div></div>');
-
-        $('.get_image').click(function(e) {
-
-            activeImageClass = $(this).data('class_id');
-            $('body').addClass('smr-open');
-
-        });
-
-        $('.close-menu').click(function(e) {
-
-            $('body').removeClass('smr-open');
-
-        });
-
-        $('.set_image').click(function(e) {
-
-            image_id = $(this).data('image_id');
-
-            currentRequest = $.ajax({
-                    type: "POST",
-                    url: AJAX_URL + "set_class_image",
-                    cache: false,
-                    dataType: 'json',
-                    data: 'class_id='+activeImageClass+'&image_id='+image_id,
-                    beforeSend: function (json) {
-                        if (currentRequest != null) currentRequest.abort();
-                    },
-                    success:function(res){
-                     console.log('done');
-                         $('body').removeClass('smr-open');
-
-                         new jBox('Notice', {
-                             offset: {
-                                 y: 100,
-                                 x: 100
-                             },
-                             stack: false,
-                             autoClose: 3000,
-                             animation: {
-                                 open: 'slide:top',
-                                 close: 'slide:right'
-                             },
-                             onInit: function () {
-                                 this.options.content = 'Image Set';
-                             }
-                        });
-                    }
-            })
-
-        });
-
-
-
-
-        $('.image_upload').click(function(e) {
-            var id = $(this).data('id');
-
-            $('.upload_'+id).trigger('click');
-
-        });
-        $('.upload_input').change(function(e) {
-            var id = $(this).data('id');
-
-            $('.form_'+id).submit();
-
-        });
-        $('.check_box').change(function(e) {
-            var id = $(this).data('id');
-
-            var data = 'id='+id+'&checked='+this.checked;
-             currentRequest = $.ajax({
-                type: "POST",
-                url: AJAX_URL + "sliderStatus",
-                cache: false,
-                dataType: 'json',
-                data: data,
-                beforeSend: function (json) {
-                    if (currentRequest != null) currentRequest.abort();
-                },
-                success:function(res){
-                    console.log(res);
-                }
-             })
-
-
-        });
-
 
     });
 
@@ -335,18 +159,9 @@ var activeImageClass;
 @stop
 
 @section('body')
-<div class="row">
-        <div class="col-md-3">
-            <input id="textFilter" type="text" class="form-control input-sm">
-            <span class="help-block">Filter</span>
-        </div>
-
-        <div class="col-md-3">
-            <a class="btn btn-default btn-sm" id="clearFilters">Clear</a>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12">
+            <p><strong>New classes</strong></p>
             <table class="table toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
                 <thead>
                     <tr>
@@ -354,20 +169,16 @@ var activeImageClass;
                         <th>Name</th>
                         <th>Trainer</th>
                         <th>Status</th>
-                        <th>Confirmed</th>
-                        <th  style="width:90px !important;">Slider</th>
                         <th data-sort-initial="descending"  width="140">Options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($classes as $a)
+                    @foreach($newClasses as $a)
+                    @if(! $a->evercisegroup_id && $a->status == 0)
                     <tr class="class_{{$a->id}}">
                         <td>{{ $a->id }}</td>
                         <td>{{ $a->name }}</td>
                         <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
-
-
-
 
                         <td>
                             @if($a->status == 1)
@@ -377,9 +188,52 @@ var activeImageClass;
                             @endif
                         </td>
 
+                        <td width="140">
+
+                            <a  title="Edit" href="{{URL::route('admin.pendinggroups.new.manage', [$a->id]) }}"><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a>
+                            <span data-confirm="Are you sure you want to delete this class?" onclick="deleteIt({{ $a->id }})" class="el-icon-remove bs_ttip cp delete_it" style="margin-left:5px" data-id="{{ $a->id }}"></span>
+
+                        </td>
+
+                   </tr>
+
+                    @endif
+                    @endforeach
+
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                    <tr>
+                        <td colspan="5">
+                            <ul class="pagination pagination-sm"></ul>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p><strong>Edited classes</strong></p>
+            <table class="table toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
+                <thead>
+                    <tr>
+                        <th data-toggle="true">ID</th>
+                        <th>Name</th>
+                        <th>Trainer</th>
+                        <th>Status</th>
+                        <th data-sort-initial="descending"  width="140">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($editedClassed as $a)
+                    @if($a->evercisegroup_id && $a->status == 0)
+                    <tr class="class_{{$a->id}}">
+                        <td>{{ $a->id }}</td>
+                        <td>{{ $a->name }}</td>
+                        <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
 
                         <td>
-
+                            @if($a->status == 1)
+                            <span class="label label-warning status-active" title="Active">Verified</span>
+                            @elseif($a->status == 0)
+                            <span class="label label-default status-disabled" title="Unpublished">Unverified</span>
+                            @endif
                         </td>
 
                         <td width="140">
@@ -392,6 +246,7 @@ var activeImageClass;
                    </tr>
 
 
+                    @endif
                     @endforeach
 
                 </tbody>
@@ -401,6 +256,54 @@ var activeImageClass;
                             <ul class="pagination pagination-sm"></ul>
                         </td>
                     </tr>
+                </tfoot>
+            </table>
+            <p><strong>Recently approved classes</strong></p>
+            <table class="table toggle-arrow-tiny" id="footable_demo" data-filter="#textFilter" data-page-size="50">
+                <thead>
+                <tr>
+                    <th data-toggle="true">ID</th>
+                    <th>Name</th>
+                    <th>Trainer</th>
+                    <th>Status</th>
+                    <th data-sort-initial="descending"  width="140">Options</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($editedClassed as $a)
+                    @if($a->status == 1)
+                        <tr class="class_{{$a->id}}">
+                            <td>{{ $a->id }}</td>
+                            <td>{{ $a->name }}</td>
+                            <td><a href="{{ URL::route('trainer.show', ['id' => $a->user->display_name])}}" target="_blank">{{ $a->user->display_name }}</a></td>
+
+                            <td>
+                                @if($a->status == 1)
+                                    <span class="label label-warning status-active" title="Active">Verified</span>
+                                @elseif($a->status == 0)
+                                    <span class="label label-default status-disabled" title="Unpublished">Unverified</span>
+                                @endif
+                            </td>
+
+                            <td width="140">
+
+                                <a  title="Edit" href="{{URL::route('admin.pendinggroups.manage', [$a->id]) }}"><span class="el-icon-edit bs_ttip" title="" data-original-title=".el-icon-edit"></span></a>
+                                <span data-confirm="Are you sure you want to delete this class?" onclick="deleteIt({{ $a->id }})" class="el-icon-remove bs_ttip cp delete_it" style="margin-left:5px" data-id="{{ $a->id }}"></span>
+
+                            </td>
+
+                        </tr>
+
+                    @endif
+                @endforeach
+
+                </tbody>
+                <tfoot class="hide-if-no-paging">
+                <tr>
+                    <td colspan="5">
+                        <ul class="pagination pagination-sm"></ul>
+                    </td>
+                </tr>
                 </tfoot>
             </table>
 </div>

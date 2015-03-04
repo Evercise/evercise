@@ -3,7 +3,7 @@
 @section('css')
 
     {{ HTML::style('assets/css/cropper.min.css') }}
-    {{ HTML::style('admin/assets/css/image-cropper.css') }}
+    {{ HTML::style('assets/css/main.min.css') }}
 
     <style>
 
@@ -318,7 +318,6 @@
                 this.updateCategoriesInput();
             },
             updateCategoriesInput: function(){
-                console.log('fuck');
                 $('input[name="category_array[]"]').val(this.keywords).trigger('change');
             }
         }
@@ -331,6 +330,7 @@
         });
 
 
+
     </script>
 
 @stop
@@ -339,49 +339,79 @@
 @section('body')
 
 
-    <div class="col-md-12">
-        <div class="col-lg-9">
+    <div class="row">
 
-            <div class="form-group mb15">
-                {{ Form::open(['route' => 'ajax.gallery.getdefaults', 'method' => 'post', 'id' => 'find_gallery_image_by_category']) }}
-                {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
-                {{ Form::select('keywords-select', $subcategories, isset($cloneGroup) ? $cloneGroup->getSubcategoryIds() : '', ['class' => 'form-control mb40 select2', 'multiple' ] ) }}
-                {{ Form::hidden('keywords',null) }}
-                {{ Form::close() }}
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-lg-11">
+                    <P><strong>{{$pendinggroup->evercisegroup_id ? 'Class Edit' : 'New class'}}</strong></P>
+                    <div class="form-group mb15">
+                        {{ Form::open(['route' => 'ajax.gallery.getdefaults', 'method' => 'post', 'id' => 'find_gallery_image_by_category']) }}
+                        {{ Form::label('category-select', 'Category', ['class' => 'mb15'] ) }}
+                        {{ Form::select('keywords-select', $subcategories, $pendinggroup->getSubcategoryIds(), ['class' => 'form-control mb40 select2', 'multiple' ] ) }}
+                        {{ Form::hidden('keywords',null) }}
+                        {{ Form::close() }}
+                    </div>
+
+                    <div class="form-group mb50">
+                        @include('v3.widgets.class_image_upload', ['cloneGroup' => $pendinggroup])
+                    </div>
+
+                    {{ Form::open(['id' => 'approve_class', 'route' => 'admin.ajax.approve_class', 'method' => 'post', 'files'=> true]) }}
+                    {{ Form::hidden('id', (!empty($pendinggroup->id) ? $pendinggroup->id : 0)) }}
+                    <div class="form-group">
+                        <label>Name:</label>
+                        {{ Form::text('class_name', (!empty($pendinggroup->name) ? $pendinggroup->name : null), ['placeholder'=> 'search', 'class' => 'form-control', 'id'=>'title']) }}
+                    </div>
+                    <div class="form-group">
+                        <label>Description:</label>
+                        {{ Form::text('class_description', (!empty($pendinggroup->description) ? $pendinggroup->description : null), ['placeholder'=> 'description', 'class' => 'form-control', 'id'=>'title']) }}
+                    </div>
+                    <div class="form-group">
+                        <label>Venue:</label>
+                        {{ Form::text('venue_select', (!empty($pendinggroup->venue_id) ? $pendinggroup->venue_id : null), ['placeholder'=> 'venue', 'class' => 'form-control', 'id'=>'title']) }}
+                    </div>
+                    {{ Form::hidden('image', $pendinggroup->image ) }}
+                    {{ Form::hidden('gallery_image', false) }}
+                    {{ Form::hidden('category_array[]',null ) }}
+                    {{ Form::hidden('evercisegroup_id', $pendinggroup->evercisegroup_id ) }}
+
+                    {{ Form::submit(($pendinggroup->evercisegroup_id ? 'Approve edit' : 'Approve new class') , array('class'=>'btn btn-sm btn-info')) }}
+                    {{ Form::close() }}
+                </div>
             </div>
         </div>
+        @if($evercisegroup)
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-lg-11">
+                    <P><strong>Original</strong></P>
+                    <div class="form-group mb15">
+                        <p>
+                        @foreach($evercisegroup->getSubcategoryIds()as $subcatId)
+                            {{$subcategories[$subcatId].', '}}
+                        @endforeach
+                        </p>
+                    </div>
+                    <div class="form-group mb15">
+                        {{image( $evercisegroup->user->directory.'/preview_'.$evercisegroup->image)}}
+                    </div>
+                    <div class="form-group mb15">
+                        {{$evercisegroup->name}}
+                    </div>
+                    <div class="form-group mb15">
+                        {{$evercisegroup->description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
-{{ Form::open(['id' => 'manage_seourl', 'route' => 'admin.approve_class', 'method' => 'post', 'form-control', 'files'=> true]) }}
-{{ Form::hidden('id', (!empty($pendinggroup->id) ? $pendinggroup->id : 0)) }}
 
 
-<div class="col-md-12">
-    <div class="col-lg-9">
-
-        <div class="form-group mb50">
-            @include('v3.widgets.class_image_upload')
-        </div>
-
-        <div class="form-group">
-            <label>Name:</label>
-            {{ Form::text('name', (!empty($pendinggroup->name) ? $pendinggroup->name : null), ['placeholder'=> 'search', 'class' => 'form-control', 'id'=>'title']) }}
-        </div>
-        <div class="form-group">
-            <label>Description:</label>
-            {{ Form::text('description', (!empty($pendinggroup->description) ? $pendinggroup->description : null), ['placeholder'=> 'description', 'class' => 'form-control', 'id'=>'title']) }}
-        </div>
-        <div class="form-group">
-            <label>Venue:</label>
-            {{ Form::text('image', (!empty($pendinggroup->venue_id) ? $pendinggroup->venue_id : null), ['placeholder'=> 'title', 'class' => 'form-control', 'id'=>'title']) }}
-        </div>
-
-    </div>
-</div>
-
-<div class="col-md-12">
-    {{ Form::submit('Save Changes' , array('class'=>'btn btn-sm btn-info')) }}
-    {{ Form::close() }}
-</div>
 
 @stop

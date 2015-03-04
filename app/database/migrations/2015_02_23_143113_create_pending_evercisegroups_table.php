@@ -22,7 +22,9 @@ class CreatePendingEvercisegroupsTable extends Migration
             $table->text('name');
             $table->text('description');
             $table->text('image');
-            $table->text('status');
+            $table->text('subcategories');
+            $table->text('type');
+            $table->integer('status');
             $table->timestamps();
         });
     }

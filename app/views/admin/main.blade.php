@@ -164,6 +164,7 @@
 
                 initPut('{"selector": ".reset_password"}');
                 initPut('{"selector": ".unapprove_trainer"}');
+                initPut('{"selector": "#approve_class"}');
 
                 $('#user_list li').click(function(){
                     $(this).find('.user-table').slideToggle(500);

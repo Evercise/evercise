@@ -112,7 +112,7 @@
                     <li class="first_level">
                         <a href="{{ URL::route('admin.pendinggroups') }}">
                             <span class="icon_currency first_level_icon"></span>
-                            <span class="menu-title">Pending Withdrawals</span>
+                            <span class="menu-title">Pending Classes</span>
                         </a>
                     </li>
                 </ul>

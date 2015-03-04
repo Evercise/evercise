@@ -42,7 +42,9 @@
                         @if(isset($cloneGroup->image))
                             <div class="holder gallery-img-wrapper" id="first-img">
                                 {{ Form::hidden('cloned', $cloneGroup->user->directory.'/cover_'.$cloneGroup->image) }}
-                                {{ image($cloneGroup->user->directory.'/cover_'.$cloneGroup->image, 'cover photo', ['class' => 'img-responsive']) }}
+                                @if(file_exists($cloneGroup->user->directory.'/cover_'.$cloneGroup->image))
+                                    {{ image($cloneGroup->user->directory.'/cover_'.$cloneGroup->image, 'cover photo', ['class' => 'img-responsive']) }}
+                                @endif
                                 <div class="holder-add-more">
                                     <span class="image-select icon-lg icon-md-camera hover"></span>
                                 </div>
