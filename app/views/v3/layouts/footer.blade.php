@@ -18,7 +18,6 @@
             </div>
             <div class="col-sm-4">
                 <h3>Contact Us</h3>
-                <li>+44 (0)20 3515 0157</li>
                 {{ HTML::mailto('contact@evercise.com') }}
                 <ul class="list-inline">
                     <li><a title="evercise facebook" target="_blank" href="https://www.facebook.com/evercise"><span class="icon-lg icon-lg-fb hover"></span></a></li>
